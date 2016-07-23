@@ -1,4 +1,4 @@
-package fragment;
+package adapter;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -39,7 +39,7 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
 
     @Override
     public FilmeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = (View) LayoutInflater.from(context).inflate(R.layout.adapter_filme_list, parent, false);
+        View view = (View) LayoutInflater.from(context).inflate(R.layout.adapter_filmes_list, parent, false);
         FilmeViewHolder holder = new FilmeViewHolder(view);
         return holder;
     }
@@ -48,12 +48,13 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
     public void onBindViewHolder(final FilmesAdapter.FilmeViewHolder holder, final int position) {
         movie = tmdbMovies.get(position);
         holder.progressBar.setVisibility(View.VISIBLE);
-       // teste();
+       // scroll_elenco();
         if (movie != null) {
             Log.d("onBindViewHolder", "Titulo Original - " + movie.getOriginalTitle());
             Log.d("onBindViewHolder", "Titulo - " + movie.toString());
             Log.d("onBindViewHolder", "ID: " + movie.getId());
             Log.d("Reviwes", "" + movie.getOverview());
+            Log.d("Direção", ""+movie.getHomepage());
             String title = movie.getTitle();
             if (title != null) {
                 holder.title.setText(title);
@@ -66,7 +67,7 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
             }
 
             Picasso.with(context)
-                    .load(UtilsFilme.buscarUrlImagemw185(movie))
+                    .load(UtilsFilme.getBaseUrlImagem(3)+movie.getPosterPath())
                     .into(holder.img);
             holder.progressBar.setVisibility(View.INVISIBLE);
             if (filmeOnClickListener != null) {

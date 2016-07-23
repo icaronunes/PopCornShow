@@ -34,7 +34,7 @@ import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.videos;
  * Created by icaro on 03/07/16.
  */
 
-public class FilmeFragmentBotton extends Fragment {
+public class FilmeBottonFragment extends Fragment {
 
     TextView titulo, categoria, time_filme, descricao, voto_media, voto_quantidade;
     ImageView img_poster;
@@ -49,7 +49,7 @@ public class FilmeFragmentBotton extends Fragment {
 
         if (getArguments() != null) {
             id_filme = getArguments().getInt(Constantes.FILME_ID);
-            Log.d("FilmeFragmentBotton", "onCreate -> " + id_filme);
+            Log.d("FilmeBottonFragment", "onCreate -> " + id_filme);
         }
     }
 
@@ -72,7 +72,7 @@ public class FilmeFragmentBotton extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d("FilmeFragmentBotton", "onActivityCreated -> " + id_filme);
+        Log.d("FilmeBottonFragment", "onActivityCreated -> " + id_filme);
         if (id_filme != 0) {
             TMDVAsync tmdvAsync = new TMDVAsync();
             tmdvAsync.execute();
@@ -129,9 +129,9 @@ public class FilmeFragmentBotton extends Fragment {
         @Override
         protected MovieDb doInBackground(Void... voids) {
             TmdbMovies movies = FilmeService.getTmdbMovies();
-            Log.d("FilmeFragmentBotton", "doInBackground: -> " + id_filme);
+            Log.d("FilmeBottonFragment", "doInBackground: -> " + id_filme);
             movieDb = movies.getMovie(id_filme, Constantes.PORTUGUES, credits, videos, releases, images, similar, reviews);
-            Log.d("FilmeFragmentBotton", "doInBackground: <-> " + movieDb.toString());
+            Log.d("FilmeBottonFragment", "doInBackground: <-> " + movieDb.toString());
 
             return movieDb;
         }

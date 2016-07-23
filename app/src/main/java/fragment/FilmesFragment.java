@@ -18,11 +18,11 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import activity.FilmeActivity;
+import adapter.FilmesAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbMovies;
@@ -34,7 +34,7 @@ import utils.UtilsFilme;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListFilmesFragment extends Fragment {
+public class FilmesFragment extends Fragment {
 
     List<MovieDb> movies = null;
     RecyclerView recyclerView;
@@ -45,7 +45,7 @@ public class ListFilmesFragment extends Fragment {
     int abaEscolhida;
     int pagina = 1;
 
-    public ListFilmesFragment() {
+    public FilmesFragment() {
         // Required empty public constructor ?????
     }
 

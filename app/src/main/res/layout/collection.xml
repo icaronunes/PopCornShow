@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/img_collection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/filme185" />
+
+    <TextView
+        android:id="@+id/dateCollection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Star Trek - adabybdabdadada"
+        android:textColor="#000" />
+
+    <Button
+        android:id="@+id/dialogButtonOK"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pesquisar_internet" />
+
+</LinearLayout>
