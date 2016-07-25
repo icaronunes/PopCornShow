@@ -1,7 +1,131 @@
 package adapter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import activity.FilmeActivity;
+import br.com.icaro.filme.R;
+import info.movito.themoviedbapi.model.CollectionInfo;
+import utils.Constantes;
+import utils.UtilsFilme;
+
 /**
  * Created by icaro on 22/07/16.
  */
-public class CollectionPagerAdapter {
+public class CollectionPagerAdapter extends PagerAdapter {
+
+
+    public static CollectionInfo info;
+    Context context;
+    int id;
+
+
+    public CollectionPagerAdapter(CollectionInfo info, Context context, int id) {
+        this.info = info;
+        this.id = id;
+        this.context = context;
+    }
+
+    private Context getContext() {
+        return context;
+    }
+
+    @Override
+    public int getCount() {
+        Log.d("CollectionPagerAdapter", "getCount");
+        return info.getParts().size() > 0 ? info.getParts().size() : 0;
+    }
+
+    @Override
+    public boolean isViewFromObject(View view, Object object) {
+        Log.d("CollectionPagerAdapter", "isViewFromObject");
+        return view == object;
+
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+
+        View view = LayoutInflater.from(context).inflate(R.layout.collection, container, false);
+        TextView nome = (TextView) view.findViewById(R.id.dateCollection);
+        ImageView imageView = (ImageView) view.findViewById(R.id.img_collection);
+        Button interno = (Button) view.findViewById(R.id.dialogInterno);
+        if (info.getParts().get(position).getId() == id) {interno.setVisibility(View.GONE);}
+        interno.setOnClickListener(this.onClickListenerInterno(position));
+
+        Button externo = (Button) view.findViewById(R.id.dialogExterno);
+        externo.setOnClickListener(this.onClickListenerExterno(position));
+        Log.d("CollectionPagerAdapter", "instantiateItem");
+        String ano = info.getParts().get(position).getReleaseDate();
+        ano = ano.substring(0,4);
+        nome.setText(info.getParts().get(position).getName() +
+                " - " + ano);
+        Picasso.with(context)
+                .load(UtilsFilme.getBaseUrlImagem(5) + info.getParts().get(position).getPosterPath())
+                .error(R.drawable.poster_empty)
+                .into(imageView);
+        ((ViewGroup) container).addView(view);
+        return view;
+
+    }
+
+    private View.OnClickListener onClickListenerInterno(final int position) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int id = info.getParts().get(position).getId();
+                String title = info.getParts().get(position).getTitle();
+                Intent intent = new Intent(getContext(), FilmeActivity.class);
+                intent.putExtra(Constantes.FILME_ID, id);
+                intent.putExtra(Constantes.NOME_FILME, title);
+                getContext().startActivity(intent);
+            }
+        };
+    }
+
+    private View.OnClickListener onClickListenerExterno(final int position) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String string = new String("https://play.google.com/store/search?c=movies&q=");
+                String query = info.getParts().get(position).getName();
+                //query = query.replaceAll(" ", "-");
+                string = string.concat(query);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(string));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Log.d("icon_collection", string.toString());
+                getContext().startActivity(intent);
+            }
+        };
+    }
+
+    // String string = new String("https://play.google.com/store/search?c=movies&q=");
+    //                            String query = movieDb.getBelongsToCollection().getName();
+//                            query = query.replaceAll(" ", "-");
+//                            string = string.concat(query);
+//                            Intent intent = new Intent(Intent.ACTION_VIEW);
+//                            intent.setData(Uri.parse(string));
+//                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            Log.d("icon_collection", string.toString());
+//                            startActivity(intent);
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        Log.d("CollectionPagerAdapter", "destroyItem");
+        ((ViewPager) container).removeView((View) object);
+    }
+
+
 }

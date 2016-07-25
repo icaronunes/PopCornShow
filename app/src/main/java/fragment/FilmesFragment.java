@@ -46,7 +46,6 @@ public class FilmesFragment extends Fragment {
     int pagina = 1;
 
     public FilmesFragment() {
-        // Required empty public constructor ?????
     }
 
     @Override
@@ -89,6 +88,7 @@ public class FilmesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if (!UtilsFilme.isNetWorkAvailable(getContext())) {
+            Log.d("onActivityCreated", "Sem internet");
             textView.setVisibility(View.VISIBLE);
             textView.setText("SEM INTERNET");
             swipeRefreshLayout.setEnabled(false);
@@ -122,6 +122,7 @@ public class FilmesFragment extends Fragment {
             @Override
             public void onRefresh() { //Verificar se ha internet
                 if (UtilsFilme.isNetWorkAvailable(getContext())) {
+                   // process.setVisibility(View.VISIBLE);
                     TMDVAsync tmdvAsync = new TMDVAsync();
                     tmdvAsync.execute();
                 }
@@ -134,7 +135,6 @@ public class FilmesFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            process.setVisibility(View.VISIBLE);
             if (pagina != 1) {
                 getView().findViewById(R.id.swipeToRefresh).setEnabled(false);
             }
@@ -153,7 +153,7 @@ public class FilmesFragment extends Fragment {
         @Override
         protected void onPostExecute(List<MovieDb> tmdbMovies) {
             Log.d("onPostExecute", "onPostExecute");
-            process.setVisibility(View.INVISIBLE);
+            process.setVisibility(View.GONE);
             if (tmdbMovies != null && pagina != 1) {
                 List<MovieDb> x = movies;
                 movies = tmdbMovies;

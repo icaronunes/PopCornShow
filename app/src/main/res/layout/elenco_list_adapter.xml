@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="6dp"
+    android:elevation="4dp"
+    android:background="@color/white">
 
+    <ImageView
+        android:id="@+id/img_elenco"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/filme185"
+        android:layout_gravity="center_vertical" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="88dp"
+        android:layout_weight="0.75">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/elenco_nome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Bred Pitt"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/elenco_character"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="1999-10-14"
+                android:textSize="14sp"
+                android:layout_margin="2dp" />
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>

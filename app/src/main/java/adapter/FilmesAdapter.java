@@ -26,7 +26,6 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
 
     private final Context context;
     protected List<MovieDb> tmdbMovies;
-    protected FilmesAdapter.FilmeViewHolder holder;
     protected MovieDb movie;
     private FilmeOnClickListener filmeOnClickListener;
 

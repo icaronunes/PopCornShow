@@ -1,37 +1,53 @@
 package activity;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+
+import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.IconPageIndicator;
+import com.viewpagerindicator.IconPagerAdapter;
 
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import fragment.PosterScrollFragment;
 import info.movito.themoviedbapi.TmdbMovies;
+import info.movito.themoviedbapi.model.ArtworkType;
 import info.movito.themoviedbapi.model.MovieDb;
+import utils.Constantes;
 
-import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.images;
+import static br.com.icaro.filme.R.id.pager;
+import static br.com.icaro.filme.R.id.title;
 
 /**
  * Created by icaro on 12/07/16.
  */
 
-public class PosterActivity extends BaseActivity {
+public class PosterActivity extends AppCompatActivity {
     int id_filme;
-    MovieDb movieDb;
     ViewPager viewPager;
+    MovieDb movieDb;
+    CirclePageIndicator titlePageIndicator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("PosterActivity", "onCreate");
         setContentView(R.layout.activity_scroll_poster);
-        id_filme = getIntent().getExtras().getInt("id_filme");
-        viewPager = (ViewPager) findViewById(R.id.pager);
+        id_filme = getIntent().getExtras().getInt(Constantes.FILME_ID);
+        viewPager = (ViewPager) findViewById(pager);
+        titlePageIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
+
+        Log.d("PosterActivity", "onCreate ID: " + id_filme);
+
     }
 
     @Override
@@ -52,36 +68,39 @@ public class PosterActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Log.d("PosterFragment", "getItem");
-            return new PosterScrollFragment().newInstance(position, movieDb.getImages().get(position).getFilePath());
+            if (position == 0) {
+                return new PosterScrollFragment().newInstance(position, movieDb.getPosterPath(), movieDb.getImages(ArtworkType.POSTER).size());
+            }
+            Log.d("PosterFragment", "doInBackground: -> " + movieDb.getImages().get(position).getLanguage());
+            return new PosterScrollFragment().newInstance(position, movieDb.getImages(ArtworkType.POSTER).get(position).getFilePath(),
+                    movieDb.getImages(ArtworkType.POSTER).size());
         }
 
         @Override
         public int getCount() {
-            Log.d("PosterFragment", "getCount");
-            Log.d("PosterFragment", "getCount " + movieDb.getImages().size() );
-            return movieDb.getImages().size();
-           // return 3;
+            return movieDb.getImages(ArtworkType.POSTER).size();
+
         }
     }
 
-    public class TesteAsync extends AsyncTask<Void, Void, MovieDb> {
+    public class TesteAsync extends AsyncTask<Void, Void, Void> {
 
         @Override
-        protected MovieDb doInBackground(Void... voids) {
+        protected Void doInBackground(Void... voids) {
             TmdbMovies movies = FilmeService.getTmdbMovies();
             Log.d("PosterFragment", "doInBackground: -> " + id_filme);
-            MovieDb movieDb = movies.getMovie(id_filme, "en", images);
-            Log.d("PosterFragment", String.valueOf("MovieDb: -> " + movieDb == null));
-            Log.d("PosterFragment", "doInBackground: Imagens " + movieDb.getImages().size());
-            return movieDb;
+            movieDb = movies.getMovie(id_filme, getString(R.string.IDIOMAS), TmdbMovies.MovieMethod.images);
+
+            return null;
         }
 
         @Override
-        protected void onPostExecute(MovieDb movieDbs) {
-            movieDb = movieDbs;
-            Log.d("PosterFragment", "onPostExecute: Imagens " + movieDb.getImages().size());
+        protected void onPostExecute(Void aVoid) {
             viewPager.setAdapter(new PosterFragment(getSupportFragmentManager()));
+            titlePageIndicator.setViewPager(viewPager);
+            titlePageIndicator.setPageColor(R.color.green);
+            titlePageIndicator.setStrokeColor(R.color.red);
+
         }
     }
 }

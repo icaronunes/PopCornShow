@@ -1,20 +1,10 @@
 package utils;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
-
-import java.util.List;
-
-import domian.FilmeService;
-import info.movito.themoviedbapi.TmdbMovies;
-import info.movito.themoviedbapi.model.MovieDb;
 
 /**
  * Created by icaro on 24/06/16.
@@ -56,25 +46,40 @@ public class UtilsFilme {
 
     }
 
-    public static String buscarUrlImagemw185(MovieDb movie) {
-        String urlBase = "http://image.tmdb.org/t/p/";
-        StringBuilder stringBuilder = new StringBuilder(urlBase);
-        stringBuilder.append("/")
-                .append("w185")
-                .append(movie.getPosterPath());
-        Log.d("buscarUrlImagemw185", "" + stringBuilder.toString());
+    public static String getBaseUrlImagem(int tamanho) {
 
-        return stringBuilder.toString();
-    }
+        switch (tamanho) {
+            case 1: {
+                return "http://image.tmdb.org/t/p/w92/";
 
-    public static String buscarUrlImagemw342(MovieDb movieDb) {
-        String urlBase = "http://image.tmdb.org/t/p/";
-        StringBuilder stringBuilder = new StringBuilder(urlBase);
-        stringBuilder.append("/")
-                .append("w342")
-                .append(movieDb.getPosterPath());
-        Log.d("buscarUrlImagemw185", "" + stringBuilder.toString());
+            }
+            case 2: {
+                return "http://image.tmdb.org/t/p/w154/";
 
-        return stringBuilder.toString();
+            }
+            case 3: {
+                return "http://image.tmdb.org/t/p/w185/";
+
+            }
+            case 4: {
+                return "http://image.tmdb.org/t/p/w342/";
+
+            }
+            case 5: {
+                return "http://image.tmdb.org/t/p/w500/";
+
+            }
+            case 6: {
+                return "http://image.tmdb.org/t/p/w780/";
+
+            }
+            case 7: {
+                return "http://image.tmdb.org/t/p/original/";
+
+            }
+            default:
+                return null;
+        }
+
     }
 }

@@ -28,11 +28,11 @@
                 android:id="@+id/imgFilme"
                 android:layout_width="300dp"
                 android:layout_height="250dp"
-                android:src="@drawable/filme"
                 android:adjustViewBounds="false"
                 android:cropToPadding="true"
                 android:layout_gravity="center_vertical|center_horizontal"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/imagem_filme" />
 
             <include
                 layout="@layout/include_progress" />
@@ -59,9 +59,8 @@
                 android:layout_marginLeft="6dp"
                 android:background="@color/black_transparente"
                 android:lines="3"
-                android:text="MATRIX"
                 android:textColor="@color/white"
-                android:textSize="8sp"
+                android:textSize="12sp"
                 android:layout_marginRight="6dp"
                 android:gravity="center_vertical|center_horizontal" />
 

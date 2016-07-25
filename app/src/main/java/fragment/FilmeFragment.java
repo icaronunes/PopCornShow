@@ -1,7 +1,5 @@
 package fragment;
 
-import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -12,17 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
-
-import java.util.List;
-
 import br.com.icaro.filme.R;
-import domian.FilmeService;
-import info.movito.themoviedbapi.model.Genre;
 import info.movito.themoviedbapi.model.MovieDb;
 import utils.Constantes;
-
-import static br.com.icaro.filme.R.id.img_poster;
 
 
 /**
@@ -32,10 +22,7 @@ public class FilmeFragment extends Fragment {
 
     //************* Alguns metodos senco chamados 2 vezes
 
-    public MovieDb movieDb;
-    ImageView img_top;
     int id_filme;
-    CollapsingToolbarLayout collapsingToolbarLayout;
     String titulo;
 
 
@@ -56,66 +43,8 @@ public class FilmeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        View view = inflater.inflate(R.layout.fragment_header_filme, container, false);
-        img_top = (ImageView) view.findViewById(R.id.img_top);
-        collapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar);
-
+        View view = inflater.inflate(R.layout.fragment_container_filme, container, false);
         return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (id_filme != 0) {
-            TMDVAsync tmdvAsync = new TMDVAsync();
-            tmdvAsync.execute();
-
-            FilmeFragmentBotton filmeFragmentBotton = new FilmeFragmentBotton();
-            Bundle bundle = new Bundle();
-            Log.d("FilmeFragment", "onActivityCreated: -> " + id_filme);
-            bundle.putInt(Constantes.FILME_ID, id_filme);
-            filmeFragmentBotton.setArguments(bundle);
-            getChildFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.filme_container, filmeFragmentBotton)
-                    .commit();
-        }
-    }
-
-    public void getImagemTopo(final MovieDb movieDb) {
-
-        String urlBase = "http://image.tmdb.org/t/p/";
-        final StringBuilder stringBuilder = new StringBuilder(urlBase);
-        stringBuilder.append("/")
-                .append("w780");
-        Log.d("Aqui", stringBuilder.toString());
-        Picasso.with(getContext()).load(stringBuilder+movieDb.getBackdropPath()).into(img_top);
-    }
-
-
-    public Context getContext() {
-        return this.getActivity();
-    }
-
-    public class TMDVAsync extends AsyncTask<Void, Void, MovieDb> {
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected MovieDb doInBackground(Void... voids) {//
-            Log.d("FilmeFragment", "doInBackground :" + id_filme);
-            return FilmeService.getTmdbMovie(id_filme, "pt-BR");
-        }
-
-        @Override
-        protected void onPostExecute(MovieDb movieDb) {
-            super.onPostExecute(movieDb);
-            collapsingToolbarLayout.setTitle(movieDb.getTitle());
-            collapsingToolbarLayout.setExpandedTitleMarginEnd(6);
-            getImagemTopo(movieDb);
-        }
     }
 
 }

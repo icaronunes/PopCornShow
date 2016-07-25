@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
@@ -9,25 +8,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black_transparente"
-        android:orientation="horizontal"
-        tools:ignore="UselessParent"
         android:layout_marginBottom="2dp"
-        android:layout_marginTop="2dp"
-        android:elevation="2dp">
+        android:layout_marginTop="0dp"
+        android:background="@color/black_transparente"
+        android:elevation="2dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/titulo_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:layout_margin="6dp"
-            android:gravity="left"
+            android:gravity="start"
             android:lines="2"
             android:maxLines="2"
             android:minLines="1"
-            android:text="TITULO"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -52,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_margin="6dp"
+                    android:layout_marginLeft="6dp"
                     android:text="@string/categoria"
                     android:textStyle="normal|italic" />
 
@@ -60,10 +56,7 @@
                     android:id="@+id/categoria_filme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:autoText="false"
-                    android:maxLines="2"
-                    android:text="@string/categoria" />
+                    android:maxLines="2" />
             </LinearLayout>
 
             <LinearLayout
@@ -86,49 +79,53 @@
                     android:id="@+id/time_filme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:hint="20"/>
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/produtora" />
+
+                <TextView
+                    android:id="@+id/produtora"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="2dp" />
+
 
             </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/descricao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:lines="6"
-            android:maxLines="8"
-            android:minLines="1"
-            android:textSize="14sp" />
-
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/img_poster"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/filme" />
+            android:layout_width="182dp"
+            android:layout_height="183dp"
+            android:contentDescription="@string/poster_filme"
+            android:elevation="19dp" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="203dp"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:elevation="0dp"
                 android:gravity="center_vertical"
-                android:elevation="0dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/voto_media"
@@ -136,8 +133,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/shape_voto"
                     android:elevation="0dp"
-                    android:padding="3dp"
-                    tools:text="0.0" />
+                    android:padding="3dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -155,12 +151,43 @@
                         android:id="@+id/voto_quantidade"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="100" />
+                        android:elevation="0dp" />
                 </LinearLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/idioma_original"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/descricao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:lines="6"
+        android:maxLines="8"
+        android:minLines="1"
+        android:textSize="14sp" />
 
 
 </LinearLayout>

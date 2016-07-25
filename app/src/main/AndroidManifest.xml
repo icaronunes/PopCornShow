@@ -5,6 +5,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality. 
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,15 +26,59 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name="activity.FilmesActivity" />
 
-        <activity android:name="activity.FilmeActivity" android:parentActivityName="activity.FilmesActivity">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.FilmesActivity" />
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="activity.SearchActivity" />
+        </activity>
+        <activity
+            android:name="activity.FilmeActivity"
+            android:parentActivityName="activity.MainActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="activity.SearchActivity" />
+        </activity>
+        <activity
+            android:name="activity.SearchActivity"
+            android:parentActivityName="activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
 
-
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity android:name="activity.TreilerActivity" />
+        <activity
+            android:name="activity.PosterActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth.NoActionBar" />
+        <activity android:name="activity.ReviewsActivity" />
+        <activity
+            android:name="activity.ElencoActivity"
+            android:parentActivityName="activity.FilmeActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="activity.SearchActivity" />
+        </activity>
+        <activity
+            android:name="activity.CrewsActivity"
+            android:parentActivityName="activity.FilmeActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="activity.SearchActivity" />
         </activity>
     </application>
 

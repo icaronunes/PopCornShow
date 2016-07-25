@@ -1,5 +1,6 @@
 package activity;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
@@ -7,6 +8,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -33,6 +35,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void setUpToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
+            toolbar.setTitleTextColor(getResources().getColor(R.color.white));
             setSupportActionBar(toolbar);
         }
     }
@@ -45,6 +48,7 @@ public class BaseActivity extends AppCompatActivity {
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layoyt);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
 
         if (navigationView != null && drawerLayout != null)
 
@@ -112,7 +116,7 @@ public class BaseActivity extends AppCompatActivity {
         Intent intent;
         switch (menuItem.getItemId()) {
             case R.id.now_playing:
-                intent = new Intent(this, FilmesActivity.class);
+                intent = new Intent(this, MainActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing);
                 intent.putExtra(Constantes.ABA, R.id.now_playing);
                 startActivity(intent);
@@ -120,21 +124,21 @@ public class BaseActivity extends AppCompatActivity {
                 //Nada aqui, pois somente a mainactivity tem menu lateral
                 break;
             case R.id.upcoming:
-                intent = new Intent(this, FilmesActivity.class);
+                intent = new Intent(this, MainActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.upcoming);
                 intent.putExtra(Constantes.ABA, R.id.upcoming);
                 startActivity(intent);
                 Toast.makeText(this, "click 2", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.popular:
-                intent = new Intent(this, FilmesActivity.class);
+                intent = new Intent(this, MainActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.popular);
                 intent.putExtra(Constantes.ABA, R.id.popular);
                 startActivity(intent);
                 Toast.makeText(this, "click 4", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.top_rated:
-                intent = new Intent(this, FilmesActivity.class);
+                intent = new Intent(this, MainActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.top_rated);
                 intent.putExtra(Constantes.ABA, R.id.top_rated);
                 startActivity(intent);
@@ -164,6 +168,13 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint("Procura Filme");
+        searchView.setEnabled(false);
+
         return super.onCreateOptionsMenu(menu);
 
     }

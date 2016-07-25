@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:id="@+id/scroll_crews_linearlayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="1dp"
+    android:weightSum="1">
+
+
+    <TextView
+        android:id="@+id/textCrewNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="bottom|center_horizontal"
+        android:lines="2" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgPagerCrews"
+            android:layout_width="76dp"
+            android:layout_height="101dp"
+            android:foregroundGravity="center_vertical" />
+
+        <ProgressBar
+            android:id="@+id/progressBarCrews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="false" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textCrewJob"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="top|center_horizontal"
+        android:maxLines="2"
+        android:maxLength="18" />
 
 </LinearLayout>

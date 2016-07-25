@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single"
-        android:id="@+id/menu_drav">
+    <group
+        android:id="@+id/menu_drav"
+        android:checkableBehavior="single">
         <!-- Todos os item Checked?! -->
         <item
             android:id="@+id/now_playing"
             android:checkable="true"
+            android:icon="@drawable/icon_movie_now"
             android:title="@string/now_playing" />
         <item
             android:id="@+id/upcoming"
+            android:icon="@drawable/icon_proximo"
             android:title="@string/upcoming" />
         <item
             android:id="@+id/popular"
+            android:icon="@drawable/icon_popular"
             android:title="@string/popular" />
         <item
             android:id="@+id/top_rated"
+            android:icon="@drawable/icon_best_variable"
             android:title="@string/top_rated" />
         <!-- WebView com informações sobre o livro -->
         <!-- Tela de configurações -->
         <item
             android:id="@+id/nav_item_settings"
-
+            android:icon="@drawable/icon_settings"
             android:title="@string/configuracoes" />
     </group>
 </menu>

@@ -13,4 +13,5 @@
     <dimen name="userPhoto_layout_height">64dp</dimen>
     <dimen name="userPhoto_layout_marginLeft">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
