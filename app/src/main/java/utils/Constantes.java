@@ -18,4 +18,5 @@ public class Constantes {
     public static final String YOU_TUBE_KEY = "youtube_key";
     public static final String SINOPSE = "sinopse";
 
+    public static final String COLOR_TOP = "color_top";
 }

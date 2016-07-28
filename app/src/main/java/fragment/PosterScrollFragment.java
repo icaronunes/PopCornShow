@@ -28,15 +28,15 @@ public class PosterScrollFragment extends Fragment {
     int tamanho;
 
 
-    public static PosterScrollFragment newInstance(int pagina, String id_filme, int tamanho) {
+    public static PosterScrollFragment newInstance(int pagina, String endereco, int tamanho) {
 
         PosterScrollFragment posterScrollFragment = new PosterScrollFragment();
         Bundle args = new Bundle();
         args.putInt(Constantes.PAGINAS, pagina);
-        args.putString(Constantes.ENDERECO, id_filme);
+        args.putString(Constantes.ENDERECO, endereco);
         args.putInt(Constantes.TAMANHO, tamanho);
         posterScrollFragment.setArguments(args);
-        Log.d("PosterScrollFragment", "newInstance: -> " + id_filme);
+        Log.d("PosterScrollFragment", "newInstance: -> " + endereco);
         return posterScrollFragment;
 
     }
@@ -46,7 +46,7 @@ public class PosterScrollFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         pagina = getArguments().getInt(Constantes.PAGINAS, 0) == 0 ? 1 :getArguments().getInt(Constantes.PAGINAS, 0) ;
-        endereco = getArguments().getString(Constantes.ENDERECO);
+        endereco = getArguments().getString(Constantes.ENDERECO); // não usado!?!?!!
         tamanho = 1+getArguments().getInt(Constantes.TAMANHO);
         Log.d("PosterScrollFragment", "onCreate: -> " + endereco);
     }

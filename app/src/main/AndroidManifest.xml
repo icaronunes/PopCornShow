@@ -80,6 +80,8 @@
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchActivity" />
         </activity>
+
+        <activity android:name="activity.PosterGridActivity"/>
     </application>
 
 </manifest>

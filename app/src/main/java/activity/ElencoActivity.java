@@ -44,7 +44,6 @@ public class ElencoActivity extends BaseActivity {
 
         String title = getIntent().getStringExtra(Constantes.NOME_FILME);
         getSupportActionBar().setTitle(title);
-       // Log.d("ElencoActivity", title);
 
         recyclerView = (RecyclerView) findViewById(R.id.elenco_recyckeview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

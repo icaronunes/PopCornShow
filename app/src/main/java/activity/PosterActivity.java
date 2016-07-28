@@ -1,6 +1,5 @@
 package activity;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,11 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 
 import com.viewpagerindicator.CirclePageIndicator;
-import com.viewpagerindicator.IconPageIndicator;
-import com.viewpagerindicator.IconPagerAdapter;
 
 import br.com.icaro.filme.R;
 import domian.FilmeService;
@@ -25,13 +22,12 @@ import info.movito.themoviedbapi.model.MovieDb;
 import utils.Constantes;
 
 import static br.com.icaro.filme.R.id.pager;
-import static br.com.icaro.filme.R.id.title;
 
 /**
  * Created by icaro on 12/07/16.
  */
 
-public class PosterActivity extends AppCompatActivity {
+public class PosterActivity extends BaseActivity {
     int id_filme;
     ViewPager viewPager;
     MovieDb movieDb;
@@ -69,18 +65,26 @@ public class PosterActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new PosterScrollFragment().newInstance(position, movieDb.getPosterPath(), movieDb.getImages(ArtworkType.POSTER).size());
+                Log.d("PosterFragment", "position: -> " + position);
+                Log.d("PosterFragment", "posicao: -> " + getIntent().getExtras().getInt("posicao"));
+
+                return new PosterScrollFragment().newInstance(getIntent().getExtras().getInt("posicao"), movieDb
+                        .getImages(ArtworkType.POSTER).get(position).getFilePath(), movieDb.getImages(ArtworkType.POSTER).size());
+
             }
             Log.d("PosterFragment", "doInBackground: -> " + movieDb.getImages().get(position).getLanguage());
             return new PosterScrollFragment().newInstance(position, movieDb.getImages(ArtworkType.POSTER).get(position).getFilePath(),
                     movieDb.getImages(ArtworkType.POSTER).size());
         }
 
+
         @Override
         public int getCount() {
             return movieDb.getImages(ArtworkType.POSTER).size();
 
         }
+
+
     }
 
     public class TesteAsync extends AsyncTask<Void, Void, Void> {

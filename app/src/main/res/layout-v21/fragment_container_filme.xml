@@ -18,7 +18,8 @@
         android:lines="2"
         android:maxLines="2"
         android:minLines="1"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_marginRight="2dp" />
 
 
     <LinearLayout

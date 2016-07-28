@@ -1,33 +1,36 @@
 package activity;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.widget.SearchView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-
-import com.squareup.picasso.Picasso;
 
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import fragment.FilmeBottonFragment;
-import info.movito.themoviedbapi.TmdbSearch;
+import fragment.ImagemTopScrollFragment;
+import info.movito.themoviedbapi.TmdbMovies;
+import info.movito.themoviedbapi.model.ArtworkType;
 import info.movito.themoviedbapi.model.MovieDb;
 import utils.Constantes;
 
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.images;
+
 public class FilmeActivity extends BaseActivity {
 
-    private ImageView img_top;
+    ViewPager viewPager;
     private int id_filme;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ProgressBar progressBar;
     private MovieDb movieDb;
+    int color_fundo;
+    TMDVAsync tmdvAsync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +38,13 @@ public class FilmeActivity extends BaseActivity {
         setContentView(R.layout.activity_filme);
         setUpToolBar();
         setupNavDrawer();
-        setUpConponentes();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(getIntent().getStringExtra(Constantes.NOME_FILME));
+        color_fundo = getIntent().getIntExtra(Constantes.COLOR_TOP, R.color.transparent);
         progressBar = (ProgressBar) findViewById(R.id.progress);
+        viewPager = (ViewPager) findViewById(R.id.top_img_viewpager);
+        viewPager.setBackgroundColor(color_fundo);
+        Log.d("color", " "+ color_fundo);
 
 
         if (savedInstanceState == null) {
@@ -63,56 +69,64 @@ public class FilmeActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
-
-        TMDVAsync tmdvAsync = new TMDVAsync();
+        tmdvAsync = new TMDVAsync();
         tmdvAsync.execute();
 
     }
 
-
-    public void getImagemTopo(final MovieDb mdovieDb) { //APAGAR
-
-        String urlBase = "http://image.tmdb.org/t/p/";
-        final StringBuilder stringBuilder = new StringBuilder(urlBase);
-        stringBuilder.append("/")
-                .append("w780");
-        Log.d("Aqui", stringBuilder.toString()+movieDb.getBackdropPath());
-        Picasso.with(this).load(stringBuilder + movieDb.getBackdropPath()).into(img_top);
-    }
-
-    protected void setUpConponentes() {
-        img_top = (ImageView) findViewById(R.id.img_top);
-    }
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+    protected void onDestroy() {
+        super.onDestroy();
+        if (!tmdvAsync.isCancelled()){
+            tmdvAsync.cancel(true);
+        }
 
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setEnabled(false);
-        return true;
+    }
+
+    private class ImagemTopFragment extends FragmentPagerAdapter {
+
+        public ImagemTopFragment(FragmentManager supportFragmentManager) {
+            super(supportFragmentManager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if (position == 0){
+                return new ImagemTopScrollFragment().newInstance(movieDb.getBackdropPath(), color_fundo);
+            }
+            Log.d("FilmeActivity", "getItem: ->  "+ movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
+            return new ImagemTopScrollFragment().newInstance(movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath(), color_fundo);
+        }
+
+        @Override
+        public int getCount() {
+            if (movieDb.getImages(ArtworkType.BACKDROP) != null) {
+
+                int tamanho = movieDb.getImages(ArtworkType.BACKDROP).size();
+                Log.d("FilmeActivity", "getCount: ->  "+ tamanho);
+                return tamanho > 0 ? tamanho : 0;
+            }
+            return 0;
+        }
     }
 
     public class TMDVAsync extends AsyncTask<Void, Void, MovieDb> {
 
         @Override
-        protected void onPreExecute() {
-
-        }
-
-        @Override
         protected MovieDb doInBackground(Void... voids) {//
-            Log.d("FilmeFragment", "doInBackground :" + id_filme);
-            movieDb = FilmeService.getTmdbMovie(id_filme, "pt-BR");
+            TmdbMovies movies = FilmeService.getTmdbMovies();
+            Log.d("FilmeActivity", "doInBackground: -> ID " + id_filme);
+            movieDb = movies.getMovie(id_filme, getResources().getString(R.string.IDIOMAS)
+                    , images);
             return movieDb;
         }
 
         @Override
         protected void onPostExecute(MovieDb movieDb) {
             super.onPostExecute(movieDb);
-            getImagemTopo(movieDb);
+            Log.d("FilmeActivity", "BACKDROP tamanho " + movieDb.getImages(ArtworkType.BACKDROP).size());
+            Log.d("FilmeActivity", "BACKDROP " + movieDb.getImages(ArtworkType.BACKDROP).get(0).getFilePath());
+            viewPager.setAdapter(new ImagemTopFragment(getSupportFragmentManager()));
             progressBar.setVisibility(View.INVISIBLE);
         }
     }

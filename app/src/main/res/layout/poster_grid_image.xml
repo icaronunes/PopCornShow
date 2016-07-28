@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/img_poster_grid"
+            android:layout_width="165dp"
+            android:layout_height="254dp"
+            android:layout_margin="6dp"
+            android:background="@color/white"
+            android:elevation="6dp"
+            android:src="@drawable/filme342"
+            android:scaleType="centerCrop" />
+
+        <ProgressBar
+            android:id="@+id/progress_poster_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+</LinearLayout>

@@ -2,12 +2,15 @@ package fragment;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -44,6 +48,7 @@ public class FilmesFragment extends Fragment {
     ProgressBar process;
     int abaEscolhida;
     int pagina = 1;
+    int color_background_top;
 
     public FilmesFragment() {
     }
@@ -122,12 +127,42 @@ public class FilmesFragment extends Fragment {
             @Override
             public void onRefresh() { //Verificar se ha internet
                 if (UtilsFilme.isNetWorkAvailable(getContext())) {
-                   // process.setVisibility(View.VISIBLE);
+                    // process.setVisibility(View.VISIBLE);
                     TMDVAsync tmdvAsync = new TMDVAsync();
                     tmdvAsync.execute();
                 }
             }
         };
+    }
+
+    private FilmesAdapter.FilmeOnClickListener onClickListener() {
+        return new FilmesAdapter.FilmeOnClickListener() {
+            @Override
+            public void onClickFilme(View view, int position) {
+                Log.d("onClickListener", "" + position);
+                Log.d("onClickListener", "" + movies.get(position).getTitle());
+                loadPalette(view, position);
+
+            }
+        };
+    }
+
+    private void loadPalette(View view, int position) {
+        Intent intent = new Intent(getActivity(), FilmeActivity.class);
+
+        ImageView imageView = (ImageView) view;
+        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+        if (drawable != null) {
+            Bitmap bitmap = drawable.getBitmap();
+            Palette.Builder builder = new Palette.Builder(bitmap);
+            Palette palette = builder.generate();
+            for (Palette.Swatch swatch : palette.getSwatches()) {
+                intent.putExtra(Constantes.COLOR_TOP, swatch.getRgb());
+            }
+        }
+        intent.putExtra(Constantes.FILME_ID, movies.get(position).getId());
+        intent.putExtra(Constantes.NOME_FILME, movies.get(position).getTitle());
+        getContext().startActivity(intent);
     }
 
     public class TMDVAsync extends AsyncTask<Void, Void, List<MovieDb>> {
@@ -165,7 +200,7 @@ public class FilmesFragment extends Fragment {
             }
             swipeRefreshLayout.setRefreshing(false);
             swipeRefreshLayout.setEnabled(true);
-            recyclerView.setAdapter(new FilmesAdapter(getContext(), movies, onClickListener() ));
+            recyclerView.setAdapter(new FilmesAdapter(getContext(), movies, onClickListener()));
             pagina++;
         }
 
@@ -194,20 +229,6 @@ public class FilmesFragment extends Fragment {
             return tmdbMovies.getNowPlayingMovies("pt-BR", pagina).getResults();
         }
 
-    }
-
-    private FilmesAdapter.FilmeOnClickListener onClickListener() {
-        return new FilmesAdapter.FilmeOnClickListener() {
-            @Override
-            public void onClickFilme(View view, int position) {
-                Intent intent = new Intent(getActivity(), FilmeActivity.class);
-                Log.d("onClickListener", "" + position);
-                Log.d("onClickListener", "" + movies.get(position).getTitle());
-                intent.putExtra(Constantes.FILME_ID, movies.get(position).getId());
-                intent.putExtra(Constantes.NOME_FILME, movies.get(position).getTitle());
-                getContext().startActivity(intent);
-            }
-        };
     }
 
 }

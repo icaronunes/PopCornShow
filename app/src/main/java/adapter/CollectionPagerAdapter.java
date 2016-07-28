@@ -2,17 +2,22 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.graphics.Palette;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import activity.FilmeActivity;
@@ -30,6 +35,11 @@ public class CollectionPagerAdapter extends PagerAdapter {
     public static CollectionInfo info;
     Context context;
     int id;
+    ImageView imageView;
+    LinearLayout linearLayout;
+    TextView nome;
+    Button externo;
+    Button interno;
 
 
     public CollectionPagerAdapter(CollectionInfo info, Context context, int id) {
@@ -59,26 +69,52 @@ public class CollectionPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
 
         View view = LayoutInflater.from(context).inflate(R.layout.collection, container, false);
-        TextView nome = (TextView) view.findViewById(R.id.dateCollection);
-        ImageView imageView = (ImageView) view.findViewById(R.id.img_collection);
-        Button interno = (Button) view.findViewById(R.id.dialogInterno);
-        if (info.getParts().get(position).getId() == id) {interno.setVisibility(View.GONE);}
-        interno.setOnClickListener(this.onClickListenerInterno(position));
-
-        Button externo = (Button) view.findViewById(R.id.dialogExterno);
-        externo.setOnClickListener(this.onClickListenerExterno(position));
-        Log.d("CollectionPagerAdapter", "instantiateItem");
-        String ano = info.getParts().get(position).getReleaseDate();
-        ano = ano.substring(0,4);
-        nome.setText(info.getParts().get(position).getName() +
-                " - " + ano);
+        nome = (TextView) view.findViewById(R.id.dateCollection);
+        linearLayout = (LinearLayout) view.findViewById(R.id.collection_linear);
+        imageView = (ImageView) view.findViewById(R.id.img_collection);
         Picasso.with(context)
                 .load(UtilsFilme.getBaseUrlImagem(5) + info.getParts().get(position).getPosterPath())
                 .error(R.drawable.poster_empty)
-                .into(imageView);
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        loadPalette();
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+
+        interno = (Button) view.findViewById(R.id.dialogInterno);
+        if (info.getParts().get(position).getId() == id) {
+            interno.setVisibility(View.GONE);
+        }
+        interno.setOnClickListener(this.onClickListenerInterno(position));
+        externo = (Button) view.findViewById(R.id.dialogExterno);
+        externo.setOnClickListener(this.onClickListenerExterno(position));
+        Log.d("CollectionPagerAdapter", "instantiateItem");
+        String ano = info.getParts().get(position).getReleaseDate();
+        ano = ano.substring(0, 4);
+        nome.setText(info.getParts().get(position).getName() +
+                " - " + ano);
         ((ViewGroup) container).addView(view);
         return view;
 
+    }
+
+    private void loadPalette() {
+        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+        if (drawable != null) {
+            Bitmap bitmap = drawable.getBitmap();
+            Palette.Builder builder = new Palette.Builder(bitmap);
+            Palette.Swatch swatch = builder.generate().getVibrantSwatch();
+            if (swatch != null) {
+                linearLayout.setBackgroundColor(swatch.getRgb());
+                nome.setTextColor(swatch.getTitleTextColor());
+            }
+        }
     }
 
     private View.OnClickListener onClickListenerInterno(final int position) {
@@ -112,15 +148,6 @@ public class CollectionPagerAdapter extends PagerAdapter {
         };
     }
 
-    // String string = new String("https://play.google.com/store/search?c=movies&q=");
-    //                            String query = movieDb.getBelongsToCollection().getName();
-//                            query = query.replaceAll(" ", "-");
-//                            string = string.concat(query);
-//                            Intent intent = new Intent(Intent.ACTION_VIEW);
-//                            intent.setData(Uri.parse(string));
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            Log.d("icon_collection", string.toString());
-//                            startActivity(intent);
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         Log.d("CollectionPagerAdapter", "destroyItem");

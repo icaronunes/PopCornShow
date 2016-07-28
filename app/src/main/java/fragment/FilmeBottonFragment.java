@@ -4,6 +4,8 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.graphics.Palette;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +29,7 @@ import android.widget.TextView;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -36,6 +40,7 @@ import activity.CrewsActivity;
 import activity.ElencoActivity;
 import activity.FilmeActivity;
 import activity.PosterActivity;
+import activity.PosterGridActivity;
 import activity.ReviewsActivity;
 import activity.TreilerActivity;
 import adapter.CollectionPagerAdapter;
@@ -55,6 +60,8 @@ import utils.Config;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static br.com.icaro.filme.R.id.imgPagerSimilares;
+import static br.com.icaro.filme.R.string.nome;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.credits;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.releases;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.reviews;
@@ -73,10 +80,12 @@ public class FilmeBottonFragment extends Fragment {
     ImageView img_poster, img_star;
     int id_filme;
     MovieDb movieDb;
-    ImageView icon_reviews, img_budget, icon_site, icon_collection;
+    ImageView icon_reviews, img_budget, icon_site, icon_collection,  imgPagerSimilares;
     LinearLayout linear_container;
     CollectionInfo info;
     MovieResultsPage similarMovies;
+    TMDVAsync tmdvAsync;
+    private int color_top;
 
     //************* Alguns metodos senco chamados 2 vezes
 
@@ -117,20 +126,25 @@ public class FilmeBottonFragment extends Fragment {
         icon_site = (ImageView) view.findViewById(R.id.icon_site);
         linear_container = (LinearLayout) view.findViewById(R.id.linear_container);
         lancamento = (TextView) view.findViewById(R.id.lancamento);
-       textview_crews = (TextView) view.findViewById(R.id.textview_crews);
-       textview_elenco = (TextView) view.findViewById(R.id.textview_elenco);
+        textview_crews = (TextView) view.findViewById(R.id.textview_crews);
+        textview_elenco = (TextView) view.findViewById(R.id.textview_elenco);
 
 
         return view;
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        tmdvAsync.cancel(true);
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.d("FilmeBottonFragment", "onActivityCreated -> " + id_filme);
         if (id_filme != 0) {
-            TMDVAsync tmdvAsync = new TMDVAsync();
+            tmdvAsync = new TMDVAsync();
             tmdvAsync.execute();
         }
 
@@ -337,11 +351,13 @@ public class FilmeBottonFragment extends Fragment {
             img_poster.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getContext(), PosterActivity.class);
+                    //Intent intent = new Intent(getContext(), PosterActivity.class);
+                    Intent intent = new Intent(getContext(), PosterGridActivity.class);
                     intent.putExtra(Constantes.FILME_ID, id_filme);
-                    ActivityOptionsCompat opts = ActivityOptionsCompat.makeCustomAnimation(getActivity(),
-                            android.R.anim.fade_in, android.R.anim.fade_out);
-                    ActivityCompat.startActivity(getActivity(), intent, opts.toBundle());
+                    startActivity(intent);
+//                    ActivityOptionsCompat opts = ActivityOptionsCompat.makeCustomAnimation(getActivity(),
+//                            android.R.anim.fade_in, android.R.anim.fade_out);
+//                    ActivityCompat.startActivity(getActivity(), intent, opts.toBundle());
                     Log.d("FilmeBottonFragment", "setPoster: -> " + id_filme);
 
                 }
@@ -391,7 +407,7 @@ public class FilmeBottonFragment extends Fragment {
     }
 
     private void setTitulo() {
-        if (!movieDb.getTitle().isEmpty()) {
+        if (movieDb.getTitle() != null) {
             titulo.setText(movieDb.getTitle());
         }
     }
@@ -420,7 +436,7 @@ public class FilmeBottonFragment extends Fragment {
     }
 
     private void setOriginalTitle() {
-        if (!movieDb.getOriginalTitle().isEmpty()) {
+        if (movieDb.getOriginalTitle() != null) {
             original_title.setText(movieDb.getOriginalTitle());
         } else {
             original_title.setText(getResources().getString(R.string.original_title));
@@ -463,7 +479,7 @@ public class FilmeBottonFragment extends Fragment {
     private void setPopularity() {
 
         ValueAnimator animatorCompat = ValueAnimator.ofFloat(1, movieDb.getPopularity());
-        if (movieDb.getPopularity() > 0) {
+        if (movieDb.getPopularity() > 0 ) {
             Log.d("POPULARIDADE", " " + movieDb.getPopularity());
 
             animatorCompat.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -480,7 +496,7 @@ public class FilmeBottonFragment extends Fragment {
                     } else {
                         int posicao = popularidade.indexOf(".") + 2;
                         popularidade = popularidade.substring(0, posicao);
-                        popularidade = popularidade.concat(" " + getResources().getString(R.string.milhoes));
+                        popularidade = popularidade.concat(" " + getActivity().getResources().getString(R.string.milhoes));
                         popularity.setText(popularidade);
                     }
 
@@ -489,7 +505,9 @@ public class FilmeBottonFragment extends Fragment {
 
             animatorCompat.setDuration(1000);
             animatorCompat.setTarget(voto_quantidade);
-            animatorCompat.start();
+
+                animatorCompat.start();
+
         }
 
     }
@@ -511,7 +529,7 @@ public class FilmeBottonFragment extends Fragment {
                 ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBarCast);
 
                 progressBar.setVisibility(View.VISIBLE);
-                if (!personCast.getName().isEmpty() || !personCast.getCharacter().isEmpty()) {
+                if (personCast.getName() != null || personCast.getCharacter() != null) {
                     textCastPersonagem.setText(personCast.getCharacter());
                     textCastNome.setText(personCast.getName());
                     Picasso.with(getActivity())
@@ -550,7 +568,7 @@ public class FilmeBottonFragment extends Fragment {
                 ProgressBar progressBarCrew = (ProgressBar) view.findViewById(R.id.progressBarCrews);
 
                 progressBarCrew.setVisibility(View.VISIBLE);
-                if (!crew.getName().isEmpty() && !crew.getJob().isEmpty()) {
+                if (crew.getName() != null && crew.getJob() != null) {
                     textCrewJob.setText(crew.getJob());
                     textCrewNome.setText(crew.getName());
                     Picasso.with(getActivity())
@@ -584,11 +602,10 @@ public class FilmeBottonFragment extends Fragment {
 
                 ProgressBar progressBarSimilares = (ProgressBar) view.findViewById(R.id.progressBarSimilares);
                 TextView textSimilares = (TextView) view.findViewById(R.id.textSimilaresNome);
-                ImageView imgPagerSimilares = (ImageView) view.findViewById(R.id.imgPagerSimilares);
+                imgPagerSimilares = (ImageView) view.findViewById(R.id.imgPagerSimilares);
 
 
-
-                if (!movie.getTitle().isEmpty() && !movie.getPosterPath().isEmpty()) {
+                if (movie.getTitle() != null && movie.getPosterPath() != null) {
                     if (movie.getTitle().length() > 21) {
                         String title = movie.getTitle().substring(0, 18);
                         title = title.concat("...");
@@ -600,14 +617,25 @@ public class FilmeBottonFragment extends Fragment {
                     Picasso.with(getActivity())
                             .load(UtilsFilme.getBaseUrlImagem(1) + movie.getPosterPath())
                             .placeholder(getResources().getDrawable(R.drawable.poster_empty))
-                            .into(imgPagerSimilares);
+                            .into(imgPagerSimilares, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    loadPalette();
+                                }
+
+                                @Override
+                                public void onError() {
+
+                                }
+                            });
                     progressBarSimilares.setVisibility(View.INVISIBLE);
 
                     imgPagerSimilares.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(getContext(), FilmeActivity.class);
-                            intent.putExtra(Constantes.NOME_FILME,movie.getTitle());
+                            intent.putExtra(Constantes.COLOR_TOP, color_top);
+                            intent.putExtra(Constantes.NOME_FILME, movie.getTitle());
                             intent.putExtra(Constantes.FILME_ID, movie.getId());
                             startActivity(intent);
                         }
@@ -622,6 +650,20 @@ public class FilmeBottonFragment extends Fragment {
             }
         }
     }
+
+    private void loadPalette() {
+        BitmapDrawable drawable = (BitmapDrawable) imgPagerSimilares.getDrawable();
+        if (drawable != null) {
+            Bitmap bitmap = drawable.getBitmap();
+            Palette.Builder builder = new Palette.Builder(bitmap);
+            Palette.Swatch swatch = builder.generate().getVibrantSwatch();
+            if (swatch != null) {
+               color_top = swatch.getRgb();
+            }
+        }
+    }
+
+
 
     private void setLancamento() {
         if (movieDb.getReleaseDate() != null) {
@@ -730,6 +772,7 @@ public class FilmeBottonFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+
             setTitulo();
             setCategoria();
             setLancamento();
@@ -751,6 +794,8 @@ public class FilmeBottonFragment extends Fragment {
             setTreiler();
             setSimilares();
             setAnimacao();
+
+
         }
     }
 
