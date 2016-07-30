@@ -48,7 +48,6 @@ public class FilmesFragment extends Fragment {
     ProgressBar process;
     int abaEscolhida;
     int pagina = 1;
-    int color_background_top;
 
     public FilmesFragment() {
     }

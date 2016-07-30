@@ -1,6 +1,12 @@
 package fragment;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -8,13 +14,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 import br.com.icaro.filme.R;
 import utils.Constantes;
 import utils.UtilsFilme;
-
 
 
 /**
@@ -23,31 +32,29 @@ import utils.UtilsFilme;
 
 public class PosterScrollFragment extends Fragment {
 
-    int pagina;
-    String endereco;
-    int tamanho;
+    String endereco, nome;
+    ImageView imageView;
+    LinearLayout linear_poster_grid;
+    ImageView compartilhar;
+    ImageView salvar;
 
 
-    public static PosterScrollFragment newInstance(int pagina, String endereco, int tamanho) {
+    public static PosterScrollFragment newInstance(String endereco, String nome) {
 
         PosterScrollFragment posterScrollFragment = new PosterScrollFragment();
         Bundle args = new Bundle();
-        args.putInt(Constantes.PAGINAS, pagina);
         args.putString(Constantes.ENDERECO, endereco);
-        args.putInt(Constantes.TAMANHO, tamanho);
+        args.putString(Constantes.NOME_FILME, nome);
         posterScrollFragment.setArguments(args);
         Log.d("PosterScrollFragment", "newInstance: -> " + endereco);
         return posterScrollFragment;
-
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        pagina = getArguments().getInt(Constantes.PAGINAS, 0) == 0 ? 1 :getArguments().getInt(Constantes.PAGINAS, 0) ;
         endereco = getArguments().getString(Constantes.ENDERECO); // não usado!?!?!!
-        tamanho = 1+getArguments().getInt(Constantes.TAMANHO);
+        nome = getArguments().getString(Constantes.NOME_FILME);
         Log.d("PosterScrollFragment", "onCreate: -> " + endereco);
     }
 
@@ -55,12 +62,109 @@ public class PosterScrollFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.page_scroll_image, container, false);
-        ImageView imageView = (ImageView) view.findViewById(R.id.img_poster_scroll);
-        Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(4) + endereco).into(imageView);
-        Log.d("PosterScrollFragment", "onCreateView: -> " + endereco);
+        imageView = (ImageView) view.findViewById(R.id.img_poster_scroll);
+        Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(5) + endereco).into(imageView);
 
+        Log.d("PosterScrollFragment", "onCreateView: -> " + endereco);
 
         return view;
     }
 
+    @Override
+    public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        linear_poster_grid = (LinearLayout) view.findViewById(R.id.linear_poster_grid);
+        compartilhar = (ImageView) view.findViewById(R.id.compartilhar);
+        salvar = (ImageView) view.findViewById(R.id.salvar);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (linear_poster_grid.getVisibility() == View.INVISIBLE) {
+                    linear_poster_grid.setVisibility(View.VISIBLE);
+                }else {
+                    linear_poster_grid.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        compartilhar.setOnClickListener(compartilharOnClick());
+
+        salvar.setOnClickListener(salvarImagem());
+
+    }
+
+    private View.OnClickListener salvarImagem() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (UtilsFilme.isExternalStorageWritable()) {
+                    salvarArquivoNaMemoriaInterna(getContext(), imageView);
+                } else {
+                    Log.e("salvarArqNaMemoriaIn", "Directory not created");
+                }
+            }
+
+        };
+    }
+
+    private View.OnClickListener compartilharOnClick() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                File file = salvaImagemMemoriaCache(getContext(), imageView);
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_TEXT, nome);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
+
+            }
+
+        };
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        File file = getContext().getExternalCacheDir();
+        if (file.exists()) {
+            getContext().deleteDatabase(getContext().getExternalCacheDir().getPath());
+        }
+    }
+
+    private File salvaImagemMemoriaCache(Context context, ImageView imageView) {
+        File file = context.getExternalCacheDir();
+
+        if (!file.exists()) {
+            file.mkdir();
+            Log.e("salvarArqNaMemoriaIn", "Directory created");
+        }
+        File dir = new File(file, endereco);
+
+        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+        if (drawable != null) {
+            Bitmap bitmap = drawable.getBitmap();
+            UtilsFilme.writeBitmap(dir, bitmap);
+        }
+        return dir;
+    }
+
+    private File salvarArquivoNaMemoriaInterna(Context context, ImageView imageView) {
+        File file = new File(Environment
+                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/Filme");
+
+        if (!file.exists()) {
+            file.mkdir();
+            Log.e("salvarArqNaMemoriaIn", "Directory created");
+        }
+        File dir = new File(file, endereco);
+
+        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+        if (drawable != null) {
+            Bitmap bitmap = drawable.getBitmap();
+            UtilsFilme.writeBitmap(dir, bitmap);
+            Toast.makeText(context, "Salvo", Toast.LENGTH_LONG).show();
+        }
+        return dir;
+    }
 }

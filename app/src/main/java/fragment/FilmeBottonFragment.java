@@ -190,9 +190,11 @@ public class FilmeBottonFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                if (movieDb.getHomepage() != null) {
+                Log.d("FilmeBottonFragment", "Home " + movieDb.getHomepage());
+                if (movieDb.getHomepage() != "") {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(movieDb.getHomepage()));
+                    Log.d("FilmeBottonFragment", "Home " + movieDb.getHomepage());
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 } else {
@@ -463,10 +465,8 @@ public class FilmeBottonFragment extends Fragment {
         if (!movieDb.getProductionCompanies().isEmpty()) {
             StringBuilder stringBuilder = new StringBuilder("");
             List<ProductionCountry> productionCompanyListanguages = movieDb.getProductionCountries();
-            for (ProductionCountry productionCountry : productionCompanyListanguages) {
-                stringBuilder.append(productionCountry.getName() + " ");
-                Log.d("productionCompany", " " + productionCountry.getName());
-            }
+                stringBuilder.append(productionCompanyListanguages.get(0).getName() + " ");
+                Log.d("productionCompany", " " + productionCompanyListanguages.get(0).getName());
             production_countries.setText(stringBuilder);
         } else {
 

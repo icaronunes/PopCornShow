@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/page_scroll_image_poster_linear"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/transparent">
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/img_poster_scroll"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/transparent"
-        android:layout_gravity="top"/>
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img_poster_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:background="@color/transparent" />
+
+
+        <LinearLayout
+            android:id="@+id/linear_poster_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            android:gravity="center"
+            android:layout_marginBottom="18dp">
+
+            <ImageButton
+                android:id="@+id/compartilhar"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:src="@drawable/sharethis"
+                android:background="@color/transparent" />
+
+            <ImageButton
+                android:id="@+id/salvar"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:src="@drawable/download"
+                android:background="@color/transparent"
+                android:layout_gravity="right" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
 
 </LinearLayout>
