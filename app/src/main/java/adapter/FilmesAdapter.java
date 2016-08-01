@@ -49,11 +49,11 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
         holder.progressBar.setVisibility(View.VISIBLE);
        // scroll_elenco();
         if (movie != null) {
-            Log.d("onBindViewHolder", "Titulo Original - " + movie.getOriginalTitle());
-            Log.d("onBindViewHolder", "Titulo - " + movie.toString());
-            Log.d("onBindViewHolder", "ID: " + movie.getId());
-            Log.d("Reviwes", "" + movie.getOverview());
-            Log.d("Direção", ""+movie.getHomepage());
+//            Log.d("onBindViewHolder", "Titulo Original - " + movie.getOriginalTitle());
+//            Log.d("onBindViewHolder", "Titulo - " + movie.toString());
+//            Log.d("onBindViewHolder", "ID: " + movie.getId());
+//            Log.d("Reviwes", "" + movie.getOverview());
+//            Log.d("Direção", ""+movie.getHomepage());
             String title = movie.getTitle();
             if (title != null) {
                 holder.title.setText(title);
@@ -66,7 +66,8 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
             }
 
             Picasso.with(context)
-                    .load(UtilsFilme.getBaseUrlImagem(3)+movie.getPosterPath())
+                    .load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
+                    .error(R.drawable.poster_empty)
                     .into(holder.img);
             holder.progressBar.setVisibility(View.INVISIBLE);
             if (filmeOnClickListener != null) {

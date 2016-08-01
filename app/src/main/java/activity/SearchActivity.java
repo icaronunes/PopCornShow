@@ -3,15 +3,19 @@ package activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -85,15 +89,29 @@ public class SearchActivity extends BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(SearchActivity.this, FilmeActivity.class);
-                Log.d("onClickListener", "" + position);
-                Log.d("onClickListener", "" + movieDbList.get(position).getTitle());
-                intent.putExtra(Constantes.FILME_ID, movieDbList.get(position).getId());
-                intent.putExtra(Constantes.NOME_FILME, movieDbList.get(position).getTitle());
-                startActivity(intent);
+                ImageView imageView = (ImageView) view.findViewById(R.id.img_search);
+                loadPalette(imageView, position);
             }
         });
         swipeRefreshLayout.setOnRefreshListener(OnRefreshListener());
+    }
+
+    private void loadPalette(View view, int position) {
+        Intent intent = new Intent(SearchActivity.this, FilmeActivity.class);
+
+        ImageView imageView = (ImageView) view;
+        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+        if (drawable != null) {
+            Bitmap bitmap = drawable.getBitmap();
+            Palette.Builder builder = new Palette.Builder(bitmap);
+            Palette palette = builder.generate();
+            for (Palette.Swatch swatch : palette.getSwatches()) {
+                intent.putExtra(Constantes.COLOR_TOP, swatch.getRgb());
+            }
+        }
+        intent.putExtra(Constantes.FILME_ID, movieDbList.get(position).getId());
+        intent.putExtra(Constantes.NOME_FILME, movieDbList.get(position).getTitle());
+        startActivity(intent);
     }
 
     private SwipeRefreshLayout.OnRefreshListener OnRefreshListener() {

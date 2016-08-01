@@ -2,15 +2,11 @@ package activity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -37,6 +33,7 @@ public class PosterActivity extends BaseActivity {
     ViewPager viewPager;
     MovieDb movieDb;
     CirclePageIndicator titlePageIndicator;
+    int posicao;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,16 +65,10 @@ public class PosterActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            String nome = movieDb.toString();
-            if (position == 0) {
 
-                return new PosterScrollFragment().newInstance(movieDb
-                        .getImages(ArtworkType.POSTER).get(getIntent().getExtras().getInt("posicao")).getFilePath(), nome
-                );
-            }
             Log.d("PosterFragment", "getItem: chegando -> " + getIntent().getExtras().getInt("posicao"));
             Log.d("PosterFragment", "getItem: position -> " + position);
-            return new PosterScrollFragment().newInstance(movieDb.getImages(ArtworkType.POSTER).get(position).getFilePath(), nome);
+            return new PosterScrollFragment().newInstance(movieDb.getImages(ArtworkType.POSTER).get(position).getFilePath(), movieDb.toString());
         }
 
         @Override
@@ -102,8 +93,7 @@ public class PosterActivity extends BaseActivity {
         protected void onPostExecute(Void aVoid) {
             viewPager.setAdapter(new PosterFragment(getSupportFragmentManager()));
             titlePageIndicator.setViewPager(viewPager);
-            titlePageIndicator.setPageColor(R.color.blue);
-            titlePageIndicator.setStrokeColor(R.color.red);
+            titlePageIndicator.setCurrentItem(getIntent().getExtras().getInt("posicao"));
         }
     }
 }

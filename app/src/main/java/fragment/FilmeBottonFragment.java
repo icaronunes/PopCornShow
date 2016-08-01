@@ -11,8 +11,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -39,7 +37,6 @@ import java.util.List;
 import activity.CrewsActivity;
 import activity.ElencoActivity;
 import activity.FilmeActivity;
-import activity.PosterActivity;
 import activity.PosterGridActivity;
 import activity.ReviewsActivity;
 import activity.TreilerActivity;
@@ -60,8 +57,6 @@ import utils.Config;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static br.com.icaro.filme.R.id.imgPagerSimilares;
-import static br.com.icaro.filme.R.string.nome;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.credits;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.releases;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.reviews;
@@ -80,7 +75,7 @@ public class FilmeBottonFragment extends Fragment {
     ImageView img_poster, img_star;
     int id_filme;
     MovieDb movieDb;
-    ImageView icon_reviews, img_budget, icon_site, icon_collection,  imgPagerSimilares;
+    ImageView icon_reviews, img_budget, icon_site, icon_collection, imgPagerSimilares;
     LinearLayout linear_container;
     CollectionInfo info;
     MovieResultsPage similarMovies;
@@ -448,13 +443,9 @@ public class FilmeBottonFragment extends Fragment {
 
     private void setSpokenLanguages() {
         if (!movieDb.getSpokenLanguages().isEmpty()) {
-            StringBuilder stringBuilder = new StringBuilder("");
             List<Language> languages = movieDb.getSpokenLanguages();
-            for (Language language : languages) {
-                stringBuilder.append(language.getName() + " ");
-                Log.d("Genero", " " + language.getName());
-            }
-            spoken_languages.setText(stringBuilder);
+
+            spoken_languages.setText(languages.get(0).getName());
         } else {
             spoken_languages.setText(getResources().getString(R.string.não_informado));
         }
@@ -465,8 +456,8 @@ public class FilmeBottonFragment extends Fragment {
         if (!movieDb.getProductionCompanies().isEmpty()) {
             StringBuilder stringBuilder = new StringBuilder("");
             List<ProductionCountry> productionCompanyListanguages = movieDb.getProductionCountries();
-                stringBuilder.append(productionCompanyListanguages.get(0).getName() + " ");
-                Log.d("productionCompany", " " + productionCompanyListanguages.get(0).getName());
+            stringBuilder.append(productionCompanyListanguages.get(0).getName() + " ");
+            Log.d("productionCompany", " " + productionCompanyListanguages.get(0).getName());
             production_countries.setText(stringBuilder);
         } else {
 
@@ -479,7 +470,7 @@ public class FilmeBottonFragment extends Fragment {
     private void setPopularity() {
 
         ValueAnimator animatorCompat = ValueAnimator.ofFloat(1, movieDb.getPopularity());
-        if (movieDb.getPopularity() > 0 ) {
+        if (movieDb.getPopularity() > 0) {
             Log.d("POPULARIDADE", " " + movieDb.getPopularity());
 
             animatorCompat.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -506,7 +497,7 @@ public class FilmeBottonFragment extends Fragment {
             animatorCompat.setDuration(1000);
             animatorCompat.setTarget(voto_quantidade);
 
-                animatorCompat.start();
+            animatorCompat.start();
 
         }
 
@@ -658,11 +649,10 @@ public class FilmeBottonFragment extends Fragment {
             Palette.Builder builder = new Palette.Builder(bitmap);
             Palette.Swatch swatch = builder.generate().getVibrantSwatch();
             if (swatch != null) {
-               color_top = swatch.getRgb();
+                color_top = swatch.getRgb();
             }
         }
     }
-
 
 
     private void setLancamento() {

@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:orientation="horizontal"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:gravity="center"
             android:layout_marginBottom="18dp">
 
@@ -34,7 +34,8 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:src="@drawable/sharethis"
-                android:background="@color/transparent" />
+                android:background="@color/transparent"
+                android:alpha="0.7" />
 
             <ImageButton
                 android:id="@+id/salvar"
@@ -43,7 +44,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/download"
                 android:background="@color/transparent"
-                android:layout_gravity="right" />
+                android:layout_gravity="right"
+                android:alpha="0.7" />
 
         </LinearLayout>
 

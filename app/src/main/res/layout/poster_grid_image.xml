@@ -8,6 +8,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
+        <ProgressBar
+            android:id="@+id/progress_poster_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:elevation="7dp" />
+
         <ImageButton
             android:id="@+id/img_poster_grid"
             android:layout_width="165dp"
@@ -17,13 +24,6 @@
             android:elevation="6dp"
             android:scaleType="centerCrop"
             android:src="@drawable/filme342" />
-
-        <ProgressBar
-            android:id="@+id/progress_poster_grid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:elevation="7dp" />
 
     </FrameLayout>
 

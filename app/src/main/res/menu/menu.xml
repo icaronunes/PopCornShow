@@ -12,8 +12,8 @@
         />
 
     <item
-        android:id="@+id/teste"
-        android:title="TESTE"
+        android:id="@+id/apagar"
+        android:title="Logout"
         app:showAsAction="never"  />
 
 </menu>

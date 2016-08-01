@@ -81,7 +81,7 @@ public class PosterScrollFragment extends Fragment {
             public void onClick(View view) {
                 if (linear_poster_grid.getVisibility() == View.INVISIBLE) {
                     linear_poster_grid.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     linear_poster_grid.setVisibility(View.INVISIBLE);
                 }
             }
@@ -112,11 +112,15 @@ public class PosterScrollFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 File file = salvaImagemMemoriaCache(getContext(), imageView);
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT, nome);
-                intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-                startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
+                if (file != null) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_TEXT, nome);
+                    intent.setType("image/*");
+                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                    startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
+                } else {
+                    Toast.makeText(getContext(), getResources().getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show();
+                }
 
             }
 
@@ -128,7 +132,7 @@ public class PosterScrollFragment extends Fragment {
         super.onDestroy();
         File file = getContext().getExternalCacheDir();
         if (file.exists()) {
-            getContext().deleteDatabase(getContext().getExternalCacheDir().getPath());
+            getContext().deleteDatabase(getContext().getExternalCacheDir().getPath()); //Funciona??????
         }
     }
 

@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group
+        android:id="@+id/menu_drav_logado"
+        android:checkableBehavior="single">
+        <!-- Todos os item Checked?! -->
+        <item
+            android:id="@+id/favorite"
+            android:checkable="true"
+            android:icon="@drawable/icon_movie_now"
+            android:title="@string/now_playing" />
+        <item
+            android:id="@+id/rated"
+            android:icon="@drawable/icon_proximo"
+            android:title="@string/upcoming" />
+        <item
+            android:id="@+id/watchlist"
+            android:icon="@drawable/icon_popular"
+            android:title="@string/popular" />
+    </group>
+
+    <group
         android:id="@+id/menu_drav"
         android:checkableBehavior="single">
         <!-- Todos os item Checked?! -->

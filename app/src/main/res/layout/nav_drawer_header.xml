@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/containerNavDrawerListViewHeader"
     android:layout_width="match_parent"
@@ -12,17 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/userBackground_layout_height"
         android:contentDescription="@string/empty"
-        android:scaleType="fitXY"
-        android:src="@drawable/nav_drawer_header" />
-
-    <ImageView
-        android:id="@+id/imgUserPhoto"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="32dp"
-        android:src="@android:drawable/sym_def_app_icon"/>
+        android:src="@drawable/nav_drawer_header"
+        android:scaleType="centerCrop" />
 
 
     <LinearLayout
@@ -43,16 +35,47 @@
             android:layout_marginLeft="16dp"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
+            android:textStyle="normal|bold"
             tools:text="Nome" />
 
-        <TextView
-            android:id="@+id/tUserEmail"
-            fontPath="fonts/Roboto-Regular.ttf"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            tools:text="Email@email.com" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                fontPath="fonts/Roboto-Regular.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="@string/login"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:id="@+id/textLogin"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tLogin"
+                fontPath="fonts/Roboto-Regular.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                tools:text="Email@email.com" />
+
+        </LinearLayout>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgUserPhoto"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        tools:src="@android:drawable/sym_def_app_icon" />
+
 </RelativeLayout><!-- From: file:/C:/git/AndroidUtils/app/src/main/res/layout/nav_drawer_listview_header.xml -->

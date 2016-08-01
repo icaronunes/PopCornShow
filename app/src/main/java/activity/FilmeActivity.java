@@ -91,11 +91,14 @@ public class FilmeActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 0){
-                return new ImagemTopScrollFragment().newInstance(movieDb.getBackdropPath(), color_fundo);
+            if(movieDb.getImages(ArtworkType.BACKDROP) != null) {
+                if (position == 0) {
+                    return new ImagemTopScrollFragment().newInstance(movieDb.getBackdropPath());
+                }
+                Log.d("FilmeActivity", "getItem: ->  " + movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
+                return new ImagemTopScrollFragment().newInstance(movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
             }
-            Log.d("FilmeActivity", "getItem: ->  "+ movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
-            return new ImagemTopScrollFragment().newInstance(movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath(), color_fundo);
+            return null;
         }
 
         @Override
@@ -104,7 +107,7 @@ public class FilmeActivity extends BaseActivity {
 
                 int tamanho = movieDb.getImages(ArtworkType.BACKDROP).size();
                 Log.d("FilmeActivity", "getCount: ->  "+ tamanho);
-                return tamanho > 0 ? tamanho : 0;
+                return tamanho > 0 ? tamanho : 1;
             }
             return 0;
         }
@@ -124,8 +127,6 @@ public class FilmeActivity extends BaseActivity {
         @Override
         protected void onPostExecute(MovieDb movieDb) {
             super.onPostExecute(movieDb);
-            Log.d("FilmeActivity", "BACKDROP tamanho " + movieDb.getImages(ArtworkType.BACKDROP).size());
-            Log.d("FilmeActivity", "BACKDROP " + movieDb.getImages(ArtworkType.BACKDROP).get(0).getFilePath());
             viewPager.setAdapter(new ImagemTopFragment(getSupportFragmentManager()));
             progressBar.setVisibility(View.INVISIBLE);
         }
