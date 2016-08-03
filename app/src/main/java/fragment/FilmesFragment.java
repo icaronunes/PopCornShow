@@ -148,17 +148,7 @@ public class FilmesFragment extends Fragment {
 
     private void loadPalette(View view, int position) {
         Intent intent = new Intent(getActivity(), FilmeActivity.class);
-
-        ImageView imageView = (ImageView) view;
-        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-        if (drawable != null) {
-            Bitmap bitmap = drawable.getBitmap();
-            Palette.Builder builder = new Palette.Builder(bitmap);
-            Palette palette = builder.generate();
-            for (Palette.Swatch swatch : palette.getSwatches()) {
-                intent.putExtra(Constantes.COLOR_TOP, swatch.getRgb());
-            }
-        }
+        intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(view));
         intent.putExtra(Constantes.FILME_ID, movies.get(position).getId());
         intent.putExtra(Constantes.NOME_FILME, movies.get(position).getTitle());
         getContext().startActivity(intent);

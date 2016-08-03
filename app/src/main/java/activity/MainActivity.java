@@ -14,7 +14,8 @@ public class MainActivity extends BaseActivity {
         setUpToolBar();
         setupNavDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getString(getIntent().getIntExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing)));
+        getSupportActionBar().setTitle(getString(getIntent()
+                .getIntExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing)));
         if (savedInstanceState == null) {
             FilmesFragment filmesFragment = new FilmesFragment();
             filmesFragment.setArguments(getIntent().getExtras());

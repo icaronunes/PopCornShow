@@ -19,8 +19,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import activity.FavotireActivity;
 import activity.FilmeActivity;
+import activity.RatedActivity;
+import activity.WatchListActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.MovieDb;
 import utils.Constantes;
@@ -30,39 +31,41 @@ import utils.UtilsFilme;
 /**
  * Created by icaro on 01/08/16.
  */
-public class FavotireAdapter extends RecyclerView.Adapter<FavotireAdapter.FavoriteViewHolder> {
+public class RatedAdapter extends RecyclerView.Adapter<RatedAdapter.RatedViewHolder> {
 
     List<MovieDb> favoritos, watchlist, rated;
     Context context;
     FavoriteOnClickListener favoriteOnClickListener;
 
-    public FavotireAdapter(FavotireActivity favotireActivity, List<MovieDb> favoritos, List<MovieDb> rated,
-                           FavoriteOnClickListener favoriteOnClickListener) {
-        this.context = favotireActivity;
-        this.favoritos = favoritos;
+    public RatedAdapter(RatedActivity ratedActivity, List<MovieDb> rated, List<MovieDb> favoritos) {
+        this.context = ratedActivity;
         this.watchlist = watchlist;
         this.rated = rated;
+        this.favoritos = favoritos;
         this.favoriteOnClickListener = favoriteOnClickListener;
     }
 
     @Override
-    public FavoriteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RatedAdapter.RatedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = (View) LayoutInflater.from(context).inflate(R.layout.usuario_list_adapter, parent, false);
-        FavoriteViewHolder holder = new FavoriteViewHolder(view);
+        RatedViewHolder holder = new RatedViewHolder(view);
         return holder;
     }
 
+
     @Override
-    public void onBindViewHolder(final FavoriteViewHolder holder, final int position) {
+    public void onBindViewHolder(final RatedViewHolder holder, final int position) {
 //        Log.d("FavotireAdapter", "favotiros " + favoritos.size());
 //        Log.d("FavotireAdapter", "watchlist " + watchlist.size());
 //        Log.d("FavotireAdapter", "rated " + rated.size());
         boolean addOrRemove = true;
 
-        final MovieDb movie = favoritos.get(position);
+        final MovieDb movie = rated.get(position);
         if (movie != null) {
             // Log.d("FavotireAdapter", "nome " + movie.getTitle());
-            holder.img_button_coracao_favorite.setVisibility(View.GONE);
+            holder.img_button_estrela_favorite.setVisibility(View.GONE);
+            holder.text_rated_favoritos.setVisibility(View.VISIBLE);
+            holder.text_rated_favoritos.setText(String.valueOf(rated.get(position).getUserRating()));
 
             Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
                     .into(holder.img_favorite, new Callback() {
@@ -95,16 +98,14 @@ public class FavotireAdapter extends RecyclerView.Adapter<FavotireAdapter.Favori
                     intent.putExtra(Constantes.FILME_ID, movie.getId());
                     intent.putExtra(Constantes.NOME_FILME, movie.getTitle());
                     context.startActivity(intent);
-
                 }
             });
 
-            if (rated.contains(movie)) {
-                holder.img_button_estrela_favorite.setImageResource(R.drawable.icon_star);
-                //  Log.d("FavotireAdapter", "Rated :" + movierated.getId() + " " + movierated.getUserRating());
-                holder.text_rated_favoritos.setVisibility(View.VISIBLE);
-                holder.text_rated_favoritos.setText(String.valueOf(rated.get(position).getUserRating()));
-            }
+
+                if (favoritos.contains(movie)) {
+                    holder.img_button_coracao_favorite.setImageResource(R.drawable.icon_favorite);
+                    //  Log.d("FavotireAdapter", "Rated :" + movierated.getId() + " " + movierated.getUserRating());
+                }
 
 
 //            if (watchlist.contains(movie)) {
@@ -124,7 +125,7 @@ public class FavotireAdapter extends RecyclerView.Adapter<FavotireAdapter.Favori
 
     @Override
     public int getItemCount() {
-        return favoritos.size() > 0 ? favoritos.size() : 0;
+        return rated.size() > 0 ? rated.size() : 0;
     }
 
     public interface FavoriteOnClickListener {
@@ -135,13 +136,13 @@ public class FavotireAdapter extends RecyclerView.Adapter<FavotireAdapter.Favori
         void onClickRelogio(View view, int posicao, boolean AddOrRemove);
     }
 
-    public static class FavoriteViewHolder extends RecyclerView.ViewHolder {
+    public static class RatedViewHolder extends RecyclerView.ViewHolder {
         ImageView img_favorite;
         ImageButton img_button_coracao_favorite, img_button_estrela_favorite, img_button_relogio_favorite;
         ProgressBar progressBar;
         TextView text_rated_favoritos;
 
-        public FavoriteViewHolder(View itemView) {
+        public RatedViewHolder(View itemView) {
             super(itemView);
             img_favorite = (ImageView) itemView.findViewById(R.id.img_filme_usuario);
             img_button_coracao_favorite = (ImageButton) itemView.findViewById(R.id.img_button_coracao_usuario);

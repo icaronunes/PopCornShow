@@ -2,21 +2,34 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group
         android:id="@+id/menu_drav_logado"
-        android:checkableBehavior="single">
+        android:checkableBehavior="single"
+        android:visible="false">
         <!-- Todos os item Checked?! -->
         <item
             android:id="@+id/favorite"
             android:checkable="true"
-            android:icon="@drawable/icon_movie_now"
-            android:title="@string/now_playing" />
+            android:icon="@drawable/icon_favorite"
+            android:title="@string/favorite" />
         <item
             android:id="@+id/rated"
-            android:icon="@drawable/icon_proximo"
-            android:title="@string/upcoming" />
+            android:icon="@drawable/icon_avaliado"
+            android:title="@string/avaliados" />
         <item
             android:id="@+id/watchlist"
-            android:icon="@drawable/icon_popular"
-            android:title="@string/popular" />
+            android:icon="@drawable/icon_agenda"
+            android:title="@string/quero_assistir" />
+
+        <item
+            android:id="@+id/recomendacao"
+            android:checkable="true"
+            android:icon="@drawable/icon_recomendacao"
+            android:title="@string/recomendacao" />
+
+        <item
+            android:id="@+id/list"
+            android:checkable="true"
+            android:icon="@drawable/icon_list"
+            android:title="@string/list" />
     </group>
 
     <group

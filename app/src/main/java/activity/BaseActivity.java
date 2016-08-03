@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,7 +30,10 @@ import info.movito.themoviedbapi.model.config.Account;
 import utils.Constantes;
 import utils.Prefs;
 
+import static br.com.icaro.filme.R.id.alertTitle;
 import static br.com.icaro.filme.R.id.watchlist;
+import static br.com.icaro.filme.R.string.login;
+import static com.google.android.gms.analytics.internal.zzy.p;
 
 
 /**
@@ -38,7 +42,7 @@ import static br.com.icaro.filme.R.id.watchlist;
 
 public class BaseActivity extends AppCompatActivity {
 
-
+    static String TAG = "BaseActivity";
     protected DrawerLayout drawerLayout;
     protected NavigationView navigationView;
     Account account;
@@ -48,23 +52,6 @@ public class BaseActivity extends AppCompatActivity {
     TextView tLogin;
     TextView textLogin;
     String user, pass;
-
-    protected final static int getResourceID
-            (final String resName, final String resType, final Context ctx) {
-        final int ResourceID =
-                ctx.getResources().getIdentifier(resName, resType,
-                        ctx.getApplicationInfo().packageName);
-        if (ResourceID == 0) {
-            throw new IllegalArgumentException
-                    (
-                            "No resource string found with name " + resName
-                    );
-        } else {
-            return ResourceID;
-        }
-
-    }
-
 
     protected void setUpToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -182,9 +169,17 @@ public class BaseActivity extends AppCompatActivity {
                 Toast.makeText(this, "favorite", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.rated:
+                intent = new Intent(this, RatedActivity.class);
+                intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.avaliados);
+                intent.putExtra(Constantes.ABA, R.id.favorite);
+                startActivity(intent);
                 Toast.makeText(this, "rated", Toast.LENGTH_SHORT).show();
                 break;
             case watchlist:
+                intent = new Intent(this, WatchListActivity.class);
+                intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.quero_assistir);
+                intent.putExtra(Constantes.ABA, R.id.favorite);
+                startActivity(intent);
                 Toast.makeText(this, "watchlist", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -200,9 +195,12 @@ public class BaseActivity extends AppCompatActivity {
                     openDrawer();
                     return true;
                 }
+                break;
             case R.id.apagar:
                 Prefs.apagar(BaseActivity.this, Prefs.LOGIN_PASS);
                 startActivity(new Intent(BaseActivity.this, MainActivity.class));
+                break;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -236,91 +234,110 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public class TMDVAsync extends AsyncTask<Void, Void, Void> {
+    protected View.OnClickListener onClickListenerLogar() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.d("setupNavDrawer", "Login");
+                final Dialog alertDialog = new Dialog(BaseActivity.this);
+                alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                alertDialog.setContentView(R.layout.adialog_custom_login);
+
+                Button button = (Button) alertDialog.findViewById(R.id.button_login_ok);
+                ImageView tmdb = (ImageView) alertDialog.findViewById(R.id.tmdb);
+                final EditText eLogin = (EditText) alertDialog.findViewById(R.id.text_login);
+                final EditText ePass = (EditText) alertDialog.findViewById(R.id.text_pass_login);
+                int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
+                int height = getResources().getDimensionPixelSize(R.dimen.popup_height);
+
+                alertDialog.getWindow().setLayout(width,height);
+
+                tmdb.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(BaseActivity.this, SiteTMDB.class);
+                        startActivity(intent);
+                    }
+                });
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(TAG, "Adialog Login");
+                        final ProgressDialog progressDialog = new ProgressDialog(BaseActivity.this,
+                                android.R.style.Theme_Material_Dialog);
+                        user = eLogin.getText().toString();
+                        pass = ePass.getText().toString();
+                        Log.d(TAG, "Login/Pass " + user + " " + pass);//
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setMessage("Authenticating...");
+                        progressDialog.show();
+
+                        new Thread() {
+                            @Override
+                            public void run() {
+                               // String user = Prefs.getString(BaseActivity.this, Prefs.LOGIN, Prefs.LOGIN_PASS);
+                                //String pass = Prefs.getString(BaseActivity.this, Prefs.PASS, Prefs.LOGIN_PASS);
+                                if (FilmeService.getAccount(user, pass) == null) {
+                                    Log.d(TAG, "Não logou");
+                                    progressDialog.dismiss();
+                                } else {
+                                    Prefs.setString(BaseActivity.this, Prefs.LOGIN, user, Prefs.LOGIN_PASS);
+                                    Prefs.setString(BaseActivity.this, Prefs.PASS, pass, Prefs.LOGIN_PASS);
+                                    startActivity(new Intent(BaseActivity.this, MainActivity.class));
+
+                                    progressDialog.dismiss();
+                                }
+                            }
+                        }.start();
+
+                        alertDialog.dismiss();
+                    }
+                });
+                alertDialog.show();
+            }
+        };
+    }
+
+    protected View.OnClickListener onClickListenerlogado() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Login");
+            }
+        };
+    }
+
+    private class TMDVAsync extends AsyncTask<Void, Void, Void> {
+
 
         @Override
         protected Void doInBackground(Void... voids) {
-            FilmeService.getTmdbMovies().getLatestMovie();
-            account = FilmeService.getAccount(Prefs.getString(BaseActivity.this, Prefs.LOGIN, Prefs.LOGIN_PASS),
-                    Prefs.getString(BaseActivity.this, Prefs.PASS, Prefs.LOGIN_PASS));
-            Log.d("setupNavDrawer", "TMDVAsync");
+
+            account = FilmeService.getAccount(Prefs.getString(getBaseContext(), Prefs.LOGIN, Prefs.LOGIN_PASS),
+                    Prefs.getString(getBaseContext(), Prefs.PASS, Prefs.LOGIN_PASS));
+
+            Log.d(TAG, "TMDVAsync");
             return null;
-        }
-
-        protected View.OnClickListener onClickListenerLogar() {
-            return new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Log.d("setupNavDrawer", "Login");
-                    final Dialog alertDialog = new Dialog(BaseActivity.this);
-                    alertDialog.setContentView(R.layout.adialog_custom_login);
-                    Button button = (Button) alertDialog.findViewById(R.id.button_login_ok);
-                    final EditText eLogin = (EditText) alertDialog.findViewById(R.id.text_login);
-                    final EditText ePass = (EditText) alertDialog.findViewById(R.id.text_pass_login);
-                    button.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Log.d("setupNavDrawer", "Adialog Login");
-                            final ProgressDialog progressDialog = new ProgressDialog(BaseActivity.this,
-                                    android.R.style.Theme_Material_Dialog);
-                            user = eLogin.getText().toString();
-                            pass = ePass.getText().toString();
-                            Log.d("setupNavDrawer", "Login/Pass " + user + " " + pass);//
-                            progressDialog.setIndeterminate(true);
-                            progressDialog.setMessage("Authenticating...");
-                            progressDialog.show();
-
-                            new Thread() {
-                                @Override
-                                public void run() {
-
-                                    if (FilmeService.getAccount(user, pass) == null) {
-                                        Log.d("setupNavDrawer", "Não logou");
-                                        progressDialog.dismiss();
-                                    } else {
-                                        Prefs.setString(BaseActivity.this, Prefs.LOGIN, user, Prefs.LOGIN_PASS);
-                                        Prefs.setString(BaseActivity.this, Prefs.PASS, pass, Prefs.LOGIN_PASS);
-                                        startActivity(new Intent(BaseActivity.this, MainActivity.class));
-
-                                        progressDialog.dismiss();
-                                    }
-                                }
-                            }.start();
-
-                            alertDialog.dismiss();
-                        }
-                    });
-                    alertDialog.show();
-                }
-
-            };
-        }
-
-        protected View.OnClickListener onClickListenerlogado() {
-            return new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.d("setupNavDrawer", "Login");
-                }
-            };
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
+            Menu grupo_login = navigationView.getMenu();
             if (account == null) {
                 textLogin.setText(R.string.fazer_login);
                 textLogin.setTextSize(20);
                 textLogin.setVisibility(View.VISIBLE);
                 imgUserPhoto.setImageResource(R.drawable.add_user);
-                Menu grupo_login = navigationView.getMenu();
+                grupo_login = navigationView.getMenu();
                 grupo_login.removeGroup(R.id.menu_drav_logado);
                 imgUserPhoto.setOnClickListener(onClickListenerLogar());
 
             } else {
                 textLogin.setVisibility(View.VISIBLE);
+                grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
                 tLogin.setText(account.getUserName());
                 tUserName.setText(account.getName());
                 imgUserPhoto.setImageResource(R.drawable.user);

@@ -66,5 +66,8 @@
     <string name="fazer_login">Fazer Login</string>
     <string name="usuario">Usuario do TMDB</string>
     <string name="password">Senha</string>
-    <string name="favorite">Favoritado</string>
+    <string name="favorite">Favoritos</string>
+    <string name="recomendacao">Recomendação</string>
+    <string name="quero_assistir">Quero Assistir</string>
+    <string name="list">Listas</string>
 </resources>

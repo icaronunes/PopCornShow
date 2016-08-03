@@ -33,7 +33,6 @@ public class PosterActivity extends BaseActivity {
     ViewPager viewPager;
     MovieDb movieDb;
     CirclePageIndicator titlePageIndicator;
-    int posicao;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

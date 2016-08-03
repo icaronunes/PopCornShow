@@ -1,17 +1,24 @@
 package utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+import android.support.v7.graphics.Palette;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import activity.FilmeActivity;
 
 /**
  * Created by icaro on 24/06/16.
@@ -98,6 +105,22 @@ public class UtilsFilme {
         }
         return false;
 
+    }
+
+
+    public static int loadPalette(View view) {
+
+        ImageView imageView = (ImageView) view;
+        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+        if (drawable != null) {
+            Bitmap bitmap = drawable.getBitmap();
+            Palette.Builder builder = new Palette.Builder(bitmap);
+            Palette palette = builder.generate();
+            for (Palette.Swatch swatch : palette.getSwatches()) {
+               return swatch.getRgb();
+            }
+        }
+        return 0;
     }
 
     public static String getBaseUrlImagem(int tamanho) {

@@ -18,7 +18,6 @@ public class Prefs {
         SharedPreferences pref = context.getSharedPreferences(PREF_ID, 0);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(chave, valor);
-
         Log.d("Prefs", "setString "+ valor );
         editor.commit();
 
@@ -28,7 +27,7 @@ public class Prefs {
         SharedPreferences pref = context.getSharedPreferences(PREF_ID, 0);
         SharedPreferences.Editor editor = pref.edit();
         editor.clear();
-        Log.d("Prefs", "apagar " );
+        Log.d("Prefs", "apagar" );
         editor.commit();
 
     }
@@ -39,5 +38,7 @@ public class Prefs {
         Log.d("Prefs", "getString "+ valor );
         return valor;
     }
+
+
 
 }
