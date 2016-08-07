@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import adapter.FavotireAdapter;
 import applicaton.FilmeApplication;
@@ -26,6 +27,7 @@ public class FavotireActivity extends BaseActivity {
 
     RecyclerView recyclerView;
     MovieResultsPage favoritos, watchlist, rated;
+    ProgressBar progressBar;
 
 
     @Override
@@ -36,11 +38,11 @@ public class FavotireActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(getIntent().getIntExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.favorite)));
         setCheckable(getIntent().getIntExtra(Constantes.ABA, 0));
+        progressBar = (ProgressBar) findViewById(R.id.progress);
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_favorite);
         recyclerView.setLayoutManager(new GridLayoutManager(FavotireActivity.this, 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
-        //FilmeApplication.getInstance().getBus().register(this);
 
     }
 
@@ -127,8 +129,8 @@ public class FavotireActivity extends BaseActivity {
             String pass = Prefs.getString(FavotireActivity.this, Prefs.PASS, Prefs.LOGIN_PASS);
             //watchlist = FilmeService.getWatchList(user, pass, 1);
             //Log.d("FavoriteActivity", "watch " + watchlist.getTotalResults());
-            favoritos = FilmeService.getFavorite(user, pass);
-            Log.d("FavoriteActivity", "favorito " + favoritos.getTotalResults());
+            //favoritos = FilmeService.getFavorite(user, pass);
+           // Log.d("FavoriteActivity", "favorito " + favoritos.getTotalResults());
             rated = FilmeService.getRated(user, pass, 1);
             Log.d("FavoriteActivity", "rated " + rated.getTotalResults());
             return null;
@@ -137,9 +139,14 @@ public class FavotireActivity extends BaseActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            progressBar.setVisibility(View.GONE);
             Log.d("FavoriteActivity", "TMDVAsync.PosEx");
+//            recyclerView.setAdapter(new FavotireAdapter(FavotireActivity.this,
+//                    favoritos.getResults(), rated.getResults(),
+//                    onclickFavorito()));
+
             recyclerView.setAdapter(new FavotireAdapter(FavotireActivity.this,
-                    favoritos.getResults(), rated.getResults(),
+                    FilmeApplication.getInstance().getFavorite().getResults(), rated.getResults(),
                     onclickFavorito()));
 
         }

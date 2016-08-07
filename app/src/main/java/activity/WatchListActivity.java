@@ -6,6 +6,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import adapter.WatchAdapter;
 import applicaton.FilmeApplication;
@@ -19,6 +21,7 @@ public class WatchListActivity extends BaseActivity {
 
     RecyclerView recyclerView;
     MovieResultsPage favoritos, watchlist, rated;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +30,10 @@ public class WatchListActivity extends BaseActivity {
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(getIntent()
+
                 .getIntExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.quero_assistir)));
         setCheckable(getIntent().getIntExtra(Constantes.ABA, 0));
+        progressBar = (ProgressBar) findViewById(R.id.progress);
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_favorite);
         recyclerView.setLayoutManager(new GridLayoutManager(WatchListActivity.this, 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -58,8 +63,11 @@ public class WatchListActivity extends BaseActivity {
             String pass = Prefs.getString(WatchListActivity.this, Prefs.PASS, Prefs.LOGIN_PASS);
             watchlist = FilmeService.getWatchList(user, pass, 1);
             //Log.d("FavoriteActivity", "watch " + watchlist.getTotalResults());
-            //favoritos = FilmeService.getFavorite(user, pass);
-           // Log.d("FavoriteActivity", "favorito " + favoritos.getTotalResults());
+            favoritos = FilmeApplication.getInstance().getFavorite();
+            if (favoritos == null) {
+                favoritos = FilmeService.getFavorite(user, pass);
+            }
+            // Log.d("FavoriteActivity", "favorito " + favoritos.getTotalResults());
             rated = FilmeService.getRated(user, pass, 1);
             Log.d("FavoriteActivity", "rated " + rated.getTotalResults());
             return null;
@@ -69,8 +77,10 @@ public class WatchListActivity extends BaseActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             Log.d("FavoriteActivity", "TMDVAsync.PosEx");
+            progressBar.setVisibility(View.GONE);
             recyclerView.setAdapter(new WatchAdapter(WatchListActivity.this, watchlist.getResults()
-                    , rated.getResults()));
+                    , rated.getResults(), favoritos.getResults()));
+
         }
     }
 

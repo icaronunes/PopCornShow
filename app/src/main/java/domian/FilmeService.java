@@ -132,6 +132,7 @@ public class FilmeService {
         SessionToken token = new SessionToken(session);
         TmdbAccount account = tmdbApi.getAccount();
         AccountID accountID = new AccountID(getAccount(user, password).getId());
+        Log.d("Thread", account.getFavoriteMovies(token, accountID).getResults().get(0).getOverview());
         return  account.getFavoriteMovies(token, accountID);
 
     }

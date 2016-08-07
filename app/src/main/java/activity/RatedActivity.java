@@ -6,6 +6,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import adapter.RatedAdapter;
 import adapter.WatchAdapter;
@@ -23,6 +25,7 @@ public class RatedActivity extends BaseActivity {
 
     RecyclerView recyclerView;
     MovieResultsPage favoritos, watchlist, rated;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class RatedActivity extends BaseActivity {
         getSupportActionBar().setTitle(getString(getIntent()
                 .getIntExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.avaliados)));
         setCheckable(getIntent().getIntExtra(Constantes.ABA, 0));
+        progressBar = (ProgressBar) findViewById(R.id.progress);
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_favorite);
         recyclerView.setLayoutManager(new GridLayoutManager(RatedActivity.this, 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -60,10 +64,12 @@ public class RatedActivity extends BaseActivity {
         protected Void doInBackground(Void... voids) {
             String user = Prefs.getString(RatedActivity.this, Prefs.LOGIN, Prefs.LOGIN_PASS);
             String pass = Prefs.getString(RatedActivity.this, Prefs.PASS, Prefs.LOGIN_PASS);
-            //rated = FilmeService.getWatchList(user, pass, 1);
-            //Log.d("FavoriteActivity", "watch " + watchlist.getTotalResults());
-            favoritos = FilmeService.getFavorite(user, pass);
-            // Log.d("FavoriteActivity", "favorito " + favoritos.getTotalResults());
+            favoritos = FilmeApplication.getInstance().getFavorite();
+            if (favoritos == null) {
+                favoritos = FilmeService.getFavorite(user, pass);
+                Log.d("FavoriteActivity", "favorito entrou " + favoritos.getTotalResults());
+            }
+             Log.d("FavoriteActivity", "favorito " + favoritos.getTotalResults());
             rated = FilmeService.getRated(user, pass, 1);
             Log.d("FavoriteActivity", "rated " + rated.getTotalResults());
             return null;
@@ -72,6 +78,7 @@ public class RatedActivity extends BaseActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            progressBar.setVisibility(View.GONE);
             Log.d("FavoriteActivity", "TMDVAsync.PosEx");
             recyclerView.setAdapter(new RatedAdapter(RatedActivity.this, rated.getResults()
                     , favoritos.getResults()));

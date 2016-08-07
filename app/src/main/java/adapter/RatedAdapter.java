@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +66,14 @@ public class RatedAdapter extends RecyclerView.Adapter<RatedAdapter.RatedViewHol
             // Log.d("FavotireAdapter", "nome " + movie.getTitle());
             holder.img_button_estrela_favorite.setVisibility(View.GONE);
             holder.text_rated_favoritos.setVisibility(View.VISIBLE);
-            holder.text_rated_favoritos.setText(String.valueOf(rated.get(position).getUserRating()));
+            String valor = String.valueOf(rated.get(position).getUserRating());
+            Log.d("Rated", "" + valor);
+            if (valor.length() > 3) {
+                valor = valor.substring(0, 2);
+                Log.d("Rated 2", "" + valor);
+            }
+            holder.text_rated_favoritos.setText(valor);
+
 
             Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
                     .into(holder.img_favorite, new Callback() {

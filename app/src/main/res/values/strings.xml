@@ -70,4 +70,5 @@
     <string name="recomendacao">Recomendação</string>
     <string name="quero_assistir">Quero Assistir</string>
     <string name="list">Listas</string>
+    <string name="poster_transition">poster_transition</string>
 </resources>

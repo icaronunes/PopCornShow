@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:layout_weight="1"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:transitionName="poster">
 
 
     <TextView
@@ -92,6 +93,7 @@
             android:id="@+id/img_poster"
             android:layout_width="126dp"
             android:layout_height="162dp"
+            android:transitionName="poster"
             android:contentDescription="@string/poster_filme" />
 
         <LinearLayout

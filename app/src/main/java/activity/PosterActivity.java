@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Window;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -36,6 +37,7 @@ public class PosterActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
         Log.d("PosterActivity", "onCreate");
         setContentView(R.layout.activity_scroll_poster);

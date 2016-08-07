@@ -24,16 +24,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.model.config.Account;
 import utils.Constantes;
 import utils.Prefs;
 
-import static br.com.icaro.filme.R.id.alertTitle;
 import static br.com.icaro.filme.R.id.watchlist;
-import static br.com.icaro.filme.R.string.login;
-import static com.google.android.gms.analytics.internal.zzy.p;
 
 
 /**
@@ -43,9 +41,9 @@ import static com.google.android.gms.analytics.internal.zzy.p;
 public class BaseActivity extends AppCompatActivity {
 
     static String TAG = "BaseActivity";
+    static Account account = FilmeApplication.getInstance().getAccount();
     protected DrawerLayout drawerLayout;
     protected NavigationView navigationView;
-    Account account;
     ImageView imgUserBackground;
     ImageView imgUserPhoto;
     TextView tUserName;
@@ -66,10 +64,11 @@ public class BaseActivity extends AppCompatActivity {
     protected void setupNavDrawer() {
         TMDVAsync tmdvAsync = new TMDVAsync();
         tmdvAsync.execute();
-
+        account = FilmeApplication.getInstance().getAccount();
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layoyt);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -89,6 +88,26 @@ public class BaseActivity extends AppCompatActivity {
             tUserName = (TextView) view.findViewById(R.id.tUserName);
             tLogin = (TextView) view.findViewById(R.id.tLogin);
             textLogin = (TextView) view.findViewById(R.id.textLogin);
+            Log.d(TAG, "BASEACTIVITY");
+
+            //Menu grupo_login = navigationView.getMenu();
+//            if (account == null) {
+//                textLogin.setText(R.string.fazer_login);
+//                textLogin.setTextSize(20);
+//                textLogin.setVisibility(View.VISIBLE);
+//                imgUserPhoto.setImageResource(R.drawable.add_user);
+//                grupo_login = navigationView.getMenu();
+//                grupo_login.removeGroup(R.id.menu_drav_logado);
+//                imgUserPhoto.setOnClickListener(onClickListenerLogar());
+//
+//            } else {
+//                textLogin.setVisibility(View.VISIBLE);
+//                grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+//                tLogin.setText(account.getUserName());
+//                tUserName.setText(account.getName());
+//                imgUserPhoto.setImageResource(R.drawable.user);
+//                imgUserPhoto.setOnClickListener(onClickListenerlogado());
+//            }
 
 
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -251,7 +270,7 @@ public class BaseActivity extends AppCompatActivity {
                 int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
                 int height = getResources().getDimensionPixelSize(R.dimen.popup_height);
 
-                alertDialog.getWindow().setLayout(width,height);
+                alertDialog.getWindow().setLayout(width, height);
 
                 tmdb.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -277,7 +296,7 @@ public class BaseActivity extends AppCompatActivity {
                         new Thread() {
                             @Override
                             public void run() {
-                               // String user = Prefs.getString(BaseActivity.this, Prefs.LOGIN, Prefs.LOGIN_PASS);
+                                // String user = Prefs.getString(BaseActivity.this, Prefs.LOGIN, Prefs.LOGIN_PASS);
                                 //String pass = Prefs.getString(BaseActivity.this, Prefs.PASS, Prefs.LOGIN_PASS);
                                 if (FilmeService.getAccount(user, pass) == null) {
                                     Log.d(TAG, "Não logou");
@@ -314,10 +333,13 @@ public class BaseActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-
-            account = FilmeService.getAccount(Prefs.getString(getBaseContext(), Prefs.LOGIN, Prefs.LOGIN_PASS),
-                    Prefs.getString(getBaseContext(), Prefs.PASS, Prefs.LOGIN_PASS));
-
+            account = FilmeApplication.getInstance().getAccount();
+            if (account == null){
+                String user, pass;
+                user = Prefs.getString(getBaseContext(), Prefs.LOGIN, Prefs.LOGIN_PASS);
+                pass = Prefs.getString(getBaseContext(), Prefs.PASS, Prefs.LOGIN_PASS);
+                account = FilmeService.getAccount(user, pass);
+            }
             Log.d(TAG, "TMDVAsync");
             return null;
         }
@@ -325,6 +347,7 @@ public class BaseActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+
             Menu grupo_login = navigationView.getMenu();
             if (account == null) {
                 textLogin.setText(R.string.fazer_login);

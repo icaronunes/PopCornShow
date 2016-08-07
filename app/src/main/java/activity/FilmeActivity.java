@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.ProgressBar;
 
 import br.com.icaro.filme.R;
@@ -55,7 +56,7 @@ public class FilmeActivity extends BaseActivity {
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.filme_container, filmeFrag, null)
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)// ????????
                     .commit();
         }
     }

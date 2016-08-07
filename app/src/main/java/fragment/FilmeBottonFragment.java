@@ -11,6 +11,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -57,6 +59,7 @@ import utils.Config;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static br.com.icaro.filme.R.string.mil;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.credits;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.releases;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.reviews;
@@ -87,8 +90,6 @@ public class FilmeBottonFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         if (getArguments() != null) {
             id_filme = getArguments().getInt(Constantes.FILME_ID);
             getActivity().getIntent().getIntExtra(Constantes.ABA, 0);
@@ -348,13 +349,12 @@ public class FilmeBottonFragment extends Fragment {
             img_poster.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Intent intent = new Intent(getContext(), PosterActivity.class);
                     Intent intent = new Intent(getContext(), PosterGridActivity.class);
                     intent.putExtra(Constantes.FILME_ID, id_filme);
-                    startActivity(intent);
-//                    ActivityOptionsCompat opts = ActivityOptionsCompat.makeCustomAnimation(getActivity(),
-//                            android.R.anim.fade_in, android.R.anim.fade_out);
-//                    ActivityCompat.startActivity(getActivity(), intent, opts.toBundle());
+                    String transition = getString(R.string.poster_transition);
+                    ActivityOptionsCompat compat = ActivityOptionsCompat
+                            .makeSceneTransitionAnimation(getActivity(), img_poster, transition);
+                    ActivityCompat.startActivity(getActivity(), intent, compat.toBundle());
                     Log.d("FilmeBottonFragment", "setPoster: -> " + id_filme);
 
                 }
@@ -481,23 +481,28 @@ public class FilmeBottonFragment extends Fragment {
 
                     if (popularidade.charAt(0) == '0') {
                         popularidade = popularidade.substring(2, popularidade.length());
-                        popularity.setText(popularidade + " " + getResources().getString(R.string.mil));
+                        popularity.setText(popularidade + " " + getResources().getString(mil));
 
 
                     } else {
                         int posicao = popularidade.indexOf(".") + 2;
                         popularidade = popularidade.substring(0, posicao);
-                        popularidade = popularidade.concat(" " + getActivity().getResources().getString(R.string.milhoes));
+                        String milhoes = null;
+                        if (isAdded()) {
+                            milhoes = getResources().getString(R.string.milhoes);
+                        }
+                        popularidade = popularidade.concat(" " + milhoes);
                         popularity.setText(popularidade);
                     }
 
                 }
             });
 
-            animatorCompat.setDuration(1000);
+            animatorCompat.setDuration(900);
             animatorCompat.setTarget(voto_quantidade);
 
             animatorCompat.start();
+
 
         }
 

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ import info.movito.themoviedbapi.model.MovieDb;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static utils.UtilsFilme.loadPalette;
+
 
 /**
  * Created by icaro on 01/08/16.
@@ -36,10 +39,12 @@ public class WatchAdapter extends RecyclerView.Adapter<WatchAdapter.WatchViewHol
     Context context;
     FavoriteOnClickListener favoriteOnClickListener;
 
-    public WatchAdapter(WatchListActivity watchListActivity, List<MovieDb> watchlist, List<MovieDb> rated) {
+    public WatchAdapter(WatchListActivity watchListActivity, List<MovieDb> watchlist, List<MovieDb> rated,
+                        List<MovieDb> favoritos) {
         this.context = watchListActivity;
         this.watchlist = watchlist;
         this.rated = rated;
+        this.favoritos = favoritos;
         this.favoriteOnClickListener = favoriteOnClickListener;
     }
 
@@ -53,15 +58,11 @@ public class WatchAdapter extends RecyclerView.Adapter<WatchAdapter.WatchViewHol
 
     @Override
     public void onBindViewHolder(final WatchViewHolder holder, final int position) {
-//        Log.d("FavotireAdapter", "favotiros " + favoritos.size());
-//        Log.d("FavotireAdapter", "watchlist " + watchlist.size());
-//        Log.d("FavotireAdapter", "rated " + rated.size());
-        boolean addOrRemove = true;
 
         final MovieDb movie = watchlist.get(position);
         if (movie != null) {
-            // Log.d("FavotireAdapter", "nome " + movie.getTitle());
-            holder.img_button_coracao_favorite.setVisibility(View.GONE);
+
+            holder.img_button_relogio_favorite.setVisibility(View.GONE);
 
             Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
                     .into(holder.img_favorite, new Callback() {
@@ -80,17 +81,9 @@ public class WatchAdapter extends RecyclerView.Adapter<WatchAdapter.WatchViewHol
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, FilmeActivity.class);
-
                     ImageView imageView = (ImageView) view;
-                    BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-                    if (drawable != null) {
-                        Bitmap bitmap = drawable.getBitmap();
-                        Palette.Builder builder = new Palette.Builder(bitmap);
-                        Palette palette = builder.generate();
-                        for (Palette.Swatch swatch : palette.getSwatches()) {
-                            intent.putExtra(Constantes.COLOR_TOP, swatch.getRgb());
-                        }
-                    }
+                    int color = UtilsFilme.loadPalette(imageView);
+                    intent.putExtra(Constantes.COLOR_TOP, color);
                     intent.putExtra(Constantes.FILME_ID, movie.getId());
                     intent.putExtra(Constantes.NOME_FILME, movie.getTitle());
                     context.startActivity(intent);
@@ -102,21 +95,21 @@ public class WatchAdapter extends RecyclerView.Adapter<WatchAdapter.WatchViewHol
                 holder.img_button_estrela_favorite.setImageResource(R.drawable.icon_star);
                 //  Log.d("FavotireAdapter", "Rated :" + movierated.getId() + " " + movierated.getUserRating());
                 holder.text_rated_favoritos.setVisibility(View.VISIBLE);
-                holder.text_rated_favoritos.setText(String.valueOf(rated.get(position).getUserRating()));
+                String valor = String.valueOf(rated.get(position).getUserRating());
+                Log.d("Rated", "" + valor);
+                if (valor.length() > 3) {
+                    valor = valor.substring(0, 2);
+                    Log.d("Rated 2", "" + valor);
+                }
+                holder.text_rated_favoritos.setText(valor);
             }
 
 
-//            if (watchlist.contains(movie)) {
-//                Log.d("FavotireAdapter", "watchlist True:" + favoritos.get(position).getTitle());
-//                holder.img_button_relogio_favorite.setImageResource(R.drawable.icon_agenda);
-//            }
+            if (favoritos.contains(movie)) {
+                Log.d("FavotireAdapter", "watchlist True:" + favoritos.get(position).getTitle());
+                holder.img_button_coracao_favorite.setImageResource(R.drawable.icon_favorite);
+            }
 
-//            holder.img_button_relogio_favorite.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    favoriteOnClickListener.onClickRelogio(view, position, !watchlist.contains(movie));
-//                }
-//            });
         }
     }
 
