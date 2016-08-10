@@ -90,28 +90,16 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 ImageView imageView = (ImageView) view.findViewById(R.id.img_search);
-                loadPalette(imageView, position);
+                Intent intent = new Intent(SearchActivity.this, FilmeActivity.class);
+                int color = UtilsFilme.loadPalette(imageView);
+                intent.putExtra(Constantes.COLOR_TOP, color);
+                intent.putExtra(Constantes.FILME_ID, movieDbList.get(position).getId());
+                intent.putExtra(Constantes.NOME_FILME, movieDbList.get(position).getTitle());
+                startActivity(intent);
+
             }
         });
         swipeRefreshLayout.setOnRefreshListener(OnRefreshListener());
-    }
-
-    private void loadPalette(View view, int position) {
-        Intent intent = new Intent(SearchActivity.this, FilmeActivity.class);
-
-        ImageView imageView = (ImageView) view;
-        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-        if (drawable != null) {
-            Bitmap bitmap = drawable.getBitmap();
-            Palette.Builder builder = new Palette.Builder(bitmap);
-            Palette palette = builder.generate();
-            for (Palette.Swatch swatch : palette.getSwatches()) {
-                intent.putExtra(Constantes.COLOR_TOP, swatch.getRgb());
-            }
-        }
-        intent.putExtra(Constantes.FILME_ID, movieDbList.get(position).getId());
-        intent.putExtra(Constantes.NOME_FILME, movieDbList.get(position).getTitle());
-        startActivity(intent);
     }
 
     private SwipeRefreshLayout.OnRefreshListener OnRefreshListener() {

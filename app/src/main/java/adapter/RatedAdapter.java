@@ -34,21 +34,17 @@ import utils.UtilsFilme;
  */
 public class RatedAdapter extends RecyclerView.Adapter<RatedAdapter.RatedViewHolder> {
 
-    List<MovieDb> favoritos, watchlist, rated;
+    List<MovieDb> rated;
     Context context;
-    FavoriteOnClickListener favoriteOnClickListener;
 
-    public RatedAdapter(RatedActivity ratedActivity, List<MovieDb> rated, List<MovieDb> favoritos) {
+    public RatedAdapter(RatedActivity ratedActivity, List<MovieDb> rated) {
         this.context = ratedActivity;
-        this.watchlist = watchlist;
         this.rated = rated;
-        this.favoritos = favoritos;
-        this.favoriteOnClickListener = favoriteOnClickListener;
     }
 
     @Override
     public RatedAdapter.RatedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = (View) LayoutInflater.from(context).inflate(R.layout.usuario_list_adapter, parent, false);
+        View view =  LayoutInflater.from(context).inflate(R.layout.usuario_list_adapter, parent, false);
         RatedViewHolder holder = new RatedViewHolder(view);
         return holder;
     }
@@ -56,14 +52,11 @@ public class RatedAdapter extends RecyclerView.Adapter<RatedAdapter.RatedViewHol
 
     @Override
     public void onBindViewHolder(final RatedViewHolder holder, final int position) {
-//        Log.d("FavotireAdapter", "favotiros " + favoritos.size());
-//        Log.d("FavotireAdapter", "watchlist " + watchlist.size());
-//        Log.d("FavotireAdapter", "rated " + rated.size());
-        boolean addOrRemove = true;
 
         final MovieDb movie = rated.get(position);
+
         if (movie != null) {
-            // Log.d("FavotireAdapter", "nome " + movie.getTitle());
+
             holder.img_button_estrela_favorite.setVisibility(View.GONE);
             holder.text_rated_favoritos.setVisibility(View.VISIBLE);
             String valor = String.valueOf(rated.get(position).getUserRating());
@@ -71,9 +64,9 @@ public class RatedAdapter extends RecyclerView.Adapter<RatedAdapter.RatedViewHol
             if (valor.length() > 3) {
                 valor = valor.substring(0, 2);
                 Log.d("Rated 2", "" + valor);
+                holder.text_rated_favoritos.setText(valor);
             }
             holder.text_rated_favoritos.setText(valor);
-
 
             Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
                     .into(holder.img_favorite, new Callback() {
@@ -108,40 +101,16 @@ public class RatedAdapter extends RecyclerView.Adapter<RatedAdapter.RatedViewHol
                     context.startActivity(intent);
                 }
             });
-
-
-                if (favoritos.contains(movie)) {
-                    holder.img_button_coracao_favorite.setImageResource(R.drawable.icon_favorite);
-                    //  Log.d("FavotireAdapter", "Rated :" + movierated.getId() + " " + movierated.getUserRating());
-                }
-
-
-//            if (watchlist.contains(movie)) {
-//                Log.d("FavotireAdapter", "watchlist True:" + favoritos.get(position).getTitle());
-//                holder.img_button_relogio_favorite.setImageResource(R.drawable.icon_agenda);
-//            }
-
-//            holder.img_button_relogio_favorite.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    favoriteOnClickListener.onClickRelogio(view, position, !watchlist.contains(movie));
-//                }
-//            });
         }
     }
 
 
     @Override
     public int getItemCount() {
-        return rated.size() > 0 ? rated.size() : 0;
-    }
-
-    public interface FavoriteOnClickListener {
-        void onClickCoracao(View view, int posicao, boolean AddOrRemove);
-
-        void onClickEstrela(View view, int posicao, boolean AddOrRemove);
-
-        void onClickRelogio(View view, int posicao, boolean AddOrRemove);
+        if (rated != null) {
+            return rated.size();
+        }
+        return 0;
     }
 
     public static class RatedViewHolder extends RecyclerView.ViewHolder {
@@ -158,6 +127,7 @@ public class RatedAdapter extends RecyclerView.Adapter<RatedAdapter.RatedViewHol
             img_button_relogio_favorite = (ImageButton) itemView.findViewById(R.id.img_button_relogio_usuario);
             text_rated_favoritos = (TextView) itemView.findViewById(R.id.text_rated_favoritos);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
+            itemView.findViewById(R.id.botoes_lista).setVisibility(View.GONE);
         }
     }
 

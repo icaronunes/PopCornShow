@@ -1,7 +1,13 @@
 package activity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +23,6 @@ import domian.FilmeService;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import info.movito.themoviedbapi.model.core.ResponseStatus;
 import utils.Constantes;
-import utils.Prefs;
 
 /**
  * Created by icaro on 01/08/16.
@@ -26,9 +31,10 @@ import utils.Prefs;
 public class FavotireActivity extends BaseActivity {
 
     RecyclerView recyclerView;
-    MovieResultsPage favoritos, watchlist, rated;
+    MovieResultsPage favoritos;
     ProgressBar progressBar;
-
+    ResponseStatus status;
+    boolean apagar = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,90 +55,84 @@ public class FavotireActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        TMDVAsync tmdvAsync = new TMDVAsync();
-        tmdvAsync.execute();
+        new TMDVAsync().execute();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        FilmeApplication.getInstance().getBus().unregister(this);
+    public void AtualizarListaFilme(final int posicao) {
+        Snackbar.make(recyclerView, getResources().getString(R.string.excluir_filme), 3000).setCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar snackbar, int event) {
+                super.onDismissed(snackbar, event);
+                if (posicao <= favoritos.getResults().size() && apagar) {
+                    favoritos.getResults().remove(favoritos.getResults().get(posicao));
+
+                    recyclerView.setAdapter(new FavotireAdapter(FavotireActivity.this,
+                            favoritos != null ? favoritos.getResults() : null, onclickListerne()));
+                }
+                recyclerView.getAdapter().notifyDataSetChanged();
+                Log.d("onBusAtualizarLista", "Entrou");
+            }
+
+            @Override
+            public void onShown(Snackbar snackbar) {
+                super.onShown(snackbar);
+            }
+        }).setAction(getResources().getString(R.string.no), new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                apagar = !apagar;
+
+            }
+        }).show();
+
     }
 
-    private FavotireAdapter.FavoriteOnClickListener onclickFavorito() {
+    private FavotireAdapter.FavoriteOnClickListener onclickListerne() {
         return new FavotireAdapter.FavoriteOnClickListener() {
             @Override
-            public void onClickCoracao(final View view, final int posicao, final boolean addOrRemove) {
-                Log.d("FavotireActivity", "ENTROU Coracao");
+            public void onClick(final View view, final int position) {
+                Intent intent = new Intent(FavotireActivity.this, FilmeActivity.class);
+
+                ImageView imageView = (ImageView) view;
+                BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+                if (drawable != null) {
+                    Bitmap bitmap = drawable.getBitmap();
+                    Palette.Builder builder = new Palette.Builder(bitmap);
+                    Palette palette = builder.generate();
+                    for (Palette.Swatch swatch : palette.getSwatches()) {
+                        intent.putExtra(Constantes.COLOR_TOP, swatch.getRgb());
+                    }
+                }
+                intent.putExtra(Constantes.FILME_ID, favoritos.getResults().get(position).getId());
+                intent.putExtra(Constantes.NOME_FILME, favoritos.getResults().get(position).getTitle());
+                startActivity(intent);
             }
 
             @Override
-            public void onClickEstrela(final View view, final int posicao, final boolean addOrRemove) {
-                Log.d("FavotireActivity", "ENTROU Estrela");
-            }
-
-            @Override
-            public void onClickRelogio(final View view, final int posicao, final boolean addOrRemove) {
+            public void onClickLong(View view, final int posicao) {
+                Log.d("onBusAtualizarLista", "onClickLong - " + posicao);
+                Log.d("onBusAtualizarLista", "onClickLong - " + favoritos.getResults().get(posicao).toString());
+                final int id = favoritos.getResults().get(posicao).getId();
+                final String user = FilmeApplication.getInstance().getUser();
+                final String pass = FilmeApplication.getInstance().getPass();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String user = Prefs.getString(FavotireActivity.this, Prefs.LOGIN, Prefs.LOGIN_PASS);
-                        String pass = Prefs.getString(FavotireActivity.this, Prefs.PASS, Prefs.LOGIN_PASS);
-                        Log.d("ResponseStatus", "run " + favoritos.getResults().get(posicao).getTitle());
-                        Log.d("ResponseStatus", "Valor boolean " + addOrRemove);
-                        ResponseStatus status = FilmeService.addOrRemoverWatchList(user, pass, favoritos.getResults().get(posicao).getId(),
-                                addOrRemove);
-                        Log.d("ResponseStatus", status.toString());
-                        // Log.d("ResponseStatus", "" + status.toString());
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ImageView imageView = (ImageView) view;
-                                if (!addOrRemove) {
-                                    Log.d("ResponseStatus", "RELOGIO");
-                                    imageView.setImageResource(R.drawable.relogio);
-
-
-                                } else {
-                                    Log.d("ResponseStatus", "ICON AGENDA");
-                                    imageView.setImageResource(R.drawable.icon_agenda);
-
-                                }
-
-                            }
-                        });
+                        status = FilmeService.addOrRemoverFavorite(user, pass, id, false);
                     }
-
                 }).start();
-               // recyclerView.getAdapter().notifyDataSetChanged();
+
+                AtualizarListaFilme(posicao);
             }
         };
     }
-
-//    @Subscribe
-//    public void teste(int position) {
-//        Log.d("teste", "Posicao "+position);
-//        favoritos.getResults().remove(favoritos.getResults().get(position));
-//        Log.d("teste", "tamanho "+favoritos.getResults().size());
-//        recyclerView.getAdapter().notifyDataSetChanged();
-//        recyclerView.setAdapter(new FavotireAdapter(FavotireActivity.this,
-//                favoritos.getResults(), rated.getResults(),
-//                onclickFavorito()));
-//
-//    }
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            String user = Prefs.getString(FavotireActivity.this, Prefs.LOGIN, Prefs.LOGIN_PASS);
-            String pass = Prefs.getString(FavotireActivity.this, Prefs.PASS, Prefs.LOGIN_PASS);
-            //watchlist = FilmeService.getWatchList(user, pass, 1);
-            //Log.d("FavoriteActivity", "watch " + watchlist.getTotalResults());
-            //favoritos = FilmeService.getFavorite(user, pass);
-           // Log.d("FavoriteActivity", "favorito " + favoritos.getTotalResults());
-            rated = FilmeService.getRated(user, pass, 1);
-            Log.d("FavoriteActivity", "rated " + rated.getTotalResults());
+            favoritos = FilmeService.getTotalFavorite();
+
             return null;
         }
 
@@ -140,15 +140,8 @@ public class FavotireActivity extends BaseActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressBar.setVisibility(View.GONE);
-            Log.d("FavoriteActivity", "TMDVAsync.PosEx");
-//            recyclerView.setAdapter(new FavotireAdapter(FavotireActivity.this,
-//                    favoritos.getResults(), rated.getResults(),
-//                    onclickFavorito()));
-
             recyclerView.setAdapter(new FavotireAdapter(FavotireActivity.this,
-                    FilmeApplication.getInstance().getFavorite().getResults(), rated.getResults(),
-                    onclickFavorito()));
-
+                    favoritos != null ? favoritos.getResults() : null, onclickListerne()));
         }
     }
 

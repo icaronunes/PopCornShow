@@ -30,6 +30,7 @@ import domian.FilmeService;
 import info.movito.themoviedbapi.model.config.Account;
 import utils.Constantes;
 import utils.Prefs;
+import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.id.watchlist;
 
@@ -62,9 +63,10 @@ public class BaseActivity extends AppCompatActivity {
 
 
     protected void setupNavDrawer() {
-        TMDVAsync tmdvAsync = new TMDVAsync();
-        tmdvAsync.execute();
-        account = FilmeApplication.getInstance().getAccount();
+        if (UtilsFilme.isNetWorkAvailable(getApplicationContext())) {
+            new TMDVAsync().execute();
+            account = FilmeApplication.getInstance().getAccount();
+        }
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -89,26 +91,6 @@ public class BaseActivity extends AppCompatActivity {
             tLogin = (TextView) view.findViewById(R.id.tLogin);
             textLogin = (TextView) view.findViewById(R.id.textLogin);
             Log.d(TAG, "BASEACTIVITY");
-
-            //Menu grupo_login = navigationView.getMenu();
-//            if (account == null) {
-//                textLogin.setText(R.string.fazer_login);
-//                textLogin.setTextSize(20);
-//                textLogin.setVisibility(View.VISIBLE);
-//                imgUserPhoto.setImageResource(R.drawable.add_user);
-//                grupo_login = navigationView.getMenu();
-//                grupo_login.removeGroup(R.id.menu_drav_logado);
-//                imgUserPhoto.setOnClickListener(onClickListenerLogar());
-//
-//            } else {
-//                textLogin.setVisibility(View.VISIBLE);
-//                grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-//                tLogin.setText(account.getUserName());
-//                tUserName.setText(account.getName());
-//                imgUserPhoto.setImageResource(R.drawable.user);
-//                imgUserPhoto.setOnClickListener(onClickListenerlogado());
-//            }
-
 
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -334,7 +316,7 @@ public class BaseActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             account = FilmeApplication.getInstance().getAccount();
-            if (account == null){
+            if (account == null) {
                 String user, pass;
                 user = Prefs.getString(getBaseContext(), Prefs.LOGIN, Prefs.LOGIN_PASS);
                 pass = Prefs.getString(getBaseContext(), Prefs.PASS, Prefs.LOGIN_PASS);

@@ -2,11 +2,7 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,30 +23,31 @@ import info.movito.themoviedbapi.model.MovieDb;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static utils.UtilsFilme.loadPalette;
-
 
 /**
  * Created by icaro on 01/08/16.
  */
 public class WatchAdapter extends RecyclerView.Adapter<WatchAdapter.WatchViewHolder> {
 
-    List<MovieDb> favoritos, watchlist, rated;
+    List<MovieDb>  watchlist;
     Context context;
-    FavoriteOnClickListener favoriteOnClickListener;
+    WatchListOnClickListener watchListOnClickListener;
 
-    public WatchAdapter(WatchListActivity watchListActivity, List<MovieDb> watchlist, List<MovieDb> rated,
-                        List<MovieDb> favoritos) {
+    public interface WatchListOnClickListener {
+        void onClick(View view, int posicao);
+        void onClickLong(View view,final int posicao);
+    }
+
+
+    public WatchAdapter(WatchListActivity watchListActivity, List<MovieDb> watchlist, WatchListOnClickListener onClickListener) {
         this.context = watchListActivity;
         this.watchlist = watchlist;
-        this.rated = rated;
-        this.favoritos = favoritos;
-        this.favoriteOnClickListener = favoriteOnClickListener;
+        this.watchListOnClickListener = onClickListener;
     }
 
     @Override
     public WatchAdapter.WatchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = (View) LayoutInflater.from(context).inflate(R.layout.usuario_list_adapter, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.usuario_list_adapter, parent, false);
         WatchViewHolder holder = new WatchViewHolder(view);
         return holder;
     }
@@ -80,51 +77,26 @@ public class WatchAdapter extends RecyclerView.Adapter<WatchAdapter.WatchViewHol
             holder.img_favorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, FilmeActivity.class);
-                    ImageView imageView = (ImageView) view;
-                    int color = UtilsFilme.loadPalette(imageView);
-                    intent.putExtra(Constantes.COLOR_TOP, color);
-                    intent.putExtra(Constantes.FILME_ID, movie.getId());
-                    intent.putExtra(Constantes.NOME_FILME, movie.getTitle());
-                    context.startActivity(intent);
-
+                    watchListOnClickListener.onClick(view, position);
                 }
             });
 
-            if (rated.contains(movie)) {
-                holder.img_button_estrela_favorite.setImageResource(R.drawable.icon_star);
-                //  Log.d("FavotireAdapter", "Rated :" + movierated.getId() + " " + movierated.getUserRating());
-                holder.text_rated_favoritos.setVisibility(View.VISIBLE);
-                String valor = String.valueOf(rated.get(position).getUserRating());
-                Log.d("Rated", "" + valor);
-                if (valor.length() > 3) {
-                    valor = valor.substring(0, 2);
-                    Log.d("Rated 2", "" + valor);
+            holder.img_favorite.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    watchListOnClickListener.onClickLong(view, position);
+                    return true;
                 }
-                holder.text_rated_favoritos.setText(valor);
-            }
-
-
-            if (favoritos.contains(movie)) {
-                Log.d("FavotireAdapter", "watchlist True:" + favoritos.get(position).getTitle());
-                holder.img_button_coracao_favorite.setImageResource(R.drawable.icon_favorite);
-            }
-
+            });
         }
     }
 
-
     @Override
     public int getItemCount() {
-        return watchlist.size() > 0 ? watchlist.size() : 0;
-    }
-
-    public interface FavoriteOnClickListener {
-        void onClickCoracao(View view, int posicao, boolean AddOrRemove);
-
-        void onClickEstrela(View view, int posicao, boolean AddOrRemove);
-
-        void onClickRelogio(View view, int posicao, boolean AddOrRemove);
+        if (watchlist != null) {
+            return watchlist.size();
+        }
+        return 0;
     }
 
     public static class WatchViewHolder extends RecyclerView.ViewHolder {
@@ -141,6 +113,9 @@ public class WatchAdapter extends RecyclerView.Adapter<WatchAdapter.WatchViewHol
             img_button_relogio_favorite = (ImageButton) itemView.findViewById(R.id.img_button_relogio_usuario);
             text_rated_favoritos = (TextView) itemView.findViewById(R.id.text_rated_favoritos);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
+            itemView.findViewById(R.id.botoes_lista).setVisibility(View.GONE);
+
+
         }
     }
 

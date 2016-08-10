@@ -5,18 +5,17 @@
     android:id="@+id/card_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
-    android:layout_marginLeft="6dp"
-    android:layout_marginRight="6dp"
     android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="0dp"
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="false"
-    card_view:cardElevation="0dp">
+    card_view:cardElevation="0dp"
+    app:cardElevation="3dp"
+    android:layout_margin="3dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <FrameLayout
@@ -24,40 +23,31 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/imgFilme"
-                android:layout_width="300dp"
-                android:layout_height="250dp"
+                android:id="@+id/imgFilme_produtora"
+                android:layout_width="143dp"
+                android:layout_height="194dp"
                 android:layout_gravity="center_vertical|center_horizontal"
-                android:adjustViewBounds="false"
                 android:contentDescription="@string/imagem_filme"
                 android:cropToPadding="true"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true" />
 
             <include layout="@layout/include_progress" />
 
-            <ImageView
-                android:id="@+id/coracao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:alpha="0.8"
-                android:visibility="invisible"
-                android:src="@drawable/icon_heart" />
-
             <TextView
-                android:id="@+id/titleTextView"
+                android:id="@+id/titleTextView_produtora"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
+                android:layout_gravity="bottom|center_horizontal"
                 android:background="@color/black_transparente"
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="top|center_horizontal"
                 android:lines="2"
                 android:textColor="@color/white"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:typeface="serif"
-                android:layout_gravity="bottom" />
+                android:text="dadsasdada"
+                android:layout_margin="1dp" />
 
         </FrameLayout>
     </LinearLayout>

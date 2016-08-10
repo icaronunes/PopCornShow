@@ -25,12 +25,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import activity.FavotireActivity;
 import activity.FilmeActivity;
 import adapter.FilmesAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.Constantes;
 import utils.UtilsFilme;
 
@@ -63,7 +65,6 @@ public class FilmesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_list_filme, container, false);
         textView = (TextView) view.findViewById(R.id.textLayoutFilmes);
@@ -84,6 +85,9 @@ public class FilmesFragment extends Fragment {
                 R.color.refresh_progress_2,
                 R.color.refresh_progress_3);
 
+        recyclerView.setAdapter(new FilmesAdapter(getContext(), movies != null ? movies : null,
+                onClickListener()));
+
         return view;
     }
 
@@ -99,8 +103,7 @@ public class FilmesFragment extends Fragment {
             snack();
 
         } else {
-            TMDVAsync tmdvAsync = new TMDVAsync();
-            tmdvAsync.execute();
+            new TMDVAsync().execute();
         }
     }
 
@@ -124,11 +127,9 @@ public class FilmesFragment extends Fragment {
     protected SwipeRefreshLayout.OnRefreshListener OnRefreshListener() {
         return new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh() { //Verificar se ha internet
+            public void onRefresh() {
                 if (UtilsFilme.isNetWorkAvailable(getContext())) {
-                    // process.setVisibility(View.VISIBLE);
-                    TMDVAsync tmdvAsync = new TMDVAsync();
-                    tmdvAsync.execute();
+                    new TMDVAsync().execute();
                 }
             }
         };
@@ -140,22 +141,16 @@ public class FilmesFragment extends Fragment {
             public void onClickFilme(View view, int position) {
                 Log.d("onClickListener", "" + position);
                 Log.d("onClickListener", "" + movies.get(position).getTitle());
-                loadPalette(view, position);
-
+                Intent intent = new Intent(getActivity(), FilmeActivity.class);
+                intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(view));
+                intent.putExtra(Constantes.FILME_ID, movies.get(position).getId());
+                intent.putExtra(Constantes.NOME_FILME, movies.get(position).getTitle());
+                getContext().startActivity(intent);
             }
         };
     }
 
-    private void loadPalette(View view, int position) {
-        Intent intent = new Intent(getActivity(), FilmeActivity.class);
-        intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(view));
-        intent.putExtra(Constantes.FILME_ID, movies.get(position).getId());
-        intent.putExtra(Constantes.NOME_FILME, movies.get(position).getTitle());
-        getContext().startActivity(intent);
-    }
-
     public class TMDVAsync extends AsyncTask<Void, Void, List<MovieDb>> {
-
 
         @Override
         protected void onPreExecute() {
@@ -189,7 +184,8 @@ public class FilmesFragment extends Fragment {
             }
             swipeRefreshLayout.setRefreshing(false);
             swipeRefreshLayout.setEnabled(true);
-            recyclerView.setAdapter(new FilmesAdapter(getContext(), movies, onClickListener()));
+            recyclerView.setAdapter(new FilmesAdapter(getContext(), movies != null ? movies : null,
+                    onClickListener()));
             pagina++;
         }
 

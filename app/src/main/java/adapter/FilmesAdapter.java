@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -29,7 +30,8 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
     protected MovieDb movie;
     private FilmeOnClickListener filmeOnClickListener;
 
-    public FilmesAdapter(Context context, List<MovieDb> tmdbMovies, FilmeOnClickListener filmeOnClickListener) {
+    public FilmesAdapter(Context context, List<MovieDb> tmdbMovies,
+                         FilmeOnClickListener filmeOnClickListener) {
 
         this.context = context;
         this.tmdbMovies = tmdbMovies;
@@ -38,7 +40,7 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
 
     @Override
     public FilmeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = (View) LayoutInflater.from(context).inflate(R.layout.adapter_filmes_list, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.adapter_filmes_list, parent, false);
         FilmeViewHolder holder = new FilmeViewHolder(view);
         return holder;
     }
@@ -47,34 +49,24 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
     public void onBindViewHolder(final FilmesAdapter.FilmeViewHolder holder, final int position) {
         movie = tmdbMovies.get(position);
         holder.progressBar.setVisibility(View.VISIBLE);
-       // scroll_elenco();
+
         if (movie != null) {
-//            Log.d("onBindViewHolder", "Titulo Original - " + movie.getOriginalTitle());
-//            Log.d("onBindViewHolder", "Titulo - " + movie.toString());
-//            Log.d("onBindViewHolder", "ID: " + movie.getId());
-//            Log.d("Reviwes", "" + movie.getOverview());
-//            Log.d("Direção", ""+movie.getHomepage());
-            String title = movie.getTitle();
+
+            String title = movie.toString();
             if (title != null) {
                 holder.title.setText(title);
-            }
-            String sinopse = movie.getOverview();
-            if (!sinopse.isEmpty()) {
-                holder.sinopse.setText(sinopse);
-            } else {
-                holder.sinopse.setVisibility(View.INVISIBLE);
             }
 
             Picasso.with(context)
                     .load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
                     .error(R.drawable.poster_empty)
-                    .into(holder.img);
+                    .into(holder.imagem_filme);
             holder.progressBar.setVisibility(View.INVISIBLE);
             if (filmeOnClickListener != null) {
-                holder.img.setOnClickListener(new View.OnClickListener() {
+                holder.imagem_filme.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        filmeOnClickListener.onClickFilme(holder.img, position);
+                        filmeOnClickListener.onClickFilme(holder.imagem_filme, position);
                     }
                 });
             }
@@ -83,8 +75,10 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
 
     @Override
     public int getItemCount() {
-        int total = tmdbMovies.size();
-        return total == 0 ? 0 : total;
+        if (tmdbMovies != null){
+            return tmdbMovies.size();
+        }
+        return 0;
     }
 
 
@@ -94,16 +88,16 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
 
     public static class FilmeViewHolder extends RecyclerView.ViewHolder {
 
-        TextView title, sinopse;
-        ImageView img;
+        TextView title;
+        ImageView imagem_filme, coracao;
         CardView cardView;
         ProgressBar progressBar;
 
         public FilmeViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.titleTextView);
-            sinopse = (TextView) itemView.findViewById(R.id.sinopse);
-            img = (ImageView) itemView.findViewById(R.id.imgFilme);
+            imagem_filme = (ImageView) itemView.findViewById(R.id.imgFilme);
+            coracao = (ImageView) itemView.findViewById(R.id.coracao);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
         }

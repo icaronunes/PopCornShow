@@ -31,7 +31,6 @@ public class FilmeActivity extends BaseActivity {
     private ProgressBar progressBar;
     private MovieDb movieDb;
     int color_fundo;
-    TMDVAsync tmdvAsync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +39,7 @@ public class FilmeActivity extends BaseActivity {
         setUpToolBar();
         setupNavDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle(getIntent().getStringExtra(Constantes.NOME_FILME));
+        setTitle(" "); // Recebendo as vezes titulo em ingles. Necessario esperar nova busca. Resolver!
         color_fundo = getIntent().getIntExtra(Constantes.COLOR_TOP, R.color.transparent);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         viewPager = (ViewPager) findViewById(R.id.top_img_viewpager);
@@ -50,7 +49,7 @@ public class FilmeActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             FilmeBottonFragment filmeFrag = new FilmeBottonFragment();
-            Bundle bundle = new Bundle(); //Tentar pegar nome que esta no bundle
+            Bundle bundle = new Bundle(); //Tentar pegar nome que esta no bundle / Posso pasar o bundle direto?
             bundle.putInt(Constantes.FILME_ID, getIntent().getExtras().getInt(Constantes.FILME_ID));
             filmeFrag.setArguments(bundle);
             getSupportFragmentManager()
@@ -70,18 +69,7 @@ public class FilmeActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
-        tmdvAsync = new TMDVAsync();
-        tmdvAsync.execute();
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (!tmdvAsync.isCancelled()){
-            tmdvAsync.cancel(true);
-        }
-
+        new TMDVAsync().execute();
     }
 
     private class ImagemTopFragment extends FragmentPagerAdapter {
@@ -114,7 +102,7 @@ public class FilmeActivity extends BaseActivity {
         }
     }
 
-    public class TMDVAsync extends AsyncTask<Void, Void, MovieDb> {
+    private class TMDVAsync extends AsyncTask<Void, Void, MovieDb> {
 
         @Override
         protected MovieDb doInBackground(Void... voids) {//
@@ -128,6 +116,7 @@ public class FilmeActivity extends BaseActivity {
         @Override
         protected void onPostExecute(MovieDb movieDb) {
             super.onPostExecute(movieDb);
+            setTitle(movieDb.getTitle());
             viewPager.setAdapter(new ImagemTopFragment(getSupportFragmentManager()));
             progressBar.setVisibility(View.INVISIBLE);
         }

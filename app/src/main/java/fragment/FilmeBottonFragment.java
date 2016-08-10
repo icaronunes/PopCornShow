@@ -40,12 +40,16 @@ import activity.CrewsActivity;
 import activity.ElencoActivity;
 import activity.FilmeActivity;
 import activity.PosterGridActivity;
+import activity.ProdutoraActivity;
 import activity.ReviewsActivity;
 import activity.TreilerActivity;
 import adapter.CollectionPagerAdapter;
+import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
+import info.movito.themoviedbapi.TmdbAccount;
 import info.movito.themoviedbapi.TmdbMovies;
+import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.model.Collection;
 import info.movito.themoviedbapi.model.CollectionInfo;
 import info.movito.themoviedbapi.model.Genre;
@@ -59,7 +63,10 @@ import utils.Config;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static br.com.icaro.filme.R.drawable.user;
 import static br.com.icaro.filme.R.string.mil;
+import static domian.FilmeService.getAccount;
+import static domian.FilmeService.getTmdbSearch;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.credits;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.releases;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.reviews;
@@ -365,13 +372,25 @@ public class FilmeBottonFragment extends Fragment {
     }
 
     private void setProdutora() {
+        String primeiraProdutora;
         if (!movieDb.getProductionCompanies().isEmpty()) {
-            String sProdutora = movieDb.getProductionCompanies().get(0).getName();
-            if (sProdutora.length() >= 27) {
-                sProdutora = (String) sProdutora.subSequence(0, 27);
-                sProdutora = sProdutora.concat("...");
+            primeiraProdutora = movieDb.getProductionCompanies().get(0).getName();
+            if (primeiraProdutora.length() >= 27) {
+                primeiraProdutora = (String) primeiraProdutora.subSequence(0, 27);
+                primeiraProdutora = primeiraProdutora.concat("...");
             }
-            produtora.setText(sProdutora);
+            produtora.setText(primeiraProdutora);
+
+            final String finalPrimeiraProdutora = primeiraProdutora;
+            produtora.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), ProdutoraActivity.class);
+                    intent.putExtra(Constantes.PRODUTORA, finalPrimeiraProdutora);
+                    intent.putExtra(Constantes.PRODUTORA_ID, movieDb.getProductionCompanies().get(0).getId());
+                    startActivity(intent);
+                }
+            });
         }
     }
 
@@ -705,9 +724,9 @@ public class FilmeBottonFragment extends Fragment {
                 });
                 YouTubeThumbnailView thumbnailView = (YouTubeThumbnailView) linearteste.findViewById(R.id.youtube_view_thumbnail);
                 thumbnailView.initialize(Config.YOUTUBE_API_KEY, OnInitializedListener(youtube_key));
+                Log.d("OnClick", youtube_key);
                 //Acontence erros - Necessario corrigir
                 linearLayout.addView(linearteste);
-
 
             }
         }

@@ -9,15 +9,16 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/recycleView_favorite">
 
-    </android.support.v7.widget.RecyclerView>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycleView_favorite"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        <include layout="@layout/include_progress"/>
+            </android.support.v7.widget.RecyclerView>
+
+        <include layout="@layout/include_progress" />
     </FrameLayout>
 
 </LinearLayout>

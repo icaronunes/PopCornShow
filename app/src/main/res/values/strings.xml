@@ -71,4 +71,7 @@
     <string name="quero_assistir">Quero Assistir</string>
     <string name="list">Listas</string>
     <string name="poster_transition">poster_transition</string>
+    <string name="excluir_filme">Excluir Filme ?</string>
+    <string name="desfazer">Desfazer</string>
+    <string name="no">Não</string>
 </resources>
