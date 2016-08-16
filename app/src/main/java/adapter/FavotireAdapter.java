@@ -1,10 +1,6 @@
 package adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -22,13 +17,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import activity.FavotireActivity;
-import activity.FilmeActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.MovieDb;
-import utils.Constantes;
 import utils.UtilsFilme;
-
-import static android.R.attr.onClick;
 
 
 /**
@@ -38,14 +29,15 @@ public class FavotireAdapter extends RecyclerView.Adapter<FavotireAdapter.Favori
 
     List<MovieDb> favoritos;
     Context context;
-    FavoriteOnClickListener onClickListener;
+    FavotireOnClickListener onClickListener;
 
-    public interface FavoriteOnClickListener {
+    // Colocar em apenas um lugar
+    public interface FavotireOnClickListener {
         void onClick(View view, int posicao);
         void onClickLong(View view,final int posicao);
     }
 
-    public FavotireAdapter(FavotireActivity favotireActivity, List<MovieDb> favoritos, FavoriteOnClickListener onClickListener) {
+    public FavotireAdapter(FavotireActivity favotireActivity, List<MovieDb> favoritos, FavotireOnClickListener onClickListener) {
         this.context = favotireActivity;
         this.favoritos = favoritos;
         this.onClickListener  = onClickListener;

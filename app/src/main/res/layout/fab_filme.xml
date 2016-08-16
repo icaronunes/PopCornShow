@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.github.clans.fab.FloatingActionMenu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fab_menu_filme"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|right"
+    android:layout_marginBottom="6dp"
+    android:layout_marginRight="6dp"
+    android:visibility="invisible">
+
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/menu_item_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_heart"
+        fab:fab_label="Favoritar"
+        fab:fab_size="mini" />
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/menu_item_watchlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/fab_calendar2"
+        fab:fab_label="Adicionar a Watchlist"
+        fab:fab_size="mini" />
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/menu_item_rated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/fab_star2"
+        fab:fab_label="Avaliar"
+        fab:fab_size="mini" />
+
+</com.github.clans.fab.FloatingActionMenu>

@@ -1,10 +1,6 @@
 package adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,12 +16,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import activity.FilmeActivity;
 import activity.RatedActivity;
-import activity.WatchListActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.MovieDb;
-import utils.Constantes;
 import utils.UtilsFilme;
 
 
@@ -36,19 +29,20 @@ public class RatedAdapter extends RecyclerView.Adapter<RatedAdapter.RatedViewHol
 
     List<MovieDb> rated;
     Context context;
+    RatedOnClickListener onClickListener;
 
-    public RatedAdapter(RatedActivity ratedActivity, List<MovieDb> rated) {
+    public RatedAdapter(RatedActivity ratedActivity, List<MovieDb> rated, RatedOnClickListener onClickListener) {
         this.context = ratedActivity;
         this.rated = rated;
+        this.onClickListener = onClickListener;
     }
 
     @Override
     public RatedAdapter.RatedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view =  LayoutInflater.from(context).inflate(R.layout.usuario_list_adapter, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.usuario_list_adapter, parent, false);
         RatedViewHolder holder = new RatedViewHolder(view);
         return holder;
     }
-
 
     @Override
     public void onBindViewHolder(final RatedViewHolder holder, final int position) {
@@ -69,7 +63,7 @@ public class RatedAdapter extends RecyclerView.Adapter<RatedAdapter.RatedViewHol
             holder.text_rated_favoritos.setText(valor);
 
             Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
-                    .into(holder.img_favorite, new Callback() {
+                    .into(holder.img_rated, new Callback() {
                         @Override
                         public void onSuccess() {
                             holder.progressBar.setVisibility(View.GONE);
@@ -81,29 +75,22 @@ public class RatedAdapter extends RecyclerView.Adapter<RatedAdapter.RatedViewHol
                         }
                     });
 
-            holder.img_favorite.setOnClickListener(new View.OnClickListener() {
+            holder.img_rated.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, FilmeActivity.class);
+                    onClickListener.onClick(view, position);
+                }
+            });
 
-                    ImageView imageView = (ImageView) view;
-                    BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-                    if (drawable != null) {
-                        Bitmap bitmap = drawable.getBitmap();
-                        Palette.Builder builder = new Palette.Builder(bitmap);
-                        Palette palette = builder.generate();
-                        for (Palette.Swatch swatch : palette.getSwatches()) {
-                            intent.putExtra(Constantes.COLOR_TOP, swatch.getRgb());
-                        }
-                    }
-                    intent.putExtra(Constantes.FILME_ID, movie.getId());
-                    intent.putExtra(Constantes.NOME_FILME, movie.getTitle());
-                    context.startActivity(intent);
+            holder.img_rated.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    onClickListener.onClickLong(view, position);
+                    return true;
                 }
             });
         }
     }
-
 
     @Override
     public int getItemCount() {
@@ -113,15 +100,22 @@ public class RatedAdapter extends RecyclerView.Adapter<RatedAdapter.RatedViewHol
         return 0;
     }
 
+    // Colocar em apenas um lugar
+    public interface RatedOnClickListener {
+        void onClick(View view, int position);
+
+        void onClickLong(View view, final int position);
+    }
+
     public static class RatedViewHolder extends RecyclerView.ViewHolder {
-        ImageView img_favorite;
+        ImageView img_rated;
         ImageButton img_button_coracao_favorite, img_button_estrela_favorite, img_button_relogio_favorite;
         ProgressBar progressBar;
         TextView text_rated_favoritos;
 
         public RatedViewHolder(View itemView) {
             super(itemView);
-            img_favorite = (ImageView) itemView.findViewById(R.id.img_filme_usuario);
+            img_rated = (ImageView) itemView.findViewById(R.id.img_filme_usuario);
             img_button_coracao_favorite = (ImageButton) itemView.findViewById(R.id.img_button_coracao_usuario);
             img_button_estrela_favorite = (ImageButton) itemView.findViewById(R.id.img_button_estrela_usuario);
             img_button_relogio_favorite = (ImageButton) itemView.findViewById(R.id.img_button_relogio_usuario);

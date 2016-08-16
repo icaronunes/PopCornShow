@@ -74,4 +74,12 @@
     <string name="excluir_filme">Excluir Filme ?</string>
     <string name="desfazer">Desfazer</string>
     <string name="no">Não</string>
+    <string name="filme_rated">Filme Classificado...</string>
+    <string name="falha_rated">Falha na classificação</string>
+    <string name="filme_add_favorite">Filme Adicionado ao Favoritos</string>
+    <string name="filme_readd_favorite">Filme adicionado novamente</string>
+    <string name="filme_remove_favorite">Filme removido da lista Favoritos</string>
+    <string name="erro_watch">Ops! Algo deu errado.</string>
+
+
 </resources>

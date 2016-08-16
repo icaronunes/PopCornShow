@@ -11,7 +11,6 @@
         android:id="@+id/img_elenco"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/filme185"
         android:layout_gravity="center_vertical" />
 
     <LinearLayout
@@ -30,14 +29,12 @@
                 android:id="@+id/elenco_nome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Bred Pitt"
                 android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/elenco_character"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="1999-10-14"
                 android:textSize="14sp"
                 android:layout_margin="2dp" />
         </LinearLayout>

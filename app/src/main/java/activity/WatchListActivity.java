@@ -1,13 +1,16 @@
 package activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -21,12 +24,13 @@ import info.movito.themoviedbapi.model.core.ResponseStatus;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static br.com.icaro.filme.R.id.watchlist;
+
 public class WatchListActivity extends BaseActivity {
 
     RecyclerView recyclerView;
     MovieResultsPage watchlist;
     ProgressBar progressBar;
-    boolean apagar = true;
     ResponseStatus status;
 
     @Override
@@ -60,58 +64,62 @@ public class WatchListActivity extends BaseActivity {
             }
 
             @Override
-            public void onClickLong(View view, int posicao) {
+            public void onClickLong(View view, final int posicao) {
                 Log.d("onBusAtualizarLista", "onClickLong - " + posicao);
                 Log.d("onBusAtualizarLista", "onClickLong - " + watchlist.getResults().get(posicao).toString());
                 final int id = watchlist.getResults().get(posicao).getId();
                 final String user = FilmeApplication.getInstance().getUser();
                 final String pass = FilmeApplication.getInstance().getPass();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        status = FilmeService.addOrRemoverFavorite(user, pass, id, false);
-                    }
-                }).start();
+                new AlertDialog.Builder(WatchListActivity.this)
+                        .setIcon(R.drawable.icon_agenda)
+                        .setTitle(watchlist.getResults().get(posicao).getTitle())
+                        .setMessage(getResources().getString(R.string.excluir_filme))
+                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
-                AtualizarListaFilme(posicao);
+                            }
+                        })
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        status = FilmeService.addOrRemoverWatchList(user, pass, id, false);
+
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if (status.getStatusCode() == 13) {
+                                                    watchlist.getResults().remove(watchlist.getResults().get(posicao));
+                                                    recyclerView.getAdapter().notifyItemRemoved(posicao);
+                                                    recyclerView.getAdapter().notifyItemChanged(posicao);
+                                                }
+                                            }
+                                        });
+                                    }
+                                }).start();
+                            }
+                        }).show();
             }
         };
     }
 
-    public void AtualizarListaFilme(final int posicao) {
-        Snackbar.make(recyclerView, getResources().getString(R.string.excluir_filme), 3000)
-                .setCallback(new Snackbar.Callback() {
-            @Override
-            public void onDismissed(Snackbar snackbar, int event) {
-                super.onDismissed(snackbar, event);
-                if (posicao <= watchlist.getResults().size() && apagar) {
-                    watchlist.getResults().remove(watchlist.getResults().get(posicao));
-
-                    recyclerView.setAdapter(new WatchAdapter(WatchListActivity.this,
-                            watchlist != null ? watchlist.getResults() : null, onclickListerne()));
-                }
-                recyclerView.getAdapter().notifyDataSetChanged();
-                Log.d("AtualizarListaFilme", "Entrou");
-            }
-
-            @Override
-            public void onShown(Snackbar snackbar) {
-                super.onShown(snackbar);
-            }
-        }).setAction(getResources().getString(R.string.no), new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                apagar = !apagar;
-
-            }
-        }).show();
-
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
         new TMDVAsync().execute();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 

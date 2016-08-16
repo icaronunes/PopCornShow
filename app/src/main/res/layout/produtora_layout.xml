@@ -1,140 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/drawer_layoyt"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:id="@+id/coordinator_layout"
+    android:background="@color/white"
+    android:fitsSystemWindows="false">
 
-    <android.support.design.widget.CoordinatorLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefresh_produtora"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:fitsSystemWindows="true">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v4.widget.NestedScrollView
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/produtora_filmes_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_weight="1"
+            android:cacheColorHint="@android:color/transparent"
+            android:clipToPadding="true"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:listSelector="@android:color/transparent"
+            android:scrollbarStyle="outsideOverlay"
+            android:scrollbars="vertical" />
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/descricao_produtora"
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:text="daeudneaidneandieandienaud. duaeudaenudnean" />
-
-                    <android.support.v7.widget.RecyclerView
-
-                        android:id="@+id/produtora_filmes_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
-
-                <include layout="@layout/include_progress" />
-
-            </FrameLayout>
+    <include layout="@layout/include_progress" />
 
 
-        </android.support.v4.widget.NestedScrollView>
+    <!-- Layout da app bar -->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="229dp"
+        android:fitsSystemWindows="false"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="0dp"
+        app:theme="@style/AppTheme.NoActionBar.NoTitle">
 
-        <!-- Layout da app bar -->
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:fitsSystemWindows="true"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:elevation="3dp">
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false"
+            android:fitsSystemWindows="true">
 
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/collapsing_toolbar"
+
+            <ImageView
+                android:id="@+id/top_img_produtora"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:adjustViewBounds="false"
+                android:background="@color/white"
                 android:fitsSystemWindows="true"
-                app:contentScrim="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:title="DASDSADA"
-                app:titleEnabled="true">
+                android:scaleType="fitCenter"
+                app:layout_collapseMode="parallax"
+                android:cropToPadding="false" />
 
 
-                <ImageView
-                    android:id="@+id/top_img_produtora"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:adjustViewBounds="true"
-                    android:background="@color/white"
-                    android:fitsSystemWindows="true"
-                    android:scaleType="fitEnd"
-                    android:src="@drawable/top_empty"
-                    app:layout_collapseMode="parallax" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            <LinearLayout
+                android:id="@+id/info_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible">
 
-                <RelativeLayout
-                    android:id="@+id/info_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/black_transparente_produtora"
+                <TextView
+                    android:id="@+id/headquarters"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:visibility="visible"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="160dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_gravity="bottom" />
 
-                    android:orientation="vertical"
-                    android:layout_marginTop="5dp">
+                <TextView
+                    android:id="@+id/home_produtora"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:textStyle="normal|bold|italic"
+                    android:visibility="visible"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_gravity="bottom" />
 
+            </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/headquarters"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_gravity="bottom"
-                        android:layout_marginBottom="95dp"
-                        android:layout_marginLeft="36dp"
-                        android:layout_marginStart="36dp"
-                        android:text="San Francisco, California" />
+        </android.support.design.widget.CollapsingToolbarLayout>
 
-                    <TextView
-                        android:id="@+id/home_produtora"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:linksClickable="true"
-                        android:text="http://www.lucasfilm.com"
-                        android:textStyle="normal|bold|italic"
-                        android:layout_centerVertical="true"
-                        android:layout_alignLeft="@+id/headquarters"
-                        android:layout_alignStart="@+id/headquarters" />
+    </android.support.design.widget.AppBarLayout>
 
-
-                </RelativeLayout>
-
-            </android.support.design.widget.CollapsingToolbarLayout>
-
-        </android.support.design.widget.AppBarLayout>
-
-    </android.support.design.widget.CoordinatorLayout>
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_drawer_header"
-        app:menu="@menu/nav_drawe_menu" />
-
-</android.support.v4.widget.DrawerLayout>
+</android.support.design.widget.CoordinatorLayout>

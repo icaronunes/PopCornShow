@@ -14,53 +14,69 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import adapter.CrewsAdapter;
+import adapter.SimilaresAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbMovies;
-import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.credits;
 
-public class CrewsActivity extends BaseActivity {
-
+/**
+ * Created by icaro on 12/08/16.
+ */
+public class SimilaresActivity extends BaseActivity{
     RecyclerView recyclerView;
-    TextView text_crews_no_internet;
-    LinearLayout linear_crews_layout;
+    TextView text_similares_no_internet;
+    LinearLayout linear_similares_layout;
     int id_filme;
     ProgressBar progressBar;
+    MovieResultsPage similares;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crews);
+        setContentView(R.layout.activity_similares);
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
-        Log.d("CrewsActivity", " " + id_filme);
+        Log.d("ElencoActivity", " " + id_filme);
 
         String title = getIntent().getStringExtra(Constantes.NOME_FILME);
         getSupportActionBar().setTitle(title);
 
-        recyclerView = (RecyclerView) findViewById(R.id.crews_recyckeview);
+        recyclerView = (RecyclerView) findViewById(R.id.similares_recyckeview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        text_crews_no_internet = (TextView) findViewById(R.id.text_crews_no_internet);
-        linear_crews_layout = (LinearLayout) findViewById(R.id.linear_crews_layout);
+        text_similares_no_internet = (TextView) findViewById(R.id.text_similares_no_internet);
+        linear_similares_layout = (LinearLayout) findViewById(R.id.linear_similares_layout);
         progressBar = (ProgressBar) findViewById(R.id.progress);
 
 
         if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
-            TMDVAsync tmdvAsync = new TMDVAsync();
-            tmdvAsync.execute();
+            new TMDVAsync().execute();
         } else {
-            text_crews_no_internet.setVisibility(View.VISIBLE);
+            text_similares_no_internet.setVisibility(View.VISIBLE);
             snack();
         }
+    }
 
+    protected void snack() {
+        Snackbar.make(linear_similares_layout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                            text_similares_no_internet.setVisibility(View.GONE);
+                            new TMDVAsync().execute();
+                        } else {
+                            snack();
+                        }
+                    }
+                }).show();
     }
 
     @Override
@@ -73,43 +89,24 @@ public class CrewsActivity extends BaseActivity {
         if (item.getItemId() == android.R.id.home){
             finish();
         }
+
         return true;
     }
 
-    protected void snack() {
-        Snackbar.make(linear_crews_layout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
-                            text_crews_no_internet.setVisibility(View.GONE);
-                            TMDVAsync tmdvAsync = new TMDVAsync();
-                            tmdvAsync.execute();
-                        } else {
-                            snack();
-                        }
-                    }
-                }).show();
-    }
-
-
-    public class TMDVAsync extends AsyncTask<Void, Void, MovieDb> {
-
+    private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
         @Override
-        protected MovieDb doInBackground(Void... voids) {
+        protected Void doInBackground(Void... voids) {
             TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
-            MovieDb movies = tmdbMovies.getMovie(id_filme, "en", credits);
-            Log.d("CrewsActivity", "" + movies.getCredits().getCast().size());
-            return movies;
+            similares = tmdbMovies.getSimilarMovies(id_filme, getResources().getString(R.string.IDIOMAS), 1);
+            return null;
         }
 
         @Override
-        protected void onPostExecute(MovieDb movieDb) {
-            Log.d("CrewsActivity", "onPostExecute");
+        protected void onPostExecute(Void Avoid) {
             progressBar.setVisibility(View.GONE);
-            recyclerView.setAdapter(new CrewsAdapter(CrewsActivity.this, movieDb.getCredits().getCrew()));
+            recyclerView.setAdapter(new SimilaresAdapter(SimilaresActivity.this, similares.getResults()));
         }
-
     }
+
 }

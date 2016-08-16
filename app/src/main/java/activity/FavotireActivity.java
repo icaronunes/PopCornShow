@@ -1,28 +1,33 @@
 package activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import adapter.FavotireAdapter;
+import adapter.WatchAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import info.movito.themoviedbapi.model.core.ResponseStatus;
 import utils.Constantes;
+
+import static android.R.attr.id;
+import static br.com.icaro.filme.R.id.watchlist;
 
 /**
  * Created by icaro on 01/08/16.
@@ -34,7 +39,6 @@ public class FavotireActivity extends BaseActivity {
     MovieResultsPage favoritos;
     ProgressBar progressBar;
     ResponseStatus status;
-    boolean apagar = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,37 +62,16 @@ public class FavotireActivity extends BaseActivity {
         new TMDVAsync().execute();
     }
 
-    public void AtualizarListaFilme(final int posicao) {
-        Snackbar.make(recyclerView, getResources().getString(R.string.excluir_filme), 3000).setCallback(new Snackbar.Callback() {
-            @Override
-            public void onDismissed(Snackbar snackbar, int event) {
-                super.onDismissed(snackbar, event);
-                if (posicao <= favoritos.getResults().size() && apagar) {
-                    favoritos.getResults().remove(favoritos.getResults().get(posicao));
-
-                    recyclerView.setAdapter(new FavotireAdapter(FavotireActivity.this,
-                            favoritos != null ? favoritos.getResults() : null, onclickListerne()));
-                }
-                recyclerView.getAdapter().notifyDataSetChanged();
-                Log.d("onBusAtualizarLista", "Entrou");
-            }
-
-            @Override
-            public void onShown(Snackbar snackbar) {
-                super.onShown(snackbar);
-            }
-        }).setAction(getResources().getString(R.string.no), new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                apagar = !apagar;
-
-            }
-        }).show();
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
-    private FavotireAdapter.FavoriteOnClickListener onclickListerne() {
-        return new FavotireAdapter.FavoriteOnClickListener() {
+    private FavotireAdapter.FavotireOnClickListener onclickListerne() {
+        return new FavotireAdapter.FavotireOnClickListener() {
             @Override
             public void onClick(final View view, final int position) {
                 Intent intent = new Intent(FavotireActivity.this, FilmeActivity.class);
@@ -115,24 +98,49 @@ public class FavotireActivity extends BaseActivity {
                 final int id = favoritos.getResults().get(posicao).getId();
                 final String user = FilmeApplication.getInstance().getUser();
                 final String pass = FilmeApplication.getInstance().getPass();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        status = FilmeService.addOrRemoverFavorite(user, pass, id, false);
-                    }
-                }).start();
+                new AlertDialog.Builder(FavotireActivity.this)
+                        .setIcon(R.drawable.icon_coracao_redondo)
+                        .setTitle(favoritos.getResults().get(posicao).getTitle())
+                        .setMessage(getResources().getString(R.string.excluir_filme))
+                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
-                AtualizarListaFilme(posicao);
+                            }
+                        })
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        status = FilmeService.addOrRemoverFavorite(user, pass, id, false);
+
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if (status.getStatusCode() == 13) {
+                                                    favoritos.getResults().remove(favoritos.getResults().get(posicao));
+                                                    recyclerView.getAdapter().notifyItemRemoved(posicao);
+                                                    recyclerView.getAdapter().notifyItemChanged(posicao);
+                                                }
+                                            }
+                                        });
+                                    }
+                                }).start();
+                            }
+                        }).show();
             }
         };
+
     }
+
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
             favoritos = FilmeService.getTotalFavorite();
-
             return null;
         }
 

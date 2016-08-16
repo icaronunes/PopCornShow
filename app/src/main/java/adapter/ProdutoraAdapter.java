@@ -17,13 +17,12 @@ import java.util.List;
 
 import activity.FilmeActivity;
 import activity.ProdutoraActivity;
-import activity.SearchActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.Collection;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static android.media.CamcorderProfile.get;
+
 
 /**
  * Created by icaro on 10/08/16.

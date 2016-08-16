@@ -19,6 +19,8 @@ public class Constantes {
     public static final String SINOPSE = "sinopse";
 
     public static final String COLOR_TOP = "color_top";
-    public static final String PRODUTORA = "produt";
+    public static final String PRODUTORA = "produta";
     public static final String PRODUTORA_ID = "produtora_id";
+    public static final String LISTA_ID = "lista_id";
+    public static final String LISTA_NOME = "lista_nome";
 }

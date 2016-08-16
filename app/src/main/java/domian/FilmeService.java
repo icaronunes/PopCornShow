@@ -30,8 +30,6 @@ import info.movito.themoviedbapi.tools.RequestMethod;
 import utils.Config;
 
 import static android.R.attr.id;
-import static br.com.icaro.filme.R.id.rated;
-import static info.movito.themoviedbapi.AbstractTmdbApi.PARAM_LANGUAGE;
 import static info.movito.themoviedbapi.TmdbAccount.PARAM_SESSION;
 import static info.movito.themoviedbapi.TmdbAccount.TMDB_METHOD_ACCOUNT;
 
@@ -54,12 +52,11 @@ public class FilmeService {
 
     public static TmdbMovies getTmdbMovies() {
         TmdbMovies movies = new TmdbApi(Config.TMDB_API_KEY).getMovies();
-
         return movies;
     }
 
-    public static TmdbCompany getTmdbCompany(){
-       TmdbCompany company = new TmdbApi(Config.TMDB_API_KEY).getCompany();
+    public static TmdbCompany getTmdbCompany() {
+        TmdbCompany company = new TmdbApi(Config.TMDB_API_KEY).getCompany();
         return company;
     }
 
@@ -113,12 +110,29 @@ public class FilmeService {
         }
     }
 
-    public static TmdbAccount tmdbAccount() {
+    public static TmdbAccount getTmdbAccount() {
         TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
         TmdbAccount account = tmdbApi.getAccount();
 
         return account;
 
+    }
+
+    public static TmdbAccount.MovieListResultsPage getListAccount(String languegem, int pagina) {
+        String user = FilmeApplication.getInstance().getUser();
+        String pass = FilmeApplication.getInstance().getPass();
+        if (user != null && pass != null) {
+            TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
+            TmdbAccount account = tmdbApi.getAccount();
+            TokenSession authentication = tmdbApi
+                    .getAuthentication().getSessionLogin(user, pass);
+            String session = authentication.getSessionId();
+            SessionToken token = new SessionToken(session);
+            AccountID accountID = new AccountID(getAccount(user, pass).getId());
+
+            return account.getLists(token, accountID, languegem, pagina);
+        }
+        return null;
     }
 
     public static ResponseStatus addOrRemoverWatchList(String user, String password, Integer id_filme, boolean opcao) {
@@ -154,10 +168,14 @@ public class FilmeService {
         if (opcao) {
             ResponseStatus status = account.addFavorite(token, accountID, id_filme, TmdbAccount.MediaType.MOVIE);
             Log.d("addOrRemoverFavorite", status.toString());
+            Log.d("addOrRemoverFavorite", String.valueOf(status.getStatusCode()));
+            Log.d("addOrRemoverFavorite", String.valueOf(status.getStatusMessage()));
             return status;
         } else {
             ResponseStatus status = account.removeFavorite(token, accountID, id_filme, TmdbAccount.MediaType.MOVIE);
             Log.d("addOrRemoverFavorite", status.toString());
+            Log.d("addOrRemoverFavorite", String.valueOf(status.getStatusCode()));
+            Log.d("addOrRemoverFavorite", String.valueOf(status.getStatusMessage()));
             return status;
         }
     }
@@ -166,22 +184,26 @@ public class FilmeService {
         String user = FilmeApplication.getInstance().getUser();
         String pass = FilmeApplication.getInstance().getPass();
         MovieResultsPage favoritos;
-        favoritos = getFavorite(user, pass);
-        if (favoritos != null) {
-            if (favoritos.getTotalPages() > 1) {
-                for (int i = 2; i <= favoritos.getTotalPages(); i++) {
-                    favoritos.getResults().addAll(FilmeService.getFavoriteMovies(user, pass, i).getResults());
+        if (user != null && pass != null) {
+            favoritos = getFavorite(user, pass);
+            if (favoritos != null) {
+                if (favoritos.getTotalPages() > 1) {
+                    for (int i = 2; i <= favoritos.getTotalPages(); i++) {
+                        favoritos.getResults().addAll(FilmeService.getFavoriteMovies(user, pass, i).getResults());
+                    }
                 }
+                Log.d("getTotalFavorite", "Total page" + favoritos.getTotalPages());
             }
-            Log.d("getTotalFavorite", "Total page" + favoritos.getTotalPages());
+            return favoritos;
         }
-        return favoritos;
+        return null;
     }
 
     //Copia de TMDBAPI para pegar paginas do Favoritos
 
     public static MovieResultsPage getFavorite(String user, String password) {
         //Criado novo getFavorito que aceita numero da pagina
+
         TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
         TokenSession authentication = tmdbApi
                 .getAuthentication().getSessionLogin(user, password);
@@ -198,7 +220,7 @@ public class FilmeService {
                 .getAuthentication().getSessionLogin(user, password);
         String session = authentication.getSessionId();
         SessionToken token = new SessionToken(session);
-        ApiUrl apiUrl = new ApiUrl(TMDB_METHOD_ACCOUNT, getAccount(user, password).getId(), "favorite/movies" );
+        ApiUrl apiUrl = new ApiUrl(TMDB_METHOD_ACCOUNT, getAccount(user, password).getId(), "favorite/movies");
         apiUrl.addParam(PARAM_SESSION, token);
         apiUrl.addPage(page);
 
@@ -238,7 +260,6 @@ public class FilmeService {
             if (statusCode != null && !SUCCESS_STATUS_CODES.contains(statusCode)) {
                 throw new ResponseStatusException(responseStatus);
             }
-
             return jsonMapper.readValue(webpage, someClass);
         } catch (IOException ex) {
             throw new MovieDbException("mapping failed:\n" + webpage);
@@ -249,14 +270,17 @@ public class FilmeService {
 
 
     public static MovieResultsPage getRated(String user, String password, int pagina) {
-        TokenSession authentication = new TmdbApi(Config.TMDB_API_KEY)
-                .getAuthentication().getSessionLogin(user, password);
-        String session = authentication.getSessionId();
-        SessionToken token = new SessionToken(session);
-        TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
-        TmdbAccount account = tmdbApi.getAccount();
-        AccountID accountID = new AccountID(getAccount(user, password).getId());
-        return account.getRatedMovies(token, accountID, pagina);
+        if (user != null && password != null) {
+            TokenSession authentication = new TmdbApi(Config.TMDB_API_KEY)
+                    .getAuthentication().getSessionLogin(user, password);
+            String session = authentication.getSessionId();
+            SessionToken token = new SessionToken(session);
+            TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
+            TmdbAccount account = tmdbApi.getAccount();
+            AccountID accountID = new AccountID(getAccount(user, password).getId());
+            return account.getRatedMovies(token, accountID, pagina);
+        }
+        return null;
     }
 
     public static MovieResultsPage getRatedListTotal() {
@@ -298,4 +322,23 @@ public class FilmeService {
         }
         return watch;
     }
+
+    public static boolean setRatedMovie(int id_filme, float nota) {
+        String user = FilmeApplication.getInstance().getUser();
+        String pass = FilmeApplication.getInstance().getPass();
+        TokenSession authentication = new TmdbApi(Config.TMDB_API_KEY)
+                .getAuthentication().getSessionLogin(user, pass);
+        String session = authentication.getSessionId();
+        SessionToken token = new SessionToken(session);
+        TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
+        TmdbAccount account = tmdbApi.getAccount();
+        if (nota != 0) {
+            boolean status = account.postMovieRating(token, id_filme, (int) nota);
+            Log.d("setRatedMovie", "" + status);
+            return status;
+        }
+        return false;
+
+    }
+
 }

@@ -29,7 +29,6 @@ public class FilmeApplication extends Application {
     private static final String TAG = "FilmeApplication";
     private static FilmeApplication instance = null;
     private static MovieResultsPage favorite;
-    private static TmdbAccount tmdbAccount;
     private static TokenSession authentication;
     private static SessionToken token;
     private static AccountID accountID;
@@ -101,7 +100,7 @@ public class FilmeApplication extends Application {
         this.favorite = favorite;
     }
 
-    public class TMDVAsync extends AsyncTask<Void, Void, Void> {
+    protected class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
 
         @Override

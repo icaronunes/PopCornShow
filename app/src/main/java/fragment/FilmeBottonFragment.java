@@ -42,14 +42,12 @@ import activity.FilmeActivity;
 import activity.PosterGridActivity;
 import activity.ProdutoraActivity;
 import activity.ReviewsActivity;
+import activity.SimilaresActivity;
 import activity.TreilerActivity;
 import adapter.CollectionPagerAdapter;
-import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
-import info.movito.themoviedbapi.TmdbAccount;
 import info.movito.themoviedbapi.TmdbMovies;
-import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.model.Collection;
 import info.movito.themoviedbapi.model.CollectionInfo;
 import info.movito.themoviedbapi.model.Genre;
@@ -63,10 +61,7 @@ import utils.Config;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static br.com.icaro.filme.R.drawable.user;
 import static br.com.icaro.filme.R.string.mil;
-import static domian.FilmeService.getAccount;
-import static domian.FilmeService.getTmdbSearch;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.credits;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.releases;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.reviews;
@@ -81,7 +76,8 @@ import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.videos;
 public class FilmeBottonFragment extends Fragment {
 
     TextView titulo, categoria, time_filme, sinopse, voto_media, voto_quantidade, produtora,
-            original_title, spoken_languages, production_countries, popularity, lancamento, textview_crews, textview_elenco;
+            original_title, spoken_languages, production_countries,
+            popularity, lancamento, textview_crews, textview_elenco, textview_similares;
     ImageView img_poster, img_star;
     int id_filme;
     MovieDb movieDb;
@@ -115,6 +111,7 @@ public class FilmeBottonFragment extends Fragment {
         time_filme = (TextView) view.findViewById(R.id.time_filme);
         sinopse = (TextView) view.findViewById(R.id.descricao);
         voto_media = (TextView) view.findViewById(R.id.voto_media);
+        textview_similares = (TextView) view.findViewById(R.id.textview_similares);
         voto_quantidade = (TextView) view.findViewById(R.id.voto_quantidade);
         produtora = (TextView) view.findViewById(R.id.produtora);
         original_title = (TextView) view.findViewById(R.id.original_title);
@@ -137,18 +134,12 @@ public class FilmeBottonFragment extends Fragment {
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        tmdvAsync.cancel(true);
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.d("FilmeBottonFragment", "onActivityCreated -> " + id_filme);
         if (id_filme != 0) {
-            tmdvAsync = new TMDVAsync();
-            tmdvAsync.execute();
+            new TMDVAsync().execute();
+
         }
 
         icon_reviews.setOnClickListener(new View.OnClickListener() {
@@ -161,7 +152,7 @@ public class FilmeBottonFragment extends Fragment {
                     startActivity(intent);
                 } else {
                     Log.d("SetSnack", "" + movieDb.getBudget());
-                    Snackbar.make(linear_container, getResources().getString(R.string.no_message)
+                    Snackbar.make(linear_container, getString(R.string.no_message)
                             , Snackbar.LENGTH_SHORT)
                             .show();
                 }
@@ -176,9 +167,9 @@ public class FilmeBottonFragment extends Fragment {
                     String valor = String.valueOf(movieDb.getBudget());
                     valor.length();
                     valor = valor.substring(0, valor.length() - 6);
-                    Snackbar.make(linear_container, getResources().getString(R.string.orcamento_budget) + " " +
-                                    getResources().getString(R.string.dollar)
-                                    + " " + valor + " " + getResources().getString(R.string.milhoes_budget)
+                    Snackbar.make(linear_container, getString(R.string.orcamento_budget) + " " +
+                                    getString(R.string.dollar)
+                                    + " " + valor + " " + getString(R.string.milhoes_budget)
                             , Snackbar.LENGTH_LONG)
                             .show();
                 } else {
@@ -214,7 +205,7 @@ public class FilmeBottonFragment extends Fragment {
             public void onClick(View view) {
                 if (movieDb.getVoteCount() > 0) {
                     Snackbar.make(linear_container, movieDb.getVoteCount()
-                                    + " " + getResources().getString(R.string.person_vote)
+                                    + " " + getString(R.string.person_vote)
                             , Snackbar.LENGTH_SHORT)
                             .show();
                 } else {
@@ -234,7 +225,7 @@ public class FilmeBottonFragment extends Fragment {
                         @Override
                         public void run() {
                             info = FilmeService.getTmdbCollections()
-                                    .getCollectionInfo(id, getResources().getString(R.string.IDIOMAS));
+                                    .getCollectionInfo(id, getString(R.string.IDIOMAS));
                             getCollection(info);
                         }
                     }.start();
@@ -268,6 +259,16 @@ public class FilmeBottonFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        textview_similares.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), SimilaresActivity.class);
+                intent.putExtra(Constantes.FILME_ID, id_filme);
+                intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
+                startActivity(intent);
+            }
+        });
     }
 
     private void getCollection(final CollectionInfo info) {
@@ -291,7 +292,7 @@ public class FilmeBottonFragment extends Fragment {
 
             sinopse.setText(movieDb.getOverview());
         } else {
-            sinopse.setText(getResources().getString(R.string.sem_sinopse));
+            sinopse.setText(getString(R.string.sem_sinopse));
         }
     }
 
@@ -307,7 +308,6 @@ public class FilmeBottonFragment extends Fragment {
         Log.d("Format", format.format(date));
         Log.d("Format", movieDb.toString());
         if (data != null && data.contains(format.format(date))) {
-            // http://www.ingresso.com/sao-paulo/espetaculo/espetaculo/cinema/futuro-junho
             stringBuilder.append(" " + data.substring(0, 4));
 
         } else {
@@ -380,6 +380,7 @@ public class FilmeBottonFragment extends Fragment {
                 primeiraProdutora = primeiraProdutora.concat("...");
             }
             produtora.setText(primeiraProdutora);
+            produtora.setTextColor(getResources().getColor(R.color.primary));
 
             final String finalPrimeiraProdutora = primeiraProdutora;
             produtora.setOnClickListener(new View.OnClickListener() {
@@ -440,14 +441,12 @@ public class FilmeBottonFragment extends Fragment {
                 tempo = tempo - 60;
             }
             minutos = tempo;
+            time_filme.setText(String.valueOf(horas + " " + getString(horas > 1 ? R.string.horas : R.string.hora)
+                    + " " + minutos + " " + getString(R.string.minutos)));//
 
-
-            time_filme.setText(String.valueOf(horas + " " + getResources().getString(horas > 1 ? R.string.horas : R.string.hora)
-                    + " " + minutos + " " + getResources().getString(R.string.minutos)));
-
-            Log.d("setTimeFilme", String.valueOf(horas + " hrs " + minutos + getResources().getString(R.string.minutos)));
+            Log.d("setTimeFilme", String.valueOf(horas + " hrs " + minutos + getString(R.string.minutos)));
         } else {
-            time_filme.setText(getResources().getString(R.string.tempo_nao_informado));
+            time_filme.setText(getString(R.string.tempo_nao_informado));
         }
     }
 
@@ -455,7 +454,7 @@ public class FilmeBottonFragment extends Fragment {
         if (movieDb.getOriginalTitle() != null) {
             original_title.setText(movieDb.getOriginalTitle());
         } else {
-            original_title.setText(getResources().getString(R.string.original_title));
+            original_title.setText(getString(R.string.original_title));
         }
 
     }
@@ -463,24 +462,22 @@ public class FilmeBottonFragment extends Fragment {
     private void setSpokenLanguages() {
         if (!movieDb.getSpokenLanguages().isEmpty()) {
             List<Language> languages = movieDb.getSpokenLanguages();
-
-            spoken_languages.setText(languages.get(0).getName());
+            if (languages.size() > 0) {
+                spoken_languages.setText(languages.get(0).getName()); //????????????
+            }
         } else {
-            spoken_languages.setText(getResources().getString(R.string.não_informado));
+            spoken_languages.setText(getString(R.string.não_informado));
         }
     }
 
     private void setProductionCountries() {
 
-        if (!movieDb.getProductionCompanies().isEmpty()) {
-            StringBuilder stringBuilder = new StringBuilder("");
-            List<ProductionCountry> productionCompanyListanguages = movieDb.getProductionCountries();
-            stringBuilder.append(productionCompanyListanguages.get(0).getName() + " ");
-            Log.d("productionCompany", " " + productionCompanyListanguages.get(0).getName());
-            production_countries.setText(stringBuilder);
+        if (!movieDb.getProductionCountries().isEmpty()) {
+            List<ProductionCountry> productionCountries = movieDb.getProductionCountries();
+            production_countries.setText(productionCountries.get(0).getName());
         } else {
 
-            production_countries.setText(getResources().getString(R.string.não_informado));
+            production_countries.setText(getString(R.string.não_informado));
             Log.d("Produtores Paises", "" + movieDb.getProductionCountries());
         }
 
@@ -500,15 +497,14 @@ public class FilmeBottonFragment extends Fragment {
 
                     if (popularidade.charAt(0) == '0') {
                         popularidade = popularidade.substring(2, popularidade.length());
-                        popularity.setText(popularidade + " " + getResources().getString(mil));
-
+                        popularity.setText(popularidade + " " + getString(mil));
 
                     } else {
                         int posicao = popularidade.indexOf(".") + 2;
                         popularidade = popularidade.substring(0, posicao);
                         String milhoes = null;
                         if (isAdded()) {
-                            milhoes = getResources().getString(R.string.milhoes);
+                            milhoes = getString(R.string.milhoes);
                         }
                         popularidade = popularidade.concat(" " + milhoes);
                         popularity.setText(popularidade);
@@ -519,10 +515,9 @@ public class FilmeBottonFragment extends Fragment {
 
             animatorCompat.setDuration(900);
             animatorCompat.setTarget(voto_quantidade);
-
-            animatorCompat.start();
-
-
+            if (isAdded()) {
+                animatorCompat.start();
+            }
         }
 
     }
@@ -608,6 +603,7 @@ public class FilmeBottonFragment extends Fragment {
         if (similarMovies.getResults().size() > 0) {
             int tamanho = similarMovies.getResults().size() < 10 ? similarMovies.getResults().size() : 10;
             getView().findViewById(R.id.textview_similares).setVisibility(View.VISIBLE);
+            textview_similares.setTextColor(getResources().getColor(R.color.primary));
             for (int i = 0; i < tamanho; i++) {
                 final MovieDb movie = similarMovies.getResults().get(i);
 
@@ -727,7 +723,6 @@ public class FilmeBottonFragment extends Fragment {
                 Log.d("OnClick", youtube_key);
                 //Acontence erros - Necessario corrigir
                 linearLayout.addView(linearteste);
-
             }
         }
     }
@@ -750,10 +745,14 @@ public class FilmeBottonFragment extends Fragment {
 
     private void setHome() {
         if (movieDb.getHomepage() != null) {
-            icon_site.setImageResource(R.drawable.site_on);
+            if (movieDb.getHomepage().length() > 5) {
+                Log.d("SETHOME", movieDb.getHomepage());
+                icon_site.setImageResource(R.drawable.site_on);
+            } else {
+                icon_site.setImageResource(R.drawable.site_off);
+            }
         } else {
             icon_site.setImageResource(R.drawable.site_off);
-
         }
     }
 
@@ -770,46 +769,48 @@ public class FilmeBottonFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            TmdbMovies movies = FilmeService.getTmdbMovies();
-            Log.d("FilmeBottonFragment", "doInBackground: -> " + id_filme);
-            movieDb = movies.getMovie(id_filme, getResources().getString(R.string.IDIOMAS)
-                    , credits, releases, videos, reviews, similar);
+            if (isAdded()) {
+                TmdbMovies movies = FilmeService.getTmdbMovies();
+                Log.d("FilmeBottonFragment", "doInBackground: -> " + id_filme);
 
-            movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
-            movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());
-            Log.d("FilmeBottonFragment", "doInBackground: VIDEOS " + movieDb.getVideos().size());
-            similarMovies = movies.getSimilarMovies(id_filme, getResources().getString(R.string.IDIOMAS), 1);
-            Log.d("FilmeBottonFragment", "doInBackground: Similares " + similarMovies.getResults().size());
+                movieDb = movies.getMovie(id_filme, getString(R.string.IDIOMAS)
+                        , credits, releases, videos, reviews, similar);
+                movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
+                movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());
+                Log.d("FilmeBottonFragment", "doInBackground: VIDEOS " + movieDb.getVideos().size());
+                similarMovies = movies.getSimilarMovies(id_filme, getString(R.string.IDIOMAS), 1);
+                Log.d("FilmeBottonFragment", "doInBackground: Similares " + similarMovies.getResults().size());
+                return null;
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
-            setTitulo();
-            setCategoria();
-            setLancamento();
-            setTimeFilme();
-            setProdutora();
-            setSinopse();
-            setPoster();
-            setBuget();
-            setHome();
-            setVotoMedia();
-            setOriginalTitle();
-            setSpokenLanguages();
-            setProductionCountries();
-            setPopularity();
-            setReviews();
-            setCollectoin();
-            setCast();
-            setCrews();
-            setTreiler();
-            setSimilares();
-            setAnimacao();
-
-
+            if (isAdded()) { //Só entrar se Fragment estiver "linkado" com activity
+                setTitulo();
+                setCategoria();
+                setLancamento();
+                setTimeFilme();
+                setProdutora();
+                setSinopse();
+                setPoster();
+                setBuget();
+                setHome();
+                setVotoMedia();
+                setOriginalTitle();
+                setSpokenLanguages();
+                setProductionCountries();
+                setPopularity();
+                setReviews();
+                setCollectoin();
+                setCast();
+                setCrews();
+                setTreiler();
+                setSimilares();
+                setAnimacao();
+            }
         }
     }
 

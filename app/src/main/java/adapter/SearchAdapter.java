@@ -29,8 +29,6 @@ public class SearchAdapter extends BaseAdapter {
 
         this.context = context;
         this.movieDbList = movieDbList;
-
-//        Log.d("getItem", String.valueOf(movieDbList.get(0).getTitle()));
         Log.d("Construtor", String.valueOf("" + movieDbList == null));
 
     }
@@ -70,11 +68,11 @@ public class SearchAdapter extends BaseAdapter {
         TextView search_voto_media = (TextView) layout.findViewById(R.id.search_voto_media);
         TextView search_title_original = (TextView) layout.findViewById(R.id.search_title_original);
         search_nome.setText(movieDb.getTitle());
-        Log.d("SearchAdapter", "search_nome :" + movieDb.getTitle());
+        Log.d("SearchAdapter", "similares_nome :" + movieDb.getTitle());
         search_data_lancamento.setText(movieDb.getReleaseDate());
-        Log.d("SearchAdapter", "search_data_lancamento :" + movieDb.getReleaseDate());
+        Log.d("SearchAdapter", "similares_data_lancamento :" + movieDb.getReleaseDate());
         search_title_original.setText(movieDb.getOriginalTitle());
-        Log.d("SearchAdapter", "search_data_lancamento :" + movieDb.getOriginalTitle());
+        Log.d("SearchAdapter", "similares_data_lancamento :" + movieDb.getOriginalTitle());
         search_voto_media.setText(Float.toString(movieDb.getVoteAverage()));
         Picasso.with(context)
                 .load(UtilsFilme.getBaseUrlImagem(2) + movieDb.getPosterPath())

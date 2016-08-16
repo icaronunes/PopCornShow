@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -16,14 +15,14 @@
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
-        android:id="@+id/linear_elenco_layout"
+        android:id="@+id/linear_similares_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TextView
-            android:id="@+id/text_elenco_no_internet"
+            android:id="@+id/text_similares_no_internet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -36,7 +35,7 @@
             android:background="@android:color/transparent">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/elenco_recyckeview"
+                android:id="@+id/similares_recyckeview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

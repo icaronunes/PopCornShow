@@ -53,7 +53,6 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + personCast.getProfilePath())
                 .placeholder(R.drawable.person)
                 .into(holder.img_elenco);
-
     }
 
     @Override
@@ -72,7 +71,6 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
             elenco_nome = (TextView) itemView.findViewById(R.id.elenco_nome);
             elenco_character = (TextView) itemView.findViewById(R.id.elenco_character);
             img_elenco = (ImageView) itemView.findViewById(R.id.img_elenco);
-
         }
     }
 }

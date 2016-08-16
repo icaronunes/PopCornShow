@@ -19,17 +19,11 @@
             android:icon="@drawable/icon_agenda"
             android:title="@string/quero_assistir" />
 
-        <item
-            android:id="@+id/recomendacao"
-            android:checkable="true"
-            android:icon="@drawable/icon_recomendacao"
-            android:title="@string/recomendacao" />
-
-        <item
-            android:id="@+id/list"
-            android:checkable="true"
-            android:icon="@drawable/icon_list"
-            android:title="@string/list" />
+        <!--<item-->
+            <!--android:id="@+id/list"-->
+            <!--android:checkable="true"-->
+            <!--android:icon="@drawable/icon_list"-->
+            <!--android:title="@string/list" />-->
     </group>
 
     <group

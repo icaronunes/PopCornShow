@@ -7,6 +7,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -37,7 +39,6 @@ public class ElencoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_elenco);
         setUpToolBar();
-        setupNavDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
         Log.d("ElencoActivity", " " + id_filme);
@@ -64,6 +65,19 @@ public class ElencoActivity extends BaseActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            finish();
+        }
+        return true;
+    }
+
     protected void snack() {
         Snackbar.make(linear_search_layout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, new View.OnClickListener() {
@@ -81,8 +95,7 @@ public class ElencoActivity extends BaseActivity {
     }
 
 
-    public class TMDVAsync extends AsyncTask<Void, Void, MovieDb> {
-
+    private class TMDVAsync extends AsyncTask<Void, Void, MovieDb> {
 
         @Override
         protected MovieDb doInBackground(Void... voids) {

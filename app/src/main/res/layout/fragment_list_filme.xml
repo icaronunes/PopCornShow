@@ -1,17 +1,17 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frame_list_filme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:id="@+id/frame_list_filme">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/textLayoutFilmes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center"
-        android:visibility="invisible"
+        android:layout_marginTop="250dp"
         android:elevation="0dp"
-        android:layout_marginTop="250dp" />
+        android:visibility="invisible" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeToRefresh"

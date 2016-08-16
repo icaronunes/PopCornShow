@@ -1,21 +1,26 @@
 package activity;
 
 import android.app.Dialog;
+import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Movie;
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.view.menu.SubMenuBuilder;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -24,15 +29,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
+import info.movito.themoviedbapi.TmdbAccount;
+import info.movito.themoviedbapi.model.MovieList;
 import info.movito.themoviedbapi.model.config.Account;
 import utils.Constantes;
 import utils.Prefs;
 import utils.UtilsFilme;
-
-import static br.com.icaro.filme.R.id.watchlist;
 
 
 /**
@@ -42,7 +49,7 @@ import static br.com.icaro.filme.R.id.watchlist;
 public class BaseActivity extends AppCompatActivity {
 
     static String TAG = "BaseActivity";
-    static Account account = FilmeApplication.getInstance().getAccount();
+    static Account account;
     protected DrawerLayout drawerLayout;
     protected NavigationView navigationView;
     ImageView imgUserBackground;
@@ -57,7 +64,6 @@ public class BaseActivity extends AppCompatActivity {
         if (toolbar != null) {
             toolbar.setTitleTextColor(getResources().getColor(R.color.white));
             setSupportActionBar(toolbar);
-
         }
     }
 
@@ -123,7 +129,11 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.top_rated: {
                 this.navigationView.setCheckedItem(id);
             }
-        }
+//            case R.id.list: {
+//                this.navigationView.setCheckedItem(id);
+//            } //Metoda da API não carrega filmes da list.
+
+        }//??????????? Cade os outros?
 
     }
 
@@ -135,29 +145,28 @@ public class BaseActivity extends AppCompatActivity {
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing);
                 intent.putExtra(Constantes.ABA, R.id.now_playing);
                 startActivity(intent);
-                Toast.makeText(this, "click 1", Toast.LENGTH_SHORT).show();
-                //Nada aqui, pois somente a mainactivity tem menu lateral
+
                 break;
             case R.id.upcoming:
                 intent = new Intent(this, MainActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.upcoming);
                 intent.putExtra(Constantes.ABA, R.id.upcoming);
                 startActivity(intent);
-                Toast.makeText(this, "click 2", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.popular:
                 intent = new Intent(this, MainActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.popular);
                 intent.putExtra(Constantes.ABA, R.id.popular);
                 startActivity(intent);
-                Toast.makeText(this, "click 4", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.top_rated:
                 intent = new Intent(this, MainActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.top_rated);
                 intent.putExtra(Constantes.ABA, R.id.top_rated);
                 startActivity(intent);
-                Toast.makeText(this, "top_rated", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.nav_item_settings:
                 Toast.makeText(this, "nav_item_settings", Toast.LENGTH_SHORT).show();
@@ -167,24 +176,26 @@ public class BaseActivity extends AppCompatActivity {
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.favorite);
                 intent.putExtra(Constantes.ABA, R.id.favorite);
                 startActivity(intent);
-                Toast.makeText(this, "favorite", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.rated:
                 intent = new Intent(this, RatedActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.avaliados);
                 intent.putExtra(Constantes.ABA, R.id.favorite);
                 startActivity(intent);
-                Toast.makeText(this, "rated", Toast.LENGTH_SHORT).show();
                 break;
-            case watchlist:
+            case R.id.watchlist:
                 intent = new Intent(this, WatchListActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.quero_assistir);
                 intent.putExtra(Constantes.ABA, R.id.favorite);
                 startActivity(intent);
-                Toast.makeText(this, "watchlist", Toast.LENGTH_SHORT).show();
                 break;
+//            case R.id.list:
+//                intent = new Intent(this, ListUserActivity.class);
+//                startActivity(intent);
+//                Toast.makeText(this, "watchlist", Toast.LENGTH_SHORT).show();
+//                break;
         }
-
     }
 
     @Override
@@ -278,8 +289,6 @@ public class BaseActivity extends AppCompatActivity {
                         new Thread() {
                             @Override
                             public void run() {
-                                // String user = Prefs.getString(BaseActivity.this, Prefs.LOGIN, Prefs.LOGIN_PASS);
-                                //String pass = Prefs.getString(BaseActivity.this, Prefs.PASS, Prefs.LOGIN_PASS);
                                 if (FilmeService.getAccount(user, pass) == null) {
                                     Log.d(TAG, "Não logou");
                                     progressDialog.dismiss();
