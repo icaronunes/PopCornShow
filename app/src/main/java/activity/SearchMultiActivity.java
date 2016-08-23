@@ -3,13 +3,11 @@ package activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Movie;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
@@ -28,26 +26,28 @@ import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.model.MovieDb;
-import info.movito.themoviedbapi.model.core.MovieResultsPage;
+import info.movito.themoviedbapi.model.Multi;
+import info.movito.themoviedbapi.model.people.Person;
 import utils.Constantes;
 import utils.UtilsFilme;
+
+import static br.com.icaro.filme.R.string.movieDb;
 
 
 /**
  * Created by icaro on 08/07/16.
  */
 
-public class SearchActivity extends BaseActivity {
+public class SearchMultiActivity extends BaseActivity {
 
     ListView listView;
     String query;
-    List<MovieDb> movieDbList = null;
+    List<Multi> movieDbList = null;
     TextView text_search_empty;
     SwipeRefreshLayout swipeRefreshLayout;
     LinearLayout linear_search_layout;
-    private int pagina = 1;
     ProgressBar progressBar;
-
+    private int pagina = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class SearchActivity extends BaseActivity {
         linear_search_layout = (LinearLayout) findViewById(R.id.linear_search_layout);
         progressBar = (ProgressBar) findViewById(R.id.progress);
 
-        Log.d("SearchActivity", "onCreate");
+        Log.d("SearchMultiActivity", "onCreate");
         if (savedInstanceState == null) {
 
 //            query = myIntent.getStringExtra(SearchManager.QUERY);
@@ -86,39 +86,59 @@ public class SearchActivity extends BaseActivity {
             snack();
         }
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                ImageView imageView = (ImageView) view.findViewById(R.id.img_search);
-//                Intent intent = new Intent(SearchActivity.this, FilmeActivity.class);
-//                int color = UtilsFilme.loadPalette(imageView);
-//                intent.putExtra(Constantes.COLOR_TOP, color);
-//                intent.putExtra(Constantes.FILME_ID, movieDbList.get(position).getId());
-//                intent.putExtra(Constantes.NOME_FILME, movieDbList.get(position).getTitle());
-//                startActivity(intent);
-//
-//            }
-//        });
-        //swipeRefreshLayout.setOnRefreshListener(OnRefreshListener());
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                if (movieDbList.get(position).getMediaType().equals(Multi.MediaType.MOVIE)) {
+                    MovieDb movieDb = ((MovieDb) movieDbList.get(position));
+                    ImageView imageView = (ImageView) view.findViewById(R.id.img_search);
+                    Intent intent = new Intent(SearchMultiActivity.this, FilmeActivity.class);
+                    int color = UtilsFilme.loadPalette(imageView);
+                    intent.putExtra(Constantes.COLOR_TOP, color);
+
+                    intent.putExtra(Constantes.FILME_ID, movieDb.getId());
+                    Log.d("setOnItemClickListener", movieDb.getOriginalTitle());
+
+                    intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
+                    startActivity(intent);
+                }
+
+                if (movieDbList.get(position).getMediaType().equals(Multi.MediaType.PERSON)) {
+                    Person person = ((Person) movieDbList.get(position));
+                    ImageView imageView = (ImageView) view.findViewById(R.id.img_search);
+                    Intent intent = new Intent(SearchMultiActivity.this, PersonActivity.class);
+                    int color = UtilsFilme.loadPalette(imageView);
+                    intent.putExtra(Constantes.COLOR_TOP, color);
+                    intent.putExtra(Constantes.PERSON_ID, person.getId());
+                    Log.d("setOnItemClickListener", person.getName());
+                    intent.putExtra(Constantes.NOME_PERSON, person.getName());
+                    startActivity(intent);
+                }
+                if (movieDbList.get(position).getMediaType().equals(Multi.MediaType.TV_SERIES)) {
+
+                }
+            }
+        });
+        swipeRefreshLayout.setOnRefreshListener(OnRefreshListener());
     }
 
-  //  private SwipeRefreshLayout.OnRefreshListener OnRefreshListener() {
-//        return new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                if (UtilsFilme.isNetWorkAvailable(SearchActivity.this)) {
-//                    TMDVAsync tmdvAsync = new TMDVAsync();
-//                    tmdvAsync.execute();
-//                    text_search_empty.setVisibility(View.GONE);
-//                } else {
-//                    text_search_empty.setText(R.string.no_internet);
-//                    text_search_empty.setText(View.VISIBLE);
-//                    swipeRefreshLayout.setEnabled(false);
-//                    snack();
-//                }
-//            }
-//        };
-    //}
+    private SwipeRefreshLayout.OnRefreshListener OnRefreshListener() {
+        return new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (UtilsFilme.isNetWorkAvailable(SearchMultiActivity.this)) {
+                    TMDVAsync tmdvAsync = new TMDVAsync();
+                    tmdvAsync.execute();
+                    text_search_empty.setVisibility(View.GONE);
+                } else {
+                    text_search_empty.setText(R.string.no_internet);
+                    text_search_empty.setText(View.VISIBLE);
+                    swipeRefreshLayout.setEnabled(false);
+                    snack();
+                }
+            }
+        };
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,7 +168,7 @@ public class SearchActivity extends BaseActivity {
                 }).show();
     }
 
-    public class TMDVAsync extends AsyncTask<Void, Void, List<MovieDb>> {
+    private class TMDVAsync extends AsyncTask<Void, Void, List<Multi>> {
 
         @Override
         protected void onPreExecute() {
@@ -158,23 +178,23 @@ public class SearchActivity extends BaseActivity {
         }
 
         @Override
-        protected List<MovieDb> doInBackground(Void... voids) {//
-            Log.d("SearchAdapter", "doInBackground :" + query);
+        protected List<Multi> doInBackground(Void... voids) {//
             TmdbSearch tmdbSearch = FilmeService.getTmdbSearch();
-            
-            MovieResultsPage movieResultsPage = tmdbSearch.searchMovie(query, 0, "pt-BR", false, pagina);
+            TmdbSearch.MultiListResultsPage movieResultsPage = tmdbSearch.searchMulti(query,
+                    Constantes.PORTUGUES, pagina);
             return movieResultsPage.getResults();
 
         }
 
         @Override
-        protected void onPostExecute(List<MovieDb> movieDbs) {
+        protected void onPostExecute(List<Multi> movieDbs) {
+
             swipeRefreshLayout.setEnabled(true);
             if (movieDbs != null && pagina != 1) {
-                Log.d("SearchAdapter", "onPostExecute :" + query);
-                List<MovieDb> x = movieDbList;
+                Log.d("SearchMultiActivity", "onPostExecute :" + query);
+                List<Multi> x = movieDbList;
                 movieDbList = movieDbs;
-                for (MovieDb movie : x) {
+                for (Multi movie : x) {
                     movieDbList.add(movie);
                 }
                 pagina++;
@@ -184,7 +204,7 @@ public class SearchActivity extends BaseActivity {
             }
             if (movieDbList.size() != 0) {
                 swipeRefreshLayout.setRefreshing(false);
-               // listView.setAdapter(new SearchAdapter(SearchActivity.this, movieDbList));
+                listView.setAdapter(new SearchAdapter(SearchMultiActivity.this, movieDbList));
                 swipeRefreshLayout.setEnabled(true);
                 pagina++;
                 progressBar.setVisibility(View.GONE);

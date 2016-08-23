@@ -1,26 +1,22 @@
 package activity;
 
 import android.app.Dialog;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Movie;
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.view.menu.SubMenuBuilder;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -29,13 +25,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
-import info.movito.themoviedbapi.TmdbAccount;
-import info.movito.themoviedbapi.model.MovieList;
 import info.movito.themoviedbapi.model.config.Account;
 import utils.Constantes;
 import utils.Prefs;
@@ -59,6 +51,25 @@ public class BaseActivity extends AppCompatActivity {
     TextView textLogin;
     String user, pass;
 
+    public static void SnackBar(final View view, String msg) {
+        Snackbar.make(view, msg
+                , Snackbar.LENGTH_SHORT).setCallback(new Snackbar.Callback() {
+            @Override
+            public void onShown(Snackbar snackbar) {
+                super.onShown(snackbar);
+                view.setAlpha(0);
+            }
+
+            @Override
+            public void onDismissed(Snackbar snackbar, int event) {
+                super.onDismissed(snackbar, event);
+                view.setAlpha(1);
+            }
+        })
+                .show();
+
+    }
+
     protected void setUpToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -66,7 +77,6 @@ public class BaseActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
         }
     }
-
 
     protected void setupNavDrawer() {
         if (UtilsFilme.isNetWorkAvailable(getApplicationContext())) {
@@ -210,6 +220,7 @@ public class BaseActivity extends AppCompatActivity {
                 break;
             case R.id.apagar:
                 Prefs.apagar(BaseActivity.this, Prefs.LOGIN_PASS);
+                FilmeApplication.getInstance().setLogado(false);
                 startActivity(new Intent(BaseActivity.this, MainActivity.class));
                 break;
 
@@ -239,13 +250,6 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    //Fecha Menu Lateral
-    protected void closeDrawer() {
-        if (drawerLayout != null) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
-    }
-
     protected View.OnClickListener onClickListenerLogar() {
         return new View.OnClickListener() {
             @Override
@@ -268,7 +272,7 @@ public class BaseActivity extends AppCompatActivity {
                 tmdb.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(BaseActivity.this, SiteTMDB.class);
+                        Intent intent = new Intent(BaseActivity.this, Site.class);
                         startActivity(intent);
                     }
                 });
@@ -308,6 +312,13 @@ public class BaseActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         };
+    }
+
+    //Fecha Menu Lateral
+    protected void closeDrawer() {
+        if (drawerLayout != null) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
     }
 
     protected View.OnClickListener onClickListenerlogado() {
@@ -350,6 +361,7 @@ public class BaseActivity extends AppCompatActivity {
                 imgUserPhoto.setOnClickListener(onClickListenerLogar());
 
             } else {
+                FilmeApplication.getInstance().setLogado(true);
                 textLogin.setVisibility(View.VISIBLE);
                 grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
                 tLogin.setText(account.getUserName());

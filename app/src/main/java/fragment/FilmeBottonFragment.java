@@ -36,9 +36,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import activity.BaseActivity;
 import activity.CrewsActivity;
 import activity.ElencoActivity;
 import activity.FilmeActivity;
+import activity.PersonActivity;
 import activity.PosterGridActivity;
 import activity.ProdutoraActivity;
 import activity.ReviewsActivity;
@@ -85,7 +87,6 @@ public class FilmeBottonFragment extends Fragment {
     LinearLayout linear_container;
     CollectionInfo info;
     MovieResultsPage similarMovies;
-    TMDVAsync tmdvAsync;
     private int color_top;
 
     //************* Alguns metodos senco chamados 2 vezes
@@ -98,7 +99,6 @@ public class FilmeBottonFragment extends Fragment {
             getActivity().getIntent().getIntExtra(Constantes.ABA, 0);
             Log.d("FilmeBottonFragment", "onCreate -> " + id_filme);
         }
-
     }
 
     @Nullable
@@ -152,9 +152,8 @@ public class FilmeBottonFragment extends Fragment {
                     startActivity(intent);
                 } else {
                     Log.d("SetSnack", "" + movieDb.getBudget());
-                    Snackbar.make(linear_container, getString(R.string.no_message)
-                            , Snackbar.LENGTH_SHORT)
-                            .show();
+                    BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
+                            getString(R.string.no_message));
                 }
             }
         });
@@ -167,15 +166,13 @@ public class FilmeBottonFragment extends Fragment {
                     String valor = String.valueOf(movieDb.getBudget());
                     valor.length();
                     valor = valor.substring(0, valor.length() - 6);
-                    Snackbar.make(linear_container, getString(R.string.orcamento_budget) + " " +
+                    BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
+                            getString(R.string.orcamento_budget) + " " +
                                     getString(R.string.dollar)
-                                    + " " + valor + " " + getString(R.string.milhoes_budget)
-                            , Snackbar.LENGTH_LONG)
-                            .show();
+                                    + " " + valor + " " + getString(R.string.milhoes_budget));
                 } else {
-                    Snackbar.make(linear_container, R.string.no_budget
-                            , Snackbar.LENGTH_SHORT)
-                            .show();
+                    BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
+                            getString(R.string.no_budget));
                 }
             }
         });
@@ -185,16 +182,15 @@ public class FilmeBottonFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d("FilmeBottonFragment", "Home " + movieDb.getHomepage());
-                if (movieDb.getHomepage() != "") {
+                if (movieDb.getHomepage() != "" && movieDb.getHomepage() != null) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(movieDb.getHomepage()));
                     Log.d("FilmeBottonFragment", "Home " + movieDb.getHomepage());
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 } else {
-                    Snackbar.make(linear_container, R.string.no_site
-                            , Snackbar.LENGTH_SHORT)
-                            .show();
+                    BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
+                            getString(R.string.no_site));
                 }
             }
         });
@@ -204,14 +200,13 @@ public class FilmeBottonFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (movieDb.getVoteCount() > 0) {
-                    Snackbar.make(linear_container, movieDb.getVoteCount()
-                                    + " " + getString(R.string.person_vote)
-                            , Snackbar.LENGTH_SHORT)
-                            .show();
+                    BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
+                            movieDb.getVoteCount()
+                                    + " " + getString(R.string.person_vote));
                 } else {
-                    Snackbar.make(linear_container, R.string.no_vote
-                            , Snackbar.LENGTH_SHORT)
-                            .show();
+                    BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
+                            movieDb.getVoteCount()
+                                    + " " + getString(R.string.no_vote));
                 }
             }
         });
@@ -230,9 +225,8 @@ public class FilmeBottonFragment extends Fragment {
                         }
                     }.start();
                 } else {
-                    Snackbar.make(linear_container, R.string.collecion_off
-                            , Snackbar.LENGTH_SHORT)
-                            .show();
+                    BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
+                            getString(R.string.collecion_off));
                 }
             }
 
@@ -495,11 +489,12 @@ public class FilmeBottonFragment extends Fragment {
                     float valor = (Float) valueAnimator.getAnimatedValue();
                     String popularidade = String.valueOf(valor);
 
-                    if (popularidade.charAt(0) == '0') {
+                    if (popularidade.charAt(0) == '0'  && isAdded()) {
                         popularidade = popularidade.substring(2, popularidade.length());
                         popularity.setText(popularidade + " " + getString(mil));
 
                     } else {
+
                         int posicao = popularidade.indexOf(".") + 2;
                         popularidade = popularidade.substring(0, posicao);
                         String milhoes = null;
@@ -524,11 +519,11 @@ public class FilmeBottonFragment extends Fragment {
 
 
     private void setCast() {
-        if (movieDb.getCast().size() > 0) {
+        if (movieDb.getCast().size() > 0 && isAdded()) {
             int tamanho = movieDb.getCast().size() < 15 ? movieDb.getCast().size() : 15;
             textview_elenco.setVisibility(View.VISIBLE);
             for (int i = 0; i < tamanho; i++) {
-                PersonCast personCast = movieDb.getCredits().getCast().get(i);
+                final PersonCast personCast = movieDb.getCredits().getCast().get(i);
                 View view = getActivity().getLayoutInflater().inflate(R.layout.scroll_elenco, (ViewGroup) getView(), false);
                 LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.scroll_elenco_linerlayout);
                 View linearInterno = view.findViewById(R.id.scroll_elenco_linearlayout);
@@ -555,6 +550,16 @@ public class FilmeBottonFragment extends Fragment {
                     progressBar.setVisibility(View.GONE);
                 }
 
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getContext(), PersonActivity.class);
+                        intent.putExtra(Constantes.PERSON_ID, personCast.getId());
+                        intent.putExtra(Constantes.NOME_PERSON, personCast.getName());
+                        getContext().startActivity(intent);
+                    }
+                });
+
                 linearLayout.addView(linearInterno);
 
             }
@@ -567,7 +572,7 @@ public class FilmeBottonFragment extends Fragment {
             textview_crews.setVisibility(View.VISIBLE);
             Log.d("setCrews", "Tamanho " + movieDb.getCredits().getCrew().size());
             for (int i = 0; i < tamanho; i++) {
-                PersonCrew crew = movieDb.getCredits().getCrew().get(i);
+                final PersonCrew crew = movieDb.getCredits().getCrew().get(i);
                 View view = getActivity().getLayoutInflater().inflate(R.layout.scroll_crews, (ViewGroup) getView(), false);
                 LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.scroll_crew_liner);
                 View layoutScroll = view.findViewById(R.id.scroll_crews_linearlayout);
@@ -592,6 +597,16 @@ public class FilmeBottonFragment extends Fragment {
                     progressBarCrew.setVisibility(View.GONE);
                     imgPagerCrews.setVisibility(View.GONE);
                 }
+
+                imgPagerCrews.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getContext(), PersonActivity.class);
+                        intent.putExtra(Constantes.PERSON_ID, crew.getId());
+                        intent.putExtra(Constantes.NOME_PERSON, crew.getName());
+                        getContext().startActivity(intent);
+                    }
+                });
                 linearLayout.addView(layoutScroll);
             }
 
@@ -765,7 +780,7 @@ public class FilmeBottonFragment extends Fragment {
     }
 
 
-    public class TMDVAsync extends AsyncTask<Void, Void, Void> {
+    private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {

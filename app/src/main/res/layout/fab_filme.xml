@@ -7,7 +7,7 @@
     android:layout_gravity="bottom|right"
     android:layout_marginBottom="6dp"
     android:layout_marginRight="6dp"
-    android:visibility="invisible">
+    android:visibility="visible">
 
 
     <com.github.clans.fab.FloatingActionButton
@@ -33,5 +33,4 @@
         android:src="@drawable/fab_star2"
         fab:fab_label="Avaliar"
         fab:fab_size="mini" />
-
 </com.github.clans.fab.FloatingActionMenu>

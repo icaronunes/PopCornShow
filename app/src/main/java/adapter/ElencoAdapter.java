@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,12 +15,11 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import activity.ElencoActivity;
+import activity.PersonActivity;
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.people.PersonCast;
+import utils.Constantes;
 import utils.UtilsFilme;
-
-import static br.com.icaro.filme.R.string.movieDb;
 
 /**
  * Created by icaro on 24/07/16.
@@ -46,13 +46,23 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
 
     @Override
     public void onBindViewHolder(ElencoAdapter.ElencoViewHolder holder, int position) {
-        PersonCast personCast = casts.get(position);
+        final PersonCast personCast = casts.get(position);
         holder.elenco_character.setText(personCast.getCharacter());
 
         holder.elenco_nome.setText(personCast.getName());
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + personCast.getProfilePath())
                 .placeholder(R.drawable.person)
                 .into(holder.img_elenco);
+
+        holder.img_elenco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, PersonActivity.class);
+                intent.putExtra(Constantes.PERSON_ID, personCast.getId());
+                intent.putExtra(Constantes.NOME_PERSON, personCast.getName());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

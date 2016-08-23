@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,8 +15,10 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import activity.CrewsActivity;
+import activity.PersonActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.people.PersonCrew;
+import utils.Constantes;
 import utils.UtilsFilme;
 
 /**
@@ -43,13 +46,22 @@ public class CrewsAdapter extends RecyclerView.Adapter<CrewsAdapter.CrewsViewHol
 
     @Override
     public void onBindViewHolder(CrewsViewHolder holder, int position) {
-        PersonCrew personCrew = crews.get(position);
+        final PersonCrew personCrew = crews.get(position);
         holder.crew_character.setText(personCrew.getDepartment() + " " + personCrew.getJob());
 
         holder.crew_nome.setText(personCrew.getName());
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + personCrew.getProfilePath())
                 .placeholder(R.drawable.person)
                 .into(holder.img_crew);
+        holder.img_crew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, PersonActivity.class);
+                intent.putExtra(Constantes.PERSON_ID, personCrew.getId());
+                intent.putExtra(Constantes.NOME_PERSON, personCrew.getName());
+                context.startActivity(intent);
+            }
+        });
 
     }
 

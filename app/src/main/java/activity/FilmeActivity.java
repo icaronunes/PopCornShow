@@ -5,12 +5,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
+import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import fragment.FilmeBottonFragment;
@@ -34,7 +36,6 @@ import utils.Constantes;
 import utils.Prefs;
 import utils.UtilsFilme;
 
-import static com.google.common.collect.ComparisonChain.start;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.images;
 
 public class FilmeActivity extends BaseActivity {
@@ -48,7 +49,6 @@ public class FilmeActivity extends BaseActivity {
     private ProgressBar progressBar;
     private MovieDb movieDb;
     private boolean addFavorite = true;
-    private boolean addRated = true;
     private boolean addWatch = true;
 
     @Override
@@ -67,8 +67,6 @@ public class FilmeActivity extends BaseActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress);
         viewPager = (ViewPager) findViewById(R.id.top_img_viewpager);
         viewPager.setBackgroundColor(color_fundo);
-        Log.d("color", " " + color_fundo);
-
 
         if (savedInstanceState == null) {
             FilmeBottonFragment filmeFrag = new FilmeBottonFragment();
@@ -82,21 +80,21 @@ public class FilmeActivity extends BaseActivity {
                     .commit();
         }
 
-        setColorFab(color_fundo);
-
-        menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
-
-        menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
-
-        menu_item_rated.setOnClickListener(RatedFilme());
+        if (FilmeApplication.getInstance().isLogado()) {
+            Log.d("FAB", "FAB");
+            setColorFab(color_fundo);
+            menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
+            menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
+            menu_item_rated.setOnClickListener(RatedFilme());
+        } else {
+            fab.setAlpha(0);
+        }
 
     }
 
     private View.OnClickListener RatedFilme() {
         return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
+            @Override public void onClick(View view) {
                 final Dialog alertDialog = new Dialog(getContext());
                 alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 alertDialog.setContentView(R.layout.adialog_custom_rated);
@@ -130,7 +128,7 @@ public class FilmeActivity extends BaseActivity {
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Log.d("Status", ""+status)
+                                                Log.d("Status", "" + status);
                                                 if (status) {
                                                     Toast.makeText(getContext(), getResources().getString(R.string.filme_rated), Toast.LENGTH_SHORT)
                                                             .show();
@@ -154,7 +152,6 @@ public class FilmeActivity extends BaseActivity {
                     }
 
                 });
-
                 alertDialog.show();
             }
         };
@@ -190,7 +187,7 @@ public class FilmeActivity extends BaseActivity {
                                         break;
                                     }
                                     case 12: {
-                                        Toast.makeText(getContext(), getString(R.string.filme_readd_favorite), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), getString(R.string.filme_re_add), Toast.LENGTH_SHORT).show();
                                         addFavorite = !addFavorite;
                                         fab.close(true);
                                         fab.close(true);
@@ -231,20 +228,20 @@ public class FilmeActivity extends BaseActivity {
                             public void run() {
                                 switch (status[0].getStatusCode()) {
                                     case 1: {
-                                        Toast.makeText(getContext(), getString(R.string.filme_add_favorite), Toast.LENGTH_SHORT)
+                                        Toast.makeText(getContext(), getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
                                                 .show();
                                         addWatch = !addWatch;
                                         fab.close(true);
                                         break;
                                     }
                                     case 12: {
-                                        Toast.makeText(getContext(), getString(R.string.filme_readd_favorite), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), getString(R.string.filme_re_add), Toast.LENGTH_SHORT).show();
                                         addWatch = !addWatch;
                                         fab.close(true);
                                         break;
                                     }
                                     case 13: {
-                                        Toast.makeText(getContext(), getString(R.string.filme_remove_favorite), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), getString(R.string.filme_remove_watchlist), Toast.LENGTH_SHORT).show();
                                         addWatch = !addWatch;
                                         fab.close(true);
                                     }

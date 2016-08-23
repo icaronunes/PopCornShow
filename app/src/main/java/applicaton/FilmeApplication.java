@@ -35,9 +35,17 @@ public class FilmeApplication extends Application {
     private static String session;
     private static TmdbApi tmdbApi;
     private static Account account;
+    private boolean logado = false;
     private static String user, pass;
     private Bus bus = new Bus();
-    private boolean logado = false;
+
+    public boolean isLogado() {
+        return logado;
+    }
+
+    public void setLogado(boolean logado) {
+        this.logado = logado;
+    }
 
     public static FilmeApplication getInstance() {
         return instance;

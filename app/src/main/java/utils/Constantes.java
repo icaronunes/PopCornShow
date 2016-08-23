@@ -23,4 +23,8 @@ public class Constantes {
     public static final String PRODUTORA_ID = "produtora_id";
     public static final String LISTA_ID = "lista_id";
     public static final String LISTA_NOME = "lista_nome";
+    public static final String NOME_PERSON = "nome_person";
+    public static final String PERSON_ID = "person_id";
+    public static final String SITE = "site";
+    public static final String POSICAO = "posicao";
 }

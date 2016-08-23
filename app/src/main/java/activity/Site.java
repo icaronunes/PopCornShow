@@ -13,13 +13,14 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import br.com.icaro.filme.R;
+import utils.Constantes;
 
 /**
  * Created by icaro on 02/08/16.
  */
-public class SiteTMDB extends AppCompatActivity {
+public class Site extends AppCompatActivity {
 
-    private static final String URL = "https://www.themoviedb.org/account/signup";
+    private static String URL = "https://www.themoviedb.org/account/signup";
     private WebView webView;
     private ProgressBar progressBar;
     protected SwipeRefreshLayout swipeRefreshLayout;
@@ -33,6 +34,8 @@ public class SiteTMDB extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.webView);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
+
+        URL = getIntent().getStringExtra(Constantes.SITE);
 
         setWebViewClient(webView);
         webView.loadUrl(URL);

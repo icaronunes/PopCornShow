@@ -15,6 +15,7 @@ import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbCollections;
 import info.movito.themoviedbapi.TmdbCompany;
 import info.movito.themoviedbapi.TmdbMovies;
+import info.movito.themoviedbapi.TmdbPeople;
 import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.config.Account;
@@ -24,21 +25,23 @@ import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import info.movito.themoviedbapi.model.core.ResponseStatus;
 import info.movito.themoviedbapi.model.core.ResponseStatusException;
 import info.movito.themoviedbapi.model.core.SessionToken;
+import info.movito.themoviedbapi.model.people.PersonCredits;
 import info.movito.themoviedbapi.tools.ApiUrl;
 import info.movito.themoviedbapi.tools.MovieDbException;
 import info.movito.themoviedbapi.tools.RequestMethod;
 import utils.Config;
 
 import static android.R.attr.id;
+import static android.R.attr.permission;
 import static info.movito.themoviedbapi.TmdbAccount.PARAM_SESSION;
 import static info.movito.themoviedbapi.TmdbAccount.TMDB_METHOD_ACCOUNT;
+import static info.movito.themoviedbapi.TmdbPeople.TMDB_METHOD_PERSON;
 
 /**
  * Created by icaro on 01/07/16.
  */
 
 public class FilmeService {
-
 
     private static final Collection<Integer> SUCCESS_STATUS_CODES = Arrays.asList(
             1, // Success
@@ -58,6 +61,12 @@ public class FilmeService {
     public static TmdbCompany getTmdbCompany() {
         TmdbCompany company = new TmdbApi(Config.TMDB_API_KEY).getCompany();
         return company;
+    }
+
+    public static TmdbPeople getTmdbPerson() {
+        TmdbPeople people = new TmdbApi(Config.TMDB_API_KEY).getPeople();
+
+        return people;
     }
 
     public static TmdbCollections getTmdbCollections() {
@@ -124,6 +133,7 @@ public class FilmeService {
         if (user != null && pass != null) {
             TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
             TmdbAccount account = tmdbApi.getAccount();
+
             TokenSession authentication = tmdbApi
                     .getAuthentication().getSessionLogin(user, pass);
             String session = authentication.getSessionId();
@@ -225,6 +235,12 @@ public class FilmeService {
         apiUrl.addPage(page);
 
         return mapJsonResult(apiUrl, MovieResultsPage.class);
+    }
+    //Copiado da FrameWork - La não ha este metodo de combinar "trabalhos" de filme e Serie
+    public static PersonCredits getPersonCredits(int personId) {
+        ApiUrl apiUrl = new ApiUrl(TMDB_METHOD_PERSON, personId, "combined_credits");
+
+        return mapJsonResult(apiUrl, PersonCredits.class);
     }
 
     public static <T> T mapJsonResult(ApiUrl apiUrl, Class<T> someClass) {

@@ -7,13 +7,16 @@
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout_filme"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
         android:fitsSystemWindows="false">
 
+
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
+            android:id="@+id/nested"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:layout_anchorGravity="top|bottom"
@@ -29,6 +32,7 @@
                     android:layout_height="match_parent" />
 
                 <include layout="@layout/include_progress" />
+
 
             </FrameLayout>
 
@@ -72,7 +76,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/fab_filme"/>
+        <include layout="@layout/fab_filme" />
 
     </android.support.design.widget.CoordinatorLayout>
 

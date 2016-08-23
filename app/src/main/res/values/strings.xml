@@ -77,9 +77,19 @@
     <string name="filme_rated">Filme Classificado...</string>
     <string name="falha_rated">Falha na classificação</string>
     <string name="filme_add_favorite">Filme Adicionado ao Favoritos</string>
-    <string name="filme_readd_favorite">Filme adicionado novamente</string>
+    <string name="filme_re_add">Filme adicionado novamente</string>
     <string name="filme_remove_favorite">Filme removido da lista Favoritos</string>
     <string name="erro_watch">Ops! Algo deu errado.</string>
+    <string name="filme_add_watchlist">Adicionado ao \"Assistir Mais Tarde\"</string>
+    <string name="filme_remove_watchlist">Filme removido</string>
+    <string name="movie">Atuação</string>
+    <string name="person">perfil</string>
+    <string name="crews">Outros</string>
+    <string name="imagem_person">Fotos</string>
+    <string name="apelido">Apelido: </string>
+    <string name="sem_biografia">Sem Biografia</string>
+    <string name="sem_filmes">Sem Filmes</string>
+    <string name="sem_fotos">Sem Fotos</string>
 
 
 </resources>

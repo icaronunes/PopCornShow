@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleView_person_imagem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <include layout="@layout/include_progress" />
+
+        <TextView
+            android:id="@+id/sem_fotos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:gravity="center"
+            android:text="@string/sem_fotos"
+            android:textSize="24sp"
+            android:textStyle="normal|italic"
+            android:visibility="invisible" />
+
+    </FrameLayout>
+</LinearLayout>

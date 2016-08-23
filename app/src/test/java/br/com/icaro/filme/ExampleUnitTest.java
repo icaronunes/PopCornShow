@@ -1,7 +1,17 @@
 package br.com.icaro.filme;
 
+import android.util.Log;
+import android.widget.Toast;
+
+import org.junit.Assert;
 import org.junit.Test;
 
+import domian.FilmeService;
+import info.movito.themoviedbapi.TmdbSearch;
+import info.movito.themoviedbapi.model.MovieDb;
+import utils.Constantes;
+
+import static br.com.icaro.filme.R.string.movieDb;
 import static org.junit.Assert.*;
 
 /**
@@ -14,4 +24,22 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
+
+    @Test
+    public void TesteMuiti(){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TmdbSearch.MultiListResultsPage multis = FilmeService.getTmdbSearch().searchMulti("jason", "pt", 1);
+                MovieDb movieDb = (MovieDb) multis.getResults().get(2);
+                Log.d("setOnItemClickListener", movieDb.getOriginalTitle());
+                Assert.assertEquals("Pedro", movieDb.getTitle());
+
+
+            }
+        }).start();
+
+    }
+
 }
