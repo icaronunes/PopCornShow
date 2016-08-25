@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linear_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:transitionName="poster">
+    android:transitionName="poster"
+    android:weightSum="1">
 
     <TextView
         android:id="@+id/titulo_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
+        android:layout_marginRight="2dp"
         android:background="@color/black_transparente"
         android:gravity="top|start"
         android:lines="2"
         android:maxLines="2"
         android:minLines="1"
-        android:textSize="20sp"
-        android:layout_marginRight="2dp" />
+        android:textSize="20sp" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="3dp">
+        android:layout_margin="3dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/categoria_filme"
@@ -66,9 +65,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginStart="2dp"
             android:maxLength="30"
-            android:maxLines="1"
-            android:layout_marginStart="2dp" />
+            android:maxLines="1" />
 
         <TextView
             android:id="@+id/lancamento"
@@ -86,15 +85,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="3dp">
+        android:layout_margin="3dp"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/img_poster"
             android:layout_width="126dp"
             android:layout_height="162dp"
-            android:transitionName="poster"
-            android:contentDescription="@string/poster_filme" />
+            android:contentDescription="@string/poster_filme"
+            android:transitionName="poster" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -109,8 +108,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
-                    android:layout_gravity="center_vertical|center_horizontal">
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_margin="1dp">
 
                     <ImageView
                         android:id="@+id/img_star"
@@ -131,9 +130,9 @@
                     android:id="@+id/img_budget"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_marginLeft="1dp"
-                    android:elevation="0dp"
-                    android:layout_gravity="center_vertical|center_horizontal" />
+                    android:elevation="0dp" />
 
                 <ImageView
                     android:id="@+id/icon_site"
@@ -163,16 +162,16 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
                 android:orientation="vertical"
-                android:weightSum="1"
-                android:layout_margin="3dp">
+                android:weightSum="1">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
                     android:orientation="horizontal"
-                    android:weightSum="1"
-                    android:layout_margin="1dp">
+                    android:weightSum="1">
 
                     <TextView
                         android:layout_width="120dp"
@@ -191,8 +190,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="1dp">
+                    android:layout_margin="1dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="120dp"
@@ -269,10 +268,10 @@
         android:id="@+id/horizontal_treiler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="3dp"
         android:fillViewport="false"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
-        android:scrollbarAlwaysDrawVerticalTrack="false"
-        android:layout_margin="3dp">
+        android:scrollbarAlwaysDrawVerticalTrack="false">
 
         <LinearLayout
             android:id="@+id/scroll_treiler_linerlayout"
@@ -288,20 +287,20 @@
         android:layout_height="wrap_content"
         android:background="@color/black_transparente"
         android:gravity="center_horizontal"
+        android:hint="@string/elenco"
         android:text="@string/elenco"
         android:textColor="@color/primary_dark"
         android:textSize="18sp"
         android:textStyle="normal|bold"
-        android:visibility="invisible"
-        android:hint="@string/elenco" />
+        android:visibility="invisible" />
 
     <HorizontalScrollView
         android:id="@+id/horizontal_elenco"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="3dp"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
-        android:scrollbarAlwaysDrawVerticalTrack="false"
-        android:layout_margin="3dp">
+        android:scrollbarAlwaysDrawVerticalTrack="false">
 
         <LinearLayout
             android:id="@+id/scroll_elenco_linerlayout"
@@ -328,11 +327,11 @@
         android:id="@+id/horizontal_crew"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="3dp"
         android:elevation="0dp"
         android:fillViewport="false"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
-        android:scrollbarAlwaysDrawVerticalTrack="false"
-        android:layout_margin="3dp">
+        android:scrollbarAlwaysDrawVerticalTrack="false">
 
         <LinearLayout
             android:id="@+id/scroll_crew_liner"
@@ -358,10 +357,10 @@
         android:id="@+id/horizontal_similares"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="3dp"
         android:fillViewport="false"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
-        android:scrollbarAlwaysDrawVerticalTrack="false"
-        android:layout_margin="3dp">
+        android:scrollbarAlwaysDrawVerticalTrack="false">
 
         <LinearLayout
             android:id="@+id/scroll_similares_linerlayout"

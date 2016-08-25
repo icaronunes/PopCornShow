@@ -6,12 +6,10 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -28,15 +26,24 @@ import br.com.icaro.filme.R;
 import domian.FilmeService;
 import fragment.FilmeBottonFragment;
 import fragment.ImagemTopScrollFragment;
+import info.movito.themoviedbapi.TmdbAccount;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.ArtworkType;
 import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import info.movito.themoviedbapi.model.core.ResponseStatus;
 import utils.Constantes;
 import utils.Prefs;
 import utils.UtilsFilme;
 
+import static com.google.android.gms.analytics.internal.zzy.i;
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.alternative_titles;
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.credits;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.images;
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.releases;
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.reviews;
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.similar;
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.videos;
 
 public class FilmeActivity extends BaseActivity {
 
@@ -49,7 +56,8 @@ public class FilmeActivity extends BaseActivity {
     private ProgressBar progressBar;
     private MovieDb movieDb;
     private boolean addFavorite = true;
-    private boolean addWatch = true;
+    private boolean addWatch = true; // Retirar quando metodo de saber, estiver pronto
+    private MovieResultsPage similarMovies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +66,8 @@ public class FilmeActivity extends BaseActivity {
         setUpToolBar();
         setupNavDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle(" "); // Recebendo as vezes titulo em ingles. Necessario esperar nova busca. Resolver!
+        setTitle(" ");
+        id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
         color_fundo = getIntent().getIntExtra(Constantes.COLOR_TOP, R.color.transparent);
         menu_item_favorite = (FloatingActionButton) findViewById(R.id.menu_item_favorite);
         menu_item_watchlist = (FloatingActionButton) findViewById(R.id.menu_item_watchlist);
@@ -67,17 +76,10 @@ public class FilmeActivity extends BaseActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress);
         viewPager = (ViewPager) findViewById(R.id.top_img_viewpager);
         viewPager.setBackgroundColor(color_fundo);
-
+        new TMDVAsync().execute();
         if (savedInstanceState == null) {
-            FilmeBottonFragment filmeFrag = new FilmeBottonFragment();
-            Bundle bundle = new Bundle(); //Tentar pegar nome que esta no bundle / Posso pasar o bundle direto?
-            bundle.putInt(Constantes.FILME_ID, getIntent().getExtras().getInt(Constantes.FILME_ID));
-            filmeFrag.setArguments(bundle);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.filme_container, filmeFrag, null)
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)// ????????
-                    .commit();
+
+
         }
 
         if (FilmeApplication.getInstance().isLogado()) {
@@ -174,7 +176,7 @@ public class FilmeActivity extends BaseActivity {
                     public void run() {
                         String user = Prefs.getString(getContext(), Prefs.LOGIN, Prefs.LOGIN_PASS);
                         String pass = Prefs.getString(getContext(), Prefs.PASS, Prefs.LOGIN_PASS);
-                        status[0] = FilmeService.addOrRemoverFavorite(user, pass, id_filme, addFavorite);
+                        status[0] = FilmeService.addOrRemoverFavorite(id_filme, addFavorite, TmdbAccount.MediaType.MOVIE);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -222,7 +224,7 @@ public class FilmeActivity extends BaseActivity {
                     public void run() {
                         String user = Prefs.getString(getContext(), Prefs.LOGIN, Prefs.LOGIN_PASS);
                         String pass = Prefs.getString(getContext(), Prefs.PASS, Prefs.LOGIN_PASS);
-                        status[0] = FilmeService.addOrRemoverWatchList(user, pass, id_filme, addWatch);
+                        status[0] = FilmeService.addOrRemoverWatchList(id_filme, addWatch, TmdbAccount.MediaType.MOVIE);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -267,12 +269,6 @@ public class FilmeActivity extends BaseActivity {
         collapsingToolbarLayout.setTitle(title);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
-        new TMDVAsync().execute();
-    }
 
     private class ImagemTopFragment extends FragmentPagerAdapter {
 
@@ -309,9 +305,12 @@ public class FilmeActivity extends BaseActivity {
         @Override
         protected MovieDb doInBackground(Void... voids) {//
             TmdbMovies movies = FilmeService.getTmdbMovies();
-            Log.d("FilmeActivity", "doInBackground: -> ID " + id_filme);
             movieDb = movies.getMovie(id_filme, getResources().getString(R.string.IDIOMAS)
-                    , images);
+                    , credits, releases, videos, reviews, similar, alternative_titles, images);
+            movieDb.getVideos().addAll(movies.getMovie(movieDb.getId(), "en", videos).getVideos());
+            movieDb.getReviews().addAll(movies.getMovie(movieDb.getId(), "en", reviews).getReviews());
+            similarMovies = movies.getSimilarMovies(movieDb.getId(), getString(R.string.IDIOMAS), 1);
+
             return movieDb;
         }
 
@@ -322,7 +321,23 @@ public class FilmeActivity extends BaseActivity {
             viewPager.setAdapter(new ImagemTopFragment(getSupportFragmentManager()));
             progressBar.setVisibility(View.INVISIBLE);
             fab.setVisibility(View.VISIBLE);
+            setFragmentBotton();
+
         }
+    }
+
+    private void setFragmentBotton() {
+        if (isFinishing())  return; //Gambiara
+        FilmeBottonFragment filmeFrag = new FilmeBottonFragment();
+        Bundle bundle = new Bundle(); //Tentar pegar nome que esta no bundle / Posso pasar o bundle direto?
+        bundle.putSerializable(Constantes.FILME, movieDb);
+        bundle.putSerializable(Constantes.SIMILARES, similarMovies);
+        filmeFrag.setArguments(bundle);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.filme_container, filmeFrag, null)
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)// ????????
+                .commit();
     }
 
 }

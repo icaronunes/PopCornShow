@@ -28,6 +28,7 @@ import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
 import info.movito.themoviedbapi.model.people.Person;
+import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;
 
@@ -115,7 +116,15 @@ public class SearchMultiActivity extends BaseActivity {
                     startActivity(intent);
                 }
                 if (movieDbList.get(position).getMediaType().equals(Multi.MediaType.TV_SERIES)) {
-
+                    TvSeries serie = ((TvSeries) movieDbList.get(position));
+                    ImageView imageView = (ImageView) view.findViewById(R.id.img_search);
+                    Intent intent = new Intent(SearchMultiActivity.this, TvShowActivity.class);
+                    int color = UtilsFilme.loadPalette(imageView);
+                    intent.putExtra(Constantes.COLOR_TOP, color);
+                    intent.putExtra(Constantes.TVSHOW_ID, serie.getId());
+                    Log.d("setOnItemClickListener", serie.getName());
+                    intent.putExtra(Constantes.NOME_TVSHOW, serie.getName());
+                    startActivity(intent);
                 }
             }
         });

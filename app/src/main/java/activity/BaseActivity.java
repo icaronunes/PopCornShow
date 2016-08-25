@@ -223,7 +223,22 @@ public class BaseActivity extends AppCompatActivity {
                 FilmeApplication.getInstance().setLogado(false);
                 startActivity(new Intent(BaseActivity.this, MainActivity.class));
                 break;
-
+            case R.id.serie:{
+                Intent intent = new Intent(this, TvShowActivity.class);
+                intent.putExtra(Constantes.TVSHOW_ID, 1396);
+                intent.putExtra(Constantes.NOME_TVSHOW, "Breaking Bad: A Química do Mal");
+                intent.putExtra(Constantes.COLOR_TOP, 123);
+                startActivity(intent);
+                break;
+            }
+            case R.id.filme: {
+                Intent intent = new Intent(this, FilmeActivity.class);
+                intent.putExtra(Constantes.FILME_ID, 76341);
+                intent.putExtra(Constantes.NOME_FILME, "Mad Max: Estrada da Fúria");
+                intent.putExtra(Constantes.COLOR_TOP, 123);
+                startActivity(intent);
+                break;
+            }
         }
 
         return super.onOptionsItemSelected(item);

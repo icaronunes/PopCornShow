@@ -21,6 +21,7 @@ import utils.UtilsFilme;
  * Created by icaro on 26/07/16.
  */
 public class ImagemTopScrollFragment extends Fragment {
+
     String endereco;
 
     public static Fragment newInstance(String artwork) {
@@ -45,16 +46,10 @@ public class ImagemTopScrollFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.page_scroll_image_top, container, false);
         ImageView imageView = (ImageView) view.findViewById(R.id.img_top_scroll);
-       // Log.d("onCreateView", endereco);
-        if (endereco != null) {
-            Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(5) + endereco)
-                    .priority(Picasso.Priority.HIGH)
-                    .into(imageView);
-        } else {
-            Picasso.with(getContext()).load(R.drawable.top_empty)
-                    .priority(Picasso.Priority.HIGH)
-                    .into(imageView);
-        }
+        Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(5) + endereco)
+                .error(R.drawable.top_empty)
+                .into(imageView);
+
         AnimatorSet animatorSet = new AnimatorSet();
         ObjectAnimator alphaStar = ObjectAnimator.ofFloat(imageView, "y", -100, 0)
                 .setDuration(1000);

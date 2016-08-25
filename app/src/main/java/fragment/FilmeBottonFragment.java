@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -64,10 +63,8 @@ import utils.Constantes;
 import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.string.mil;
-import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.credits;
-import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.releases;
+import static com.squareup.picasso.Picasso.with;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.reviews;
-import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.similar;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.videos;
 
 
@@ -77,11 +74,11 @@ import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.videos;
 
 public class FilmeBottonFragment extends Fragment {
 
-    TextView titulo, categoria, time_filme, sinopse, voto_media, voto_quantidade, produtora,
+    TextView titulo, categoria, time_filme, descricao, voto_media, voto_quantidade, produtora,
             original_title, spoken_languages, production_countries,
             popularity, lancamento, textview_crews, textview_elenco, textview_similares;
     ImageView img_poster, img_star;
-    int id_filme;
+    //int id_filme;
     MovieDb movieDb;
     ImageView icon_reviews, img_budget, icon_site, icon_collection, imgPagerSimilares;
     LinearLayout linear_container;
@@ -95,9 +92,9 @@ public class FilmeBottonFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            id_filme = getArguments().getInt(Constantes.FILME_ID);
-            getActivity().getIntent().getIntExtra(Constantes.ABA, 0);
-            Log.d("FilmeBottonFragment", "onCreate -> " + id_filme);
+            Bundle bundle = getArguments();
+            movieDb = (MovieDb) bundle.getSerializable(Constantes.FILME);
+            similarMovies = (MovieResultsPage) bundle.getSerializable(Constantes.SIMILARES);
         }
     }
 
@@ -109,7 +106,7 @@ public class FilmeBottonFragment extends Fragment {
         titulo = (TextView) view.findViewById(R.id.titulo_text);
         categoria = (TextView) view.findViewById(R.id.categoria_filme);
         time_filme = (TextView) view.findViewById(R.id.time_filme);
-        sinopse = (TextView) view.findViewById(R.id.descricao);
+        descricao = (TextView) view.findViewById(R.id.descricao);
         voto_media = (TextView) view.findViewById(R.id.voto_media);
         textview_similares = (TextView) view.findViewById(R.id.textview_similares);
         voto_quantidade = (TextView) view.findViewById(R.id.voto_quantidade);
@@ -136,18 +133,34 @@ public class FilmeBottonFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d("FilmeBottonFragment", "onActivityCreated -> " + id_filme);
-        if (id_filme != 0) {
-            new TMDVAsync().execute();
-
-        }
+        setTitulo();
+        setCategoria();
+        setLancamento();
+        setTimeFilme();
+        setProdutora();
+        setSinopse();
+        setPoster();
+        setBuget();
+        setHome();
+        setVotoMedia();
+        setOriginalTitle();
+        setSpokenLanguages();
+        setProductionCountries();
+        setPopularity();
+        setReviews();
+        setCollectoin();
+        setCast();
+        setCrews();
+        setTreiler();
+        setSimilares();
+        setAnimacao();
 
         icon_reviews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (movieDb.getReviews().size() >= 1) {
                     Intent intent = new Intent(getContext(), ReviewsActivity.class);
-                    intent.putExtra(Constantes.FILME_ID, id_filme);
+                    intent.putExtra(Constantes.FILME_ID, movieDb.getId());
                     intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
                     startActivity(intent);
                 } else {
@@ -236,7 +249,7 @@ public class FilmeBottonFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), ElencoActivity.class);
-                intent.putExtra(Constantes.FILME_ID, id_filme);
+                intent.putExtra(Constantes.FILME_ID, movieDb.getId());
                 Log.d("setOnClickListener", "" + movieDb.getTitle());
                 intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
                 startActivity(intent);
@@ -247,7 +260,7 @@ public class FilmeBottonFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), CrewsActivity.class);
-                intent.putExtra(Constantes.FILME_ID, id_filme);
+                intent.putExtra(Constantes.FILME_ID, movieDb.getId());
                 Log.d("setOnClickListener", "" + movieDb.getTitle());
                 intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
                 startActivity(intent);
@@ -258,7 +271,7 @@ public class FilmeBottonFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), SimilaresActivity.class);
-                intent.putExtra(Constantes.FILME_ID, id_filme);
+                intent.putExtra(Constantes.FILME_ID, movieDb.getId());
                 intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
                 startActivity(intent);
             }
@@ -273,7 +286,7 @@ public class FilmeBottonFragment extends Fragment {
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 View dialog_collection = inflater.inflate(R.layout.dialog_collection, null);
                 ViewPager pager = (ViewPager) dialog_collection.findViewById(R.id.viewpager_collection);
-                pager.setAdapter(new CollectionPagerAdapter(info, getContext(), id_filme));
+                pager.setAdapter(new CollectionPagerAdapter(info, getContext(), movieDb.getId()));
                 builder.setView(dialog_collection);
                 builder.show();
             }
@@ -284,9 +297,9 @@ public class FilmeBottonFragment extends Fragment {
         Log.d("SetSinopse", "OverView" + movieDb.getOverview());
         if (movieDb.getOverview() != null) {
 
-            sinopse.setText(movieDb.getOverview());
+            descricao.setText(movieDb.getOverview());
         } else {
-            sinopse.setText(getString(R.string.sem_sinopse));
+            descricao.setText(getString(R.string.sem_sinopse));
         }
     }
 
@@ -351,12 +364,13 @@ public class FilmeBottonFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), PosterGridActivity.class);
-                    intent.putExtra(Constantes.FILME_ID, id_filme);
                     String transition = getString(R.string.poster_transition);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constantes.FILME, movieDb);
                     ActivityOptionsCompat compat = ActivityOptionsCompat
                             .makeSceneTransitionAnimation(getActivity(), img_poster, transition);
                     ActivityCompat.startActivity(getActivity(), intent, compat.toBundle());
-                    Log.d("FilmeBottonFragment", "setPoster: -> " + id_filme);
+                    Log.d("FilmeBottonFragment", "setPoster: -> " + movieDb.getId());
 
                 }
             });
@@ -489,7 +503,7 @@ public class FilmeBottonFragment extends Fragment {
                     float valor = (Float) valueAnimator.getAnimatedValue();
                     String popularidade = String.valueOf(valor);
 
-                    if (popularidade.charAt(0) == '0'  && isAdded()) {
+                    if (popularidade.charAt(0) == '0' && isAdded()) {
                         popularidade = popularidade.substring(2, popularidade.length());
                         popularity.setText(popularidade + " " + getString(mil));
 
@@ -537,7 +551,7 @@ public class FilmeBottonFragment extends Fragment {
                 if (personCast.getName() != null || personCast.getCharacter() != null) {
                     textCastPersonagem.setText(personCast.getCharacter());
                     textCastNome.setText(personCast.getName());
-                    Picasso.with(getActivity())
+                    with(getActivity())
                             .load(UtilsFilme.getBaseUrlImagem(3) + personCast.getProfilePath())
                             .placeholder(R.drawable.person)
                             .into(imageView);
@@ -586,7 +600,7 @@ public class FilmeBottonFragment extends Fragment {
                 if (crew.getName() != null && crew.getJob() != null) {
                     textCrewJob.setText(crew.getJob());
                     textCrewNome.setText(crew.getName());
-                    Picasso.with(getActivity())
+                    with(getActivity())
                             .load(UtilsFilme.getBaseUrlImagem(1) + crew.getProfilePath())
                             .placeholder(getResources().getDrawable(R.drawable.person))
                             .into(imgPagerCrews);
@@ -615,7 +629,7 @@ public class FilmeBottonFragment extends Fragment {
     }
 
     private void setSimilares() {
-        if (similarMovies.getResults().size() > 0) {
+        if (similarMovies.getResults().size() > 0 && similarMovies.getResults() != null) {
             int tamanho = similarMovies.getResults().size() < 10 ? similarMovies.getResults().size() : 10;
             getView().findViewById(R.id.textview_similares).setVisibility(View.VISIBLE);
             textview_similares.setTextColor(getResources().getColor(R.color.primary));
@@ -640,13 +654,14 @@ public class FilmeBottonFragment extends Fragment {
                     } else {
                         textSimilares.setText(movie.getTitle());
                     }
-                    Picasso.with(getActivity())
+                    with(getActivity())
                             .load(UtilsFilme.getBaseUrlImagem(1) + movie.getPosterPath())
                             .placeholder(getResources().getDrawable(R.drawable.poster_empty))
                             .into(imgPagerSimilares, new Callback() {
                                 @Override
                                 public void onSuccess() {
-                                    loadPalette();
+                                    color_top = UtilsFilme.loadPalette(imgPagerSimilares);
+                                    //loadPalette();
                                 }
 
                                 @Override
@@ -786,16 +801,7 @@ public class FilmeBottonFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             if (isAdded()) {
                 TmdbMovies movies = FilmeService.getTmdbMovies();
-                Log.d("FilmeBottonFragment", "doInBackground: -> " + id_filme);
 
-                movieDb = movies.getMovie(id_filme, getString(R.string.IDIOMAS)
-                        , credits, releases, videos, reviews, similar);
-                movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
-                movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());
-                Log.d("FilmeBottonFragment", "doInBackground: VIDEOS " + movieDb.getVideos().size());
-                similarMovies = movies.getSimilarMovies(id_filme, getString(R.string.IDIOMAS), 1);
-                Log.d("FilmeBottonFragment", "doInBackground: Similares " + similarMovies.getResults().size());
-                return null;
             }
             return null;
         }

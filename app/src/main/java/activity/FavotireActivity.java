@@ -18,16 +18,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import adapter.FavotireAdapter;
-import adapter.WatchAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
+import info.movito.themoviedbapi.TmdbAccount;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import info.movito.themoviedbapi.model.core.ResponseStatus;
 import utils.Constantes;
-
-import static android.R.attr.id;
-import static br.com.icaro.filme.R.id.watchlist;
 
 /**
  * Created by icaro on 01/08/16.
@@ -114,7 +111,8 @@ public class FavotireActivity extends BaseActivity {
                                 new Thread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        status = FilmeService.addOrRemoverFavorite(user, pass, id, false);
+                                        status = FilmeService.addOrRemoverFavorite(id, false, TmdbAccount.MediaType.MOVIE);
+                                        //Necessario descobrir se a MediaType é filme ou tvshow
 
                                         runOnUiThread(new Runnable() {
                                             @Override

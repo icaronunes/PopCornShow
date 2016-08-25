@@ -12,7 +12,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:adjustViewBounds="true"
-
         android:background="@color/transparent"
         android:contentDescription="@string/foto_principal"
         android:elevation="3dp"

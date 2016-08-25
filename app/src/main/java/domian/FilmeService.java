@@ -17,7 +17,9 @@ import info.movito.themoviedbapi.TmdbCompany;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbPeople;
 import info.movito.themoviedbapi.TmdbSearch;
+import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.Multi;
 import info.movito.themoviedbapi.model.config.Account;
 import info.movito.themoviedbapi.model.config.TokenSession;
 import info.movito.themoviedbapi.model.core.AccountID;
@@ -51,6 +53,10 @@ public class FilmeService {
 
     public static TmdbSearch getTmdbSearch() {
         return new TmdbApi(Config.TMDB_API_KEY).getSearch();
+    }
+
+    public static TmdbTV getTmdbTvShow(){
+        return  new TmdbApi(Config.TMDB_API_KEY).getTvSeries();
     }
 
     public static TmdbMovies getTmdbMovies() {
@@ -145,8 +151,9 @@ public class FilmeService {
         return null;
     }
 
-    public static ResponseStatus addOrRemoverWatchList(String user, String password, Integer id_filme, boolean opcao) {
-
+    public static ResponseStatus addOrRemoverWatchList(Integer id_filme, boolean opcao, TmdbAccount.MediaType mediaType) {
+        String user = FilmeApplication.getInstance().getUser();
+        String password = FilmeApplication.getInstance().getPass();
         TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
         TokenSession authentication = tmdbApi
                 .getAuthentication().getSessionLogin(user, password);
@@ -155,37 +162,38 @@ public class FilmeService {
         TmdbAccount account = tmdbApi.getAccount();
         AccountID accountID = new AccountID(getAccount(user, password).getId());
         if (opcao) {
-            ResponseStatus status = account.addToWatchList(token, accountID, id_filme, TmdbAccount.MediaType.MOVIE);
+            ResponseStatus status = account.addToWatchList(token, accountID, id_filme, mediaType);
             Log.d("addOrRemoverWatchList", status.toString());
             return status;
         } else {
-            ResponseStatus status = account.removeFromWatchList(token, accountID, id_filme, TmdbAccount.MediaType.MOVIE);
+            ResponseStatus status = account.removeFromWatchList(token, accountID, id_filme, mediaType);
             Log.d("addOrRemoverWatchList", status.toString());
             return status;
         }
 
     }
 
-    public static ResponseStatus addOrRemoverFavorite(String user, String password, Integer id_filme, boolean opcao) {
-
+    public static ResponseStatus addOrRemoverFavorite(Integer id, boolean opcao, TmdbAccount.MediaType mediaType) {
+        String user = FilmeApplication.getInstance().getUser();
+        String pass = FilmeApplication.getInstance().getPass();
         TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
         TokenSession authentication = tmdbApi
-                .getAuthentication().getSessionLogin(user, password);
+                .getAuthentication().getSessionLogin(user, pass);
         String session = authentication.getSessionId();
         SessionToken token = new SessionToken(session);
         TmdbAccount account = tmdbApi.getAccount();
-        AccountID accountID = new AccountID(getAccount(user, password).getId());
+        AccountID accountID = new AccountID(getAccount(user, pass).getId());
         if (opcao) {
-            ResponseStatus status = account.addFavorite(token, accountID, id_filme, TmdbAccount.MediaType.MOVIE);
-            Log.d("addOrRemoverFavorite", status.toString());
-            Log.d("addOrRemoverFavorite", String.valueOf(status.getStatusCode()));
-            Log.d("addOrRemoverFavorite", String.valueOf(status.getStatusMessage()));
+            ResponseStatus status = account.addFavorite(token, accountID, id, mediaType);
+            Log.d("addOrRemoverFavoriteM", status.toString());
+            Log.d("addOrRemoverFavoriteM", String.valueOf(status.getStatusCode()));
+            Log.d("addOrRemoverFavoriteM", String.valueOf(status.getStatusMessage()));
             return status;
         } else {
-            ResponseStatus status = account.removeFavorite(token, accountID, id_filme, TmdbAccount.MediaType.MOVIE);
-            Log.d("addOrRemoverFavorite", status.toString());
-            Log.d("addOrRemoverFavorite", String.valueOf(status.getStatusCode()));
-            Log.d("addOrRemoverFavorite", String.valueOf(status.getStatusMessage()));
+            ResponseStatus status = account.removeFavorite(token, accountID, id, mediaType);
+            Log.d("addOrRemoverFavoriteM", status.toString());
+            Log.d("addOrRemoverFavoriteM", String.valueOf(status.getStatusCode()));
+            Log.d("addOrRemoverFavoriteM", String.valueOf(status.getStatusMessage()));
             return status;
         }
     }
@@ -355,6 +363,23 @@ public class FilmeService {
         }
         return false;
 
+    }
+
+    public static boolean setRatedTvShow(int id_tvshow, float nota) {
+        String user = FilmeApplication.getInstance().getUser();
+        String pass = FilmeApplication.getInstance().getPass();
+        TokenSession authentication = new TmdbApi(Config.TMDB_API_KEY)
+                .getAuthentication().getSessionLogin(user, pass);
+        String session = authentication.getSessionId();
+        SessionToken token = new SessionToken(session);
+        TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
+        TmdbAccount account = tmdbApi.getAccount();
+        if (nota != 0) {
+            boolean status = account.postTvSeriesRating(token, id_tvshow, (int) nota);
+            Log.d("setRatedMovie", "" + status);
+            return status;
+        }
+        return false;
     }
 
 }

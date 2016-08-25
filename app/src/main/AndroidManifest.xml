@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <application
         android:name="applicaton.FilmeApplication"
         android:icon="@mipmap/ic_launcher"
@@ -18,6 +17,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -27,6 +27,15 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
+        </activity>
+
+        <activity android:name="activity.TvShowActivity">
+        <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+
+        <!--</intent-filter>-->
         </activity>
 
         <activity
@@ -40,56 +49,46 @@
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
         </activity>
-
         <activity android:name="activity.TreilerActivity" />
-
         <activity
             android:name="activity.PosterActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth.NoActionBar" />
-
         <activity android:name="activity.ReviewsActivity" />
-
         <activity
             android:name="activity.ElencoActivity"
-
-            android:theme="@style/AppTheme.NoActionBar.NavDrawer"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar.NavDrawer" />
         <activity
             android:name="activity.CrewsActivity"
-
-            android:theme="@style/AppTheme.NoActionBar.NavDrawer"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar.NavDrawer" />
         <activity android:name="activity.PosterGridActivity" />
-
         <activity android:name="activity.FavotireActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultictivity" />
         </activity>
-
         <activity android:name="activity.Site" />
-
         <activity android:name="activity.SearchMultiActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-
         <activity android:name="activity.WatchListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-
         <activity android:name="activity.RatedActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -99,19 +98,14 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-
         <activity
             android:name="activity.ProdutoraActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="activity.SimilaresActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="activity.ListUserActivity" />
-
         <activity android:name="activity.ListaUserActivity" />
-
         <activity android:name="activity.PersonActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -121,9 +115,8 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-
         <activity android:name="activity.FotoPersonActivity" />
-
+        <!--<activity android:name="activity.TvShowActivity"></activity>-->
     </application>
 
 </manifest>

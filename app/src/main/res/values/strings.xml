@@ -28,7 +28,7 @@
     <string name="foto_principal">Imagem Principal</string>
     <string name="imagem_filme">Imagem do Filme</string>
     <string name="poster_filme">Poster do Filme</string>
-    <string name="production_countries">Paises Produtores:</string>
+    <string name="production_countries">País Produtor:</string>
     <string name="spoken_languages">Idioma Original:</string>
     <string name="popularity">Popularidade:</string>
     <string name="original_title">Titulo Original:</string>
@@ -90,6 +90,9 @@
     <string name="sem_biografia">Sem Biografia</string>
     <string name="sem_filmes">Sem Filmes</string>
     <string name="sem_fotos">Sem Fotos</string>
-
+    <string name="temporadas">Temporadas</string>
+    <string name="informacoes">Informações</string>
+    <string name="status">Status:</string>
+    <string name="temporada">Temporada</string>
 
 </resources>

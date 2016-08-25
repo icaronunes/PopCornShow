@@ -16,4 +16,14 @@
         android:title="Logout"
         app:showAsAction="never"  />
 
+    <item
+        android:id="@+id/serie"
+        android:title="Serie"
+        app:showAsAction="never"  />
+
+    <item
+        android:id="@+id/filme"
+        android:title="Filme"
+        app:showAsAction="never"  />
+
 </menu>

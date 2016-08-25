@@ -19,6 +19,7 @@ import adapter.WatchAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
+import info.movito.themoviedbapi.TmdbAccount;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import info.movito.themoviedbapi.model.core.ResponseStatus;
 import utils.Constantes;
@@ -86,7 +87,8 @@ public class WatchListActivity extends BaseActivity {
                                 new Thread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        status = FilmeService.addOrRemoverWatchList(user, pass, id, false);
+                                        status = FilmeService.addOrRemoverWatchList(id, false, TmdbAccount.MediaType.MOVIE);
+                                        //Arrumar para utilizar em filme e tvshow
 
                                         runOnUiThread(new Runnable() {
                                             @Override

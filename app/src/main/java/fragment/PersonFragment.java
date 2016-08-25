@@ -143,7 +143,7 @@ public class PersonFragment extends Fragment {
 
     private View getViewPersonMovie(LayoutInflater inflater, ViewGroup container) {
 
-        View view = inflater.inflate(R.layout.activity_person_movies, container, false);
+        View view = inflater.inflate(R.layout.activity_person_movies, container, false); // ? activity???
         recyclerViewMovie = (RecyclerView) view.findViewById(R.id.recycleView_person_movies);
         sem_filmes = (TextView) view.findViewById(R.id.sem_filmes);
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
@@ -278,7 +278,7 @@ public class PersonFragment extends Fragment {
         return temp;
     }
 
-    public class PersonAsync extends AsyncTask<Void, Void, Void> {
+    private class PersonAsync extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
             Log.d("PersonAsync", "" + id_person);

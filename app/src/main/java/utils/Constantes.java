@@ -27,4 +27,9 @@ public class Constantes {
     public static final String PERSON_ID = "person_id";
     public static final String SITE = "site";
     public static final String POSICAO = "posicao";
+    public static final String TVSHOW_ID = "tvshow_id";
+    public static final String NOME_TVSHOW = "tvshow_nome";
+    public static final String SERIE = "serie";
+    public static final String FILME = "filme";
+    public static final String SIMILARES = "similares";
 }
