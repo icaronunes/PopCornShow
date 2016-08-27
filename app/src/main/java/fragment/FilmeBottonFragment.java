@@ -365,8 +365,7 @@ public class FilmeBottonFragment extends Fragment {
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), PosterGridActivity.class);
                     String transition = getString(R.string.poster_transition);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(Constantes.FILME, movieDb);
+                    intent.putExtra(Constantes.FILME, movieDb);
                     ActivityOptionsCompat compat = ActivityOptionsCompat
                             .makeSceneTransitionAnimation(getActivity(), img_poster, transition);
                     ActivityCompat.startActivity(getActivity(), intent, compat.toBundle());

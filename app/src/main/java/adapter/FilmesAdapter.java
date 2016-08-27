@@ -71,6 +71,8 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
                 });
             }
         }
+
+
     }
 
     @Override

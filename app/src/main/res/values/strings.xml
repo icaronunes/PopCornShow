@@ -94,5 +94,14 @@
     <string name="informacoes">Informações</string>
     <string name="status">Status:</string>
     <string name="temporada">Temporada</string>
+    <string name="nota">Nota:</string>
+    <string name="epsodio">Epsodio</string>
+    <string name="sem_data">Sem Data</string>
+    <string name="sem_nome">Sem informação</string>
+    <string name="sem_nota">Sem Nota</string>
+    <string name="director">Direção</string>
+    <string name="writer">Escrito</string>
+    <string name="air_date">No Ar</string>
+    <string name="vote_average">Votos</string>
 
 </resources>

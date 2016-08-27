@@ -18,6 +18,8 @@ import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbPeople;
 import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.TmdbTV;
+import info.movito.themoviedbapi.TmdbTvEpisodes;
+import info.movito.themoviedbapi.TmdbTvSeasons;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
 import info.movito.themoviedbapi.model.config.Account;
@@ -59,6 +61,15 @@ public class FilmeService {
         return  new TmdbApi(Config.TMDB_API_KEY).getTvSeries();
     }
 
+    public static TmdbTvSeasons getTmdbTvSeasons(){
+        return  new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
+    }
+
+    public static TmdbTvEpisodes getTmdbTvEpisodes(){
+        return  new TmdbApi(Config.TMDB_API_KEY).getTvEpisodes();
+    }
+
+
     public static TmdbMovies getTmdbMovies() {
         TmdbMovies movies = new TmdbApi(Config.TMDB_API_KEY).getMovies();
         return movies;
@@ -71,7 +82,6 @@ public class FilmeService {
 
     public static TmdbPeople getTmdbPerson() {
         TmdbPeople people = new TmdbApi(Config.TMDB_API_KEY).getPeople();
-
         return people;
     }
 

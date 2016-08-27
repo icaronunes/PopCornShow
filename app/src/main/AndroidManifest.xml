@@ -38,6 +38,8 @@
         <!--</intent-filter>-->
         </activity>
 
+        <activity android:name="activity.TemporadaActivity"/>
+        <activity android:name="activity.EpsodioActivity"/>
         <activity
             android:name="activity.FilmeActivity"
             android:parentActivityName="activity.MainActivity"

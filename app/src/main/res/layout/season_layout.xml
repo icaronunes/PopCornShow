@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginStart="1dp"
+    android:layout_marginLeft="1dp">
+
+    <ImageView
+        android:id="@+id/image_temporada"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/filme185" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp">
+
+        <TextView
+            android:id="@+id/temporada"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Temporada"
+            android:textStyle="normal|bold|italic"
+            android:gravity="left"
+            android:layout_marginTop="15dp" />
+
+        <TextView
+            android:id="@+id/date_temporada"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="2000-12-23"
+            android:layout_marginTop="3dp" />
+
+        <TextView
+            android:id="@+id/numero_epsodios_temporada"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="numero de Epsodios"
+            android:layout_marginTop="5dp"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+</LinearLayout>

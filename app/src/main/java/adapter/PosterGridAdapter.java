@@ -3,6 +3,7 @@ package adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
@@ -16,11 +17,15 @@ import android.widget.ProgressBar;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
 import activity.PosterActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.Artwork;
+import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.Multi;
+import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;
 
@@ -31,12 +36,13 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
 
     List<Artwork> artworks;
     Context context;
-    int id_filme;
+    String nome;
 
-    public PosterGridAdapter(Context context, List<Artwork> artworks, int id_filme) {
+
+    public PosterGridAdapter(Context context, List<Artwork> artworks, String nome) {
         this.context = context;
         this.artworks = artworks;
-        this.id_filme = id_filme;
+        this.nome = nome;
     }
 
     @Override
@@ -61,8 +67,11 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
                                 @Override
                                 public void onClick(View view) {
                                     Intent intent = new Intent(context, PosterActivity.class);
-                                    intent.putExtra(Constantes.FILME_ID, id_filme);
-                                    intent.putExtra("posicao", position);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable(Constantes.ARTWORKS, (Serializable) artworks);
+                                    intent.putExtra(Constantes.BUNDLE, bundle);
+                                    intent.putExtra(Constantes.POSICAO, position);
+                                    intent.putExtra(Constantes.NOME, nome);
                                     ActivityOptionsCompat opts = ActivityOptionsCompat.makeCustomAnimation(context,
                                             android.R.anim.fade_in, android.R.anim.fade_out);
                                     ActivityCompat.startActivity((Activity) context, intent, opts.toBundle());
@@ -75,7 +84,6 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
 
                         }
                     });
-
         }
     }
 

@@ -225,7 +225,7 @@ public class BaseActivity extends AppCompatActivity {
                 break;
             case R.id.serie:{
                 Intent intent = new Intent(this, TvShowActivity.class);
-                intent.putExtra(Constantes.TVSHOW_ID, 1396);
+                intent.putExtra(Constantes.TVSHOW_ID, 62560);
                 intent.putExtra(Constantes.NOME_TVSHOW, "Breaking Bad: A Química do Mal");
                 intent.putExtra(Constantes.COLOR_TOP, 123);
                 startActivity(intent);

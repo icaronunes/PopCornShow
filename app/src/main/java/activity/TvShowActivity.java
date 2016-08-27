@@ -21,16 +21,21 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import adapter.TvShowAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbAccount;
+import info.movito.themoviedbapi.TmdbTvSeasons;
 import info.movito.themoviedbapi.model.core.ResponseStatus;
+import info.movito.themoviedbapi.model.tv.TvSeason;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static domian.FilmeService.getTmdbTvSeasons;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.credits;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.images;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.videos;
@@ -68,7 +73,7 @@ public class TvShowActivity extends BaseActivity {
         layout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         new TMDVAsync().execute();
 
-        if (true || FilmeApplication.getInstance().isLogado()) { // Arrumar
+        if (FilmeApplication.getInstance().isLogado()) { // Arrumar
             Log.d("FAB", "FAB");
             setColorFab(color_top);
             menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
@@ -277,7 +282,8 @@ public class TvShowActivity extends BaseActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             Log.d("TMDVASync", "AsynTask");
-            series = FilmeService.getTmdbTvShow().getSeries(id_tvshow, getString(R.string.IDIOMAS), images, credits, videos);
+            series = FilmeService.getTmdbTvShow()
+                    .getSeries(id_tvshow, getString(R.string.IDIOMAS), images, credits, videos);
             return null;
         }
 
@@ -287,7 +293,6 @@ public class TvShowActivity extends BaseActivity {
             setCoordinator();
             setImageTop();
             setupViewPagerTabs();
-
         }
     }
 

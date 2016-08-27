@@ -1,6 +1,5 @@
 package activity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,12 +10,11 @@ import android.view.Window;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
+import java.util.List;
+
 import br.com.icaro.filme.R;
-import domian.FilmeService;
 import fragment.PosterScrollFragment;
-import info.movito.themoviedbapi.TmdbMovies;
-import info.movito.themoviedbapi.model.ArtworkType;
-import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.Artwork;
 import utils.Constantes;
 
 import static br.com.icaro.filme.R.id.pager;
@@ -27,10 +25,11 @@ import static br.com.icaro.filme.R.id.pager;
 
 
 public class PosterActivity extends BaseActivity {
-    int id_filme;
+
     ViewPager viewPager;
-    MovieDb movieDb;
+    List<Artwork> artworks;
     CirclePageIndicator titlePageIndicator;
+    String nome;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,21 +37,16 @@ public class PosterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         Log.d("PosterActivity", "onCreate");
         setContentView(R.layout.activity_scroll_poster);
-        id_filme = getIntent().getExtras().getInt(Constantes.FILME_ID);
+        artworks = (List<Artwork>) getIntent().getBundleExtra(Constantes.BUNDLE).getSerializable(Constantes.ARTWORKS);
+        nome = getIntent().getStringExtra(Constantes.NOME);
         viewPager = (ViewPager) findViewById(pager);
         titlePageIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
-        Log.d("PosterActivity", "onCreate ID: " + id_filme);
+
+        viewPager.setAdapter(new PosterFragment(getSupportFragmentManager()));
+        titlePageIndicator.setViewPager(viewPager);
+        titlePageIndicator.setCurrentItem(getIntent().getExtras().getInt(Constantes.POSICAO));
 
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d("PosterActivity", "onStart");
-        TesteAsync testeAsync = new TesteAsync();
-        testeAsync.execute();
-    }
-
 
     public class PosterFragment extends FragmentPagerAdapter {
 
@@ -64,32 +58,13 @@ public class PosterActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
 
-            return new PosterScrollFragment().newInstance(movieDb.getImages(ArtworkType.POSTER).get(position).getFilePath(), movieDb.toString());
+            return new PosterScrollFragment().newInstance(artworks.get(position).getFilePath(), nome);
         }
 
         @Override
         public int getCount() {
-            return movieDb.getImages(ArtworkType.POSTER).size();
+            return artworks.size();
 
-        }
-    }
-
-    public class TesteAsync extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            TmdbMovies movies = FilmeService.getTmdbMovies();
-            Log.d("PosterFragment", "doInBackground: -> " + id_filme);
-            movieDb = movies.getMovie(id_filme, getString(R.string.IDIOMAS), TmdbMovies.MovieMethod.images);
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            viewPager.setAdapter(new PosterFragment(getSupportFragmentManager()));
-            titlePageIndicator.setViewPager(viewPager);
-            titlePageIndicator.setCurrentItem(getIntent().getExtras().getInt("posicao"));
         }
     }
 }

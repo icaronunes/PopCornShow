@@ -31,6 +31,7 @@ import info.movito.themoviedbapi.model.people.PersonPeople;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static domian.FilmeService.getPersonCredits;
 import static domian.FilmeService.getTmdbPerson;
 
 /**
@@ -285,7 +286,8 @@ public class PersonFragment extends Fragment {
             personPeople = getTmdbPerson()
                     .getPersonInfo(id_person, "&language=pt");
             artworks = FilmeService.getTmdbPerson().getPersonImages(id_person);
-            personCredits = FilmeService.getTmdbPerson().getPersonCredits(id_person);
+            personCredits = FilmeService.getPersonCredits(id_person);
+                    //.getPersonCredits(id_person); Pega TVseries do Ator. Mas não da pra diferenciar.
 
             return null;
         }

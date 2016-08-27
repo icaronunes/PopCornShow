@@ -10,6 +10,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +36,9 @@ import activity.PersonActivity;
 import activity.PosterGridActivity;
 import activity.ProdutoraActivity;
 import activity.SimilaresActivity;
+import activity.TemporadaActivity;
 import activity.TreilerActivity;
+import adapter.TemporadasAdapter;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.Genre;
 import info.movito.themoviedbapi.model.people.PersonCast;
@@ -44,7 +49,6 @@ import utils.Constantes;
 import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.string.mil;
-import static com.google.android.gms.cast.internal.zzl.pa;
 import static com.squareup.picasso.Picasso.with;
 
 
@@ -85,80 +89,6 @@ public class TvShowFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        icon_site.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "Home " + series.getHomepage());
-                if (series.getHomepage() != "" && series.getHomepage() != null) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(series.getHomepage()));
-                    Log.d(TAG, "Home " + series.getHomepage());
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                } else {
-                    BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
-                            getString(R.string.no_site));
-                }
-            }
-        });
-
-
-        img_star.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (series.getVoteCount() > 0) {
-                    BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
-                            series.getVoteCount()
-                                    + " " + getString(R.string.person_vote));
-                    //Sem FAB
-                } else {
-                    BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
-                            series.getVoteCount()
-                                    + " " + getString(R.string.no_vote));
-                }
-            }
-        });
-
-
-        textview_elenco.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ElencoActivity.class);
-                intent.putExtra(Constantes.TVSHOW_ID, series.getId());
-                Log.d("setOnClickListener", "" + series.getName());
-                intent.putExtra(Constantes.NOME_FILME, series.getName());
-                startActivity(intent);
-                // ???????????????? Solicitando id de filme, necessario verificar o tipo;
-            }
-        });
-
-        textview_crews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), CrewsActivity.class);
-                intent.putExtra(Constantes.TVSHOW_ID, series.getId());
-                Log.d("setOnClickListener", "" + series.getName());
-                intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
-                startActivity(intent);
-            }
-        });
-
-        textview_similares.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), SimilaresActivity.class);
-                intent.putExtra(Constantes.TVSHOW_ID, series.getId());
-                intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
-                startActivity(intent);
-            }
-        });
-
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (tipo == R.string.informacoes) {
@@ -179,6 +109,75 @@ public class TvShowFragment extends Fragment {
             setAnimacao();
             setPoster();
             setStatus();
+
+
+            icon_site.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d(TAG, "Home " + series.getHomepage());
+                    if (series.getHomepage() != "" && series.getHomepage() != null) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(series.getHomepage()));
+                        Log.d(TAG, "Home " + series.getHomepage());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    } else {
+                        BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
+                                getString(R.string.no_site));
+                    }
+                }
+            });
+
+
+            img_star.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (series.getVoteCount() > 0) {
+                        BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
+                                series.getVoteCount()
+                                        + " " + getString(R.string.person_vote));
+                    } else {
+                        BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
+                                series.getVoteCount()
+                                        + " " + getString(R.string.no_vote));
+                    }
+                }
+            });
+
+
+            textview_elenco.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), ElencoActivity.class);
+                    intent.putExtra(Constantes.TVSHOW_ID, series.getId());
+                    Log.d("setOnClickListener", "" + series.getName());
+                    intent.putExtra(Constantes.NOME_FILME, series.getName());
+                    startActivity(intent);
+                    // ???????????????? Solicitando id de filme, necessario verificar o tipo;
+                }
+            });
+
+            textview_crews.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), CrewsActivity.class);
+                    intent.putExtra(Constantes.TVSHOW_ID, series.getId());
+                    Log.d("setOnClickListener", "" + series.getName());
+                    intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
+                    startActivity(intent);
+                }
+            });
+
+            textview_similares.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), SimilaresActivity.class);
+                    intent.putExtra(Constantes.TVSHOW_ID, series.getId());
+                    intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
+                    startActivity(intent);
+                }
+            });
+
         }
 
     }
@@ -197,7 +196,7 @@ public class TvShowFragment extends Fragment {
         switch (tipo) {
 
             case R.string.temporadas: {
-                return null;//getViewTemporadas(inflater, container);
+                return getViewTemporadas(inflater, container);
             }
             case R.string.informacoes: {
                 return getViewInformacoes(inflater, container);
@@ -206,10 +205,35 @@ public class TvShowFragment extends Fragment {
         return null;
     }
 
+    private View getViewTemporadas(LayoutInflater inflater, ViewGroup container) {
+        View view = inflater.inflate(R.layout.temporadas, container, false);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.temporadas_recycle);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new TemporadasAdapter(getActivity(), series, onClickListener()));
+
+        return view;
+    }
+
     private void setTemporada() {
-        if (series.getNumberOfSeasons()  > 0){
+        if (series.getNumberOfSeasons() > 0) {
             temporada.setText(String.valueOf(series.getNumberOfSeasons()));
         }
+    }
+
+    private TemporadasAdapter.TemporadaOnClickListener onClickListener() {
+        return new TemporadasAdapter.TemporadaOnClickListener() {
+            @Override
+            public void onClickTemporada(View view, int position) {
+                Log.d("onClickListener", "id " + series.getId());
+                Log.d("onClickListener", "season " + series.getSeasons().get(position).getSeasonNumber());
+                Intent intent = new Intent(getContext(), TemporadaActivity.class);
+                intent.putExtra(Constantes.TEMPORADA_ID, series.getSeasons().get(position).getSeasonNumber());
+                intent.putExtra(Constantes.TVSHOW_ID, series.getId());
+                getContext().startActivity(intent);
+            }
+        };
     }
 
     private View getViewInformacoes(LayoutInflater inflater, ViewGroup container) {
@@ -278,7 +302,7 @@ public class TvShowFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), PosterGridActivity.class);
-                    intent.putExtras(getArguments());
+                    intent.putExtra(Constantes.SERIE, series);
                     String transition = getString(R.string.poster_transition);
                     ActivityOptionsCompat compat = ActivityOptionsCompat
                             .makeSceneTransitionAnimation(getActivity(), img_poster, transition);

@@ -32,4 +32,13 @@ public class Constantes {
     public static final String SERIE = "serie";
     public static final String FILME = "filme";
     public static final String SIMILARES = "similares";
+    public static final String TVSEASONS = "tvseason";
+    public static final String TEMPORADA_ID = "temporada_id";
+    public static final String ARTWORKS = "artworks";
+    public static final String BUNDLE = "bundle";
+    public static final String NOME = "nome";
+    public static final String TVSEASON_ID = "tvseason_id";
+    public static final String EPSODIO_ID = "epsodio_id";
+    public static final String EPSODIO = "epsodio";
 }
+
