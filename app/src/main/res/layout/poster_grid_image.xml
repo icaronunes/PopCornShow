@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="165dp"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -26,15 +26,16 @@
             android:src="@drawable/filme342" />
 
         <TextView
+            android:id="@+id/text_title_crew"
             android:layout_width="166dp"
             android:layout_height="wrap_content"
-            android:background="@android:drawable/screen_background_dark_transparent"
-            android:id="@+id/text_title_crew"
-            android:visibility="invisible"
             android:layout_gravity="bottom|center"
-            android:elevation="3dp"
             android:layout_margin="2dp"
-            android:textColor="@color/white" />
+            android:background="@android:drawable/screen_background_dark_transparent"
+            android:elevation="3dp"
+            android:textColor="@color/white"
+            android:visibility="invisible"
+            android:gravity="center" />
 
     </FrameLayout>
 

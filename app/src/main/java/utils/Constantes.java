@@ -40,5 +40,8 @@ public class Constantes {
     public static final String TVSEASON_ID = "tvseason_id";
     public static final String EPSODIO_ID = "epsodio_id";
     public static final String EPSODIO = "epsodio";
+    public static final String MEDIATYPE = "mediatype";
+    public static final String ID = "id";
+
 }
 

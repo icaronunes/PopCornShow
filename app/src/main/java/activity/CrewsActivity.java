@@ -15,22 +15,29 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import adapter.CrewsAdapter;
+import adapter.ElencoAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbMovies;
+import info.movito.themoviedbapi.TmdbTvSeasons;
+import info.movito.themoviedbapi.model.Credits;
 import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.Multi;
 import utils.Constantes;
 import utils.UtilsFilme;
-
-import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.credits;
 
 public class CrewsActivity extends BaseActivity {
 
     RecyclerView recyclerView;
     TextView text_crews_no_internet;
     LinearLayout linear_crews_layout;
-    int id_filme;
+    int id;
+    Multi.MediaType mediaType;
     ProgressBar progressBar;
+    Credits creditsTvShow;
+    MovieDb movies;
+    int season = -100;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +45,11 @@ public class CrewsActivity extends BaseActivity {
         setContentView(R.layout.activity_crews);
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
-        Log.d("CrewsActivity", " " + id_filme);
-
-        String title = getIntent().getStringExtra(Constantes.NOME_FILME);
+        id = getIntent().getIntExtra(Constantes.ID, 0);
+        mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
+        season = getIntent().getIntExtra(Constantes.TVSEASONS, 0);
+        Log.d("CrewsActivity", " " + id);
+        String title = getIntent().getStringExtra(Constantes.NOME);
         getSupportActionBar().setTitle(title);
 
         recyclerView = (RecyclerView) findViewById(R.id.crews_recyckeview);
@@ -93,23 +101,38 @@ public class CrewsActivity extends BaseActivity {
     }
 
 
-    public class TMDVAsync extends AsyncTask<Void, Void, MovieDb> {
-
+    private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
         @Override
-        protected MovieDb doInBackground(Void... voids) {
-            TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
-            MovieDb movies = tmdbMovies.getMovie(id_filme, "en", credits);
-            Log.d("CrewsActivity", "" + movies.getCredits().getCast().size());
-            return movies;
+        protected Void doInBackground(Void... voids) {
+            if (Multi.MediaType.TV_SERIES.equals(mediaType)) {
+                creditsTvShow = FilmeService.getTmdbTvShow().getCredits(id, "en");
+            }
+            if (Multi.MediaType.TV_SERIES.equals(mediaType) && season != -100){
+                creditsTvShow = FilmeService.getTmdbTvSeasons().getSeason(id, season,"en", TmdbTvSeasons.SeasonMethod.credits)
+                        .getCredits();
+            }
+
+            if (Multi.MediaType.MOVIE.equals(mediaType)) {
+                TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
+                movies = tmdbMovies.getMovie(id, "en", TmdbMovies.MovieMethod.credits);
+                Log.d("ElencoActivity", "" + movies.getCredits().getCast().size());
+            }
+            return null;
         }
 
+
         @Override
-        protected void onPostExecute(MovieDb movieDb) {
-            Log.d("CrewsActivity", "onPostExecute");
+        protected void onPostExecute(Void aVoid){
+            Log.d("ElencoActivity", "onPostExecute");
             progressBar.setVisibility(View.GONE);
-            recyclerView.setAdapter(new CrewsAdapter(CrewsActivity.this, movieDb.getCredits().getCrew()));
-        }
+            if (Multi.MediaType.MOVIE.equals(mediaType)) {
+                recyclerView.setAdapter(new CrewsAdapter(CrewsActivity.this, movies.getCredits().getCrew()));
+            }
+            if (Multi.MediaType.TV_SERIES.equals(mediaType)) {
+                recyclerView.setAdapter(new CrewsAdapter(CrewsActivity.this, creditsTvShow.getCrew()));
+            }
 
+        }
     }
 }

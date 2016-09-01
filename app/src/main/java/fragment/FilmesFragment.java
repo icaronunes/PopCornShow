@@ -2,15 +2,12 @@ package fragment;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,20 +16,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
 
-import activity.FavotireActivity;
 import activity.FilmeActivity;
 import adapter.FilmesAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.MovieDb;
-import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.Constantes;
 import utils.UtilsFilme;
 
@@ -139,8 +133,8 @@ public class FilmesFragment extends Fragment {
         return new FilmesAdapter.FilmeOnClickListener() {
             @Override
             public void onClickFilme(View view, int position) {
-                Log.d("onClickListener", "" + position);
-                Log.d("onClickListener", "" + movies.get(position).getTitle());
+                Log.d("onClickMovieListener", "" + position);
+                Log.d("onClickMovieListener", "" + movies.get(position).getTitle());
                 Intent intent = new Intent(getActivity(), FilmeActivity.class);
                 intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(view));
                 intent.putExtra(Constantes.FILME_ID, movies.get(position).getId());

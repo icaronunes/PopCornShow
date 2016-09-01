@@ -316,7 +316,7 @@
         android:layout_height="wrap_content"
         android:background="@color/black_transparente"
         android:gravity="center_horizontal"
-        android:text="@string/por_tras_camera"
+        android:text="@string/por_tras_camera_filme"
         android:textColor="@color/primary_dark"
         android:textSize="@dimen/abc_text_size_medium_material"
         android:textStyle="normal|bold"

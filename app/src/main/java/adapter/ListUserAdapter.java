@@ -1,6 +1,8 @@
 package adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Movie;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,10 +16,16 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import activity.FilmeActivity;
 import activity.ListaUserActivity;
+import activity.TvShowActivity;
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.model.MovieList;
+import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.Multi;
+import utils.Constantes;
 import utils.UtilsFilme;
+
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.lists;
 
 /**
  * Created by icaro on 14/08/16.
@@ -25,11 +33,11 @@ import utils.UtilsFilme;
 public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListViewHolder> {
 
 
-    List<MovieList> lista;
+    List<MovieDb> lista;
     Context context;
 
 
-    public ListUserAdapter(ListaUserActivity listaUserActivity, List<MovieList> movieLists) {
+    public ListUserAdapter(ListaUserActivity listaUserActivity, List<MovieDb> movieLists) {
         this.context = listaUserActivity;
         lista = movieLists;
     }
@@ -43,24 +51,40 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListVi
 
     @Override
     public void onBindViewHolder(final ListViewHolder holder, int position) {
-        MovieList listaMovie = lista.get(position);
-        Log.d("onBindViewHolder", listaMovie.getName());
-        Log.d("onBindViewHolder", listaMovie.getId());
 
-        if (listaMovie != null) {
-            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + listaMovie.getPosterPath())
-                    .into(holder.img_rated, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            holder.progressBar.setVisibility(View.GONE);
-                        }
+            final MovieDb listaMovie = lista.get(position);
 
-                        @Override
-                        public void onError() {
-                            holder.progressBar.setVisibility(View.GONE);
-                        }
-                    });
-        }
+            if (listaMovie != null) {
+                Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + listaMovie.getPosterPath())
+                        .into(holder.img_rated, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                holder.progressBar.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onError() {
+                                holder.progressBar.setVisibility(View.GONE);
+                            }
+                        });
+            }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { //NÃO FUNCIONA. METODO FilmeService.getTmdbTvShow()
+                //.getSeries() NÃO TRAS O TIPO DE MEDIA
+                if (listaMovie.getMediaType().equals(Multi.MediaType.TV_SERIES)){
+                    Intent intent = new Intent(context, TvShowActivity.class);
+                    intent.putExtra(Constantes.TVSHOW_ID, listaMovie.getId());
+                    intent.putExtra(Constantes.NOME_TVSHOW, listaMovie.getTitle());
+                    context.startActivity(intent);
+                } else {
+                    Intent intent = new Intent(context, FilmeActivity.class);
+                    intent.putExtra(Constantes.FILME_ID, listaMovie.getId());
+                    context.startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override

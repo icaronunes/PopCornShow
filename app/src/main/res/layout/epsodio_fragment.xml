@@ -1,154 +1,258 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll_id"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="3dp"
-        android:layout_marginStart="3dp"
-        android:hint="Mr. Robot"
-        android:gravity="center" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/black_transparente"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/ep_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:text="@string/director"
-            android:textStyle="normal|bold" />
-
-        <TextView
-            android:id="@+id/textview_director"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="TextView"
+            android:layout_marginRight="3dp"
+            android:gravity="center"
+            android:textSize="24sp"
             android:textStyle="normal|italic" />
+
+        <TextView
+            android:id="@+id/ep_tvshow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:gravity="center"
+            android:hint="Mr. Robot"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black" />
+
+        <LinearLayout
+            android:id="@+id/linear_director"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/black_transparente"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/director"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:id="@+id/ep_director"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textColor="@color/primary"
+                android:textStyle="normal|italic" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/linear_meio_ep_cima"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/accent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:background="@color/black"
+                android:orientation="horizontal" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_air_date"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/black_transparente"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/air_date"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:id="@+id/air_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="TextView"
+                android:textStyle="normal|italic" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="@color/black" />
+
+        <ImageView
+            android:id="@+id/ep_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="4dp"
+            android:src="@drawable/empty_produtora" />
+
+        <Button
+            android:id="@+id/ep_rating_button"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_radius"
+            android:padding="3dp"
+            android:text="@string/classificar" />
+
+        <android.support.v7.widget.AppCompatRatingBar
+            android:id="@+id/ep_rating"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:numStars="10"
+            android:rating="7"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/ep_sinopse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="Elliot, a cyber-sdansidbasuybdayubdyuabdyuabedabdya
+            deanduaeiduaeda
+            daeuhdnaeundeian
+            admaednaendaecurity engineer by day and vigilante hacker by night, is recruited by a mysterious underground group to destroy the firm he's paid to protect. Elliot must decide how far he'll go to expose the forces he believes are running (and ruining) the world. daysdyuasgduasduyabdgauydaygudasgyudayusgdasuygdyuasgdyuagdyagduagyudgayudgayugdyuasgdyugayugaugdauygdya"
+            android:textAlignment="center"
+            android:textAllCaps="false" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="@color/black" />
+
+        <LinearLayout
+            android:id="@+id/linear_write"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/black_transparente"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/writer"
+
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:id="@+id/ep_write"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:gravity="right"
+
+                android:textColor="@color/primary"
+                android:textStyle="normal|italic" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/linear_meio_ep_baixo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/accent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:background="@color/black"
+                android:orientation="horizontal" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_vote"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/black_transparente"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/vote_average"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:id="@+id/ep_votos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="TextView"
+                android:textStyle="normal|italic" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="@color/black"
+            android:elevation="1dp" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/black_transparente"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:text="@string/writer"
-
-            android:textStyle="normal|bold" />
-
-        <TextView
-            android:id="@+id/write_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="TextView"
-
-            android:textStyle="normal|italic" />
-
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/image_epsopdio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:src="@drawable/empty_produtora" />
-
-    <TextView
-        android:id="@+id/sinopse_epsodio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:text="Elliot, a cyber-security engineer by day and vigilante hacker by night, is recruited by a mysterious underground group to destroy the firm he's paid to protect. Elliot must decide how far he'll go to expose the forces he believes are running (and ruining) the world."
-        android:textAlignment="center"
-        android:textAllCaps="false" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/black_transparente"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:text="@string/air_date"
-            android:textStyle="normal|bold" />
-
-        <TextView
-            android:id="@+id/air_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="TextView"
-            android:textStyle="normal|italic" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/black_transparente"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:text="@string/vote_average"
-            android:textStyle="normal|bold" />
-
-        <TextView
-            android:id="@+id/votos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="TextView"
-            android:textStyle="normal|italic" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

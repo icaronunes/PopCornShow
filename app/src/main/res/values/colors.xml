@@ -1,10 +1,11 @@
 <resources>
     <!-- Cores do Tema Material -->
-    <color name="primary">#3F51B5</color>
+    <color name="primary">#3f51b5</color>
     <color name="primary_dark">#303f9f</color>
-    <color name="accent">#FF4081</color>
     <color name="control_highlight">#B3E5FC</color>
+    <color name="accent">#FF4081</color>
 
+    <color name="accent2">#16042d</color>
     <!-- Outras cores -->
     <color name="transparent">#0000</color>
     <color name="transparent2">#37000000</color>

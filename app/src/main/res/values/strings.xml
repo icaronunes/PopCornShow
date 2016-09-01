@@ -39,6 +39,7 @@
     <string name="erro">Erro YouTube</string>
     <string name="player_error">Erro YouTube</string>
     <string name="IDIOMAS">pt-BR,pt,en,null</string>
+    <string name="IDIOMAS_BUSCA">pt-BR,en,null</string>
     <string name="mil">Mil</string>
     <string name="milhoes">Mi</string>
     <string name="horas">horas</string>
@@ -46,7 +47,8 @@
     <string name="author">Autor:</string>
     <string name="no_reviews">Não há comentarios</string>
     <string name="treiler">Treiler</string>
-    <string name="por_tras_camera">Por trás das cameras</string>
+    <string name="por_tras_camera_filme">Produção do Filme</string>
+    <string name="por_tras_camera_tvshow">Produção do Série</string>
     <string name="dollar">$</string>
     <string name="milhoes_budget">Milhões</string>
     <string name="no_message">Sem Comentarios</string>
@@ -103,5 +105,15 @@
     <string name="writer">Escrito</string>
     <string name="air_date">No Ar</string>
     <string name="vote_average">Votos</string>
+    <string name="sem_titulo">Sem Titulo</string>
+    <string name="tvshow_rated">Epsodio Classificado</string>
+    <string name="classificar">Classificar</string>
+    <string name="returnin_series">Renovada</string>
+    <string name="ended">Finalizada</string>
+    <string name="canceled">Cancelado</string>
+    <string name="in_production">Em Producação</string>
+    <string name="filme">Filme</string>
+    <string name="tvshow">Séries</string>
+    <string name="excluir_tvshow">Excluir Série</string>
 
 </resources>

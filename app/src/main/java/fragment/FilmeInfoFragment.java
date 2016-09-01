@@ -72,7 +72,7 @@ import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.videos;
  * Created by icaro on 03/07/16.
  */
 
-public class FilmeBottonFragment extends Fragment {
+public class FilmeInfoFragment extends Fragment {
 
     TextView titulo, categoria, time_filme, descricao, voto_media, voto_quantidade, produtora,
             original_title, spoken_languages, production_countries,
@@ -95,7 +95,9 @@ public class FilmeBottonFragment extends Fragment {
             Bundle bundle = getArguments();
             movieDb = (MovieDb) bundle.getSerializable(Constantes.FILME);
             similarMovies = (MovieResultsPage) bundle.getSerializable(Constantes.SIMILARES);
+            Log.d("FilmeInfoFragment", "onCreate");
         }
+
     }
 
     @Nullable
@@ -125,7 +127,7 @@ public class FilmeBottonFragment extends Fragment {
         lancamento = (TextView) view.findViewById(R.id.lancamento);
         textview_crews = (TextView) view.findViewById(R.id.textview_crews);
         textview_elenco = (TextView) view.findViewById(R.id.textview_elenco);
-
+        Log.d("FilmeInfoFragment", "onCreateView");
 
         return view;
     }
@@ -194,11 +196,11 @@ public class FilmeBottonFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                Log.d("FilmeBottonFragment", "Home " + movieDb.getHomepage());
+                Log.d("FilmeInfoFragment", "Home " + movieDb.getHomepage());
                 if (movieDb.getHomepage() != "" && movieDb.getHomepage() != null) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(movieDb.getHomepage()));
-                    Log.d("FilmeBottonFragment", "Home " + movieDb.getHomepage());
+                    Log.d("FilmeInfoFragment", "Home " + movieDb.getHomepage());
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 } else {
@@ -249,9 +251,10 @@ public class FilmeBottonFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), ElencoActivity.class);
-                intent.putExtra(Constantes.FILME_ID, movieDb.getId());
+                intent.putExtra(Constantes.ID, movieDb.getId());
+                intent.putExtra(Constantes.MEDIATYPE, movieDb.getMediaType());
                 Log.d("setOnClickListener", "" + movieDb.getTitle());
-                intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
+                intent.putExtra(Constantes.NOME, movieDb.getTitle());
                 startActivity(intent);
             }
         });
@@ -260,9 +263,10 @@ public class FilmeBottonFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), CrewsActivity.class);
-                intent.putExtra(Constantes.FILME_ID, movieDb.getId());
+                intent.putExtra(Constantes.ID, movieDb.getId());
                 Log.d("setOnClickListener", "" + movieDb.getTitle());
-                intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
+                intent.putExtra(Constantes.MEDIATYPE, movieDb.getMediaType());
+                intent.putExtra(Constantes.NOME, movieDb.getTitle());
                 startActivity(intent);
             }
         });
@@ -369,7 +373,7 @@ public class FilmeBottonFragment extends Fragment {
                     ActivityOptionsCompat compat = ActivityOptionsCompat
                             .makeSceneTransitionAnimation(getActivity(), img_poster, transition);
                     ActivityCompat.startActivity(getActivity(), intent, compat.toBundle());
-                    Log.d("FilmeBottonFragment", "setPoster: -> " + movieDb.getId());
+                    Log.d("FilmeInfoFragment", "setPoster: -> " + movieDb.getId());
 
                 }
             });
@@ -724,7 +728,7 @@ public class FilmeBottonFragment extends Fragment {
 
         if (movieDb.getVideos().size() > 0) {
             int tamanho = movieDb.getVideos().size();
-            Log.d("FilmeBottonFragment", "SetTreiler: -> " + movieDb.getVideos().size());
+            Log.d("FilmeInfoFragment", "SetTreiler: -> " + movieDb.getVideos().size());
             for (int i = 0; i < tamanho; i++) {
                 Log.d("SetTreiler", "" + movieDb.getVideos().get(i).getKey());
                 final String youtube_key = movieDb.getVideos().get(i).getKey();

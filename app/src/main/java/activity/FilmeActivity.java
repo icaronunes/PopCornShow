@@ -24,7 +24,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
-import fragment.FilmeBottonFragment;
+import fragment.FilmeInfoFragment;
 import fragment.ImagemTopScrollFragment;
 import info.movito.themoviedbapi.TmdbAccount;
 import info.movito.themoviedbapi.TmdbMovies;
@@ -36,7 +36,6 @@ import utils.Constantes;
 import utils.Prefs;
 import utils.UtilsFilme;
 
-import static com.google.android.gms.analytics.internal.zzy.i;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.alternative_titles;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.credits;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.images;
@@ -79,7 +78,6 @@ public class FilmeActivity extends BaseActivity {
         new TMDVAsync().execute();
         if (savedInstanceState == null) {
 
-
         }
 
         if (FilmeApplication.getInstance().isLogado()) {
@@ -94,9 +92,10 @@ public class FilmeActivity extends BaseActivity {
 
     }
 
-    private View.OnClickListener RatedFilme() {
+    public View.OnClickListener RatedFilme() {
         return new View.OnClickListener() {
-            @Override public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 final Dialog alertDialog = new Dialog(getContext());
                 alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 alertDialog.setContentView(R.layout.adialog_custom_rated);
@@ -269,6 +268,22 @@ public class FilmeActivity extends BaseActivity {
         collapsingToolbarLayout.setTitle(title);
     }
 
+    private void setFragmentBotton() {
+        Log.d("FilmeActivity", "setFragmentBotton");
+        //Gambiara
+        FilmeInfoFragment filmeFrag = new FilmeInfoFragment();
+        Bundle bundle = new Bundle(); //Tentar pegar nome que esta no bundle / Posso pasar o bundle direto?
+        bundle.putSerializable(Constantes.FILME, movieDb);
+        bundle.putSerializable(Constantes.SIMILARES, similarMovies);
+        filmeFrag.setArguments(bundle);
+        if (!isFinishing()) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.filme_container, filmeFrag, null)
+                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)// ????????
+                    .commit();
+        }
+    }
 
     private class ImagemTopFragment extends FragmentPagerAdapter {
 
@@ -310,7 +325,6 @@ public class FilmeActivity extends BaseActivity {
             movieDb.getVideos().addAll(movies.getMovie(movieDb.getId(), "en", videos).getVideos());
             movieDb.getReviews().addAll(movies.getMovie(movieDb.getId(), "en", reviews).getReviews());
             similarMovies = movies.getSimilarMovies(movieDb.getId(), getString(R.string.IDIOMAS), 1);
-
             return movieDb;
         }
 
@@ -324,20 +338,6 @@ public class FilmeActivity extends BaseActivity {
             setFragmentBotton();
 
         }
-    }
-
-    private void setFragmentBotton() {
-        if (isFinishing())  return; //Gambiara
-        FilmeBottonFragment filmeFrag = new FilmeBottonFragment();
-        Bundle bundle = new Bundle(); //Tentar pegar nome que esta no bundle / Posso pasar o bundle direto?
-        bundle.putSerializable(Constantes.FILME, movieDb);
-        bundle.putSerializable(Constantes.SIMILARES, similarMovies);
-        filmeFrag.setArguments(bundle);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.filme_container, filmeFrag, null)
-                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)// ????????
-                .commit();
     }
 
 }

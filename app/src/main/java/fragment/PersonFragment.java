@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -31,7 +32,6 @@ import info.movito.themoviedbapi.model.people.PersonPeople;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static domian.FilmeService.getPersonCredits;
 import static domian.FilmeService.getTmdbPerson;
 
 /**
@@ -107,7 +107,7 @@ public class PersonFragment extends Fragment {
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
         recyclerViewImagem.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerViewImagem.setHasFixedSize(true);
-        recyclerViewImagem.setHasFixedSize(true);
+        recyclerViewImagem.setItemAnimator(new DefaultItemAnimator());
 
         return view;
     }
@@ -117,8 +117,8 @@ public class PersonFragment extends Fragment {
         RecyclerViewCrews = (RecyclerView) view.findViewById(R.id.recycleView_person_crews);
         sem_crews = (TextView) view.findViewById(R.id.sem_crews);
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
+        RecyclerViewCrews.setItemAnimator(new DefaultItemAnimator());
         RecyclerViewCrews.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        RecyclerViewCrews.setHasFixedSize(true);
         RecyclerViewCrews.setHasFixedSize(true);
 
         return view;
@@ -286,8 +286,8 @@ public class PersonFragment extends Fragment {
             personPeople = getTmdbPerson()
                     .getPersonInfo(id_person, "&language=pt");
             artworks = FilmeService.getTmdbPerson().getPersonImages(id_person);
-            personCredits = FilmeService.getPersonCredits(id_person);
-                    //.getPersonCredits(id_person); Pega TVseries do Ator. Mas não da pra diferenciar.
+            personCredits = FilmeService.getTmdbPerson().getPersonCredits(id_person);
+            //.getPersonCredits(id_person); Pega TVseries do Ator. Mas não da pra diferenciar.
 
             return null;
         }

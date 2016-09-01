@@ -57,6 +57,7 @@ public class ListUserActivity extends BaseActivity {
         protected Void doInBackground(Void... voids) {
             lists = FilmeService.getListAccount("en", 1);
             //METODO NAO CARREGA INFORMAÇÕES DOS FILMES DA LISTA
+
             return null;
         }
 
@@ -64,13 +65,17 @@ public class ListUserActivity extends BaseActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             listView.setAdapter(new ListaUserAdapter(ListUserActivity.this, lists));
+
+                Log.d("LISTA", ""+lists.getResults().size());
+                Log.d("LISTA", ""+lists.getResults().get(0).getItems());
+
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     Intent intent = new Intent(ListUserActivity.this, ListaUserActivity.class);
                     intent.putExtra(Constantes.LISTA_ID, lists.getResults().get(i).getId());
-                    Log.d("ListUserActivity", lists.getResults().get(i).getId());
                     intent.putExtra(Constantes.LISTA_NOME, lists.getResults().get(i).getName());
+                    Log.d("ListUserActivity", lists.getResults().get(i).getId());
                     startActivity(intent);
                 }
             });

@@ -17,8 +17,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import adapter.FavotireAdapter;
-import applicaton.FilmeApplication;
+import adapter.FavoriteFilmeAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbAccount;
@@ -30,7 +29,7 @@ import utils.Constantes;
  * Created by icaro on 01/08/16.
  */
 
-public class FavotireActivity extends BaseActivity {
+public class FavoriteActivityApagar extends BaseActivity {
 
     RecyclerView recyclerView;
     MovieResultsPage favoritos;
@@ -47,7 +46,7 @@ public class FavotireActivity extends BaseActivity {
         setCheckable(getIntent().getIntExtra(Constantes.ABA, 0));
         progressBar = (ProgressBar) findViewById(R.id.progress);
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_favorite);
-        recyclerView.setLayoutManager(new GridLayoutManager(FavotireActivity.this, 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(FavoriteActivityApagar.this, 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
 
@@ -67,11 +66,11 @@ public class FavotireActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private FavotireAdapter.FavotireOnClickListener onclickListerne() {
-        return new FavotireAdapter.FavotireOnClickListener() {
+    private FavoriteFilmeAdapter.FavotireOnClickListener onclickListerne() {
+        return new FavoriteFilmeAdapter.FavotireOnClickListener() {
             @Override
             public void onClick(final View view, final int position) {
-                Intent intent = new Intent(FavotireActivity.this, FilmeActivity.class);
+                Intent intent = new Intent(FavoriteActivityApagar.this, FilmeActivity.class);
 
                 ImageView imageView = (ImageView) view;
                 BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
@@ -93,9 +92,7 @@ public class FavotireActivity extends BaseActivity {
                 Log.d("onBusAtualizarLista", "onClickLong - " + posicao);
                 Log.d("onBusAtualizarLista", "onClickLong - " + favoritos.getResults().get(posicao).toString());
                 final int id = favoritos.getResults().get(posicao).getId();
-                final String user = FilmeApplication.getInstance().getUser();
-                final String pass = FilmeApplication.getInstance().getPass();
-                new AlertDialog.Builder(FavotireActivity.this)
+                new AlertDialog.Builder(FavoriteActivityApagar.this)
                         .setIcon(R.drawable.icon_coracao_redondo)
                         .setTitle(favoritos.getResults().get(posicao).getTitle())
                         .setMessage(getResources().getString(R.string.excluir_filme))
@@ -133,7 +130,6 @@ public class FavotireActivity extends BaseActivity {
 
     }
 
-
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -142,13 +138,13 @@ public class FavotireActivity extends BaseActivity {
             return null;
         }
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            progressBar.setVisibility(View.GONE);
-            recyclerView.setAdapter(new FavotireAdapter(FavotireActivity.this,
-                    favoritos != null ? favoritos.getResults() : null, onclickListerne()));
-        }
+//        @Override
+//        protected void onPostExecute(Void aVoid) {
+//            super.onPostExecute(aVoid);
+//            progressBar.setVisibility(View.GONE);
+//            recyclerView.setAdapter(new FavoriteFilmeAdapter(FavoriteActivityApagar.this,
+//                    favoritos != null ? favoritos.getResults() : null, onclickListerne()));
+//        }
     }
 
 }

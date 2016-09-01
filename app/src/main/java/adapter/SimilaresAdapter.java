@@ -14,7 +14,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import activity.FilmeActivity;
-import activity.SearchActivity;
 import activity.SimilaresActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.MovieDb;

@@ -21,21 +21,16 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
 import adapter.TvShowAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbAccount;
-import info.movito.themoviedbapi.TmdbTvSeasons;
 import info.movito.themoviedbapi.model.core.ResponseStatus;
-import info.movito.themoviedbapi.model.tv.TvSeason;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static domian.FilmeService.getTmdbTvSeasons;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.credits;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.images;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.videos;
@@ -43,7 +38,7 @@ import static info.movito.themoviedbapi.TmdbTV.TvMethod.videos;
 
 public class TvShowActivity extends BaseActivity {
 
-    int id_tvshow = 1396;
+    int id_tvshow;
     String nome;
     int color_top;
     ViewPager viewPager;
@@ -63,6 +58,9 @@ public class TvShowActivity extends BaseActivity {
         setupNavDrawer();
         nome = getIntent().getStringExtra(Constantes.NOME_TVSHOW);
         color_top = getIntent().getIntExtra(Constantes.COLOR_TOP, 0);
+        layout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        layout.setBackgroundColor(color_top);
+        viewPager = (ViewPager) findViewById(R.id.viewPager_tvshow);
         id_tvshow = getIntent().getIntExtra(Constantes.TVSHOW_ID, 0);
         menu_item_favorite = (FloatingActionButton) findViewById(R.id.menu_item_favorite);
         menu_item_watchlist = (FloatingActionButton) findViewById(R.id.menu_item_watchlist);
@@ -70,11 +68,10 @@ public class TvShowActivity extends BaseActivity {
         fab = (FloatingActionMenu) findViewById(R.id.fab_menu_filme);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         imageView = (ImageView) findViewById(R.id.img_top_tvshow);
-        layout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         new TMDVAsync().execute();
 
         if (FilmeApplication.getInstance().isLogado()) { // Arrumar
-            Log.d("FAB", "FAB");
+            Log.d("FAB", "FAB " + color_top);
             setColorFab(color_top);
             menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
             menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
@@ -85,7 +82,6 @@ public class TvShowActivity extends BaseActivity {
     }
 
     private void setCoordinator() {
-        layout.setBackgroundColor(color_top);
         layout.setTitle(series.getName());
     }
 
@@ -248,25 +244,26 @@ public class TvShowActivity extends BaseActivity {
     }
 
     private void setupViewPagerTabs() {
-        viewPager = (ViewPager) findViewById(R.id.viewPager_tvshow);
+
         viewPager.setOffscreenPageLimit(1);
-        viewPager.setAdapter(new TvShowAdapter(this, getSupportFragmentManager(), series));
+        viewPager.setAdapter(new TvShowAdapter(this, getSupportFragmentManager(), series, color_top));
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager.setCurrentItem(0);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setSelectedTabIndicatorColor(color_top);
     }
 
     private void setImageTop() {
-        if (series.getBackdropPath() != null && series.getBackdropPath().length() > 5)
-            Picasso.with(TvShowActivity.this)
-                    .load(UtilsFilme.getBaseUrlImagem(5) + series.getBackdropPath())
-                    .error(R.drawable.top_empty)
-                    .into(imageView);
+
+        Picasso.with(TvShowActivity.this)
+                .load(UtilsFilme.getBaseUrlImagem(5) + series.getBackdropPath())
+                .error(R.drawable.top_empty)
+                .into(imageView);
 
         AnimatorSet animatorSet = new AnimatorSet();
-        ObjectAnimator alphaStar = ObjectAnimator.ofFloat(imageView, "y", -100, 0)
+        ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "x", -100, 0)
                 .setDuration(1000);
-        animatorSet.playTogether(alphaStar);
+        animatorSet.playTogether(animator);
         animatorSet.start();
     }
 
@@ -281,7 +278,6 @@ public class TvShowActivity extends BaseActivity {
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
-            Log.d("TMDVASync", "AsynTask");
             series = FilmeService.getTmdbTvShow()
                     .getSeries(id_tvshow, getString(R.string.IDIOMAS), images, credits, videos);
             return null;

@@ -4,17 +4,22 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.MenuItem;
 
 import adapter.PersonAdapter;
 import br.com.icaro.filme.R;
+import info.movito.themoviedbapi.model.Multi;
 import utils.Constantes;
+
+import static com.google.android.gms.analytics.internal.zzy.t;
 
 public class PersonActivity extends BaseActivity {
 
     int id_person;
     String nome;
     ViewPager viewPager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,7 @@ public class PersonActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(nome);
         setupViewPagerTabs();
+
     }
 
     private Context getContext() {

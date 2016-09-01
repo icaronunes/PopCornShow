@@ -182,7 +182,7 @@ public class BaseActivity extends AppCompatActivity {
                 Toast.makeText(this, "nav_item_settings", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.favorite:
-                intent = new Intent(this, FavotireActivity.class);
+                intent = new Intent(this, FavoriteActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.favorite);
                 intent.putExtra(Constantes.ABA, R.id.favorite);
                 startActivity(intent);
@@ -212,6 +212,7 @@ public class BaseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
+
             case android.R.id.home:
                 if (drawerLayout != null) {
                     openDrawer();
@@ -227,7 +228,7 @@ public class BaseActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, TvShowActivity.class);
                 intent.putExtra(Constantes.TVSHOW_ID, 62560);
                 intent.putExtra(Constantes.NOME_TVSHOW, "Breaking Bad: A Química do Mal");
-                intent.putExtra(Constantes.COLOR_TOP, 123);
+                intent.putExtra(Constantes.COLOR_TOP, -14663350);
                 startActivity(intent);
                 break;
             }
@@ -235,7 +236,7 @@ public class BaseActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, FilmeActivity.class);
                 intent.putExtra(Constantes.FILME_ID, 76341);
                 intent.putExtra(Constantes.NOME_FILME, "Mad Max: Estrada da Fúria");
-                intent.putExtra(Constantes.COLOR_TOP, 123);
+                intent.putExtra(Constantes.COLOR_TOP, -14663350);
                 startActivity(intent);
                 break;
             }
@@ -255,7 +256,6 @@ public class BaseActivity extends AppCompatActivity {
         searchView.setEnabled(false);
 
         return super.onCreateOptionsMenu(menu);
-
     }
 
     //Abre Menu Lateral

@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
 
 import adapter.ReviewsAdapter;
 import br.com.icaro.filme.R;
@@ -42,12 +43,17 @@ public class ReviewsActivity extends BaseActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
     public class TMDVAsync extends AsyncTask<Void, Void, MovieDb> {
 
         @Override
         protected MovieDb doInBackground(Void... voids) {
             TmdbMovies movies = FilmeService.getTmdbMovies();
-            Log.d("FilmeBottonFragment", "doInBackground: -> " + id_filme);
+            Log.d("FilmeInfoFragment", "doInBackground: -> " + id_filme);
             movieDb = movies.getMovie(id_filme, "pt-BR", reviews);
             movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());
             return movieDb;

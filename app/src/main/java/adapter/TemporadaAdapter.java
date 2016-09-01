@@ -2,8 +2,8 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,14 +26,18 @@ import utils.UtilsFilme;
 public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.HoldeTemporada> {
     Context context;
     TvSeason tvSeason;
+    String nome_serie;
     TvEpisode episode;
-    int serie_id;
+    int serie_id, color;
 
-    public TemporadaAdapter(TemporadaActivity temporadaActivity, TvSeason tvSeason, int serie_id) {
+    public TemporadaAdapter(TemporadaActivity temporadaActivity, TvSeason tvSeason,
+                            int serie_id, String nome, int color) {
 
         this.tvSeason = tvSeason;
         this.context = temporadaActivity;
         this.serie_id = serie_id;
+        this.nome_serie = nome;
+        this.color = color;
     }
 
     @Override
@@ -52,8 +56,19 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
 
         holder.data.setText(episode.getAirDate() != null ? episode.getAirDate() : context.getString(R.string.sem_data));
         holder.nome.setText(episode.getName() != "" ? episode.getName() : context.getString(R.string.sem_nome));
-        holder.nota.setText(episode.getVoteAverage() > 0 ? String.valueOf(episode.getVoteAverage()) : context.getString(R.string.sem_nota));
+        if (episode.getVoteAverage() > 0) {
+            String votos = (String) String.valueOf(episode.getVoteAverage()).subSequence(0, 3);
+            if (episode.getVoteAverage() < 10) {
+                holder.nota.setText(votos + "/" + episode.getVoteCount());
+            } else {
+                votos = votos.replace(".", "");
+                holder.nota.setText(votos + "/" + episode.getVoteCount());
+            }
+        } else {
+            holder.nota.setText(context.getString(R.string.sem_nota));
+        }
 
+        Log.d("Temporada", "Rating " +episode.getUserRating());
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(4) + episode.getStillPath())
                 .into(holder.poster);
 
@@ -65,7 +80,9 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
                 intent.putExtra(Constantes.TVSEASON_ID, tvSeason.getId());
                 intent.putExtra(Constantes.EPSODIO_ID, episode.getId());
                 intent.putExtra(Constantes.POSICAO, position);
-                intent.putExtra("teste", tvSeason);
+                intent.putExtra(Constantes.TVSEASONS, tvSeason);
+                intent.putExtra(Constantes.COLOR_TOP, color);
+                intent.putExtra(Constantes.NOME_TVSHOW, nome_serie);
                 context.startActivity(intent);
             }
         });

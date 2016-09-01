@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,20 +15,20 @@ import android.widget.TextView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
-import activity.FavotireActivity;
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.TvResultsPage;
+import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.UtilsFilme;
+
+import static android.media.CamcorderProfile.get;
 
 
 /**
  * Created by icaro on 01/08/16.
  */
-public class FavotireAdapter extends RecyclerView.Adapter<FavotireAdapter.FavoriteViewHolder> {
+public class FavoriteTvShowAdapter extends RecyclerView.Adapter<FavoriteTvShowAdapter.FavoriteViewHolder> {
 
-    List<MovieDb> favoritos;
+    TvResultsPage favoritos;
     Context context;
     FavotireOnClickListener onClickListener;
 
@@ -37,7 +38,8 @@ public class FavotireAdapter extends RecyclerView.Adapter<FavotireAdapter.Favori
         void onClickLong(View view,final int posicao);
     }
 
-    public FavotireAdapter(FavotireActivity favotireActivity, List<MovieDb> favoritos, FavotireOnClickListener onClickListener) {
+    public FavoriteTvShowAdapter(FragmentActivity favotireActivity, TvResultsPage favoritos,
+                                 FavotireOnClickListener onClickListener) {
         this.context = favotireActivity;
         this.favoritos = favoritos;
         this.onClickListener  = onClickListener;
@@ -53,14 +55,14 @@ public class FavotireAdapter extends RecyclerView.Adapter<FavotireAdapter.Favori
     @Override
     public void onBindViewHolder(final FavoriteViewHolder holder, final int position) {
 
-       final MovieDb movie = favoritos.get(position);
+        final TvSeries series = favoritos.getResults().get(position);
         Log.d("onBindViewHolder", "position" + position);
 
-        if (movie != null) {
+        if (series != null) {
 
             holder.img_button_coracao_favorite.setVisibility(View.GONE);
 
-            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
+            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + series.getPosterPath())
                     .into(holder.img_favorite, new Callback() {
                         @Override
                         public void onSuccess() {
@@ -95,7 +97,7 @@ public class FavotireAdapter extends RecyclerView.Adapter<FavotireAdapter.Favori
     @Override
     public int getItemCount() {
         if (favoritos != null) {
-            return favoritos.size();
+            return favoritos.getResults().size();
         }
         return 0;
     }

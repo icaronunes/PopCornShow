@@ -3,7 +3,6 @@ package activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Movie;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -32,8 +31,6 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static br.com.icaro.filme.R.string.movieDb;
-
 
 /**
  * Created by icaro on 08/07/16.
@@ -61,7 +58,7 @@ public class SearchMultiActivity extends BaseActivity {
         listView = (ListView) findViewById(R.id.listview_search); //Mudar ListView para Recycleview
         text_search_empty = (TextView) findViewById(R.id.text_search_empty);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
-        linear_search_layout = (LinearLayout) findViewById(R.id.linear_search_layout);
+        //linear_search_layout = (LinearLayout) findViewById(R.id.linear_search_layout);
         progressBar = (ProgressBar) findViewById(R.id.progress);
 
         Log.d("SearchMultiActivity", "onCreate");
@@ -84,7 +81,7 @@ public class SearchMultiActivity extends BaseActivity {
             text_search_empty.setText(R.string.no_internet);
             text_search_empty.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.INVISIBLE);
-            snack();
+           // snack();
         }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -143,7 +140,7 @@ public class SearchMultiActivity extends BaseActivity {
                     text_search_empty.setText(R.string.no_internet);
                     text_search_empty.setText(View.VISIBLE);
                     swipeRefreshLayout.setEnabled(false);
-                    snack();
+                    //snack();
                 }
             }
         };
@@ -161,21 +158,21 @@ public class SearchMultiActivity extends BaseActivity {
         return true;//super.onCreateOptionsMenu(menu);
     }
 
-    protected void snack() {
-        Snackbar.make(linear_search_layout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
-                            text_search_empty.setVisibility(View.GONE);
-                            TMDVAsync tmdvAsync = new TMDVAsync();
-                            tmdvAsync.execute();
-                        } else {
-                            snack();
-                        }
-                    }
-                }).show();
-    }
+//    protected void snack() {
+//        Snackbar.make(linear_search_layout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+//                .setAction(R.string.retry, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+//                            text_search_empty.setVisibility(View.GONE);
+//                            TMDVAsync tmdvAsync = new TMDVAsync();
+//                            tmdvAsync.execute();
+//                        } else {
+//                            snack();
+//                        }
+//                    }
+//                }).show();
+//    }
 
     private class TMDVAsync extends AsyncTask<Void, Void, List<Multi>> {
 
@@ -188,11 +185,13 @@ public class SearchMultiActivity extends BaseActivity {
 
         @Override
         protected List<Multi> doInBackground(Void... voids) {//
-            TmdbSearch tmdbSearch = FilmeService.getTmdbSearch();
-            TmdbSearch.MultiListResultsPage movieResultsPage = tmdbSearch.searchMulti(query,
-                    Constantes.PORTUGUES, pagina);
-            return movieResultsPage.getResults();
-
+            if (!query.isEmpty()) {
+                TmdbSearch tmdbSearch = FilmeService.getTmdbSearch();
+                TmdbSearch.MultiListResultsPage movieResultsPage = tmdbSearch.searchMulti(query,
+                        getString(R.string.IDIOMAS_BUSCA), pagina);
+                return movieResultsPage.getResults();
+            }
+            return null;
         }
 
         @Override

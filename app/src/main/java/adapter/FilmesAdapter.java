@@ -52,7 +52,7 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
 
         if (movie != null) {
 
-            String title = movie.toString();
+            String title = movie.getReleaseDate();
             if (title != null) {
                 holder.title.setText(title);
             }

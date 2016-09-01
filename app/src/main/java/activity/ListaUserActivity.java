@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -12,6 +14,8 @@ import adapter.ListUserAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbAccount;
+import info.movito.themoviedbapi.TmdbLists;
+import info.movito.themoviedbapi.model.MovieList;
 import utils.Constantes;
 
 /**
@@ -20,8 +24,9 @@ import utils.Constantes;
 public class ListaUserActivity extends BaseActivity {
 
     RecyclerView recyclerView;
-    TmdbAccount.MovieListResultsPage lists;
+    MovieList lists;
     ProgressBar progressBar;
+    String list_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +35,7 @@ public class ListaUserActivity extends BaseActivity {
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getIntent().getStringExtra(Constantes.LISTA_NOME));
-        setCheckable(getIntent().getIntExtra(Constantes.ABA, 0));
+        list_id = getIntent().getStringExtra(Constantes.LISTA_ID);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_favorite);
         recyclerView.setLayoutManager(new GridLayoutManager(ListaUserActivity.this, 2));
@@ -41,16 +46,20 @@ public class ListaUserActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new TMDVAsync().execute();
+       new TMDVAsync().execute();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            lists = FilmeService.getListAccount(null, 1);
-
+            Log.d("ListaUserActivity", "" + lists);
+            lists = FilmeService.getTmdbList().getList(getIntent().getStringExtra(Constantes.LISTA_ID));
             return null;
         }
 
@@ -59,7 +68,7 @@ public class ListaUserActivity extends BaseActivity {
             super.onPostExecute(aVoid);
             progressBar.setVisibility(View.GONE);
             recyclerView.setAdapter(new ListUserAdapter(ListaUserActivity.this,
-                    lists != null ? lists.getResults() : null));
+                    lists != null ? lists.getItems() : null));
         }
     }
 }

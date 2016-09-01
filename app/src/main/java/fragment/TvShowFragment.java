@@ -27,6 +27,7 @@ import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
 import activity.BaseActivity;
@@ -48,6 +49,7 @@ import utils.Config;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static br.com.icaro.filme.R.id.container;
 import static br.com.icaro.filme.R.string.mil;
 import static com.squareup.picasso.Picasso.with;
 
@@ -58,7 +60,7 @@ import static com.squareup.picasso.Picasso.with;
 public class TvShowFragment extends Fragment {
 
     final String TAG = TvShowFragment.class.getName();
-    int tipo;
+    int tipo, color;
     TvSeries series;
 
     TextView titulo, categoria, descricao, voto_media, voto_quantidade, produtora,
@@ -68,11 +70,12 @@ public class TvShowFragment extends Fragment {
     LinearLayout linear_container;
 
 
-    public static Fragment newInstance(int tipo, TvSeries series) {
+    public static Fragment newInstance(int tipo, TvSeries series, int color) {
         TvShowFragment fragment = new TvShowFragment();
         Bundle bundle = new Bundle();
         Log.d("TvShowFragment", "Series " + series.getName());
         bundle.putSerializable(Constantes.SERIE, series);
+        bundle.putInt(Constantes.COLOR_TOP, color);
         bundle.putInt(Constantes.ABA, tipo);
         fragment.setArguments(bundle);
 
@@ -85,6 +88,7 @@ public class TvShowFragment extends Fragment {
         if (getArguments() != null) {
             tipo = getArguments().getInt(Constantes.ABA);
             series = (TvSeries) getArguments().getSerializable(Constantes.SERIE);
+            color = getArguments().getInt(Constantes.COLOR_TOP);
         }
     }
 
@@ -149,9 +153,10 @@ public class TvShowFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), ElencoActivity.class);
-                    intent.putExtra(Constantes.TVSHOW_ID, series.getId());
+                    intent.putExtra(Constantes.ID, series.getId());
+                    intent.putExtra(Constantes.MEDIATYPE, series.getMediaType());
                     Log.d("setOnClickListener", "" + series.getName());
-                    intent.putExtra(Constantes.NOME_FILME, series.getName());
+                    intent.putExtra(Constantes.NOME, series.getName());
                     startActivity(intent);
                     // ???????????????? Solicitando id de filme, necessario verificar o tipo;
                 }
@@ -161,9 +166,10 @@ public class TvShowFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), CrewsActivity.class);
-                    intent.putExtra(Constantes.TVSHOW_ID, series.getId());
+                    intent.putExtra(Constantes.ID, series.getId());
+                    intent.putExtra(Constantes.MEDIATYPE, series.getMediaType());
                     Log.d("setOnClickListener", "" + series.getName());
-                    intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
+                    intent.putExtra(Constantes.NOME, series.getName());
                     startActivity(intent);
                 }
             });
@@ -184,7 +190,23 @@ public class TvShowFragment extends Fragment {
 
     private void setStatus() {
         if (series.getStatus() != null) {
-            status.setText(series.getStatus());
+            status.setTextColor(color);
+            Log.d("setStatus", series.getStatus());
+
+            if (series.getStatus().equals("Returning Series")) {
+                status.setText(R.string.returnin_series);
+            }
+            if (series.getStatus().equals("Ended")) {
+                status.setText(R.string.ended);
+            }
+            if (series.getStatus().equals("Canceled")) {
+                status.setText(R.string.canceled);
+
+            }
+            if (series.getStatus().equals("In Production")) {
+                status.setText(R.string.in_production);
+            }
+
         }
     }
 
@@ -211,7 +233,7 @@ public class TvShowFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new TemporadasAdapter(getActivity(), series, onClickListener()));
+        recyclerView.setAdapter(new TemporadasAdapter(getActivity(), series, onClickListener(), color));
 
         return view;
     }
@@ -225,12 +247,15 @@ public class TvShowFragment extends Fragment {
     private TemporadasAdapter.TemporadaOnClickListener onClickListener() {
         return new TemporadasAdapter.TemporadaOnClickListener() {
             @Override
-            public void onClickTemporada(View view, int position) {
-                Log.d("onClickListener", "id " + series.getId());
-                Log.d("onClickListener", "season " + series.getSeasons().get(position).getSeasonNumber());
+            public void onClickTemporada(View view, int position, int color) {
+                Log.d("onClickMovieListener", "id " + series.getId());
+                Log.d("onClickMovieListener", "season " + series.getSeasons().get(position).getSeasonNumber());
                 Intent intent = new Intent(getContext(), TemporadaActivity.class);
+                intent.putExtra(Constantes.NOME, getString(R.string.temporada) +" " + series.getSeasons().get(position).getSeasonNumber());
                 intent.putExtra(Constantes.TEMPORADA_ID, series.getSeasons().get(position).getSeasonNumber());
                 intent.putExtra(Constantes.TVSHOW_ID, series.getId());
+                intent.putExtra(Constantes.COLOR_TOP, color);
+                intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
                 getContext().startActivity(intent);
             }
         };
@@ -307,7 +332,7 @@ public class TvShowFragment extends Fragment {
                     ActivityOptionsCompat compat = ActivityOptionsCompat
                             .makeSceneTransitionAnimation(getActivity(), img_poster, transition);
                     ActivityCompat.startActivity(getActivity(), intent, compat.toBundle());
-                    Log.d("FilmeBottonFragment", "setPoster: -> " + series.getPosterPath());
+                    Log.d("FilmeInfoFragment", "setPoster: -> " + series.getPosterPath());
                     //Necessario verificar tipo - filme ou serie;
 
                 }

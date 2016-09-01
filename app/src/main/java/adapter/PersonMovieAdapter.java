@@ -47,11 +47,11 @@ public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.
     @Override
     public void onBindViewHolder(final PersonMovieAdapter.PersonMovieViewHolder holder, int position) {
 
-        PersonCredit movie = personCredits.getCast().get(position);
-        final int id = movie.getId();
-        final String title = movie.getMovieTitle();
-        Log.d("PersonMovieAdapter", "True - " + personCredits.getCast().get(position).getMovieTitle() +" " + movie.getPosterPath());
-            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
+        PersonCredit credit = personCredits.getCast().get(position);
+        final int id = credit.getId();
+        final String title = credit.getMovieTitle();
+        Log.d("PersonMovieAdapter", "True - " + personCredits.getCast().get(position).getMovieTitle() +" " + credit.getPosterPath());
+            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + credit.getPosterPath())
                     .error(R.drawable.poster_empty)
                     .into(holder.poster, new Callback() {
                         @Override
@@ -76,6 +76,8 @@ public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.
                 ImageView imageView = (ImageView) view;
                 int color = UtilsFilme.loadPalette(imageView);
                 intent.putExtra(Constantes.COLOR_TOP, color);
+                Log.d("PersonMovieAdapter","ID - " + id);
+                Log.d("PersonMovieAdapter","ID - " + title);
                 intent.putExtra(Constantes.FILME_ID, id);
                 intent.putExtra(Constantes.NOME_FILME, title);
                 context.startActivity(intent);

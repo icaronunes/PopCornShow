@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/elenco_temporada"
+        android:title="Elenco"
+        app:showAsAction="never"  />
+
+    <item
+        android:id="@+id/producao_temporada"
+        android:title="Produção"
+        app:showAsAction="never"/>
+
+</menu>

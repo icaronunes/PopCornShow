@@ -14,10 +14,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import activity.CrewsActivity;
 import activity.ElencoActivity;
 import activity.PersonActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.people.PersonCast;
+import info.movito.themoviedbapi.model.people.PersonCrew;
 import utils.Constantes;
 import utils.UtilsFilme;
 
@@ -30,12 +32,14 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
     List<PersonCast> casts;
 
 
-    public ElencoAdapter(ElencoActivity elencoActivity, List<PersonCast> movieDb) {
+    public ElencoAdapter(Context elencoActivity, List<PersonCast> movieDb) {
 
         this.context = elencoActivity;
         this.casts = movieDb;
         Log.d("ElencoAdapter", "Tamanho " + casts.size());
     }
+
+
 
     @Override
     public ElencoAdapter.ElencoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -54,7 +58,8 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
                 .placeholder(R.drawable.person)
                 .into(holder.img_elenco);
 
-        holder.img_elenco.setOnClickListener(new View.OnClickListener() {
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, PersonActivity.class);
