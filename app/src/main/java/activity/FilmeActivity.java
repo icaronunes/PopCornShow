@@ -3,6 +3,8 @@ package activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -11,15 +13,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+
+import java.io.File;
 
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
@@ -92,6 +99,32 @@ public class FilmeActivity extends BaseActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_share, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.share){
+            File file = salvaImagemMemoriaCache(getContext(), movieDb.getPosterPath() );
+            if (file != null) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle());
+                intent.putExtra(Intent.EXTRA_SUBJECT, movieDb.getOverview());
+                intent.setType("image/*");
+                intent.setType("text/*");
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
+            } else {
+                Toast.makeText(getContext(), getResources().getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show();
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public View.OnClickListener RatedFilme() {
         return new View.OnClickListener() {
             @Override
@@ -101,6 +134,8 @@ public class FilmeActivity extends BaseActivity {
                 alertDialog.setContentView(R.layout.adialog_custom_rated);
 
                 Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
+                TextView title = (TextView) alertDialog.findViewById(R.id.rating_title);
+                title.setText(movieDb.getTitle());
                 final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
                 int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
                 int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
@@ -123,7 +158,7 @@ public class FilmeActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 if (UtilsFilme.isNetWorkAvailable(getContext())) {
-                                    status = FilmeService.setRatedMovie(id_filme, ratingBar.getRating() * 2);
+                                    status = FilmeService.setRatedMovie(id_filme, ratingBar.getRating());
                                     try {
                                         Thread.sleep(1150);
                                         runOnUiThread(new Runnable() {

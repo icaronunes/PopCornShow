@@ -137,6 +137,7 @@ public class PosterScrollFragment extends Fragment {
     }
 
     private File salvaImagemMemoriaCache(Context context, ImageView imageView) {
+        //USar metodo do BaseActivity
         File file = context.getExternalCacheDir();
 
         if (!file.exists()) {

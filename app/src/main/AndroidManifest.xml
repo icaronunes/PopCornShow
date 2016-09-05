@@ -43,8 +43,9 @@
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
         </activity>
+        <activity android:name="activity.FavoriteActivity" />
 
-        <activity android:name="activity.FavoriteActivity"/>
+        <activity android:name="activity.RatedActivity" />
 
         <activity
             android:name="activity.FilmeActivity"
@@ -71,18 +72,6 @@
         <activity android:name="activity.ElencoActivity" />
         <activity android:name="activity.CrewsActivity" />
         <activity android:name="activity.PosterGridActivity" />
-        <activity android:name="activity.FavoriteActivityApagar">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="activity.SearchMultiActivity" />
-        </activity>
         <activity android:name="activity.Site" />
         <activity android:name="activity.SearchMultiActivity">
             <intent-filter>
@@ -97,20 +86,6 @@
                 android:value="activity.SearchMultiActivity" />
         </activity>
         <activity android:name="activity.WatchListActivity">
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="activity.SearchMultiActivity" />
-        </activity>
-        <activity android:name="activity.RatedActivity">
-
-            <!-- <intent-filter> -->
-            <!-- &lt;!&ndash;Verificar motivo desta linha. Acredito que seja para outras versoes do android ???????&ndash;&gt; -->
-            <!-- <action android:name="android.intent.action.SEARCH" /> -->
-            <!-- </intent-filter> -->
-
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -136,7 +111,7 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name="activity.FotoPersonActivity" />
-        <activity android:name="activity.FavoriteActivity"></activity>
+        <activity android:name="activity.RatedActivity"></activity>
     </application>
 
 </manifest>

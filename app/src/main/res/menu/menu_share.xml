@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/search"
+        android:checkable="false"
+        android:icon="@drawable/icon_find"
+        android:title="@string/search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
+
+    <item
+        android:id="@+id/share"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="Compartilhar"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/apagar"
+        android:title="Logout"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/serie"
+        android:title="Serie"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filme"
+        android:title="Filme"
+        app:showAsAction="never" />
+
+</menu>

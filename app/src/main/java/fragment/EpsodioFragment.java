@@ -127,7 +127,7 @@ public class EpsodioFragment extends Fragment {
                             public void run() {
                                 if (UtilsFilme.isNetWorkAvailable(getContext())) {
                                     status = FilmeService
-                                            .setRatedTvShowEpsodio(tvshow_id, episode.getSeasonNumber(), episode.getEpisodeNumber(), ratingBar.getRating() * 2);
+                                            .setRatedTvShowEpsodio(tvshow_id, episode.getSeasonNumber(), episode.getEpisodeNumber(), ratingBar.getRating());
                                     try {
                                         Thread.sleep(200);
                                         getActivity().runOnUiThread(new Runnable() {

@@ -23,8 +23,6 @@ import info.movito.themoviedbapi.TmdbTvEpisodes;
 import info.movito.themoviedbapi.TmdbTvSeasons;
 import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.MovieDb;
-import info.movito.themoviedbapi.model.MovieList;
-import info.movito.themoviedbapi.model.Multi;
 import info.movito.themoviedbapi.model.config.Account;
 import info.movito.themoviedbapi.model.config.TokenSession;
 import info.movito.themoviedbapi.model.core.AccountID;
@@ -39,8 +37,6 @@ import info.movito.themoviedbapi.tools.RequestMethod;
 import utils.Config;
 
 import static android.R.attr.id;
-import static android.R.attr.permission;
-import static br.com.icaro.filme.R.string.nota;
 import static info.movito.themoviedbapi.TmdbAccount.PARAM_SESSION;
 import static info.movito.themoviedbapi.TmdbAccount.TMDB_METHOD_ACCOUNT;
 import static info.movito.themoviedbapi.TmdbPeople.TMDB_METHOD_PERSON;
@@ -66,16 +62,16 @@ public class FilmeService {
         return new TmdbApi(Config.TMDB_API_KEY).getSearch();
     }
 
-    public static TmdbTV getTmdbTvShow(){
-        return  new TmdbApi(Config.TMDB_API_KEY).getTvSeries();
+    public static TmdbTV getTmdbTvShow() {
+        return new TmdbApi(Config.TMDB_API_KEY).getTvSeries();
     }
 
-    public static TmdbTvSeasons getTmdbTvSeasons(){
-        return  new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
+    public static TmdbTvSeasons getTmdbTvSeasons() {
+        return new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
     }
 
-    public static TmdbTvEpisodes getTmdbTvEpisodes(){
-        return  new TmdbApi(Config.TMDB_API_KEY).getTvEpisodes();
+    public static TmdbTvEpisodes getTmdbTvEpisodes() {
+        return new TmdbApi(Config.TMDB_API_KEY).getTvEpisodes();
     }
 
 
@@ -294,6 +290,7 @@ public class FilmeService {
 
         return mapJsonResult(apiUrl, MovieResultsPage.class);
     }
+
     //Copiado da FrameWork - La não ha este metodo de combinar "trabalhos" de filme e Serie
     public static PersonCredits getPersonCreditsCombinado(int personId) {
         ApiUrl apiUrl = new ApiUrl(TMDB_METHOD_PERSON, personId, "combined_credits");
@@ -343,7 +340,7 @@ public class FilmeService {
     //Copia de TMDBAPI para pegar paginas do Favoritos ^^^^^^^^
 
 
-    public static MovieResultsPage getRated(String user, String password, int pagina) {
+    public static MovieResultsPage getRatedMovie(String user, String password, int pagina) {
         if (user != null && password != null) {
             TokenSession authentication = new TmdbApi(Config.TMDB_API_KEY)
                     .getAuthentication().getSessionLogin(user, password);
@@ -357,19 +354,48 @@ public class FilmeService {
         return null;
     }
 
-    public static MovieResultsPage getRatedListTotal() {
+    public static MovieResultsPage getRatedMovieListTotal() {
         String user = FilmeApplication.getInstance().getUser();
         String pass = FilmeApplication.getInstance().getPass();
-        MovieResultsPage rated = FilmeService.getRated(user, pass, 1);
+        MovieResultsPage rated = FilmeService.getRatedMovie(user, pass, 1);
         if (rated != null) {
             if (rated.getTotalPages() > 1) {
                 for (int i = 2; i <= rated.getTotalPages(); i++) {
-                    rated.getResults().addAll(FilmeService.getRated(user, pass, i).getResults());
+                    rated.getResults().addAll(FilmeService.getRatedMovie(user, pass, i).getResults());
                 }
             }
         }
         return rated;
     }
+
+    public static TvResultsPage getRatedTvShow(String user, String password, int pagina) {
+        if (user != null && password != null) {
+            TokenSession authentication = new TmdbApi(Config.TMDB_API_KEY)
+                    .getAuthentication().getSessionLogin(user, password);
+            String session = authentication.getSessionId();
+            SessionToken token = new SessionToken(session);
+            TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
+            TmdbAccount account = tmdbApi.getAccount();
+            AccountID accountID = new AccountID(getAccount(user, password).getId());
+            return account.getRatedTvSeries(token, accountID, pagina);
+        }
+        return null;
+    }
+
+    public static TvResultsPage getRatedListTotal() {
+        String user = FilmeApplication.getInstance().getUser();
+        String pass = FilmeApplication.getInstance().getPass();
+        TvResultsPage rated = FilmeService.getRatedTvShow(user, pass, 1);
+        if (rated != null) {
+            if (rated.getTotalPages() > 1) {
+                for (int i = 2; i <= rated.getTotalPages(); i++) {
+                    rated.getResults().addAll(FilmeService.getRatedTvShow(user, pass, i).getResults());
+                }
+            }
+        }
+        return rated;
+    }
+
 
     public static MovieResultsPage getWatchList(String user, String password, int pagina) {
         TokenSession authentication = new TmdbApi(Config.TMDB_API_KEY)
@@ -382,7 +408,7 @@ public class FilmeService {
         return account.getWatchListMovies(token, accountID, pagina);
     }
 
-    public static MovieResultsPage getWatchListTotal() {
+    public static MovieResultsPage getWatchListMovieTotal() {
         String user = FilmeApplication.getInstance().getUser();
         String pass = FilmeApplication.getInstance().getPass();
 
@@ -395,6 +421,33 @@ public class FilmeService {
             }
         }
         return watch;
+    }
+
+    public static TvResultsPage getWatchListTvshowTotal() {
+        String user = FilmeApplication.getInstance().getUser();
+        String pass = FilmeApplication.getInstance().getPass();
+
+        TvResultsPage watch = getWatchListTvShow(user, pass, 1);
+        if (watch != null) {
+            if (watch.getTotalPages() > 1) {
+                for (int i = 2; i <= watch.getTotalPages(); i++) {
+                    watch.getResults().addAll(getWatchListTvShow(user, pass, i).getResults());
+                }
+            }
+        }
+        return watch;
+    }
+
+
+    public static TvResultsPage getWatchListTvShow(String user, String password, int pagina) {
+        TokenSession authentication = new TmdbApi(Config.TMDB_API_KEY)
+                .getAuthentication().getSessionLogin(user, password);
+        String session = authentication.getSessionId();
+        SessionToken token = new SessionToken(session);
+        TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
+        TmdbAccount account = tmdbApi.getAccount();
+        AccountID accountID = new AccountID(getAccount(user, password).getId());
+        return account.getWatchListSeries(token, accountID, pagina);
     }
 
     public static boolean setRatedMovie(int id_filme, float nota) {
@@ -414,7 +467,7 @@ public class FilmeService {
         return false;
     }
 
-    public static boolean setRatedTvShowEpsodio(int id_tvshow,int seasonid,  int id_epsodio, float nota) {
+    public static boolean setRatedTvShowEpsodio(int id_tvshow, int seasonid, int id_epsodio, float nota) {
         String user = FilmeApplication.getInstance().getUser();
         String pass = FilmeApplication.getInstance().getPass();
         TokenSession authentication = new TmdbApi(Config.TMDB_API_KEY)
@@ -427,7 +480,7 @@ public class FilmeService {
             Log.d("setRatedMovie", "" + id_tvshow);
             Log.d("setRatedMovie", "" + seasonid);
             Log.d("setRatedMovie", "" + id_epsodio);
-            Log.d("setRatedMovie", "" + ""+nota);
+            Log.d("setRatedMovie", "" + "" + nota);
             return account.postTvExpisodeRating(token, id_tvshow, seasonid, id_epsodio, (int) nota);
         }
         return false;
@@ -442,6 +495,7 @@ public class FilmeService {
         SessionToken token = new SessionToken(session);
         TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
         TmdbAccount account = tmdbApi.getAccount();
+
         if (nota != 0) {
             boolean status = account.postTvSeriesRating(token, id_tvshow, (int) nota);
             Log.d("setRatedMovie", "" + status);

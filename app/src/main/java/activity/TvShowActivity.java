@@ -4,22 +4,29 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 import adapter.TvShowAdapter;
 import applicaton.FilmeApplication;
@@ -31,6 +38,8 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static br.com.icaro.filme.R.string.movieDb;
+import static br.com.icaro.filme.R.string.tvshow_rated;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.credits;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.images;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.videos;
@@ -79,6 +88,32 @@ public class TvShowActivity extends BaseActivity {
         } else {
             fab.setAlpha(0);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_share, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.share){
+            File file = salvaImagemMemoriaCache(this, series.getPosterPath());
+            if (file != null) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_TEXT, series.getName());
+                intent.putExtra(Intent.EXTRA_SUBJECT, series.getOverview());
+                intent.setType("image/*");
+                intent.setType("text/*");
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_tvshow)));
+            } else {
+                Toast.makeText(this, getResources().getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setCoordinator() {
@@ -184,6 +219,8 @@ public class TvShowActivity extends BaseActivity {
                 alertDialog.setContentView(R.layout.adialog_custom_rated);
 
                 Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
+                TextView title = (TextView) alertDialog.findViewById(R.id.rating_title);
+                title.setText(series.getName());
                 final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
                 int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
                 int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
@@ -206,7 +243,7 @@ public class TvShowActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 if (UtilsFilme.isNetWorkAvailable(TvShowActivity.this)) {
-                                    status = FilmeService.setRatedTvShow(id_tvshow, ratingBar.getRating() * 2);
+                                    status = FilmeService.setRatedTvShow(id_tvshow, ratingBar.getRating());
                                     try {
                                         Thread.sleep(150);
                                         runOnUiThread(new Runnable() {

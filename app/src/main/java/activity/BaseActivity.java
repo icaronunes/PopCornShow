@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -24,6 +26,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
@@ -256,6 +262,24 @@ public class BaseActivity extends AppCompatActivity {
         searchView.setEnabled(false);
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    protected File salvaImagemMemoriaCache(Context context, String endereco) {
+        File file = context.getExternalCacheDir();
+
+        if (!file.exists()) {
+            file.mkdir();
+            Log.e("salvarArqNaMemoriaIn", "Directory created");
+        }
+        File dir = new File(file, endereco );
+        ImageView imageView = new ImageView(context);
+        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + endereco).into(imageView);
+        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+        if (drawable != null) {
+            Bitmap bitmap = drawable.getBitmap();
+            UtilsFilme.writeBitmap(dir, bitmap);
+        }
+        return dir;
     }
 
     //Abre Menu Lateral

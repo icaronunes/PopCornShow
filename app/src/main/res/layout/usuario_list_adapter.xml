@@ -3,8 +3,8 @@
     android:id="@+id/card_view_usuario"
     android:layout_width="wrap_content"
     android:layout_height="263dp"
-    android:orientation="vertical"
-    android:layout_margin="3dp">
+    android:layout_margin="3dp"
+    android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -14,59 +14,59 @@
             android:id="@+id/img_filme_usuario"
             android:layout_width="174dp"
             android:layout_height="261dp"
-            android:src="@drawable/filme342"
             android:background="@color/transparent"
-            android:scaleType="fitStart" />
+            android:scaleType="fitStart"
+            android:src="@drawable/filme342" />
 
 
         <TextView
+            android:id="@+id/text_rated_favoritos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/text_rated_favoritos"
-            android:padding="4dp"
             android:autoText="false"
             android:background="@color/yellow_transparente"
+            android:padding="4dp"
             android:textStyle="normal|bold"
             android:visibility="invisible" />
 
-        <include layout="@layout/include_progress"/>
+        <include layout="@layout/include_progress" />
     </FrameLayout>
 
 
     <LinearLayout
+        android:id="@+id/botoes_lista"
         android:layout_width="176dp"
         android:layout_height="49dp"
         android:layout_gravity="bottom"
-        android:id="@+id/botoes_lista"
         android:visibility="gone">
 
         <ImageButton
             android:id="@+id/img_button_coracao_usuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/coracao_vazio"
-            android:background="@color/transparent"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:layout_gravity="center_vertical" />
+            android:background="@color/transparent"
+            android:src="@drawable/coracao_vazio" />
 
         <ImageButton
             android:id="@+id/img_button_estrela_usuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/estrela_vazia"
-            android:background="@color/transparent"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:layout_gravity="center_vertical" />
+            android:background="@color/transparent"
+            android:src="@drawable/estrela_vazia" />
 
         <ImageButton
             android:id="@+id/img_button_relogio_usuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/relogio"
-            android:background="@color/transparent"
-            android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:elevation="1dp" />
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:elevation="1dp"
+            android:src="@drawable/relogio" />
 
 
     </LinearLayout>

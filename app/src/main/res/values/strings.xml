@@ -115,5 +115,6 @@
     <string name="filme">Filme</string>
     <string name="tvshow">Séries</string>
     <string name="excluir_tvshow">Excluir Série</string>
+    <string name="compartilhar_tvshow">Compartilhando Séries</string>
 
 </resources>

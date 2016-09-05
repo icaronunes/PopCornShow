@@ -16,34 +16,37 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.model.MovieDb;
-import info.movito.themoviedbapi.model.core.MovieResultsPage;
+import info.movito.themoviedbapi.TvResultsPage;
+import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.UtilsFilme;
 
 import static android.media.CamcorderProfile.get;
+import static br.com.icaro.filme.R.id.rated;
 
 
 /**
  * Created by icaro on 01/08/16.
  */
-public class FavoriteFilmeAdapter extends RecyclerView.Adapter<FavoriteFilmeAdapter.FavoriteViewHolder> {
+public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.FavoriteViewHolder> {
 
-    MovieResultsPage favoritos;
+    TvResultsPage favoritos;
     Context context;
-    FavotireOnClickListener onClickListener;
+    RatedOnClickListener onClickListener;
 
     // Colocar em apenas um lugar
-    public interface FavotireOnClickListener {
+    public interface RatedOnClickListener {
         void onClick(View view, int posicao);
         void onClickLong(View view,final int posicao);
     }
 
-    public FavoriteFilmeAdapter(FragmentActivity favotireActivity, MovieResultsPage favoritos,
-                                FavotireOnClickListener onClickListener) {
-        this.context = favotireActivity;
-        this.favoritos = favoritos;
-        this.onClickListener  = onClickListener;
+    public ListaTvShowAdapter(FragmentActivity activity, TvResultsPage tvSeries,
+                              RatedOnClickListener ratedOnClickListener) {
+        this.context = activity;
+        this.favoritos = tvSeries;
+        this.onClickListener  = ratedOnClickListener;
+
     }
+
 
     @Override
     public FavoriteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -55,14 +58,14 @@ public class FavoriteFilmeAdapter extends RecyclerView.Adapter<FavoriteFilmeAdap
     @Override
     public void onBindViewHolder(final FavoriteViewHolder holder, final int position) {
 
-       final MovieDb movie = favoritos.getResults().get(position);
+        final TvSeries series = favoritos.getResults().get(position);
         Log.d("onBindViewHolder", "position" + position);
 
-        if (movie != null) {
+        if (series != null) {
 
             holder.img_button_coracao_favorite.setVisibility(View.GONE);
 
-            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
+            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + series.getPosterPath())
                     .into(holder.img_favorite, new Callback() {
                         @Override
                         public void onSuccess() {
