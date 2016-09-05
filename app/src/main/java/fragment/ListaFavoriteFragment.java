@@ -34,7 +34,7 @@ import utils.Constantes;
 /**
  * Created by icaro on 23/08/16.
  */
-public class ListaWatchlistFragment extends Fragment {
+public class ListaFavoriteFragment extends Fragment {
 
     final String TAG = TvShowFragment.class.getName();
     ResponseStatus status;
@@ -45,7 +45,7 @@ public class ListaWatchlistFragment extends Fragment {
     RecyclerView recyclerViewTvShow;
 
     public static Fragment newInstanceMovie(int tipo, MovieResultsPage series) {
-        ListaWatchlistFragment fragment = new ListaWatchlistFragment();
+        ListaFavoriteFragment fragment = new ListaFavoriteFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constantes.FILME, series);
         bundle.putInt(Constantes.ABA, tipo);
@@ -55,7 +55,7 @@ public class ListaWatchlistFragment extends Fragment {
     }
 
     public static Fragment newInstanceTvShow(int tvshow, TvResultsPage results) {
-        ListaWatchlistFragment fragment = new ListaWatchlistFragment();
+        ListaFavoriteFragment fragment = new ListaFavoriteFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constantes.SERIE, results);
         bundle.putInt(Constantes.ABA, tvshow);
@@ -134,8 +134,7 @@ public class ListaWatchlistFragment extends Fragment {
                                 new Thread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        status = FilmeService.addOrRemoverWatchList(id, false, TmdbAccount.MediaType.MOVIE);
-
+                                        status = FilmeService.addOrRemoverFavorite(id, false, TmdbAccount.MediaType.MOVIE);
                                         getActivity().runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
@@ -183,7 +182,7 @@ public class ListaWatchlistFragment extends Fragment {
                 new AlertDialog.Builder(getActivity())
                         .setIcon(R.drawable.icon_agenda)
                         .setTitle(tvSeries.getResults().get(position).getName())
-                        .setMessage(getResources().getString(R.string.excluir_filme))
+                        .setMessage(getResources().getString(R.string.excluir_tvshow))
                         .setNegativeButton("Não", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -196,7 +195,7 @@ public class ListaWatchlistFragment extends Fragment {
                                 new Thread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        status = FilmeService.addOrRemoverWatchList(id, false, TmdbAccount.MediaType.TV);
+                                        status = FilmeService.addOrRemoverFavorite(id, false, TmdbAccount.MediaType.TV);
 
                                         getActivity().runOnUiThread(new Runnable() {
                                             @Override

@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import adapter.ListasAdapater;
 import adapter.WatchListAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;

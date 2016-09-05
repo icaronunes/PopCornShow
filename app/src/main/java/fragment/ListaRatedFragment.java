@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import activity.FilmeActivity;
+import activity.TvShowActivity;
 import adapter.ListaFilmeAdapter;
 import adapter.ListaTvShowAdapter;
 import br.com.icaro.filme.R;
@@ -38,7 +39,7 @@ import utils.UtilsFilme;
 /**
  * Created by icaro on 23/08/16.
  */
-public class ListaFragment extends Fragment {
+public class ListaRatedFragment extends Fragment {
 
     final String TAG = TvShowFragment.class.getName();
     ResponseStatus status;
@@ -47,12 +48,9 @@ public class ListaFragment extends Fragment {
     TvResultsPage tvSeries;
     RecyclerView recyclerViewFilme;
     RecyclerView recyclerViewTvShow;
-    ListaFilmeAdapter.ListaOnClickListener onClickMovieListener;
-    ListaTvShowAdapter.ListaOnClickListener onClickTvListener;
-
 
     public static Fragment newInstanceMovie(int tipo, MovieResultsPage series) {
-        ListaFragment fragment = new ListaFragment();
+        ListaRatedFragment fragment = new ListaRatedFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constantes.FILME, series);
         bundle.putInt(Constantes.ABA, tipo);
@@ -62,7 +60,7 @@ public class ListaFragment extends Fragment {
     }
 
     public static Fragment newInstanceTvShow(int tvshow, TvResultsPage results) {
-        ListaFragment fragment = new ListaFragment();
+        ListaRatedFragment fragment = new ListaRatedFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constantes.SERIE, results);
         bundle.putInt(Constantes.ABA, tvshow);
@@ -84,7 +82,8 @@ public class ListaFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
         switch (tipo) {
 
@@ -103,7 +102,7 @@ public class ListaFragment extends Fragment {
             @Override
             public void onClick(final View view, final int position) {
                 Intent intent = new Intent(getActivity(), FilmeActivity.class);
-
+                Log.d("ListaFilmeAdapter", "ListaFilmeAdapter");
                 ImageView imageView = (ImageView) view;
                 BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                 if (drawable != null) {
@@ -161,7 +160,7 @@ public class ListaFragment extends Fragment {
                                                     .show();
                                             RecyclerView.ViewHolder view = recyclerViewFilme.findViewHolderForAdapterPosition(position);
                                             TextView textView = (TextView) view.itemView.findViewById(R.id.text_rated_favoritos);
-                                            String valor = String.valueOf((ratingBar.getRating() * 2));
+                                            String valor = String.valueOf((ratingBar.getRating()));
                                             textView.setText(valor);
 
                                         } else {
@@ -186,13 +185,100 @@ public class ListaFragment extends Fragment {
     }
 
 
+    private ListaTvShowAdapter.ListaOnClickListener onclickTvShowListerne() {
+        return new ListaTvShowAdapter.ListaOnClickListener() {
+            @Override
+            public void onClick(final View view, final int position) {
+                Intent intent = new Intent(getActivity(), TvShowActivity.class);
+                Log.d("OnClick", "Onclick");
+                ImageView imageView = (ImageView) view;
+                BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+                if (drawable != null) {
+                    Bitmap bitmap = drawable.getBitmap();
+                    Palette.Builder builder = new Palette.Builder(bitmap);
+                    Palette palette = builder.generate();
+                    for (Palette.Swatch swatch : palette.getSwatches()) {
+                        intent.putExtra(Constantes.COLOR_TOP, swatch.getRgb());
+                    }
+                }
+                intent.putExtra(Constantes.TVSHOW_ID, tvSeries.getResults().get(position).getId());
+                intent.putExtra(Constantes.NOME_TVSHOW, tvSeries.getResults().get(position).getName());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onClickLong(View view, final int position) {
+                Log.d("setupNavDrawer", "Login");
+                final boolean[] status = {false};
+                final Dialog alertDialog = new Dialog(getActivity());
+                alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                alertDialog.setContentView(R.layout.adialog_custom_rated);
+
+                Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
+                final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
+                int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
+                int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
+                Log.d(TAG, "Valor Rated" + tvSeries.getResults().get(position).getUserRating());
+                ratingBar.setRating(tvSeries.getResults().get(position).getUserRating());
+
+                alertDialog.getWindow().setLayout(width, height);
+
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(TAG, "Adialog Rated");
+                        final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
+                                android.R.style.Theme_Material_Dialog);
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setMessage("Salvando...");
+                        progressDialog.show();
+
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                if (UtilsFilme.isNetWorkAvailable(getActivity())) {
+                                    status[0] = FilmeService.setRatedTvShow(tvSeries.getResults().get(position).getId(), ratingBar.getRating());
+                                }
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (status[0]) {
+                                            Toast.makeText(getActivity(), getResources().getString(R.string.tvshow_rated), Toast.LENGTH_SHORT)
+                                                    .show();
+                                            RecyclerView.ViewHolder view = recyclerViewTvShow.findViewHolderForAdapterPosition(position);
+                                            TextView textView = (TextView) view.itemView.findViewById(R.id.text_rated_favoritos);
+                                            String valor = String.valueOf((ratingBar.getRating()));
+                                            textView.setText(valor);
+
+                                        } else {
+                                            Toast.makeText(getActivity(), getResources().getString(R.string.falha_rated), Toast.LENGTH_SHORT)
+                                                    .show();
+                                        }
+                                        progressDialog.dismiss();
+                                    }
+                                });
+                            }
+                        }.start();
+                        alertDialog.dismiss();
+                    }
+
+                });
+
+                alertDialog.show();
+                recyclerViewTvShow.getAdapter().notifyItemChanged(position);
+            }
+        };
+    }
+
+
     private View getViewMovie(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.temporadas, container, false); // Criar novo layout
         recyclerViewFilme = (RecyclerView) view.findViewById(R.id.temporadas_recycle);
         recyclerViewFilme.setHasFixedSize(true);
         recyclerViewFilme.setItemAnimator(new DefaultItemAnimator());
         recyclerViewFilme.setLayoutManager(new GridLayoutManager(getContext(), 2));
-       // recyclerViewFilme.setAdapter(new ListaFilmeAdapter(getActivity(), movies));
+        recyclerViewFilme.setAdapter(new ListaFilmeAdapter(getActivity(), movies,
+                onclickListerne(), true));
 
         return view;
     }
@@ -203,8 +289,8 @@ public class ListaFragment extends Fragment {
         recyclerViewTvShow.setHasFixedSize(true);
         recyclerViewTvShow.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTvShow.setLayoutManager(new GridLayoutManager(getContext(), 2));
-      //  recyclerViewTvShow.setAdapter(new ListaTvShowAdapter(getActivity(), tvSeries));
-
+        recyclerViewTvShow.setAdapter(new ListaTvShowAdapter(getActivity(), tvSeries,
+                onclickTvShowListerne(), true));
         return view;
     }
 }

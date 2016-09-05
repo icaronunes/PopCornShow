@@ -6,22 +6,24 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import br.com.icaro.filme.R;
-import fragment.ListaWatchlistFragment;
+import fragment.FavoriteFragment;
+import fragment.ListaFavoriteFragment;
+import fragment.ListaRatedFragment;
 import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 
 /**
  * Created by icaro on 23/08/16.
  */
-public class ListasAdapater extends FragmentPagerAdapter {
+public class FavoriteAdapater extends FragmentPagerAdapter {
 
     Context context;
     TvResultsPage tvResultsPage;
     MovieResultsPage movieResultsPage;
 
 
-    public ListasAdapater(Context context, FragmentManager supportFragmentManager,
-                          TvResultsPage series, MovieResultsPage movies) {
+    public FavoriteAdapater(Context context, FragmentManager supportFragmentManager,
+                            TvResultsPage series, MovieResultsPage movies) {
         super(supportFragmentManager);
         this.context = context;
         this.tvResultsPage = series;
@@ -31,10 +33,10 @@ public class ListasAdapater extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return ListaWatchlistFragment.newInstanceMovie(R.string.filme, movieResultsPage);
+            return ListaFavoriteFragment.newInstanceMovie(R.string.filme, movieResultsPage);
         }
         if (position == 1) {
-            return ListaWatchlistFragment.newInstanceTvShow(R.string.tvshow, tvResultsPage);
+            return ListaFavoriteFragment.newInstanceTvShow(R.string.tvshow, tvResultsPage);
         }
         return null;
     }

@@ -1,7 +1,6 @@
 package adapter;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +20,7 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.UtilsFilme;
 
 import static android.media.CamcorderProfile.get;
-import static br.com.icaro.filme.R.id.rated;
+import static br.com.icaro.filme.R.string.movie;
 
 
 /**
@@ -31,19 +30,21 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
 
     TvResultsPage favoritos;
     Context context;
-    RatedOnClickListener onClickListener;
+    ListaOnClickListener onClickListener;
+    boolean status = false;
 
     // Colocar em apenas um lugar
-    public interface RatedOnClickListener {
+    public interface ListaOnClickListener {
         void onClick(View view, int posicao);
         void onClickLong(View view,final int posicao);
     }
 
-    public ListaTvShowAdapter(FragmentActivity activity, TvResultsPage tvSeries,
-                              RatedOnClickListener ratedOnClickListener) {
+    public ListaTvShowAdapter(Context activity, TvResultsPage tvSeries,
+                              ListaOnClickListener ratedOnClickListener, boolean b) {
         this.context = activity;
         this.favoritos = tvSeries;
         this.onClickListener  = ratedOnClickListener;
+        this.status = b;
 
     }
 
@@ -60,6 +61,19 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
 
         final TvSeries series = favoritos.getResults().get(position);
         Log.d("onBindViewHolder", "position" + position);
+
+        if (status) {
+            String valor = String.valueOf(series.getUserRating());
+            Log.d("Rated", "" + valor);
+            if (valor.length() > 3) {
+                valor = valor.substring(0, 2);
+                Log.d("Rated 2", "" + valor);
+                holder.text_rated_favoritos.setText(valor);
+            }
+            holder.text_rated_favoritos.setText(valor);
+            holder.text_rated_favoritos.setVisibility(View.VISIBLE);
+        }
+
 
         if (series != null) {
 

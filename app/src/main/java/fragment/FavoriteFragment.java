@@ -1,13 +1,13 @@
 package fragment;
 
-import android.content.DialogInterface;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,7 +16,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import activity.FilmeActivity;
 import activity.TvShowActivity;
@@ -24,17 +29,17 @@ import adapter.ListaFilmeAdapter;
 import adapter.ListaTvShowAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
-import info.movito.themoviedbapi.TmdbAccount;
 import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import info.movito.themoviedbapi.model.core.ResponseStatus;
 import utils.Constantes;
+import utils.UtilsFilme;
 
 
 /**
  * Created by icaro on 23/08/16.
  */
-public class ListaWatchlistFragment extends Fragment {
+public class FavoriteFragment extends Fragment {
 
     final String TAG = TvShowFragment.class.getName();
     ResponseStatus status;
@@ -45,7 +50,7 @@ public class ListaWatchlistFragment extends Fragment {
     RecyclerView recyclerViewTvShow;
 
     public static Fragment newInstanceMovie(int tipo, MovieResultsPage series) {
-        ListaWatchlistFragment fragment = new ListaWatchlistFragment();
+        FavoriteFragment fragment = new FavoriteFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constantes.FILME, series);
         bundle.putInt(Constantes.ABA, tipo);
@@ -55,7 +60,7 @@ public class ListaWatchlistFragment extends Fragment {
     }
 
     public static Fragment newInstanceTvShow(int tvshow, TvResultsPage results) {
-        ListaWatchlistFragment fragment = new ListaWatchlistFragment();
+        FavoriteFragment fragment = new FavoriteFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constantes.SERIE, results);
         bundle.putInt(Constantes.ABA, tvshow);
@@ -116,40 +121,65 @@ public class ListaWatchlistFragment extends Fragment {
 
             @Override
             public void onClickLong(View view, final int position) {
-                final int id = movies.getResults().get(position).getId();
-                Log.d("OnClick", "Onclick");
-                new AlertDialog.Builder(getActivity())
-                        .setIcon(R.drawable.icon_agenda)
-                        .setTitle(movies.getResults().get(position).getTitle())
-                        .setMessage(getResources().getString(R.string.excluir_filme))
-                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                Log.d("setupNavDrawer", "Login");
+                final boolean[] status = {false};
+                final Dialog alertDialog = new Dialog(getActivity());
+                alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                alertDialog.setContentView(R.layout.adialog_custom_rated);
 
-                            }
-                        })
-                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
+                final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
+                int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
+                int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
+                Log.d(TAG, "Valor Rated" + movies.getResults().get(position).getUserRating());
+                ratingBar.setRating(movies.getResults().get(position).getUserRating());
+
+                alertDialog.getWindow().setLayout(width, height);
+
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(TAG, "Adialog Rated");
+                        final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
+                                android.R.style.Theme_Material_Dialog);
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setMessage("Salvando...");
+                        progressDialog.show();
+
+                        new Thread() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                new Thread(new Runnable() {
+                            public void run() {
+                                if (UtilsFilme.isNetWorkAvailable(getActivity())) {
+                                    status[0] = FilmeService.setRatedMovie(movies.getResults().get(position).getId(), ratingBar.getRating());
+                                }
+                                getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        status = FilmeService.addOrRemoverWatchList(id, false, TmdbAccount.MediaType.MOVIE);
+                                        if (status[0]) {
+                                            Toast.makeText(getActivity(), getResources().getString(R.string.filme_rated), Toast.LENGTH_SHORT)
+                                                    .show();
+                                            RecyclerView.ViewHolder view = recyclerViewFilme.findViewHolderForAdapterPosition(position);
+                                            TextView textView = (TextView) view.itemView.findViewById(R.id.text_rated_favoritos);
+                                            String valor = String.valueOf((ratingBar.getRating()));
+                                            textView.setText(valor);
 
-                                        getActivity().runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                if (status.getStatusCode() == 13) {
-                                                    movies.getResults().remove(movies.getResults().get(position));
-                                                    recyclerViewFilme.getAdapter().notifyItemRemoved(position);
-                                                    recyclerViewFilme.getAdapter().notifyItemChanged(position);
-                                                }
-                                            }
-                                        });
+                                        } else {
+                                            Toast.makeText(getActivity(), getResources().getString(R.string.falha_rated), Toast.LENGTH_SHORT)
+                                                    .show();
+                                        }
+                                        progressDialog.dismiss();
                                     }
-                                }).start();
+                                });
                             }
-                        }).show();
+                        }.start();
+
+                        alertDialog.dismiss();
+                    }
+
+                });
+
+                alertDialog.show();
+                recyclerViewFilme.getAdapter().notifyItemChanged(position);
             }
         };
     }
@@ -178,40 +208,64 @@ public class ListaWatchlistFragment extends Fragment {
 
             @Override
             public void onClickLong(View view, final int position) {
-                final int id = tvSeries.getResults().get(position).getId();
-                Log.d("OnClick", "onClickLong");
-                new AlertDialog.Builder(getActivity())
-                        .setIcon(R.drawable.icon_agenda)
-                        .setTitle(tvSeries.getResults().get(position).getName())
-                        .setMessage(getResources().getString(R.string.excluir_filme))
-                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                Log.d("setupNavDrawer", "Login");
+                final boolean[] status = {false};
+                final Dialog alertDialog = new Dialog(getActivity());
+                alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                alertDialog.setContentView(R.layout.adialog_custom_rated);
 
-                            }
-                        })
-                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
+                final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
+                int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
+                int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
+                Log.d(TAG, "Valor Rated" + tvSeries.getResults().get(position).getUserRating());
+                ratingBar.setRating(tvSeries.getResults().get(position).getUserRating());
+
+                alertDialog.getWindow().setLayout(width, height);
+
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(TAG, "Adialog Rated");
+                        final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
+                                android.R.style.Theme_Material_Dialog);
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setMessage("Salvando...");
+                        progressDialog.show();
+
+                        new Thread() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                new Thread(new Runnable() {
+                            public void run() {
+                                if (UtilsFilme.isNetWorkAvailable(getActivity())) {
+                                    status[0] = FilmeService.setRatedTvShow(tvSeries.getResults().get(position).getId(), ratingBar.getRating());
+                                }
+                                getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        status = FilmeService.addOrRemoverWatchList(id, false, TmdbAccount.MediaType.TV);
+                                        if (status[0]) {
+                                            Toast.makeText(getActivity(), getResources().getString(R.string.tvshow_rated), Toast.LENGTH_SHORT)
+                                                    .show();
+                                            RecyclerView.ViewHolder view = recyclerViewTvShow.findViewHolderForAdapterPosition(position);
+                                            TextView textView = (TextView) view.itemView.findViewById(R.id.text_rated_favoritos);
+                                            String valor = String.valueOf((ratingBar.getRating()));
+                                            textView.setText(valor);
 
-                                        getActivity().runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                if (status.getStatusCode() == 13) {
-                                                    tvSeries.getResults().remove(tvSeries.getResults().get(position));
-                                                    recyclerViewTvShow.getAdapter().notifyItemRemoved(position);
-                                                    recyclerViewTvShow.getAdapter().notifyItemChanged(position);
-                                                }
-                                            }
-                                        });
+                                        } else {
+                                            Toast.makeText(getActivity(), getResources().getString(R.string.falha_rated), Toast.LENGTH_SHORT)
+                                                    .show();
+                                        }
+                                        progressDialog.dismiss();
                                     }
-                                }).start();
+                                });
                             }
-                        }).show();
+                        }.start();
+                        alertDialog.dismiss();
+                    }
+
+                });
+
+                alertDialog.show();
+                recyclerViewTvShow.getAdapter().notifyItemChanged(position);
             }
         };
     }

@@ -8,7 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import adapter.ListasAdapater;
+import adapter.FavoriteAdapater;
+import adapter.RatedAdapater;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TvResultsPage;
@@ -50,7 +51,7 @@ public class FavoriteActivity extends BaseActivity {
         viewPager.setCurrentItem(0);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.accent));
-        viewPager.setAdapter(new ListasAdapater(FavoriteActivity.this, getSupportFragmentManager(),
+        viewPager.setAdapter(new FavoriteAdapater(FavoriteActivity.this, getSupportFragmentManager(),
                 tvResultsPage, movieResultsPage));
     }
 

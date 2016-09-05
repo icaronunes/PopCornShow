@@ -1,5 +1,6 @@
 package adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +22,6 @@ import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.UtilsFilme;
 
 import static android.media.CamcorderProfile.get;
-import static br.com.icaro.filme.R.id.rated;
 
 
 /**
@@ -32,7 +32,7 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
     MovieResultsPage favoritos;
     Context context;
     ListaOnClickListener onClickListener;
-    boolean status;
+    boolean status = false;
 
     // Colocar em apenas um lugar
     public interface ListaOnClickListener {
@@ -60,9 +60,17 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
 
        final MovieDb movie = favoritos.getResults().get(position);
         Log.d("onBindViewHolder", "position" + position);
-
-        holder.text_rated_favoritos.setVisibility(View.GONE);
-
+        if (status) {
+            String valor = String.valueOf(movie.getUserRating());
+            Log.d("Rated", "" + valor);
+            if (valor.length() > 3) {
+                valor = valor.substring(0, 2);
+                Log.d("Rated 2", "" + valor);
+                holder.text_rated_favoritos.setText(valor);
+            }
+            holder.text_rated_favoritos.setText(valor);
+            holder.text_rated_favoritos.setVisibility(View.VISIBLE);
+        }
         if (movie != null) {
 
             holder.img_button_coracao_favorite.setVisibility(View.GONE);
