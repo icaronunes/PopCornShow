@@ -34,7 +34,7 @@ public class CrewsActivity extends BaseActivity {
     int id;
     Multi.MediaType mediaType;
     ProgressBar progressBar;
-    Credits creditsTvShow;
+    //Credits creditsTvShow;
     MovieDb movies;
     int season = -100;
 
@@ -47,7 +47,7 @@ public class CrewsActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         id = getIntent().getIntExtra(Constantes.ID, 0);
         mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
-        season = getIntent().getIntExtra(Constantes.TVSEASONS, 0);
+        season = getIntent().getIntExtra(Constantes.TVSEASONS, -100);
         Log.d("CrewsActivity", " " + id);
         String title = getIntent().getStringExtra(Constantes.NOME);
         getSupportActionBar().setTitle(title);
@@ -102,21 +102,24 @@ public class CrewsActivity extends BaseActivity {
 
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
-
+        Credits creditsTvShow;
         @Override
         protected Void doInBackground(Void... voids) {
             if (Multi.MediaType.TV_SERIES.equals(mediaType)) {
                 creditsTvShow = FilmeService.getTmdbTvShow().getCredits(id, "en");
+                Log.d("CrewsActivity", "IF " + creditsTvShow.getCrew().size());
             }
             if (Multi.MediaType.TV_SERIES.equals(mediaType) && season != -100){
-                creditsTvShow = FilmeService.getTmdbTvSeasons().getSeason(id, season,"en", TmdbTvSeasons.SeasonMethod.credits)
+                creditsTvShow = FilmeService.getTmdbTvSeasons()
+                        .getSeason(id, season,"en", TmdbTvSeasons.SeasonMethod.credits)
                         .getCredits();
+                Log.d("CrewsActivity", "-100 " + creditsTvShow.getCrew().size());
             }
 
             if (Multi.MediaType.MOVIE.equals(mediaType)) {
                 TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
                 movies = tmdbMovies.getMovie(id, "en", TmdbMovies.MovieMethod.credits);
-                Log.d("ElencoActivity", "" + movies.getCredits().getCast().size());
+                Log.d("CrewsActivity", "" + movies.getCredits().getCast().size());
             }
             return null;
         }
@@ -124,12 +127,13 @@ public class CrewsActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(Void aVoid){
-            Log.d("ElencoActivity", "onPostExecute");
+            Log.d("CrewsActivity", "onPostExecute");
             progressBar.setVisibility(View.GONE);
             if (Multi.MediaType.MOVIE.equals(mediaType)) {
                 recyclerView.setAdapter(new CrewsAdapter(CrewsActivity.this, movies.getCredits().getCrew()));
             }
             if (Multi.MediaType.TV_SERIES.equals(mediaType)) {
+                Log.d("CrewsActivity", "IF " + creditsTvShow.getCrew().size());
                 recyclerView.setAdapter(new CrewsAdapter(CrewsActivity.this, creditsTvShow.getCrew()));
             }
 

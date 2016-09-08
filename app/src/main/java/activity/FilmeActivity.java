@@ -4,14 +4,19 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +32,7 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import java.io.File;
+import java.util.Locale;
 
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
@@ -108,8 +114,8 @@ public class FilmeActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.share){
-            File file = salvaImagemMemoriaCache(getContext(), movieDb.getPosterPath() );
+        if (item.getItemId() == R.id.share) {
+            File file = salvaImagemMemoriaCache(getContext(), movieDb.getPosterPath());
             if (file != null) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle());
@@ -304,8 +310,7 @@ public class FilmeActivity extends BaseActivity {
     }
 
     private void setFragmentBotton() {
-        Log.d("FilmeActivity", "setFragmentBotton");
-        //Gambiara
+        Log.d("FilmeActivity", Locale.getDefault().toLanguageTag());
         FilmeInfoFragment filmeFrag = new FilmeInfoFragment();
         Bundle bundle = new Bundle(); //Tentar pegar nome que esta no bundle / Posso pasar o bundle direto?
         bundle.putSerializable(Constantes.FILME, movieDb);
@@ -315,10 +320,24 @@ public class FilmeActivity extends BaseActivity {
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.filme_container, filmeFrag, null)
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)// ????????
+                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                     .commit();
         }
+
     }
+
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(this, MainActivity.class);
+        refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(refresh);
+    }
+
 
     private class ImagemTopFragment extends FragmentPagerAdapter {
 
@@ -355,11 +374,22 @@ public class FilmeActivity extends BaseActivity {
         @Override
         protected MovieDb doInBackground(Void... voids) {//
             TmdbMovies movies = FilmeService.getTmdbMovies();
-            movieDb = movies.getMovie(id_filme, getResources().getString(R.string.IDIOMAS)
-                    , credits, releases, videos, reviews, similar, alternative_titles, images);
-            movieDb.getVideos().addAll(movies.getMovie(movieDb.getId(), "en", videos).getVideos());
-            movieDb.getReviews().addAll(movies.getMovie(movieDb.getId(), "en", reviews).getReviews());
-            similarMovies = movies.getSimilarMovies(movieDb.getId(), getString(R.string.IDIOMAS), 1);
+            Log.d("FilmeActivity", "Filme ID - " + id_filme);
+//
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
+            boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+            if (idioma_padrao) {
+                Log.d("FilmeActivity", "true - " + id_filme);
+                movieDb = movies.getMovie(id_filme, Locale.getDefault().toLanguageTag()
+                        , credits, releases, videos, reviews, similar, alternative_titles, images);
+
+            } else {
+                Log.d("FilmeActivity", "False - " + id_filme);
+                movieDb = movies.getMovie(id_filme, null
+                        , credits, releases, videos, reviews, similar, alternative_titles, images);
+            }
+
+            similarMovies = movies.getSimilarMovies(movieDb.getId(), null, 1);
             return movieDb;
         }
 

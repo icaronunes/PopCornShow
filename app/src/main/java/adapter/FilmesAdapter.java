@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -52,15 +53,24 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
 
         if (movie != null) {
 
-            String title = movie.getReleaseDate();
-            if (title != null) {
-                holder.title.setText(title);
-            }
 
             Picasso.with(context)
                     .load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
                     .error(R.drawable.poster_empty)
-                    .into(holder.imagem_filme);
+                    .into(holder.imagem_filme, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            String title = movie.getReleaseDate();
+                            holder.title.setText(title);
+                        }
+
+                        @Override
+                        public void onError() {
+                            String title = movie.getTitle();
+                            String release  = movie.getReleaseDate();
+                            holder.title.setText(title + " - " + release);
+                        }
+                    });
             holder.progressBar.setVisibility(View.INVISIBLE);
             if (filmeOnClickListener != null) {
                 holder.imagem_filme.setOnClickListener(new View.OnClickListener() {

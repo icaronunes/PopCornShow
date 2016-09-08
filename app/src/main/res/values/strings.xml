@@ -33,13 +33,13 @@
     <string name="popularity">Popularidade:</string>
     <string name="original_title">Titulo Original:</string>
     <string name="elenco">Elenco</string>
-    <string name="search">Search</string>
+    <string name="search">Procurar</string>
     <string name="search_empty">Busca sem Resultado</string>
     <string name="title_activity_maps">Map</string>
     <string name="erro">Erro YouTube</string>
     <string name="player_error">Erro YouTube</string>
-    <string name="IDIOMAS">pt-BR,pt,en,null</string>
-    <string name="IDIOMAS_BUSCA">pt-BR,en,null</string>
+    <string name="IDIOMAS" translatable="false">pt-BR,pt,en,null</string>
+    <string name="IDIOMAS_BUSCA" translatable="false">pt-BR,en,null</string>
     <string name="mil">Mil</string>
     <string name="milhoes">Mi</string>
     <string name="horas">horas</string>
@@ -116,5 +116,9 @@
     <string name="tvshow">Séries</string>
     <string name="excluir_tvshow">Excluir Série</string>
     <string name="compartilhar_tvshow">Compartilhando Séries</string>
+    <string name="idioma_padrao">Idioma do Android</string>
+    <string name="idioma_padrao_subtitle">Idioma Inglês contem mais informações no TMDB. Caso não uso o padrão do Android, este será usado.</string>
+    <string name="opcoes">Opcções</string>
+    <string name="pref_idioma_en">Idioma com mais informações é o Inglês (\"En\")</string>
 
 </resources>

@@ -41,7 +41,7 @@ public class PersonFragment extends Fragment {
 
     TextView nome_person, birthday, dead, homepage, biografia, aka, conhecido, place_of_birth, sem_filmes, sem_fotos, sem_crews;
     ImageView imageView, imageButtonWiki;
-    RecyclerView recyclerViewMovie, recyclerViewImagem, RecyclerViewCrews;
+    RecyclerView recyclerViewMovie, recyclerViewImagem, RecyclerViewCrews, recyclerViewTvshow;
 
     int tipo, id_person;
     ProgressBar progressBar;
@@ -95,8 +95,24 @@ public class PersonFragment extends Fragment {
             case R.string.imagem_person: {
                 return getViewPersonImage(inflater, container);
             }
+            case R.string.tvshow: {
+                return getViewPersonTvShow(inflater, container);
+            }
         }
         return null;
+    }
+
+    private View getViewPersonTvShow(LayoutInflater inflater, ViewGroup container) {
+
+        View view = inflater.inflate(R.layout.activity_person_tvshow, container, false);
+        recyclerViewTvshow = (RecyclerView) view.findViewById(R.id.recycleView_person_imagem);
+        sem_fotos = (TextView) view.findViewById(R.id.sem_fotos);
+        progressBar = (ProgressBar) view.findViewById(R.id.progress);
+        recyclerViewTvshow.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerViewTvshow.setHasFixedSize(true);
+        recyclerViewTvshow.setItemAnimator(new DefaultItemAnimator());
+
+        return view;
     }
 
     private View getViewPersonImage(LayoutInflater inflater, ViewGroup container) {
@@ -280,33 +296,46 @@ public class PersonFragment extends Fragment {
     }
 
     private class PersonAsync extends AsyncTask<Void, Void, Void> {
+        boolean status = false;
+
+        @Override
+        protected void onPreExecute() {
+            if (UtilsFilme.isNetWorkAvailable(getContext())) {
+                status = true;
+            }
+            super.onPreExecute();
+        }
+
         @Override
         protected Void doInBackground(Void... voids) {
             Log.d("PersonAsync", "" + id_person);
-            personPeople = getTmdbPerson()
-                    .getPersonInfo(id_person, "&language=pt");
-            artworks = FilmeService.getTmdbPerson().getPersonImages(id_person);
-            personCredits = FilmeService.getTmdbPerson().getPersonCredits(id_person);
-            //.getPersonCredits(id_person); Pega TVseries do Ator. Mas não da pra diferenciar.
-
+            if (status) {
+                personPeople = getTmdbPerson()
+                        .getPersonInfo(id_person, "&language=pt");
+                artworks = FilmeService.getTmdbPerson().getPersonImages(id_person);
+                personCredits = FilmeService.getTmdbPerson().getPersonCredits(id_person);
+                //.getPersonCredits(id_person); Pega TVseries do Ator. Mas não da pra diferenciar dos filmes
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            if (status) {
 
-            if (tipo == R.string.person) {
-                setPersonInformation(personPeople);
-            }
-            if (tipo == R.string.movie) {
-                setPersonMovies(personCredits);
-            }
-            if (tipo == R.string.crews) {
-                setPersonCrews(personCredits);
-            }
-            if (tipo == R.string.imagem_person) {
-                setPersonImagem(artworks);
+                if (tipo == R.string.person) {
+                    setPersonInformation(personPeople);
+                }
+                if (tipo == R.string.movie) {
+                    setPersonMovies(personCredits);
+                }
+                if (tipo == R.string.crews) {
+                    setPersonCrews(personCredits);
+                }
+                if (tipo == R.string.imagem_person) {
+                    setPersonImagem(artworks);
+                }
             }
         }
     }

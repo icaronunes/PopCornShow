@@ -51,9 +51,9 @@
             android:name="activity.FilmeActivity"
             android:parentActivityName="activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar.NavDrawer">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.SEARCH" />-->
+            <!--</intent-filter>-->
 
             <meta-data
                 android:name="android.app.searchable"
@@ -110,8 +110,10 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+
         <activity android:name="activity.FotoPersonActivity" />
-        <activity android:name="activity.RatedActivity"></activity>
+
+        <activity android:name="activity.SettingsActivity"></activity>
     </application>
 
 </manifest>

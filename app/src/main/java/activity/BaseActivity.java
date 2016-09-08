@@ -185,6 +185,8 @@ public class BaseActivity extends AppCompatActivity {
 
                 break;
             case R.id.nav_item_settings:
+                intent = new Intent (this, SettingsActivity.class);
+                startActivity(intent);
                 Toast.makeText(this, "nav_item_settings", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.favorite:

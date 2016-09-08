@@ -4,8 +4,10 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -33,9 +35,11 @@ import java.util.List;
 import activity.BaseActivity;
 import activity.CrewsActivity;
 import activity.ElencoActivity;
+import activity.FilmeActivity;
 import activity.PersonActivity;
 import activity.PosterGridActivity;
 import activity.ProdutoraActivity;
+import activity.SettingsActivity;
 import activity.SimilaresActivity;
 import activity.TemporadaActivity;
 import activity.TreilerActivity;
@@ -192,20 +196,26 @@ public class TvShowFragment extends Fragment {
         if (series.getStatus() != null) {
             status.setTextColor(color);
             Log.d("setStatus", series.getStatus());
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+           if (idioma_padrao) {
 
-            if (series.getStatus().equals("Returning Series")) {
-                status.setText(R.string.returnin_series);
-            }
-            if (series.getStatus().equals("Ended")) {
-                status.setText(R.string.ended);
-            }
-            if (series.getStatus().equals("Canceled")) {
-                status.setText(R.string.canceled);
+               if (series.getStatus().equals("Returning Series")) {
+                   status.setText(R.string.returnin_series);
+               }
+               if (series.getStatus().equals("Ended")) {
+                   status.setText(R.string.ended);
+               }
+               if (series.getStatus().equals("Canceled")) {
+                   status.setText(R.string.canceled);
 
-            }
-            if (series.getStatus().equals("In Production")) {
-                status.setText(R.string.in_production);
-            }
+               }
+               if (series.getStatus().equals("In Production")) {
+                   status.setText(R.string.in_production);
+               }
+           } else {
+               status.setText(series.getStatus());
+           }
 
         }
     }

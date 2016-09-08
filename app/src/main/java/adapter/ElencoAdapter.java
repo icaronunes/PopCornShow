@@ -32,10 +32,10 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
     List<PersonCast> casts;
 
 
-    public ElencoAdapter(Context elencoActivity, List<PersonCast> movieDb) {
+    public ElencoAdapter(Context elencoActivity, List<PersonCast> casts) {
 
         this.context = elencoActivity;
-        this.casts = movieDb;
+        this.casts = casts;
         Log.d("ElencoAdapter", "Tamanho " + casts.size());
     }
 

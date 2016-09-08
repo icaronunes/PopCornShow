@@ -39,7 +39,7 @@ public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.
 
     @Override
     public PersonMovieAdapter.PersonMovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.poster_grid_image, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.person_movie_filmes_layout, parent, false);
         PersonMovieViewHolder holder = new PersonMovieViewHolder(view);
         return holder;
     }
@@ -47,10 +47,10 @@ public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.
     @Override
     public void onBindViewHolder(final PersonMovieAdapter.PersonMovieViewHolder holder, int position) {
 
-        PersonCredit credit = personCredits.getCast().get(position);
-        final int id = credit.getId();
-        final String title = credit.getMovieTitle();
-        Log.d("PersonMovieAdapter", "True - " + personCredits.getCast().get(position).getMovieTitle() +" " + credit.getPosterPath());
+        final PersonCredit credit = personCredits.getCast().get(position);
+        if (credit != null) {
+
+            Log.d("PersonMovieAdapter", "True - " + personCredits.getCast().get(position).getMovieTitle() + " " + credit.getPosterPath());
             Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + credit.getPosterPath())
                     .error(R.drawable.poster_empty)
                     .into(holder.poster, new Callback() {
@@ -58,31 +58,33 @@ public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.
                         public void onSuccess() {
                             holder.progressBar.setVisibility(View.INVISIBLE);
                             Log.d("PersonMovieAdapter", "Sucesso");
+                            holder.title.setVisibility(View.GONE);
                         }
 
                         @Override
                         public void onError() {
-                            Log.d("PersonMovieAdapter", "ERRO");
+                            Log.d("PersonMovieAdapter", "ERRO " + credit.getMovieTitle());
                             holder.progressBar.setVisibility(View.INVISIBLE);
-                            holder.title.setText(title);
                             holder.title.setVisibility(View.VISIBLE);
+                            holder.title.setText(credit.getMovieTitle());
                         }
                     });
 
-        holder.poster.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, FilmeActivity.class);
-                ImageView imageView = (ImageView) view;
-                int color = UtilsFilme.loadPalette(imageView);
-                intent.putExtra(Constantes.COLOR_TOP, color);
-                Log.d("PersonMovieAdapter","ID - " + id);
-                Log.d("PersonMovieAdapter","ID - " + title);
-                intent.putExtra(Constantes.FILME_ID, id);
-                intent.putExtra(Constantes.NOME_FILME, title);
-                context.startActivity(intent);
-            }
-        });
+            holder.poster.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, FilmeActivity.class);
+                    ImageView imageView = (ImageView) view;
+                    int color = UtilsFilme.loadPalette(imageView);
+                    intent.putExtra(Constantes.COLOR_TOP, color);
+                    Log.d("PersonMovieAdapter", "ID - " + credit.getMovieId());
+                    Log.d("PersonMovieAdapter", "ID - " + credit.getMovieTitle());
+                    intent.putExtra(Constantes.FILME_ID, credit.getMovieId());
+                    intent.putExtra(Constantes.NOME_FILME, credit.getMovieTitle());
+                    context.startActivity(intent);
+                }
+            });
+        }
 
     }
 

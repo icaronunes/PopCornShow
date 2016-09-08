@@ -20,6 +20,8 @@ import info.movito.themoviedbapi.model.people.PersonCredits;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static android.R.attr.id;
+
 /**
  * Created by icaro on 18/08/16.
  */
@@ -36,7 +38,7 @@ public class PersonCrewsAdapter extends RecyclerView.Adapter<PersonCrewsAdapter.
 
     @Override
     public PersonCrewsAdapter.PersonCrewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.poster_grid_image, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.crews_filmes_layout, parent, false);
         PersonCrewsViewHolder holder = new PersonCrewsViewHolder(view);
         return holder;
     }
@@ -44,22 +46,22 @@ public class PersonCrewsAdapter extends RecyclerView.Adapter<PersonCrewsAdapter.
     @Override
     public void onBindViewHolder(final PersonCrewsAdapter.PersonCrewsViewHolder holder, int position) {
 
-        movie = personCredits.getCrew().get(position);
-        final int id = movie.getId();
+       movie = personCredits.getCrew().get(position);
 
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
                 .placeholder(R.drawable.poster_empty)
                 .into(holder.poster, new Callback() {
                     @Override
                     public void onSuccess() {
+                        holder.title.setVisibility(View.INVISIBLE);
                         holder.progressBar.setVisibility(View.INVISIBLE);
                     }
 
                     @Override
                     public void onError() {
                         holder.progressBar.setVisibility(View.INVISIBLE);
-                        holder.title.setVisibility(View.VISIBLE);
                         holder.title.setText(movie.getMovieTitle() + " - " +movie.getReleaseDate());
+                        holder.title.setVisibility(View.VISIBLE);
                     }
                 });
         
@@ -70,7 +72,7 @@ public class PersonCrewsAdapter extends RecyclerView.Adapter<PersonCrewsAdapter.
                 ImageView imageView = (ImageView) view;
                 int color = UtilsFilme.loadPalette(imageView);
                 intent.putExtra(Constantes.COLOR_TOP, color);
-                intent.putExtra(Constantes.FILME_ID, id);
+                intent.putExtra(Constantes.FILME_ID, movie.getMovieId());
                 intent.putExtra(Constantes.NOME_FILME, movie.getMovieTitle());
                 context.startActivity(intent);
             }

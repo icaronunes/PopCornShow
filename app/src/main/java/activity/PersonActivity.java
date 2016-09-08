@@ -49,11 +49,10 @@ public class PersonActivity extends BaseActivity {
 
     private void setupViewPagerTabs() {
         viewPager = (ViewPager) findViewById(R.id.viewPager_person);
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new PersonAdapter(getContext(), getSupportFragmentManager(), id_person));
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager.setCurrentItem(1);
         tabLayout.setupWithViewPager(viewPager);
-
     }
 }

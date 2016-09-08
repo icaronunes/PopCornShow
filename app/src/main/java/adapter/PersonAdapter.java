@@ -53,6 +53,7 @@ public class PersonAdapter extends FragmentPagerAdapter {
         if (position == 3) {
             return context.getString(R.string.crews);
         }
+
         return null;
     }
 

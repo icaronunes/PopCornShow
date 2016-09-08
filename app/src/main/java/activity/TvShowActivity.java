@@ -5,9 +5,11 @@ import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -27,6 +29,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.Locale;
 
 import adapter.TvShowAdapter;
 import applicaton.FilmeApplication;
@@ -315,8 +318,17 @@ public class TvShowActivity extends BaseActivity {
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
-            series = FilmeService.getTmdbTvShow()
-                    .getSeries(id_tvshow, getString(R.string.IDIOMAS), images, credits, videos);
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(TvShowActivity.this);
+            boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+            if (idioma_padrao) {
+                Log.d("FilmeActivity", "true - " );
+                series = FilmeService.getTmdbTvShow()
+                        .getSeries(id_tvshow, Locale.getDefault().toLanguageTag(), images, credits, videos);
+            } else {
+                Log.d("FilmeActivity", "false - " );
+                series = FilmeService.getTmdbTvShow()
+                        .getSeries(id_tvshow, null, images, credits, videos);
+            }
             return null;
         }
 

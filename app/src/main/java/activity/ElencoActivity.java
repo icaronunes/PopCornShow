@@ -112,6 +112,7 @@ public class ElencoActivity extends BaseActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            Log.d("ElencoActivity", "ID " + id);
             if (Multi.MediaType.TV_SERIES.equals(mediaType)) {
                 creditsTvShow = FilmeService.getTmdbTvShow().getCredits(id, "en");
 
