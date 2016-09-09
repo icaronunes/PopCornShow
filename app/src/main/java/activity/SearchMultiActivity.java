@@ -43,7 +43,6 @@ public class SearchMultiActivity extends BaseActivity {
     List<Multi> movieDbList = null;
     TextView text_search_empty;
     SwipeRefreshLayout swipeRefreshLayout;
-    LinearLayout linear_search_layout;
     ProgressBar progressBar;
     private int pagina = 1;
 
@@ -60,7 +59,7 @@ public class SearchMultiActivity extends BaseActivity {
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
         //linear_search_layout = (LinearLayout) findViewById(R.id.linear_search_layout);
         progressBar = (ProgressBar) findViewById(R.id.progress);
-
+        Log.d("SearchMultiActivity", "Entrou");
         Log.d("SearchMultiActivity", "onCreate");
         if (savedInstanceState == null) {
 
@@ -149,7 +148,7 @@ public class SearchMultiActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
-
+        Log.d("onCreateOptionsMenu", "Option Menu");
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));

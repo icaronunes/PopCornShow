@@ -220,7 +220,6 @@ public class BaseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
-
             case android.R.id.home:
                 if (drawerLayout != null) {
                     openDrawer();
@@ -255,7 +254,7 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu_share, menu);
 
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -314,6 +313,7 @@ public class BaseActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(BaseActivity.this, Site.class);
+                        intent.putExtra(Constantes.SITE, "https://www.themoviedb.org/account/signup");
                         startActivity(intent);
                     }
                 });

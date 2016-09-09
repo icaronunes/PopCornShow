@@ -2,8 +2,10 @@ package fragment;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -20,8 +22,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Locale;
 
 import activity.FilmeActivity;
+import activity.SettingsActivity;
+import activity.TvShowActivity;
 import adapter.FilmesAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
@@ -144,7 +149,7 @@ public class FilmesFragment extends Fragment {
         };
     }
 
-    public class TMDVAsync extends AsyncTask<Void, Void, List<MovieDb>> {
+    private class TMDVAsync extends AsyncTask<Void, Void, List<MovieDb>> {
 
         @Override
         protected void onPreExecute() {
@@ -184,28 +189,31 @@ public class FilmesFragment extends Fragment {
         }
 
         protected List<MovieDb> getListaTipo(TmdbMovies tmdbMovies) {
+            String language = Locale.getDefault().toLanguageTag();
+            if (language != null) {
+                switch (abaEscolhida) {
 
-            switch (abaEscolhida) {
+                    case R.string.now_playing: {
+                        return tmdbMovies.getNowPlayingMovies(language, pagina).getResults();
+                    }
 
-                case R.string.now_playing: {
-                    return tmdbMovies.getNowPlayingMovies("pt-BR", pagina).getResults();
+                    case R.string.upcoming: {
+                        return tmdbMovies.getUpcoming(language, pagina).getResults();
+                    }
+
+
+                    case R.string.popular: {
+                        return tmdbMovies.getPopularMovies(language, pagina).getResults();
+                    }
+
+                    case R.string.top_rated: {
+                        return tmdbMovies.getTopRatedMovies(language, pagina).getResults();
+                    }
+
                 }
-
-                case R.string.upcoming: {
-                    return tmdbMovies.getUpcoming("pt-BR", pagina).getResults();
-                }
-
-
-                case R.string.popular: {
-                    return tmdbMovies.getPopularMovies("pt-BR", pagina).getResults();
-                }
-
-                case R.string.top_rated: {
-                    return tmdbMovies.getTopRatedMovies("pt-BR", pagina).getResults();
-                }
-
+                return tmdbMovies.getNowPlayingMovies(language, pagina).getResults();
             }
-            return tmdbMovies.getNowPlayingMovies("pt-BR", pagina).getResults();
+            return null;
         }
 
     }

@@ -36,7 +36,7 @@ public class Site extends AppCompatActivity {
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
 
         URL = getIntent().getStringExtra(Constantes.SITE);
-
+        Log.d("Site", URL);
         setWebViewClient(webView);
         webView.loadUrl(URL);
         configJavascript();

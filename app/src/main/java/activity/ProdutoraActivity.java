@@ -32,6 +32,7 @@ import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbCompany;
 import info.movito.themoviedbapi.model.Company;
 import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.Multi;
 import utils.Constantes;
 import utils.UtilsFilme;
 
@@ -45,6 +46,7 @@ public class ProdutoraActivity extends BaseActivity {
     int pagina = 1;
     TmdbCompany.CollectionResultsPage resultsPage;
     RecyclerView recyclerView;
+    Multi.MediaType mediaType;
     LinearLayout info_layout;
     int id_produtora;
     TextView home_produtora, headquarters;
@@ -70,6 +72,7 @@ public class ProdutoraActivity extends BaseActivity {
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         top_img_produtora = (ImageView) findViewById(R.id.top_img_produtora);
+        mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
         recyclerView = (RecyclerView) findViewById(R.id.produtora_filmes_container);
         recyclerView.setLayoutManager(new GridLayoutManager(ProdutoraActivity.this, 3));
         recyclerView.setHasFixedSize(true);
@@ -145,7 +148,7 @@ public class ProdutoraActivity extends BaseActivity {
         }
 
         AnimatorSet animatorSet = new AnimatorSet();
-        ObjectAnimator alphaStar = ObjectAnimator.ofFloat(top_img_produtora, "y", -100, 0)
+        ObjectAnimator alphaStar = ObjectAnimator.ofFloat(top_img_produtora, "x", -100, 0)
                 .setDuration(1000);
         animatorSet.playTogether(alphaStar);
         animatorSet.start();
@@ -182,9 +185,9 @@ public class ProdutoraActivity extends BaseActivity {
 
     private class TMDVAsync extends AsyncTask<Void, Void, MovieDb> {
 
-
         @Override
         protected MovieDb doInBackground(Void... voids) {
+            //não é possivel buscar TVShow da company. Esperar API
             company = getTmdbCompany().getCompanyInfo(id_produtora);
             if (pagina == 1) {
                 resultsPage = FilmeService.getTmdbCompany()

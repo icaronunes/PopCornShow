@@ -29,18 +29,16 @@ import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.List;
 
 import activity.BaseActivity;
 import activity.CrewsActivity;
 import activity.ElencoActivity;
-import activity.FilmeActivity;
 import activity.PersonActivity;
 import activity.PosterGridActivity;
-import activity.ProdutoraActivity;
 import activity.SettingsActivity;
 import activity.SimilaresActivity;
+import activity.Site;
 import activity.TemporadaActivity;
 import activity.TreilerActivity;
 import adapter.TemporadasAdapter;
@@ -53,8 +51,8 @@ import utils.Config;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static br.com.icaro.filme.R.id.container;
 import static br.com.icaro.filme.R.string.mil;
+import static br.com.icaro.filme.R.string.movieDb;
 import static com.squareup.picasso.Picasso.with;
 
 
@@ -69,7 +67,7 @@ public class TvShowFragment extends Fragment {
 
     TextView titulo, categoria, descricao, voto_media, voto_quantidade, produtora,
             original_title, spoken_languages, production_countries, end, status, temporada,
-            popularity, lancamento, textview_crews, textview_elenco, textview_similares;
+            imdb, tmdb, popularity, lancamento, textview_crews, textview_elenco, textview_similares;
     ImageView icon_reviews, img_budget, icon_site, icon_collection, img_poster, img_star;
     LinearLayout linear_container;
 
@@ -136,6 +134,26 @@ public class TvShowFragment extends Fragment {
                 }
             });
 
+            imdb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), Site.class);
+                    intent.putExtra(Constantes.SITE,
+                            "https:www.imdb.com/title/" + series.getExternalIds().getImdbId() + "/");
+                    startActivity(intent);
+                }
+            });
+
+            tmdb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), Site.class);
+                    intent.putExtra(Constantes.SITE,
+                            "https://www.themoviedb.org/tv/" + series.getId()git + "/");
+                    startActivity(intent);
+                }
+            });
+
 
             img_star.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -198,24 +216,24 @@ public class TvShowFragment extends Fragment {
             Log.d("setStatus", series.getStatus());
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-           if (idioma_padrao) {
+            if (idioma_padrao) {
 
-               if (series.getStatus().equals("Returning Series")) {
-                   status.setText(R.string.returnin_series);
-               }
-               if (series.getStatus().equals("Ended")) {
-                   status.setText(R.string.ended);
-               }
-               if (series.getStatus().equals("Canceled")) {
-                   status.setText(R.string.canceled);
+                if (series.getStatus().equals("Returning Series")) {
+                    status.setText(R.string.returnin_series);
+                }
+                if (series.getStatus().equals("Ended")) {
+                    status.setText(R.string.ended);
+                }
+                if (series.getStatus().equals("Canceled")) {
+                    status.setText(R.string.canceled);
 
-               }
-               if (series.getStatus().equals("In Production")) {
-                   status.setText(R.string.in_production);
-               }
-           } else {
-               status.setText(series.getStatus());
-           }
+                }
+                if (series.getStatus().equals("In Production")) {
+                    status.setText(R.string.in_production);
+                }
+            } else {
+                status.setText(series.getStatus());
+            }
 
         }
     }
@@ -261,7 +279,7 @@ public class TvShowFragment extends Fragment {
                 Log.d("onClickMovieListener", "id " + series.getId());
                 Log.d("onClickMovieListener", "season " + series.getSeasons().get(position).getSeasonNumber());
                 Intent intent = new Intent(getContext(), TemporadaActivity.class);
-                intent.putExtra(Constantes.NOME, getString(R.string.temporada) +" " + series.getSeasons().get(position).getSeasonNumber());
+                intent.putExtra(Constantes.NOME, getString(R.string.temporada) + " " + series.getSeasons().get(position).getSeasonNumber());
                 intent.putExtra(Constantes.TEMPORADA_ID, series.getSeasons().get(position).getSeasonNumber());
                 intent.putExtra(Constantes.TVSHOW_ID, series.getId());
                 intent.putExtra(Constantes.COLOR_TOP, color);
@@ -288,6 +306,8 @@ public class TvShowFragment extends Fragment {
         spoken_languages = (TextView) view.findViewById(R.id.spoken_languages);
         production_countries = (TextView) view.findViewById(R.id.production_countries);
         popularity = (TextView) view.findViewById(R.id.popularity);
+        imdb = (TextView) view.findViewById(R.id.imdb_site);
+        tmdb = (TextView) view.findViewById(R.id.tmdb_site);
         img_poster = (ImageView) view.findViewById(R.id.img_poster);
         img_star = (ImageView) view.findViewById(R.id.img_star);
         icon_reviews = (ImageView) view.findViewById(R.id.icon_reviews);
@@ -361,18 +381,20 @@ public class TvShowFragment extends Fragment {
                 primeiraProdutora = primeiraProdutora.concat("...");
             }
             produtora.setText(primeiraProdutora);
-            produtora.setTextColor(getResources().getColor(R.color.primary));
-
-            final String linkProdutora = primeiraProdutora;
-            produtora.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getContext(), ProdutoraActivity.class);
-                    intent.putExtra(Constantes.PRODUTORA, linkProdutora);
-                    intent.putExtra(Constantes.PRODUTORA_ID, series.getNetworks().get(0).getId());
-                    startActivity(intent);
-                }
-            });
+            //não é possivel buscar TVShow da company. Esperar API
+//            produtora.setTextColor(getResources().getColor(R.color.primary));
+//            final String linkProdutora = primeiraProdutora;
+//            produtora.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Intent intent = new Intent(getContext(), ProdutoraActivity.class);
+//                    intent.putExtra(Constantes.PRODUTORA, linkProdutora);
+//                    Log.d("setProdutora", "ID " + series.getNetworks().get(0).getId());
+//                    intent.putExtra(Constantes.MEDIATYPE,  Multi.MediaType.TV_SERIES);
+//                    intent.putExtra(Constantes.PRODUTORA_ID, series.getNetworks().get(0).getId());
+//                    startActivity(intent);
+//                }
+//            });
         }
     }
 

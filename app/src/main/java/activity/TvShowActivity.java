@@ -4,6 +4,8 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -13,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +32,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.Locale;
 
 import adapter.TvShowAdapter;
@@ -36,6 +40,8 @@ import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbAccount;
+import info.movito.themoviedbapi.TmdbTV;
+import info.movito.themoviedbapi.model.Artwork;
 import info.movito.themoviedbapi.model.core.ResponseStatus;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
@@ -43,7 +49,12 @@ import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.string.movieDb;
 import static br.com.icaro.filme.R.string.tvshow_rated;
+import static domian.FilmeService.getTmdbTvShow;
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.alternative_titles;
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.releases;
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.similar;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.credits;
+import static info.movito.themoviedbapi.TmdbTV.TvMethod.external_ids;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.images;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.videos;
 
@@ -97,8 +108,17 @@ public class TvShowActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_share, menu);
 
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint("Procura Filme");
+        searchView.setEnabled(false);
+
+
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -106,14 +126,15 @@ public class TvShowActivity extends BaseActivity {
             File file = salvaImagemMemoriaCache(this, series.getPosterPath());
             if (file != null) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
+              //  intent.putExtra(Intent.EXTRA_SUBJECT, series.getOverview());
+                intent.setType("message/rfc822");
                 intent.putExtra(Intent.EXTRA_TEXT, series.getName());
-                intent.putExtra(Intent.EXTRA_SUBJECT, series.getOverview());
                 intent.setType("image/*");
-                intent.setType("text/*");
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                 startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_tvshow)));
             } else {
-                Toast.makeText(this, getResources().getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.erro_na_gravacao_imagem),
+                        Toast.LENGTH_SHORT).show();
             }
         }
         return super.onOptionsItemSelected(item);
@@ -320,14 +341,16 @@ public class TvShowActivity extends BaseActivity {
         protected Void doInBackground(Void... voids) {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(TvShowActivity.this);
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+            TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
             if (idioma_padrao) {
                 Log.d("FilmeActivity", "true - " );
-                series = FilmeService.getTmdbTvShow()
-                        .getSeries(id_tvshow, Locale.getDefault().toLanguageTag(), images, credits, videos);
+                series = tmdbTv
+                        .getSeries(id_tvshow, Locale.getDefault().toLanguageTag() + ",en,null",  external_ids, images, credits, videos);
+                series.getVideos().addAll(tmdbTv.getSeries(id_tvshow, "en", videos).getVideos());
             } else {
                 Log.d("FilmeActivity", "false - " );
                 series = FilmeService.getTmdbTvShow()
-                        .getSeries(id_tvshow, null, images, credits, videos);
+                        .getSeries(id_tvshow, "en,null", images, credits, videos);
             }
             return null;
         }

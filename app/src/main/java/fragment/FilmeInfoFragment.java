@@ -4,10 +4,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -15,7 +12,6 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.graphics.Palette;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,16 +40,17 @@ import activity.PosterGridActivity;
 import activity.ProdutoraActivity;
 import activity.ReviewsActivity;
 import activity.SimilaresActivity;
+import activity.Site;
 import activity.TreilerActivity;
 import adapter.CollectionPagerAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
-import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.Collection;
 import info.movito.themoviedbapi.model.CollectionInfo;
 import info.movito.themoviedbapi.model.Genre;
 import info.movito.themoviedbapi.model.Language;
 import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.Multi;
 import info.movito.themoviedbapi.model.ProductionCountry;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import info.movito.themoviedbapi.model.people.PersonCast;
@@ -64,8 +61,6 @@ import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.string.mil;
 import static com.squareup.picasso.Picasso.with;
-import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.reviews;
-import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.videos;
 
 
 /**
@@ -75,7 +70,7 @@ import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.videos;
 public class FilmeInfoFragment extends Fragment {
 
     TextView titulo, categoria, time_filme, descricao, voto_media, voto_quantidade, produtora,
-            original_title, spoken_languages, production_countries,
+            original_title, spoken_languages, production_countries, imdb, tmdb,
             popularity, lancamento, textview_crews, textview_elenco, textview_similares;
     ImageView img_poster, img_star;
     //int id_filme;
@@ -119,6 +114,8 @@ public class FilmeInfoFragment extends Fragment {
         popularity = (TextView) view.findViewById(R.id.popularity);
         img_poster = (ImageView) view.findViewById(R.id.img_poster);
         img_star = (ImageView) view.findViewById(R.id.img_star);
+        imdb = (TextView) view.findViewById(R.id.imdb_site);
+        tmdb = (TextView) view.findViewById(R.id.tmdb_site);
         icon_reviews = (ImageView) view.findViewById(R.id.icon_reviews);
         img_budget = (ImageView) view.findViewById(R.id.img_budget);
         icon_collection = (ImageView) view.findViewById(R.id.icon_collection);
@@ -170,6 +167,26 @@ public class FilmeInfoFragment extends Fragment {
                     BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
                             getString(R.string.no_message));
                 }
+            }
+        });
+
+        imdb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), Site.class);
+                intent.putExtra(Constantes.SITE,
+                        "https:www.imdb.com/title/" + movieDb.getImdbID() + "/");
+                startActivity(intent);
+            }
+        });
+
+        tmdb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), Site.class);
+                intent.putExtra(Constantes.SITE,
+                        "https://www.themoviedb.org/movie/" + movieDb.getId() + "/");
+                startActivity(intent);
             }
         });
 
@@ -400,6 +417,7 @@ public class FilmeInfoFragment extends Fragment {
                     Intent intent = new Intent(getContext(), ProdutoraActivity.class);
                     intent.putExtra(Constantes.PRODUTORA, finalPrimeiraProdutora);
                     intent.putExtra(Constantes.PRODUTORA_ID, movieDb.getProductionCompanies().get(0).getId());
+                    intent.putExtra(Constantes.MEDIATYPE, Multi.MediaType.MOVIE);
                     startActivity(intent);
                 }
             });
@@ -695,18 +713,6 @@ public class FilmeInfoFragment extends Fragment {
         }
     }
 
-    private void loadPalette() {
-        BitmapDrawable drawable = (BitmapDrawable) imgPagerSimilares.getDrawable();
-        if (drawable != null) {
-            Bitmap bitmap = drawable.getBitmap();
-            Palette.Builder builder = new Palette.Builder(bitmap);
-            Palette.Swatch swatch = builder.generate().getVibrantSwatch();
-            if (swatch != null) {
-                color_top = swatch.getRgb();
-            }
-        }
-    }
-
 
     private void setLancamento() {
         if (movieDb.getReleaseDate() != null) {
@@ -794,47 +800,6 @@ public class FilmeInfoFragment extends Fragment {
             icon_collection.setImageResource(R.drawable.collection_on);
         } else {
             icon_collection.setImageResource(R.drawable.collection_off);
-        }
-    }
-
-
-    private class TMDVAsync extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            if (isAdded()) {
-                TmdbMovies movies = FilmeService.getTmdbMovies();
-
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            if (isAdded()) { //Só entrar se Fragment estiver "linkado" com activity
-                setTitulo();
-                setCategoria();
-                setLancamento();
-                setTimeFilme();
-                setProdutora();
-                setSinopse();
-                setPoster();
-                setBuget();
-                setHome();
-                setVotoMedia();
-                setOriginalTitle();
-                setSpokenLanguages();
-                setProductionCountries();
-                setPopularity();
-                setReviews();
-                setCollectoin();
-                setCast();
-                setCrews();
-                setTreiler();
-                setSimilares();
-                setAnimacao();
-            }
         }
     }
 

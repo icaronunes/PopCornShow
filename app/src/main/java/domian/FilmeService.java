@@ -85,6 +85,8 @@ public class FilmeService {
         return company;
     }
 
+
+
     public static TmdbPeople getTmdbPerson() {
         TmdbPeople people = new TmdbApi(Config.TMDB_API_KEY).getPeople();
         return people;

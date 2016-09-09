@@ -2,6 +2,7 @@ package activity;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,12 +11,14 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -89,9 +92,6 @@ public class FilmeActivity extends BaseActivity {
         viewPager = (ViewPager) findViewById(R.id.top_img_viewpager);
         viewPager.setBackgroundColor(color_fundo);
         new TMDVAsync().execute();
-        if (savedInstanceState == null) {
-
-        }
 
         if (FilmeApplication.getInstance().isLogado()) {
             Log.d("FAB", "FAB");
@@ -105,11 +105,23 @@ public class FilmeActivity extends BaseActivity {
 
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_share, menu);
 
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint("Procura Filme");
+        searchView.setEnabled(false);
+
         return true;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     @Override
@@ -118,10 +130,9 @@ public class FilmeActivity extends BaseActivity {
             File file = salvaImagemMemoriaCache(getContext(), movieDb.getPosterPath());
             if (file != null) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("message/rfc822");
                 intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle());
-                intent.putExtra(Intent.EXTRA_SUBJECT, movieDb.getOverview());
                 intent.setType("image/*");
-                intent.setType("text/*");
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                 startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
             } else {
@@ -316,7 +327,7 @@ public class FilmeActivity extends BaseActivity {
         bundle.putSerializable(Constantes.FILME, movieDb);
         bundle.putSerializable(Constantes.SIMILARES, similarMovies);
         filmeFrag.setArguments(bundle);
-        if (!isFinishing()) {
+        if (!isFinishing() && !isDestroyed()) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.filme_container, filmeFrag, null)
@@ -379,13 +390,15 @@ public class FilmeActivity extends BaseActivity {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             if (idioma_padrao) {
-                Log.d("FilmeActivity", "true - " + id_filme);
-                movieDb = movies.getMovie(id_filme, Locale.getDefault().toLanguageTag()
+                Log.d("FilmeActivity", "true - " + Locale.getDefault().toLanguageTag());
+                movieDb = movies.getMovie(id_filme, Locale.getDefault().toLanguageTag() + ",en,null"
                         , credits, releases, videos, reviews, similar, alternative_titles, images);
+                movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
+                movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());
 
             } else {
                 Log.d("FilmeActivity", "False - " + id_filme);
-                movieDb = movies.getMovie(id_filme, null
+                movieDb = movies.getMovie(id_filme, "en,null"
                         , credits, releases, videos, reviews, similar, alternative_titles, images);
             }
 

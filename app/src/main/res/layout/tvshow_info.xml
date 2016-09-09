@@ -380,5 +380,29 @@
 
         </HorizontalScrollView>
 
+        <TextView
+            android:id="@+id/imdb_site"
+            android:text="@string/ver_imdb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/imdb"
+            android:textAlignment="center"
+            android:background="@color/transparent2"
+            android:padding="3dp"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:id="@+id/tmdb_site"
+            android:text="@string/ver_tmdb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/tmdb"
+            android:background="@color/transparent2"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="2dp"
+            android:padding="3dp"
+            android:textStyle="normal|bold" />
+
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

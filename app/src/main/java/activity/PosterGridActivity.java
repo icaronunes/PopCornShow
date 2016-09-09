@@ -1,6 +1,5 @@
 package activity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +13,6 @@ import java.util.List;
 
 import adapter.PosterGridAdapter;
 import br.com.icaro.filme.R;
-
 import info.movito.themoviedbapi.model.Artwork;
 import info.movito.themoviedbapi.model.ArtworkType;
 import info.movito.themoviedbapi.model.MovieDb;
@@ -46,7 +44,7 @@ public class PosterGridActivity extends AppCompatActivity {
                 series = (TvSeries) getIntent().getSerializableExtra(Constantes.SERIE);
                 Log.d("PosterGridActivity", "SERIE " + series.getName());
                 List<Artwork> artworks = series.getImages().getPosters();
-                recyclerView.setAdapter(new PosterGridAdapter(PosterGridActivity.this, artworks, series.getName() ));
+                recyclerView.setAdapter(new PosterGridAdapter(PosterGridActivity.this, artworks, series.getName()));
                 return;
             }
             if (getIntent().getSerializableExtra(Constantes.FILME) != null) {
