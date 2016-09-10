@@ -32,9 +32,10 @@
                 android:value="activity.SearchMultiActivity" />
         </activity>
         <activity android:name="activity.TvShowActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.SEARCH" />-->
-            <!--</intent-filter>-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.SEARCH" /> -->
+            <!-- </intent-filter> -->
 
             <meta-data
                 android:name="android.app.searchable"
@@ -44,16 +45,15 @@
                 android:value="activity.SearchMultiActivity" />
         </activity>
         <activity android:name="activity.FavoriteActivity" />
-
         <activity android:name="activity.RatedActivity" />
-
         <activity
             android:name="activity.FilmeActivity"
             android:parentActivityName="activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar.NavDrawer">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.SEARCH" />-->
-            <!--</intent-filter>-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.SEARCH" /> -->
+            <!-- </intent-filter> -->
 
             <meta-data
                 android:name="android.app.searchable"
@@ -110,10 +110,9 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-
         <activity android:name="activity.FotoPersonActivity" />
-
-        <activity android:name="activity.SettingsActivity"></activity>
+        <activity android:name="activity.SettingsActivity" />
+        <activity android:name="activity.FilmesActivity"></activity>
     </application>
 
 </manifest>

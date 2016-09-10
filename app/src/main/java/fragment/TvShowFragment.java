@@ -52,7 +52,6 @@ import utils.Constantes;
 import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.string.mil;
-import static br.com.icaro.filme.R.string.movieDb;
 import static com.squareup.picasso.Picasso.with;
 
 
@@ -149,7 +148,7 @@ public class TvShowFragment extends Fragment {
                 public void onClick(View view) {
                     Intent intent = new Intent(getActivity(), Site.class);
                     intent.putExtra(Constantes.SITE,
-                            "https://www.themoviedb.org/tv/" + series.getId()git + "/");
+                            "https://www.themoviedb.org/tv/" + series.getId() + "/");
                     startActivity(intent);
                 }
             });
@@ -291,6 +290,7 @@ public class TvShowFragment extends Fragment {
 
     private View getViewInformacoes(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.tvshow_info, container, false);
+
         titulo = (TextView) view.findViewById(R.id.titulo_tvshow);
         categoria = (TextView) view.findViewById(R.id.categoria_tvshow);
         descricao = (TextView) view.findViewById(R.id.descricao);

@@ -32,7 +32,9 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.util.Collection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import adapter.TvShowAdapter;
@@ -41,18 +43,11 @@ import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbAccount;
 import info.movito.themoviedbapi.TmdbTV;
-import info.movito.themoviedbapi.model.Artwork;
 import info.movito.themoviedbapi.model.core.ResponseStatus;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static br.com.icaro.filme.R.string.movieDb;
-import static br.com.icaro.filme.R.string.tvshow_rated;
-import static domian.FilmeService.getTmdbTvShow;
-import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.alternative_titles;
-import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.releases;
-import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.similar;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.credits;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.external_ids;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.images;
@@ -91,17 +86,10 @@ public class TvShowActivity extends BaseActivity {
         fab = (FloatingActionMenu) findViewById(R.id.fab_menu_filme);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         imageView = (ImageView) findViewById(R.id.img_top_tvshow);
+        setColorFab(color_top);
         new TMDVAsync().execute();
 
-        if (FilmeApplication.getInstance().isLogado()) { // Arrumar
-            Log.d("FAB", "FAB " + color_top);
-            setColorFab(color_top);
-            menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
-            menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
-            menu_item_rated.setOnClickListener(RatedFilme());
-        } else {
-            fab.setAlpha(0);
-        }
+
     }
 
     @Override
@@ -119,14 +107,13 @@ public class TvShowActivity extends BaseActivity {
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.share){
+        if (item.getItemId() == R.id.share) {
             File file = salvaImagemMemoriaCache(this, series.getPosterPath());
             if (file != null) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
-              //  intent.putExtra(Intent.EXTRA_SUBJECT, series.getOverview());
+                //  intent.putExtra(Intent.EXTRA_SUBJECT, series.getOverview());
                 intent.setType("message/rfc822");
                 intent.putExtra(Intent.EXTRA_TEXT, series.getName());
                 intent.setType("image/*");
@@ -343,12 +330,12 @@ public class TvShowActivity extends BaseActivity {
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
             if (idioma_padrao) {
-                Log.d("FilmeActivity", "true - " );
+                Log.d("FilmeActivity", "true - ");
                 series = tmdbTv
-                        .getSeries(id_tvshow, Locale.getDefault().toLanguageTag() + ",en,null",  external_ids, images, credits, videos);
+                        .getSeries(id_tvshow, Locale.getDefault().toLanguageTag() + ",en,null", external_ids, images, credits, videos);
                 series.getVideos().addAll(tmdbTv.getSeries(id_tvshow, "en", videos).getVideos());
             } else {
-                Log.d("FilmeActivity", "false - " );
+                Log.d("FilmeActivity", "false - ");
                 series = FilmeService.getTmdbTvShow()
                         .getSeries(id_tvshow, "en,null", images, credits, videos);
             }
@@ -361,6 +348,24 @@ public class TvShowActivity extends BaseActivity {
             setCoordinator();
             setImageTop();
             setupViewPagerTabs();
+
+            if (FilmeApplication.getInstance().isLogado()) { // Arrumar
+                Log.d("FAB", "FAB " + color_top);
+                Date date = null;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    date = sdf.parse(series.getFirstAirDate());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (UtilsFilme.verificavencimento(date)) {
+                    menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
+                    menu_item_rated.setOnClickListener(RatedFilme());
+                }
+                menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
+            } else {
+                fab.setAlpha(0);
+            }
         }
     }
 

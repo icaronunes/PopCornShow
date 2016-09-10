@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,16 +14,19 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import activity.PersonActivity;
 import br.com.icaro.filme.R;
@@ -96,61 +98,74 @@ public class EpsodioFragment extends Fragment {
 
 
     private void setButtonRating() {
-        ep_rating_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Dialog alertDialog = new Dialog(getContext());
-                alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                alertDialog.setContentView(R.layout.adialog_custom_rated);
+        //Arrumar. Ta esquisito.
+        Date date = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            date = sdf.parse(episode.getAirDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-                Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
-                final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
-                int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
-                int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
+        if (UtilsFilme.verificavencimento(date)) {
 
-                alertDialog.getWindow().setLayout(width, height);
-                final ProgressDialog progressDialog = new ProgressDialog(getContext(),
-                        android.R.style.Theme_Material_Dialog);
-                ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.d(TAG, "Adialog Rated");
+            ep_rating_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final Dialog alertDialog = new Dialog(getContext());
+                    alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    alertDialog.setContentView(R.layout.adialog_custom_rated);
 
-                        progressDialog.setIndeterminate(true);
-                        progressDialog.setMessage("Salvando...");
-                        progressDialog.show();
+                    Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
+                    final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
+                    int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
+                    int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
 
-                        new Thread() {
-                            boolean status = false;
+                    alertDialog.getWindow().setLayout(width, height);
+                    final ProgressDialog progressDialog = new ProgressDialog(getContext(),
+                            android.R.style.Theme_Material_Dialog);
+                    ok.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Log.d(TAG, "Adialog Rated");
 
-                            @Override
-                            public void run() {
-                                if (UtilsFilme.isNetWorkAvailable(getContext())) {
-                                    status = FilmeService
-                                            .setRatedTvShowEpsodio(tvshow_id, episode.getSeasonNumber(), episode.getEpisodeNumber(), ratingBar.getRating());
-                                    try {
-                                        Thread.sleep(200);
-                                        getActivity().runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Toast.makeText(getContext(), getResources().getString(R.string.tvshow_rated), Toast.LENGTH_SHORT)
-                                                        .show();
+                            progressDialog.setIndeterminate(true);
+                            progressDialog.setMessage("Salvando...");
+                            progressDialog.show();
 
-                                                progressDialog.dismiss();
-                                            }
-                                        });
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
+                            new Thread() {
+                                boolean status = false;
+
+                                @Override
+                                public void run() {
+                                    if (UtilsFilme.isNetWorkAvailable(getContext())) {
+                                        status = FilmeService
+                                                .setRatedTvShowEpsodio(tvshow_id, episode.getSeasonNumber(),
+                                                        episode.getEpisodeNumber(), ratingBar.getRating());
+                                        try {
+                                            Thread.sleep(200);
+                                            getActivity().runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Toast.makeText(getContext(), getResources().getString(R.string.tvshow_rated), Toast.LENGTH_SHORT)
+                                                            .show();
+
+                                                    progressDialog.dismiss();
+                                                }
+                                            });
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                 }
-                            }
-                        }.start();
-                        alertDialog.dismiss();
-                    }
-                });
-                alertDialog.show();
-            }
-        });
+                            }.start();
+                            alertDialog.dismiss();
+                        }
+                    });
+                    alertDialog.show();
+                }
+            });
+        }
     }
 
 

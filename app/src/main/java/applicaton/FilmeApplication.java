@@ -28,16 +28,9 @@ public class FilmeApplication extends Application {
 
     private static final String TAG = "FilmeApplication";
     private static FilmeApplication instance = null;
-    private static MovieResultsPage favorite;
-    private static TokenSession authentication;
-    private static SessionToken token;
-    private static AccountID accountID;
-    private static String session;
-    private static TmdbApi tmdbApi;
     private static Account account;
     private boolean logado = false;
     private static String user, pass;
-    private Bus bus = new Bus();
 
     public boolean isLogado() {
         return logado;
@@ -75,38 +68,15 @@ public class FilmeApplication extends Application {
         return account;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 
     public String getUser() {
         return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
     }
 
     public String getPass() {
         return pass;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
-    public Bus getBus() {
-        return bus;
-    }
-
-
-    public MovieResultsPage getFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(MovieResultsPage favorite) {
-        this.favorite = favorite;
-    }
 
     protected class TMDVAsync extends AsyncTask<Void, Void, Void> {
 

@@ -17,8 +17,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Calendar;
+import java.util.Date;
 
 import activity.FilmeActivity;
+
+import static com.google.android.gms.wearable.DataMap.TAG;
 
 /**
  * Created by icaro on 24/06/16.
@@ -49,6 +53,21 @@ public class UtilsFilme {
             return true;
         }
         return false;
+    }
+
+    public static  boolean verificavencimento(Date air_date) {
+        boolean data;
+        //Arrumar. Ta esquisito.
+        Date myDate = Calendar.getInstance().getTime();
+        Log.d(TAG, "Hoje " + myDate);
+        Log.d(TAG, "Emissao " + air_date);
+        if (air_date.before(myDate)) {
+            data = true;
+        } else if (air_date.after(myDate))
+            data = false;
+        else
+            data = true;
+        return data;
     }
 
     public static void writeBytes(File file, byte[] bytes) {

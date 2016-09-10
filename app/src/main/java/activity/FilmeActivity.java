@@ -35,6 +35,9 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import applicaton.FilmeApplication;
@@ -93,15 +96,6 @@ public class FilmeActivity extends BaseActivity {
         viewPager.setBackgroundColor(color_fundo);
         new TMDVAsync().execute();
 
-        if (FilmeApplication.getInstance().isLogado()) {
-            Log.d("FAB", "FAB");
-            setColorFab(color_fundo);
-            menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
-            menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
-            menu_item_rated.setOnClickListener(RatedFilme());
-        } else {
-            fab.setAlpha(0);
-        }
 
     }
 
@@ -412,8 +406,27 @@ public class FilmeActivity extends BaseActivity {
             setTitle(movieDb.getTitle());
             viewPager.setAdapter(new ImagemTopFragment(getSupportFragmentManager()));
             progressBar.setVisibility(View.INVISIBLE);
-            fab.setVisibility(View.VISIBLE);
             setFragmentBotton();
+
+            if (FilmeApplication.getInstance().isLogado()) { // Arrumar
+                Log.d("FAB", "FAB " + color_fundo);
+                fab.setVisibility(View.VISIBLE);
+                setColorFab(color_fundo);
+                Date date = null;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    date = sdf.parse(movieDb.getReleaseDate());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (UtilsFilme.verificavencimento(date)) {
+                    menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
+                    menu_item_rated.setOnClickListener(RatedFilme());
+                }
+                menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
+            } else {
+                fab.setAlpha(0);
+            }
 
         }
     }
