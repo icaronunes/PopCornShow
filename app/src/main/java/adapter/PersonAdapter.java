@@ -19,6 +19,7 @@ public class PersonAdapter extends FragmentPagerAdapter {
         super(supportFragmentManager);
         this.context = context;
         this.id_person = id_person;
+
     }
 
 

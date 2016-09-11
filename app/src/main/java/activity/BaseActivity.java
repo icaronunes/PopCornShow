@@ -147,7 +147,7 @@ public class BaseActivity extends AppCompatActivity {
             }
 //            case R.id.list: {
 //                this.navigationView.setCheckedItem(id);
-//            } //Metoda da API não carrega filmes da list.
+//            } //Metoda da API não carrega filmes_main da list.
 
         }//??????????? Cade os outros?
 
@@ -157,28 +157,28 @@ public class BaseActivity extends AppCompatActivity {
         Intent intent;
         switch (menuItem.getItemId()) {
             case R.id.now_playing:
-                intent = new Intent(this, MainActivity.class);
+                intent = new Intent(this, FilmesActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing);
                 intent.putExtra(Constantes.ABA, R.id.now_playing);
                 startActivity(intent);
 
                 break;
             case R.id.upcoming:
-                intent = new Intent(this, MainActivity.class);
+                intent = new Intent(this, FilmesActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.upcoming);
                 intent.putExtra(Constantes.ABA, R.id.upcoming);
                 startActivity(intent);
 
                 break;
             case R.id.popular:
-                intent = new Intent(this, MainActivity.class);
+                intent = new Intent(this, FilmesActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.popular);
                 intent.putExtra(Constantes.ABA, R.id.popular);
                 startActivity(intent);
 
                 break;
             case R.id.top_rated:
-                intent = new Intent(this, MainActivity.class);
+                intent = new Intent(this, FilmesActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.top_rated);
                 intent.putExtra(Constantes.ABA, R.id.top_rated);
                 startActivity(intent);

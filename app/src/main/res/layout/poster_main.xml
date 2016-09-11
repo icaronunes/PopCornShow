@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:id="@+id/layout_poster_main"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progress_poster_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:elevation="7dp" />
+
+        <ImageButton
+            android:id="@+id/img_poster_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="130dp"
+            android:layout_margin="6dp"
+            android:background="@color/white"
+            android:scaleType="centerCrop"
+            android:src="@drawable/filme342" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/title_main"
+            android:visibility="invisible"
+            android:maxLength="10"
+            />
+
+
+
+    </FrameLayout>
+
+</LinearLayout>

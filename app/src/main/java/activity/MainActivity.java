@@ -3,40 +3,80 @@ package activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import adapter.MainAdapter;
+import adapter.TvShowAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
+import domian.FilmeService;
 import fragment.FilmesFragment;
+import info.movito.themoviedbapi.TmdbMovies;
+import info.movito.themoviedbapi.TmdbTV;
+import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.Prefs;
+import utils.UtilsFilme;
+
+import static br.com.icaro.filme.R.id.menu_item_favorite;
+import static br.com.icaro.filme.R.id.menu_item_rated;
+import static br.com.icaro.filme.R.id.menu_item_watchlist;
+import static info.movito.themoviedbapi.TmdbTV.TvMethod.credits;
+import static info.movito.themoviedbapi.TmdbTV.TvMethod.external_ids;
+import static info.movito.themoviedbapi.TmdbTV.TvMethod.images;
+import static info.movito.themoviedbapi.TmdbTV.TvMethod.videos;
 
 public class MainActivity extends BaseActivity {
+
+    ViewPager viewPager_main;
+    ImageView image_top_main;
+    TmdbTV tmdbTv;
+    TmdbMovies tmdbMovies;
+    boolean idioma_padrao;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
         setUpToolBar();
         setupNavDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getString(getIntent()
-                .getIntExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing)));
-        if (savedInstanceState == null) {
-            FilmesFragment filmesFragment = new FilmesFragment();
-            filmesFragment.setArguments(getIntent().getExtras());
-            setCheckable(getIntent().getIntExtra(Constantes.ABA, 0));
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.container, filmesFragment)
-                    .commit();
-        }
+        getSupportActionBar().setTitle(" ");
+        viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);
+        image_top_main = (ImageView) findViewById(R.id.img_top_main);
+        TMDVAsync tmdvAsync = new TMDVAsync();
+        tmdvAsync.execute();
     }
 
+    private void setupViewPagerTabs() {
 
+        viewPager_main.setOffscreenPageLimit(1);
+        viewPager_main.setAdapter(new MainAdapter(this, getSupportFragmentManager(), tmdbMovies, tmdbTv));
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        viewPager_main.setCurrentItem(1);
+        tabLayout.setupWithViewPager(viewPager_main);
+        //tabLayout.setSelectedTabIndicatorColor(color_top);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -80,6 +120,23 @@ public class MainActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class TMDVAsync extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            tmdbTv = FilmeService.getTmdbTvShow();
+            tmdbMovies = FilmeService.getTmdbMovies();
+            //??????????/ usado pra que? alem to top?
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            setupViewPagerTabs();
+        }
     }
 
 }

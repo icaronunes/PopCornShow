@@ -33,6 +33,7 @@
         </activity>
         <activity android:name="activity.TvShowActivity">
 
+
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.SEARCH" /> -->
             <!-- </intent-filter> -->
@@ -44,6 +45,7 @@
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
         </activity>
+        <activity android:name="activity.FilmesActivity"/>
         <activity android:name="activity.FavoriteActivity" />
         <activity android:name="activity.RatedActivity" />
         <activity

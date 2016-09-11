@@ -26,6 +26,8 @@
             android:layout_height="101dp"
             android:foregroundGravity="center_vertical" />
 
+
+
         <ProgressBar
             android:id="@+id/progressBarCrews"
             android:layout_width="wrap_content"

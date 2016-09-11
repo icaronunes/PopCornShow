@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/layout_main_button"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/button_main"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginRight="8dp"
+
+        android:background="@drawable/button_main"
+        android:textColor="@color/white"
+        android:minHeight="0dp"
+        android:minWidth="80dip"
+        android:maxWidth="140dp" />
+
+</LinearLayout>

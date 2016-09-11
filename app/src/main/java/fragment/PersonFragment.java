@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
 import activity.Site;
@@ -32,12 +33,15 @@ import info.movito.themoviedbapi.model.people.PersonPeople;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static br.com.icaro.filme.R.id.container;
 import static domian.FilmeService.getTmdbPerson;
 
 /**
  * Created by icaro on 18/08/16.
  */
 public class PersonFragment extends Fragment {
+
+
 
     TextView nome_person, birthday, dead, homepage, biografia, aka, conhecido, place_of_birth, sem_filmes, sem_fotos, sem_crews;
     ImageView imageView, imageButtonWiki;
@@ -64,17 +68,19 @@ public class PersonFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
+        setRetainInstance(true);
         if (getArguments() != null) {
             tipo = getArguments().getInt(Constantes.ABA);
             id_person = getArguments().getInt(Constantes.PERSON_ID);
         }
-
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        new PersonAsync().execute();
+
+            new PersonAsync().execute();
+
     }
 
     @Nullable
@@ -308,13 +314,13 @@ public class PersonFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            Log.d("PersonAsync", "" + id_person);
+            Log.d("PersonFragment", "doInBackground");
             if (status) {
                 personPeople = getTmdbPerson()
                         .getPersonInfo(id_person, "&language=pt");
                 artworks = FilmeService.getTmdbPerson().getPersonImages(id_person);
                 personCredits = FilmeService.getTmdbPerson().getPersonCredits(id_person);
-                //.getPersonCredits(id_person); Pega TVseries do Ator. Mas não da pra diferenciar dos filmes
+                //.getPersonCredits(id_person); Pega TVseries do Ator. Mas não da pra diferenciar dos filmes_main
             }
             return null;
         }
