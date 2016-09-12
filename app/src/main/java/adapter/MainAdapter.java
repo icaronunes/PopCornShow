@@ -19,16 +19,11 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
 public class MainAdapter extends FragmentPagerAdapter {
 
     Context context;
-    TmdbMovies tmdbMovies;
-    TmdbTV tmdbTv;
 
 
-    public MainAdapter(Context context, FragmentManager supportFragmentManager,
-                       TmdbMovies tmdbMovies, TmdbTV tmdbTv) {
+    public MainAdapter(Context context, FragmentManager supportFragmentManager) {
         super(supportFragmentManager);
         this.context = context;
-        this.tmdbMovies = tmdbMovies;
-        this.tmdbTv = tmdbTv;
 
     }
 

@@ -349,7 +349,7 @@ public class MainFragment extends Fragment {
                 popularTvshow = tmdbTv.getPopular("pt-BR", 1);
                 onTheAirTvshow = tmdbTv.getOnTheAir("pt-BR", 1);
                 popularMovie = tmdbMovies.getPopularMovies("pt-BR", 1);
-                cinema = tmdbMovies.getNowPlayingMovies("pt-BR", 1);
+                cinema = tmdbMovies.getUpcoming("pt-BR", 1);
 
             }
             return null;
