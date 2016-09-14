@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,6 +22,7 @@ import domian.FilmeService;
 import fragment.ViewPageMainTopFragment;
 import fragment.ViewPageMainTvTopFragment;
 import info.movito.themoviedbapi.TvResultsPage;
+import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.Constantes;
 import utils.Prefs;
@@ -31,12 +33,14 @@ public class MainActivity extends BaseActivity {
     TvResultsPage tmdbTv;
     MovieResultsPage tmdbMovies;
     boolean idioma_padrao;
+    TabLayout tabLayout;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
         setUpToolBar();
@@ -45,41 +49,45 @@ public class MainActivity extends BaseActivity {
         getSupportActionBar().setTitle(" ");
         viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);
         viewpage_top_main = (ViewPager) findViewById(R.id.viewpage_top_main);
+
         new TMDVAsync().execute();
+
     }
 
     private void setupViewPagerTabs() {
 
-        viewPager_main.setOffscreenPageLimit(1);
-        viewPager_main.setAdapter(new MainAdapter(this, getSupportFragmentManager()));
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        viewPager_main.setOffscreenPageLimit(2);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager_main.setCurrentItem(0);
+        viewPager_main.setAdapter(new MainAdapter(this, getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager_main);
-
-        if (viewPager_main.getCurrentItem() == 0) {
-            viewpage_top_main.setAdapter(new ViewPageMainTopFragment(getSupportFragmentManager(), tmdbMovies));
-        }
-
-
-        viewPager_main.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
+        viewpage_top_main.setAdapter(new ViewPageMainTopFragment(getSupportFragmentManager(), tmdbMovies));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onTabSelected(TabLayout.Tab tab) {
 
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                if (state == 1) {
-                    viewpage_top_main.setAdapter(new ViewPageMainTvTopFragment(getSupportFragmentManager(), tmdbTv));
+                if (tab.getPosition() == 0) {
+                    Log.d("MainActivity", "0");
+                    tabLayout.setBackgroundColor(getResources().getColor(R.color.accent2));
+                    viewpage_top_main.setBackgroundColor(getResources().getColor(R.color.accent2));
+                    //  viewpage_top_main.setAdapter(new ViewPageMainTopFragment(getSupportFragmentManager(), tvSeries));
                 }
+                if (tab.getPosition() == 1) {
+                    Log.d("MainActivity", "1");
+                    tabLayout.setBackgroundColor(getResources().getColor(R.color.accent));
+                    viewpage_top_main.setBackgroundColor(getResources().getColor(R.color.accent));
+                    viewpage_top_main.setAdapter(new ViewPageMainTvTopFragment(getSupportFragmentManager(), tmdbTv));
+
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
             }
         });
 
@@ -134,9 +142,10 @@ public class MainActivity extends BaseActivity {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            tmdbTv = FilmeService.getTmdbTvShow().getOnTheAir("pt-BR", 1);
+            tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("pt-BR", 1, new Timezone("Brasil", "Brazil"));
             tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies("pt-BR", 1);
-
+            Log.d("MainActivity", "Movie - " + tmdbMovies.getResults().size());
+            Log.d("MainActivity", "Tv - " + tmdbTv.getResults().size());
             return null;
         }
 
@@ -144,6 +153,8 @@ public class MainActivity extends BaseActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             setupViewPagerTabs();
+
+
         }
     }
 

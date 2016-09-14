@@ -185,7 +185,7 @@ public class FilmeInfoFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), Site.class);
                 intent.putExtra(Constantes.SITE,
-                        "https://www.themoviedb.org/movie/" + movieDb.getId() + "/");
+                        "https://www.themoviedb.org/series/" + movieDb.getId() + "/");
                 startActivity(intent);
             }
         });
@@ -328,7 +328,7 @@ public class FilmeInfoFragment extends Fragment {
         Collection collection = movieDb.getBelongsToCollection();
         String data = movieDb.getReleaseDate();
         String query = collection.getTitle();
-        StringBuilder stringBuilder = new StringBuilder("https://play.google.com/store/search?c=movies&q=");
+        StringBuilder stringBuilder = new StringBuilder("https://play.google.com/store/search?c=tvSeries&q=");
         stringBuilder.append(query);
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

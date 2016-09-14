@@ -7,7 +7,7 @@
 
     <color name="accent2">#16042d</color>
     <!-- Outras cores -->
-    <color name="transparent">#0000</color>
+    <color name="transparent">#00000000</color>
     <color name="transparent2">#37000000</color>
     <color name="black_transparente_produtora">#36000000</color>
     <color name="white">#ffffff</color>

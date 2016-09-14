@@ -29,7 +29,7 @@ public class ImagemTopScrollFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString(Constantes.ENDERECO, artwork);
         topScrollFragment.setArguments(bundle);
-        Log.d("PosterScrollFragment", "newInstance: -> " + artwork);
+      //  Log.d("PosterScrollFragment", "newInstance: -> " + artwork);
         return topScrollFragment;
     }
 
@@ -38,7 +38,7 @@ public class ImagemTopScrollFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         endereco = getArguments().getString(Constantes.ENDERECO);
-        Log.d("PosterScrollFragment", "onCreate: -> " + endereco);
+        //Log.d("PosterScrollFragment", "onCreate: -> " + endereco);
     }
 
     @Nullable
@@ -54,8 +54,8 @@ public class ImagemTopScrollFragment extends Fragment {
         ObjectAnimator alphaStar = ObjectAnimator.ofFloat(imageView, "y", -100, 0)
                 .setDuration(1000);
         animatorSet.playTogether(alphaStar);
-        animatorSet.start();
-        Log.d("PosterScrollFragment", "onCreateView: -> " + UtilsFilme.getBaseUrlImagem(4) + endereco);
+       // animatorSet.start();
+       // Log.d("PosterScrollFragment", "onCreateView: -> " + UtilsFilme.getBaseUrlImagem(4) + endereco);
         return view;
     }
 

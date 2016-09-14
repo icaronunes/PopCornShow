@@ -192,7 +192,7 @@ public class ListaFragment extends Fragment {
         recyclerViewFilme.setHasFixedSize(true);
         recyclerViewFilme.setItemAnimator(new DefaultItemAnimator());
         recyclerViewFilme.setLayoutManager(new GridLayoutManager(getContext(), 2));
-       // recyclerViewFilme.setAdapter(new ListaFilmeAdapter(getActivity(), movies));
+       // recyclerViewFilme.setAdapter(new ListaFilmeAdapter(getActivity(), tvSeries));
 
         return view;
     }

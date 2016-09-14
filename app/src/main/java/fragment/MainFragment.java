@@ -26,6 +26,7 @@ import activity.FilmeActivity;
 import activity.FilmesActivity;
 import activity.MainActivity;
 import activity.TvShowActivity;
+import activity.TvShowsActivity;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbMovies;
@@ -214,30 +215,35 @@ public class MainFragment extends Fragment {
 
                         case 0: {
                             Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
-//                            Intent intent = new Intent(getActivity(), FilmesActivity.class);
-//                            intent.putExtra(Constantes.ABA, R.id.now_playing);
-//                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.id.now_playing);
-//                            startActivity(intent);
+                            Intent intent = new Intent(getActivity(), TvShowsActivity.class);
+                            intent.putExtra(Constantes.ABA, R.id.air_date);
+                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.air_date);
+                            startActivity(intent);
                             break;
                         }
-
                         case 1: {
                             Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
-//                            Intent intent = new Intent(getActivity(), FilmesActivity.class);
-//                            intent.putExtra(Constantes.ABA, R.id.upcoming);
-//                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.id.upcoming);
-//                            startActivity(intent);
+                            Intent intent = new Intent(getActivity(), TvShowsActivity.class);
+                           // intent.putExtra(Constantes.ABA, R.id.tod);
+                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.today);
+                            startActivity(intent);
                             break;
                         }
-
-
                         case 2: {
                             Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getActivity(), TvShowsActivity.class);
+                            intent.putExtra(Constantes.ABA, R.id.popular);
+                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.popular);
+                            startActivity(intent);
                             break;
                         }
 
                         case 3: {
                             Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getActivity(), TvShowsActivity.class);
+                            intent.putExtra(Constantes.ABA, R.id.top_rated);
+                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.top_rated);
+                            startActivity(intent);
                             break;
                         }
 
@@ -273,6 +279,8 @@ public class MainFragment extends Fragment {
 
     private View getViewTvshow(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.tvshow_main, container, false);
+
+
         return view;
 
     }
@@ -328,6 +336,7 @@ public class MainFragment extends Fragment {
         }
 
     }
+
 
     private class MainAsync extends AsyncTask<Void, Void, Void> {
         boolean status = false;

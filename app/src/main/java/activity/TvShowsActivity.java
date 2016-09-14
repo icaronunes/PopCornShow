@@ -1,5 +1,9 @@
 package activity;
 
+/**
+ * Created by icaro on 14/09/16.
+ */
+
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -10,11 +14,13 @@ import android.view.MenuItem;
 
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
-import fragment.FilmesFragment;
+import fragment.TvShowsFragment;
 import utils.Constantes;
 import utils.Prefs;
 
-public class FilmesActivity extends BaseActivity {
+
+public class TvShowsActivity extends BaseActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,12 +31,12 @@ public class FilmesActivity extends BaseActivity {
         getSupportActionBar().setTitle(getString(getIntent()
                 .getIntExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing)));
         if (savedInstanceState == null) {
-            FilmesFragment filmesFragment = new FilmesFragment();
-            filmesFragment.setArguments(getIntent().getExtras());
+            TvShowsFragment tvShowsFragment = new TvShowsFragment();
+            tvShowsFragment.setArguments(getIntent().getExtras());
             setCheckable(getIntent().getIntExtra(Constantes.ABA, 0));
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.container, filmesFragment)
+                    .add(R.id.container, tvShowsFragment)
                     .commit();
         }
     }
@@ -53,16 +59,16 @@ public class FilmesActivity extends BaseActivity {
 
         switch (item.getItemId()) {
 
-            case android.R.id.home:{
+            case android.R.id.home: {
                 finish();
                 break;
             }
             case R.id.apagar:
-                Prefs.apagar(FilmesActivity.this, Prefs.LOGIN_PASS);
+                Prefs.apagar(TvShowsActivity.this, Prefs.LOGIN_PASS);
                 FilmeApplication.getInstance().setLogado(false);
-                startActivity(new Intent(FilmesActivity.this, MainActivity.class));
+                startActivity(new Intent(TvShowsActivity.this, MainActivity.class));
                 break;
-            case R.id.serie:{
+            case R.id.serie: {
                 Intent intent = new Intent(this, TvShowActivity.class);
                 intent.putExtra(Constantes.TVSHOW_ID, 62560);
                 intent.putExtra(Constantes.NOME_TVSHOW, "Breaking Bad: A Química do Mal");
@@ -84,3 +90,4 @@ public class FilmesActivity extends BaseActivity {
     }
 
 }
+
