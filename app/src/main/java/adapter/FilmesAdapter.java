@@ -21,6 +21,8 @@ import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.MovieDb;
 import utils.UtilsFilme;
 
+import static br.com.icaro.filme.R.string.movie;
+
 /**
  * Created by icaro on 30/06/16.
  */
@@ -28,7 +30,6 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
 
     private final Context context;
     protected List<MovieDb> tmdbMovies;
-    protected MovieDb movie;
     private FilmeOnClickListener filmeOnClickListener;
 
     public FilmesAdapter(Context context, List<MovieDb> tmdbMovies,
@@ -48,7 +49,7 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
 
     @Override
     public void onBindViewHolder(final FilmesAdapter.FilmeViewHolder holder, final int position) {
-        movie = tmdbMovies.get(position);
+        final MovieDb movie = tmdbMovies.get(position);
         holder.progressBar.setVisibility(View.VISIBLE);
 
         if (movie != null) {

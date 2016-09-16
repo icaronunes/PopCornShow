@@ -5,10 +5,8 @@
     <string name="popular">Populares</string>
     <string name="avaliados">Avaliados</string>
     <string name="about">Sobre</string>
-    <string name="nome">Icaro Nunes</string>
     <string name="empty" />
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="retry">Repetir</string>
     <string name="no_internet">Sem Internet</string>
     <string name="lastest">Ultimos</string>
@@ -38,8 +36,8 @@
     <string name="title_activity_maps">Map</string>
     <string name="erro">Erro YouTube</string>
     <string name="player_error">Erro YouTube</string>
-    <string name="IDIOMAS" translatable="false">pt-BR,pt,en,null</string>
-    <string name="IDIOMAS_BUSCA" translatable="false">pt-BR,en,null</string>
+    <string name="IDIOMAS">pt-BR,pt,en,null</string>
+    <string name="IDIOMAS_BUSCA">pt-BR,en,null</string>
     <string name="mil">Mil</string>
     <string name="milhoes">Mi</string>
     <string name="horas">horas</string>
@@ -72,7 +70,7 @@
     <string name="recomendacao">Recomendação</string>
     <string name="quero_assistir">Quero Assistir</string>
     <string name="list">Listas</string>
-    <string name="poster_transition">poster_transition</string>
+    <string name="poster_transition" translatable="false">poster_transition</string>
     <string name="excluir_filme">Excluir Filme ?</string>
     <string name="desfazer">Desfazer</string>
     <string name="no">Não</string>
@@ -103,7 +101,7 @@
     <string name="sem_nota">Sem Nota</string>
     <string name="director">Direção</string>
     <string name="writer">Escrito</string>
-    <string name="air_date">No Ar</string>
+    <string name="air_date"><Na></Na> TV Agora</string>
     <string name="vote_average">Votos</string>
     <string name="sem_titulo">Sem Titulo</string>
     <string name="tvshow_rated">Epsodio Classificado</string>
@@ -123,10 +121,15 @@
     <string name="ver_imdb">Ver no IMDB</string>
     <string name="ver_tmdb">Ver no TMDB</string>
     <string name="filmes_main">filmes_main</string>
-    <string name="tvshow_main">tvshow_main</string>
+    <string name="tvshow_main" translatable="false">tvshow_main</string>
     <string name="populares">Populares</string>
     <string name="na_tv">Passando na TV</string>
     <string name="today">Hoje</string>
     <string name="em_breve">Em Breve</string>
+    <string name="home">Home</string>
+    <string name="sair">Sair</string>
+    <string name="title_logoff_dialog">Deslogar do TMDB?</string>
+    <string name="cancel">Cancelar</string>
+    <string name="text_logoff_dialog">Apos deslogar, não será possivel interagir com o aplicativo.</string>
 
 </resources>

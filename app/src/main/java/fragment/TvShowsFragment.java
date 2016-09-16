@@ -134,8 +134,8 @@ public class TvShowsFragment extends Fragment {
             public void onClickTvshow(View view, int position) {
                 Intent intent = new Intent(getActivity(), TvShowActivity.class);
                 intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(view));
-                intent.putExtra(Constantes.FILME_ID, tvSeries.get(position).getId());
-                intent.putExtra(Constantes.NOME_FILME, tvSeries.get(position).getName());
+                intent.putExtra(Constantes.TVSHOW_ID, tvSeries.get(position).getId());
+                intent.putExtra(Constantes.NOME_TVSHOW, tvSeries.get(position).getName());
                 getContext().startActivity(intent);
             }
 
@@ -143,6 +143,8 @@ public class TvShowsFragment extends Fragment {
     }
 
     private class TMDVAsync extends AsyncTask<Void, Void, List<TvSeries>> {
+
+        private List<TvSeries> results;
 
         @Override
         protected void onPreExecute() {
@@ -187,7 +189,9 @@ public class TvShowsFragment extends Fragment {
                 switch (abaEscolhida) {
 
                     case R.string.air_date: {
-                        return tmdbTV.getOnTheAir(language, pagina).getResults();
+                        results = tmdbTV.getOnTheAir(language, pagina).getResults();
+                        Log.d("Air Date", "" + results.size());
+                        return  results;
                     }
 
                     case R.string.today: {

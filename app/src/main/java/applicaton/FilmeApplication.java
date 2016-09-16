@@ -28,7 +28,7 @@ public class FilmeApplication extends Application {
 
     private static final String TAG = "FilmeApplication";
     private static FilmeApplication instance = null;
-    private static Account account;
+    private static Account account = null;
     private boolean logado = false;
     private static String user, pass;
 
@@ -80,13 +80,17 @@ public class FilmeApplication extends Application {
 
     protected class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
-
         @Override
         protected Void doInBackground(Void... voids) {
 
             user = Prefs.getString(getBaseContext(), Prefs.LOGIN, Prefs.LOGIN_PASS);
             pass = Prefs.getString(getBaseContext(), Prefs.PASS, Prefs.LOGIN_PASS);
             account = FilmeService.getAccount(user, pass);
+            if (account != null){
+                setLogado(true);
+            } else {
+                setLogado(false);
+            }
 
             return null;
         }

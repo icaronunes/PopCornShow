@@ -87,7 +87,6 @@ public class BaseActivity extends AppCompatActivity {
     protected void setupNavDrawer() {
         if (UtilsFilme.isNetWorkAvailable(getApplicationContext())) {
             new TMDVAsync().execute();
-            account = FilmeApplication.getInstance().getAccount();
         }
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -145,6 +144,9 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.top_rated: {
                 this.navigationView.setCheckedItem(id);
             }
+            case R.id.menu_drav_home: {
+                this.navigationView.setCheckedItem(id);
+            }
 //            case R.id.list: {
 //                this.navigationView.setCheckedItem(id);
 //            } //Metoda da API não carrega filmes_main da list.
@@ -156,6 +158,13 @@ public class BaseActivity extends AppCompatActivity {
     private void onNavDrawerItemSelected(MenuItem menuItem) {
         Intent intent;
         switch (menuItem.getItemId()) {
+
+            case R.id.menu_drav_home:
+                intent = new Intent(this, MainActivity.class);
+                intent.putExtra(Constantes.ABA, R.id.menu_drav_home);
+                startActivity(intent);
+                break;
+
             case R.id.now_playing:
                 intent = new Intent(this, FilmesActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing);
@@ -373,7 +382,6 @@ public class BaseActivity extends AppCompatActivity {
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
-
         @Override
         protected Void doInBackground(Void... voids) {
             account = FilmeApplication.getInstance().getAccount();
@@ -400,6 +408,7 @@ public class BaseActivity extends AppCompatActivity {
                 grupo_login = navigationView.getMenu();
                 grupo_login.removeGroup(R.id.menu_drav_logado);
                 imgUserPhoto.setOnClickListener(onClickListenerLogar());
+                FilmeApplication.getInstance().setLogado(false);
 
             } else {
                 FilmeApplication.getInstance().setLogado(true);

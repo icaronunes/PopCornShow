@@ -26,7 +26,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
 
     private final Context context;
     protected List<TvSeries> tvSeries;
-    protected TvSeries series;
+   // protected TvSeries series;
     private  TvShowsAdapter.TvshowOnClickListener tvshowOnClickListener;
 
     public TvShowsAdapter(Context context, List<TvSeries> tvSeries,
@@ -46,7 +46,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
 
     @Override
     public void onBindViewHolder(final TvShowsAdapter.TvShowViewHolder holder, final int position) {
-        series = tvSeries.get(position);
+        final TvSeries series = tvSeries.get(position);
         holder.progressBar.setVisibility(View.VISIBLE);
 
         if (series != null) {
@@ -59,7 +59,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
                         @Override
                         public void onSuccess() {
                             String title = series.getFirstAirDate();
-                            holder.title.setText(title);
+                            holder.title.setText(title.substring(0,4));
                         }
 
                         @Override

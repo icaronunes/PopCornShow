@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:checkableBehavior="all"
+        android:visible="true">
+
+        <item
+            android:id="@+id/menu_drav_home"
+            android:checkable="true"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/home"/>
+
+    </group>
+
     <group
         android:id="@+id/menu_drav_logado"
         android:checkableBehavior="single"
@@ -7,7 +20,6 @@
         <!-- Todos os item Checked?! -->
         <item
             android:id="@+id/favorite"
-            android:checkable="true"
             android:icon="@drawable/icon_favorite"
             android:title="@string/favorite" />
         <item
@@ -20,10 +32,10 @@
             android:title="@string/quero_assistir" />
 
         <!--<item-->
-            <!--android:id="@+id/list"-->
-            <!--android:checkable="true"-->
-            <!--android:icon="@drawable/icon_list"-->
-            <!--android:title="@string/list" />-->
+        <!--android:id="@+id/list"-->
+        <!--android:checkable="true"-->
+        <!--android:icon="@drawable/icon_list"-->
+        <!--android:title="@string/list" />-->
     </group>
 
     <group

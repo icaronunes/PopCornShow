@@ -6,21 +6,11 @@
         android:summary="@string/idioma_padrao_subtitle"
         android:defaultValue="true" />
 
-    <!--<ListPreference-->
-        <!--android:key="language_preference"-->
-        <!--android:title="Language"-->
-        <!--android:summary="@string/pref_idioma_en"-->
-        <!--android:entries="@array/Language"-->
-        <!--android:entryValues="@array/languageAlias"/>-->
+    <utils.LogoffDialog
+        android:enabled="true"
+        android:key="pref_logoff"
+        android:summary="@string/text_logoff_dialog"
+        android:title="@string/title_logoff_dialog" />
 
-    <!---->
-    <!--<ListPreference-->
-        <!--android:dependency="pref_sync"-->
-        <!--android:key="pref_logado"-->
-        <!--android:title="@string/pref_syncConnectionType"-->
-        <!--android:dialogTitle="@string/pref_syncConnectionType"-->
-        <!--android:entries="@array/pref_syncConnectionTypes_entries"-->
-        <!--android:entryValues="@array/pref_syncConnectionTypes_values"-->
-        <!--android:defaultValue="@string/pref_syncConnectionTypes_default" />-->
 
 </PreferenceScreen>

@@ -47,6 +47,7 @@ public class MainActivity extends BaseActivity {
         setupNavDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(" ");
+        setCheckable(R.id.menu_drav_home);
         viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);
         viewpage_top_main = (ViewPager) findViewById(R.id.viewpage_top_main);
 
@@ -70,12 +71,14 @@ public class MainActivity extends BaseActivity {
                     Log.d("MainActivity", "0");
                     tabLayout.setBackgroundColor(getResources().getColor(R.color.accent2));
                     viewpage_top_main.setBackgroundColor(getResources().getColor(R.color.accent2));
+                    tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.accent));
                     //  viewpage_top_main.setAdapter(new ViewPageMainTopFragment(getSupportFragmentManager(), tvSeries));
                 }
                 if (tab.getPosition() == 1) {
                     Log.d("MainActivity", "1");
                     tabLayout.setBackgroundColor(getResources().getColor(R.color.accent));
                     viewpage_top_main.setBackgroundColor(getResources().getColor(R.color.accent));
+                    tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.accent2));
                     viewpage_top_main.setAdapter(new ViewPageMainTvTopFragment(getSupportFragmentManager(), tmdbTv));
 
                 }

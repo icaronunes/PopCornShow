@@ -1,30 +1,24 @@
 package activity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import adapter.EpsodioAdapter;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
-import info.movito.themoviedbapi.model.Credits;
 import info.movito.themoviedbapi.model.tv.TvSeason;
 import utils.Constantes;
-
-import static br.com.icaro.filme.R.string.nome;
 
 /**
  * Created by icaro on 27/08/16.
  */
 public class EpsodioActivity extends BaseActivity {
 
-    int tvshow_id,  posicao, color;
+    int tvshow_id, posicao, color;
     ViewPager viewPager;
     TabLayout tabLayout;
     String nome_serie = null;
