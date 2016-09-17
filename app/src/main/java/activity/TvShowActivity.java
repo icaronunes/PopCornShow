@@ -200,7 +200,6 @@ public class TvShowActivity extends BaseActivity {
                                         Toast.makeText(TvShowActivity.this, getString(R.string.filme_re_add), Toast.LENGTH_SHORT).show();
                                         addFavorite = !addFavorite;
                                         fab.close(true);
-                                        fab.close(true);
                                         break;
                                     }
                                     case 13: {
@@ -352,6 +351,7 @@ public class TvShowActivity extends BaseActivity {
             if (FilmeApplication.getInstance().isLogado()) { // Arrumar
                 Log.d("FAB", "FAB " + color_top);
                 Date date = null;
+                fab.setAlpha(1);
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     date = sdf.parse(series.getFirstAirDate());

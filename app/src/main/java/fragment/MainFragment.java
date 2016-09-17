@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -38,7 +39,9 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static android.R.attr.id;
 import static br.com.icaro.filme.R.string.filmes_main;
+import static br.com.icaro.filme.R.string.movieDb;
 import static java.util.Arrays.asList;
 
 
@@ -52,6 +55,8 @@ public class MainFragment extends Fragment {
     int tipo;
     TvResultsPage popularTvshow, onTheAirTvshow;
     MovieResultsPage popularMovie, cinema;
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public static Fragment newInstance(int informacoes) {
         MainFragment fragment = new MainFragment();
@@ -72,8 +77,8 @@ public class MainFragment extends Fragment {
                 getString(R.string.today), getString(R.string.popular), getString(R.string.top_rated)));
         if (getArguments() != null) {
             tipo = getArguments().getInt(Constantes.ABA);
-
         }
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
 
     @Override
@@ -106,14 +111,27 @@ public class MainFragment extends Fragment {
                     switch (finalI) {
 
                         case 0: {
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Filme");
+                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
+                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                             Intent intent = new Intent(getActivity(), FilmesActivity.class);
                             intent.putExtra(Constantes.ABA, R.id.now_playing);
                             intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing);
                             startActivity(intent);
+
                             break;
                         }
 
                         case 1: {
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Filme");
+                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
+                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                             Intent intent = new Intent(getActivity(), FilmesActivity.class);
                             intent.putExtra(Constantes.ABA, R.id.upcoming);
                             intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.upcoming);
@@ -123,6 +141,12 @@ public class MainFragment extends Fragment {
 
 
                         case 2: {
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Filme");
+                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
+                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                             Intent intent = new Intent(getActivity(), FilmesActivity.class);
                             intent.putExtra(Constantes.ABA, R.id.popular);
                             intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.popular);
@@ -131,6 +155,12 @@ public class MainFragment extends Fragment {
                         }
 
                         case 3: {
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Filme");
+                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
+                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                             Intent intent = new Intent(getActivity(), FilmesActivity.class);
                             intent.putExtra(Constantes.ABA, R.id.top_rated);
                             intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.top_rated);
@@ -148,8 +178,8 @@ public class MainFragment extends Fragment {
     }
 
     private void setScrollTvShowPopulares() {
-        List<TvSeries> tvSeries;
-        if (popularTvshow.getResults().size() > 0) {
+        final List<TvSeries> tvSeries;
+        if (popularTvshow.getResults().size() > 0 & isAdded()) {
             int tamanho = popularTvshow.getResults().size() < 15 ? popularTvshow.getResults().size() : 15;
             Log.d("MainFragment", "Tamanho " + popularTvshow.getResults().size());
             tvSeries = popularTvshow.getResults();
@@ -182,6 +212,13 @@ public class MainFragment extends Fragment {
                 poster.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"TvShowPopulares");
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                         Intent intent = new Intent(getActivity(), TvShowActivity.class);
                         intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
                         intent.putExtra(Constantes.TVSHOW_ID, series.getId());
@@ -214,7 +251,12 @@ public class MainFragment extends Fragment {
                     switch (finalI) {
 
                         case 0: {
-                            Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Tvshow");
+                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
+                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
                             intent.putExtra(Constantes.ABA, R.id.air_date);
                             intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.air_date);
@@ -222,15 +264,21 @@ public class MainFragment extends Fragment {
                             break;
                         }
                         case 1: {
-                            Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
+                            Bundle bundle = new Bundle();
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Tvshow");
+                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
+                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
-                           // intent.putExtra(Constantes.ABA, R.id.tod);
                             intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.today);
                             startActivity(intent);
                             break;
                         }
                         case 2: {
-                            Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
+                            Bundle bundle = new Bundle();
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Tvshow");
+                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
+                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
                             intent.putExtra(Constantes.ABA, R.id.popular);
                             intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.popular);
@@ -239,7 +287,12 @@ public class MainFragment extends Fragment {
                         }
 
                         case 3: {
-                            Toast.makeText(getActivity(), button.getText(), Toast.LENGTH_SHORT).show();
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Tvshow");
+                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
+                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
                             intent.putExtra(Constantes.ABA, R.id.top_rated);
                             intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.top_rated);
@@ -288,7 +341,7 @@ public class MainFragment extends Fragment {
     private void setScrollTvShowOntheAir() {
 
         List<TvSeries> tvSeries;
-        if (onTheAirTvshow.getResults().size() > 0) {
+        if (onTheAirTvshow.getResults().size() > 0 & isAdded()) {
             int tamanho = onTheAirTvshow.getResults().size() < 15 ? onTheAirTvshow.getResults().size() : 15;
             Log.d("MainFragment", "Tamanho " + onTheAirTvshow.getResults().size());
             tvSeries = onTheAirTvshow.getResults();
@@ -322,6 +375,13 @@ public class MainFragment extends Fragment {
                 poster.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Main_TvShowOntheAir");
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                         Intent intent = new Intent(getActivity(), TvShowActivity.class);
                         intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
                         intent.putExtra(Constantes.TVSHOW_ID, series.getId());
@@ -367,7 +427,7 @@ public class MainFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            if (status) {
+            if (status & isAdded()) {
                 if (tipo == R.string.tvshow_main) {
                     setScrollTvShowPopulares();
                     setScrollTvShowOntheAir();
@@ -384,7 +444,7 @@ public class MainFragment extends Fragment {
     private void setScrollMovieOntheAir() {
         List<MovieDb> movie;
 
-        if (cinema.getResults().size() > 0) {
+        if (cinema.getResults().size() > 0 & isAdded()) {
             int tamanho = cinema.getResults().size() < 15 ? cinema.getResults().size() : 15;
             Log.d("MainFragment", "Tamanho " + cinema.getResults().size());
             movie = cinema.getResults();
@@ -417,6 +477,13 @@ public class MainFragment extends Fragment {
                 poster.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Main_MovieOntheAir");
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                         Intent intent = new Intent(getActivity(), FilmeActivity.class);
                         intent.putExtra(Constantes.FILME_ID, movieDb.getId());
                         intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(poster));
@@ -434,7 +501,7 @@ public class MainFragment extends Fragment {
     private void setScrollMoviePopular() {
         List<MovieDb> movie;
 
-        if (popularMovie.getResults().size() > 0) {
+        if (popularMovie.getResults().size() > 0 & isAdded()) {
             int tamanho = popularMovie.getResults().size() < 15 ? popularMovie.getResults().size() : 15;
             Log.d("MainFragment", "Tamanho " + popularMovie.getResults().size());
             movie = popularMovie.getResults();
@@ -467,6 +534,13 @@ public class MainFragment extends Fragment {
                 poster.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Main_MoviePopular");
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                         Intent intent = new Intent(getActivity(), FilmeActivity.class);
                         intent.putExtra(Constantes.FILME_ID, movieDb.getId());
                         intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(poster));

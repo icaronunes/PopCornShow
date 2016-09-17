@@ -2,6 +2,7 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +11,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import activity.FilmeActivity;
+import activity.Site;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.people.PersonCredit;
 import info.movito.themoviedbapi.model.people.PersonCredits;
@@ -28,7 +31,7 @@ import static android.R.attr.id;
 public class PersonCrewsAdapter extends RecyclerView.Adapter<PersonCrewsAdapter.PersonCrewsViewHolder> {
     Context context;
     PersonCredits personCredits;
-    PersonCredit movie;
+    FirebaseAnalytics firebaseAnalytics;
 
     public PersonCrewsAdapter(Context context, PersonCredits personCredits) {
 
@@ -46,7 +49,7 @@ public class PersonCrewsAdapter extends RecyclerView.Adapter<PersonCrewsAdapter.
     @Override
     public void onBindViewHolder(final PersonCrewsAdapter.PersonCrewsViewHolder holder, int position) {
 
-       movie = personCredits.getCrew().get(position);
+        final PersonCredit movie = personCredits.getCrew().get(position);
 
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
                 .placeholder(R.drawable.poster_empty)
@@ -75,6 +78,12 @@ public class PersonCrewsAdapter extends RecyclerView.Adapter<PersonCrewsAdapter.
                 intent.putExtra(Constantes.FILME_ID, movie.getMovieId());
                 intent.putExtra(Constantes.NOME_FILME, movie.getMovieTitle());
                 context.startActivity(intent);
+                firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PersonCrewsAdapter.class.getName());
+                bundle.putString(FirebaseAnalytics.Param.DESTINATION, FilmeActivity.class.getName());
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+
             }
         });
     }

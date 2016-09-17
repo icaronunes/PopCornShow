@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
+import com.google.firebase.crash.FirebaseCrash;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -646,7 +647,7 @@ public class TvShowFragment extends Fragment {
 
             @Override
             public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
-
+                FirebaseCrash.report(new Exception("Erro em \"onInitializationFailure\" dentro de "+this.getClass()));
             }
         };
     }

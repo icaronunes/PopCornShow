@@ -3,6 +3,7 @@ package fragment;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.ApplicationErrorReport;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,9 +22,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.crash.internal.service.CrashReceiverService;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
+import com.google.firebase.crash.FirebaseCrash;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -60,6 +63,7 @@ import utils.Constantes;
 import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.string.mil;
+import static com.google.android.gms.auth.api.credentials.PasswordSpecification.de;
 import static com.squareup.picasso.Picasso.with;
 
 
@@ -185,7 +189,8 @@ public class FilmeInfoFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), Site.class);
                 intent.putExtra(Constantes.SITE,
-                        "https://www.themoviedb.org/series/" + movieDb.getId() + "/");
+                        "https://www.themoviedb.org/movie/" + movieDb.getId() + "/");
+                Log.d("TMDB",  "https://www.themoviedb.org/movie/" + movieDb.getId() + "/" );
                 startActivity(intent);
             }
         });
@@ -762,6 +767,7 @@ public class FilmeInfoFragment extends Fragment {
                 Log.d("OnClick", youtube_key);
                 //Acontence erros - Necessario corrigir
                 linearLayout.addView(linearteste);
+
             }
         }
     }
@@ -777,7 +783,7 @@ public class FilmeInfoFragment extends Fragment {
 
             @Override
             public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
-
+                FirebaseCrash.report(new Exception("Erro em \"onInitializationFailure\" dentro de "+this.getClass()));
             }
         };
     }

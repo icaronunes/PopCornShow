@@ -2,6 +2,7 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -29,6 +31,7 @@ public class PersonImagemAdapter extends RecyclerView.Adapter<PersonImagemAdapte
     List<Artwork> artworks;
     int id_person;
     String nome;
+    FirebaseAnalytics firebaseAnalytics;
 
     public PersonImagemAdapter(Context context, List<Artwork> artworks, int id_person, String nome) {
         this.context = context;
@@ -64,6 +67,8 @@ public class PersonImagemAdapter extends RecyclerView.Adapter<PersonImagemAdapte
                 });
 
         holder.imageButton.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, FotoPersonActivity.class);
@@ -72,6 +77,12 @@ public class PersonImagemAdapter extends RecyclerView.Adapter<PersonImagemAdapte
                 intent.putExtra(Constantes.POSICAO, position);
                 context.startActivity(intent);
 
+                firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.DESTINATION, FotoPersonActivity.class.getName());
+                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id_person);
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, nome);
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
             }
         });
     }

@@ -131,5 +131,6 @@
     <string name="title_logoff_dialog">Deslogar do TMDB?</string>
     <string name="cancel">Cancelar</string>
     <string name="text_logoff_dialog">Apos deslogar, não será possivel interagir com o aplicativo.</string>
+    <string name="no_login">Não conectou</string>
 
 </resources>

@@ -23,11 +23,11 @@ public class Prefs {
 
     }
 
-    public static void apagar(Context context, String PREF_ID ){
+    public static void apagarLoginSenha(Context context, String PREF_ID ){
         SharedPreferences pref = context.getSharedPreferences(PREF_ID, 0);
         SharedPreferences.Editor editor = pref.edit();
         editor.clear();
-        Log.d("Prefs", "apagar" );
+        Log.d("Prefs", "apagarLoginSenha" );
         editor.commit();
 
     }

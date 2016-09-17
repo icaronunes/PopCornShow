@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import adapter.WatchListAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
@@ -22,6 +24,7 @@ public class WatchListActivity extends BaseActivity {
     MovieResultsPage movieResultsPage;
     ProgressBar progressBar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +35,7 @@ public class WatchListActivity extends BaseActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpage_rated);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         progressBar = (ProgressBar) findViewById(R.id.progress);
+
         new WatchlistAsync().execute();
     }
 

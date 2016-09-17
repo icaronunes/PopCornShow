@@ -64,7 +64,7 @@ public class TvShowsActivity extends BaseActivity {
                 break;
             }
             case R.id.apagar:
-                Prefs.apagar(TvShowsActivity.this, Prefs.LOGIN_PASS);
+                Prefs.apagarLoginSenha(TvShowsActivity.this, Prefs.LOGIN_PASS);
                 FilmeApplication.getInstance().setLogado(false);
                 startActivity(new Intent(TvShowsActivity.this, MainActivity.class));
                 break;

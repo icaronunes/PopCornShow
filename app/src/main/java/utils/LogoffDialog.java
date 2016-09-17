@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 
-import activity.FilmeActivity;
 import activity.MainActivity;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
@@ -31,9 +30,11 @@ public class LogoffDialog extends DialogPreference {
         builder.setPositiveButton(getContext().getResources().getString(R.string.sair), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Prefs.apagar(getContext(), Prefs.LOGIN_PASS);
+                Prefs.apagarLoginSenha(getContext(), Prefs.LOGIN_PASS);
                 FilmeApplication.getInstance().setLogado(false);
+                FilmeApplication.getInstance().setAccount(null);
                 Intent intent = new Intent(getContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 getContext().startActivity(intent);
             }
         });

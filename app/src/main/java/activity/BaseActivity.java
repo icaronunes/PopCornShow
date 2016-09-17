@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -27,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -47,7 +49,7 @@ import utils.UtilsFilme;
 public class BaseActivity extends AppCompatActivity {
 
     static String TAG = "BaseActivity";
-    static Account account;
+    static Account account = null;
     protected DrawerLayout drawerLayout;
     protected NavigationView navigationView;
     ImageView imgUserBackground;
@@ -56,8 +58,11 @@ public class BaseActivity extends AppCompatActivity {
     TextView tLogin;
     TextView textLogin;
     String user, pass;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public static void SnackBar(final View view, String msg) {
+
+
         Snackbar.make(view, msg
                 , Snackbar.LENGTH_SHORT).setCallback(new Snackbar.Callback() {
             @Override
@@ -147,6 +152,7 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.menu_drav_home: {
                 this.navigationView.setCheckedItem(id);
             }
+
 //            case R.id.list: {
 //                this.navigationView.setCheckedItem(id);
 //            } //Metoda da API não carrega filmes_main da list.
@@ -157,15 +163,24 @@ public class BaseActivity extends AppCompatActivity {
 
     private void onNavDrawerItemSelected(MenuItem menuItem) {
         Intent intent;
+        Bundle bundle = new Bundle();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
         switch (menuItem.getItemId()) {
 
             case R.id.menu_drav_home:
+
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_MainActivity:menu_drav_home");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 intent = new Intent(this, MainActivity.class);
                 intent.putExtra(Constantes.ABA, R.id.menu_drav_home);
                 startActivity(intent);
                 break;
 
             case R.id.now_playing:
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_FilmesActivity:now_playing");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 intent = new Intent(this, FilmesActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing);
                 intent.putExtra(Constantes.ABA, R.id.now_playing);
@@ -173,6 +188,10 @@ public class BaseActivity extends AppCompatActivity {
 
                 break;
             case R.id.upcoming:
+
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_FilmesActivity:upcoming");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 intent = new Intent(this, FilmesActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.upcoming);
                 intent.putExtra(Constantes.ABA, R.id.upcoming);
@@ -180,6 +199,10 @@ public class BaseActivity extends AppCompatActivity {
 
                 break;
             case R.id.popular:
+
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_FilmesActivity:popular");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 intent = new Intent(this, FilmesActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.popular);
                 intent.putExtra(Constantes.ABA, R.id.popular);
@@ -187,6 +210,10 @@ public class BaseActivity extends AppCompatActivity {
 
                 break;
             case R.id.top_rated:
+
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_FilmesActivity:top_rated");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 intent = new Intent(this, FilmesActivity.class);
                 intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.top_rated);
                 intent.putExtra(Constantes.ABA, R.id.top_rated);
@@ -194,27 +221,34 @@ public class BaseActivity extends AppCompatActivity {
 
                 break;
             case R.id.nav_item_settings:
-                intent = new Intent (this, SettingsActivity.class);
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_SettingsActivity:item_settings");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+                intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
-                Toast.makeText(this, "nav_item_settings", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.favorite:
+
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_FavoriteActivity:favorite");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 intent = new Intent(this, FavoriteActivity.class);
-                intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.favorite);
-                intent.putExtra(Constantes.ABA, R.id.favorite);
+
                 startActivity(intent);
 
                 break;
             case R.id.rated:
+
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_RatedActivity:rated");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 intent = new Intent(this, RatedActivity.class);
-                intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.avaliados);
-                intent.putExtra(Constantes.ABA, R.id.favorite);
                 startActivity(intent);
                 break;
             case R.id.watchlist:
+
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_WatchListActivity:watchlist");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 intent = new Intent(this, WatchListActivity.class);
-                intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.quero_assistir);
-                intent.putExtra(Constantes.ABA, R.id.favorite);
                 startActivity(intent);
                 break;
 //            case R.id.list:
@@ -227,6 +261,7 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
 
             case android.R.id.home:
@@ -236,11 +271,11 @@ public class BaseActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.apagar:
-                Prefs.apagar(BaseActivity.this, Prefs.LOGIN_PASS);
+                Prefs.apagarLoginSenha(BaseActivity.this, Prefs.LOGIN_PASS);
                 FilmeApplication.getInstance().setLogado(false);
                 startActivity(new Intent(BaseActivity.this, MainActivity.class));
                 break;
-            case R.id.serie:{
+            case R.id.serie: {
                 Intent intent = new Intent(this, TvShowActivity.class);
                 intent.putExtra(Constantes.TVSHOW_ID, 62560);
                 intent.putExtra(Constantes.NOME_TVSHOW, "Breaking Bad: A Química do Mal");
@@ -281,7 +316,7 @@ public class BaseActivity extends AppCompatActivity {
             file.mkdir();
             Log.e("salvarArqNaMemoriaIn", "Directory created");
         }
-        File dir = new File(file, endereco );
+        File dir = new File(file, endereco);
         ImageView imageView = new ImageView(context);
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + endereco).into(imageView);
         BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
@@ -300,6 +335,10 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected View.OnClickListener onClickListenerLogar() {
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Event.LOGIN, "Tentativa de login");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -324,6 +363,9 @@ public class BaseActivity extends AppCompatActivity {
                         Intent intent = new Intent(BaseActivity.this, Site.class);
                         intent.putExtra(Constantes.SITE, "https://www.themoviedb.org/account/signup");
                         startActivity(intent);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SIGN_UP, "Tentativa de criar login - site TMDB");
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                     }
                 });
 
@@ -341,15 +383,35 @@ public class BaseActivity extends AppCompatActivity {
                         progressDialog.show();
 
                         new Thread() {
+                            private Intent intent;
+
                             @Override
                             public void run() {
                                 if (FilmeService.getAccount(user, pass) == null) {
                                     Log.d(TAG, "Não logou");
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(BaseActivity.this, R.string.no_login, Toast.LENGTH_SHORT).show();
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString(FirebaseAnalytics.Event.LOGIN, "Sucesso");
+                                            bundle.putString(FirebaseAnalytics.Param.DESTINATION, "MainActivity.class");
+                                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                                        }
+                                    });
                                     progressDialog.dismiss();
                                 } else {
                                     Prefs.setString(BaseActivity.this, Prefs.LOGIN, user, Prefs.LOGIN_PASS);
                                     Prefs.setString(BaseActivity.this, Prefs.PASS, pass, Prefs.LOGIN_PASS);
-                                    startActivity(new Intent(BaseActivity.this, MainActivity.class));
+                                    FilmeApplication.getInstance().setAccount(account);
+                                    intent = new Intent(BaseActivity.this, MainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                    finish();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(FirebaseAnalytics.Event.LOGIN, "Sucesso");
+                                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, "MainActivity.class");
+                                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                                     progressDialog.dismiss();
                                 }
@@ -385,13 +447,12 @@ public class BaseActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             account = FilmeApplication.getInstance().getAccount();
-            if (account == null) {
-                String user, pass;
-                user = Prefs.getString(getBaseContext(), Prefs.LOGIN, Prefs.LOGIN_PASS);
-                pass = Prefs.getString(getBaseContext(), Prefs.PASS, Prefs.LOGIN_PASS);
+            user = Prefs.getString(getBaseContext(), Prefs.LOGIN, Prefs.LOGIN_PASS);
+            pass = Prefs.getString(getBaseContext(), Prefs.PASS, Prefs.LOGIN_PASS);
+            if (account == null && user != null && pass != null) {
                 account = FilmeService.getAccount(user, pass);
             }
-            Log.d(TAG, "TMDVAsync");
+            Log.d(TAG, "doInBackground - Login");
             return null;
         }
 

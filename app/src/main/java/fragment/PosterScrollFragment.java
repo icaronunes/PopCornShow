@@ -17,10 +17,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
+import activity.FotoPersonActivity;
 import br.com.icaro.filme.R;
 import utils.Constantes;
 import utils.UtilsFilme;
@@ -37,6 +39,7 @@ public class PosterScrollFragment extends Fragment {
     LinearLayout linear_poster_grid;
     ImageView compartilhar;
     ImageView salvar;
+    FirebaseAnalytics firebaseAnalytics;
 
 
     public static PosterScrollFragment newInstance(String endereco, String nome) {
@@ -56,6 +59,7 @@ public class PosterScrollFragment extends Fragment {
         endereco = getArguments().getString(Constantes.ENDERECO); // não usado!?!?!!
         nome = getArguments().getString(Constantes.NOME_FILME);
         Log.d("PosterScrollFragment", "onCreate: -> " + endereco);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
 
     @Nullable
@@ -94,6 +98,10 @@ public class PosterScrollFragment extends Fragment {
     }
 
     private View.OnClickListener salvarImagem() {
+        Bundle bundle = new Bundle();
+        bundle.putString("Download_Imagem", PosterScrollFragment.this.getClass().getName());
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, nome);
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,6 +116,11 @@ public class PosterScrollFragment extends Fragment {
     }
 
     private View.OnClickListener compartilharOnClick() {
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Event.SHARE, PosterScrollFragment.this.getClass().getName());
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, nome);
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {

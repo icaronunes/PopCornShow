@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
@@ -53,6 +54,7 @@ public class PersonFragment extends Fragment {
     PersonCredits personCredits;
     List<Artwork> artworks;
     String TAG = "PersonFragment";
+    FirebaseAnalytics firebaseAnalytics;
 
     public static PersonFragment newInstance(int aba, int id_person) {
         Log.d("PersonFragment", "newInstance");
@@ -73,12 +75,12 @@ public class PersonFragment extends Fragment {
             tipo = getArguments().getInt(Constantes.ABA);
             id_person = getArguments().getInt(Constantes.PERSON_ID);
         }
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
             new PersonAsync().execute();
 
     }
@@ -101,9 +103,9 @@ public class PersonFragment extends Fragment {
             case R.string.imagem_person: {
                 return getViewPersonImage(inflater, container);
             }
-            case R.string.tvshow: {
-                return getViewPersonTvShow(inflater, container);
-            }
+//            case R.string.tvshow: {
+//                return getViewPersonTvShow(inflater, container);
+//            }
         }
         return null;
     }
@@ -118,11 +120,12 @@ public class PersonFragment extends Fragment {
         recyclerViewTvshow.setHasFixedSize(true);
         recyclerViewTvshow.setItemAnimator(new DefaultItemAnimator());
 
+
         return view;
     }
 
     private View getViewPersonImage(LayoutInflater inflater, ViewGroup container) {
-
+        Log.d(TAG, "getViewPersonImage");
         View view = inflater.inflate(R.layout.activity_person_imagem, container, false);
         recyclerViewImagem = (RecyclerView) view.findViewById(R.id.recycleView_person_imagem);
         sem_fotos = (TextView) view.findViewById(R.id.sem_fotos);
@@ -135,6 +138,7 @@ public class PersonFragment extends Fragment {
     }
 
     private View getViewPersonCrews(LayoutInflater inflater, ViewGroup container) {
+        Log.d(TAG, "getViewPersonCrews");
         View view = inflater.inflate(R.layout.activity_person_crews, container, false);
         RecyclerViewCrews = (RecyclerView) view.findViewById(R.id.recycleView_person_crews);
         sem_crews = (TextView) view.findViewById(R.id.sem_crews);
@@ -165,7 +169,7 @@ public class PersonFragment extends Fragment {
     }
 
     private View getViewPersonMovie(LayoutInflater inflater, ViewGroup container) {
-
+        Log.d(TAG, "getViewPersonMovie");
         View view = inflater.inflate(R.layout.activity_person_movies, container, false); // ? activity???
         recyclerViewMovie = (RecyclerView) view.findViewById(R.id.recycleView_person_movies);
         sem_filmes = (TextView) view.findViewById(R.id.sem_filmes);
@@ -204,6 +208,11 @@ public class PersonFragment extends Fragment {
                     Intent intent = new Intent(getContext(), Site.class);
                     intent.putExtra(Constantes.SITE, information.getHomepage());
                     startActivity(intent);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Site", "Site_Person " + information.getHomepage());
+                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, Site.class.getName());
+                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
                 }
             });
 
@@ -246,6 +255,11 @@ public class PersonFragment extends Fragment {
 
                     intent.putExtra(Constantes.SITE, site);
                     startActivity(intent);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Site", "Wiki_Person " + site);
+                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, Site.class.getName());
+                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
                 }
             });
         }

@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import adapter.MainAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
@@ -35,19 +37,23 @@ public class MainActivity extends BaseActivity {
     boolean idioma_padrao;
     TabLayout tabLayout;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
         setUpToolBar();
         setupNavDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(" ");
-        setCheckable(R.id.menu_drav_home);
+
         viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);
         viewpage_top_main = (ViewPager) findViewById(R.id.viewpage_top_main);
 
@@ -97,6 +103,12 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        setCheckable(R.id.menu_drav_home);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
 
@@ -115,7 +127,7 @@ public class MainActivity extends BaseActivity {
         switch (item.getItemId()) {
 
             case R.id.apagar:
-                Prefs.apagar(MainActivity.this, Prefs.LOGIN_PASS);
+                Prefs.apagarLoginSenha(MainActivity.this, Prefs.LOGIN_PASS);
                 FilmeApplication.getInstance().setLogado(false);
                 startActivity(new Intent(MainActivity.this, MainActivity.class));
                 break;

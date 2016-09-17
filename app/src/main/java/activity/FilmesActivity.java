@@ -58,7 +58,7 @@ public class FilmesActivity extends BaseActivity {
                 break;
             }
             case R.id.apagar:
-                Prefs.apagar(FilmesActivity.this, Prefs.LOGIN_PASS);
+                Prefs.apagarLoginSenha(FilmesActivity.this, Prefs.LOGIN_PASS);
                 FilmeApplication.getInstance().setLogado(false);
                 startActivity(new Intent(FilmesActivity.this, MainActivity.class));
                 break;

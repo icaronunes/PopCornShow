@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
@@ -13,10 +14,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crash.FirebaseCrash;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.security.cert.CertStore;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -78,6 +83,8 @@ public class UtilsFilme {
             stream.close();
         } catch (IOException e) {
             Log.e(TAG, e.getMessage(), e);
+            FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
+            FirebaseCrash.report(e);
         }
 
     }
@@ -92,6 +99,8 @@ public class UtilsFilme {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();
         } catch (IOException e) {
+            FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
+            FirebaseCrash.report(e);
             Log.e(TAG, e.getMessage(), e);
         }
     }
@@ -101,6 +110,8 @@ public class UtilsFilme {
     }
 
     public static boolean isNetWorkAvailable(Context context) {
+
+
         try {
             ConnectivityManager connectivityManager =
                     (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
@@ -118,10 +129,11 @@ public class UtilsFilme {
                 }
             }
 
-
         } catch (SecurityException e) {
-            Log.d("UtilsFilme", "isNetWorkAvailable: " + e);
+            FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
+            FirebaseCrash.report(e);
         }
+
         return false;
 
     }

@@ -28,6 +28,11 @@ public class FilmeApplication extends Application {
 
     private static final String TAG = "FilmeApplication";
     private static FilmeApplication instance = null;
+
+    public static void setAccount(Account account) {
+        FilmeApplication.account = account;
+    }
+
     private static Account account = null;
     private boolean logado = false;
     private static String user, pass;
@@ -85,11 +90,16 @@ public class FilmeApplication extends Application {
 
             user = Prefs.getString(getBaseContext(), Prefs.LOGIN, Prefs.LOGIN_PASS);
             pass = Prefs.getString(getBaseContext(), Prefs.PASS, Prefs.LOGIN_PASS);
+            Log.d(this.getClass().getName(), "User: " + user);
+            Log.d(this.getClass().getName(), "Pass: " + pass);
+
             account = FilmeService.getAccount(user, pass);
             if (account != null){
                 setLogado(true);
+                Log.d(this.getClass().getName(), "account - true");
             } else {
                 setLogado(false);
+                Log.d(this.getClass().getName(), "account - false");
             }
 
             return null;

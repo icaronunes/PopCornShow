@@ -1,9 +1,12 @@
 package domian;
 
+import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.crash.FirebaseCrash;
+import com.google.firebase.crash.internal.FirebaseCrashOptions;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -114,6 +117,9 @@ public class FilmeService {
 
         } catch (Exception e) {
             Log.e("getAccount", e.getMessage());
+            if (FirebaseCrash.isSingletonInitialized()) {
+                FirebaseCrash.report(e);
+            }
         }
         Log.d("getAccount", "Account Nulo");
         return null;
