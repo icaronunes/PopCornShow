@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.SearchRecentSuggestions;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,6 +28,7 @@ import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.model.Multi;
+import provider.SuggestionProvider;
 import utils.UtilsFilme;
 
 
@@ -36,7 +38,7 @@ import utils.UtilsFilme;
 
 public class SearchMultiActivity extends BaseActivity {
 
-    ListView listView;
+
     RecyclerView recyclerView;
     String query;
     List<Multi> movieDbList = null;
@@ -73,6 +75,11 @@ public class SearchMultiActivity extends BaseActivity {
             if (Intent.ACTION_SEARCH.equals(myIntent.getAction())) {
                 query = myIntent.getStringExtra(SearchManager.QUERY);
                 getSupportActionBar().setTitle(query);
+
+                SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                        SuggestionProvider.AUTHORITY, SuggestionProvider.MODE);
+                suggestions.saveRecentQuery(query, null);
+
                 Log.d("ACTION_SEARCH", query);
             }
         }

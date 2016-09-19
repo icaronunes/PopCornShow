@@ -8,6 +8,7 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.SearchRecentSuggestions;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
@@ -26,21 +27,21 @@ import domian.FilmeService;
 import fragment.ViewPageMainTopFragment;
 import fragment.ViewPageMainTvTopFragment;
 import info.movito.themoviedbapi.TvResultsPage;
-import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
+import provider.SuggestionProvider;
 import utils.Constantes;
 import utils.Prefs;
 
-import static br.com.icaro.filme.R.string.movieDb;
 import static utils.UtilsFilme.getTimezone;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements SearchView.OnQueryTextListener {
 
     ViewPager viewPager_main, viewpage_top_main;
     TvResultsPage tmdbTv;
     MovieResultsPage tmdbMovies;
     boolean idioma_padrao;
     TabLayout tabLayout;
+    SearchView searchView;
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -55,8 +56,10 @@ public class MainActivity extends BaseActivity {
         idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
         setUpToolBar();
         setupNavDrawer();
+        setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(" ");
+
 
         viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);
         viewpage_top_main = (ViewPager) findViewById(R.id.viewpage_top_main);
@@ -122,13 +125,22 @@ public class MainActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
 
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setQueryHint("Procura Filme");
-        searchView.setEnabled(false);
+        searchView.setQueryRefinementEnabled(true);
+        searchView.setEnabled(true);
 
         return true;
+    }
+
+
+
+    @Override
+    public boolean onSearchRequested() {
+        //entrou na pesquisa
+        return super.onSearchRequested();
     }
 
     @Override
@@ -160,6 +172,16 @@ public class MainActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {

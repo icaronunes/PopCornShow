@@ -31,6 +31,11 @@
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
         </activity>
+
+        <provider
+            android:authorities="br.com.icaro.filme.suggestions"
+            android:name="provider.SuggestionProvider"/>
+
         <activity android:name="activity.TvShowActivity">
 
 
