@@ -37,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
+            android:minHeight="120dp"
             android:scrollbars="none">>
 
             <LinearLayout
@@ -60,6 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
+            android:minHeight="120dp"
             android:scrollbars="none">>
 
             <LinearLayout

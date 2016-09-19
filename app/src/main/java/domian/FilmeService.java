@@ -28,6 +28,7 @@ import info.movito.themoviedbapi.TmdbTvSeasons;
 import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.config.Account;
+import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.config.TokenSession;
 import info.movito.themoviedbapi.model.core.AccountID;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
@@ -59,6 +60,11 @@ public class FilmeService {
 
     public static TmdbLists getTmdbList() {
         return new TmdbApi(Config.TMDB_API_KEY).getLists();
+        //Metodo não aceita TVShow
+    }
+
+    public static List<Timezone> getTimeZone() {
+        return new TmdbApi(Config.TMDB_API_KEY).getTimezones();
         //Metodo não aceita TVShow
     }
 

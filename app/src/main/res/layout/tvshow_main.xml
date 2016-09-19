@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
             android:layout_marginStart="6dp"
-            android:text="@string/na_tv"
+            android:text="@string/today"
             android:typeface="serif" />
 
         <HorizontalScrollView

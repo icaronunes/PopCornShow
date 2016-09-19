@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
 import com.squareup.picasso.Picasso;
 
@@ -37,6 +38,7 @@ import activity.CrewsActivity;
 import activity.ElencoActivity;
 import activity.PersonActivity;
 import activity.PosterGridActivity;
+import activity.ReviewsActivity;
 import activity.SettingsActivity;
 import activity.SimilaresActivity;
 import activity.Site;
@@ -52,7 +54,9 @@ import utils.Config;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static br.com.icaro.filme.R.string.in_production;
 import static br.com.icaro.filme.R.string.mil;
+import static br.com.icaro.filme.R.string.movieDb;
 import static com.squareup.picasso.Picasso.with;
 
 
@@ -127,9 +131,19 @@ public class TvShowFragment extends Fragment {
                         Log.d(TAG, "Home " + series.getHomepage());
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_homepage" );
+                        bundle.putString(FirebaseAnalytics.Param.DESTINATION, "Navegador");
+                        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                     } else {
                         BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
                                 getString(R.string.no_site));
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_homepage" );
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Sem homepage");
+                        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                     }
                 }
             });
@@ -141,6 +155,12 @@ public class TvShowFragment extends Fragment {
                     intent.putExtra(Constantes.SITE,
                             "https:www.imdb.com/title/" + series.getExternalIds().getImdbId() + "/");
                     startActivity(intent);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_imdb" );
+                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, Site.class.getName());
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 }
             });
 
@@ -151,6 +171,12 @@ public class TvShowFragment extends Fragment {
                     intent.putExtra(Constantes.SITE,
                             "https://www.themoviedb.org/tv/" + series.getId() + "/");
                     startActivity(intent);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_tmdb" );
+                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, Site.class.getName());
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 }
             });
 
@@ -162,10 +188,22 @@ public class TvShowFragment extends Fragment {
                         BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
                                 series.getVoteCount()
                                         + " " + getString(R.string.person_vote));
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star" );
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star_SnackBar" );
+                        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                     } else {
                         BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
                                 series.getVoteCount()
                                         + " " + getString(R.string.no_vote));
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star" );
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "SnarBar_sem_informaçao" );
+                        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                     }
                 }
             });
@@ -180,7 +218,13 @@ public class TvShowFragment extends Fragment {
                     Log.d("setOnClickListener", "" + series.getName());
                     intent.putExtra(Constantes.NOME, series.getName());
                     startActivity(intent);
-                    // ???????????????? Solicitando id de filme, necessario verificar o tipo;
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, ElencoActivity.class.getName() );
+                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 }
             });
 
@@ -193,6 +237,13 @@ public class TvShowFragment extends Fragment {
                     Log.d("setOnClickListener", "" + series.getName());
                     intent.putExtra(Constantes.NOME, series.getName());
                     startActivity(intent);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, CrewsActivity.class.getName() );
+                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 }
             });
 
@@ -203,6 +254,13 @@ public class TvShowFragment extends Fragment {
                     intent.putExtra(Constantes.TVSHOW_ID, series.getId());
                     intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
                     startActivity(intent);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, SimilaresActivity.class.getName() );
+                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 }
             });
 
@@ -216,25 +274,32 @@ public class TvShowFragment extends Fragment {
             Log.d("setStatus", series.getStatus());
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+            FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             if (idioma_padrao) {
 
                 if (series.getStatus().equals("Returning Series")) {
                     status.setText(R.string.returnin_series);
+                    bundle.putString("status_da_serie", getString(R.string.returnin_series) );
                 }
                 if (series.getStatus().equals("Ended")) {
                     status.setText(R.string.ended);
+                    bundle.putString("status_da_serie", getString(R.string.ended) );
                 }
                 if (series.getStatus().equals("Canceled")) {
                     status.setText(R.string.canceled);
-
+                    bundle.putString("status_da_serie", getString(R.string.canceled) );
                 }
                 if (series.getStatus().equals("In Production")) {
-                    status.setText(R.string.in_production);
+                    status.setText(in_production);
+                    bundle.putString("status_da_serie", getString(in_production) );
                 }
             } else {
                 status.setText(series.getStatus());
+                bundle.putString("status_da_serie", series.getStatus() + " Idioma Original");
             }
-
+            FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
         }
     }
 
@@ -285,6 +350,13 @@ public class TvShowFragment extends Fragment {
                 intent.putExtra(Constantes.COLOR_TOP, color);
                 intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
                 getContext().startActivity(intent);
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TemporadaActivity.class.getName() );
+                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             }
         };
     }
@@ -364,6 +436,13 @@ public class TvShowFragment extends Fragment {
                             .makeSceneTransitionAnimation(getActivity(), img_poster, transition);
                     ActivityCompat.startActivity(getActivity(), intent, compat.toBundle());
                     Log.d("FilmeInfoFragment", "setPoster: -> " + series.getPosterPath());
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PosterGridActivity.class.getName() );
+                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                     //Necessario verificar tipo - filme ou serie;
 
                 }
@@ -382,20 +461,6 @@ public class TvShowFragment extends Fragment {
                 primeiraProdutora = primeiraProdutora.concat("...");
             }
             produtora.setText(primeiraProdutora);
-            //não é possivel buscar TVShow da company. Esperar API
-//            produtora.setTextColor(getResources().getColor(R.color.primary));
-//            final String linkProdutora = primeiraProdutora;
-//            produtora.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Intent intent = new Intent(getContext(), ProdutoraActivity.class);
-//                    intent.putExtra(Constantes.PRODUTORA, linkProdutora);
-//                    Log.d("setProdutora", "ID " + series.getNetworks().get(0).getId());
-//                    intent.putExtra(Constantes.MEDIATYPE,  Multi.MediaType.TV_SERIES);
-//                    intent.putExtra(Constantes.PRODUTORA_ID, series.getNetworks().get(0).getId());
-//                    startActivity(intent);
-//                }
-//            });
         }
     }
 
@@ -447,7 +512,6 @@ public class TvShowFragment extends Fragment {
 
         } else {
             production_countries.setText(getString(R.string.não_informado));
-            Log.d("Produtores Paises", "" + series.getOriginCountry().get(0).toString());
         }
 
     }
@@ -531,6 +595,13 @@ public class TvShowFragment extends Fragment {
                         intent.putExtra(Constantes.PERSON_ID, personCast.getId());
                         intent.putExtra(Constantes.NOME_PERSON, personCast.getName());
                         getContext().startActivity(intent);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PersonActivity.class.getName() );
+                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, personCast.getId());
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, personCast.getName());
+                        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                     }
                 });
 
@@ -579,6 +650,13 @@ public class TvShowFragment extends Fragment {
                         intent.putExtra(Constantes.PERSON_ID, crew.getId());
                         intent.putExtra(Constantes.NOME_PERSON, crew.getName());
                         getContext().startActivity(intent);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PersonActivity.class.getName() );
+                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, crew.getId());
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, crew.getName());
+                        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                     }
                 });
                 linearLayout.addView(layoutScroll);
@@ -619,12 +697,18 @@ public class TvShowFragment extends Fragment {
                     public void onClick(View view) {
 
                         Intent intent = new Intent(getActivity(), TreilerActivity.class);
-                        Log.d("OnClick", youtube_key);
                         intent.putExtra(Constantes.YOU_TUBE_KEY, youtube_key);
                         if ((series.getOverview() != null)) {
                             intent.putExtra(Constantes.SINOPSE, series.getOverview());
                         }
                         startActivity(intent);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TreilerActivity.class.getName());
+                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                        bundle.putString("Endereço do youtube", youtube_key);
+                        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                     }
                 });
@@ -634,8 +718,10 @@ public class TvShowFragment extends Fragment {
                 //Acontence erros - Necessario corrigir
                 linearLayout.addView(linearteste);
             }
+
         }
     }
+
 
     private YouTubeThumbnailView.OnInitializedListener OnInitializedListener(final String youtube_key) {
         return new YouTubeThumbnailView.OnInitializedListener() {

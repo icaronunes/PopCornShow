@@ -24,8 +24,11 @@ import java.io.OutputStream;
 import java.security.cert.CertStore;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import activity.FilmeActivity;
+import domian.FilmeService;
+import info.movito.themoviedbapi.model.config.Timezone;
 
 import static com.google.android.gms.wearable.DataMap.TAG;
 
@@ -136,6 +139,16 @@ public class UtilsFilme {
 
         return false;
 
+    }
+
+    public static Timezone getTimezone() {
+        for (Timezone timezone : FilmeService.getTimeZone()) {
+            if (timezone.getCountry().equals(Locale.getDefault().getCountry())){
+                Log.d("Timezone", timezone.getCountry());
+                return timezone;
+            }
+        }
+        return null;
     }
 
 

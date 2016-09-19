@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -75,6 +76,8 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
                                     ActivityOptionsCompat opts = ActivityOptionsCompat.makeCustomAnimation(context,
                                             android.R.anim.fade_in, android.R.anim.fade_out);
                                     ActivityCompat.startActivity((Activity) context, intent, opts.toBundle());
+                                    FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
+                                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                 }
                             });
                         }

@@ -50,8 +50,9 @@ public class ElencoActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         id = getIntent().getIntExtra(Constantes.ID, 0);
         mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
-        season = getIntent().getIntExtra(Constantes.TVSEASONS,0);
+        season = getIntent().getIntExtra(Constantes.TVSEASONS,-100);
         Log.d("ElencoActivity", " " + id);
+        Log.d("ElencoActivity", "oncreate " + season);
         Log.d("ElencoActivity", "" + mediaType.toString());
 
         String title = getIntent().getStringExtra(Constantes.NOME);
@@ -113,14 +114,16 @@ public class ElencoActivity extends BaseActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             Log.d("ElencoActivity", "ID " + id);
-            if (Multi.MediaType.TV_SERIES.equals(mediaType)) {
-                creditsTvShow = FilmeService.getTmdbTvShow().getCredits(id, "en");
-
-            }
 
             if (Multi.MediaType.TV_SERIES.equals(mediaType) && season != -100){
+                Log.d("ElencoActivity", "" + season);
                 creditsTvShow = FilmeService.getTmdbTvSeasons().getSeason(id, season, "en", TmdbTvSeasons.SeasonMethod.credits).getCredits();
             }
+
+            if (Multi.MediaType.TV_SERIES.equals(mediaType)) {
+                creditsTvShow = FilmeService.getTmdbTvShow().getCredits(id, "en");
+            }
+
             if (Multi.MediaType.MOVIE.equals(mediaType)) {
                 TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
                 movies = tmdbMovies.getMovie(id, "en", TmdbMovies.MovieMethod.credits);

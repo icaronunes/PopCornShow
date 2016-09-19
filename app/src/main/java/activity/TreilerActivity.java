@@ -7,10 +7,13 @@ import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import br.com.icaro.filme.R;
 import utils.Config;
 import utils.Constantes;
+
+import static br.com.icaro.filme.R.string.similares;
 
 /**
  * Created by icaro on 12/07/16.
@@ -41,8 +44,14 @@ public class TreilerActivity extends YouTubeBaseActivity implements YouTubePlaye
             player.cueVideo(youtube_key);
             player.setFullscreen(true);
             player.addFullscreenControlFlag(1);
-
             player.play();
+
+            FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Play_youTube");
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, youtube_key );
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
         }
     }
 

@@ -17,6 +17,8 @@ import android.view.MenuItem;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.util.Locale;
+
 import adapter.MainAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
@@ -29,6 +31,9 @@ import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.Constantes;
 import utils.Prefs;
 
+import static br.com.icaro.filme.R.string.movieDb;
+import static utils.UtilsFilme.getTimezone;
+
 public class MainActivity extends BaseActivity {
 
     ViewPager viewPager_main, viewpage_top_main;
@@ -38,7 +43,6 @@ public class MainActivity extends BaseActivity {
     TabLayout tabLayout;
 
     private FirebaseAnalytics mFirebaseAnalytics;
-
 
 
     @Override
@@ -72,13 +76,16 @@ public class MainActivity extends BaseActivity {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
+                Bundle bundle;
                 if (tab.getPosition() == 0) {
                     Log.d("MainActivity", "0");
                     tabLayout.setBackgroundColor(getResources().getColor(R.color.accent2));
                     viewpage_top_main.setBackgroundColor(getResources().getColor(R.color.accent2));
                     tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.accent));
-                    //  viewpage_top_main.setAdapter(new ViewPageMainTopFragment(getSupportFragmentManager(), tvSeries));
+                    bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "tab_main");
+                    bundle.putInt(FirebaseAnalytics.Param.ITEM_NAME, tab.getPosition());
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 }
                 if (tab.getPosition() == 1) {
                     Log.d("MainActivity", "1");
@@ -86,7 +93,10 @@ public class MainActivity extends BaseActivity {
                     viewpage_top_main.setBackgroundColor(getResources().getColor(R.color.accent));
                     tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.accent2));
                     viewpage_top_main.setAdapter(new ViewPageMainTvTopFragment(getSupportFragmentManager(), tmdbTv));
-
+                    bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "tab_main");
+                    bundle.putInt(FirebaseAnalytics.Param.ITEM_NAME, tab.getPosition());
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 }
             }
 
@@ -156,11 +166,19 @@ public class MainActivity extends BaseActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-
-            tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("pt-BR", 1, new Timezone("Brasil", "Brazil"));
-            tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies("pt-BR", 1);
-            Log.d("MainActivity", "Movie - " + tmdbMovies.getResults().size());
-            Log.d("MainActivity", "Tv - " + tmdbTv.getResults().size());
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+            boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+            if (idioma_padrao) {
+                tmdbTv = FilmeService.getTmdbTvShow()
+                        .getAiringToday(Locale.getDefault().toLanguageTag() + ",en,null", 1, getTimezone());
+                tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies(Locale
+                        .getDefault().toLanguageTag() + ",en,null", 1);
+                Log.d("MainActivity", "Movie - " + tmdbMovies.getResults().size());
+                Log.d("MainActivity", "Tv - " + tmdbTv.getResults().size());
+            } else {
+                tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("en", 1, getTimezone());
+                tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies("en", 1);
+            }
             return null;
         }
 
@@ -168,7 +186,6 @@ public class MainActivity extends BaseActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             setupViewPagerTabs();
-
 
         }
     }

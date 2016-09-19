@@ -26,7 +26,6 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
 
     private final Context context;
     protected List<TvSeries> tvSeries;
-   // protected TvSeries series;
     private  TvShowsAdapter.TvshowOnClickListener tvshowOnClickListener;
 
     public TvShowsAdapter(Context context, List<TvSeries> tvSeries,

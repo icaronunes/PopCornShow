@@ -24,7 +24,7 @@ public class TvShowsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filmes);
+        setContentView(R.layout.activity_filmes); // ???
         setUpToolBar();
         setupNavDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

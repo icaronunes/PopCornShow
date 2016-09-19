@@ -2,6 +2,7 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -72,6 +74,14 @@ public class ProdutoraAdapter extends RecyclerView.Adapter<ProdutoraAdapter.Prod
                     intent.putExtra(Constantes.FILME_ID, movie.getId());
                     intent.putExtra(Constantes.NOME_FILME, movie.getTitle());
                     context.startActivity(intent);
+                    FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, ProdutoraAdapter.class.getName() );
+                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, FilmeActivity.class.getName() );
+                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movie.getId() );
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, movie.getTitle() );
+                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+
                 }
             });
         }

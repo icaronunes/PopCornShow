@@ -18,6 +18,8 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -137,6 +139,13 @@ public class TvShowsFragment extends Fragment {
                 intent.putExtra(Constantes.TVSHOW_ID, tvSeries.get(position).getId());
                 intent.putExtra(Constantes.NOME_TVSHOW, tvSeries.get(position).getName());
                 getContext().startActivity(intent);
+                FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TvShowActivity.class.getName());
+                bundle.putInt(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getId());
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getName());
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             }
 
         };

@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -65,6 +66,7 @@ public class TvShowActivity extends BaseActivity {
     CollapsingToolbarLayout layout;
     FloatingActionButton menu_item_favorite, menu_item_watchlist, menu_item_rated;
     FloatingActionMenu fab;
+    FirebaseAnalytics firebaseAnalytics;
     private boolean addFavorite = true;
     private boolean addWatch = true;
 
@@ -87,8 +89,8 @@ public class TvShowActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         imageView = (ImageView) findViewById(R.id.img_top_tvshow);
         setColorFab(color_top);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         new TMDVAsync().execute();
-
 
     }
 
@@ -148,23 +150,43 @@ public class TvShowActivity extends BaseActivity {
                                     case 1: {
                                         Toast.makeText(TvShowActivity.this, getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
                                                 .show();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_add_watchlist));
+                                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                         addWatch = !addWatch;
                                         fab.close(true);
                                         break;
                                     }
                                     case 12: {
                                         Toast.makeText(TvShowActivity.this, getString(R.string.filme_re_add), Toast.LENGTH_SHORT).show();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_re_add));
+                                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                         addWatch = !addWatch;
                                         fab.close(true);
                                         break;
                                     }
                                     case 13: {
                                         Toast.makeText(TvShowActivity.this, getString(R.string.filme_remove_watchlist), Toast.LENGTH_SHORT).show();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_remove_watchlist));
+                                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                         addWatch = !addWatch;
                                         fab.close(true);
                                     }
                                     default: {
-                                        Toast.makeText(TvShowActivity.this, getString(R.string.erro_watch), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(TvShowActivity.this, getString(R.string.erro_add_or_remove), Toast.LENGTH_SHORT).show();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.erro_add_or_remove));
+                                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                         fab.close(true);
                                     }
                                 }
@@ -190,25 +212,45 @@ public class TvShowActivity extends BaseActivity {
                             public void run() {
                                 switch (status[0].getStatusCode()) {
                                     case 1: {
-                                        Toast.makeText(TvShowActivity.this, getString(R.string.filme_add_favorite), Toast.LENGTH_SHORT)
+                                        Toast.makeText(TvShowActivity.this, getString(R.string.tvshow_add_favorite), Toast.LENGTH_SHORT)
                                                 .show();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.tvshow_add_favorite));
+                                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                         addFavorite = !addFavorite;
                                         fab.close(true);
                                         break;
                                     }
                                     case 12: {
-                                        Toast.makeText(TvShowActivity.this, getString(R.string.filme_re_add), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(TvShowActivity.this, getString(R.string.tvshow_re_add), Toast.LENGTH_SHORT).show();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.tvshow_add_favorite));
+                                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                         addFavorite = !addFavorite;
                                         fab.close(true);
                                         break;
                                     }
                                     case 13: {
-                                        Toast.makeText(TvShowActivity.this, getString(R.string.filme_remove_favorite), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(TvShowActivity.this, getString(R.string.tvshow_remove_favorite), Toast.LENGTH_SHORT).show();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.tvshow_remove_favorite));
+                                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                         addFavorite = !addFavorite;
                                         fab.close(true);
                                     }
                                     default: {
-                                        Toast.makeText(TvShowActivity.this, getString(R.string.erro_watch), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(TvShowActivity.this, getString(R.string.erro_add_or_remove), Toast.LENGTH_SHORT).show();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.erro_add_or_remove));
+                                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                         fab.close(true);
                                     }
                                 }
@@ -224,68 +266,94 @@ public class TvShowActivity extends BaseActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog alertDialog = new Dialog(TvShowActivity.this);
-                alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                alertDialog.setContentView(R.layout.adialog_custom_rated);
+                Date date = null;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    date = sdf.parse(series.getFirstAirDate());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (!UtilsFilme.verificavencimento(date)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Tentativa de Rated fora da data de lançamento");
+                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                    Toast.makeText(TvShowActivity.this, getString(R.string.tvshow_nao_lancado), Toast.LENGTH_SHORT).show();
+                } else {
+                    final Dialog alertDialog = new Dialog(TvShowActivity.this);
+                    alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    alertDialog.setContentView(R.layout.adialog_custom_rated);
 
-                Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
-                TextView title = (TextView) alertDialog.findViewById(R.id.rating_title);
-                title.setText(series.getName());
-                final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
-                int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
-                int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
+                    Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
+                    TextView title = (TextView) alertDialog.findViewById(R.id.rating_title);
+                    title.setText(series.getName());
+                    final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
+                    int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
+                    int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
 
-                alertDialog.getWindow().setLayout(width, height);
+                    alertDialog.getWindow().setLayout(width, height);
 
-                ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.d(TAG, "Adialog Rated");
-                        final ProgressDialog progressDialog = new ProgressDialog(TvShowActivity.this,
-                                android.R.style.Theme_Material_Dialog);
-                        progressDialog.setIndeterminate(true);
-                        progressDialog.setMessage("Salvando...");
-                        progressDialog.show();
+                    ok.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Log.d(TAG, "Adialog Rated");
+                            final ProgressDialog progressDialog = new ProgressDialog(TvShowActivity.this,
+                                    android.R.style.Theme_Material_Dialog);
+                            progressDialog.setIndeterminate(true);
+                            progressDialog.setMessage("Salvando...");
+                            progressDialog.show();
 
-                        new Thread() {
-                            boolean status = false;
+                            new Thread() {
+                                boolean status = false;
 
-                            @Override
-                            public void run() {
-                                if (UtilsFilme.isNetWorkAvailable(TvShowActivity.this)) {
-                                    status = FilmeService.setRatedTvShow(id_tvshow, ratingBar.getRating());
-                                    try {
-                                        Thread.sleep(150);
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Log.d("Status", "" + status);
-                                                if (status) {
-                                                    Toast.makeText(TvShowActivity.this,
-                                                            getString(R.string.filme_rated), Toast.LENGTH_SHORT)
-                                                            .show();
-                                                    fab.close(true);
-                                                } else {
-                                                    Toast.makeText(TvShowActivity.this,
-                                                            getString(R.string.falha_rated), Toast.LENGTH_SHORT)
-                                                            .show();
-                                                    fab.close(true);
+                                @Override
+                                public void run() {
+                                    if (UtilsFilme.isNetWorkAvailable(TvShowActivity.this)) {
+                                        status = FilmeService.setRatedTvShow(id_tvshow, ratingBar.getRating());
+                                        try {
+                                            Thread.sleep(150);
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Log.d("Status", "" + status);
+                                                    if (status) {
+                                                        Toast.makeText(TvShowActivity.this,
+                                                                getString(R.string.tvshow_rated), Toast.LENGTH_SHORT)
+                                                                .show();
+                                                        Bundle bundle = new Bundle();
+                                                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,
+                                                                getString(R.string.tvshow_rated));
+                                                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                                                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                                                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                                                        fab.close(true);
+                                                    } else {
+                                                        Toast.makeText(TvShowActivity.this,
+                                                                getString(R.string.falha_rated), Toast.LENGTH_SHORT)
+                                                                .show();
+                                                        Bundle bundle = new Bundle();
+                                                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,
+                                                                getString(R.string.falha_rated));
+                                                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                                                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                                                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                                                        fab.close(true);
+                                                    }
+                                                    progressDialog.dismiss();
                                                 }
-                                                progressDialog.dismiss();
-                                            }
-                                        });
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
+                                            });
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                 }
-                            }
-                        }.start();
+                            }.start();
 
-                        alertDialog.dismiss();
-                    }
+                            alertDialog.dismiss();
+                        }
 
-                });
-                alertDialog.show();
+                    });
+                    alertDialog.show();
+                }
             }
         };
     }

@@ -1,7 +1,9 @@
 package activity;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,9 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.Locale;
+
 import adapter.TemporadaAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
+import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.model.tv.TvSeason;
 import utils.Constantes;
 
@@ -63,8 +68,17 @@ public class TemporadaActivity extends BaseActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            tvSeason = FilmeService.getTmdbTvSeasons().getSeason(serie_id, temporada_id, getString(R.string.IDIOMAS), null);
-            return null;
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(TemporadaActivity.this);
+            boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+            if (idioma_padrao) {
+                tvSeason = FilmeService.getTmdbTvSeasons()
+                        .getSeason(serie_id, temporada_id, Locale.getDefault().toLanguageTag() + ",en,null", null);
+                return null;
+            }else {
+                tvSeason = FilmeService.getTmdbTvSeasons()
+                        .getSeason(serie_id, temporada_id, ",en,null", null);
+                return null;
+                }
         }
 
         @Override

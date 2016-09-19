@@ -2,6 +2,7 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import activity.EpsodioActivity;
@@ -68,7 +70,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
             holder.nota.setText(context.getString(R.string.sem_nota));
         }
 
-        Log.d("Temporada", "Rating " +episode.getUserRating());
+        Log.d("Temporada", "Rating " + episode.getUserRating());
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(4) + episode.getStillPath())
                 .into(holder.poster);
 
@@ -84,6 +86,14 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
                 intent.putExtra(Constantes.COLOR_TOP, color);
                 intent.putExtra(Constantes.NOME_TVSHOW, nome_serie);
                 context.startActivity(intent);
+                FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TemporadaAdapter.class.getName());
+                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, tvSeason.getId());
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeason.getName());
+                bundle.putString(FirebaseAnalytics.Param.DESTINATION, EpsodioActivity.class.getName());
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             }
         });
     }

@@ -19,7 +19,7 @@
         <ImageButton
             android:id="@+id/img_poster_grid"
             android:layout_width="wrap_content"
-            android:layout_height="130dp"
+            android:layout_height="wrap_content"
             android:layout_margin="6dp"
             android:background="@color/white"
             android:scaleType="centerCrop"

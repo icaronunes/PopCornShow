@@ -3,32 +3,30 @@ package activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Locale;
 
 import adapter.SearchAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbSearch;
-import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
-import info.movito.themoviedbapi.model.people.Person;
-import info.movito.themoviedbapi.model.tv.TvSeries;
-import utils.Constantes;
 import utils.UtilsFilme;
 
 
@@ -39,6 +37,7 @@ import utils.UtilsFilme;
 public class SearchMultiActivity extends BaseActivity {
 
     ListView listView;
+    RecyclerView recyclerView;
     String query;
     List<Multi> movieDbList = null;
     TextView text_search_empty;
@@ -54,13 +53,18 @@ public class SearchMultiActivity extends BaseActivity {
         setupNavDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        listView = (ListView) findViewById(R.id.listview_search); //Mudar ListView para Recycleview
+        //listView = (ListView) findViewById(R.id.listview_search); //Mudar ListView para Recycleview
+        recyclerView = (RecyclerView) findViewById(R.id.recycleView_search);
         text_search_empty = (TextView) findViewById(R.id.text_search_empty);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
         //linear_search_layout = (LinearLayout) findViewById(R.id.linear_search_layout);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         Log.d("SearchMultiActivity", "Entrou");
         Log.d("SearchMultiActivity", "onCreate");
+        recyclerView = (RecyclerView) findViewById(R.id.recycleView_search);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
         if (savedInstanceState == null) {
 
 //            query = myIntent.getStringExtra(SearchManager.QUERY);
@@ -83,47 +87,6 @@ public class SearchMultiActivity extends BaseActivity {
            // snack();
         }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                if (movieDbList.get(position).getMediaType().equals(Multi.MediaType.MOVIE)) {
-                    MovieDb movieDb = ((MovieDb) movieDbList.get(position));
-                    ImageView imageView = (ImageView) view.findViewById(R.id.img_search);
-                    Intent intent = new Intent(SearchMultiActivity.this, FilmeActivity.class);
-                    int color = UtilsFilme.loadPalette(imageView);
-                    intent.putExtra(Constantes.COLOR_TOP, color);
-
-                    intent.putExtra(Constantes.FILME_ID, movieDb.getId());
-                    Log.d("setOnItemClickListener", movieDb.getOriginalTitle());
-
-                    intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
-                    startActivity(intent);
-                }
-
-                if (movieDbList.get(position).getMediaType().equals(Multi.MediaType.PERSON)) {
-                    Person person = ((Person) movieDbList.get(position));
-                    ImageView imageView = (ImageView) view.findViewById(R.id.img_search);
-                    Intent intent = new Intent(SearchMultiActivity.this, PersonActivity.class);
-                    int color = UtilsFilme.loadPalette(imageView);
-                    intent.putExtra(Constantes.COLOR_TOP, color);
-                    intent.putExtra(Constantes.PERSON_ID, person.getId());
-                    Log.d("setOnItemClickListener", person.getName());
-                    intent.putExtra(Constantes.NOME_PERSON, person.getName());
-                    startActivity(intent);
-                }
-                if (movieDbList.get(position).getMediaType().equals(Multi.MediaType.TV_SERIES)) {
-                    TvSeries serie = ((TvSeries) movieDbList.get(position));
-                    ImageView imageView = (ImageView) view.findViewById(R.id.img_search);
-                    Intent intent = new Intent(SearchMultiActivity.this, TvShowActivity.class);
-                    int color = UtilsFilme.loadPalette(imageView);
-                    intent.putExtra(Constantes.COLOR_TOP, color);
-                    intent.putExtra(Constantes.TVSHOW_ID, serie.getId());
-                    Log.d("setOnItemClickListener", serie.getName());
-                    intent.putExtra(Constantes.NOME_TVSHOW, serie.getName());
-                    startActivity(intent);
-                }
-            }
-        });
         swipeRefreshLayout.setOnRefreshListener(OnRefreshListener());
     }
 
@@ -131,6 +94,7 @@ public class SearchMultiActivity extends BaseActivity {
         return new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                progressBar.setVisibility(View.INVISIBLE);
                 if (UtilsFilme.isNetWorkAvailable(SearchMultiActivity.this)) {
                     TMDVAsync tmdvAsync = new TMDVAsync();
                     tmdvAsync.execute();
@@ -185,10 +149,19 @@ public class SearchMultiActivity extends BaseActivity {
         @Override
         protected List<Multi> doInBackground(Void... voids) {//
             if (!query.isEmpty()) {
-                TmdbSearch tmdbSearch = FilmeService.getTmdbSearch();
-                TmdbSearch.MultiListResultsPage movieResultsPage = tmdbSearch.searchMulti(query,
-                        getString(R.string.IDIOMAS_BUSCA), pagina);
-                return movieResultsPage.getResults();
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(SearchMultiActivity.this);
+                boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+                if (idioma_padrao) {
+                    TmdbSearch tmdbSearch = FilmeService.getTmdbSearch();
+                    TmdbSearch.MultiListResultsPage movieResultsPage = tmdbSearch.searchMulti(query,
+                            Locale.getDefault().toLanguageTag() + ",en,null", pagina);
+                    return movieResultsPage.getResults();
+                } else {
+                    TmdbSearch tmdbSearch = FilmeService.getTmdbSearch();
+                    TmdbSearch.MultiListResultsPage movieResultsPage = tmdbSearch.searchMulti(query,
+                            ",en,null", pagina);
+                    return movieResultsPage.getResults();
+                }
             }
             return null;
         }
@@ -211,7 +184,8 @@ public class SearchMultiActivity extends BaseActivity {
             }
             if (movieDbList.size() != 0) {
                 swipeRefreshLayout.setRefreshing(false);
-                listView.setAdapter(new SearchAdapter(SearchMultiActivity.this, movieDbList));
+               // listView.setAdapter(new SearchAdapter(SearchMultiActivity.this, movieDbList));
+                recyclerView.setAdapter(new SearchAdapter(SearchMultiActivity.this, movieDbList) );
                 swipeRefreshLayout.setEnabled(true);
                 pagina++;
                 progressBar.setVisibility(View.GONE);

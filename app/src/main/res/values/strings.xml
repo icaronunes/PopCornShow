@@ -78,8 +78,10 @@
     <string name="falha_rated">Falha na classificação</string>
     <string name="filme_add_favorite">Filme Adicionado ao Favoritos</string>
     <string name="filme_re_add">Filme adicionado novamente</string>
+    <string name="tvshow_re_add">Tvshow adicionado novamente</string>
     <string name="filme_remove_favorite">Filme removido da lista Favoritos</string>
-    <string name="erro_watch">Ops! Algo deu errado.</string>
+    <string name="tvshow_remove_favorite">Tvshow removido da lista Favoritos</string>
+    <string name="erro_add_or_remove">Ops! Algo deu errado.</string>
     <string name="filme_add_watchlist">Adicionado ao \"Assistir Mais Tarde\"</string>
     <string name="filme_remove_watchlist">Filme removido</string>
     <string name="movie">Atuação</string>
@@ -132,5 +134,8 @@
     <string name="cancel">Cancelar</string>
     <string name="text_logoff_dialog">Apos deslogar, não será possivel interagir com o aplicativo.</string>
     <string name="no_login">Não conectou</string>
+    <string name="tvshow_add_favorite">Série adicionada aos Favoritos</string>
+    <string name="filme_nao_lancado">Filme ainda não foi lançado.</string>
+    <string name="tvshow_nao_lancado">Série ainda não lançada</string>
 
 </resources>

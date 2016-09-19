@@ -5,8 +5,10 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.ApplicationErrorReport;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -26,6 +28,7 @@ import com.google.android.gms.crash.internal.service.CrashReceiverService;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -33,6 +36,7 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import activity.BaseActivity;
 import activity.CrewsActivity;
@@ -42,6 +46,7 @@ import activity.PersonActivity;
 import activity.PosterGridActivity;
 import activity.ProdutoraActivity;
 import activity.ReviewsActivity;
+import activity.SettingsActivity;
 import activity.SimilaresActivity;
 import activity.Site;
 import activity.TreilerActivity;
@@ -63,7 +68,9 @@ import utils.Constantes;
 import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.string.mil;
+import static br.com.icaro.filme.R.string.movie;
 import static com.google.android.gms.auth.api.credentials.PasswordSpecification.de;
+import static com.google.android.gms.internal.zznk.fi;
 import static com.squareup.picasso.Picasso.with;
 
 
@@ -84,6 +91,8 @@ public class FilmeInfoFragment extends Fragment {
     CollectionInfo info;
     MovieResultsPage similarMovies;
     private int color_top;
+    Bundle bundle;
+    FirebaseAnalytics firebaseAnalytics;
 
     //************* Alguns metodos senco chamados 2 vezes
 
@@ -166,10 +175,18 @@ public class FilmeInfoFragment extends Fragment {
                     intent.putExtra(Constantes.FILME_ID, movieDb.getId());
                     intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
                     startActivity(intent);
+                    bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_reviews" );
+                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, ReviewsActivity.class.getName());
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 } else {
                     Log.d("SetSnack", "" + movieDb.getBudget());
                     BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
                             getString(R.string.no_message));
+                    bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_reviews_SnackBar" );
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 }
             }
         });
@@ -181,6 +198,11 @@ public class FilmeInfoFragment extends Fragment {
                 intent.putExtra(Constantes.SITE,
                         "https:www.imdb.com/title/" + movieDb.getImdbID() + "/");
                 startActivity(intent);
+
+                bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_imdb" );
+                bundle.putString(FirebaseAnalytics.Param.DESTINATION, Site.class.getName());
+                FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             }
         });
 
@@ -192,6 +214,11 @@ public class FilmeInfoFragment extends Fragment {
                         "https://www.themoviedb.org/movie/" + movieDb.getId() + "/");
                 Log.d("TMDB",  "https://www.themoviedb.org/movie/" + movieDb.getId() + "/" );
                 startActivity(intent);
+
+                bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_tmdb" );
+                bundle.putString(FirebaseAnalytics.Param.DESTINATION, Site.class.getName());
+                FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             }
         });
 
@@ -207,9 +234,18 @@ public class FilmeInfoFragment extends Fragment {
                             getString(R.string.orcamento_budget) + " " +
                                     getString(R.string.dollar)
                                     + " " + valor + " " + getString(R.string.milhoes_budget));
+
+                    bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_budget" );
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "SnackBar_Sucesso");
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 } else {
                     BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
                             getString(R.string.no_budget));
+                    bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_budget" );
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "SnackBar_sem_valor");
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 }
             }
         });
@@ -225,9 +261,18 @@ public class FilmeInfoFragment extends Fragment {
                     Log.d("FilmeInfoFragment", "Home " + movieDb.getHomepage());
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
+
+                    bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_homepage" );
+                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, "Navegador");
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 } else {
                     BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
                             getString(R.string.no_site));
+                    bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_homepage" );
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Sem homepage");
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 }
             }
         });
@@ -240,10 +285,18 @@ public class FilmeInfoFragment extends Fragment {
                     BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
                             movieDb.getVoteCount()
                                     + " " + getString(R.string.person_vote));
+                    bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star" );
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star_SnackBar" );
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 } else {
                     BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
                             movieDb.getVoteCount()
                                     + " " + getString(R.string.no_vote));
+                    bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star" );
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "SnarBar_sem_informaçao" );
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 }
             }
         });
@@ -256,11 +309,24 @@ public class FilmeInfoFragment extends Fragment {
                     new Thread() {
                         @Override
                         public void run() {
-                            info = FilmeService.getTmdbCollections()
-                                    .getCollectionInfo(id, getString(R.string.IDIOMAS));
-                            getCollection(info);
+                            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                            boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+                            if (idioma_padrao) {
+                                info = FilmeService.getTmdbCollections()
+                                        .getCollectionInfo(id, Locale.getDefault().toLanguageTag() + ",en,null");
+                                getCollection(info);
+                            } else {
+                                info = FilmeService.getTmdbCollections()
+                                        .getCollectionInfo(id, "en,null");
+                                getCollection(info);
+                            }
                         }
                     }.start();
+
+                    bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star" );
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "SnarBar_sem_informaçao" );
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 } else {
                     BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
                             getString(R.string.collecion_off));
@@ -278,6 +344,13 @@ public class FilmeInfoFragment extends Fragment {
                 Log.d("setOnClickListener", "" + movieDb.getTitle());
                 intent.putExtra(Constantes.NOME, movieDb.getTitle());
                 startActivity(intent);
+
+                bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, ElencoActivity.class.getName() );
+                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             }
         });
 
@@ -290,6 +363,14 @@ public class FilmeInfoFragment extends Fragment {
                 intent.putExtra(Constantes.MEDIATYPE, movieDb.getMediaType());
                 intent.putExtra(Constantes.NOME, movieDb.getTitle());
                 startActivity(intent);
+
+
+                bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, CrewsActivity.class.getName() );
+                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             }
         });
 
@@ -300,6 +381,13 @@ public class FilmeInfoFragment extends Fragment {
                 intent.putExtra(Constantes.FILME_ID, movieDb.getId());
                 intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
                 startActivity(intent);
+
+                bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, SimilaresActivity.class.getName() );
+                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             }
         });
     }
@@ -315,8 +403,15 @@ public class FilmeInfoFragment extends Fragment {
                 pager.setAdapter(new CollectionPagerAdapter(info, getContext(), movieDb.getId()));
                 builder.setView(dialog_collection);
                 builder.show();
+
             }
         });
+
+        bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Collection" );
+        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
     public void setSinopse() {
@@ -397,6 +492,12 @@ public class FilmeInfoFragment extends Fragment {
                     ActivityCompat.startActivity(getActivity(), intent, compat.toBundle());
                     Log.d("FilmeInfoFragment", "setPoster: -> " + movieDb.getId());
 
+                    bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PosterGridActivity.class.getName());
+                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 }
             });
         } else {
@@ -424,6 +525,12 @@ public class FilmeInfoFragment extends Fragment {
                     intent.putExtra(Constantes.PRODUTORA_ID, movieDb.getProductionCompanies().get(0).getId());
                     intent.putExtra(Constantes.MEDIATYPE, Multi.MediaType.MOVIE);
                     startActivity(intent);
+
+                    bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, ProdutoraActivity.class.getName());
+                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 }
             });
         }
@@ -597,6 +704,13 @@ public class FilmeInfoFragment extends Fragment {
                         intent.putExtra(Constantes.PERSON_ID, personCast.getId());
                         intent.putExtra(Constantes.NOME_PERSON, personCast.getName());
                         getContext().startActivity(intent);
+
+                        bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PersonActivity.class.getName());
+                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, personCast.getId());
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, personCast.getName());
+                        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                     }
                 });
 
@@ -645,6 +759,13 @@ public class FilmeInfoFragment extends Fragment {
                         intent.putExtra(Constantes.PERSON_ID, crew.getId());
                         intent.putExtra(Constantes.NOME_PERSON, crew.getName());
                         getContext().startActivity(intent);
+
+                        bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PersonActivity.class.getName());
+                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, crew.getId());
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, crew.getName());
+                        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                     }
                 });
                 linearLayout.addView(layoutScroll);
@@ -705,6 +826,13 @@ public class FilmeInfoFragment extends Fragment {
                             intent.putExtra(Constantes.NOME_FILME, movie.getTitle());
                             intent.putExtra(Constantes.FILME_ID, movie.getId());
                             startActivity(intent);
+
+                            bundle = new Bundle();
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PersonActivity.class.getName());
+                            bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movie.getId());
+                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movie.getTitle());
+                            FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                         }
                     });
 
@@ -759,6 +887,13 @@ public class FilmeInfoFragment extends Fragment {
                             intent.putExtra(Constantes.SINOPSE, movieDb.getOverview());
                         }
                         startActivity(intent);
+
+                        bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TreilerActivity.class.getName());
+                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                        bundle.putString("Endereço do youtube", youtube_key);
+                        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                     }
                 });

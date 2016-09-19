@@ -2,6 +2,7 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,10 +12,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import activity.FilmeActivity;
+import activity.Site;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.people.PersonCredit;
 import info.movito.themoviedbapi.model.people.PersonCredits;
@@ -82,6 +85,13 @@ public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.
                     intent.putExtra(Constantes.FILME_ID, credit.getMovieId());
                     intent.putExtra(Constantes.NOME_FILME, credit.getMovieTitle());
                     context.startActivity(intent);
+
+                    FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, FilmeActivity.class.getName() );
+                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, FilmeActivity.class.getName());
+                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 }
             });
         }

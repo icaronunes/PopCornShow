@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
 import java.text.ParseException;
@@ -71,6 +72,8 @@ public class FilmeActivity extends BaseActivity {
     private boolean addFavorite = true;
     private boolean addWatch = true; // Retirar quando metodo de saber, estiver pronto
     private MovieResultsPage similarMovies;
+    private FirebaseAnalytics mFirebaseAnalytics;
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,28 @@ public class FilmeActivity extends BaseActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress);
         viewPager = (ViewPager) findViewById(R.id.top_img_viewpager);
         viewPager.setBackgroundColor(color_fundo);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ViewPager");
+                bundle.putInt(FirebaseAnalytics.Param.TRANSACTION_ID, viewPager.getCurrentItem());
+                FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         new TMDVAsync().execute();
 
     }
@@ -118,6 +143,10 @@ public class FilmeActivity extends BaseActivity {
                 intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                 startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
+                bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_MainActivity:menu_drav_home");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             } else {
                 Toast.makeText(getContext(), getResources().getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show();
             }
@@ -137,7 +166,10 @@ public class FilmeActivity extends BaseActivity {
                     e.printStackTrace();
                 }
                 if (!UtilsFilme.verificavencimento(date)) {
-                    Toast.makeText(FilmeActivity.this, "Filme ainda não foi lançado.", Toast.LENGTH_SHORT).show();
+                    bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Tentativa de Rated fora da data de lançamento");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                    Toast.makeText(FilmeActivity.this, getString(R.string.filme_nao_lancado), Toast.LENGTH_SHORT).show();
                 } else {
                     final Dialog alertDialog = new Dialog(getContext());
                     alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -170,7 +202,7 @@ public class FilmeActivity extends BaseActivity {
                                     if (UtilsFilme.isNetWorkAvailable(getContext())) {
                                         status = FilmeService.setRatedMovie(id_filme, ratingBar.getRating());
                                         try {
-                                            Thread.sleep(1150);
+                                            Thread.sleep(1000);
                                             runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
@@ -178,10 +210,22 @@ public class FilmeActivity extends BaseActivity {
                                                     if (status) {
                                                         Toast.makeText(getContext(), getResources().getString(R.string.filme_rated), Toast.LENGTH_SHORT)
                                                                 .show();
+                                                        bundle = new Bundle();
+                                                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getResources()
+                                                                .getString(R.string.filme_rated));
+                                                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                                                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                                                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                                         fab.close(true);
                                                     } else {
-                                                        Toast.makeText(getContext(), getResources().getString(R.string.falha_rated), Toast.LENGTH_SHORT)
+                                                        Toast.makeText(getContext(), getString(R.string.falha_rated), Toast.LENGTH_SHORT)
                                                                 .show();
+                                                        bundle = new Bundle();
+                                                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getResources()
+                                                                .getString(R.string.falha_rated));
+                                                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                                                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                                                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                                         fab.close(true);
                                                     }
                                                     progressDialog.dismiss();
@@ -224,6 +268,9 @@ public class FilmeActivity extends BaseActivity {
                 }
                 if (!UtilsFilme.verificavencimento(date)) {
                     Toast.makeText(FilmeActivity.this, "Filme ainda não foi lançado.", Toast.LENGTH_SHORT).show();
+                    bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Favorite - Filme ainda não foi lançado.");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 } else {
                     final ResponseStatus[] status = new ResponseStatus[1];
                     new Thread(new Runnable() {
@@ -237,23 +284,43 @@ public class FilmeActivity extends BaseActivity {
                                         case 1: {
                                             Toast.makeText(getContext(), getString(R.string.filme_add_favorite), Toast.LENGTH_SHORT)
                                                     .show();
+                                            bundle = new Bundle();
+                                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_add_favorite));
+                                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                                            bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                             addFavorite = !addFavorite;
                                             fab.close(true);
                                             break;
                                         }
                                         case 12: {
                                             Toast.makeText(getContext(), getString(R.string.filme_re_add), Toast.LENGTH_SHORT).show();
+                                            bundle = new Bundle();
+                                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_re_add));
+                                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                                            bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                             addFavorite = !addFavorite;
                                             fab.close(true);
                                             break;
                                         }
                                         case 13: {
                                             Toast.makeText(getContext(), getString(R.string.filme_remove_favorite), Toast.LENGTH_SHORT).show();
+                                            bundle = new Bundle();
+                                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_remove_favorite));
+                                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                                            bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                             addFavorite = !addFavorite;
                                             fab.close(true);
                                         }
                                         default: {
-                                            Toast.makeText(getContext(), getString(R.string.erro_watch), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), getString(R.string.erro_add_or_remove), Toast.LENGTH_SHORT).show();
+                                            bundle = new Bundle();
+                                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.erro_add_or_remove));
+                                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                                            bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                             fab.close(true);
                                         }
                                     }
@@ -283,23 +350,43 @@ public class FilmeActivity extends BaseActivity {
                                     case 1: {
                                         Toast.makeText(getContext(), getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
                                                 .show();
+                                        bundle = new Bundle();
+                                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_add_watchlist));
+                                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                         addWatch = !addWatch;
                                         fab.close(true);
                                         break;
                                     }
                                     case 12: {
                                         Toast.makeText(getContext(), getString(R.string.filme_re_add), Toast.LENGTH_SHORT).show();
+                                        bundle = new Bundle();
+                                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_re_add));
+                                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                         addWatch = !addWatch;
                                         fab.close(true);
                                         break;
                                     }
                                     case 13: {
                                         Toast.makeText(getContext(), getString(R.string.filme_remove_watchlist), Toast.LENGTH_SHORT).show();
+                                        bundle = new Bundle();
+                                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_remove_watchlist));
+                                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                         addWatch = !addWatch;
                                         fab.close(true);
                                     }
                                     default: {
-                                        Toast.makeText(getContext(), getString(R.string.erro_watch), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), getString(R.string.erro_add_or_remove), Toast.LENGTH_SHORT).show();
+                                        bundle = new Bundle();
+                                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.erro_add_or_remove));
+                                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                         fab.close(true);
                                     }
                                 }
@@ -356,6 +443,7 @@ public class FilmeActivity extends BaseActivity {
             return null;
         }
 
+
         @Override
         public int getCount() {
             if (movieDb.getImages(ArtworkType.BACKDROP) != null) {
@@ -378,7 +466,7 @@ public class FilmeActivity extends BaseActivity {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             if (idioma_padrao) {
-                Log.d("FilmeActivity", "true - " + Locale.getDefault().toLanguageTag());
+                Log.d("FilmeActivity", "true - " + Locale.getDefault().getCountry());
                 movieDb = movies.getMovie(id_filme, Locale.getDefault().toLanguageTag() + ",en,null"
                         , credits, releases, videos, reviews, similar, alternative_titles, images);
                 movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
@@ -406,7 +494,6 @@ public class FilmeActivity extends BaseActivity {
                 Log.d("FAB", "FAB " + color_fundo);
                 fab.setAlpha(1);
                 setColorFab(color_fundo);
-
                 menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
                 menu_item_rated.setOnClickListener(RatedFilme());
                 menu_item_watchlist.setOnClickListener(addOrRemoveWatch());

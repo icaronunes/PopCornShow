@@ -1,8 +1,10 @@
 package fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
@@ -22,10 +23,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import activity.FilmeActivity;
 import activity.FilmesActivity;
 import activity.MainActivity;
+import activity.SettingsActivity;
 import activity.TvShowActivity;
 import activity.TvShowsActivity;
 import br.com.icaro.filme.R;
@@ -34,15 +37,16 @@ import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static android.R.attr.id;
 import static br.com.icaro.filme.R.string.filmes_main;
-import static br.com.icaro.filme.R.string.movieDb;
+import static br.com.icaro.filme.R.string.time;
 import static java.util.Arrays.asList;
+import static utils.UtilsFilme.getTimezone;
 
 
 /**
@@ -53,7 +57,7 @@ public class MainFragment extends Fragment {
     final static String TAG = MainActivity.class.getName();
     static List<String> buttonFilme, buttonTvshow;
     int tipo;
-    TvResultsPage popularTvshow, onTheAirTvshow;
+    TvResultsPage popularTvshow, toDay;
     MovieResultsPage popularMovie, cinema;
 
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -338,13 +342,13 @@ public class MainFragment extends Fragment {
 
     }
 
-    private void setScrollTvShowOntheAir() {
+    private void setScrollTvShowToDay() {
 
         List<TvSeries> tvSeries;
-        if (onTheAirTvshow.getResults().size() > 0 & isAdded()) {
-            int tamanho = onTheAirTvshow.getResults().size() < 15 ? onTheAirTvshow.getResults().size() : 15;
-            Log.d("MainFragment", "Tamanho " + onTheAirTvshow.getResults().size());
-            tvSeries = onTheAirTvshow.getResults();
+        if (toDay.getResults().size() > 0 & isAdded()) {
+            int tamanho = toDay.getResults().size() < 15 ? toDay.getResults().size() : 15;
+            Log.d("MainFragment", "Tamanho " + toDay.getResults().size());
+            tvSeries = toDay.getResults();
             for (int i = 0; i < tamanho; i++) {
                 final TvSeries series = tvSeries.get(i);
                 View view = getActivity().getLayoutInflater().inflate(R.layout.poster_main, (ViewGroup) getView(), false);
@@ -409,17 +413,28 @@ public class MainFragment extends Fragment {
             super.onPreExecute();
         }
 
+
         @Override
         protected Void doInBackground(Void... voids) {
             Log.d("PersonFragment", "doInBackground");
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             if (status) {
-                TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
-                TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
-                popularTvshow = tmdbTv.getPopular("pt-BR", 1);
-                onTheAirTvshow = tmdbTv.getOnTheAir("pt-BR", 1);
-                popularMovie = tmdbMovies.getPopularMovies("pt-BR", 1);
-                cinema = tmdbMovies.getUpcoming("pt-BR", 1);
-
+                if (idioma_padrao) {
+                    TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
+                    TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
+                    popularTvshow = tmdbTv.getPopular(Locale.getDefault().toLanguageTag() + ",en,null", 1);
+                    toDay = tmdbTv.getAiringToday(Locale.getDefault().toLanguageTag() + ",en,null", 1, getTimezone());
+                    popularMovie = tmdbMovies.getPopularMovies(Locale.getDefault().toLanguageTag() + ",en,null", 1);
+                    cinema = tmdbMovies.getUpcoming(Locale.getDefault().toLanguageTag() + ",en,null", 1);
+                }else{
+                    TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
+                    TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
+                    popularTvshow = tmdbTv.getPopular("en", 1);
+                    toDay = tmdbTv.getAiringToday("en,null", 1, getTimezone());
+                    popularMovie = tmdbMovies.getPopularMovies("en", 1);
+                    cinema = tmdbMovies.getUpcoming("en", 1);
+                }
             }
             return null;
         }
@@ -430,7 +445,7 @@ public class MainFragment extends Fragment {
             if (status & isAdded()) {
                 if (tipo == R.string.tvshow_main) {
                     setScrollTvShowPopulares();
-                    setScrollTvShowOntheAir();
+                    setScrollTvShowToDay();
                 }
                 if (tipo == R.string.filmes_main) {
                     setScrollMoviePopular();

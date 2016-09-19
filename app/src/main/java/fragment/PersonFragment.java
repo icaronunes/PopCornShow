@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 import java.io.Serializable;
 import java.util.List;
 
+import activity.FilmeActivity;
 import activity.Site;
 import adapter.PersonCrewsAdapter;
 import adapter.PersonImagemAdapter;
@@ -304,6 +305,7 @@ public class PersonFragment extends Fragment {
 
     /*Refazer metodo. Deve haver jeito melhor*/
     private PersonCredits removerDuplicados(PersonCredits credits) {
+
         PersonCredits temp = credits;
         for (int i = 0; i <= personCredits.getCrew().size(); i++) {
             for (int l = i + 1; l < personCredits.getCrew().size(); l++) {

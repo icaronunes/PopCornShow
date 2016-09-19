@@ -2,6 +2,7 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -19,6 +21,8 @@ import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.MovieDb;
 import utils.Constantes;
 import utils.UtilsFilme;
+
+import static br.com.icaro.filme.R.string.movie;
 
 /**
  * Created by icaro on 12/08/16.
@@ -60,6 +64,12 @@ public class SimilaresAdapter extends RecyclerView.Adapter<SimilaresAdapter.Simi
                 intent.putExtra(Constantes.FILME_ID, similares.get(position).getId());
                 intent.putExtra(Constantes.NOME_FILME, similares.get(position).getTitle());
                 context.startActivity(intent);
+                FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, FilmeActivity.class.getName());
+                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, similares.get(position).getId() );
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, similares.get(position).getTitle() );
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             }
         });
     }
