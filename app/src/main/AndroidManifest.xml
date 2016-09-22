@@ -20,9 +20,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.SEARCH" /> -->
-            <!-- </intent-filter> -->
 
             <meta-data
                 android:name="android.app.searchable"
@@ -30,19 +27,12 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
+
         </activity>
 
-        <provider
-            android:authorities="br.com.icaro.filme.suggestions"
-            android:name="provider.SuggestionProvider"/>
 
         <activity android:name="activity.TvShowActivity">
 
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.SEARCH" /> -->
-            <!-- </intent-filter> -->
-
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -50,7 +40,8 @@
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
         </activity>
-        <activity android:name="activity.FilmesActivity"/>
+
+        <activity android:name="activity.FilmesActivity" />
         <activity android:name="activity.FavoriteActivity" />
         <activity android:name="activity.RatedActivity" />
         <activity
@@ -76,18 +67,19 @@
         <activity android:name="activity.CrewsActivity" />
         <activity android:name="activity.PosterGridActivity" />
         <activity android:name="activity.Site" />
+
         <activity android:name="activity.SearchMultiActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
+
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="activity.SearchMultiActivity" />
+
         </activity>
+
         <activity android:name="activity.WatchListActivity">
             <meta-data
                 android:name="android.app.searchable"
@@ -117,6 +109,17 @@
         <activity android:name="activity.SettingsActivity" />
 
         <activity android:name="activity.TvShowsActivity" />
+
+        <provider
+            android:name="provider.SuggestionRecentProvider"
+            android:authorities="br.com.icaro.filme.search2" />
+
+        <provider
+            android:name="provider.SuggestionProvider"
+            android:authorities="br.com.icaro.filme.search"
+            android:enabled="true"
+            android:exported="true" />
+
     </application>
 
 </manifest>

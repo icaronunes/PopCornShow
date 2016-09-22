@@ -16,7 +16,6 @@ import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -28,8 +27,11 @@ import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.model.Multi;
-import provider.SuggestionProvider;
+import provider.SuggestionRecentProvider;
+import utils.Constantes;
 import utils.UtilsFilme;
+
+import static android.R.attr.id;
 
 
 /**
@@ -40,12 +42,14 @@ public class SearchMultiActivity extends BaseActivity {
 
 
     RecyclerView recyclerView;
-    String query;
+    String query = "";
     List<Multi> movieDbList = null;
     TextView text_search_empty;
     SwipeRefreshLayout swipeRefreshLayout;
     ProgressBar progressBar;
     private int pagina = 1;
+    private Intent intent;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,11 +59,9 @@ public class SearchMultiActivity extends BaseActivity {
         setupNavDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //listView = (ListView) findViewById(R.id.listview_search); //Mudar ListView para Recycleview
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_search);
         text_search_empty = (TextView) findViewById(R.id.text_search_empty);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
-        //linear_search_layout = (LinearLayout) findViewById(R.id.linear_search_layout);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         Log.d("SearchMultiActivity", "Entrou");
         Log.d("SearchMultiActivity", "onCreate");
@@ -67,20 +69,69 @@ public class SearchMultiActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
+        /**
+         *
+         * Arrumar! Gambiara funcionando.
+         *
+         */
+
         if (savedInstanceState == null) {
-
-//            query = myIntent.getStringExtra(SearchManager.QUERY);
-//            getSupportActionBar().setTitle(query);
-            Intent myIntent = getIntent();
-            if (Intent.ACTION_SEARCH.equals(myIntent.getAction())) {
-                query = myIntent.getStringExtra(SearchManager.QUERY);
+            if (Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
+                query = getIntent().getStringExtra(SearchManager.QUERY);
                 getSupportActionBar().setTitle(query);
-
                 SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
-                        SuggestionProvider.AUTHORITY, SuggestionProvider.MODE);
+                        SuggestionRecentProvider.AUTHORITY, SuggestionRecentProvider.MODE);
                 suggestions.saveRecentQuery(query, null);
+                Log.d("SearchMultiActivity", "ACTION_SEARCH");
 
-                Log.d("ACTION_SEARCH", query);
+            } else {
+                if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
+
+                    if (getIntent().getData().getLastPathSegment().equalsIgnoreCase(Multi.MediaType.MOVIE.name())) {
+                        Log.d("SearchMultiActivity", "ACTION_VIEW");
+                        Log.d("SearchMultiActivity", String.valueOf(getIntent().getData()));
+                        Log.d("SearchMultiActivity", String.valueOf(getIntent().getData().getLastPathSegment()));
+                        final int id = Integer.parseInt(getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY));
+                        Log.d("SearchMultiActivity", id + " " + Multi.MediaType.MOVIE);
+                        intent = new Intent(this, FilmeActivity.class);
+                        intent.putExtra(Constantes.FILME_ID, id);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                        startActivity(intent);
+                        finish();
+                        return;
+                    }
+
+                    if (getIntent().getData().getLastPathSegment().equalsIgnoreCase(Multi.MediaType.TV_SERIES.name())) {
+                        Log.d("SearchMultiActivity", "ACTION_VIEW");
+                        Log.d("SearchMultiActivity", String.valueOf(getIntent().getData().getLastPathSegment()));
+                        final int id = Integer.parseInt(getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY));
+                        Log.d("SearchMultiActivity", "" + id);
+                        intent = new Intent(this, TvShowActivity.class);
+                        intent.putExtra(Constantes.TVSHOW_ID, id);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                        startActivity(intent);
+                        finish();
+                        return;
+                    }
+
+                    if (getIntent().getData().getLastPathSegment().equalsIgnoreCase(Multi.MediaType.PERSON.name())) {
+                        Log.d("SearchMultiActivity", "ACTION_VIEW");
+                        Log.d("SearchMultiActivity", String.valueOf(getIntent().getData()));
+                        Log.d("SearchMultiActivity", String.valueOf(getIntent().getData().getLastPathSegment()));
+                        String string = getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY);
+                        final String id = string.substring(0, string.indexOf('/'));
+                        Log.d("SearchMultiActivity", id);
+                        Log.d("SearchMultiActivity", string.substring(string.indexOf('/') +1, string.length()));
+                        intent = new Intent(this, PersonActivity.class );
+                        intent.putExtra(Constantes.PERSON_ID, Integer.valueOf(id));
+                        intent.putExtra(Constantes.NOME_PERSON, string.substring(string.indexOf('/') + 1, string.length()));
+                        intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                        startActivity(intent);
+                        finish();
+                        return;
+                    }
+//: "1892/Matt Damon"
+                }
             }
         }
 
@@ -91,11 +142,12 @@ public class SearchMultiActivity extends BaseActivity {
             text_search_empty.setText(R.string.no_internet);
             text_search_empty.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.INVISIBLE);
-           // snack();
+            // snack();
         }
 
         swipeRefreshLayout.setOnRefreshListener(OnRefreshListener());
     }
+
 
     private SwipeRefreshLayout.OnRefreshListener OnRefreshListener() {
         return new SwipeRefreshLayout.OnRefreshListener() {
@@ -118,6 +170,7 @@ public class SearchMultiActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.menu, menu);
         Log.d("onCreateOptionsMenu", "Option Menu");
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
@@ -125,24 +178,8 @@ public class SearchMultiActivity extends BaseActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setEnabled(false);
 
-        return true;//super.onCreateOptionsMenu(menu);
+        return true;
     }
-
-//    protected void snack() {
-//        Snackbar.make(linear_search_layout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-//                .setAction(R.string.retry, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
-//                            text_search_empty.setVisibility(View.GONE);
-//                            TMDVAsync tmdvAsync = new TMDVAsync();
-//                            tmdvAsync.execute();
-//                        } else {
-//                            snack();
-//                        }
-//                    }
-//                }).show();
-//    }
 
     private class TMDVAsync extends AsyncTask<Void, Void, List<Multi>> {
 
@@ -166,7 +203,7 @@ public class SearchMultiActivity extends BaseActivity {
                 } else {
                     TmdbSearch tmdbSearch = FilmeService.getTmdbSearch();
                     TmdbSearch.MultiListResultsPage movieResultsPage = tmdbSearch.searchMulti(query,
-                            ",en,null", pagina);
+                            "en,null", pagina);
                     return movieResultsPage.getResults();
                 }
             }
@@ -191,8 +228,7 @@ public class SearchMultiActivity extends BaseActivity {
             }
             if (movieDbList.size() != 0) {
                 swipeRefreshLayout.setRefreshing(false);
-               // listView.setAdapter(new SearchAdapter(SearchMultiActivity.this, movieDbList));
-                recyclerView.setAdapter(new SearchAdapter(SearchMultiActivity.this, movieDbList) );
+                recyclerView.setAdapter(new SearchAdapter(SearchMultiActivity.this, movieDbList));
                 swipeRefreshLayout.setEnabled(true);
                 pagina++;
                 progressBar.setVisibility(View.GONE);

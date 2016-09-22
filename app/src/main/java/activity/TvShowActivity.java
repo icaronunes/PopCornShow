@@ -77,7 +77,7 @@ public class TvShowActivity extends BaseActivity {
         setUpToolBar();
         setupNavDrawer();
         nome = getIntent().getStringExtra(Constantes.NOME_TVSHOW);
-        color_top = getIntent().getIntExtra(Constantes.COLOR_TOP, 0);
+        color_top = getIntent().getIntExtra(Constantes.COLOR_TOP, R.color.colorFAB);
         layout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         layout.setBackgroundColor(color_top);
         viewPager = (ViewPager) findViewById(R.id.viewPager_tvshow);
@@ -415,6 +415,7 @@ public class TvShowActivity extends BaseActivity {
             setCoordinator();
             setImageTop();
             setupViewPagerTabs();
+
 
             if (FilmeApplication.getInstance().isLogado()) { // Arrumar
                 Log.d("FAB", "FAB " + color_top);

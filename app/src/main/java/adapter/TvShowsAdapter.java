@@ -57,8 +57,8 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
                     .into(holder.imagem_filme, new Callback() {
                         @Override
                         public void onSuccess() {
-                            String title = series.getFirstAirDate();
-                            holder.title.setText(title.substring(0,4));
+                            String fist = series.getFirstAirDate();
+                            holder.title.setText(fist.length() >= 4 ? fist.substring(0,4) : "");
                         }
 
                         @Override

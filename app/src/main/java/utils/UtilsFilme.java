@@ -92,6 +92,24 @@ public class UtilsFilme {
 
     }
 
+    public static  File salvaImagemMemoriaCache(Context context, ImageView imageView, String endereco) {
+        //Usar metodo do BaseActivity
+        File file = context.getExternalCacheDir();
+
+        if (!file.exists()) {
+            file.mkdir();
+            Log.e("salvarArqNaMemoriaIn", "Directory created");
+        }
+        File dir = new File(file, endereco);
+
+        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+        if (drawable != null) {
+            Bitmap bitmap = drawable.getBitmap();
+            UtilsFilme.writeBitmap(dir, bitmap);
+        }
+        return dir;
+    }
+
     public static void writeBitmap(File file, Bitmap bitmap) {
         try {
             if (!file.exists()) {
