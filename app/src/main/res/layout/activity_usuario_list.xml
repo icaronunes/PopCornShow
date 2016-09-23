@@ -19,10 +19,21 @@
 
         <android.support.v4.view.ViewPager
             android:layout_width="match_parent"
-            android:id="@+id/viewpage_rated"
+            android:id="@+id/viewpage_usuario"
+            android:layout_marginBottom="50dp"
             android:layout_height="match_parent"/>
 
         <include layout="@layout/include_progress"/>
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="bottom"
+            app:adSize="SMART_BANNER"
+            app:adUnitId="@string/admob" />
 
     </FrameLayout>
 

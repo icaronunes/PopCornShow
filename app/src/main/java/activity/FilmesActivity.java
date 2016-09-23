@@ -8,6 +8,9 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import fragment.FilmesFragment;
@@ -18,12 +21,20 @@ public class FilmesActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filmes);
+        setContentView(R.layout.activity_list_main);
         setUpToolBar();
         setupNavDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(getIntent()
                 .getIntExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing)));
+
+        AdView adview = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+        adview.loadAd(adRequest);
+
         if (savedInstanceState == null) {
             FilmesFragment filmesFragment = new FilmesFragment();
             filmesFragment.setArguments(getIntent().getExtras());
@@ -33,6 +44,7 @@ public class FilmesActivity extends BaseActivity {
                     .add(R.id.container, filmesFragment)
                     .commit();
         }
+
     }
 
     @Override

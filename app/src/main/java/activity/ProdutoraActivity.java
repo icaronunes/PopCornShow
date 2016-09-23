@@ -3,10 +3,11 @@ package activity;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -21,10 +22,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.squareup.picasso.Picasso;
+
+import java.util.Locale;
 
 import adapter.ProdutoraAdapter;
 import br.com.icaro.filme.R;
@@ -64,7 +68,6 @@ public class ProdutoraActivity extends BaseActivity {
         setContentView(R.layout.produtora_layout);
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
         home_produtora = (TextView) findViewById(R.id.home_produtora);
         headquarters = (TextView) findViewById(R.id.headquarters);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh_produtora);
@@ -79,6 +82,15 @@ public class ProdutoraActivity extends BaseActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         InfoLayout();
         id_produtora = getIntent().getIntExtra(Constantes.PRODUTORA_ID, 0);
+
+
+        AdView adview = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+        adview.loadAd(adRequest);
+
         new TMDVAsync().execute();
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -89,10 +101,10 @@ public class ProdutoraActivity extends BaseActivity {
         layout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
 
 
-            if (!layout.hasFocus()){
-                info_layout.setVisibility(View.INVISIBLE);
+        if (!layout.hasFocus()) {
+            info_layout.setVisibility(View.INVISIBLE);
 
-            }
+        }
 
 
     }
@@ -113,7 +125,7 @@ public class ProdutoraActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
         }
@@ -188,15 +200,27 @@ public class ProdutoraActivity extends BaseActivity {
         @Override
         protected MovieDb doInBackground(Void... voids) {
             //não é possivel buscar TVShow da company. Esperar API
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ProdutoraActivity.this);
+            boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             company = getTmdbCompany().getCompanyInfo(id_produtora);
             if (pagina == 1) {
-                resultsPage = FilmeService.getTmdbCompany()
-                        .getCompanyMovies(id_produtora, getResources().getString(R.string.IDIOMAS), pagina);
+                if (idioma_padrao) {
+                    resultsPage = FilmeService.getTmdbCompany()
+                            .getCompanyMovies(id_produtora, Locale.getDefault().toLanguageTag() + ",en,null", pagina);
+                } else {
+                    resultsPage = FilmeService.getTmdbCompany()
+                            .getCompanyMovies(id_produtora, "en,null", pagina);
+                }
             } else {
-                temp = resultsPage;
-                resultsPage = FilmeService.getTmdbCompany()
-                        .getCompanyMovies(id_produtora, getResources().getString(R.string.IDIOMAS), pagina);
-                resultsPage.getResults().addAll(temp.getResults());
+                if (idioma_padrao) {
+                    temp = resultsPage;
+                    resultsPage = FilmeService.getTmdbCompany()
+                            .getCompanyMovies(id_produtora, Locale.getDefault().toLanguageTag() + ",en,null", pagina);
+                    resultsPage.getResults().addAll(temp.getResults());
+                } else {
+                    resultsPage = FilmeService.getTmdbCompany()
+                            .getCompanyMovies(id_produtora, "en,null", pagina);
+                }
             }
             Log.d("PRODUTORA", "Total : " + resultsPage.getTotalPages());
             return null;
@@ -207,7 +231,7 @@ public class ProdutoraActivity extends BaseActivity {
             super.onPostExecute(movieDb);
             Log.d("PRODUTORA", "post : " + resultsPage.getTotalPages());
             refreshLayout.setRefreshing(false);
-            if (pagina == 1){
+            if (pagina == 1) {
                 setImageTop();
             }
             if (pagina <= resultsPage.getTotalPages()) {
@@ -216,7 +240,7 @@ public class ProdutoraActivity extends BaseActivity {
             progressBar.setVisibility(View.GONE);
             setHome();
             setHeadquarters();
-
+            getSupportActionBar().setTitle(company.getName().isEmpty() ? "" : company.getName());
             recyclerView.setAdapter(new ProdutoraAdapter(ProdutoraActivity.this, resultsPage.getResults()));
         }
     }

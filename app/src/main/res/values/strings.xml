@@ -137,5 +137,6 @@
     <string name="tvshow_add_favorite">Série adicionada aos Favoritos</string>
     <string name="filme_nao_lancado">Filme ainda não foi lançado.</string>
     <string name="tvshow_nao_lancado">Série ainda não lançada</string>
+    <string name="admob" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
 
 </resources>

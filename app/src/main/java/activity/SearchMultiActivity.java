@@ -19,6 +19,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -30,8 +34,6 @@ import info.movito.themoviedbapi.model.Multi;
 import provider.SuggestionRecentProvider;
 import utils.Constantes;
 import utils.UtilsFilme;
-
-import static android.R.attr.id;
 
 
 /**
@@ -69,9 +71,17 @@ public class SearchMultiActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
+
+        AdView adview = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+        adview.loadAd(adRequest);
+
         /**
          *
-         * Arrumar! Gambiara funcionando.
+         * Arrumar! Gambiara. Funcionando.
          *
          */
 
@@ -121,8 +131,8 @@ public class SearchMultiActivity extends BaseActivity {
                         String string = getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY);
                         final String id = string.substring(0, string.indexOf('/'));
                         Log.d("SearchMultiActivity", id);
-                        Log.d("SearchMultiActivity", string.substring(string.indexOf('/') +1, string.length()));
-                        intent = new Intent(this, PersonActivity.class );
+                        Log.d("SearchMultiActivity", string.substring(string.indexOf('/') + 1, string.length()));
+                        intent = new Intent(this, PersonActivity.class);
                         intent.putExtra(Constantes.PERSON_ID, Integer.valueOf(id));
                         intent.putExtra(Constantes.NOME_PERSON, string.substring(string.indexOf('/') + 1, string.length()));
                         intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
@@ -130,7 +140,7 @@ public class SearchMultiActivity extends BaseActivity {
                         finish();
                         return;
                     }
-//: "1892/Matt Damon"
+
                 }
             }
         }
@@ -144,6 +154,7 @@ public class SearchMultiActivity extends BaseActivity {
             progressBar.setVisibility(View.INVISIBLE);
             // snack();
         }
+
 
         swipeRefreshLayout.setOnRefreshListener(OnRefreshListener());
     }

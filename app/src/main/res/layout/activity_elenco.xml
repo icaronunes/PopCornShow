@@ -32,18 +32,30 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@android:color/transparent">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/elenco_recyckeview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp" />
 
             <include layout="@layout/include_progress" />
 
         </FrameLayout>
 
     </LinearLayout>
+
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="@string/admob"
+        android:layout_gravity="bottom" />
 
 </android.support.design.widget.CoordinatorLayout>

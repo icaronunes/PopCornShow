@@ -166,8 +166,8 @@ public class TvShowsFragment extends Fragment {
         @Override
         protected List<TvSeries> doInBackground(Void... voids) {
             Log.d("doInBackground", "doInBackground");
-            TmdbTV movies = FilmeService.getTmdbTvShow();
-            List<TvSeries> dbList = getListaTipo(movies);
+            TmdbTV tvShow = FilmeService.getTmdbTvShow();
+            List<TvSeries> dbList = getListaTipo(tvShow);
             return dbList;
         }
 

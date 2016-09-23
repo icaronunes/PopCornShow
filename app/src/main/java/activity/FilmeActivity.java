@@ -92,6 +92,7 @@ public class FilmeActivity extends BaseActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress);
         viewPager = (ViewPager) findViewById(R.id.top_img_viewpager);
         viewPager.setBackgroundColor(color_fundo);
+        viewPager.setOffscreenPageLimit(3);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -410,7 +411,7 @@ public class FilmeActivity extends BaseActivity {
     private void setFragmentInfo() {
         Log.d("FilmeActivity", Locale.getDefault().toLanguageTag());
         FilmeInfoFragment filmeFrag = new FilmeInfoFragment();
-        Bundle bundle = new Bundle(); //Tentar pegar nome que esta no bundle / Posso pasar o bundle direto?
+        Bundle bundle = new Bundle();
         bundle.putSerializable(Constantes.FILME, movieDb);
         bundle.putSerializable(Constantes.SIMILARES, similarMovies);
         filmeFrag.setArguments(bundle);

@@ -20,29 +20,23 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <!--<LinearLayout-->
-            <!--android:id="@+id/linear_search_layout"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:orientation="vertical"-->
-            <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:labelFor="@+id/coordinator_layout">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="50dp">
 
                 <android.support.v4.widget.SwipeRefreshLayout
                     android:id="@+id/swipeToRefresh"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                    <!--<ListView-->
-                    <!--android:id="@+id/listview_search"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="0dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycleView_search"
@@ -51,7 +45,6 @@
                         android:orientation="vertical" />
 
                 </android.support.v4.widget.SwipeRefreshLayout>
-
 
                 <TextView
                     android:id="@+id/text_search_empty"
@@ -65,7 +58,19 @@
 
                 <include layout="@layout/include_progress" />
             </FrameLayout>
-        <!--</LinearLayout>-->
+        </LinearLayout>
+
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            app:adSize="SMART_BANNER"
+            app:adUnitId="@string/admob"
+            android:layout_gravity="bottom" />
+
 
     </android.support.design.widget.CoordinatorLayout>
 

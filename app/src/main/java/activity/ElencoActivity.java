@@ -14,6 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import adapter.ElencoAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
@@ -50,7 +53,7 @@ public class ElencoActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         id = getIntent().getIntExtra(Constantes.ID, 0);
         mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
-        season = getIntent().getIntExtra(Constantes.TVSEASONS,-100);
+        season = getIntent().getIntExtra(Constantes.TVSEASONS, -100);
         Log.d("ElencoActivity", " " + id);
         Log.d("ElencoActivity", "oncreate " + season);
         Log.d("ElencoActivity", "" + mediaType.toString());
@@ -65,6 +68,13 @@ public class ElencoActivity extends BaseActivity {
         text_elenco_no_internet = (TextView) findViewById(R.id.text_elenco_no_internet);
         linear_search_layout = (LinearLayout) findViewById(R.id.linear_elenco_layout);
         progressBar = (ProgressBar) findViewById(R.id.progress);
+
+        AdView adview = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+        adview.loadAd(adRequest);
 
 
         if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
@@ -120,7 +130,7 @@ public class ElencoActivity extends BaseActivity {
                 creditsTvShow = FilmeService.getTmdbTvSeasons().getSeason(id, season, "en", TmdbTvSeasons.SeasonMethod.credits).getCredits();
             }
 
-            if (Multi.MediaType.TV_SERIES.equals(mediaType)) {
+            if (Multi.MediaType.TV_SERIES.equals(mediaType) && season == -100) {
                 creditsTvShow = FilmeService.getTmdbTvShow().getCredits(id, "en");
             }
 

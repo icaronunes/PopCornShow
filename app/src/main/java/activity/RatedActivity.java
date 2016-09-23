@@ -8,6 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import adapter.RatedAdapater;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
@@ -25,13 +28,21 @@ public class RatedActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_watch_list);
+        setContentView(R.layout.activity_usuario_list);
         setUpToolBar();
         getSupportActionBar().setTitle(R.string.avaliados);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        viewPager = (ViewPager) findViewById(R.id.viewpage_rated);
+        viewPager = (ViewPager) findViewById(R.id.viewpage_usuario);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         progressBar = (ProgressBar) findViewById(R.id.progress);
+
+        AdView adview = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+        adview.loadAd(adRequest);
+
         new WatchlistAsync().execute();
     }
 

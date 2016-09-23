@@ -3,6 +3,8 @@ package activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -35,6 +37,14 @@ public class TreilerActivity extends YouTubeBaseActivity implements YouTubePlaye
         youTubeView.initialize(Config.YOUTUBE_API_KEY, this);
         youtube_key = getIntent().getStringExtra(Constantes.YOU_TUBE_KEY);
         sinopse.setText(getIntent().getStringExtra(Constantes.SINOPSE));
+
+        AdView adview = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+        adview.loadAd(adRequest);
+
     }
 
     @Override

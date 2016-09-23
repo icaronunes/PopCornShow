@@ -21,6 +21,9 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -71,7 +74,6 @@ public class FilmesFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
         frameLayout = (FrameLayout) view.findViewById(R.id.frame_list_filme);
         process = (ProgressBar) view.findViewById(R.id.progress);
-
 
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());

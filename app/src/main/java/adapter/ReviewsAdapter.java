@@ -29,7 +29,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.FilmeVie
 
     @Override
     public ReviewsAdapter.FilmeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = (View) LayoutInflater.from(context).inflate(R.layout.reviews, parent, false);
+        View view =  LayoutInflater.from(context).inflate(R.layout.reviews, parent, false);
         context = view.getContext();
         return new ReviewsAdapter.FilmeViewHolder(view);
     }

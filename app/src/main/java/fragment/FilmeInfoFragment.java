@@ -33,6 +33,7 @@ import com.google.firebase.crash.FirebaseCrash;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -92,7 +93,6 @@ public class FilmeInfoFragment extends Fragment {
     MovieResultsPage similarMovies;
     private int color_top;
     Bundle bundle;
-    FirebaseAnalytics firebaseAnalytics;
 
     //************* Alguns metodos senco chamados 2 vezes
 
@@ -174,7 +174,9 @@ public class FilmeInfoFragment extends Fragment {
                     Intent intent = new Intent(getContext(), ReviewsActivity.class);
                     intent.putExtra(Constantes.FILME_ID, movieDb.getId());
                     intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
+
                     startActivity(intent);
+
                     bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_reviews" );
                     bundle.putString(FirebaseAnalytics.Param.DESTINATION, ReviewsActivity.class.getName());
@@ -521,9 +523,9 @@ public class FilmeInfoFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), ProdutoraActivity.class);
-                    intent.putExtra(Constantes.PRODUTORA, finalPrimeiraProdutora);
+                    intent.putExtra(Constantes.PRODUTORA, finalPrimeiraProdutora);// não usado
                     intent.putExtra(Constantes.PRODUTORA_ID, movieDb.getProductionCompanies().get(0).getId());
-                    intent.putExtra(Constantes.MEDIATYPE, Multi.MediaType.MOVIE);
+                    intent.putExtra(Constantes.MEDIATYPE, Multi.MediaType.MOVIE);// Não usado
                     startActivity(intent);
 
                     bundle = new Bundle();

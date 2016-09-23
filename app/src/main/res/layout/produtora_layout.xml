@@ -11,23 +11,30 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeToRefresh_produtora"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginBottom="50dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/produtora_filmes_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:cacheColorHint="@android:color/transparent"
-            android:clipToPadding="true"
-            android:divider="@null"
-            android:dividerHeight="0dp"
             android:listSelector="@android:color/transparent"
             android:scrollbarStyle="outsideOverlay"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            android:clipToPadding="true" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="@string/admob"
+        android:layout_gravity="bottom" />
 
     <include layout="@layout/include_progress" />
 
@@ -40,7 +47,7 @@
         android:fitsSystemWindows="false"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:elevation="0dp"
-        app:theme="@style/AppTheme.NoActionBar.NoTitle">
+        >
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
