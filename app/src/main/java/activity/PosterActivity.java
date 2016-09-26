@@ -9,12 +9,15 @@ import android.util.Log;
 import android.view.Window;
 
 import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.LinePageIndicator;
+import com.viewpagerindicator.UnderlinePageIndicator;
 
 import java.util.List;
 
 import br.com.icaro.filme.R;
 import fragment.PosterScrollFragment;
 import info.movito.themoviedbapi.model.Artwork;
+import me.relex.circleindicator.CircleIndicator;
 import utils.Constantes;
 
 import static br.com.icaro.filme.R.id.pager;
@@ -28,7 +31,7 @@ public class PosterActivity extends BaseActivity {
 
     ViewPager viewPager;
     List<Artwork> artworks;
-    CirclePageIndicator titlePageIndicator;
+    LinePageIndicator titlePageIndicator;
     String nome;
 
     @Override
@@ -40,11 +43,11 @@ public class PosterActivity extends BaseActivity {
         artworks = (List<Artwork>) getIntent().getBundleExtra(Constantes.BUNDLE).getSerializable(Constantes.ARTWORKS);
         nome = getIntent().getStringExtra(Constantes.NOME);
         viewPager = (ViewPager) findViewById(pager);
-        titlePageIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
-
+        titlePageIndicator = (LinePageIndicator) findViewById(R.id.indicator);
         viewPager.setAdapter(new PosterFragment(getSupportFragmentManager()));
         titlePageIndicator.setViewPager(viewPager);
         titlePageIndicator.setCurrentItem(getIntent().getExtras().getInt(Constantes.POSICAO));
+
 
     }
 

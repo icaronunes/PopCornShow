@@ -5,34 +5,29 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
-import info.movito.themoviedbapi.TmdbMovies;
-import info.movito.themoviedbapi.TvResultsPage;
-import info.movito.themoviedbapi.model.core.MovieResultsPage;
+import java.util.List;
+
+import domian.TopMain;
 
 public class ViewPageMainTopFragment extends FragmentPagerAdapter {
 
-    Object tmdbMovies;
+    List<TopMain> multis;
 
-    public ViewPageMainTopFragment(FragmentManager supportFragmentManager, Object tmdbMovies) {
+    public ViewPageMainTopFragment(FragmentManager supportFragmentManager, List<TopMain> objects) {
         super(supportFragmentManager);
-        this.tmdbMovies = tmdbMovies;
-        Log.d("ViewPageMainTopFragment", "Movie");
+        this.multis = objects;
     }
 
 
     @Override
     public Fragment getItem(int position) {
-        if (tmdbMovies.getClass().equals(MovieResultsPage.class)) {
-            Log.d("ViewPageMainTopFragment", tmdbMovies.toString());
-            return new ImagemTopScrollFragment().newInstance(((MovieResultsPage) tmdbMovies).getResults().get(position).getBackdropPath());
-        } else {
-            return new ImagemTopScrollFragment().newInstance(((TvResultsPage) tmdbMovies).getResults().get(position).getBackdropPath());
-        }
 
+        Log.d("ViewPageMainTopFragment", multis.get(position).toString());
+        return new ImagemTopScrollFragment().newInstance(multis.get(position));
     }
 
     @Override
     public int getCount() {
-        return 20;
+        return multis.size();
     }
 }

@@ -43,5 +43,6 @@ public class Constantes {
     public static final String MEDIATYPE = "mediatype";
     public static final String ID = "id";
 
+    public static final String MAIN = "main";
 }
 

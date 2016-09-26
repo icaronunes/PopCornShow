@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_scroll_image_top"
+    android:layout_width="match_parent"
+    android:layout_height="202dp">
+
+    <ImageView
+        android:id="@+id/img_top_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/foto_principal"
+        android:elevation="0dp"
+        android:scaleType="centerCrop"
+        app:layout_collapseMode="parallax"
+        app:layout_collapseParallaxMultiplier="1.0" />
+
+    <!--<ImageView-->
+        <!--android:id="@+id/img_top_tvshow"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="bottom|center_horizontal"-->
+        <!--android:adjustViewBounds="false"-->
+        <!--android:background="@color/transparent"-->
+        <!--android:contentDescription="@string/foto_principal"-->
+        <!--android:elevation="0dp"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--app:layout_collapseMode="parallax"-->
+        <!--app:layout_collapseParallaxMultiplier="1.0" />-->
+
+</FrameLayout>

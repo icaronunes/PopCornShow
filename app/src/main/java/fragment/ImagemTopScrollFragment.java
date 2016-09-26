@@ -2,6 +2,7 @@ package fragment;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,10 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import activity.FilmeActivity;
+import activity.TvShowActivity;
 import br.com.icaro.filme.R;
+import domian.TopMain;
+import info.movito.themoviedbapi.model.Multi;
 import utils.Constantes;
 import utils.UtilsFilme;
 
@@ -22,14 +28,13 @@ import utils.UtilsFilme;
  */
 public class ImagemTopScrollFragment extends Fragment {
 
-    String endereco;
+    TopMain topMains;
 
-    public static Fragment newInstance(String artwork) {
+    public static Fragment newInstance(TopMain topMainList) {
         ImagemTopScrollFragment topScrollFragment = new ImagemTopScrollFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(Constantes.ENDERECO, artwork);
+        bundle.putSerializable(Constantes.MAIN, topMainList);
         topScrollFragment.setArguments(bundle);
-      //  Log.d("PosterScrollFragment", "newInstance: -> " + artwork);
         return topScrollFragment;
     }
 
@@ -37,25 +42,55 @@ public class ImagemTopScrollFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        endereco = getArguments().getString(Constantes.ENDERECO);
-        //Log.d("PosterScrollFragment", "onCreate: -> " + endereco);
+        topMains = (TopMain) getArguments().getSerializable(Constantes.MAIN);
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.page_scroll_image_top, container, false);
-        ImageView imageView = (ImageView) view.findViewById(R.id.img_top_scroll);
-        Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(5) + endereco)
-                .error(R.drawable.top_empty)
-                .into(imageView);
+        final ImageView imageView = (ImageView) view.findViewById(R.id.img_top_scroll);
+        TextView title = (TextView) view.findViewById(R.id.title);
+
+        if (topMains.getMediaType().equalsIgnoreCase(Multi.MediaType.MOVIE.name())) {
+            Log.d("ImagemTopScrollFragment", "Movie " + topMains.getNome());
+            Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(4) + topMains.getImagem())
+                    .error(R.drawable.top_empty)
+                    .into(imageView);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), FilmeActivity.class);
+                    intent.putExtra(Constantes.NOME_FILME, topMains.getNome());
+                    intent.putExtra(Constantes.FILME_ID, topMains.getId());
+                    intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(imageView));
+                    startActivity(intent);
+                }
+            });
+            title.setText(topMains.getNome());
+        } else {
+            Log.d("ImagemTopScrollFragment", "TVshow " + topMains.getNome());
+            Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(4) + topMains.getImagem())
+                    .error(R.drawable.top_empty)
+                    .into(imageView);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), TvShowActivity.class);
+                    intent.putExtra(Constantes.NOME_TVSHOW, topMains.getNome());
+                    intent.putExtra(Constantes.TVSHOW_ID, topMains.getId());
+                    intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(imageView));
+                    startActivity(intent);
+                }
+            });
+            title.setText(topMains.getNome());
+        }
 
         AnimatorSet animatorSet = new AnimatorSet();
         ObjectAnimator alphaStar = ObjectAnimator.ofFloat(imageView, "y", -100, 0)
                 .setDuration(1000);
         animatorSet.playTogether(alphaStar);
-       // animatorSet.start();
-       // Log.d("PosterScrollFragment", "onCreateView: -> " + UtilsFilme.getBaseUrlImagem(4) + endereco);
+
         return view;
     }
 

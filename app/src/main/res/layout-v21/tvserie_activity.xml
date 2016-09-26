@@ -18,8 +18,8 @@
             android:id="@+id/viewPager_tvshow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/transparent"
             android:layout_gravity="top|start"
+            android:background="@color/transparent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <!-- Layout da app bar -->
@@ -35,10 +35,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom"
-                app:title=" "
+                android:fitsSystemWindows="false"
                 app:contentScrim="@android:drawable/screen_background_light_transparent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                android:fitsSystemWindows="false">
+                app:title=" ">
 
 
                 <ImageView
@@ -49,10 +49,10 @@
                     android:adjustViewBounds="false"
                     android:background="@color/transparent"
                     android:contentDescription="@string/foto_principal"
+                    android:elevation="0dp"
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax"
-                    app:layout_collapseParallaxMultiplier="1.0"
-                    android:elevation="0dp" />
+                    app:layout_collapseParallaxMultiplier="1.0" />
 
 
                 <android.support.v7.widget.Toolbar

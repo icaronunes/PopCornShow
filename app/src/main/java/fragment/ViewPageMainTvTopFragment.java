@@ -23,7 +23,7 @@ public class ViewPageMainTvTopFragment extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        return new ImagemTopScrollFragment().newInstance(tmdbtvshow.getResults().get(position).getBackdropPath());
+        return new ImagemTopFilmeScrollFragment().newInstance(tmdbtvshow.getResults().get(position).getBackdropPath());
 
     }
 

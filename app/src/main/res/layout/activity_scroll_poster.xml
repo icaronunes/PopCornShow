@@ -4,11 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.viewpagerindicator.CirclePageIndicator
-        android:id="@+id/indicator"
+    <com.viewpagerindicator.LinePageIndicator
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:id="@+id/indicator"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

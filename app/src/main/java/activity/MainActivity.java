@@ -12,18 +12,20 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.viewpagerindicator.CirclePageIndicator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import adapter.MainAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
+import domian.TopMain;
 import fragment.ViewPageMainTopFragment;
-import fragment.ViewPageMainTvTopFragment;
 import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.Constantes;
@@ -38,7 +40,8 @@ public class MainActivity extends BaseActivity {
     MovieResultsPage tmdbMovies;
     boolean idioma_padrao;
     TabLayout tabLayout;
-    TextView internet;
+    List<TopMain> multi = new ArrayList<>();
+    CirclePageIndicator circlePageIndicator;
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -59,6 +62,7 @@ public class MainActivity extends BaseActivity {
 
         viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);
         viewpage_top_main = (ViewPager) findViewById(R.id.viewpage_top_main);
+        viewpage_top_main.setOffscreenPageLimit(3);
 
 
         if (UtilsFilme.isNetWorkAvailable(this)) {
@@ -90,43 +94,45 @@ public class MainActivity extends BaseActivity {
         viewPager_main.setCurrentItem(0);
         viewPager_main.setAdapter(new MainAdapter(this, getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager_main);
-        viewpage_top_main.setAdapter(new ViewPageMainTopFragment(getSupportFragmentManager(), tmdbMovies));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                Bundle bundle;
-                if (tab.getPosition() == 0) {
-                    Log.d("MainActivity", "0");
-                    tabLayout.setBackgroundColor(getResources().getColor(R.color.accent2));
-                    viewpage_top_main.setBackgroundColor(getResources().getColor(R.color.accent2));
-                    tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.accent));
-                    bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "tab_main");
-                    bundle.putInt(FirebaseAnalytics.Param.ITEM_NAME, tab.getPosition());
-                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                }
-                if (tab.getPosition() == 1) {
-                    Log.d("MainActivity", "1");
-                    tabLayout.setBackgroundColor(getResources().getColor(R.color.accent));
-                    viewpage_top_main.setBackgroundColor(getResources().getColor(R.color.accent));
-                    tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.accent2));
-                    viewpage_top_main.setAdapter(new ViewPageMainTvTopFragment(getSupportFragmentManager(), tmdbTv));
-                    bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "tab_main");
-                    bundle.putInt(FirebaseAnalytics.Param.ITEM_NAME, tab.getPosition());
-                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
+        circlePageIndicator = (CirclePageIndicator) findViewById(R.id.indication_main);
+        viewpage_top_main.setAdapter(new ViewPageMainTopFragment(getSupportFragmentManager(), multi));
+        circlePageIndicator.setViewPager(viewpage_top_main);
+//        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                Bundle bundle;
+//                if (tab.getPosition() == 0) {
+//                    Log.d("MainActivity", "0");
+//                    tabLayout.setBackgroundColor(getResources().getColor(R.color.accent2));
+//                    viewpage_top_main.setBackgroundColor(getResources().getColor(R.color.accent2));
+//                    tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.accent));
+//                    bundle = new Bundle();
+//                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "tab_main");
+//                    bundle.putInt(FirebaseAnalytics.Param.ITEM_NAME, tab.getPosition());
+//                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+//                }
+//                if (tab.getPosition() == 1) {
+//                    Log.d("MainActivity", "1");
+//                    tabLayout.setBackgroundColor(getResources().getColor(R.color.accent));
+//                    viewpage_top_main.setBackgroundColor(getResources().getColor(R.color.accent));
+//                    tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.accent2));
+//                    viewpage_top_main.setAdapter(new ViewPageMainTvTopFragment(getSupportFragmentManager(), tmdbTv));
+//                    bundle = new Bundle();
+//                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "tab_main");
+//                    bundle.putInt(FirebaseAnalytics.Param.ITEM_NAME, tab.getPosition());
+//                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+//                }
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//            }
+//        });
 
     }
 
@@ -167,6 +173,31 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void mescla() {
+        int tamanho = 0;
+        for (int i = 0; i <= 20 && multi.size() < 14; i++) {
+            if (i % 2 == 0) {
+                TopMain topMain = new TopMain();
+                topMain.setId(tmdbMovies.getResults().get(i).getId());
+                topMain.setNome(tmdbMovies.getResults().get(i).getTitle());
+                topMain.setMediaType(tmdbMovies.getResults().get(i).getMediaType().name());
+                topMain.setImagem(tmdbMovies.getResults().get(i).getBackdropPath());
+                if (tmdbMovies.getResults().get(i).getBackdropPath() != null) {
+                    multi.add(topMain);
+                }
+            } else {
+                TopMain topMain = new TopMain();
+                topMain.setId(tmdbTv.getResults().get(i).getId());
+                topMain.setNome(tmdbTv.getResults().get(i).getName());
+                topMain.setMediaType(tmdbTv.getResults().get(i).getMediaType().name());
+                topMain.setImagem(tmdbTv.getResults().get(i).getBackdropPath());
+                if (tmdbTv.getResults().get(i).getBackdropPath() != null) {
+                    multi.add(topMain);
+                }
+            }
+        }
+        setupViewPagerTabs();
+    }
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
@@ -191,8 +222,7 @@ public class MainActivity extends BaseActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            setupViewPagerTabs();
-
+            mescla();
         }
     }
 

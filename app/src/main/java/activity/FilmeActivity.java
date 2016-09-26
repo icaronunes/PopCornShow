@@ -42,6 +42,7 @@ import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import fragment.FilmeInfoFragment;
+import fragment.ImagemTopFilmeScrollFragment;
 import fragment.ImagemTopScrollFragment;
 import info.movito.themoviedbapi.TmdbAccount;
 import info.movito.themoviedbapi.TmdbMovies;
@@ -455,10 +456,10 @@ public class FilmeActivity extends BaseActivity {
         public Fragment getItem(int position) {
             if (movieDb.getImages(ArtworkType.BACKDROP) != null) {
                 if (position == 0) {
-                    return new ImagemTopScrollFragment().newInstance(movieDb.getBackdropPath());
+                    return new ImagemTopFilmeScrollFragment().newInstance(movieDb.getBackdropPath());
                 }
                 Log.d("FilmeActivity", "getItem: ->  " + movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
-                return new ImagemTopScrollFragment().newInstance(movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
+                return new ImagemTopFilmeScrollFragment().newInstance(movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
             }
             return null;
         }
