@@ -55,7 +55,7 @@ public class SimilaresAdapter extends RecyclerView.Adapter<SimilaresAdapter.Simi
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + similares.get(position)
                 .getPosterPath()).into(holder.imageView);
 
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, FilmeActivity.class);

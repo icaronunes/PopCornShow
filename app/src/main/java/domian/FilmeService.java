@@ -121,7 +121,6 @@ public class FilmeService {
             if (account != null) {
                 return account;
             }
-
         } catch (Exception e) {
             Log.e("getAccount", e.getMessage());
             if (FirebaseCrash.isSingletonInitialized()) {
@@ -306,8 +305,9 @@ public class FilmeService {
     }
 
     //Copiado da FrameWork - La não ha este metodo de combinar "trabalhos" de filme e Serie
+
     public static PersonCredits getPersonCreditsCombinado(int personId) {
-        ApiUrl apiUrl = new ApiUrl(TMDB_METHOD_PERSON, personId, "combined_credits");
+        ApiUrl apiUrl = new ApiUrl(TMDB_METHOD_PERSON, personId, "tv_credits");
 
         return mapJsonResult(apiUrl, PersonCredits.class);
     }
@@ -363,6 +363,7 @@ public class FilmeService {
             TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
             TmdbAccount account = tmdbApi.getAccount();
             AccountID accountID = new AccountID(getAccount(user, password).getId());
+
             return account.getRatedMovies(token, accountID, pagina);
         }
         return null;

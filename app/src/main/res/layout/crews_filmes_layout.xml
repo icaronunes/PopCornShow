@@ -19,7 +19,7 @@
             android:id="@+id/img_poster_grid"
             android:layout_width="165dp"
             android:layout_height="254dp"
-            android:layout_margin="6dp"
+            android:layout_margin="2dp"
             android:background="@color/white"
             android:elevation="0dp"
             android:scaleType="centerCrop"

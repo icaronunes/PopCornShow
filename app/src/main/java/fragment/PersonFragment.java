@@ -13,20 +13,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.List;
 
-import activity.FilmeActivity;
 import activity.Site;
 import adapter.PersonCrewsAdapter;
 import adapter.PersonImagemAdapter;
 import adapter.PersonMovieAdapter;
+import adapter.PersontvAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.model.Artwork;
@@ -35,7 +37,6 @@ import info.movito.themoviedbapi.model.people.PersonPeople;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static br.com.icaro.filme.R.id.container;
 import static domian.FilmeService.getTmdbPerson;
 
 /**
@@ -44,15 +45,14 @@ import static domian.FilmeService.getTmdbPerson;
 public class PersonFragment extends Fragment {
 
 
-
     TextView nome_person, birthday, dead, homepage, biografia, aka, conhecido, place_of_birth, sem_filmes, sem_fotos, sem_crews;
     ImageView imageView, imageButtonWiki;
     RecyclerView recyclerViewMovie, recyclerViewImagem, RecyclerViewCrews, recyclerViewTvshow;
-
+    LinearLayout linear_person;
     int tipo, id_person;
     ProgressBar progressBar;
     PersonPeople personPeople;
-    PersonCredits personCredits;
+    PersonCredits personCredits, personCreditsTvshow;
     List<Artwork> artworks;
     String TAG = "PersonFragment";
     FirebaseAnalytics firebaseAnalytics;
@@ -82,9 +82,9 @@ public class PersonFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-            new PersonAsync().execute();
-
+        new PersonAsync().execute();
     }
+
 
     @Nullable
     @Override
@@ -92,7 +92,7 @@ public class PersonFragment extends Fragment {
         Log.d(TAG, "onCreateView");
         switch (tipo) {
 
-            case R.string.movie: {
+            case R.string.filme: {
                 return getViewPersonMovie(inflater, container);
             }
             case R.string.crews: {
@@ -104,9 +104,9 @@ public class PersonFragment extends Fragment {
             case R.string.imagem_person: {
                 return getViewPersonImage(inflater, container);
             }
-//            case R.string.tvshow: {
-//                return getViewPersonTvShow(inflater, container);
-//            }
+            case R.string.tvshow: {
+                return getViewPersonTvShow(inflater, container);
+            }
         }
         return null;
     }
@@ -114,13 +114,19 @@ public class PersonFragment extends Fragment {
     private View getViewPersonTvShow(LayoutInflater inflater, ViewGroup container) {
 
         View view = inflater.inflate(R.layout.activity_person_tvshow, container, false);
-        recyclerViewTvshow = (RecyclerView) view.findViewById(R.id.recycleView_person_imagem);
-        sem_fotos = (TextView) view.findViewById(R.id.sem_fotos);
+        recyclerViewTvshow = (RecyclerView) view.findViewById(R.id.recycleView_person_crews);
+        sem_fotos = (TextView) view.findViewById(R.id.sem_tvshow);
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
         recyclerViewTvshow.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerViewTvshow.setHasFixedSize(true);
         recyclerViewTvshow.setItemAnimator(new DefaultItemAnimator());
 
+        AdView adview = (AdView) view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+        adview.loadAd(adRequest);
 
         return view;
     }
@@ -148,6 +154,13 @@ public class PersonFragment extends Fragment {
         RecyclerViewCrews.setLayoutManager(new GridLayoutManager(getContext(), 2));
         RecyclerViewCrews.setHasFixedSize(true);
 
+        AdView adview = (AdView) view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+        adview.loadAd(adRequest);
+
         return view;
     }
 
@@ -155,6 +168,7 @@ public class PersonFragment extends Fragment {
         Log.d(TAG, "getViewPerson");
         View view = inflater.inflate(R.layout.activity_person_perfil, container, false);
         nome_person = (TextView) view.findViewById(R.id.nome_person);
+        linear_person = (LinearLayout) view.findViewById(R.id.linear_person);
         birthday = (TextView) view.findViewById(R.id.birthday);
         dead = (TextView) view.findViewById(R.id.dead);
         homepage = (TextView) view.findViewById(R.id.person_homepage);
@@ -178,10 +192,18 @@ public class PersonFragment extends Fragment {
         recyclerViewMovie.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerViewMovie.setHasFixedSize(true);
 
+        AdView adview = (AdView) view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+        adview.loadAd(adRequest);
+
         return view;
     }
 
     private void setPersonInformation(final PersonPeople information) {
+        Log.d(TAG, "setPersonInformation");
         if (!information.getName().isEmpty() && information.getName().length() > 1) {
             nome_person.setText(information.getName());
             nome_person.setVisibility(View.VISIBLE);
@@ -273,23 +295,29 @@ public class PersonFragment extends Fragment {
     }
 
     private void setPersonMovies(PersonCredits personCredits) {
+
         if (personCredits.getCast() == null || personCredits.getCast().isEmpty()) {
             sem_filmes.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
+
         } else {
             recyclerViewMovie.setAdapter(new PersonMovieAdapter(getContext(), personCredits));
             progressBar.setVisibility(View.GONE);
+
         }
     }
 
     private void setPersonCrews(PersonCredits personCredits) {
         personCredits = removerDuplicados(personCredits);
+
         if (personCredits.getCrew() == null || personCredits.getCrew().isEmpty()) {
             sem_crews.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
+
         } else {
             RecyclerViewCrews.setAdapter(new PersonCrewsAdapter(getContext(), removerDuplicados(personCredits)));
             progressBar.setVisibility(View.GONE);
+
         }
     }
 
@@ -299,6 +327,16 @@ public class PersonFragment extends Fragment {
             progressBar.setVisibility(View.GONE);
         } else {
             recyclerViewImagem.setAdapter(new PersonImagemAdapter(getContext(), artworks, id_person, personPeople.getName()));
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    private void setPersonCreditsTvshow(PersonCredits personCredits) {
+        if (artworks.isEmpty() || artworks == null) {
+            sem_fotos.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
+        } else {
+            recyclerViewTvshow.setAdapter(new PersontvAdapter(getContext(), personCredits));
             progressBar.setVisibility(View.GONE);
         }
     }
@@ -318,46 +356,40 @@ public class PersonFragment extends Fragment {
     }
 
     private class PersonAsync extends AsyncTask<Void, Void, Void> {
-        boolean status = false;
-
-        @Override
-        protected void onPreExecute() {
-            if (UtilsFilme.isNetWorkAvailable(getContext())) {
-                status = true;
-            }
-            super.onPreExecute();
-        }
 
         @Override
         protected Void doInBackground(Void... voids) {
             Log.d("PersonFragment", "doInBackground");
-            if (status) {
-                personPeople = getTmdbPerson()
-                        .getPersonInfo(id_person, "&language=pt");
-                artworks = FilmeService.getTmdbPerson().getPersonImages(id_person);
-                personCredits = FilmeService.getTmdbPerson().getPersonCredits(id_person);
-                //.getPersonCredits(id_person); Pega TVseries do Ator. Mas não da pra diferenciar dos filmes_main
-            }
+
+            personPeople = getTmdbPerson()
+                    .getPersonInfo(id_person, "&language=pt");
+            Log.d("PersonFragment", "doInBackground entrou");
+            artworks = FilmeService.getTmdbPerson().getPersonImages(id_person);
+            personCredits = FilmeService.getTmdbPerson().getPersonCredits(id_person);
+            personCreditsTvshow = FilmeService.getPersonCreditsCombinado(id_person);
+            //FilmeService.getPersonCredits(id_person); Pega TVseries do Ator. Mas não da pra diferenciar dos filmes_main
+
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            if (status) {
-
-                if (tipo == R.string.person) {
-                    setPersonInformation(personPeople);
-                }
-                if (tipo == R.string.movie) {
-                    setPersonMovies(personCredits);
-                }
-                if (tipo == R.string.crews) {
-                    setPersonCrews(personCredits);
-                }
-                if (tipo == R.string.imagem_person) {
-                    setPersonImagem(artworks);
-                }
+            Log.d("PersonFragment", "onPostExecute");
+            if (tipo == R.string.person) {
+                setPersonInformation(personPeople);
+            }
+            if (tipo == R.string.filme) {
+                setPersonMovies(personCredits);
+            }
+            if (tipo == R.string.crews) {
+                setPersonCrews(personCredits);
+            }
+            if (tipo == R.string.imagem_person) {
+                setPersonImagem(artworks);
+            }
+            if (tipo == R.string.tvshow) {
+                setPersonCreditsTvshow(personCreditsTvshow);
             }
         }
     }

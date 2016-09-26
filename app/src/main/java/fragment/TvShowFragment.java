@@ -71,7 +71,7 @@ public class TvShowFragment extends Fragment {
 
     TextView titulo, categoria, descricao, voto_media, voto_quantidade, produtora,
             original_title, spoken_languages, production_countries, end, status, temporada,
-            imdb, tmdb, popularity, lancamento, textview_crews, textview_elenco, textview_similares;
+            imdb, tmdb, popularity, lancamento, textview_crews, textview_elenco;
     ImageView icon_reviews, img_budget, icon_site, icon_collection, img_poster, img_star;
     LinearLayout linear_container;
 
@@ -247,22 +247,6 @@ public class TvShowFragment extends Fragment {
                 }
             });
 
-            textview_similares.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getContext(), SimilaresActivity.class);
-                    intent.putExtra(Constantes.TVSHOW_ID, series.getId());
-                    intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
-                    startActivity(intent);
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, SimilaresActivity.class.getName() );
-                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
-                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
-                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                }
-            });
 
         }
 
@@ -374,7 +358,6 @@ public class TvShowFragment extends Fragment {
         voto_media = (TextView) view.findViewById(R.id.voto_media);
         voto_quantidade = (TextView) view.findViewById(R.id.voto_quantidade);
         produtora = (TextView) view.findViewById(R.id.produtora);
-        textview_similares = (TextView) view.findViewById(R.id.textview_similares);
         original_title = (TextView) view.findViewById(R.id.original_title);
         spoken_languages = (TextView) view.findViewById(R.id.spoken_languages);
         production_countries = (TextView) view.findViewById(R.id.production_countries);

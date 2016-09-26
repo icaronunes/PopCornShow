@@ -6,7 +6,6 @@
     <string name="avaliados">Avaliados</string>
     <string name="about">Sobre</string>
     <string name="empty" />
-
     <string name="retry">Repetir</string>
     <string name="no_internet">Sem Internet</string>
     <string name="lastest">Ultimos</string>
@@ -63,7 +62,7 @@
     <string name="compartilhar_filme">Compartilhar Filme</string>
     <string name="erro_na_gravacao_imagem">Erro na gravação da imagem na memoria. Tente novamente.</string>
     <string name="login">Login:</string>
-    <string name="fazer_login">Fazer Login</string>
+    <string name="fazer_login">Faça Login</string>
     <string name="usuario">Usuario do TMDB</string>
     <string name="password">Senha</string>
     <string name="favorite">Favoritos</string>
@@ -138,5 +137,7 @@
     <string name="filme_nao_lancado">Filme ainda não foi lançado.</string>
     <string name="tvshow_nao_lancado">Série ainda não lançada</string>
     <string name="admob" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="sem_tvshow">Sem Séries</string>
+    <!--ca-app-pub-7639270198633263/7125334030-->
 
 </resources>

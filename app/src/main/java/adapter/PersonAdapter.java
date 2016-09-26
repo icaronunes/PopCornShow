@@ -25,33 +25,41 @@ public class PersonAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+
         if (position == 0) {
-            return PersonFragment.newInstance(R.string.movie, id_person);
+            return PersonFragment.newInstance(R.string.tvshow, id_person);
         }
         if (position == 1) {
+            return PersonFragment.newInstance(R.string.filme, id_person);
+        }
+        if (position == 2) {
             return PersonFragment.newInstance(R.string.person, id_person);
         }
-        if (position == 2){
+        if (position == 3){
             return PersonFragment.newInstance(R.string.imagem_person, id_person);
         }
-        if (position == 3) {
+        if (position == 4) {
             return PersonFragment.newInstance(R.string.crews, id_person);
         }
+
         return null;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
-            return context.getString(R.string.movie);
+            return context.getString(R.string.tvshow);
         }
         if (position == 1) {
-            return context.getString(R.string.person);
+            return context.getString(R.string.filme);
         }
         if (position == 2) {
-            return context.getString(R.string.imagem_person);
+            return context.getString(R.string.person);
         }
         if (position == 3) {
+            return context.getString(R.string.imagem_person);
+        }
+        if (position == 4) {
             return context.getString(R.string.crews);
         }
 
@@ -60,6 +68,6 @@ public class PersonAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 5;
     }
 }

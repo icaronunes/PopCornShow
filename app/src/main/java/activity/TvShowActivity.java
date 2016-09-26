@@ -13,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
@@ -90,8 +91,26 @@ public class TvShowActivity extends BaseActivity {
         imageView = (ImageView) findViewById(R.id.img_top_tvshow);
         setColorFab(color_top);
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        new TMDVAsync().execute();
 
+        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+            new TMDVAsync().execute();
+        } else {
+            snack();
+        }
+    }
+
+    protected void snack() {
+        Snackbar.make(viewPager, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                            new TMDVAsync().execute();
+                        } else {
+                            snack();
+                        }
+                    }
+                }).show();
     }
 
     @Override

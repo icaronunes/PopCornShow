@@ -279,6 +279,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
+            android:scrollbars="none"
             android:fillViewport="false"
             android:scrollbarAlwaysDrawHorizontalTrack="false"
             android:scrollbarAlwaysDrawVerticalTrack="false">
@@ -297,7 +298,6 @@
             android:layout_height="wrap_content"
             android:background="@color/black_transparente"
             android:gravity="center_horizontal"
-            android:hint="@string/elenco"
             android:text="@string/elenco"
             android:textColor="@color/primary_dark"
             android:textSize="18sp"
@@ -309,6 +309,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
+            android:scrollbars="none"
             android:scrollbarAlwaysDrawHorizontalTrack="false"
             android:scrollbarAlwaysDrawVerticalTrack="false">
 
@@ -339,41 +340,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:elevation="0dp"
+            android:scrollbars="none"
             android:fillViewport="false"
             android:scrollbarAlwaysDrawHorizontalTrack="false"
             android:scrollbarAlwaysDrawVerticalTrack="false">
 
             <LinearLayout
                 android:id="@+id/scroll_crew_liner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
-
-        </HorizontalScrollView>
-
-        <TextView
-            android:id="@+id/textview_similares"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/black_transparente"
-            android:gravity="center_horizontal"
-            android:text="@string/similares"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/abc_text_size_medium_material"
-            android:textStyle="normal|bold"
-            android:visibility="invisible" />
-
-        <HorizontalScrollView
-            android:id="@+id/horizontal_similares"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:fillViewport="false"
-            android:scrollbarAlwaysDrawHorizontalTrack="false"
-            android:scrollbarAlwaysDrawVerticalTrack="false">
-
-            <LinearLayout
-                android:id="@+id/scroll_similares_linerlayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal" />

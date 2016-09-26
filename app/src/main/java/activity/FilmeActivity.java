@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -76,7 +77,7 @@ public class FilmeActivity extends BaseActivity {
     private Bundle bundle;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filme);
         setUpToolBar();
@@ -115,8 +116,26 @@ public class FilmeActivity extends BaseActivity {
         });
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        new TMDVAsync().execute();
 
+        if (UtilsFilme.isNetWorkAvailable(this)) {
+            new TMDVAsync().execute();
+        } else {
+            snack();
+        }
+    }
+
+    protected void snack() {
+        Snackbar.make(viewPager, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                            new TMDVAsync().execute();
+                        } else {
+                            snack();
+                        }
+                    }
+                }).show();
     }
 
     @Override

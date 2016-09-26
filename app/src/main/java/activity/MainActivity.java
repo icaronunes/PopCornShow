@@ -6,10 +6,13 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -35,6 +38,7 @@ public class MainActivity extends BaseActivity {
     MovieResultsPage tmdbMovies;
     boolean idioma_padrao;
     TabLayout tabLayout;
+    TextView internet;
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -56,8 +60,27 @@ public class MainActivity extends BaseActivity {
         viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);
         viewpage_top_main = (ViewPager) findViewById(R.id.viewpage_top_main);
 
-        new TMDVAsync().execute();
 
+        if (UtilsFilme.isNetWorkAvailable(this)) {
+            new TMDVAsync().execute();
+        } else {
+            snack();
+        }
+
+    }
+
+    protected void snack() {
+        Snackbar.make(viewpage_top_main, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                            new TMDVAsync().execute();
+                        } else {
+                            snack();
+                        }
+                    }
+                }).show();
     }
 
     private void setupViewPagerTabs() {

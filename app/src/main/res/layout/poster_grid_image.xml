@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="165dp"
+    android:layout_width="176dp"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_margin="1dp">
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -13,21 +14,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:elevation="7dp" />
+            android:elevation="2dp" />
 
         <ImageButton
             android:id="@+id/img_poster_grid"
-            android:layout_width="165dp"
-            android:layout_height="254dp"
-            android:layout_margin="6dp"
             android:background="@color/white"
             android:elevation="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/filme342" />
+            android:src="@drawable/filme342"
+            android:layout_width="176dp"
+            android:layout_height="271dp"
+            android:cropToPadding="false"
+            android:layout_gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/text_title_crew"
-            android:layout_width="166dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="2dp"

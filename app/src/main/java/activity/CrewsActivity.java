@@ -29,10 +29,11 @@ import info.movito.themoviedbapi.model.Multi;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+
+
 public class CrewsActivity extends BaseActivity {
 
     RecyclerView recyclerView;
-    TextView text_crews_no_internet;
     LinearLayout linear_crews_layout;
     int id;
     Multi.MediaType mediaType;
@@ -59,7 +60,6 @@ public class CrewsActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        text_crews_no_internet = (TextView) findViewById(R.id.text_crews_no_internet);
         linear_crews_layout = (LinearLayout) findViewById(R.id.linear_crews_layout);
         progressBar = (ProgressBar) findViewById(R.id.progress);
 
@@ -72,14 +72,27 @@ public class CrewsActivity extends BaseActivity {
 
 
         if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
-            TMDVAsync tmdvAsync = new TMDVAsync();
-            tmdvAsync.execute();
+            new TMDVAsync().execute();
         } else {
-            text_crews_no_internet.setVisibility(View.VISIBLE);
             snack();
         }
 
     }
+
+    protected void snack() {
+        Snackbar.make(linear_crews_layout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                            new TMDVAsync().execute();
+                        } else {
+                            snack();
+                        }
+                    }
+                }).show();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,22 +105,6 @@ public class CrewsActivity extends BaseActivity {
             finish();
         }
         return true;
-    }
-
-    protected void snack() {
-        Snackbar.make(linear_crews_layout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
-                            text_crews_no_internet.setVisibility(View.GONE);
-                            TMDVAsync tmdvAsync = new TMDVAsync();
-                            tmdvAsync.execute();
-                        } else {
-                            snack();
-                        }
-                    }
-                }).show();
     }
 
 
@@ -146,7 +143,6 @@ public class CrewsActivity extends BaseActivity {
                 Log.d("CrewsActivity", "IF " + creditsTvShow.getCrew().size());
                 recyclerView.setAdapter(new CrewsAdapter(CrewsActivity.this, creditsTvShow.getCrew()));
             }
-
         }
     }
 }

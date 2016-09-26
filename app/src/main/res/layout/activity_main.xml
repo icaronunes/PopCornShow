@@ -15,32 +15,15 @@
         android:fillViewport="true"
         android:fitsSystemWindows="false">
 
-
-
-        <!--<android.support.v4.widget.NestedScrollView-->
-            <!--android:id="@+id/nested"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:clipToPadding="false"-->
-            <!--app:layout_scrollFlags="scroll|enterAlwaysCollapsed"-->
-            <!--android:fillViewport="true"-->
-            <!--android:fitsSystemWindows="true"-->
-            <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
-
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewPager_main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:layout_gravity="top|start"
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
                 android:background="@color/transparent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:nestedScrollingEnabled="false" />
-
-        <!--</android.support.v4.widget.NestedScrollView>-->
-        <!--class="fragment.MainFragment"-->
-        <!--tools:layout="@layout/filmes_main"-->
 
         <!-- Layout da app bar -->
         <android.support.design.widget.AppBarLayout

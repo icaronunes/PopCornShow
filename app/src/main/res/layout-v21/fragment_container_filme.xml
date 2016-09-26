@@ -270,6 +270,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
+        android:scrollbars="none"
         android:fillViewport="false"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
         android:scrollbarAlwaysDrawVerticalTrack="false">
@@ -300,6 +301,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
+        android:scrollbars="none"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
         android:scrollbarAlwaysDrawVerticalTrack="false">
 
@@ -328,7 +330,7 @@
         android:id="@+id/horizontal_crew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:scrollbars="none"
         android:layout_margin="3dp"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
         android:scrollbarAlwaysDrawVerticalTrack="false">
@@ -358,6 +360,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
+        android:scrollbars="none"
         android:fillViewport="false"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
         android:scrollbarAlwaysDrawVerticalTrack="false">

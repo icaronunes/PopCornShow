@@ -20,15 +20,17 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import activity.PersonActivity;
+import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.model.Credits;
@@ -107,7 +109,7 @@ public class EpsodioFragment extends Fragment {
             e.printStackTrace();
         }
 
-        if (UtilsFilme.verificavencimento(date)) {
+        if (UtilsFilme.verificavencimento(date) && FilmeApplication.getInstance().isLogado()) {
 
             ep_rating_button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -165,6 +167,8 @@ public class EpsodioFragment extends Fragment {
                     alertDialog.show();
                 }
             });
+        } else {
+            ep_rating_button.setVisibility(View.GONE);
         }
     }
 
@@ -184,20 +188,23 @@ public class EpsodioFragment extends Fragment {
     }
 
     private void setImage() {
-        if (episode.getStillPath() != null) {
-            Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(5) + episode.getStillPath())
-                    .into(ep_image, new Callback() {
-                        @Override
-                        public void onSuccess() {
 
-                        }
+        Log.d("Entrou", UtilsFilme.getBaseUrlImagem(5) + episode.getStillPath());
+        Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(5) + episode.getStillPath())
+                .error(R.drawable.top_empty)
+                .into(ep_image, new Callback() {
+                    @Override
+                    public void onSuccess() {
 
-                        @Override
-                        public void onError() {
-                            ep_image.setVisibility(View.GONE);
-                        }
-                    });
-        }
+                    }
+
+                    @Override
+                    public void onError() {
+                        Log.d("Entrou", "");
+
+                    }
+                });
+
     }
 
     private void setVote() {
@@ -319,6 +326,13 @@ public class EpsodioFragment extends Fragment {
         ep_ratingBar = (RatingBar) view.findViewById(ep_rating);
         ep_rating_button = (Button) view.findViewById(R.id.ep_rating_button);
         ep_rating_button.setTextColor(color);
+
+        AdView adview = (AdView) view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+        adview.loadAd(adRequest);
 
         new TvEpisodeAsync().execute();
         return view;

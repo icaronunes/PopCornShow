@@ -1,6 +1,7 @@
 package activity;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import br.com.icaro.filme.R;
@@ -28,6 +29,11 @@ public class SettingsActivity extends BaseActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
 }

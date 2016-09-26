@@ -152,7 +152,6 @@ public class SearchMultiActivity extends BaseActivity {
             text_search_empty.setText(R.string.no_internet);
             text_search_empty.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.INVISIBLE);
-            // snack();
         }
 
 
@@ -197,7 +196,7 @@ public class SearchMultiActivity extends BaseActivity {
         @Override
         protected void onPreExecute() {
             swipeRefreshLayout.setEnabled(false);
-            progressBar.setVisibility(View.VISIBLE);
+            //progressBar.setVisibility(View.VISIBLE);
 
         }
 

@@ -34,7 +34,6 @@
 
                 <include layout="@layout/include_progress" />
 
-
             </FrameLayout>
 
 

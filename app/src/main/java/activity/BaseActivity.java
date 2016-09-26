@@ -62,7 +62,6 @@ public class BaseActivity extends AppCompatActivity {
 
     public static void SnackBar(final View view, String msg) {
 
-
         Snackbar.make(view, msg
                 , Snackbar.LENGTH_SHORT).setCallback(new Snackbar.Callback() {
             @Override

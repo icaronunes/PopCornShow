@@ -54,7 +54,6 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
 
         if (movie != null) {
 
-
             Picasso.with(context)
                     .load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
                     .error(R.drawable.poster_empty)
