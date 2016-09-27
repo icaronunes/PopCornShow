@@ -90,7 +90,7 @@ public class PersonActivity extends BaseActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager.setCurrentItem(2);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.computeScroll();
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

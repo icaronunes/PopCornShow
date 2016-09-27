@@ -43,7 +43,6 @@ import br.com.icaro.filme.R;
 import domian.FilmeService;
 import fragment.FilmeInfoFragment;
 import fragment.ImagemTopFilmeScrollFragment;
-import fragment.ImagemTopScrollFragment;
 import info.movito.themoviedbapi.TmdbAccount;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.ArtworkType;
@@ -186,7 +185,7 @@ public class FilmeActivity extends BaseActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if (!UtilsFilme.verificavencimento(date)) {
+                if (!UtilsFilme.verificaLancamento(date)) {
                     bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Tentativa de Rated fora da data de lançamento");
                     mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
@@ -287,7 +286,7 @@ public class FilmeActivity extends BaseActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if (!UtilsFilme.verificavencimento(date)) {
+                if (!UtilsFilme.verificaLancamento(date)) {
                     Toast.makeText(FilmeActivity.this, "Filme ainda não foi lançado.", Toast.LENGTH_SHORT).show();
                     bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Favorite - Filme ainda não foi lançado.");
@@ -498,7 +497,6 @@ public class FilmeActivity extends BaseActivity {
                 movieDb = movies.getMovie(id_filme, "en,null"
                         , credits, releases, videos, reviews, similar, alternative_titles, images);
             }
-
             similarMovies = movies.getSimilarMovies(movieDb.getId(), null, 1);
             return movieDb;
         }

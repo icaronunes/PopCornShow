@@ -41,9 +41,33 @@
                 android:value="activity.SearchMultiActivity" />
         </activity>
 
-        <activity android:name="activity.FilmesActivity" />
-        <activity android:name="activity.FavoriteActivity" />
-        <activity android:name="activity.RatedActivity" />
+        <activity android:name="activity.FilmesActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="activity.SearchMultiActivity" />
+
+        </activity>
+        <activity android:name="activity.FavoriteActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="activity.SearchMultiActivity" />
+        </activity>
+        <activity android:name="activity.RatedActivity">
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="activity.SearchMultiActivity" />
+
+        </activity>
         <activity
             android:name="activity.FilmeActivity"
             android:parentActivityName="activity.MainActivity"
@@ -108,7 +132,16 @@
         <activity android:name="activity.FotoPersonActivity" />
         <activity android:name="activity.SettingsActivity" />
 
-        <activity android:name="activity.TvShowsActivity" />
+        <activity android:name="activity.TvShowsActivity">
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="activity.SearchMultiActivity" />
+
+        </activity>
 
         <provider
             android:name="provider.SuggestionRecentProvider"

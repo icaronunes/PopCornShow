@@ -45,9 +45,9 @@ import static domian.FilmeService.getTmdbPerson;
 public class PersonFragment extends Fragment {
 
 
-    TextView nome_person, birthday, dead, homepage, biografia, aka, conhecido, place_of_birth, sem_filmes, sem_fotos, sem_crews;
+    TextView nome_person, birthday, dead, homepage, biografia, aka, conhecido, place_of_birth, sem_filmes, sem_fotos, sem_crews, sem_serie;
     ImageView imageView, imageButtonWiki;
-    RecyclerView recyclerViewMovie, recyclerViewImagem, RecyclerViewCrews, recyclerViewTvshow;
+    RecyclerView recyclerViewMovie, recyclerViewImagem, recyclerViewCrews, recyclerViewTvshow;
     LinearLayout linear_person;
     int tipo, id_person;
     ProgressBar progressBar;
@@ -95,7 +95,7 @@ public class PersonFragment extends Fragment {
             case R.string.filme: {
                 return getViewPersonMovie(inflater, container);
             }
-            case R.string.crews: {
+            case R.string.producao: {
                 return getViewPersonCrews(inflater, container);
             }
             case R.string.person: {
@@ -114,8 +114,8 @@ public class PersonFragment extends Fragment {
     private View getViewPersonTvShow(LayoutInflater inflater, ViewGroup container) {
 
         View view = inflater.inflate(R.layout.activity_person_tvshow, container, false);
-        recyclerViewTvshow = (RecyclerView) view.findViewById(R.id.recycleView_person_crews);
-        sem_fotos = (TextView) view.findViewById(R.id.sem_tvshow);
+        recyclerViewTvshow = (RecyclerView) view.findViewById(R.id.recycleView_person_tvshow);
+        sem_serie = (TextView) view.findViewById(R.id.sem_tvshow);
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
         recyclerViewTvshow.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerViewTvshow.setHasFixedSize(true);
@@ -147,12 +147,12 @@ public class PersonFragment extends Fragment {
     private View getViewPersonCrews(LayoutInflater inflater, ViewGroup container) {
         Log.d(TAG, "getViewPersonCrews");
         View view = inflater.inflate(R.layout.activity_person_crews, container, false);
-        RecyclerViewCrews = (RecyclerView) view.findViewById(R.id.recycleView_person_crews);
+        recyclerViewCrews = (RecyclerView) view.findViewById(R.id.recycleView_person_crews);
         sem_crews = (TextView) view.findViewById(R.id.sem_crews);
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
-        RecyclerViewCrews.setItemAnimator(new DefaultItemAnimator());
-        RecyclerViewCrews.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        RecyclerViewCrews.setHasFixedSize(true);
+        recyclerViewCrews.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewCrews.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerViewCrews.setHasFixedSize(true);
 
         AdView adview = (AdView) view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
@@ -315,7 +315,7 @@ public class PersonFragment extends Fragment {
             progressBar.setVisibility(View.GONE);
 
         } else {
-            RecyclerViewCrews.setAdapter(new PersonCrewsAdapter(getContext(), removerDuplicados(personCredits)));
+            recyclerViewCrews.setAdapter(new PersonCrewsAdapter(getContext(), removerDuplicados(personCredits)));
             progressBar.setVisibility(View.GONE);
 
         }
@@ -332,8 +332,8 @@ public class PersonFragment extends Fragment {
     }
 
     private void setPersonCreditsTvshow(PersonCredits personCredits) {
-        if (artworks.isEmpty() || artworks == null) {
-            sem_fotos.setVisibility(View.VISIBLE);
+        if (personCreditsTvshow.getCast() == null || personCreditsTvshow.getCast().isEmpty()) {
+            sem_serie.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
         } else {
             recyclerViewTvshow.setAdapter(new PersontvAdapter(getContext(), personCredits));
@@ -382,7 +382,7 @@ public class PersonFragment extends Fragment {
             if (tipo == R.string.filme) {
                 setPersonMovies(personCredits);
             }
-            if (tipo == R.string.crews) {
+            if (tipo == R.string.producao) {
                 setPersonCrews(personCredits);
             }
             if (tipo == R.string.imagem_person) {

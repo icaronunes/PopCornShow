@@ -292,7 +292,7 @@ public class TvShowActivity extends BaseActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if (!UtilsFilme.verificavencimento(date)) {
+                if (!UtilsFilme.verificaLancamento(date)) {
                     Bundle bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Tentativa de Rated fora da data de lançamento");
                     firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
@@ -418,12 +418,15 @@ public class TvShowActivity extends BaseActivity {
             if (idioma_padrao) {
                 Log.d("FilmeActivity", "true - ");
                 series = tmdbTv
-                        .getSeries(id_tvshow, Locale.getDefault().toLanguageTag() + ",en,null", external_ids, images, credits, videos);
-                series.getVideos().addAll(tmdbTv.getSeries(id_tvshow, "en", videos).getVideos());
+                        .getSeries(id_tvshow, Locale.getDefault().toLanguageTag() + ",en,null"
+                                , images, credits, videos);
+                series.getVideos().addAll(tmdbTv.getSeries(id_tvshow, null, videos).getVideos());
+                series.getImages().setPosters(tmdbTv.getSeries(id_tvshow, null, images).getImages().getPosters());
+
             } else {
                 Log.d("FilmeActivity", "false - ");
                 series = FilmeService.getTmdbTvShow()
-                        .getSeries(id_tvshow, "en,null", images, credits, videos);
+                        .getSeries(id_tvshow, null, images, credits, videos);
             }
             return null;
         }
@@ -446,7 +449,7 @@ public class TvShowActivity extends BaseActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if (UtilsFilme.verificavencimento(date)) {
+                if (UtilsFilme.verificaLancamento(date)) {
                     menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
                     menu_item_rated.setOnClickListener(RatedFilme());
                 }

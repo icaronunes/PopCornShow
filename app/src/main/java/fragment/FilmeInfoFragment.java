@@ -54,6 +54,7 @@ import activity.TreilerActivity;
 import adapter.CollectionPagerAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
+import info.movito.themoviedbapi.model.ArtworkType;
 import info.movito.themoviedbapi.model.Collection;
 import info.movito.themoviedbapi.model.CollectionInfo;
 import info.movito.themoviedbapi.model.Genre;
@@ -481,7 +482,7 @@ public class FilmeInfoFragment extends Fragment {
     }
 
     private void setPoster() {
-        if (movieDb.getPosterPath() != null) {
+        if (movieDb.getPosterPath() != null && movieDb.getImages(ArtworkType.POSTER).size() > 0) {
             Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(2) + movieDb.getPosterPath()).into(img_poster);
             img_poster.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -535,6 +536,8 @@ public class FilmeInfoFragment extends Fragment {
                     FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 }
             });
+        } else {
+            getView().findViewById(R.id.label_produtora).setVisibility(View.GONE);
         }
     }
 
@@ -851,7 +854,13 @@ public class FilmeInfoFragment extends Fragment {
 
     private void setLancamento() {
         if (movieDb.getReleaseDate() != null) {
-            lancamento.setText(movieDb.getReleaseDate());
+            for (int i = 0; i < movieDb.getReleases().size(); i++) {
+                if (Locale.getDefault().getCountry().equalsIgnoreCase(movieDb.getReleases().get(i).getCountry())) {
+                    lancamento.setText(movieDb.getReleases().get(i).getReleaseDate());
+                    // Adicionar Botão de comprar depois
+                    break;
+                }
+            }
         }
     }
 

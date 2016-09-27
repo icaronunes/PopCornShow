@@ -9,14 +9,16 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,6 +29,7 @@ import domian.FilmeService;
 import domian.TopMain;
 import fragment.ViewPageMainTopFragment;
 import info.movito.themoviedbapi.TvResultsPage;
+import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.Constantes;
 import utils.Prefs;
@@ -174,15 +177,25 @@ public class MainActivity extends BaseActivity {
     }
 
     private void mescla() {
-        int tamanho = 0;
-        for (int i = 0; i <= 20 && multi.size() < 14; i++) {
+
+        for (int i = 0; i < 20 && multi.size() < 14; i++) {
             if (i % 2 == 0) {
                 TopMain topMain = new TopMain();
-                topMain.setId(tmdbMovies.getResults().get(i).getId());
-                topMain.setNome(tmdbMovies.getResults().get(i).getTitle());
-                topMain.setMediaType(tmdbMovies.getResults().get(i).getMediaType().name());
-                topMain.setImagem(tmdbMovies.getResults().get(i).getBackdropPath());
-                if (tmdbMovies.getResults().get(i).getBackdropPath() != null) {
+                MovieDb movieDb = tmdbMovies.getResults().get(i);
+                topMain.setId(movieDb.getId());
+                topMain.setNome(movieDb.getTitle());
+                topMain.setMediaType(movieDb.getMediaType().name());
+                topMain.setImagem(movieDb.getBackdropPath());
+
+                Date date = null;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+                try {
+                    date = sdf.parse(movieDb.getReleaseDate());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (movieDb.getBackdropPath() != null && UtilsFilme.verificaLancamento(date)) {
                     multi.add(topMain);
                 }
             } else {
@@ -207,11 +220,9 @@ public class MainActivity extends BaseActivity {
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             if (idioma_padrao) {
                 tmdbTv = FilmeService.getTmdbTvShow()
-                        .getAiringToday(Locale.getDefault().toLanguageTag() + ",en,null", 1, UtilsFilme.getTimezone());
+                        .getAiringToday(Locale.getDefault().toLanguageTag(), 1, UtilsFilme.getTimezone());
                 tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies(Locale
-                        .getDefault().toLanguageTag() + ",en,null", 1);
-                Log.d("MainActivity", "Movie - " + tmdbMovies.getResults().size());
-                Log.d("MainActivity", "Tv - " + tmdbTv.getResults().size());
+                        .getDefault().toLanguageTag() , 1);
             } else {
                 tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("en", 1, UtilsFilme.getTimezone());
                 tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies("en", 1);

@@ -39,7 +39,7 @@ public class PersonAdapter extends FragmentPagerAdapter {
             return PersonFragment.newInstance(R.string.imagem_person, id_person);
         }
         if (position == 4) {
-            return PersonFragment.newInstance(R.string.crews, id_person);
+            return PersonFragment.newInstance(R.string.producao, id_person);
         }
 
         return null;
@@ -60,7 +60,7 @@ public class PersonAdapter extends FragmentPagerAdapter {
             return context.getString(R.string.imagem_person);
         }
         if (position == 4) {
-            return context.getString(R.string.crews);
+            return context.getString(R.string.producao);
         }
 
         return null;

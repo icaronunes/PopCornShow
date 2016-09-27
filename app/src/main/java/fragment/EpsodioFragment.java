@@ -109,7 +109,7 @@ public class EpsodioFragment extends Fragment {
             e.printStackTrace();
         }
 
-        if (UtilsFilme.verificavencimento(date) && FilmeApplication.getInstance().isLogado()) {
+        if (UtilsFilme.verificaLancamento(date) && FilmeApplication.getInstance().isLogado()) {
 
             ep_rating_button.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -138,6 +138,7 @@
     <string name="tvshow_nao_lancado">Série ainda não lançada</string>
     <string name="admob" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="sem_tvshow">Sem Séries</string>
+    <string name="producao">Produção</string>
     <!--ca-app-pub-7639270198633263/7125334030-->
 
 </resources>

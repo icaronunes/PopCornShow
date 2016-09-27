@@ -63,12 +63,29 @@ public class UtilsFilme {
         return false;
     }
 
-    public static  boolean verificavencimento(Date air_date) {
+    public static  boolean verificaLancamento(Date air_date) {
         boolean data;
         //Arrumar. Ta esquisito.
         Date myDate = Calendar.getInstance().getTime();
         Log.d(TAG, "Hoje " + myDate);
         Log.d(TAG, "Emissao " + air_date);
+        if (air_date.before(myDate)) {
+            data = true;
+        } else if (air_date.after(myDate))
+            data = false;
+        else
+            data = true;
+        return data;
+    }
+
+    public static  boolean verificaDataProximaLancamento(Date air_date) {
+        boolean data;
+        //Arrumar. Ta esquisito.
+        Date myDate = Calendar.getInstance().getTime();
+        Log.d(TAG, "Hoje " + myDate);
+        Log.d(TAG, "Emissao " + air_date);
+        myDate.setMonth(myDate.getMonth() + 1);
+        Log.d(TAG, "Depois " + myDate);
         if (air_date.before(myDate)) {
             data = true;
         } else if (air_date.after(myDate))

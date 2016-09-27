@@ -73,7 +73,9 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
                 super.onDismissed(snackbar, event);
-                view.setAlpha(1);
+                if (FilmeApplication.getInstance().isLogado()) {
+                    view.setAlpha(1);
+                }
             }
         })
                 .show();

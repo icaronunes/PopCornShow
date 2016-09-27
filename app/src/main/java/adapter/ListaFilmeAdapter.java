@@ -1,6 +1,5 @@
 package adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -21,8 +20,6 @@ import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.UtilsFilme;
 
-import static android.media.CamcorderProfile.get;
-
 
 /**
  * Created by icaro on 01/08/16.
@@ -34,17 +31,11 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
     ListaOnClickListener onClickListener;
     boolean status = false;
 
-    // Colocar em apenas um lugar
-    public interface ListaOnClickListener {
-        void onClick(View view, int posicao);
-        void onClickLong(View view,final int posicao);
-    }
-
     public ListaFilmeAdapter(FragmentActivity favotireActivity, MovieResultsPage favoritos,
                              ListaOnClickListener onClickListener, boolean b) {
         this.context = favotireActivity;
         this.favoritos = favoritos;
-        this.onClickListener  = onClickListener;
+        this.onClickListener = onClickListener;
         status = b;
     }
 
@@ -58,7 +49,7 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
     @Override
     public void onBindViewHolder(final FavoriteViewHolder holder, final int position) {
 
-       final MovieDb movie = favoritos.getResults().get(position);
+        final MovieDb movie = favoritos.getResults().get(position);
         Log.d("onBindViewHolder", "position" + position);
         if (status) {
             String valor = String.valueOf(movie.getUserRating());
@@ -106,13 +97,20 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
         }
     }
 
-
     @Override
     public int getItemCount() {
         if (favoritos != null) {
             return favoritos.getResults().size();
         }
         return 0;
+    }
+
+
+    // Colocar em apenas um lugar
+    public interface ListaOnClickListener {
+        void onClick(View view, int posicao);
+
+        void onClickLong(View view, final int posicao);
     }
 
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder {
