@@ -17,4 +17,6 @@
     <dimen name="popup_width">365dp</dimen>
     <dimen name="popup_height">252dp</dimen>
     <dimen name="popup_height_rated">150dp</dimen>
+    <dimen name="poster_main_width">76dp</dimen>
+    <dimen name="poster_main_height">111dp</dimen>
 </resources>

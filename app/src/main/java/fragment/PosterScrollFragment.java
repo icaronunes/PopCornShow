@@ -2,6 +2,7 @@ package fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -169,7 +170,8 @@ public class PosterScrollFragment extends Fragment {
 
     private File salvarArquivoNaMemoriaInterna(Context context, ImageView imageView) {
         File file = new File(Environment
-                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/Filme");
+                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + getContext().getPackageName() );
+                //"/Filme");
 
         if (!file.exists()) {
             file.mkdir();
@@ -181,7 +183,7 @@ public class PosterScrollFragment extends Fragment {
         if (drawable != null) {
             Bitmap bitmap = drawable.getBitmap();
             UtilsFilme.writeBitmap(dir, bitmap);
-            Toast.makeText(context, "Salvo", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.toast_salvar_imagem, Toast.LENGTH_LONG).show();
         }
         return dir;
     }

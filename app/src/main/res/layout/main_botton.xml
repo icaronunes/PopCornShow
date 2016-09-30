@@ -8,12 +8,12 @@
     <Button
         android:id="@+id/button_main"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_marginRight="8dp"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_marginRight="6dp"
         android:background="@drawable/button_main"
         android:textColor="@color/white"
-        android:minHeight="0dp"
-        android:minWidth="80dip"
-        android:maxWidth="140dp" />
+        android:minHeight="35dp"
+        android:minWidth="90dip"/>
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package activity;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -31,7 +32,7 @@ public class TreilerActivity extends YouTubeBaseActivity implements YouTubePlaye
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.youtube_layout);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
         sinopse = (TextView) findViewById(R.id.treiler_sinopse);
         youTubeView.initialize(Config.YOUTUBE_API_KEY, this);

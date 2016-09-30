@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.graphics.Palette;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -39,6 +41,7 @@ public class CollectionPagerAdapter extends PagerAdapter {
     LinearLayout linearLayout;
     TextView nome;
     Button externo;
+    FirebaseAnalytics firebaseAnalytics;
     Button interno;
 
 
@@ -78,7 +81,7 @@ public class CollectionPagerAdapter extends PagerAdapter {
                 .into(imageView, new Callback() {
                     @Override
                     public void onSuccess() {
-                        loadPalette();
+                        loadPaletteCollection();
                     }
 
                     @Override
@@ -104,7 +107,7 @@ public class CollectionPagerAdapter extends PagerAdapter {
 
     }
 
-    private void loadPalette() {
+    private void loadPaletteCollection() {
         BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
         if (drawable != null) {
             Bitmap bitmap = drawable.getBitmap();
@@ -127,6 +130,14 @@ public class CollectionPagerAdapter extends PagerAdapter {
                 intent.putExtra(Constantes.FILME_ID, id);
                 intent.putExtra(Constantes.NOME_FILME, title);
                 getContext().startActivity(intent);
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Collection_interno");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, info.getName());
+                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, info.getId());
+                firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             }
         };
     }
@@ -137,13 +148,20 @@ public class CollectionPagerAdapter extends PagerAdapter {
             public void onClick(View view) {
                 String string = new String("https://play.google.com/store/search?c=movies&q=");
                 String query = info.getParts().get(position).getName();
-                //query = query.replaceAll(" ", "-");
                 string = string.concat(query);
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(string));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Log.d("icon_collection", string.toString());
                 getContext().startActivity(intent);
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Collection_externo_site");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, info.getName());
+                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, info.getId());
+                firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             }
         };
     }

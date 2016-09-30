@@ -7,6 +7,7 @@ package activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
@@ -28,6 +29,7 @@ public class TvShowsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_main); // ???
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         setupNavDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -72,27 +74,6 @@ public class TvShowsActivity extends BaseActivity {
 
             case android.R.id.home: {
                 finish();
-                break;
-            }
-            case R.id.apagar:
-                Prefs.apagarLoginSenha(TvShowsActivity.this, Prefs.LOGIN_PASS);
-                FilmeApplication.getInstance().setLogado(false);
-                startActivity(new Intent(TvShowsActivity.this, MainActivity.class));
-                break;
-            case R.id.serie: {
-                Intent intent = new Intent(this, TvShowActivity.class);
-                intent.putExtra(Constantes.TVSHOW_ID, 62560);
-                intent.putExtra(Constantes.NOME_TVSHOW, "Breaking Bad: A Química do Mal");
-                intent.putExtra(Constantes.COLOR_TOP, -14663350);
-                startActivity(intent);
-                break;
-            }
-            case R.id.filme: {
-                Intent intent = new Intent(this, FilmeActivity.class);
-                intent.putExtra(Constantes.FILME_ID, 76341);
-                intent.putExtra(Constantes.NOME_FILME, "Mad Max: Estrada da Fúria");
-                intent.putExtra(Constantes.COLOR_TOP, -14663350);
-                startActivity(intent);
                 break;
             }
         }

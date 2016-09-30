@@ -1,12 +1,9 @@
 package domian;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.crash.FirebaseCrash;
-import com.google.firebase.crash.internal.FirebaseCrashOptions;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -210,17 +207,32 @@ public class FilmeService {
         SessionToken token = new SessionToken(session);
         TmdbAccount account = tmdbApi.getAccount();
         AccountID accountID = new AccountID(getAccount(user, pass).getId());
+        ResponseStatus status = null;
         if (opcao) {
-            ResponseStatus status = account.addFavorite(token, accountID, id, mediaType);
-            Log.d("addOrRemoverFavoriteM", status.toString());
-            Log.d("addOrRemoverFavoriteM", String.valueOf(status.getStatusCode()));
-            Log.d("addOrRemoverFavoriteM", String.valueOf(status.getStatusMessage()));
+            try {
+                status = account.addFavorite(token, accountID, id, mediaType);
+            } catch (Exception e) {
+                Log.d("addOrRemoverFavoriteM", e.toString());
+
+            } finally {
+
+//                Log.d("addOrRemoverFavoriteM", status.toString());
+//                Log.d("addOrRemoverFavoriteM", String.valueOf(status.getStatusCode()));
+//                Log.d("addOrRemoverFavoriteM", String.valueOf(status.getStatusMessage()));
+            }
             return status;
         } else {
-            ResponseStatus status = account.removeFavorite(token, accountID, id, mediaType);
-            Log.d("addOrRemoverFavoriteM", status.toString());
-            Log.d("addOrRemoverFavoriteM", String.valueOf(status.getStatusCode()));
-            Log.d("addOrRemoverFavoriteM", String.valueOf(status.getStatusMessage()));
+            try {
+                status = account.removeFavorite(token, accountID, id, mediaType);
+            } catch (Exception e) {
+                Log.d("addOrRemoverFavoriteM", e.toString());
+
+            } finally {
+
+//                Log.d("addOrRemoverFavoriteM", status.toString());
+//                Log.d("addOrRemoverFavoriteM", String.valueOf(status.getStatusCode()));
+//                Log.d("addOrRemoverFavoriteM", String.valueOf(status.getStatusMessage()));
+            }
             return status;
         }
     }

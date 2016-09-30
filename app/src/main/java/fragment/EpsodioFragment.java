@@ -145,16 +145,20 @@ public class EpsodioFragment extends Fragment {
                                                 .setRatedTvShowEpsodio(tvshow_id, episode.getSeasonNumber(),
                                                         episode.getEpisodeNumber(), ratingBar.getRating());
                                         try {
-                                            Thread.sleep(200);
-                                            getActivity().runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    Toast.makeText(getContext(), getResources().getString(R.string.tvshow_rated), Toast.LENGTH_SHORT)
-                                                            .show();
+                                            if (getActivity() != null) { // usada para não crash quando activity e destruida antes do fim do metodo
+                                                Thread.sleep(200);
+                                                if (getActivity() != null) {
+                                                    getActivity().runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            Toast.makeText(getContext(), getResources().getString(R.string.tvshow_rated), Toast.LENGTH_SHORT)
+                                                                    .show();
 
-                                                    progressDialog.dismiss();
+                                                            progressDialog.dismiss();
+                                                        }
+                                                    });
                                                 }
-                                            });
+                                            }
                                         } catch (InterruptedException e) {
                                             e.printStackTrace();
                                         }

@@ -27,7 +27,8 @@ public class LogoffDialog extends DialogPreference {
         builder.setTitle(getContext().getResources().getString(R.string.title_logoff_dialog));
         builder.setNegativeButton(getContext().getResources().getString(R.string.cancel), null);
         builder.setMessage(getContext().getResources().getString(R.string.text_logoff_dialog));
-        builder.setPositiveButton(getContext().getResources().getString(R.string.sair), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getContext()
+                .getResources().getString(R.string.sair), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Prefs.apagarLoginSenha(getContext(), Prefs.LOGIN_PASS);

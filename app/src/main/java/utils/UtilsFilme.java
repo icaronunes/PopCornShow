@@ -67,8 +67,6 @@ public class UtilsFilme {
         boolean data;
         //Arrumar. Ta esquisito.
         Date myDate = Calendar.getInstance().getTime();
-        Log.d(TAG, "Hoje " + myDate);
-        Log.d(TAG, "Emissao " + air_date);
         if (air_date.before(myDate)) {
             data = true;
         } else if (air_date.after(myDate))

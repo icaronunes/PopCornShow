@@ -68,7 +68,6 @@
             android:elevation="1dp"
             android:src="@drawable/relogio" />
 
-
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

@@ -32,6 +32,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.Random;
 
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
@@ -47,11 +48,12 @@ import utils.UtilsFilme;
  */
 
 public class BaseActivity extends AppCompatActivity {
-
     static String TAG = "BaseActivity";
     static Account account = null;
     protected DrawerLayout drawerLayout;
     protected NavigationView navigationView;
+    int[] drawer = {R.drawable.nav_drawer_header, R.drawable.nav_drawer_header2, R.drawable.nav_drawer_header3,
+            R.drawable.nav_drawer_header4, R.drawable.nav_drawer_header5, R.drawable.nav_drawer_header6, R.drawable.nav_drawer_header7};
     ImageView imgUserBackground;
     ImageView imgUserPhoto;
     TextView tUserName;
@@ -112,8 +114,9 @@ public class BaseActivity extends AppCompatActivity {
             view.setVisibility(View.VISIBLE);
             imgUserBackground = (ImageView) view.findViewById(R.id.imgUserBackground);
             imgUserPhoto = (ImageView) view.findViewById(R.id.imgUserPhoto);
-
-            imgUserBackground.setImageResource(R.drawable.nav_drawer_header);
+            Random random = new Random();
+            Log.d("randon", ""+random.nextInt(7));
+            imgUserBackground.setImageResource(drawer[random.nextInt(7)]);
             tUserName = (TextView) view.findViewById(R.id.tUserName);
             tLogin = (TextView) view.findViewById(R.id.tLogin);
             textLogin = (TextView) view.findViewById(R.id.textLogin);
@@ -271,27 +274,6 @@ public class BaseActivity extends AppCompatActivity {
                     return true;
                 }
                 break;
-            case R.id.apagar:
-                Prefs.apagarLoginSenha(BaseActivity.this, Prefs.LOGIN_PASS);
-                FilmeApplication.getInstance().setLogado(false);
-                startActivity(new Intent(BaseActivity.this, MainActivity.class));
-                break;
-            case R.id.serie: {
-                Intent intent = new Intent(this, TvShowActivity.class);
-                intent.putExtra(Constantes.TVSHOW_ID, 62560);
-                intent.putExtra(Constantes.NOME_TVSHOW, "Breaking Bad: A Química do Mal");
-                intent.putExtra(Constantes.COLOR_TOP, -14663350);
-                startActivity(intent);
-                break;
-            }
-            case R.id.filme: {
-                Intent intent = new Intent(this, FilmeActivity.class);
-                intent.putExtra(Constantes.FILME_ID, 76341);
-                intent.putExtra(Constantes.NOME_FILME, "Mad Max: Estrada da Fúria");
-                intent.putExtra(Constantes.COLOR_TOP, -14663350);
-                startActivity(intent);
-                break;
-            }
         }
 
         return super.onOptionsItemSelected(item);

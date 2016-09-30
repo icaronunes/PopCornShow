@@ -1,5 +1,6 @@
 package activity;
 
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -29,6 +30,7 @@ public class RatedActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuario_list);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getSupportActionBar().setTitle(R.string.avaliados);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

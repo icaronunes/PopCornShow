@@ -10,19 +10,4 @@
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always|collapseActionView" />
 
-    <item
-        android:id="@+id/apagar"
-        android:title="Logout"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/serie"
-        android:title="Serie"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/filme"
-        android:title="Filme"
-        app:showAsAction="never" />
-
 </menu>

@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <CheckBoxPreference
+        android:defaultValue="true"
         android:key="pref_idioma_padrao"
-        android:title="@string/idioma_padrao"
         android:summary="@string/idioma_padrao_subtitle"
-        android:defaultValue="true" />
+        android:title="@string/idioma_padrao" />
 
     <utils.LogoffDialog
         android:enabled="true"
         android:key="pref_logoff"
         android:summary="@string/text_logoff_dialog"
         android:title="@string/title_logoff_dialog" />
+
+    <utils.Sobre
+        android:key="pref_sobre"
+        android:summary="@string/infor_app"
+        android:title="@string/sobre" />
 
 
 </PreferenceScreen>

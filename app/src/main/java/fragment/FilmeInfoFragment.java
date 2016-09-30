@@ -86,7 +86,6 @@ public class FilmeInfoFragment extends Fragment {
             original_title, spoken_languages, production_countries, imdb, tmdb,
             popularity, lancamento, textview_crews, textview_elenco, textview_similares;
     ImageView img_poster, img_star;
-    //int id_filme;
     MovieDb movieDb;
     ImageView icon_reviews, img_budget, icon_site, icon_collection, imgPagerSimilares;
     LinearLayout linear_container;

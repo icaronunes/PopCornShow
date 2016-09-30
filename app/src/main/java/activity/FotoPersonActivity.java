@@ -1,5 +1,6 @@
 package activity;
 
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.Window;
 
 import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.LinePageIndicator;
 
 import java.util.List;
 
@@ -34,20 +36,20 @@ public class FotoPersonActivity extends BaseActivity {
     int id_foto;
     ViewPager viewPager;
     List<Artwork> artworks;
-    CirclePageIndicator titlePageIndicator;
+    LinePageIndicator titlePageIndicator;
     String nome;
-    int position;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
-        Log.d("PosterActivity", "onCreate");
         setContentView(R.layout.activity_scroll_poster);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        Log.d("PosterActivity", "onCreate");
         id_foto = getIntent().getExtras().getInt(Constantes.PERSON_ID);
         nome = getIntent().getExtras().getString(Constantes.NOME_PERSON);
         viewPager = (ViewPager) findViewById(pager);
-        titlePageIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
+        titlePageIndicator = (LinePageIndicator) findViewById(R.id.indicator);
         Log.d("PosterActivity", "onCreate ID: " + id_foto);
 
     }
@@ -92,7 +94,7 @@ public class FotoPersonActivity extends BaseActivity {
         protected void onPostExecute(Void aVoid) {
             viewPager.setAdapter(new PosterFragment(getSupportFragmentManager()));
             titlePageIndicator.setViewPager(viewPager);
-            titlePageIndicator.setFillColor(R.color.black);
+          //  titlePageIndicator.setFillColor(R.color.black);
             titlePageIndicator.setCurrentItem(getIntent().getExtras().getInt(Constantes.POSICAO));
         }
     }

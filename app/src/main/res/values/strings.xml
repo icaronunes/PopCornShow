@@ -102,7 +102,7 @@
     <string name="sem_nota">Sem Nota</string>
     <string name="director">Direção</string>
     <string name="writer">Escrito</string>
-    <string name="air_date"><Na></Na> TV Agora</string>
+    <string name="air_date">Passando na TV</string>
     <string name="vote_average">Votos</string>
     <string name="sem_titulo">Sem Titulo</string>
     <string name="tvshow_rated">Epsodio Classificado</string>
@@ -125,7 +125,7 @@
     <string name="tvshow_main" translatable="false">tvshow_main</string>
     <string name="populares">Populares</string>
     <string name="na_tv">Passando na TV</string>
-    <string name="today">Hoje</string>
+    <string name="today">Na Tv Hoje</string>
     <string name="em_breve">Em Breve</string>
     <string name="home">Home</string>
     <string name="sair">Sair</string>
@@ -139,6 +139,13 @@
     <string name="admob" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="sem_tvshow">Sem Séries</string>
     <string name="producao">Produção</string>
+    <string name="toast_salvar_imagem">Imagem salva na pasta do aplicativo.</string>
+    <string name="sobre">Sobre</string>
+    <string name="infor_app">Informaçãoes sobre o App</string>
+    <string name="criado">Criado:</string>
+    <string name="icaronunes">icaronunes@hotmail.com</string>
+    <string name="infor_tmdb">Informações do PopCorn são fornecidas pelo TMDB.</string>
+    <string name="rated_googleplay">Avaliar no Google Play.</string>
     <!--ca-app-pub-7639270198633263/7125334030-->
 
 </resources>
