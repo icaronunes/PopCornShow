@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Filme</string>
+    <string name="app_name">PopCorn</string>
     <string name="configuracoes">Configurações</string>
     <string name="now_playing">No Cinema</string>
     <string name="popular">Populares</string>
@@ -111,7 +111,7 @@
     <string name="ended">Finalizada</string>
     <string name="canceled">Cancelado</string>
     <string name="in_production">Em Producação</string>
-    <string name="filme">Filme</string>
+    <string name="filme">Filmes</string>
     <string name="tvshow">Séries</string>
     <string name="excluir_tvshow">Excluir Série</string>
     <string name="compartilhar_tvshow">Compartilhando Séries</string>
@@ -136,16 +136,17 @@
     <string name="tvshow_add_favorite">Série adicionada aos Favoritos</string>
     <string name="filme_nao_lancado">Filme ainda não foi lançado.</string>
     <string name="tvshow_nao_lancado">Série ainda não lançada</string>
-    <string name="admob" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="sem_tvshow">Sem Séries</string>
     <string name="producao">Produção</string>
     <string name="toast_salvar_imagem">Imagem salva na pasta do aplicativo.</string>
     <string name="sobre">Sobre</string>
     <string name="infor_app">Informaçãoes sobre o App</string>
-    <string name="criado">Criado:</string>
+    <string name="criado">Criado por:</string>
     <string name="icaronunes">icaronunes@hotmail.com</string>
     <string name="infor_tmdb">Informações do PopCorn são fornecidas pelo TMDB.</string>
     <string name="rated_googleplay">Avaliar no Google Play.</string>
-    <!--ca-app-pub-7639270198633263/7125334030-->
+    <string name="suas_listas">Suas listas</string>
+    <string name="person_rated">Pessoas Populares</string>
+    <string name="oscar">Vencedores de Oscar</string>
 
 </resources>

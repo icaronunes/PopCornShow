@@ -32,7 +32,6 @@ public class TreilerActivity extends YouTubeBaseActivity implements YouTubePlaye
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.youtube_layout);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
         sinopse = (TextView) findViewById(R.id.treiler_sinopse);
         youTubeView.initialize(Config.YOUTUBE_API_KEY, this);
@@ -41,8 +40,6 @@ public class TreilerActivity extends YouTubeBaseActivity implements YouTubePlaye
 
         AdView adview = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
                 .build();
         adview.loadAd(adRequest);
 

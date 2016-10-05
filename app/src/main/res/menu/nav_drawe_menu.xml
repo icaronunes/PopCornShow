@@ -9,7 +9,19 @@
             android:id="@+id/menu_drav_home"
             android:checkable="true"
             android:icon="@mipmap/ic_launcher"
-            android:title="@string/home"/>
+            android:title="@string/home" />
+
+        <item
+            android:id="@+id/menu_drav_person"
+            android:checkable="true"
+            android:icon="@drawable/mickey_mouse"
+            android:title="@string/person_rated" />
+
+        <item
+            android:id="@+id/menu_drav_oscar"
+            android:checkable="true"
+            android:icon="@drawable/oscar"
+            android:title="@string/oscar" />
 
     </group>
 
@@ -32,10 +44,11 @@
             android:title="@string/quero_assistir" />
 
         <!--<item-->
-        <!--android:id="@+id/list"-->
-        <!--android:checkable="true"-->
-        <!--android:icon="@drawable/icon_list"-->
-        <!--android:title="@string/list" />-->
+            <!--android:id="@+id/list"-->
+            <!--android:checkable="true"-->
+            <!--android:icon="@drawable/lista"-->
+            <!--android:title="@string/list"-->
+           <!--/>-->
     </group>
 
     <group
@@ -46,19 +59,24 @@
             android:id="@+id/now_playing"
             android:checkable="true"
             android:icon="@drawable/icon_movie_now"
-            android:title="@string/now_playing" />
+            android:title="@string/now_playing"
+            android:visible="false" />
         <item
             android:id="@+id/upcoming"
             android:icon="@drawable/icon_proximo"
-            android:title="@string/upcoming" />
+            android:title="@string/upcoming"
+            android:visible="false" />
         <item
             android:id="@+id/popular"
             android:icon="@drawable/icon_popular"
-            android:title="@string/popular" />
+            android:title="@string/popular"
+            android:visible="false" />
         <item
             android:id="@+id/top_rated"
             android:icon="@drawable/icon_best_variable"
-            android:title="@string/top_rated" />
+            android:title="@string/top_rated"
+            android:visible="false" />
+
         <!-- WebView com informações sobre o livro -->
         <!-- Tela de configurações -->
         <item

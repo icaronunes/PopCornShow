@@ -42,6 +42,9 @@ import utils.Constantes;
 import utils.Prefs;
 import utils.UtilsFilme;
 
+import static com.google.android.gms.analytics.internal.zzy.i;
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.lists;
+
 
 /**
  * Created by icaro on 24/06/16.
@@ -156,6 +159,12 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.menu_drav_home: {
                 this.navigationView.setCheckedItem(id);
             }
+            case R.id.menu_drav_person: {
+                this.navigationView.setCheckedItem(id);
+            }
+            case R.id.menu_drav_oscar: {
+                this.navigationView.setCheckedItem(id);
+            }
 
 //            case R.id.list: {
 //                this.navigationView.setCheckedItem(id);
@@ -255,6 +264,22 @@ public class BaseActivity extends AppCompatActivity {
                 intent = new Intent(this, WatchListActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.menu_drav_person:
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_PersonPopular");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                intent = new Intent(this, PersonPopularActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.menu_drav_oscar:
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_PersonPopular");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);//
+                intent = new Intent(this, OscarActivity.class);
+                intent.putExtra(Constantes.LISTA_ID, "28");
+                intent.putExtra(Constantes.LISTA_NOME, R.string.oscar);
+                startActivity(intent);
+
+                break;
+
 //            case R.id.list:
 //                intent = new Intent(this, ListUserActivity.class);
 //                startActivity(intent);

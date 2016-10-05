@@ -326,7 +326,7 @@ public class FilmeActivity extends BaseActivity {
                     e.printStackTrace();
                 }
                 if (!UtilsFilme.verificaLancamento(date)) {
-                    Toast.makeText(FilmeActivity.this, "Filme ainda não foi lançado.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FilmeActivity.this, R.string.filme_nao_lancado, Toast.LENGTH_SHORT).show();
                     bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Favorite - Filme ainda não foi lançado.");
                     mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);

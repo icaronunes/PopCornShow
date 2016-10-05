@@ -14,10 +14,9 @@ import android.widget.ProgressBar;
 import adapter.ListUserAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
-import info.movito.themoviedbapi.TmdbAccount;
-import info.movito.themoviedbapi.TmdbLists;
 import info.movito.themoviedbapi.model.MovieList;
 import utils.Constantes;
+import domian.Lista;
 
 /**
  * Created by icaro on 14/08/16.
@@ -28,6 +27,7 @@ public class ListaUserActivity extends BaseActivity {
     MovieList lists;
     ProgressBar progressBar;
     String list_id;
+    Lista lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +60,10 @@ public class ListaUserActivity extends BaseActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            Log.d("ListaUserActivity", "" + lists);
-            lists = FilmeService.getTmdbList().getList(getIntent().getStringExtra(Constantes.LISTA_ID));
+
+            lista = FilmeService.getLista(getIntent().getStringExtra(Constantes.LISTA_ID));
+            //Metodos criados. Tudo gambiara. Precisa arrumar
+
             return null;
         }
 
@@ -70,7 +72,7 @@ public class ListaUserActivity extends BaseActivity {
             super.onPostExecute(aVoid);
             progressBar.setVisibility(View.GONE);
             recyclerView.setAdapter(new ListUserAdapter(ListaUserActivity.this,
-                    lists != null ? lists.getItems() : null));
+                    lista != null ? lista.items : null));
         }
     }
 }

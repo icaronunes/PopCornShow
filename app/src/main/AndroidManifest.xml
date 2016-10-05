@@ -8,13 +8,13 @@
 
     <application
         android:name="applicaton.FilmeApplication"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher3"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name="activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar.NavDrawer">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,8 +31,8 @@
         </activity>
 
 
-        <activity android:name="activity.TvShowActivity">
-
+        <activity android:name="activity.TvShowActivity"
+            android:theme="@style/AppTheme.NoActionBar.NavDrawer">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -68,6 +68,16 @@
                 android:value="activity.SearchMultiActivity" />
 
         </activity>
+
+        <activity android:name="activity.PersonPopularActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="activity.SearchMultiActivity" />
+
+            </activity>
         <activity
             android:name="activity.FilmeActivity"
             android:parentActivityName="activity.MainActivity"
@@ -80,6 +90,18 @@
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
         </activity>
+
+        <activity android:name="activity.OscarActivity">
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="activity.SearchMultiActivity" />
+
+        </activity>
+
         <activity android:name="activity.TemporadaActivity" />
         <activity android:name="activity.EpsodioActivity" />
         <activity android:name="activity.TreilerActivity" />
@@ -92,7 +114,8 @@
         <activity android:name="activity.PosterGridActivity" />
         <activity android:name="activity.Site" />
 
-        <activity android:name="activity.SearchMultiActivity">
+        <activity android:name="activity.SearchMultiActivity"
+            android:theme="@style/AppTheme.NoActionBar.NavDrawer">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
 
@@ -121,13 +144,12 @@
         <activity android:name="activity.ListUserActivity" />
         <activity android:name="activity.ListaUserActivity" />
         <activity android:name="activity.PersonActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="activity.SearchMultiActivity" />
         </activity>
         <activity android:name="activity.FotoPersonActivity" />
         <activity android:name="activity.SettingsActivity" />

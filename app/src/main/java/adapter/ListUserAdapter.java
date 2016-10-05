@@ -2,7 +2,6 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Movie;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -17,15 +17,12 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import activity.FilmeActivity;
+import domian.ItemsLista;
 import activity.ListaUserActivity;
 import activity.TvShowActivity;
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.model.MovieDb;
-import info.movito.themoviedbapi.model.Multi;
 import utils.Constantes;
 import utils.UtilsFilme;
-
-import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.lists;
 
 /**
  * Created by icaro on 14/08/16.
@@ -33,18 +30,18 @@ import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.lists;
 public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListViewHolder> {
 
 
-    List<MovieDb> lista;
+    List<ItemsLista> lista;
     Context context;
 
 
-    public ListUserAdapter(ListaUserActivity listaUserActivity, List<MovieDb> movieLists) {
+    public ListUserAdapter(Context listaUserActivity, List<ItemsLista> movieLists) {
         this.context = listaUserActivity;
         lista = movieLists;
     }
 
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.usuario_list_adapter, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.lista, parent, false);
         ListUserAdapter.ListViewHolder holder = new ListViewHolder(view);
         return holder;
     }
@@ -52,10 +49,17 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListVi
     @Override
     public void onBindViewHolder(final ListViewHolder holder, int position) {
 
-            final MovieDb listaMovie = lista.get(position);
 
-            if (listaMovie != null) {
-                Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + listaMovie.getPosterPath())
+            Log.d("domian.Lista", lista.get(position).getMediaType());
+            final ItemsLista movie = lista.get(position);
+
+            if (movie.getReleaseDate() != null){
+                holder.release.setText(movie.getReleaseDate().substring(0,4));
+            }
+
+
+            if (movie != null) {
+                Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
                         .into(holder.img_rated, new Callback() {
                             @Override
                             public void onSuccess() {
@@ -69,22 +73,27 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListVi
                         });
             }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { //NÃO FUNCIONA. METODO FilmeService.getTmdbTvShow()
-                //.getSeries() NÃO TRAS O TIPO DE MEDIA
-                if (listaMovie.getMediaType().equals(Multi.MediaType.TV_SERIES)){
-                    Intent intent = new Intent(context, TvShowActivity.class);
-                    intent.putExtra(Constantes.TVSHOW_ID, listaMovie.getId());
-                    intent.putExtra(Constantes.NOME_TVSHOW, listaMovie.getTitle());
-                    context.startActivity(intent);
-                } else {
-                    Intent intent = new Intent(context, FilmeActivity.class);
-                    intent.putExtra(Constantes.FILME_ID, listaMovie.getId());
-                    context.startActivity(intent);
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { //NÃO FUNCIONA. METODO FilmeService.getTmdbTvShow()
+                    //.getSeries() NÃO TRAS O TIPO DE MEDIA
+                    if (movie.getMediaType().equalsIgnoreCase("tv")) {
+                        Intent intent = new Intent(context, TvShowActivity.class);
+                        intent.putExtra(Constantes.TVSHOW_ID, movie.getId());
+                        intent.putExtra(Constantes.NOME_TVSHOW, movie.getTitle());
+                        intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(holder.img_rated));
+                        context.startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(context, FilmeActivity.class);
+                        intent.putExtra(Constantes.FILME_ID, movie.getId());
+                        intent.putExtra(Constantes.NOME_FILME, movie.getTitle());
+                        intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(holder.img_rated));
+                        context.startActivity(intent);
+                    }
                 }
-            }
-        });
+            });
+
     }
 
     @Override
@@ -99,12 +108,13 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListVi
 
         ImageView img_rated;
         ProgressBar progressBar;
+        TextView release;
 
         public ListViewHolder(View itemView) {
             super(itemView);
-            img_rated = (ImageView) itemView.findViewById(R.id.img_filme_usuario);
+            img_rated = (ImageView) itemView.findViewById(R.id.img_lista);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
-            itemView.findViewById(R.id.botoes_lista).setVisibility(View.GONE);
+            release  = (TextView) itemView.findViewById(R.id.date_oscar);
         }
     }
 }

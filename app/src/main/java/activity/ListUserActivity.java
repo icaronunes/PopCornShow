@@ -34,7 +34,7 @@ public class ListUserActivity extends BaseActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Listas...");
+        getSupportActionBar().setTitle(R.string.suas_listas);
         listView = (ListView) findViewById(R.id.listview_lista_user);
 
         new TMDVAsync().execute();
@@ -53,7 +53,7 @@ public class ListUserActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class TMDVAsync extends AsyncTask<Void, Void, Void> {
+    private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -68,8 +68,6 @@ public class ListUserActivity extends BaseActivity {
             super.onPostExecute(aVoid);
             listView.setAdapter(new ListaUserAdapter(ListUserActivity.this, lists));
 
-                Log.d("LISTA", ""+lists.getResults().size());
-                Log.d("LISTA", ""+lists.getResults().get(0).getItems());
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

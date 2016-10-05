@@ -2,6 +2,7 @@ package activity;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
@@ -41,6 +42,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import adapter.TvShowAdapter;
+import adapter.TvShowsAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
@@ -51,6 +53,7 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static br.com.icaro.filme.R.string.movieDb;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.credits;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.external_ids;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.images;
@@ -159,13 +162,22 @@ public class TvShowActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 
+                PropertyValuesHolder anim1 = PropertyValuesHolder.ofFloat("scaleX", 1f, 0f);
+                PropertyValuesHolder anim2 = PropertyValuesHolder.ofFloat("scaley", 1f, 0f);
+                PropertyValuesHolder anim3 = PropertyValuesHolder.ofFloat("scaleX", 0.5f, 1f);
+                PropertyValuesHolder anim4 = PropertyValuesHolder.ofFloat("scaley", 0.5f, 1f);
+                ObjectAnimator animator = ObjectAnimator
+                        .ofPropertyValuesHolder(menu_item_watchlist, anim1, anim2, anim3, anim4);
+                animator.setDuration(1650);
+                animator.start();
+
                 final ResponseStatus[] status = new ResponseStatus[1];
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        if (isDestroyed()) {
+                        if (!isDestroyed()) {
                             status[0] = FilmeService.addOrRemoverWatchList(id_tvshow, addWatch, TmdbAccount.MediaType.TV);
-                            if (isDestroyed()) {
+                            if (!isDestroyed()) {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -227,66 +239,91 @@ public class TvShowActivity extends BaseActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final ResponseStatus[] status = new ResponseStatus[1];
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (isDestroyed()) {
-                            status[0] = FilmeService.addOrRemoverFavorite(id_tvshow, addFavorite, TmdbAccount.MediaType.TV);
-                            if (isDestroyed()) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        switch (status[0].getStatusCode()) {
-                                            case 1: {
-                                                Toast.makeText(TvShowActivity.this, getString(R.string.tvshow_add_favorite), Toast.LENGTH_SHORT)
-                                                        .show();
-                                                Bundle bundle = new Bundle();
-                                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.tvshow_add_favorite));
-                                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
-                                                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
-                                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                                                addFavorite = !addFavorite;
-                                                fab.close(true);
-                                                break;
-                                            }
-                                            case 12: {
-                                                Toast.makeText(TvShowActivity.this, getString(R.string.tvshow_re_add), Toast.LENGTH_SHORT).show();
-                                                Bundle bundle = new Bundle();
-                                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.tvshow_add_favorite));
-                                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
-                                                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
-                                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                                                addFavorite = !addFavorite;
-                                                fab.close(true);
-                                                break;
-                                            }
-                                            case 13: {
-                                                Toast.makeText(TvShowActivity.this, getString(R.string.tvshow_remove_favorite), Toast.LENGTH_SHORT).show();
-                                                Bundle bundle = new Bundle();
-                                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.tvshow_remove_favorite));
-                                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
-                                                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
-                                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                                                addFavorite = !addFavorite;
-                                                fab.close(true);
-                                            }
-                                            default: {
-                                                Toast.makeText(TvShowActivity.this, getString(R.string.erro_add_or_remove), Toast.LENGTH_SHORT).show();
-                                                Bundle bundle = new Bundle();
-                                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.erro_add_or_remove));
-                                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
-                                                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
-                                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                                                fab.close(true);
+
+                PropertyValuesHolder anim1 = PropertyValuesHolder.ofFloat("scaleX", 1f, 0.2f);
+                PropertyValuesHolder anim2 = PropertyValuesHolder.ofFloat("scaley", 1f, 0.2f);
+                PropertyValuesHolder anim3 = PropertyValuesHolder.ofFloat("scaleX", 0f, 1f);
+                PropertyValuesHolder anim4 = PropertyValuesHolder.ofFloat("scaley", 0f, 1f);
+                ObjectAnimator animator = ObjectAnimator
+                        .ofPropertyValuesHolder(menu_item_favorite, anim1, anim2, anim3, anim4);
+                animator.setDuration(1700);
+                animator.start();
+
+                Date date = null;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    date = sdf.parse(series.getFirstAirDate());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (!UtilsFilme.verificaLancamento(date)) {
+                    FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(TvShowActivity.this);
+                    Toast.makeText(TvShowActivity.this, R.string.tvshow_nao_lancado, Toast.LENGTH_SHORT).show();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Favorite - Tvshow ainda não foi lançado.");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                } else {
+                    final ResponseStatus[] status = new ResponseStatus[1];
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!isDestroyed()) {
+                                status[0] = FilmeService.addOrRemoverFavorite(id_tvshow, addFavorite, TmdbAccount.MediaType.TV);
+                                if (!isDestroyed()) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            switch (status[0].getStatusCode()) {
+                                                case 1: {
+                                                    Toast.makeText(TvShowActivity.this, getString(R.string.tvshow_add_favorite), Toast.LENGTH_SHORT)
+                                                            .show();
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.tvshow_add_favorite));
+                                                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                                                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                                                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                                                    addFavorite = !addFavorite;
+                                                    fab.close(true);
+                                                    break;
+                                                }
+                                                case 12: {
+                                                    Toast.makeText(TvShowActivity.this, getString(R.string.tvshow_re_add), Toast.LENGTH_SHORT).show();
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.tvshow_add_favorite));
+                                                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                                                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                                                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                                                    addFavorite = !addFavorite;
+                                                    fab.close(true);
+                                                    break;
+                                                }
+                                                case 13: {
+                                                    Toast.makeText(TvShowActivity.this, getString(R.string.tvshow_remove_favorite), Toast.LENGTH_SHORT).show();
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.tvshow_remove_favorite));
+                                                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                                                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                                                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                                                    addFavorite = !addFavorite;
+                                                    fab.close(true);
+                                                }
+                                                default: {
+                                                    Toast.makeText(TvShowActivity.this, getString(R.string.erro_add_or_remove), Toast.LENGTH_SHORT).show();
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.erro_add_or_remove));
+                                                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                                                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+                                                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                                                    fab.close(true);
+                                                }
                                             }
                                         }
-                                    }
-                                });
+                                    });
+                                }
                             }
                         }
-                    }
-                }).start();
+                    }).start();
+                }
             }
         };
     }
@@ -295,6 +332,7 @@ public class TvShowActivity extends BaseActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Date date = null;
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 try {
@@ -433,14 +471,14 @@ public class TvShowActivity extends BaseActivity {
                 Log.d("FilmeActivity", "true - ");
                 series = tmdbTv
                         .getSeries(id_tvshow, Locale.getDefault().toLanguageTag() + ",en,null"
-                                , images, credits, videos);
+                                , images, credits, videos, external_ids);
                 series.getVideos().addAll(tmdbTv.getSeries(id_tvshow, null, videos).getVideos());
                 series.getImages().setPosters(tmdbTv.getSeries(id_tvshow, null, images).getImages().getPosters());
 
             } else {
                 Log.d("FilmeActivity", "false - ");
                 series = FilmeService.getTmdbTvShow()
-                        .getSeries(id_tvshow, null, images, credits, videos);
+                        .getSeries(id_tvshow, null, images, credits, videos, external_ids);
             }
             return null;
         }

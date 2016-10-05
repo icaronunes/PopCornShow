@@ -2,4 +2,5 @@
 <resources>
 
     <string name="API_KEY" translatable="false">fb14e77a32282ed59a8122a266010b70</string>
+    <string name="admob" translatable="false">ca-app-pub-7639270198633263/7125334030   321</string>
 </resources>

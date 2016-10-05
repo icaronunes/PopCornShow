@@ -85,11 +85,11 @@ public class TemporadaActivity extends BaseActivity {
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             if (idioma_padrao) {
                 tvSeason = FilmeService.getTmdbTvSeasons()
-                        .getSeason(serie_id, temporada_id, Locale.getDefault().toLanguageTag() + ",en,null", null);
+                        .getSeason(serie_id, temporada_id, Locale.getDefault().toLanguageTag() + ",en,null");
                 return null; // ????????
             }else {
                 tvSeason = FilmeService.getTmdbTvSeasons()
-                        .getSeason(serie_id, temporada_id, ",en,null", null); //????
+                        .getSeason(serie_id, temporada_id, ",en,null"); //????
                 return null;
                 }
         }

@@ -90,8 +90,8 @@ public class FilmeApplication extends Application {
 
             user = Prefs.getString(getBaseContext(), Prefs.LOGIN, Prefs.LOGIN_PASS);
             pass = Prefs.getString(getBaseContext(), Prefs.PASS, Prefs.LOGIN_PASS);
-            Log.d(this.getClass().getName(), "User: " + user);
-            Log.d(this.getClass().getName(), "Pass: " + pass);
+           // Log.d(this.getClass().getName(), "User: " + user);
+         //   Log.d(this.getClass().getName(), "Pass: " + pass);
 
             account = FilmeService.getAccount(user, pass);
             if (account != null){

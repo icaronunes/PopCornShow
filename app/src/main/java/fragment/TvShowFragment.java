@@ -151,16 +151,18 @@ public class TvShowFragment extends Fragment {
             imdb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), Site.class);
-                    intent.putExtra(Constantes.SITE,
-                            "https:www.imdb.com/title/" + series.getExternalIds().getImdbId() + "/");
-                    startActivity(intent);
+                    if (series.getExternalIds().getImdbId() != null) {
+                        Intent intent = new Intent(getActivity(), Site.class);
+                        intent.putExtra(Constantes.SITE,
+                                "https:www.imdb.com/title/" + series.getExternalIds().getImdbId() + "/");
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_imdb" );
-                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, Site.class.getName());
-                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                        startActivity(intent);
 
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_imdb");
+                        bundle.putString(FirebaseAnalytics.Param.DESTINATION, Site.class.getName());
+                        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                    }
                 }
             });
 
