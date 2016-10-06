@@ -11,11 +11,25 @@
     android:paddingTop="10dp"
     android:elevation="0dp">
 
+    <LinearLayout
+        android:id="@+id/criar_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <ImageView
         android:id="@+id/tmdb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/tmdb" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/criar_login_tmdb"
+        android:textStyle="normal|italic"
+        android:layout_gravity="bottom|center_horizontal" />
+
+    </LinearLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"

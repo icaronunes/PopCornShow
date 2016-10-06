@@ -238,7 +238,7 @@ public class SearchMultiActivity extends BaseActivity {
 
                 movieDbList = movieDbs;
             }
-            if (movieDbList.size() != 0) {
+            if (movieDbList != null) {
                 swipeRefreshLayout.setRefreshing(false);
                 recyclerView.setAdapter(new SearchAdapter(SearchMultiActivity.this, movieDbList));
                 swipeRefreshLayout.setEnabled(true);

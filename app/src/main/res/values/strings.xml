@@ -142,11 +142,12 @@
     <string name="sobre">Sobre</string>
     <string name="infor_app">Informaçãoes sobre o App</string>
     <string name="criado">Criado por:</string>
-    <string name="icaronunes">icaronunes@hotmail.com</string>
-    <string name="infor_tmdb">Informações do PopCorn são fornecidas pelo TMDB.</string>
+    <string name="icaronunes">icaronunes@gmail.com</string>
+    <string name="infor_tmdb">"This product uses the TMDb API but is not endorsed or certified by TMDb."</string>
     <string name="rated_googleplay">Avaliar no Google Play.</string>
     <string name="suas_listas">Suas listas</string>
     <string name="person_rated">Pessoas Populares</string>
     <string name="oscar">Vencedores de Oscar</string>
+    <string name="criar_login_tmdb">Criar Login no TMDB</string>
 
 </resources>

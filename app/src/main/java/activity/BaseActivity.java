@@ -25,6 +25,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.lists;
  */
 
 public class BaseActivity extends AppCompatActivity {
+
     static String TAG = "BaseActivity";
     static Account account = null;
     protected DrawerLayout drawerLayout;
@@ -358,6 +360,7 @@ public class BaseActivity extends AppCompatActivity {
 
                 Button button = (Button) alertDialog.findViewById(R.id.button_login_ok);
                 ImageView tmdb = (ImageView) alertDialog.findViewById(R.id.tmdb);
+                LinearLayout criar_login = (LinearLayout) alertDialog.findViewById(R.id.criar_login);
                 final EditText eLogin = (EditText) alertDialog.findViewById(R.id.text_login);
                 final EditText ePass = (EditText) alertDialog.findViewById(R.id.text_pass_login);
                 int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
@@ -365,7 +368,7 @@ public class BaseActivity extends AppCompatActivity {
 
                 alertDialog.getWindow().setLayout(width, height);
 
-                tmdb.setOnClickListener(new View.OnClickListener() {
+                criar_login.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(BaseActivity.this, Site.class);
