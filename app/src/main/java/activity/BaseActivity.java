@@ -359,7 +359,6 @@ public class BaseActivity extends AppCompatActivity {
                 alertDialog.setContentView(R.layout.adialog_custom_login);
 
                 Button button = (Button) alertDialog.findViewById(R.id.button_login_ok);
-                ImageView tmdb = (ImageView) alertDialog.findViewById(R.id.tmdb);
                 LinearLayout criar_login = (LinearLayout) alertDialog.findViewById(R.id.criar_login);
                 final EditText eLogin = (EditText) alertDialog.findViewById(R.id.text_login);
                 final EditText ePass = (EditText) alertDialog.findViewById(R.id.text_pass_login);
@@ -388,7 +387,7 @@ public class BaseActivity extends AppCompatActivity {
                                 android.R.style.Theme_Material_Dialog);
                         user = eLogin.getText().toString();
                         pass = ePass.getText().toString();
-                        Log.d(TAG, "Login/Pass " + user + " " + pass);//
+                        //Log.d(TAG, "Login/Pass " + user + " " + pass);//
                         progressDialog.setIndeterminate(true);
                         progressDialog.setMessage("Authenticating...");
                         progressDialog.show();

@@ -698,7 +698,9 @@ public class TvShowFragment extends Fragment {
                     }
                 });
                 YouTubeThumbnailView thumbnailView = (YouTubeThumbnailView) linearteste.findViewById(R.id.youtube_view_thumbnail);
-                thumbnailView.initialize(Config.YOUTUBE_API_KEY, OnInitializedListener(youtube_key));
+                if (isAdded()) {
+                    thumbnailView.initialize(Config.YOUTUBE_API_KEY, OnInitializedListener(youtube_key));
+                }
                 Log.d("OnClick", youtube_key);
                 //Acontence erros - Necessario corrigir
                 linearLayout.addView(linearteste);

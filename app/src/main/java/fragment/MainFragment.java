@@ -44,6 +44,7 @@ import utils.Constantes;
 import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.string.filmes_main;
+import static br.com.icaro.filme.R.string.idioma_padrao;
 import static br.com.icaro.filme.R.string.time;
 import static java.util.Arrays.asList;
 import static utils.UtilsFilme.getTimezone;
@@ -417,9 +418,10 @@ public class MainFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
             Log.d("PersonFragment", "doInBackground");
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
-            boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+
             if (status) {
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+                boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
                 if (idioma_padrao) {
                     TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
                     TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();

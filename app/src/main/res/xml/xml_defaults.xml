@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- START xml_defaults -->
+<defaultsMap>
+    <entry>
+        <key>descricao</key>
+        <value>""</value>
+    </entry>
+
+    <entry>
+        <key>id_main</key>
+        <value>0</value>
+    </entry>
+</defaultsMap>
+    <!-- END xml_defaults -->

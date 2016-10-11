@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import activity.MainActivity;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
+import domian.FilmeService;
 
 /**
  * Created by icaro on 15/09/16.
@@ -33,6 +34,7 @@ public class LogoffDialog extends DialogPreference {
             public void onClick(DialogInterface dialogInterface, int i) {
                 Prefs.apagarLoginSenha(getContext(), Prefs.LOGIN_PASS);
                 FilmeApplication.getInstance().setLogado(false);
+                FilmeApplication.getInstance().setAccount(null);
                 FilmeApplication.getInstance().setAccount(null);
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

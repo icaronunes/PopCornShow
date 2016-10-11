@@ -29,6 +29,8 @@ public class Prefs {
         editor.clear();
         Log.d("Prefs", "apagarLoginSenha" );
         editor.commit();
+        Log.d("Prefs", getString(context, Prefs.LOGIN, PREF_ID));
+        Log.d("Prefs", getString(context, Prefs.PASS, PREF_ID));
 
     }
 

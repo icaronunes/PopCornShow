@@ -82,7 +82,7 @@ public class TvShowActivity extends BaseActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         setupNavDrawer();
-        nome = getIntent().getStringExtra(Constantes.NOME_TVSHOW);
+        nome = getIntent().getStringExtra(Constantes.NOME_TVSHOW);// usado????????
         color_top = getIntent().getIntExtra(Constantes.COLOR_TOP, R.color.colorFAB);
         layout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         layout.setBackgroundColor(color_top);
@@ -466,8 +466,9 @@ public class TvShowActivity extends BaseActivity {
         protected Void doInBackground(Void... voids) {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(TvShowActivity.this);
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-            TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
+
             if (idioma_padrao) {
+                TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
                 Log.d("FilmeActivity", "true - ");
                 series = tmdbTv
                         .getSeries(id_tvshow, Locale.getDefault().toLanguageTag() + ",en,null"
@@ -489,6 +490,7 @@ public class TvShowActivity extends BaseActivity {
             setCoordinator();
             setImageTop();
             setupViewPagerTabs();
+
 
 
             if (FilmeApplication.getInstance().isLogado()) { // Arrumar

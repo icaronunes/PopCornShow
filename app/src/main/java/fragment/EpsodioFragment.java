@@ -41,6 +41,7 @@ import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.id.ep_rating;
 import static com.google.android.gms.wearable.DataMap.TAG;
+import static utils.UtilsFilme.getContext;
 
 /**
  * Created by icaro on 27/08/16.
@@ -95,21 +96,25 @@ public class EpsodioFragment extends Fragment {
         setTvshow();
         setSinopse();
         setName();
-        setButtonRating();
+        if (!episode.getAirDate().isEmpty()) {
+            setButtonRating();
+        }
     }
 
 
     private void setButtonRating() {
         //Arrumar. Ta esquisito.
+
         Date date = null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            date = sdf.parse(episode.getAirDate());
+            date = sdf.parse(episode.getAirDate() != null ? episode.getAirDate() : null );
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         if (UtilsFilme.verificaLancamento(date) && FilmeApplication.getInstance().isLogado()) {
+
 
             ep_rating_button.setOnClickListener(new View.OnClickListener() {
                 @Override
