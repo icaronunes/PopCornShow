@@ -1,6 +1,5 @@
 package domian;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +25,6 @@ import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.TmdbTvEpisodes;
 import info.movito.themoviedbapi.TmdbTvSeasons;
 import info.movito.themoviedbapi.TvResultsPage;
-import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.config.Account;
 import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.config.TokenSession;
@@ -46,8 +44,6 @@ import utils.Config;
 import utils.Prefs;
 
 import static android.R.attr.id;
-import static br.com.icaro.filme.R.drawable.user;
-import static br.com.icaro.filme.R.id.rated;
 import static info.movito.themoviedbapi.TmdbAccount.PARAM_SESSION;
 import static info.movito.themoviedbapi.TmdbAccount.TMDB_METHOD_ACCOUNT;
 import static info.movito.themoviedbapi.TmdbPeople.TMDB_METHOD_PERSON;

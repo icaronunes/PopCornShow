@@ -8,16 +8,13 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Window;
 
-import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.LinePageIndicator;
-import com.viewpagerindicator.UnderlinePageIndicator;
 
 import java.util.List;
 
 import br.com.icaro.filme.R;
 import fragment.PosterScrollFragment;
 import info.movito.themoviedbapi.model.Artwork;
-import me.relex.circleindicator.CircleIndicator;
 import utils.Constantes;
 
 import static br.com.icaro.filme.R.id.pager;
@@ -25,6 +22,8 @@ import static br.com.icaro.filme.R.id.pager;
 /**
  * Created by icaro on 12/07/16.
  */
+
+
 
 
 public class PosterActivity extends BaseActivity {

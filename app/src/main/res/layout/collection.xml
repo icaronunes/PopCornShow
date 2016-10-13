@@ -20,7 +20,6 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:maxLines="2"
-        android:text="Star Trek - adabybdabdadada"
         android:textColor="#000" />
 
     <LinearLayout

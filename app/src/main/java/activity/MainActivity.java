@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 
 import com.viewpagerindicator.CirclePageIndicator;
@@ -52,6 +53,9 @@ public class MainActivity extends BaseActivity {
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(" ");
+        if (getIntent().hasExtra("click_action")){
+            Log.d("MainActivity", getIntent().getStringExtra("click_action"));
+        }
 
         viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);
         viewpage_top_main = (ViewPager) findViewById(R.id.viewpage_top_main);
@@ -143,9 +147,12 @@ public class MainActivity extends BaseActivity {
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             if (idioma_padrao) {
                 tmdbTv = FilmeService.getTmdbTvShow()
-                        .getAiringToday(Locale.getDefault().toLanguageTag(), 1, UtilsFilme.getTimezone());
-                tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies(Locale
-                        .getDefault().toLanguageTag(), 1);
+                        .getAiringToday(Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
+                                //.toLanguageTag()
+                                , 1, UtilsFilme.getTimezone());
+                tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies(Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
+                        //.toLanguageTag()
+                         , 1);
             } else {
                 tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("en", 1, UtilsFilme.getTimezone());
                 tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies("en", 1);

@@ -1,5 +1,6 @@
 package activity;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ import utils.Constantes;
 /**
  * Created by icaro on 04/10/16.
  */
-public class OscarActivity  extends BaseActivity{
+public class ListaGenericaActivity  extends BaseActivity{
 
     RecyclerView recyclerView;
     ProgressBar progressBar;
@@ -39,8 +40,12 @@ public class OscarActivity  extends BaseActivity{
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.oscar);
-        list_id = getIntent().getStringExtra(Constantes.LISTA_ID);
+        if (getIntent().getAction() != null) {
+            getSupportActionBar().setTitle(getIntent().getStringExtra(Constantes.LISTA_GENERICA));
+            list_id = getIntent().getStringExtra(Constantes.LISTA_ID);
+        }else {
+            startActivity(new Intent(this, MainActivity.class));
+        }
         progressBar = (ProgressBar) findViewById(R.id.progress);
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_favorite);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
@@ -91,7 +96,7 @@ public class OscarActivity  extends BaseActivity{
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressBar.setVisibility(View.GONE);
-            recyclerView.setAdapter(new ListUserAdapter(OscarActivity.this,
+            recyclerView.setAdapter(new ListUserAdapter(ListaGenericaActivity.this,
                     lista != null ? lista.items : null));
         }
     }

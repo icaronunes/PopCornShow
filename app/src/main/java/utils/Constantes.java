@@ -8,7 +8,7 @@ public class Constantes {
 
     public final static String NAV_DRAW_ESCOLIDO = "check";
     public static final String ABA = "aba";
-    public static final String FILME_ID = "filme";
+    public static final String FILME_ID = "filme_id";
     public static final String NOME_FILME = "nome_filme";
     public static final String PORTUGUES = "pt-BR";
     public static final String INGLES = "en";
@@ -42,7 +42,7 @@ public class Constantes {
     public static final String EPSODIO = "epsodio";
     public static final String MEDIATYPE = "mediatype";
     public static final String ID = "id";
-
     public static final String MAIN = "main";
+    public static final String LISTA_GENERICA = "generica_nome";
 }
 

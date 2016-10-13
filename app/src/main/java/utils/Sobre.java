@@ -1,14 +1,13 @@
 package utils;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import activity.Site;
 import br.com.icaro.filme.R;
@@ -48,7 +47,12 @@ public class Sobre extends DialogPreference {
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "entrou", Toast.LENGTH_SHORT).show();
+                final String appPackageName = getContext().getPackageName(); // getPackageName() from Context or Activity object
+                try {
+                    getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
             }
         });
     }

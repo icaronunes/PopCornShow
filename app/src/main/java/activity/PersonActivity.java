@@ -14,12 +14,8 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import adapter.PersonAdapter;
 import br.com.icaro.filme.R;
-import fragment.PersonFragment;
-import info.movito.themoviedbapi.model.Multi;
 import utils.Constantes;
 import utils.UtilsFilme;
-
-import static com.google.android.gms.analytics.internal.zzy.t;
 
 public class PersonActivity extends BaseActivity {
 
@@ -35,8 +31,7 @@ public class PersonActivity extends BaseActivity {
         setContentView(R.layout.activity_person);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
-        nome = getIntent().getStringExtra(Constantes.NOME_PERSON);
-        id_person = getIntent().getIntExtra(Constantes.PERSON_ID, 0);
+        getExtras();
         viewPager = (ViewPager) findViewById(R.id.viewPager_person);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(nome);
@@ -54,6 +49,16 @@ public class PersonActivity extends BaseActivity {
             snack();
         }
 
+    }
+
+    private void getExtras() {
+        if (getIntent().getAction() == null){
+            nome = getIntent().getStringExtra(Constantes.NOME_PERSON);
+            id_person = getIntent().getIntExtra(Constantes.PERSON_ID, 0);
+        } else {
+            nome = getIntent().getStringExtra(Constantes.NOME_PERSON);
+            id_person = Integer.parseInt(getIntent().getStringExtra(Constantes.PERSON_ID));
+        }
     }
 
     protected void snack() {

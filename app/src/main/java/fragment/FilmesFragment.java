@@ -2,10 +2,8 @@ package fragment;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -21,15 +19,10 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-
 import java.util.List;
 import java.util.Locale;
 
 import activity.FilmeActivity;
-import activity.SettingsActivity;
-import activity.TvShowActivity;
 import adapter.FilmesAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
@@ -60,7 +53,11 @@ public class FilmesFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.abaEscolhida = getArguments().getInt(Constantes.NAV_DRAW_ESCOLIDO);
+            if (getActivity().getIntent().getAction() == null) {
+                this.abaEscolhida = getArguments().getInt(Constantes.NAV_DRAW_ESCOLIDO);
+            } else {
+                this.abaEscolhida = Integer.parseInt(getArguments().getString(Constantes.NAV_DRAW_ESCOLIDO));
+            }
         }
     }
 
@@ -191,7 +188,7 @@ public class FilmesFragment extends Fragment {
         }
 
         protected List<MovieDb> getListaTipo(TmdbMovies tmdbMovies) {
-            String language = Locale.getDefault().toLanguageTag();
+            String language = Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry();
             if (language != null) {
                 switch (abaEscolhida) {
 

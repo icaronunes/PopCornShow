@@ -10,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Window;
 
-import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.LinePageIndicator;
 
 import java.util.List;
@@ -18,13 +17,9 @@ import java.util.List;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import fragment.PosterScrollFragment;
-import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.Artwork;
-import info.movito.themoviedbapi.model.ArtworkType;
-import info.movito.themoviedbapi.model.MovieDb;
 import utils.Constantes;
 
-import static br.com.icaro.filme.R.id.art;
 import static br.com.icaro.filme.R.id.pager;
 
 /**
@@ -33,7 +28,7 @@ import static br.com.icaro.filme.R.id.pager;
 
 
 public class FotoPersonActivity extends BaseActivity {
-    int id_foto;
+    int id_foto, position;
     ViewPager viewPager;
     List<Artwork> artworks;
     LinePageIndicator titlePageIndicator;
@@ -46,12 +41,24 @@ public class FotoPersonActivity extends BaseActivity {
         setContentView(R.layout.activity_scroll_poster);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Log.d("PosterActivity", "onCreate");
-        id_foto = getIntent().getExtras().getInt(Constantes.PERSON_ID);
-        nome = getIntent().getExtras().getString(Constantes.NOME_PERSON);
+        getExtras();
+
         viewPager = (ViewPager) findViewById(pager);
         titlePageIndicator = (LinePageIndicator) findViewById(R.id.indicator);
         Log.d("PosterActivity", "onCreate ID: " + id_foto);
 
+    }
+
+    private void getExtras() {
+        if (getIntent().getAction() == null){
+            id_foto = getIntent().getExtras().getInt(Constantes.PERSON_ID);
+            nome = getIntent().getExtras().getString(Constantes.NOME_PERSON);
+             position = getIntent().getExtras().getInt(Constantes.POSICAO);
+        } else {
+            id_foto = Integer.parseInt(getIntent().getExtras().getString(Constantes.PERSON_ID));
+            nome = getIntent().getExtras().getString(Constantes.NOME_PERSON);
+            position = Integer.parseInt(getIntent().getExtras().getString(Constantes.POSICAO));
+        }
     }
 
     @Override
@@ -95,7 +102,7 @@ public class FotoPersonActivity extends BaseActivity {
             viewPager.setAdapter(new PosterFragment(getSupportFragmentManager()));
             titlePageIndicator.setViewPager(viewPager);
           //  titlePageIndicator.setFillColor(R.color.black);
-            titlePageIndicator.setCurrentItem(getIntent().getExtras().getInt(Constantes.POSICAO));
+            titlePageIndicator.setCurrentItem(position);
         }
     }
 }

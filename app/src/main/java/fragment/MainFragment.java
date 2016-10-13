@@ -37,15 +37,12 @@ import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.MovieDb;
-import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.string.filmes_main;
-import static br.com.icaro.filme.R.string.idioma_padrao;
-import static br.com.icaro.filme.R.string.time;
 import static java.util.Arrays.asList;
 import static utils.UtilsFilme.getTimezone;
 
@@ -425,10 +422,18 @@ public class MainFragment extends Fragment {
                 if (idioma_padrao) {
                     TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
                     TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
-                    popularTvshow = tmdbTv.getPopular(Locale.getDefault().toLanguageTag() + ",en,null", 1);
-                    toDay = tmdbTv.getAiringToday(Locale.getDefault().toLanguageTag() + ",en,null", 1, getTimezone());
-                    popularMovie = tmdbMovies.getPopularMovies(Locale.getDefault().toLanguageTag() + ",en,null", 1);
-                    cinema = tmdbMovies.getUpcoming(Locale.getDefault().toLanguageTag() + ",en,null", 1);
+                    popularTvshow = tmdbTv.getPopular(Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
+                            //.toLanguageTag()
+                            + ",en,null", 1);
+                    toDay = tmdbTv.getAiringToday(Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
+                            //.toLanguageTag()
+                            + ",en,null", 1, getTimezone());
+                    popularMovie = tmdbMovies.getPopularMovies(Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
+                            //.toLanguageTag()
+                            + ",en,null", 1);
+                    cinema = tmdbMovies.getUpcoming(Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
+                            //.toLanguageTag()
+                            + ",en,null", 1);
                 }else{
                     TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
                     TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();

@@ -77,13 +77,12 @@ public class ProdutoraActivity extends BaseActivity {
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         top_img_produtora = (ImageView) findViewById(R.id.top_img_produtora);
-        mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
+        getExtras();
         recyclerView = (RecyclerView) findViewById(R.id.produtora_filmes_container);
         recyclerView.setLayoutManager(new GridLayoutManager(ProdutoraActivity.this, 3));
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         InfoLayout();
-        id_produtora = getIntent().getIntExtra(Constantes.PRODUTORA_ID, 0);
 
 
         AdView adview = (AdView) findViewById(R.id.adView);
@@ -109,6 +108,20 @@ public class ProdutoraActivity extends BaseActivity {
         }
 
 
+    }
+
+    private void getExtras() {
+        if (getIntent().getAction() == null){
+            mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
+            id_produtora = getIntent().getIntExtra(Constantes.PRODUTORA_ID, 0);
+        } else {
+//            String media = getIntent().getStringExtra(Constantes.MEDIATYPE);
+//            switch (media){
+//                case "tv"
+//            }
+//            mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
+            id_produtora = Integer.parseInt(getIntent().getStringExtra(Constantes.PRODUTORA_ID));
+        }
     }
 
     private void setHeadquarters() {
@@ -208,7 +221,7 @@ public class ProdutoraActivity extends BaseActivity {
             if (pagina == 1) {
                 if (idioma_padrao) {
                     resultsPage = FilmeService.getTmdbCompany()
-                            .getCompanyMovies(id_produtora, Locale.getDefault().toLanguageTag() + ",en,null", pagina);
+                            .getCompanyMovies(id_produtora, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry() + ",en,null", pagina);
                 } else {
                     resultsPage = FilmeService.getTmdbCompany()
                             .getCompanyMovies(id_produtora, "en,null", pagina);
@@ -217,7 +230,7 @@ public class ProdutoraActivity extends BaseActivity {
                 if (idioma_padrao) {
                     temp = resultsPage;
                     resultsPage = FilmeService.getTmdbCompany()
-                            .getCompanyMovies(id_produtora, Locale.getDefault().toLanguageTag() + ",en,null", pagina);
+                            .getCompanyMovies(id_produtora, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry() + ",en,null", pagina);
                     resultsPage.getResults().addAll(temp.getResults());
                 } else {
                     resultsPage = FilmeService.getTmdbCompany()

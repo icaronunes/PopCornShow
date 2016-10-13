@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -12,16 +13,33 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+
+        <!--
+         android:name="applicaton.FilmeApplication"
+         android:name="android.support.multidex.MultiDexApplication"
+        -->
         <activity
             android:name="activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar.NavDrawer">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="activity.SearchMultiActivity" />
+        </activity>
+        <activity
+            android:name="activity.TvShowActivity"
+            android:theme="@style/AppTheme.NoActionBar.NavDrawer">
             <intent-filter>
-                <action android:name="OPEN_ACTIVITY_1" />
+                <action android:name="OPEN_ACTIVITY_TV" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
@@ -31,28 +49,20 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
-
         </activity>
-
-
-        <activity android:name="activity.TvShowActivity"
-            android:theme="@style/AppTheme.NoActionBar.NavDrawer">
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="activity.SearchMultiActivity" />
-        </activity>
-
         <activity android:name="activity.FilmesActivity">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_FILMES" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
-
         </activity>
         <activity android:name="activity.FavoriteActivity">
             <meta-data
@@ -63,16 +73,13 @@
                 android:value="activity.SearchMultiActivity" />
         </activity>
         <activity android:name="activity.RatedActivity">
-
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
-
         </activity>
-
         <activity android:name="activity.PersonPopularActivity">
             <meta-data
                 android:name="android.app.searchable"
@@ -80,55 +87,114 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
-
-            </activity>
+        </activity>
         <activity
             android:name="activity.FilmeActivity"
             android:parentActivityName="activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar.NavDrawer">
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="activity.SearchMultiActivity" />
-        </activity>
-
-        <activity android:name="activity.OscarActivity">
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="activity.SearchMultiActivity" />
-
-        </activity>
-
-        <activity android:name="activity.TemporadaActivity" />
-        <activity android:name="activity.EpsodioActivity" />
-        <activity android:name="activity.TreilerActivity" />
-        <activity
-            android:name="activity.PosterActivity"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth.NoActionBar" />
-        <activity android:name="activity.ReviewsActivity" />
-        <activity android:name="activity.ElencoActivity" />
-        <activity android:name="activity.CrewsActivity" />
-        <activity android:name="activity.PosterGridActivity" />
-        <activity android:name="activity.Site" />
-
-        <activity android:name="activity.SearchMultiActivity"
-            android:theme="@style/AppTheme.NoActionBar.NavDrawer">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="OPEN_ACTIVITY_FILME" />
 
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="activity.SearchMultiActivity" />
+        </activity>
 
+        <activity android:name="activity.ListaGenericaActivity">
+
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_GENERICA" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
+
+        <activity android:name="activity.OscarActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="activity.SearchMultiActivity" />
+        </activity>
+
+        <activity android:name="activity.TemporadaActivity">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_TEMPORADA" />
+<!--Não usado ainda-->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="activity.EpsodioActivity">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_EPSODIO" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <!--não usado ainda-->
+            </intent-filter>
+        </activity>
+
+        <activity android:name="activity.TreilerActivity">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_TREILER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="activity.PosterActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth.NoActionBar" />
+
+
+        <activity android:name="activity.ReviewsActivity">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_REVIEWS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="activity.ElencoActivity">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_ELENCO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="activity.CrewsActivity">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_CREWS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+        <activity android:name="activity.PosterGridActivity" />
+
+        <activity android:name="activity.Site">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_SITE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="activity.SearchMultiActivity"
+            android:theme="@style/AppTheme.NoActionBar.NavDrawer">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
 
         <activity android:name="activity.WatchListActivity">
@@ -139,15 +205,35 @@
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
         </activity>
+
         <activity
             android:name="activity.ProdutoraActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_PRODUTORA" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
         <activity
             android:name="activity.SimilaresActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_SIMILARES" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name="activity.ListUserActivity" />
         <activity android:name="activity.ListaUserActivity" />
+
         <activity android:name="activity.PersonActivity">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_PERSON" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -155,10 +241,23 @@
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
         </activity>
-        <activity android:name="activity.FotoPersonActivity" />
+
+        <activity android:name="activity.FotoPersonActivity">
+
+        <intent-filter>
+            <action android:name="OPEN_ACTIVITY_PERSON_FOTO" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+
+        </activity>
+
         <activity android:name="activity.SettingsActivity" />
 
         <activity android:name="activity.TvShowsActivity">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_TVSHOWS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
@@ -166,33 +265,27 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
-
         </activity>
 
         <provider
             android:name="provider.SuggestionRecentProvider"
             android:authorities="br.com.icaro.filme.search2" />
-
         <provider
             android:name="provider.SuggestionProvider"
             android:authorities="br.com.icaro.filme.search"
             android:enabled="true"
             android:exported="true" />
 
-
-        <!--<service-->
-            <!--android:name="service.MyFirebaseMessagingService">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.google.firebase.MESSAGING_EVENT"/>-->
-            <!--</intent-filter>-->
-        <!--</service>-->
-
-        <!--<service-->
-            <!--android:name="service.MyFirebaseInstanceIDService">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>-->
-            <!--</intent-filter>-->
-        <!--</service>-->
+        <service android:name="service.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name="service.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
 
     </application>
 

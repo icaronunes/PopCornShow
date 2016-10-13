@@ -43,9 +43,6 @@ import utils.Constantes;
 import utils.Prefs;
 import utils.UtilsFilme;
 
-import static com.google.android.gms.analytics.internal.zzy.i;
-import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.lists;
-
 
 /**
  * Created by icaro on 24/06/16.
@@ -459,6 +456,7 @@ public class BaseActivity extends AppCompatActivity {
             account = FilmeApplication.getInstance().getAccount();
             user = Prefs.getString(getBaseContext(), Prefs.LOGIN, Prefs.LOGIN_PASS);
             pass = Prefs.getString(getBaseContext(), Prefs.PASS, Prefs.LOGIN_PASS);
+            account = FilmeService.getAccount(user, pass);
             if (account == null && user != null && pass != null) {
                 account = FilmeService.getAccount(user, pass);
             }

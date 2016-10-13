@@ -2,7 +2,6 @@ package activity;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -12,11 +11,9 @@ import android.view.MenuItem;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import fragment.FilmesFragment;
 import utils.Constantes;
-import utils.Prefs;
 
 public class FilmesActivity extends BaseActivity {
     @Override
@@ -26,9 +23,8 @@ public class FilmesActivity extends BaseActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         setupNavDrawer();
+        getExtras();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getString(getIntent()
-                .getIntExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing)));
 
         AdView adview = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
@@ -40,13 +36,22 @@ public class FilmesActivity extends BaseActivity {
         if (savedInstanceState == null) {
             FilmesFragment filmesFragment = new FilmesFragment();
             filmesFragment.setArguments(getIntent().getExtras());
-            setCheckable(getIntent().getIntExtra(Constantes.ABA, 0));
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.container, filmesFragment)
                     .commit();
         }
 
+    }
+
+    private void getExtras() {
+        if (getIntent().getAction() == null) {
+            getSupportActionBar().setTitle(getString(getIntent()
+                    .getIntExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing)));
+        } else {
+            getSupportActionBar().setTitle(getString(Integer.parseInt(getIntent()
+                    .getStringExtra(Constantes.NAV_DRAW_ESCOLIDO))));
+        }
     }
 
     @Override

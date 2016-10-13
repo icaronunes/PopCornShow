@@ -86,6 +86,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
                 intent.putExtra(Constantes.COLOR_TOP, color);
                 intent.putExtra(Constantes.NOME_TVSHOW, nome_serie);
                 context.startActivity(intent);
+
                 FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
                 Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TemporadaAdapter.class.getName());

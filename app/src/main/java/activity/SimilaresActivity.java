@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +36,7 @@ public class SimilaresActivity extends BaseActivity{
     int id_filme;
     ProgressBar progressBar;
     MovieResultsPage similares;
+    String title;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,11 +45,8 @@ public class SimilaresActivity extends BaseActivity{
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+getExtras();
 
-        id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
-        Log.d("ElencoActivity", " " + id_filme);
-
-        String title = getIntent().getStringExtra(Constantes.NOME_FILME);
         getSupportActionBar().setTitle(title);
 
         recyclerView = (RecyclerView) findViewById(R.id.similares_recyckeview);
@@ -72,6 +69,16 @@ public class SimilaresActivity extends BaseActivity{
         } else {
             text_similares_no_internet.setVisibility(View.VISIBLE);
             snack();
+        }
+    }
+
+    private void getExtras() {
+        if (getIntent().getAction() == null){
+            id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
+            title = getIntent().getStringExtra(Constantes.NOME_FILME);
+        } else {
+            id_filme = Integer.parseInt(getIntent().getStringExtra(Constantes.FILME_ID));
+            title = getIntent().getStringExtra(Constantes.NOME_FILME);
         }
     }
 

@@ -22,7 +22,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.List;
 import java.util.Locale;
@@ -210,7 +209,7 @@ public class SearchMultiActivity extends BaseActivity {
                 if (idioma_padrao) {
                     TmdbSearch tmdbSearch = FilmeService.getTmdbSearch();
                     TmdbSearch.MultiListResultsPage movieResultsPage = tmdbSearch.searchMulti(query,
-                            Locale.getDefault().toLanguageTag() + ",en,null", pagina);
+                            Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry() + ",en,null", pagina);
                     return movieResultsPage.getResults();
                 } else {
                     TmdbSearch tmdbSearch = FilmeService.getTmdbSearch();

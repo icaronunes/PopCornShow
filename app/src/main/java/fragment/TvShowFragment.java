@@ -38,9 +38,7 @@ import activity.CrewsActivity;
 import activity.ElencoActivity;
 import activity.PersonActivity;
 import activity.PosterGridActivity;
-import activity.ReviewsActivity;
 import activity.SettingsActivity;
-import activity.SimilaresActivity;
 import activity.Site;
 import activity.TemporadaActivity;
 import activity.TreilerActivity;
@@ -56,7 +54,6 @@ import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.string.in_production;
 import static br.com.icaro.filme.R.string.mil;
-import static br.com.icaro.filme.R.string.movieDb;
 import static com.squareup.picasso.Picasso.with;
 
 
@@ -358,7 +355,7 @@ public class TvShowFragment extends Fragment {
         temporada = (TextView) view.findViewById(R.id.temporadas);
         lancamento = (TextView) view.findViewById(R.id.lancamento);
         voto_media = (TextView) view.findViewById(R.id.voto_media);
-        voto_quantidade = (TextView) view.findViewById(R.id.voto_quantidade);
+        //voto_quantidade = (TextView) view.findViewById(R.id.voto_quantidade);
         produtora = (TextView) view.findViewById(R.id.produtora);
         original_title = (TextView) view.findViewById(R.id.original_title);
         spoken_languages = (TextView) view.findViewById(R.id.spoken_languages);
@@ -533,7 +530,8 @@ public class TvShowFragment extends Fragment {
             });
 
             animatorCompat.setDuration(900);
-            animatorCompat.setTarget(voto_quantidade);
+            //animatorCompat.setTarget(voto_quantidade);
+            animatorCompat.setTarget(popularity);
             if (isAdded()) {
                 animatorCompat.start();
             }

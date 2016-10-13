@@ -193,7 +193,7 @@ public class TvShowsFragment extends Fragment {
         }
 
         protected List<TvSeries> getListaTipo(TmdbTV tmdbTV) {
-            String language = Locale.getDefault().toLanguageTag();
+            String language = Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry();
             if (language != null) {
                 switch (abaEscolhida) {
 
@@ -204,11 +204,8 @@ public class TvShowsFragment extends Fragment {
                     }
 
                     case R.string.today: {
-                        Timezone timezone = new Timezone(Locale.getDefault().toLanguageTag(), Locale.getDefault().getCountry());
-                        return tmdbTV.getAiringToday(language, pagina, timezone).getResults();
+                        //transferido para defaul
                     }
-
-
                     case R.string.popular: {
                         return tmdbTV.getPopular(language, pagina).getResults();
                     }
@@ -216,10 +213,13 @@ public class TvShowsFragment extends Fragment {
                     case R.string.top_rated: {
                         return tmdbTV.getTopRated(language, pagina).getResults();
                     }
-
+                    default: {
+                        Timezone timezone = new Timezone(Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry(), Locale.getDefault().getCountry());
+                        return tmdbTV.getAiringToday(language, pagina, timezone).getResults();
+                    }
                 }
             }
-            return null;
+            return  tmdbTV.getOnTheAir(language, pagina).getResults();
         }
 
     }

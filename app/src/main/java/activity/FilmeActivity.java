@@ -41,7 +41,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import fragment.FilmeInfoFragment;
@@ -55,7 +54,6 @@ import info.movito.themoviedbapi.model.core.ResponseStatus;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static com.google.android.gms.analytics.internal.zzy.f;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.alternative_titles;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.credits;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.images;
@@ -89,8 +87,7 @@ public class FilmeActivity extends BaseActivity {
         setupNavDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(" ");
-        id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
-        color_fundo = getIntent().getIntExtra(Constantes.COLOR_TOP, R.color.transparent);
+        getExtras();
         menu_item_favorite = (FloatingActionButton) findViewById(R.id.menu_item_favorite);
         menu_item_watchlist = (FloatingActionButton) findViewById(R.id.menu_item_watchlist);
         menu_item_rated = (FloatingActionButton) findViewById(R.id.menu_item_rated);
@@ -126,6 +123,16 @@ public class FilmeActivity extends BaseActivity {
             new TMDVAsync().execute();
         } else {
             snack();
+        }
+    }
+
+    private void getExtras() {
+        if (getIntent().getAction() == null) {
+            id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
+            color_fundo = getIntent().getIntExtra(Constantes.COLOR_TOP, R.color.transparent);
+        } else {
+            id_filme = Integer.parseInt(getIntent().getStringExtra(Constantes.FILME_ID));
+            color_fundo = Integer.parseInt(getIntent().getStringExtra(Constantes.COLOR_TOP));
         }
     }
 
@@ -482,7 +489,7 @@ public class FilmeActivity extends BaseActivity {
     }
 
     private void setFragmentInfo() {
-        Log.d("FilmeActivity", Locale.getDefault().toLanguageTag());
+        Log.d("FilmeActivity", Locale.getDefault().getLanguage());
         FilmeInfoFragment filmeFrag = new FilmeInfoFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constantes.FILME, movieDb);
@@ -540,8 +547,9 @@ public class FilmeActivity extends BaseActivity {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             if (idioma_padrao) {
-                Log.d("FilmeActivity", "true - " + Locale.getDefault().getCountry());
-                movieDb = movies.getMovie(id_filme, Locale.getDefault().toLanguageTag() + ",en,null"
+                movieDb = movies.getMovie(id_filme, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
+                        //.toLanguageTag() não funciona na API 14
+                        + ",en,null"
                         , credits, releases, videos, reviews, similar, alternative_titles, images);
                 movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
                 movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());
@@ -563,7 +571,7 @@ public class FilmeActivity extends BaseActivity {
             progressBar.setVisibility(View.INVISIBLE);
             setFragmentInfo();
 
-            if (FilmeApplication.getInstance().isLogado()) { // Arrumar
+            if (true){//FilmeApplication.getInstance().isLogado()) { // Arrumar
                 Log.d("FAB", "FAB " + color_fundo);
                 fab.setAlpha(1);
                 setColorFab(color_fundo);

@@ -3,7 +3,6 @@ package activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -36,7 +35,6 @@ public class Site extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.webView);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
-
         URL = getIntent().getStringExtra(Constantes.SITE);
         Log.d("Site", URL);
         setWebViewClient(webView);

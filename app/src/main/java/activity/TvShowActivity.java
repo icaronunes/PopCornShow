@@ -42,7 +42,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import adapter.TvShowAdapter;
-import adapter.TvShowsAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
@@ -53,7 +52,6 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static br.com.icaro.filme.R.string.movieDb;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.credits;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.external_ids;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.images;
@@ -82,12 +80,10 @@ public class TvShowActivity extends BaseActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         setupNavDrawer();
-        nome = getIntent().getStringExtra(Constantes.NOME_TVSHOW);// usado????????
-        color_top = getIntent().getIntExtra(Constantes.COLOR_TOP, R.color.colorFAB);
+        getExtras();
         layout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         layout.setBackgroundColor(color_top);
         viewPager = (ViewPager) findViewById(R.id.viewPager_tvshow);
-        id_tvshow = getIntent().getIntExtra(Constantes.TVSHOW_ID, 0);
         menu_item_favorite = (FloatingActionButton) findViewById(R.id.menu_item_favorite);
         menu_item_watchlist = (FloatingActionButton) findViewById(R.id.menu_item_watchlist);
         menu_item_rated = (FloatingActionButton) findViewById(R.id.menu_item_rated);
@@ -101,6 +97,18 @@ public class TvShowActivity extends BaseActivity {
             new TMDVAsync().execute();
         } else {
             snack();
+        }
+    }
+
+    private void getExtras(){
+        if (getIntent().getAction() == null){
+            nome = getIntent().getStringExtra(Constantes.NOME_TVSHOW);// usado????????
+            color_top = getIntent().getIntExtra(Constantes.COLOR_TOP, R.color.colorFAB);
+            id_tvshow = getIntent().getIntExtra(Constantes.TVSHOW_ID, 0);
+        } else{
+            nome = getIntent().getStringExtra(Constantes.NOME_TVSHOW);// usado????????
+            color_top = Integer.parseInt(getIntent().getStringExtra(Constantes.COLOR_TOP));
+            id_tvshow = Integer.parseInt(getIntent().getStringExtra(Constantes.TVSHOW_ID));
         }
     }
 
@@ -471,8 +479,11 @@ public class TvShowActivity extends BaseActivity {
                 TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
                 Log.d("FilmeActivity", "true - ");
                 series = tmdbTv
-                        .getSeries(id_tvshow, Locale.getDefault().toLanguageTag() + ",en,null"
+                        .getSeries(id_tvshow, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
+                                //.toLanguageTag() não funciona na API 14
+                                + ",en,null"
                                 , images, credits, videos, external_ids);
+                Log.d("FilmeActivity", Locale.getDefault().getLanguage() );
                 series.getVideos().addAll(tmdbTv.getSeries(id_tvshow, null, videos).getVideos());
                 series.getImages().setPosters(tmdbTv.getSeries(id_tvshow, null, images).getImages().getPosters());
 

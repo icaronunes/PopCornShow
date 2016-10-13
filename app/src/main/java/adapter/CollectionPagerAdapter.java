@@ -98,10 +98,15 @@ public class CollectionPagerAdapter extends PagerAdapter {
         externo = (Button) view.findViewById(R.id.dialogExterno);
         externo.setOnClickListener(this.onClickListenerExterno(position));
         Log.d("CollectionPagerAdapter", "instantiateItem");
-        String ano = info.getParts().get(position).getReleaseDate();
-        ano = ano.substring(0, 4);
-        nome.setText(info.getParts().get(position).getName() +
-                " - " + ano);
+        String ano = "xxxx";
+        if (info.getParts().get(position).getReleaseDate() != null) {
+            ano = info.getParts().get(position).getReleaseDate();
+            ano = ano.substring(0, 4);
+        }
+        if (info.getParts().get(position).getName() != null) {
+            nome.setText(info.getParts().get(position).getName() +
+                    " - " + ano);
+        }
         ((ViewGroup) container).addView(view);
         return view;
 

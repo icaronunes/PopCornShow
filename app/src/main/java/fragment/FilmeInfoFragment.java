@@ -3,7 +3,6 @@ package fragment;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.ApplicationErrorReport;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -24,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.android.gms.crash.internal.service.CrashReceiverService;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
@@ -33,7 +31,6 @@ import com.google.firebase.crash.FirebaseCrash;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -70,9 +67,6 @@ import utils.Constantes;
 import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.string.mil;
-import static br.com.icaro.filme.R.string.movie;
-import static com.google.android.gms.auth.api.credentials.PasswordSpecification.de;
-import static com.google.android.gms.internal.zznk.fi;
 import static com.squareup.picasso.Picasso.with;
 
 
@@ -119,7 +113,7 @@ public class FilmeInfoFragment extends Fragment {
         descricao = (TextView) view.findViewById(R.id.descricao);
         voto_media = (TextView) view.findViewById(R.id.voto_media);
         textview_similares = (TextView) view.findViewById(R.id.textview_similares);
-        voto_quantidade = (TextView) view.findViewById(R.id.voto_quantidade);
+        //voto_quantidade = (TextView) view.findViewById(R.id.voto_quantidade);
         produtora = (TextView) view.findViewById(R.id.produtora);
         original_title = (TextView) view.findViewById(R.id.original_title);
         spoken_languages = (TextView) view.findViewById(R.id.spoken_languages);
@@ -315,7 +309,7 @@ public class FilmeInfoFragment extends Fragment {
                             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
                             if (idioma_padrao) {
                                 info = FilmeService.getTmdbCollections()
-                                        .getCollectionInfo(id, Locale.getDefault().toLanguageTag() + ",en,null");
+                                        .getCollectionInfo(id, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry() + ",en,null");
                                 getCollection(info);
                             } else {
                                 info = FilmeService.getTmdbCollections()
@@ -660,7 +654,8 @@ public class FilmeInfoFragment extends Fragment {
             });
 
             animatorCompat.setDuration(900);
-            animatorCompat.setTarget(voto_quantidade);
+            //animatorCompat.setTarget(voto_quantidade);
+            animatorCompat.setTarget(popularity);
             if (isAdded()) {
                 animatorCompat.start();
             }

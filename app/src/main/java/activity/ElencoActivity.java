@@ -29,9 +29,6 @@ import info.movito.themoviedbapi.model.Multi;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static br.com.icaro.filme.R.string.movie;
-import static br.com.icaro.filme.R.string.movieDb;
-
 /**
  * Created by icaro on 24/07/16.
  */
@@ -45,6 +42,7 @@ public class ElencoActivity extends BaseActivity {
     Credits creditsTvShow;
     MovieDb movies;
     Multi.MediaType mediaType;
+    String title;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,14 +51,11 @@ public class ElencoActivity extends BaseActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        id = getIntent().getIntExtra(Constantes.ID, 0);
-        mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
-        season = getIntent().getIntExtra(Constantes.TVSEASONS, -100);
+        getExtras();
         Log.d("ElencoActivity", " " + id);
         Log.d("ElencoActivity", "oncreate " + season);
         Log.d("ElencoActivity", "" + mediaType.toString());
 
-        String title = getIntent().getStringExtra(Constantes.NOME);
         getSupportActionBar().setTitle(title);
 
         recyclerView = (RecyclerView) findViewById(R.id.elenco_recyckeview);
@@ -87,6 +82,31 @@ public class ElencoActivity extends BaseActivity {
             snack();
         }
 
+    }
+
+    private void getExtras() {
+        if (getIntent().getAction() == null) {
+            id = getIntent().getIntExtra(Constantes.ID, 0);
+            mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
+            season = getIntent().getIntExtra(Constantes.TVSEASONS, -100);
+            title = getIntent().getStringExtra(Constantes.NOME);
+        } else {
+            id = Integer.parseInt(getIntent().getStringExtra(Constantes.ID));
+            String media  = getIntent().getStringExtra(Constantes.MEDIATYPE);
+            switch (media) {
+
+                case "tv": {
+                    mediaType = (Multi.MediaType.TV_SERIES);
+                    season = Integer.parseInt(getIntent().getStringExtra(Constantes.TVSEASONS));
+                    break;
+                }
+                case "movie": {
+                    mediaType = (Multi.MediaType.MOVIE);
+                    break;
+                }
+            }
+            title = getIntent().getStringExtra(Constantes.NOME);
+        }
     }
 
     @Override

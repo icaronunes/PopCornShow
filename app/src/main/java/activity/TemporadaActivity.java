@@ -20,8 +20,6 @@ import java.util.Locale;
 import adapter.TemporadaAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
-import info.movito.themoviedbapi.TmdbTV;
-import info.movito.themoviedbapi.TmdbTvSeasons;
 import info.movito.themoviedbapi.model.tv.TvSeason;
 import utils.Constantes;
 
@@ -85,7 +83,7 @@ public class TemporadaActivity extends BaseActivity {
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             if (idioma_padrao) {
                 tvSeason = FilmeService.getTmdbTvSeasons()
-                        .getSeason(serie_id, temporada_id, Locale.getDefault().toLanguageTag() + ",en,null");
+                        .getSeason(serie_id, temporada_id, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry() + ",en,null");
                 return null; // ????????
             }else {
                 tvSeason = FilmeService.getTmdbTvSeasons()

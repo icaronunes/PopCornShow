@@ -1,6 +1,5 @@
 package activity;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -15,8 +14,6 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import br.com.icaro.filme.R;
 import utils.Config;
 import utils.Constantes;
-
-import static br.com.icaro.filme.R.string.similares;
 
 /**
  * Created by icaro on 12/07/16.
@@ -35,6 +32,7 @@ public class TreilerActivity extends YouTubeBaseActivity implements YouTubePlaye
         youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
         sinopse = (TextView) findViewById(R.id.treiler_sinopse);
         youTubeView.initialize(Config.YOUTUBE_API_KEY, this);
+        getExtras();
         youtube_key = getIntent().getStringExtra(Constantes.YOU_TUBE_KEY);
         sinopse.setText(getIntent().getStringExtra(Constantes.SINOPSE));
 
@@ -43,6 +41,17 @@ public class TreilerActivity extends YouTubeBaseActivity implements YouTubePlaye
                 .build();
         adview.loadAd(adRequest);
 
+    }
+
+    private void getExtras() {
+        if (getIntent().getAction() == null){
+            youtube_key = getIntent().getStringExtra(Constantes.YOU_TUBE_KEY);
+            sinopse.setText(getIntent().getStringExtra(Constantes.SINOPSE));
+        } else {
+            //não usado, todos os extras são strings. Somente para deixar no padrão.
+            youtube_key = getIntent().getStringExtra(Constantes.YOU_TUBE_KEY);
+            sinopse.setText(getIntent().getStringExtra(Constantes.SINOPSE));
+        }
     }
 
     @Override

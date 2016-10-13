@@ -1,22 +1,11 @@
 package applicaton;
 
 import android.app.Application;
-import android.content.ComponentName;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.squareup.otto.Bus;
-
 import domian.FilmeService;
-import info.movito.themoviedbapi.TmdbAccount;
-import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.model.config.Account;
-import info.movito.themoviedbapi.model.config.TokenSession;
-import info.movito.themoviedbapi.model.core.AccountID;
-import info.movito.themoviedbapi.model.core.MovieResultsPage;
-import info.movito.themoviedbapi.model.core.SessionToken;
-import utils.Config;
 import utils.Prefs;
 import utils.UtilsFilme;
 
@@ -57,10 +46,17 @@ public class FilmeApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        Log.d(TAG, "FilmeApplication.onCreate");
         if (UtilsFilme.isNetWorkAvailable(getApplicationContext())) {
             new TMDVAsync().execute();
         }
     }
+
+//    @Override
+//    protected void attachBaseContext(Context base) {
+//        super.attachBaseContext(base);
+//        MultiDex.install(this);
+//    }
 
     @Override
     public void onTerminate() {
