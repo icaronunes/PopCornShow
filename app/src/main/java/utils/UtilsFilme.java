@@ -1,12 +1,10 @@
 package utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
@@ -14,23 +12,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.security.cert.CertStore;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import activity.FilmeActivity;
 import domian.FilmeService;
 import info.movito.themoviedbapi.model.config.Timezone;
-
-import static com.google.android.gms.wearable.DataMap.TAG;
 
 /**
  * Created by icaro on 24/06/16.

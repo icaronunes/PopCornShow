@@ -113,7 +113,6 @@ public class FilmeInfoFragment extends Fragment {
         descricao = (TextView) view.findViewById(R.id.descricao);
         voto_media = (TextView) view.findViewById(R.id.voto_media);
         textview_similares = (TextView) view.findViewById(R.id.textview_similares);
-        //voto_quantidade = (TextView) view.findViewById(R.id.voto_quantidade);
         produtora = (TextView) view.findViewById(R.id.produtora);
         original_title = (TextView) view.findViewById(R.id.original_title);
         spoken_languages = (TextView) view.findViewById(R.id.spoken_languages);

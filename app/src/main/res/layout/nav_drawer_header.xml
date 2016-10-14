@@ -11,7 +11,6 @@
         android:id="@+id/imgUserBackground"
         android:layout_width="match_parent"
         android:layout_height="@dimen/userBackground_layout_height"
-        android:contentDescription="@string/empty"
         android:src="@drawable/nav_drawer_header"
         android:scaleType="centerCrop" />
 

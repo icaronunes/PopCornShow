@@ -19,9 +19,6 @@ import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.UtilsFilme;
 
-import static android.media.CamcorderProfile.get;
-import static br.com.icaro.filme.R.string.movie;
-
 
 /**
  * Created by icaro on 01/08/16.

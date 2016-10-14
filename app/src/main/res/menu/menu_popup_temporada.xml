@@ -5,12 +5,12 @@
 
     <item
         android:id="@+id/elenco_temporada"
-        android:title="Elenco"
+        android:title="@string/elenco"
         app:showAsAction="never"  />
 
     <item
         android:id="@+id/producao_temporada"
-        android:title="Produção"
+        android:title="@string/producao"
         app:showAsAction="never"/>
 
 </menu>

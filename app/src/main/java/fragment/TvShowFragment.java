@@ -66,10 +66,10 @@ public class TvShowFragment extends Fragment {
     int tipo, color;
     TvSeries series;
 
-    TextView titulo, categoria, descricao, voto_media, voto_quantidade, produtora,
+    TextView titulo, categoria, descricao, voto_media, produtora,
             original_title, spoken_languages, production_countries, end, status, temporada,
             imdb, tmdb, popularity, lancamento, textview_crews, textview_elenco;
-    ImageView icon_reviews, img_budget, icon_site, icon_collection, img_poster, img_star;
+    ImageView  icon_site, img_poster, img_star;
     LinearLayout linear_container;
 
 
@@ -113,9 +113,9 @@ public class TvShowFragment extends Fragment {
             setCast();
             setCrews();
             setTreiler();
-            setAnimacao();
             setPoster();
             setStatus();
+            setAnimacao();
 
 
             icon_site.setOnClickListener(new View.OnClickListener() {
@@ -355,7 +355,6 @@ public class TvShowFragment extends Fragment {
         temporada = (TextView) view.findViewById(R.id.temporadas);
         lancamento = (TextView) view.findViewById(R.id.lancamento);
         voto_media = (TextView) view.findViewById(R.id.voto_media);
-        //voto_quantidade = (TextView) view.findViewById(R.id.voto_quantidade);
         produtora = (TextView) view.findViewById(R.id.produtora);
         original_title = (TextView) view.findViewById(R.id.original_title);
         spoken_languages = (TextView) view.findViewById(R.id.spoken_languages);
@@ -365,9 +364,6 @@ public class TvShowFragment extends Fragment {
         tmdb = (TextView) view.findViewById(R.id.tmdb_site);
         img_poster = (ImageView) view.findViewById(R.id.img_poster);
         img_star = (ImageView) view.findViewById(R.id.img_star);
-        icon_reviews = (ImageView) view.findViewById(R.id.icon_reviews);
-        img_budget = (ImageView) view.findViewById(R.id.img_budget);
-        icon_collection = (ImageView) view.findViewById(R.id.icon_collection);
         icon_site = (ImageView) view.findViewById(R.id.icon_site);
         linear_container = (LinearLayout) view.findViewById(R.id.linear_container);
         textview_crews = (TextView) view.findViewById(R.id.textview_crews);
@@ -387,22 +383,18 @@ public class TvShowFragment extends Fragment {
         }
     }
 
+
     private void setAnimacao() {
-        AnimatorSet animatorSet = new AnimatorSet();
-        ObjectAnimator alphaStar = ObjectAnimator.ofFloat(img_star, "alpha", 0, 1)
-                .setDuration(2000);
-        ObjectAnimator alphaMedia = ObjectAnimator.ofFloat(voto_media, "alpha", 0, 1)
-                .setDuration(2300);
-        ObjectAnimator alphaBuget = ObjectAnimator.ofFloat(img_budget, "alpha", 0, 1)
-                .setDuration(2500);
-        ObjectAnimator alphaReviews = ObjectAnimator.ofFloat(icon_reviews, "alpha", 0, 1)
-                .setDuration(2800);
-        ObjectAnimator alphaSite = ObjectAnimator.ofFloat(icon_site, "alpha", 0, 1)
-                .setDuration(3000);
-        ObjectAnimator alphaCollecton = ObjectAnimator.ofFloat(icon_collection, "alpha", 0, 1)
-                .setDuration(3300);
-        animatorSet.playTogether(alphaStar, alphaBuget, alphaMedia, alphaReviews, alphaSite, alphaCollecton);
-        animatorSet.start();
+
+            AnimatorSet animatorSet = new AnimatorSet();
+            ObjectAnimator alphaStar = ObjectAnimator.ofFloat(img_star, "alpha", 0, 1)
+                    .setDuration(2000);
+            ObjectAnimator alphaMedia = ObjectAnimator.ofFloat(voto_media, "alpha", 0, 1)
+                    .setDuration(2300);
+            ObjectAnimator alphaSite = ObjectAnimator.ofFloat(icon_site, "alpha", 0, 1)
+                    .setDuration(3000);
+            animatorSet.playTogether(alphaStar,  alphaMedia,  alphaSite);
+            animatorSet.start();
     }
 
     private void setPoster() {

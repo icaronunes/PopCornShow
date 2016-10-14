@@ -22,8 +22,6 @@ import info.movito.themoviedbapi.model.MovieDb;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static br.com.icaro.filme.R.string.movie;
-
 /**
  * Created by icaro on 12/08/16.
  */

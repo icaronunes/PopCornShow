@@ -18,7 +18,7 @@ public class SettingsActivity extends BaseActivity {
         setContentView(R.layout.settings_acitivity);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
-        getSupportActionBar().setTitle(R.string.opcoes);
+        getSupportActionBar().setTitle(R.string.configuracoes);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //  Display the fragment as the main content.
         getFragmentManager().beginTransaction()

@@ -2,28 +2,23 @@
     <string name="app_name">PopCorn</string>
     <string name="configuracoes">Configurações</string>
     <string name="now_playing">No Cinema</string>
-    <string name="popular">Populares</string>
+    <string name="popular" translatable="false">Populares</string>
     <string name="avaliados">Avaliados</string>
     <string name="about">Sobre</string>
-    <string name="empty" />
     <string name="retry">Repetir</string>
     <string name="no_internet">Sem Internet</string>
-    <string name="lastest">Ultimos</string>
+
     <string name="top_rated">Melhores Avaliados</string>
     <string name="upcoming">Em Breve</string>
-    <string name="movieDb">Filme</string>
     <string name="categoria">Categoria:</string>
     <string name="time">Tempo:</string>
-    <string name="metascore">Metascore</string>
     <string name="sem_sinopse">Sem Sinopse</string>
     <string name="minutos">mins</string>
     <string name="não_informado">N/A</string>
     <string name="tempo_nao_informado">Tempo N/A</string>
-    <string name="votos">Votos:</string>
     <string name="produtora">Produtora:</string>
-    <string name="sem_qualidade">0.0</string>
-    <string name="foto_principal">Imagem Principal</string>
-    <string name="imagem_filme">Imagem do Filme</string>
+    <string name="foto_principal" translatable="false"></string>
+    <string name="imagem_filme"></string>
     <string name="poster_filme">Poster do Filme</string>
     <string name="production_countries">País Produtor:</string>
     <string name="spoken_languages">Idioma Original:</string>
@@ -32,60 +27,54 @@
     <string name="elenco">Elenco</string>
     <string name="search">Procurar</string>
     <string name="search_empty">Busca sem Resultado</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="erro">Erro YouTube</string>
-    <string name="player_error">Erro YouTube</string>
     <string name="IDIOMAS">pt-BR,pt,en,null</string>
     <string name="IDIOMAS_BUSCA">pt-BR,en,null</string>
     <string name="mil">Mil</string>
-    <string name="milhoes">Mi</string>
+    <string name="milhoes" translatable="false">Mi</string>
     <string name="horas">horas</string>
     <string name="hora">hora</string>
     <string name="author">Autor:</string>
-    <string name="no_reviews">Não há comentarios</string>
     <string name="treiler">Treiler</string>
     <string name="por_tras_camera_filme">Produção do Filme</string>
     <string name="por_tras_camera_tvshow">Produção do Série</string>
-    <string name="dollar">$</string>
+    <string name="dollar" translatable="false">$</string>
     <string name="milhoes_budget">Milhões</string>
     <string name="no_message">Sem Comentarios</string>
     <string name="person_vote">Pessoas Votaram</string>
     <string name="orcamento_budget">Orçamento</string>
-    <string name="valor_zero">0.0</string>
+    <string name="valor_zero" translatable="false">0.0</string>
     <string name="no_vote">Não houve votos</string>
     <string name="no_budget">Não há informação orçamentaria</string>
     <string name="collecion_off">Sem coleção</string>
     <string name="no_site">Sem site Oficial</string>
     <string name="pesquisar_internet">Na internet</string>
-    <string name="ver_no_app">Ver no App</string>
+    <string name="ver_no_app">Ver no PopCorn</string>
     <string name="similares">Similares</string>
     <string name="compartilhar_filme">Compartilhar Filme</string>
     <string name="erro_na_gravacao_imagem">Erro na gravação da imagem na memoria. Tente novamente.</string>
     <string name="login">Login:</string>
-    <string name="fazer_login">Faça Login</string>
-    <string name="usuario">Usuario do TMDB</string>
+    <string name="fazer_login">Fazer Login</string>
+    <string name="usuario">Usuário do TMDB</string>
     <string name="password">Senha</string>
     <string name="favorite">Favoritos</string>
     <string name="recomendacao">Recomendação</string>
     <string name="quero_assistir">Quero Assistir</string>
-    <string name="list">Listas</string>
     <string name="poster_transition" translatable="false">poster_transition</string>
     <string name="excluir_filme">Excluir Filme ?</string>
     <string name="desfazer">Desfazer</string>
     <string name="no">Não</string>
-    <string name="filme_rated">Filme Classificado...</string>
+    <string name="filme_rated">Filme Classificado</string>
     <string name="falha_rated">Falha na classificação</string>
     <string name="filme_add_favorite">Filme Adicionado ao Favoritos</string>
     <string name="filme_re_add">Filme adicionado novamente</string>
-    <string name="tvshow_re_add">Tvshow adicionado novamente</string>
+    <string name="tvshow_re_add">Série adicionado novamente</string>
     <string name="filme_remove_favorite">Filme removido da lista Favoritos</string>
-    <string name="tvshow_remove_favorite">Tvshow removido da lista Favoritos</string>
+    <string name="tvshow_remove_favorite">Série removido da lista Favoritos</string>
     <string name="erro_add_or_remove">Ops! Algo deu errado.</string>
     <string name="filme_add_watchlist">Adicionado ao \"Assistir Mais Tarde\"</string>
-    <string name="filme_remove_watchlist">Filme removido</string>
-    <string name="movie">Atuação</string>
-    <string name="person">perfil</string>
-    <string name="crews">Outros</string>
+    <string name="filme_remove">Filme removido</string>
+    <string name="person" translatable="false">perfil</string>
+    <!--<string name="crews">Outros</string>-->
     <string name="imagem_person">Fotos</string>
     <string name="apelido">Apelido: </string>
     <string name="sem_biografia">Sem Biografia</string>
@@ -113,37 +102,35 @@
     <string name="in_production">Em Producação</string>
     <string name="filme">Filmes</string>
     <string name="tvshow">Séries</string>
-    <string name="excluir_tvshow">Excluir Série</string>
+    <string name="excluir_tvshow">Excluir Série ?</string>
     <string name="compartilhar_tvshow">Compartilhando Séries</string>
     <string name="idioma_padrao">Idioma do Android</string>
     <string name="idioma_padrao_subtitle">Idioma Inglês contem mais informações no TMDB. Caso não uso o padrão do Android, este será usado.</string>
-    <string name="opcoes">Opcções</string>
     <string name="pref_idioma_en">Idioma com mais informações é o Inglês (\"En\")</string>
     <string name="ver_imdb">Ver no IMDB</string>
     <string name="ver_tmdb">Ver no TMDB</string>
-    <string name="filmes_main">filmes_main</string>
+    <string name="filmes_main" translatable="false">filmes_main</string>
     <string name="tvshow_main" translatable="false">tvshow_main</string>
     <string name="populares">Populares</string>
     <string name="na_tv">Passando na TV</string>
     <string name="today">Na Tv Hoje</string>
     <string name="em_breve">Em Breve</string>
-    <string name="home">Home</string>
+    <string name="home">Principal</string>
     <string name="sair">Sair</string>
     <string name="title_logoff_dialog">Deslogar do TMDB?</string>
     <string name="cancel">Cancelar</string>
     <string name="text_logoff_dialog">Apos deslogar, não será possivel interagir com o aplicativo.</string>
     <string name="no_login">Não conectou</string>
     <string name="tvshow_add_favorite">Série adicionada aos Favoritos</string>
-    <string name="filme_nao_lancado">Filme ainda não foi lançado.</string>
+    <string name="filme_nao_lancado">Filme ainda não foi lançado</string>
     <string name="tvshow_nao_lancado">Série ainda não lançada</string>
     <string name="sem_tvshow">Sem Séries</string>
     <string name="producao">Produção</string>
     <string name="toast_salvar_imagem">Imagem salva na pasta do aplicativo.</string>
-    <string name="sobre">Sobre</string>
     <string name="infor_app">Informaçãoes sobre o App</string>
     <string name="criado">Criado por:</string>
-    <string name="icaronunes">icaronunes@gmail.com</string>
-    <string name="infor_tmdb">"This product uses the TMDb API but is not endorsed or certified by TMDb."</string>
+    <string name="icaronunes" translatable="false">icaronunes@gmail.com</string>
+    <string name="infor_tmdb" translatable="false">"This product uses the TMDb API but is not endorsed or certified by TMDb."</string>
     <string name="rated_googleplay">Avaliar no Google Play.</string>
     <string name="suas_listas">Suas listas</string>
     <string name="person_rated">Pessoas Populares</string>

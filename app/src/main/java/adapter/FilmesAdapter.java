@@ -3,14 +3,12 @@ package adapter;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -20,8 +18,6 @@ import java.util.List;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.MovieDb;
 import utils.UtilsFilme;
-
-import static br.com.icaro.filme.R.string.movie;
 
 /**
  * Created by icaro on 30/06/16.

@@ -15,7 +15,7 @@
     <utils.Sobre
         android:key="pref_sobre"
         android:summary="@string/infor_app"
-        android:title="@string/sobre" />
+        android:title="@string/about" />
 
 
 </PreferenceScreen>

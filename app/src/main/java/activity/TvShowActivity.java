@@ -214,9 +214,9 @@ public class TvShowActivity extends BaseActivity {
                                                 break;
                                             }
                                             case 13: {
-                                                Toast.makeText(TvShowActivity.this, getString(R.string.filme_remove_watchlist), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(TvShowActivity.this, getString(R.string.filme_remove), Toast.LENGTH_SHORT).show();
                                                 Bundle bundle = new Bundle();
-                                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_remove_watchlist));
+                                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_remove));
                                                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
                                                 bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
                                                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);

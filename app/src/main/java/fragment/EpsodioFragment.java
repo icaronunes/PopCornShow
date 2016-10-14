@@ -40,8 +40,7 @@ import utils.Constantes;
 import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.id.ep_rating;
-import static com.google.android.gms.wearable.DataMap.TAG;
-import static utils.UtilsFilme.getContext;
+
 
 /**
  * Created by icaro on 27/08/16.
@@ -51,6 +50,7 @@ public class EpsodioFragment extends Fragment {
     int tvshow_id, color;
     Credits credits;
     TvEpisode episode;
+    final String TAG = this.getClass().getName();
 
     String nome_serie;
     LinearLayout linear_director, linear_air_date, linear_write, linear_vote;

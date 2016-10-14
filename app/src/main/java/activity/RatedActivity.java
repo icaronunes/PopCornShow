@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -69,6 +70,7 @@ public class RatedActivity extends BaseActivity {
 
 
     private class WatchlistAsync extends AsyncTask<Void, Void, Void> {
+
         @Override
         protected Void doInBackground(Void... voids) {
             movieResultsPage = FilmeService.getRatedMovieListTotal();
@@ -79,6 +81,7 @@ public class RatedActivity extends BaseActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            Log.d("RatedActivity", "WatchlistAsync");
             setupViewPagerTabs();
             progressBar.setVisibility(View.GONE);
         }

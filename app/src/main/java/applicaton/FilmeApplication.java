@@ -1,7 +1,9 @@
 package applicaton;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import domian.FilmeService;
@@ -52,11 +54,11 @@ public class FilmeApplication extends Application {
         }
     }
 
-//    @Override
-//    protected void attachBaseContext(Context base) {
-//        super.attachBaseContext(base);
-//        MultiDex.install(this);
-//    }
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
     @Override
     public void onTerminate() {

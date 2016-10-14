@@ -1,7 +1,6 @@
 package br.com.icaro.filme;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,10 +8,8 @@ import org.junit.Test;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.model.MovieDb;
-import utils.Constantes;
 
-import static br.com.icaro.filme.R.string.movieDb;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).

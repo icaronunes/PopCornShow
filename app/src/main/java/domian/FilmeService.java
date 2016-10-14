@@ -455,71 +455,84 @@ public class FilmeService {
 
 
     public static MovieResultsPage getWatchList(String user, String password, int pagina) {
-        TokenSession authentication = new TmdbApi(Config.TMDB_API_KEY)
-                .getAuthentication().getSessionLogin(user, password);
-        String session = authentication.getSessionId();
-        SessionToken token = new SessionToken(session);
-        TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
-        TmdbAccount account = tmdbApi.getAccount();
-        AccountID accountID = new AccountID(getAccount(user, password).getId());
-        return account.getWatchListMovies(token, accountID, pagina);
+        if (user != null && password != null) {
+            TokenSession authentication = new TmdbApi(Config.TMDB_API_KEY)
+                    .getAuthentication().getSessionLogin(user, password);
+            String session = authentication.getSessionId();
+            SessionToken token = new SessionToken(session);
+            TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
+            TmdbAccount account = tmdbApi.getAccount();
+            AccountID accountID = new AccountID(getAccount(user, password).getId());
+            return account.getWatchListMovies(token, accountID, pagina);
+        }
+        return null;
     }
 
     public static MovieResultsPage getWatchListMovieTotal() {
         String user = Prefs.getString(FilmeApplication.getInstance().getBaseContext(), Prefs.LOGIN, Prefs.LOGIN_PASS);
         String  pass = Prefs.getString(FilmeApplication.getInstance().getBaseContext(), Prefs.PASS, Prefs.LOGIN_PASS);
-
-        MovieResultsPage watch = getWatchList(user, pass, 1);
-        if (watch != null) {
-            if (watch.getTotalPages() > 1) {
-                for (int i = 2; i <= watch.getTotalPages(); i++) {
-                    watch.getResults().addAll(getWatchList(user, pass, i).getResults());
+        if (user != null && pass != null) {
+            MovieResultsPage watch = getWatchList(user, pass, 1);
+            if (watch != null) {
+                if (watch.getTotalPages() > 1) {
+                    for (int i = 2; i <= watch.getTotalPages(); i++) {
+                        watch.getResults().addAll(getWatchList(user, pass, i).getResults());
+                    }
                 }
             }
+            return watch;
         }
-        return watch;
+        return null;
     }
 
     public static TvResultsPage getWatchListTvshowTotal() {
         String user = Prefs.getString(FilmeApplication.getInstance().getBaseContext(), Prefs.LOGIN, Prefs.LOGIN_PASS);
         String  pass = Prefs.getString(FilmeApplication.getInstance().getBaseContext(), Prefs.PASS, Prefs.LOGIN_PASS);
-
-        TvResultsPage watch = getWatchListTvShow(user, pass, 1);
-        if (watch != null) {
-            if (watch.getTotalPages() > 1) {
-                for (int i = 2; i <= watch.getTotalPages(); i++) {
-                    watch.getResults().addAll(getWatchListTvShow(user, pass, i).getResults());
+        if (user != null && pass != null) {
+            TvResultsPage watch = getWatchListTvShow(user, pass, 1);
+            if (watch != null) {
+                if (watch.getTotalPages() > 1) {
+                    for (int i = 2; i <= watch.getTotalPages(); i++) {
+                        watch.getResults().addAll(getWatchListTvShow(user, pass, i).getResults());
+                    }
                 }
             }
+
+            return watch;
         }
-        return watch;
+        return null;
     }
 
 
     public static TvResultsPage getWatchListTvShow(String user, String password, int pagina) {
-        TokenSession authentication = new TmdbApi(Config.TMDB_API_KEY)
-                .getAuthentication().getSessionLogin(user, password);
-        String session = authentication.getSessionId();
-        SessionToken token = new SessionToken(session);
-        TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
-        TmdbAccount account = tmdbApi.getAccount();
-        AccountID accountID = new AccountID(getAccount(user, password).getId());
-        return account.getWatchListSeries(token, accountID, pagina);
+        if (user != null && password != null) {
+            TokenSession authentication = new TmdbApi(Config.TMDB_API_KEY)
+                    .getAuthentication().getSessionLogin(user, password);
+            String session = authentication.getSessionId();
+            SessionToken token = new SessionToken(session);
+            TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
+            TmdbAccount account = tmdbApi.getAccount();
+            AccountID accountID = new AccountID(getAccount(user, password).getId());
+            return account.getWatchListSeries(token, accountID, pagina);
+        }
+        return null;
     }
 
     public static boolean setRatedMovie(int id_filme, float nota) {
         String user = Prefs.getString(FilmeApplication.getInstance().getBaseContext(), Prefs.LOGIN, Prefs.LOGIN_PASS);
         String  pass = Prefs.getString(FilmeApplication.getInstance().getBaseContext(), Prefs.PASS, Prefs.LOGIN_PASS);
-        TokenSession authentication = new TmdbApi(Config.TMDB_API_KEY)
-                .getAuthentication().getSessionLogin(user, pass);
-        String session = authentication.getSessionId();
-        SessionToken token = new SessionToken(session);
-        TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
-        TmdbAccount account = tmdbApi.getAccount();
-        if (nota != 0) {
-            boolean status = account.postMovieRating(token, id_filme, (int) nota);
-            Log.d("setRatedMovie", "" + status);
-            return status;
+        if (user != null && pass != null) {
+            TokenSession authentication = new TmdbApi(Config.TMDB_API_KEY)
+                    .getAuthentication().getSessionLogin(user, pass);
+            String session = authentication.getSessionId();
+            SessionToken token = new SessionToken(session);
+            TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
+            TmdbAccount account = tmdbApi.getAccount();
+            if (nota != 0) {
+                boolean status = account.postMovieRating(token, id_filme, (int) nota);
+                Log.d("setRatedMovie", "" + status);
+                return status;
+            }
         }
         return false;
     }

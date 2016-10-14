@@ -41,6 +41,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import fragment.FilmeInfoFragment;
@@ -451,9 +452,9 @@ public class FilmeActivity extends BaseActivity {
                                             break;
                                         }
                                         case 13: {
-                                            Toast.makeText(getContext(), getString(R.string.filme_remove_watchlist), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), getString(R.string.filme_remove), Toast.LENGTH_SHORT).show();
                                             bundle = new Bundle();
-                                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_remove_watchlist));
+                                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_remove));
                                             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
                                             bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
                                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
@@ -571,7 +572,7 @@ public class FilmeActivity extends BaseActivity {
             progressBar.setVisibility(View.INVISIBLE);
             setFragmentInfo();
 
-            if (true){//FilmeApplication.getInstance().isLogado()) { // Arrumar
+            if (FilmeApplication.getInstance().isLogado()) { // Arrumar
                 Log.d("FAB", "FAB " + color_fundo);
                 fab.setAlpha(1);
                 setColorFab(color_fundo);
