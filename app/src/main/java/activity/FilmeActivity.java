@@ -129,7 +129,7 @@ public class FilmeActivity extends BaseActivity {
 
     private void getExtras() {
         if (getIntent().getAction() == null) {
-            id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
+            id_filme = (int) getIntent().getIntExtra(Constantes.FILME_ID, 0);
             color_fundo = getIntent().getIntExtra(Constantes.COLOR_TOP, R.color.transparent);
         } else {
             id_filme = Integer.parseInt(getIntent().getStringExtra(Constantes.FILME_ID));

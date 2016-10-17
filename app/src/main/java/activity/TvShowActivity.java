@@ -502,23 +502,27 @@ public class TvShowActivity extends BaseActivity {
             setImageTop();
             setupViewPagerTabs();
 
-
-
             if (FilmeApplication.getInstance().isLogado()) { // Arrumar
                 Log.d("FAB", "FAB " + color_top);
                 Date date = null;
                 fab.setAlpha(1);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    date = sdf.parse(series.getFirstAirDate());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                if (UtilsFilme.verificaLancamento(date)) {
+                if (series.getFirstAirDate() != null) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        date = sdf.parse(series.getFirstAirDate());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (UtilsFilme.verificaLancamento(date)) {
+                        menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
+                        menu_item_rated.setOnClickListener(RatedFilme());
+                    }
+                    menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
+                } else {
+                    menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
                     menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
                     menu_item_rated.setOnClickListener(RatedFilme());
                 }
-                menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
             } else {
                 fab.setAlpha(0);
             }

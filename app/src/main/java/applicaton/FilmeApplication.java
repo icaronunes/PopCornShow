@@ -6,8 +6,12 @@ import android.os.AsyncTask;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
+import com.onesignal.OneSignal;
+
 import domian.FilmeService;
 import info.movito.themoviedbapi.model.config.Account;
+import onsignal.CustomNotificationOpenedHandler;
+import onsignal.CustomNotificationReceivedHandler;
 import utils.Prefs;
 import utils.UtilsFilme;
 
@@ -52,6 +56,11 @@ public class FilmeApplication extends Application {
         if (UtilsFilme.isNetWorkAvailable(getApplicationContext())) {
             new TMDVAsync().execute();
         }
+        OneSignal.startInit(this)
+                .setNotificationOpenedHandler(new CustomNotificationOpenedHandler())
+                .setNotificationReceivedHandler(new CustomNotificationReceivedHandler())
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .init();
     }
 
     @Override

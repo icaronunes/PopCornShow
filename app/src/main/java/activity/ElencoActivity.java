@@ -52,9 +52,6 @@ public class ElencoActivity extends BaseActivity {
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getExtras();
-        Log.d("ElencoActivity", " " + id);
-        Log.d("ElencoActivity", "oncreate " + season);
-        Log.d("ElencoActivity", "" + mediaType.toString());
 
         getSupportActionBar().setTitle(title);
 
@@ -85,13 +82,13 @@ public class ElencoActivity extends BaseActivity {
     }
 
     private void getExtras() {
-        if (getIntent().getAction() == null) {
+        if (getIntent().getBooleanExtra("notification" , true)) {
             id = getIntent().getIntExtra(Constantes.ID, 0);
             mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
             season = getIntent().getIntExtra(Constantes.TVSEASONS, -100);
             title = getIntent().getStringExtra(Constantes.NOME);
         } else {
-            id = Integer.parseInt(getIntent().getStringExtra(Constantes.ID));
+            id = getIntent().getIntExtra(Constantes.ID,0);
             String media  = getIntent().getStringExtra(Constantes.MEDIATYPE);
             switch (media) {
 

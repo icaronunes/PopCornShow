@@ -55,6 +55,7 @@ public class MainActivity extends BaseActivity {
         getSupportActionBar().setTitle(" ");
         if (getIntent().hasExtra("click_action")){
             Log.d("MainActivity", getIntent().getStringExtra("click_action"));
+            Log.d("MainActivity", "tamanhao bandle " + getIntent().getExtras().size());
         }
 
         viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);

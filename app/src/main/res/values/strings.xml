@@ -18,7 +18,7 @@
     <string name="tempo_nao_informado">Tempo N/A</string>
     <string name="produtora">Produtora:</string>
     <string name="foto_principal" translatable="false"></string>
-    <string name="imagem_filme"></string>
+    <string name="imagem_filme"  translatable="false"></string>
     <string name="poster_filme">Poster do Filme</string>
     <string name="production_countries">País Produtor:</string>
     <string name="spoken_languages">Idioma Original:</string>
@@ -27,8 +27,6 @@
     <string name="elenco">Elenco</string>
     <string name="search">Procurar</string>
     <string name="search_empty">Busca sem Resultado</string>
-    <string name="IDIOMAS">pt-BR,pt,en,null</string>
-    <string name="IDIOMAS_BUSCA">pt-BR,en,null</string>
     <string name="mil">Mil</string>
     <string name="milhoes" translatable="false">Mi</string>
     <string name="horas">horas</string>
@@ -111,7 +109,7 @@
     <string name="ver_tmdb">Ver no TMDB</string>
     <string name="filmes_main" translatable="false">filmes_main</string>
     <string name="tvshow_main" translatable="false">tvshow_main</string>
-    <string name="populares">Populares</string>
+    <string name="populares" translatable="false">Populares</string>
     <string name="na_tv">Passando na TV</string>
     <string name="today">Na Tv Hoje</string>
     <string name="em_breve">Em Breve</string>
@@ -136,5 +134,6 @@
     <string name="person_rated">Pessoas Populares</string>
     <string name="oscar">Vencedores de Oscar</string>
     <string name="criar_login_tmdb">Criar Login no TMDB</string>
+    <string name="erro">Erro Youtube</string>
 
 </resources>

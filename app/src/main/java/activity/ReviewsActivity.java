@@ -37,7 +37,8 @@ public class ReviewsActivity extends BaseActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       getExtras();
+        setTitle(getIntent().getStringExtra(Constantes.NOME_FILME));
+        id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
         Log.d("ReviewsActivity", "onCreate " + id_filme);
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_reviews);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -54,16 +55,6 @@ public class ReviewsActivity extends BaseActivity {
         TMDVAsync tmdvAsync = new TMDVAsync();
         tmdvAsync.execute();
 
-    }
-
-    private void getExtras() {
-        if (getIntent().getAction() == null){
-            setTitle(getIntent().getStringExtra(Constantes.NOME_FILME));
-            id_filme = getIntent().getExtras().getInt(Constantes.FILME_ID);
-        } else {
-            setTitle(getIntent().getStringExtra(Constantes.NOME_FILME));
-            id_filme = Integer.parseInt(getIntent().getExtras().getString(Constantes.FILME_ID));
-        }
     }
 
     @Override

@@ -30,7 +30,6 @@ public class CrewsAdapter extends RecyclerView.Adapter<CrewsAdapter.CrewsViewHol
 
     public CrewsAdapter(CrewsActivity crewsActivity, List<PersonCrew> crew) {
 
-
         this.context = crewsActivity;
         this.crews = crew;
         Log.d("CrewsAdapter", "Tamanho " + crews.size());
@@ -53,7 +52,7 @@ public class CrewsAdapter extends RecyclerView.Adapter<CrewsAdapter.CrewsViewHol
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + personCrew.getProfilePath())
                 .placeholder(R.drawable.person)
                 .into(holder.img_crew);
-        holder.img_crew.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, PersonActivity.class);

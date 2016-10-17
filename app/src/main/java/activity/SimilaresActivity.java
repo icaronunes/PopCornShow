@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.util.Locale;
+
 import adapter.SimilaresAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
@@ -116,7 +118,7 @@ getExtras();
         @Override
         protected Void doInBackground(Void... voids) {
             TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
-            similares = tmdbMovies.getSimilarMovies(id_filme, getResources().getString(R.string.IDIOMAS), 1);
+            similares = tmdbMovies.getSimilarMovies(id_filme, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry(), 1);
             return null;
         }
 

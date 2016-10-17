@@ -1,12 +1,12 @@
 package activity;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +31,7 @@ public class ListaGenericaActivity  extends BaseActivity{
     RecyclerView recyclerView;
     ProgressBar progressBar;
     String list_id;
-    Lista lista;
+    Lista lista = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +40,11 @@ public class ListaGenericaActivity  extends BaseActivity{
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if (getIntent().getAction() != null) {
-            getSupportActionBar().setTitle(getIntent().getStringExtra(Constantes.LISTA_GENERICA));
-            list_id = getIntent().getStringExtra(Constantes.LISTA_ID);
-        }else {
-            startActivity(new Intent(this, MainActivity.class));
-        }
+        getSupportActionBar().setTitle(getIntent().getStringExtra(Constantes.LISTA_GENERICA));
+        Log.d("ListaGenericaActivity", (String) getSupportActionBar().getTitle());
+        list_id = getIntent().getStringExtra(Constantes.LISTA_ID);
+        Log.d("ListaGenericaActivity", list_id);
+
         progressBar = (ProgressBar) findViewById(R.id.progress);
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_favorite);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
@@ -98,6 +97,7 @@ public class ListaGenericaActivity  extends BaseActivity{
             progressBar.setVisibility(View.GONE);
             recyclerView.setAdapter(new ListUserAdapter(ListaGenericaActivity.this,
                     lista != null ? lista.items : null));
+
         }
     }
 }
