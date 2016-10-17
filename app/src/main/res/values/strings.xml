@@ -34,7 +34,7 @@
     <string name="author">Autor:</string>
     <string name="treiler">Treiler</string>
     <string name="por_tras_camera_filme">Produção do Filme</string>
-    <string name="por_tras_camera_tvshow">Produção do Série</string>
+    <string name="por_tras_camera_tvshow">Produção da Série</string>
     <string name="dollar" translatable="false">$</string>
     <string name="milhoes_budget">Milhões</string>
     <string name="no_message">Sem Comentarios</string>
@@ -127,7 +127,7 @@
     <string name="toast_salvar_imagem">Imagem salva na pasta do aplicativo.</string>
     <string name="infor_app">Informaçãoes sobre o App</string>
     <string name="criado">Criado por:</string>
-    <string name="icaronunes" translatable="false">icaronunes@gmail.com</string>
+    <string name="email" translatable="false">icarornunes@gmail.com</string>
     <string name="infor_tmdb" translatable="false">"This product uses the TMDb API but is not endorsed or certified by TMDb."</string>
     <string name="rated_googleplay">Avaliar no Google Play.</string>
     <string name="suas_listas">Suas listas</string>

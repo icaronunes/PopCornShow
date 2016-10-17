@@ -1,7 +1,9 @@
 package activity;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -20,11 +22,10 @@ import utils.Constantes;
  */
 public class Site extends AppCompatActivity {
 
-    private static String URL = "https://www.themoviedb.org/account/signup";
+    private static String url = "https://www.themoviedb.org/account/signup";
+    protected SwipeRefreshLayout swipeRefreshLayout;
     private WebView webView;
     private ProgressBar progressBar;
-    protected SwipeRefreshLayout swipeRefreshLayout;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,10 +36,23 @@ public class Site extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.webView);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
-        URL = getIntent().getStringExtra(Constantes.SITE);
-        Log.d("Site", URL);
+        url = getIntent().getStringExtra(Constantes.SITE);
+
+        if (url.contains("https://play.google.com/store/apps/details?id=")) {
+            Log.d("Site", url);
+            final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                finish();
+            } catch (android.content.ActivityNotFoundException anfe) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                finish();
+            }
+        } // https://play.google.com/store/apps/details?id=br.com.icaro.filme
+
+        //Log.d("Site", url);
         setWebViewClient(webView);
-        webView.loadUrl(URL);
+        webView.loadUrl(url);
         configJavascript();
 
         swipeRefreshLayout.setOnRefreshListener(OnRefreshListener());

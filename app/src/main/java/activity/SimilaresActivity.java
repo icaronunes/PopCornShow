@@ -47,7 +47,7 @@ public class SimilaresActivity extends BaseActivity{
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-getExtras();
+        getExtras();
 
         getSupportActionBar().setTitle(title);
 
@@ -79,7 +79,7 @@ getExtras();
             id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
             title = getIntent().getStringExtra(Constantes.NOME_FILME);
         } else {
-            id_filme = Integer.parseInt(getIntent().getStringExtra(Constantes.FILME_ID));
+            id_filme = getIntent().getIntExtra(Constantes.FILME_ID,0);
             title = getIntent().getStringExtra(Constantes.NOME_FILME);
         }
     }

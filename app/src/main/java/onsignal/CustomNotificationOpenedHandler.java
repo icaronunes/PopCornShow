@@ -11,15 +11,21 @@ import com.onesignal.OneSignal;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import activity.CrewsActivity;
 import activity.ElencoActivity;
 import activity.FilmeActivity;
 import activity.FilmesActivity;
+import activity.FotoPersonActivity;
 import activity.ListaGenericaActivity;
 import activity.MainActivity;
 import activity.PersonActivity;
+import activity.ProdutoraActivity;
 import activity.ReviewsActivity;
+import activity.SimilaresActivity;
+import activity.Site;
 import activity.TreilerActivity;
 import activity.TvShowActivity;
+import activity.TvShowsActivity;
 import applicaton.FilmeApplication;
 import utils.Constantes;
 
@@ -164,6 +170,97 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                         stackBuilder.startActivities();
                     }
                 }
+
+                if (action.equals("CrewsActivity")) {
+                    Intent intent = new Intent(context, CrewsActivity.class);
+
+                    if (object.has("nome"))
+                        intent.putExtra(Constantes.NOME, object.getString("nome"));
+
+                    if (object.has("mediatype"))
+                        intent.putExtra(Constantes.MEDIATYPE, object.getString("mediatype"));
+
+                    if (object.has("tvseason"))
+                        intent.putExtra(Constantes.TVSEASONS, object.getString("tvseason"));
+
+                    if (object.has("id") && object.has("mediatype")) {
+                        intent.putExtra(Constantes.ID, object.getInt("id"));
+                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                        intent.putExtra("notification", false);
+                        stackBuilder.addParentStack(CrewsActivity.class);
+                        stackBuilder.addNextIntent(intent);
+                        stackBuilder.startActivities();
+                    }
+                }
+
+                if (action.equals("SiteActivity")) {
+                    Intent intent = new Intent(context, Site.class);
+
+                    if (object.has("url")) {
+                        intent.putExtra(Constantes.SITE, object.getString("url"));
+                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                        stackBuilder.addParentStack(Site.class);
+                        stackBuilder.addNextIntent(intent);
+                        stackBuilder.startActivities();
+                    }
+                }
+
+                if (action.equals("ProdutoraActivity")){
+                    Intent intent = new Intent(context, ProdutoraActivity.class);
+
+                    if (object.has("id")) {
+                        intent.putExtra(Constantes.PRODUTORA_ID, object.getInt("id"));
+                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                        stackBuilder.addParentStack(ProdutoraActivity.class);
+                        stackBuilder.addNextIntent(intent);
+                        stackBuilder.startActivities();
+                    }
+                }
+
+                if (action.equals("SimilaresActivity")){
+                    Intent intent = new Intent(context, SimilaresActivity.class);
+                    if (object.has("nome"))
+                        intent.putExtra(Constantes.NOME_FILME, object.getString("nome"));
+
+                    if (object.has("id")) {
+                        intent.putExtra(Constantes.FILME_ID, object.getInt("id"));
+                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                        stackBuilder.addParentStack(SimilaresActivity.class);
+                        stackBuilder.addNextIntent(intent);
+                        stackBuilder.startActivities();
+                    }
+                }
+
+                if (action.equals("FotoPersonActivity")) {
+                    Intent intent = new Intent(context, FotoPersonActivity.class);
+
+                    if (object.has("nome"))
+                        intent.putExtra(Constantes.NOME_PERSON, object.getString("nome"));
+
+                    if (object.has("position"))
+                        intent.putExtra(Constantes.POSICAO, object.getInt("position"));
+
+                    if (object.has("id")) {
+                        intent.putExtra(Constantes.PERSON_ID, object.getInt("id"));
+                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                        stackBuilder.addParentStack(FotoPersonActivity.class);
+                        stackBuilder.addNextIntent(intent);
+                        stackBuilder.startActivities();
+                    }
+                }
+
+                if (action.equals("TvShowsActivity")) {
+                    Intent intent = new Intent(context, TvShowsActivity.class);
+
+                    // if (object.has("aba")) {    só funciona para NO CINEMA - ARRUMAR
+                    // intent.putExtra(Constantes.ABA, object.getInt("id"));
+                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                    stackBuilder.addParentStack(TvShowsActivity.class);
+                    stackBuilder.addNextIntent(intent);
+                    stackBuilder.startActivities();
+                    // }
+                }
+
 
             } catch (JSONException e) {
                 e.printStackTrace();

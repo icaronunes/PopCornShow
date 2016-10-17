@@ -28,7 +28,7 @@ import static br.com.icaro.filme.R.id.pager;
 
 
 public class FotoPersonActivity extends BaseActivity {
-    int id_foto, position;
+    int id_foto, position = 0;
     ViewPager viewPager;
     List<Artwork> artworks;
     LinePageIndicator titlePageIndicator;
@@ -55,9 +55,9 @@ public class FotoPersonActivity extends BaseActivity {
             nome = getIntent().getExtras().getString(Constantes.NOME_PERSON);
              position = getIntent().getExtras().getInt(Constantes.POSICAO);
         } else {
-            id_foto = Integer.parseInt(getIntent().getExtras().getString(Constantes.PERSON_ID));
+            id_foto = getIntent().getExtras().getInt(Constantes.PERSON_ID);
             nome = getIntent().getExtras().getString(Constantes.NOME_PERSON);
-            position = Integer.parseInt(getIntent().getExtras().getString(Constantes.POSICAO));
+            position = getIntent().getExtras().getInt(Constantes.POSICAO);
         }
     }
 

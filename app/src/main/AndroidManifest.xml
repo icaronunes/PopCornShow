@@ -204,6 +204,9 @@
                 android:value="activity.SearchMultiActivity" />
         </activity>
 
+        <activity android:name="activity.Site"
+            android:parentActivityName="activity.MainActivity"/>
+
         <service
             android:name="onsignal.CustomNotificationExtenderService"
             android:exported="false">

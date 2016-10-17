@@ -112,15 +112,9 @@ public class ProdutoraActivity extends BaseActivity {
 
     private void getExtras() {
         if (getIntent().getAction() == null){
-            mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
             id_produtora = getIntent().getIntExtra(Constantes.PRODUTORA_ID, 0);
         } else {
-//            String media = getIntent().getStringExtra(Constantes.MEDIATYPE);
-//            switch (media){
-//                case "tv"
-//            }
-//            mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
-            id_produtora = Integer.parseInt(getIntent().getStringExtra(Constantes.PRODUTORA_ID));
+            id_produtora = getIntent().getIntExtra(Constantes.PRODUTORA_ID, 0);
         }
     }
 
