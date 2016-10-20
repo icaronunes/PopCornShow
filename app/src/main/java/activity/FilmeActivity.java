@@ -89,6 +89,8 @@ public class FilmeActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(" ");
         getExtras();
+        Log.d("color", "Cor do fab " + color_fundo);
+        //Toast.makeText(this, "FAB = "+ color_fundo, Toast.LENGTH_LONG).show();
         menu_item_favorite = (FloatingActionButton) findViewById(R.id.menu_item_favorite);
         menu_item_watchlist = (FloatingActionButton) findViewById(R.id.menu_item_watchlist);
         menu_item_rated = (FloatingActionButton) findViewById(R.id.menu_item_rated);
@@ -134,6 +136,7 @@ public class FilmeActivity extends BaseActivity {
         } else {
             id_filme = Integer.parseInt(getIntent().getStringExtra(Constantes.FILME_ID));
             color_fundo = Integer.parseInt(getIntent().getStringExtra(Constantes.COLOR_TOP));
+
         }
     }
 
@@ -172,10 +175,12 @@ public class FilmeActivity extends BaseActivity {
             if (file != null) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("message/rfc822");
-                intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle());
+                final String appPackageName = getContext().getPackageName();
+                intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() +"  -  "+"https://play.google.com/store/apps/details?id=" + appPackageName);
                 intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                 startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
+
                 bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_MainActivity:menu_drav_home");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);

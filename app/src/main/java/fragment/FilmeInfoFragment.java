@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
@@ -76,7 +77,7 @@ import static com.squareup.picasso.Picasso.with;
 
 public class FilmeInfoFragment extends Fragment {
 
-    TextView titulo, categoria, time_filme, descricao, voto_media, voto_quantidade, produtora,
+    TextView titulo, categoria, time_filme, descricao, voto_media,  produtora,
             original_title, spoken_languages, production_countries, imdb, tmdb,
             popularity, lancamento, textview_crews, textview_elenco, textview_similares;
     ImageView img_poster, img_star;
@@ -312,7 +313,7 @@ public class FilmeInfoFragment extends Fragment {
                                 getCollection(info);
                             } else {
                                 info = FilmeService.getTmdbCollections()
-                                        .getCollectionInfo(id, "en,null");
+                                        .getCollectionInfo(id, "en");
                                 getCollection(info);
                             }
                         }
@@ -388,19 +389,28 @@ public class FilmeInfoFragment extends Fragment {
     }
 
     private void getCollection(final CollectionInfo info) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                View dialog_collection = inflater.inflate(R.layout.dialog_collection, null);
-                ViewPager pager = (ViewPager) dialog_collection.findViewById(R.id.viewpager_collection);
-                pager.setAdapter(new CollectionPagerAdapter(info, getContext(), movieDb.getId()));
-                builder.setView(dialog_collection);
-                builder.show();
+        if (info.getParts().size() != 0) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    LayoutInflater inflater = getActivity().getLayoutInflater();
+                    View dialog_collection = inflater.inflate(R.layout.dialog_collection, null);
+                    ViewPager pager = (ViewPager) dialog_collection.findViewById(R.id.viewpager_collection);
+                    pager.setAdapter(new CollectionPagerAdapter(info, getContext(), movieDb.getId()));
+                    builder.setView(dialog_collection);
+                    builder.show();
 
-            }
-        });
+                }
+            });
+        } else {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getContext(), R.string.sem_informacao_colletion, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
         bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Collection" );
@@ -942,8 +952,10 @@ public class FilmeInfoFragment extends Fragment {
 
     private void setCollectoin() {
         if (movieDb.getBelongsToCollection() != null) {
+
             icon_collection.setImageResource(R.drawable.collection_on);
         } else {
+
             icon_collection.setImageResource(R.drawable.collection_off);
         }
     }

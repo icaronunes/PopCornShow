@@ -2,10 +2,10 @@ package fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -23,7 +23,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
-import activity.FotoPersonActivity;
 import br.com.icaro.filme.R;
 import utils.Constantes;
 import utils.UtilsFilme;
@@ -81,20 +80,23 @@ public class PosterScrollFragment extends Fragment {
         linear_poster_grid = (LinearLayout) view.findViewById(R.id.linear_poster_grid);
         compartilhar = (ImageView) view.findViewById(R.id.compartilhar);
         salvar = (ImageView) view.findViewById(R.id.salvar);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (linear_poster_grid.getVisibility() == View.INVISIBLE) {
-                    linear_poster_grid.setVisibility(View.VISIBLE);
-                } else {
-                    linear_poster_grid.setVisibility(View.INVISIBLE);
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP){
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (linear_poster_grid.getVisibility() == View.INVISIBLE) {
+                        linear_poster_grid.setVisibility(View.VISIBLE);
+                    } else {
+                        linear_poster_grid.setVisibility(View.INVISIBLE);
+                    }
                 }
-            }
-        });
+            });
 
-        compartilhar.setOnClickListener(compartilharOnClick());
+            compartilhar.setOnClickListener(compartilharOnClick());
 
-        salvar.setOnClickListener(salvarImagem());
+            salvar.setOnClickListener(salvarImagem());
+        }
 
     }
 
@@ -121,6 +123,7 @@ public class PosterScrollFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Event.SHARE, PosterScrollFragment.this.getClass().getName());
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, nome);
+
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
         return new View.OnClickListener() {
             @Override
@@ -128,7 +131,8 @@ public class PosterScrollFragment extends Fragment {
                 File file = salvaImagemMemoriaCache(getContext(), imageView);
                 if (file != null) {
                     Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.putExtra(Intent.EXTRA_TEXT, nome);
+                    final String appPackageName = getContext().getPackageName();
+                    intent.putExtra(Intent.EXTRA_TEXT, nome + "  -  " + "https://play.google.com/store/apps/details?id=" + appPackageName);
                     intent.setType("image/*");
                     intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                     startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));

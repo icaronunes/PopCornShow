@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PopCorn</string>
     <string name="about">About</string>
@@ -121,4 +120,6 @@
     <string name="ver_tmdb">See TMDB</string>
     <string name="vote_average">Vote Average</string>
     <string name="writer">Written</string>
+    <string name="sem_informacao_colletion">
+No information about the collection.</string>
 </resources>

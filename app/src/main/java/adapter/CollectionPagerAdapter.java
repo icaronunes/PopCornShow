@@ -58,6 +58,7 @@ public class CollectionPagerAdapter extends PagerAdapter {
     @Override
     public int getCount() {
         Log.d("CollectionPagerAdapter", "getCount");
+        Log.d("CollectionPagerAdapter", ""+ info.getParts().size());
         return info.getParts().size() > 0 ? info.getParts().size() : 0;
     }
 
