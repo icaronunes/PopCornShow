@@ -83,7 +83,6 @@ public class BaseActivity extends AppCompatActivity {
             }
         })
                 .show();
-
     }
 
     protected void setUpToolBar() {
@@ -263,12 +262,14 @@ public class BaseActivity extends AppCompatActivity {
                 intent = new Intent(this, WatchListActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.menu_drav_person:
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_PersonPopular");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 intent = new Intent(this, PersonPopularActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.menu_drav_oscar:
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_PersonPopular");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);//
@@ -453,6 +454,7 @@ public class BaseActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
+
             account = FilmeApplication.getInstance().getAccount();
             user = Prefs.getString(getBaseContext(), Prefs.LOGIN, Prefs.LOGIN_PASS);
             pass = Prefs.getString(getBaseContext(), Prefs.PASS, Prefs.LOGIN_PASS);
@@ -469,24 +471,26 @@ public class BaseActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
 
             Menu grupo_login = navigationView.getMenu();
-            if (account == null) {
-                textLogin.setText(R.string.fazer_login);
-                textLogin.setTextSize(20);
-                textLogin.setVisibility(View.VISIBLE);
-                imgUserPhoto.setImageResource(R.drawable.add_user);
-                grupo_login = navigationView.getMenu();
-                grupo_login.removeGroup(R.id.menu_drav_logado);
-                imgUserPhoto.setOnClickListener(onClickListenerLogar());
-                FilmeApplication.getInstance().setLogado(false);
+            if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                if (account == null) {
+                    textLogin.setText(R.string.fazer_login);
+                    textLogin.setTextSize(20);
+                    textLogin.setVisibility(View.VISIBLE);
+                    imgUserPhoto.setImageResource(R.drawable.add_user);
+                    grupo_login = navigationView.getMenu();
+                    grupo_login.removeGroup(R.id.menu_drav_logado);
+                    imgUserPhoto.setOnClickListener(onClickListenerLogar());
+                    FilmeApplication.getInstance().setLogado(false);
 
-            } else {
-                FilmeApplication.getInstance().setLogado(true);
-                textLogin.setVisibility(View.VISIBLE);
-                grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-                tLogin.setText(account.getUserName());
-                tUserName.setText(account.getName());
-                imgUserPhoto.setImageResource(R.drawable.user);
-                imgUserPhoto.setOnClickListener(onClickListenerlogado());
+                } else {
+                    FilmeApplication.getInstance().setLogado(true);
+                    textLogin.setVisibility(View.VISIBLE);
+                    grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+                    tLogin.setText(account.getUserName());
+                    tUserName.setText(account.getName());
+                    imgUserPhoto.setImageResource(R.drawable.user);
+                    imgUserPhoto.setOnClickListener(onClickListenerlogado());
+                }
             }
         }
     }

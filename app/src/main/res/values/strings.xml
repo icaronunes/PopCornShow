@@ -135,6 +135,5 @@
     <string name="ver_tmdb">See TMDB</string>
     <string name="vote_average">Vote Average</string>
     <string name="writer">Written</string>
-    <string name="sem_informacao_colletion">
-No information about the collection</string>
+    <string name="sem_informacao_colletion">No information about the collection</string>
 </resources>

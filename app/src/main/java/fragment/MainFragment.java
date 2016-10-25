@@ -417,7 +417,7 @@ public class MainFragment extends Fragment {
             Log.d("PersonFragment", "doInBackground");
 
             if (status) {
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
                 boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
                 if (idioma_padrao) {
                     TmdbTV tmdbTv = FilmeService.getTmdbTvShow();

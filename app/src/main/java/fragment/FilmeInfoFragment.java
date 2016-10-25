@@ -856,12 +856,17 @@ public class FilmeInfoFragment extends Fragment {
 
 
     private void setLancamento() {
-        if (movieDb.getReleaseDate() != null) {
+        if (movieDb.getReleaseDate() != null && movieDb.getReleases().size() > 0) {
             for (int i = 0; i < movieDb.getReleases().size(); i++) {
                 if (Locale.getDefault().getCountry().equalsIgnoreCase(movieDb.getReleases().get(i).getCountry())) {
                     lancamento.setText(movieDb.getReleases().get(i).getReleaseDate());
                     // Adicionar Botão de comprar depois
                     break;
+                } else {
+                   // Log.d("lancamento", movieDb.getReleases().get(i).getCountry());
+                    if (movieDb.getReleases().get(i).getCountry().equalsIgnoreCase("US")) {
+                        lancamento.setText("US " + movieDb.getReleases().get(0).getReleaseDate());
+                    }
                 }
             }
         }

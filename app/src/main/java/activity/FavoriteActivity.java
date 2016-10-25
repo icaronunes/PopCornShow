@@ -3,10 +3,12 @@ package activity;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.google.android.gms.ads.AdRequest;
@@ -17,6 +19,7 @@ import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
+import utils.UtilsFilme;
 
 public class FavoriteActivity extends BaseActivity {
 
@@ -25,6 +28,7 @@ public class FavoriteActivity extends BaseActivity {
     TvResultsPage tvResultsPage;
     MovieResultsPage movieResultsPage;
     ProgressBar progressBar;
+    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,7 @@ public class FavoriteActivity extends BaseActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpage_usuario);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         progressBar = (ProgressBar) findViewById(R.id.progress);
+        linearLayout = (LinearLayout) findViewById(R.id.linear_usuario_list);
 
         AdView adview = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
@@ -45,7 +50,26 @@ public class FavoriteActivity extends BaseActivity {
                 .build();
         adview.loadAd(adRequest);
 
-        new FavoriteAsync().execute();
+        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+            new FavoriteAsync().execute();
+        } else {
+            snack();
+        }
+    }
+
+    protected void snack() {
+        Snackbar.make(linearLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                            //text_elenco_no_internet.setVisibility(View.GONE);
+                            new FavoriteAsync().execute();
+                        } else {
+                            snack();
+                        }
+                    }
+                }).show();
     }
 
     @Override

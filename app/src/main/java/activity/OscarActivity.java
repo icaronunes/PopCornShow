@@ -3,12 +3,14 @@ package activity;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.google.android.gms.ads.AdRequest;
@@ -21,6 +23,7 @@ import br.com.icaro.filme.R;
 import domian.FilmeService;
 import domian.Lista;
 import utils.Constantes;
+import utils.UtilsFilme;
 
 /**
  * Created by icaro on 04/10/16.
@@ -31,6 +34,7 @@ public class OscarActivity  extends BaseActivity{
     ProgressBar progressBar;
     String list_id;
     Lista lista;
+    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class OscarActivity  extends BaseActivity{
         getSupportActionBar().setTitle(R.string.oscar);
         list_id = getIntent().getStringExtra(Constantes.LISTA_ID);
         progressBar = (ProgressBar) findViewById(R.id.progress);
+        linearLayout = (LinearLayout) findViewById(R.id.linear_lista);
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_favorite);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -57,8 +62,27 @@ public class OscarActivity  extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        new TMDVAsync().execute();
+        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+            new TMDVAsync().execute();
+        } else {
+            snack();
+        }
     }
+
+    protected void snack() {
+        Snackbar.make(linearLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                            new TMDVAsync().execute();
+                        } else {
+                            snack();
+                        }
+                    }
+                }).show();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
