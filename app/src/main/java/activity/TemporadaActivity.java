@@ -95,7 +95,7 @@ public class TemporadaActivity extends BaseActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            recyclerView.setAdapter(new TemporadaAdapter(TemporadaActivity.this, tvSeason, serie_id, nome, color));
+            recyclerView.setAdapter(new TemporadaAdapter(TemporadaActivity.this, tvSeason, serie_id, nome, color, nome_temporada));
         }
     }
 }

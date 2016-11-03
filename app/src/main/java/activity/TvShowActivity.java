@@ -81,7 +81,6 @@ public class TvShowActivity extends BaseActivity {
         setUpToolBar();
         setupNavDrawer();
         getExtras();
-       // Toast.makeText(this, "FAB = "+ color_top, Toast.LENGTH_LONG).show();
         layout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         layout.setBackgroundColor(color_top);
         Log.d("color", "Cor do fab " + color_top);

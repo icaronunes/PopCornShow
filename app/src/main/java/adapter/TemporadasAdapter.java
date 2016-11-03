@@ -87,15 +87,13 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
 
     @Override
     public void onBindViewHolder(final TemporadasAdapter.HoldeTemporada holder, final int position) {
-        final int[] numeroep = new int[1];
         Log.d("Position", "numero " + position);
         holder.temporada.setText(context.getString(R.string.temporada) + " " + series.getSeasons().get(position).getSeasonNumber());
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + series.getSeasons().get(position).getPosterPath())
                 .error(R.drawable.poster_empty)
                 .into(holder.image_temporada);
         holder.data.setText(series.getSeasons().get(position).getAirDate() != null ? series.getSeasons().get(position).getAirDate() : "");
-        //holder.numero_ep.setText("Rated " + series.getSeasons().get(position).getEpisodes().size());
-        //NÃO É POSSIVEL PEGAR INFORMAÇÕES DOS EPSODIOS.
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

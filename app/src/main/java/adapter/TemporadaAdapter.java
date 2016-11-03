@@ -28,18 +28,19 @@ import utils.UtilsFilme;
 public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.HoldeTemporada> {
     Context context;
     TvSeason tvSeason;
-    String nome_serie;
+    String nome_serie, nome_temporada;
     TvEpisode episode;
     int serie_id, color;
 
     public TemporadaAdapter(TemporadaActivity temporadaActivity, TvSeason tvSeason,
-                            int serie_id, String nome, int color) {
+                            int serie_id, String nome, int color, String nome_temporada) {
 
         this.tvSeason = tvSeason;
         this.context = temporadaActivity;
         this.serie_id = serie_id;
         this.nome_serie = nome;
         this.color = color;
+        this.nome_temporada = nome_temporada;
     }
 
     @Override
@@ -85,6 +86,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
                 intent.putExtra(Constantes.TVSEASONS, tvSeason);
                 intent.putExtra(Constantes.COLOR_TOP, color);
                 intent.putExtra(Constantes.NOME_TVSHOW, nome_serie);
+                intent.putExtra(Constantes.NOME, nome_temporada);
                 context.startActivity(intent);
 
                 FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
