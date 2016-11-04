@@ -65,7 +65,7 @@ public class TvShowActivity extends BaseActivity {
     int color_top;
     ViewPager viewPager;
     ImageView imageView;
-    TvSeries series;
+    TvSeries series = null;
     CollapsingToolbarLayout layout;
     FloatingActionButton menu_item_favorite, menu_item_watchlist, menu_item_rated;
     FloatingActionMenu fab;
@@ -146,21 +146,24 @@ public class TvShowActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.share) {
             File file = null;
-            if (series.getPosterPath() != null) {
-                 file = salvaImagemMemoriaCache(this, series.getPosterPath());
-            }
-            if (file != null) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                //  intent.putExtra(Intent.EXTRA_SUBJECT, series.getOverview());
-                final String appPackageName = getPackageName();
-                intent.setType("message/rfc822");
-                intent.putExtra(Intent.EXTRA_TEXT, series.getName() +"  -  "+"https://play.google.com/store/apps/details?id=" + appPackageName);
-                intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-                startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_tvshow)));
+            if (series != null) {
+                file = salvaImagemMemoriaCache(this, series.getPosterPath());
+
+                if (file != null) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    //  intent.putExtra(Intent.EXTRA_SUBJECT, series.getOverview());
+                    final String appPackageName = getPackageName();
+                    intent.setType("message/rfc822");
+                    intent.putExtra(Intent.EXTRA_TEXT, series.getName() + "  -  " + "https://play.google.com/store/apps/details?id=" + appPackageName);
+                    intent.setType("image/*");
+                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                    startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_tvshow)));
+                } else {
+                    Toast.makeText(this, getResources().getString(R.string.erro_na_gravacao_imagem),
+                            Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(this, getResources().getString(R.string.erro_na_gravacao_imagem),
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.erro_ainda_sem_imagem), Toast.LENGTH_SHORT).show();
             }
         }
         return super.onOptionsItemSelected(item);

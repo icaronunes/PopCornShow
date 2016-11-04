@@ -72,7 +72,7 @@ public class FilmeActivity extends BaseActivity {
     private int id_filme;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ProgressBar progressBar;
-    private MovieDb movieDb;
+    private MovieDb movieDb = null;
     private boolean addFavorite = true;
     private boolean addWatch = true; // Retirar quando metodo de saber, estiver pronto
     private MovieResultsPage similarMovies;
@@ -170,24 +170,28 @@ public class FilmeActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.share) {
-            File file = salvaImagemMemoriaCache(getContext(), movieDb.getPosterPath());
-            if (file != null) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("message/rfc822");
-                final String appPackageName = getContext().getPackageName();
-                intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() +"  -  "+"https://play.google.com/store/apps/details?id=" + appPackageName);
-                intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-                startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
+        if (movieDb != null) {
+            if (item.getItemId() == R.id.share) {
+                File file = salvaImagemMemoriaCache(getContext(), movieDb.getPosterPath());
+                if (file != null) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("message/rfc822");
+                    final String appPackageName = getContext().getPackageName();
+                    intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() + "  -  " + "https://play.google.com/store/apps/details?id=" + appPackageName);
+                    intent.setType("image/*");
+                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                    startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
 
-                bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_MainActivity:menu_drav_home");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                    bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_MainActivity:menu_drav_home");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
-            } else {
-                Toast.makeText(getContext(), getResources().getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), getResources().getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show();
+                }
             }
+        }else {
+            Toast.makeText(getContext(), getResources().getString(R.string.erro_ainda_sem_imagem), Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }

@@ -128,4 +128,5 @@
     <string name="criar_login_tmdb">Criar Login no TMDB</string>
     <string name="erro">Erro Youtube</string>
     <string name="sem_informacao_colletion">Não há informação sobre a coleção</string>
+    <string name="erro_ainda_sem_imagem">Ainda sem imagem, tente novamente.</string>
 </resources>

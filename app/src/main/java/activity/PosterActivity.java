@@ -41,6 +41,7 @@ public class PosterActivity extends BaseActivity {
         setContentView(R.layout.activity_scroll_poster);
         artworks = (List<Artwork>) getIntent().getBundleExtra(Constantes.BUNDLE).getSerializable(Constantes.ARTWORKS);
         nome = getIntent().getStringExtra(Constantes.NOME);
+        Log.d("posterAcvitivy", String.valueOf(getWindow().getContext().getTheme()));
         viewPager = (ViewPager) findViewById(pager);
         titlePageIndicator = (LinePageIndicator) findViewById(R.id.indicator);
         viewPager.setAdapter(new PosterFragment(getSupportFragmentManager()));

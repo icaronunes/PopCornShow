@@ -42,4 +42,12 @@
         <item name="android:maxHeight">40dp</item>
     </style>
 
+        <!-- Tema de PosterActivity -->
+    <style name="Theme.AppCompat.Light.Dialog.MinWidth.NoActionBar" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparent2</item>
+    </style>
+
 </resources>
