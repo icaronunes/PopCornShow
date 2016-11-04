@@ -50,7 +50,7 @@ import static utils.UtilsFilme.getTimezone;
 /**
  * Created by icaro on 23/08/16.
  */
-public class MainFragment extends Fragment {
+    public class MainFragment extends Fragment {
 
     final static String TAG = MainActivity.class.getName();
     static List<String> buttonFilme, buttonTvshow;
@@ -416,9 +416,16 @@ public class MainFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             Log.d("PersonFragment", "doInBackground");
 
+            if (isDetached()){
+                return null;
+            }
+
             if (status) {
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
-                boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+                boolean idioma_padrao = false;
+                if (isDetached()) {
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                    idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+                }
                 if (idioma_padrao) {
                     TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
                     TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();

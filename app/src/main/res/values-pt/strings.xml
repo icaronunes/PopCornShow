@@ -43,7 +43,7 @@
     <string name="no_budget">Não há informação orçamentaria</string>
     <string name="collecion_off">Sem coleção</string>
     <string name="no_site">Sem site Oficial</string>
-    <string name="pesquisar_internet">Na internet</string>
+    <string name="pesquisar_internet">No Google Play</string>
     <string name="ver_no_app">Ver no PopCorn</string>
     <string name="similares">Similares</string>
     <string name="compartilhar_filme">Compartilhar Filme</string>
@@ -129,4 +129,5 @@
     <string name="erro">Erro Youtube</string>
     <string name="sem_informacao_colletion">Não há informação sobre a coleção</string>
     <string name="erro_ainda_sem_imagem">Ainda sem imagem, tente novamente.</string>
+    <string name="random">Random</string>
 </resources>

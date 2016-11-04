@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,9 +40,7 @@ public class ListaGenericaActivity  extends BaseActivity{
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getIntent().getStringExtra(Constantes.LISTA_GENERICA));
-        Log.d("ListaGenericaActivity", (String) getSupportActionBar().getTitle());
         list_id = getIntent().getStringExtra(Constantes.LISTA_ID);
-        Log.d("ListaGenericaActivity", list_id);
 
         progressBar = (ProgressBar) findViewById(R.id.progress);
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_favorite);

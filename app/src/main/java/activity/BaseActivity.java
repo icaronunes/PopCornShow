@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -29,13 +30,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import applicaton.FilmeApplication;
+import br.com.icaro.filme.BuildConfig;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.model.config.Account;
@@ -63,6 +71,7 @@ public class BaseActivity extends AppCompatActivity {
     TextView textLogin;
     String user, pass;
     private FirebaseAnalytics mFirebaseAnalytics;
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     public static void SnackBar(final View view, String msg) {
 
@@ -280,12 +289,93 @@ public class BaseActivity extends AppCompatActivity {
 
                 break;
 
-//            case R.id.list:
-//                intent = new Intent(this, ListUserActivity.class);
-//                startActivity(intent);
-//                Toast.makeText(this, "watchlist", Toast.LENGTH_SHORT).show();
-//                break;
+            case R.id.menu_drav_surpresa:
+                getParametrosDoRemoteConfig();
+                break;
         }
+    }
+
+    private void getParametrosDoRemoteConfig() {
+
+        final Intent intent = new Intent(this, ListaGenericaActivity.class);
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setDeveloperModeEnabled(BuildConfig.DEBUG)
+                .build();
+        mFirebaseRemoteConfig.setConfigSettings(configSettings);
+
+        mFirebaseRemoteConfig.setDefaults(R.xml.xml_defaults);
+
+        long cacheExpiration = 3600; // 1 hour in seconds.
+        // If in developer mode cacheExpiration is set to 0 so each fetch will retrieve values from
+        // the server.
+        if (mFirebaseRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {
+            cacheExpiration = 0;
+        }
+
+        mFirebaseRemoteConfig.fetch(cacheExpiration)
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            mFirebaseRemoteConfig.activateFetched();
+
+                        } else {
+                            Toast.makeText(BaseActivity.this, "Fetch Failed",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        Map<String, String> map = new HashMap<String, String>();
+                        map = getListaRemoteConfig();
+
+                        String numero = String.valueOf(new Random().nextInt(10));
+                        Log.d(TAG, "numero : " + numero);
+
+                        intent.putExtra(Constantes.LISTA_ID, map.get("id"+numero));
+                        intent.putExtra(Constantes.LISTA_GENERICA, map.get("title"+numero));
+
+                        startActivity(intent);
+
+                    }
+                });
+    }
+
+    private Map<String, String> getListaRemoteConfig() {
+        Map<String, String> map = new HashMap<String, String>();
+
+        //Criar dentro de um FOR
+
+        map.put("id0", mFirebaseRemoteConfig.getString("id0") );
+        map.put("title0",  mFirebaseRemoteConfig.getString("title0") );
+
+        map.put("id1", mFirebaseRemoteConfig.getString("id1") );
+        map.put("title1",  mFirebaseRemoteConfig.getString("title1") );
+
+        map.put("id2", mFirebaseRemoteConfig.getString("id2") );
+        map.put("title2",  mFirebaseRemoteConfig.getString("title2") );
+
+        map.put("id3", mFirebaseRemoteConfig.getString("id3") );
+        map.put("title3",  mFirebaseRemoteConfig.getString("title3") );
+
+        map.put("id4", mFirebaseRemoteConfig.getString("id4") );
+        map.put("title4",  mFirebaseRemoteConfig.getString("title4") );
+
+        map.put("id5", mFirebaseRemoteConfig.getString("id5") );
+        map.put("title5",  mFirebaseRemoteConfig.getString("title5") );
+
+        map.put("id6", mFirebaseRemoteConfig.getString("id6") );
+        map.put("title6",  mFirebaseRemoteConfig.getString("title6") );
+
+        map.put("id7", mFirebaseRemoteConfig.getString("id7") );
+        map.put("title7",  mFirebaseRemoteConfig.getString("title7") );
+
+        map.put("id8", mFirebaseRemoteConfig.getString("id8") );
+        map.put("title8",  mFirebaseRemoteConfig.getString("title8") );
+
+        map.put("id9", mFirebaseRemoteConfig.getString("id9") );
+        map.put("title9",  mFirebaseRemoteConfig.getString("title9") );
+
+        return map;
     }
 
     @Override
@@ -445,7 +535,7 @@ public class BaseActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "Login");
+              //  Log.d(TAG, "Login");
             }
         };
     }
@@ -458,7 +548,6 @@ public class BaseActivity extends AppCompatActivity {
             account = FilmeApplication.getInstance().getAccount();
             user = Prefs.getString(getBaseContext(), Prefs.LOGIN, Prefs.LOGIN_PASS);
             pass = Prefs.getString(getBaseContext(), Prefs.PASS, Prefs.LOGIN_PASS);
-            account = FilmeService.getAccount(user, pass);
             if (account == null && user != null && pass != null) {
                 account = FilmeService.getAccount(user, pass);
             }

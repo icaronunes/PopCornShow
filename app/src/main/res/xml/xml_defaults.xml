@@ -2,13 +2,104 @@
 <!-- START xml_defaults -->
 <defaultsMap>
     <entry>
-        <key>descricao</key>
-        <value>""</value>
+        <key>id0</key>
+        <value>11060</value>
     </entry>
 
     <entry>
-        <key>id_main</key>
-        <value>0</value>
+        <key>title0</key>
+        <value>PopCorn Favorites</value>
     </entry>
+
+    <entry>
+        <key>id1</key>
+        <value>3681</value>
+    </entry>
+
+    <entry>
+        <key>title1</key>
+        <value>BAFTA - Best Film winners</value>
+    </entry>
+
+    <entry>
+        <key>id2</key>
+        <value>11060</value>
+    </entry>
+
+    <entry>
+        <key>title2</key>
+        <value>My name is Bond, James Bond</value>
+    </entry>
+
+    <entry>
+        <key>id3</key>
+        <value>11060</value>
+    </entry>
+
+    <entry>
+        <key>title3</key>
+        <value>My name is Bond, James Bond</value>
+    </entry>
+
+    <entry>
+        <key>id4</key>
+        <value>11060</value>
+    </entry>
+
+    <entry>
+        <key>title4</key>
+        <value>My name is Bond, James Bond</value>
+    </entry>
+
+    <entry>
+        <key>id5</key>
+        <value>11060</value>
+    </entry>
+
+    <entry>
+        <key>title5</key>
+        <value>My name is Bond, James Bond</value>
+    </entry>
+
+    <entry>
+        <key>id6</key>
+        <value>11060</value>
+    </entry>
+
+    <entry>
+        <key>title6</key>
+        <value>My name is Bond, James Bond</value>
+    </entry>
+
+    <entry>
+        <key>id7</key>
+        <value>11060</value>
+    </entry>
+
+    <entry>
+        <key>title7</key>
+        <value>My name is Bond, James Bond</value>
+    </entry>
+
+    <entry>
+        <key>id8</key>
+        <value>11060</value>
+    </entry>
+
+    <entry>
+        <key>title8</key>
+        <value>My name is Bond, James Bond</value>
+    </entry>
+
+    <entry>
+        <key>id9</key>
+        <value>11060</value>
+    </entry>
+
+    <entry>
+        <key>title9</key>
+        <value>My name is Bond, James Bond</value>
+    </entry>
+
 </defaultsMap>
     <!-- END xml_defaults -->

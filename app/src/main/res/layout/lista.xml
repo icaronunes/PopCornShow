@@ -27,7 +27,7 @@
 
             <ImageView
                 android:id="@+id/img_lista"
-                android:src="@drawable/filme342"
+
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:contentDescription="@string/imagem_filme"
                 android:scaleType="center"

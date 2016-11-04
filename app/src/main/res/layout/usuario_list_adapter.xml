@@ -16,7 +16,7 @@
             android:layout_height="261dp"
             android:background="@color/transparent"
             android:scaleType="fitStart"
-            android:src="@drawable/filme342" />
+             />
 
 
         <TextView

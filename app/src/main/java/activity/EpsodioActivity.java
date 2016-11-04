@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -48,7 +47,6 @@ public class EpsodioActivity extends BaseActivity {
     }
 
     private void getExtras() {
-        Log.d("LOG", "entrou");
 
         if (getIntent().getAction() == null) {
             tvshow_id = getIntent().getIntExtra(Constantes.TVSHOW_ID, 0);
@@ -57,18 +55,15 @@ public class EpsodioActivity extends BaseActivity {
             color = getIntent().getIntExtra(Constantes.COLOR_TOP, 0);
             tvSeason = (TvSeason) getIntent().getSerializableExtra(Constantes.TVSEASONS);
             nome_temporada = getIntent().getStringExtra(Constantes.NOME);
-            Log.d("LOG", "nome:" + tvSeason.getName());
-            Log.d("LOG", "entrou true" );
+
             getSupportActionBar().setTitle(!nome_temporada.isEmpty() ? nome_temporada : tvSeason.getName());
         } else {
-            Log.d("LOG", "entrou else" );
             tvshow_id = Integer.parseInt(getIntent().getStringExtra(Constantes.TVSHOW_ID));
             posicao = Integer.parseInt(getIntent().getStringExtra(Constantes.POSICAO));
             nome_serie = getIntent().getStringExtra(Constantes.NOME_TVSHOW);
             color = Integer.parseInt(getIntent().getStringExtra(Constantes.COLOR_TOP));
             tvSeason = (TvSeason) getIntent().getSerializableExtra(Constantes.TVSEASONS);
             nome_temporada = getIntent().getStringExtra(Constantes.NOME);
-            Log.d("LOG", "nome :"  +tvSeason.getName());
             getSupportActionBar().setTitle(!!nome_temporada.isEmpty() ? nome_temporada : tvSeason.getName());
         }
     }

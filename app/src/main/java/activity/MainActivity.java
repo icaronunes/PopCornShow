@@ -33,10 +33,10 @@ import utils.UtilsFilme;
 
 public class MainActivity extends BaseActivity {
 
+    public static final String TAG = MainActivity.class.getName();
     ViewPager viewPager_main, viewpage_top_main;
     TvResultsPage tmdbTv;
     MovieResultsPage tmdbMovies;
-    boolean idioma_padrao;
     TabLayout tabLayout;
     List<TopMain> multi = new ArrayList<>();
     CirclePageIndicator circlePageIndicator;
@@ -46,8 +46,6 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
         setUpToolBar();
         setupNavDrawer();
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
@@ -154,6 +152,7 @@ public class MainActivity extends BaseActivity {
                 tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies(Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
                         //.toLanguageTag()
                          , 1);
+
             } else {
                 tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("en", 1, UtilsFilme.getTimezone());
                 tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies("en", 1);

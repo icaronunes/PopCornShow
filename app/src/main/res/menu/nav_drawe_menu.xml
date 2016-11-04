@@ -23,6 +23,12 @@
             android:icon="@drawable/oscar"
             android:title="@string/oscar" />
 
+        <item
+            android:id="@+id/menu_drav_surpresa"
+            android:checkable="true"
+            android:icon="@drawable/dado"
+            android:title="@string/random" />
+
     </group>
 
     <group

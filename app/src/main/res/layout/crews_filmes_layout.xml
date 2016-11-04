@@ -21,7 +21,7 @@
             android:background="@color/white"
             android:elevation="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/filme342"
+
             android:layout_width="176dp"
             android:layout_height="271dp" />
 

@@ -82,7 +82,7 @@
     <string name="password">Password</string>
     <string name="person_rated">Popular people</string>
     <string name="person_vote">People voted</string>
-    <string name="pesquisar_internet">On the internet</string>
+    <string name="pesquisar_internet">On the Google Play</string>
     <string name="popularity">" Popularity:"</string>
     <string name="por_tras_camera_filme">Film Production</string>
     <string name="por_tras_camera_tvshow">Series Production</string>
@@ -137,4 +137,5 @@
     <string name="writer">Written</string>
     <string name="sem_informacao_colletion">No information about the collection</string>
     <string name="erro_ainda_sem_imagem">Still no image, try again.</string>
+    <string name="random" translatable="false">Random</string>
 </resources>
