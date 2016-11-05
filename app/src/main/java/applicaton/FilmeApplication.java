@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.onesignal.OneSignal;
 
 import domian.FilmeService;
@@ -23,6 +24,7 @@ public class FilmeApplication extends Application {
 
     private static final String TAG = "FilmeApplication";
     private static FilmeApplication instance = null;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public static void setAccount(Account account) {
         FilmeApplication.account = account;
@@ -61,6 +63,9 @@ public class FilmeApplication extends Application {
                 .setNotificationReceivedHandler(new CustomNotificationReceivedHandler())
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .init();
+
+       // mFirebaseAnalytics.setAnalyticsCollectionEnabled(Config.getAnalytucs_enable);
+
     }
 
     @Override
@@ -72,7 +77,7 @@ public class FilmeApplication extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        Log.d(TAG, "FilmeApplication.onTerminate");
+       // Log.d(TAG, "FilmeApplication.onTerminate");
     }
 
 
@@ -103,10 +108,10 @@ public class FilmeApplication extends Application {
             account = FilmeService.getAccount(user, pass);
             if (account != null){
                 setLogado(true);
-                Log.d(this.getClass().getName(), "account - true");
+               // Log.d(this.getClass().getName(), "account - true");
             } else {
                 setLogado(false);
-                Log.d(this.getClass().getName(), "account - false");
+               // Log.d(this.getClass().getName(), "account - false");
             }
 
             return null;

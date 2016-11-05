@@ -125,12 +125,12 @@ public class BaseActivity extends AppCompatActivity {
             imgUserBackground = (ImageView) view.findViewById(R.id.imgUserBackground);
             imgUserPhoto = (ImageView) view.findViewById(R.id.imgUserPhoto);
             Random random = new Random();
-            Log.d("randon", ""+random.nextInt(7));
+           // Log.d("randon", ""+random.nextInt(7));
             imgUserBackground.setImageResource(drawer[random.nextInt(7)]);
             tUserName = (TextView) view.findViewById(R.id.tUserName);
             tLogin = (TextView) view.findViewById(R.id.tLogin);
             textLogin = (TextView) view.findViewById(R.id.textLogin);
-            Log.d(TAG, "BASEACTIVITY");
+          //  Log.d(TAG, "BASEACTIVITY");
 
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -329,10 +329,15 @@ public class BaseActivity extends AppCompatActivity {
                         map = getListaRemoteConfig();
 
                         String numero = String.valueOf(new Random().nextInt(10));
-                        Log.d(TAG, "numero : " + numero);
+                        //Log.d(TAG, "numero : " + numero);
 
                         intent.putExtra(Constantes.LISTA_ID, map.get("id"+numero));
                         intent.putExtra(Constantes.LISTA_GENERICA, map.get("title"+numero));
+
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_Random:List:"+map.get("id"+numero)+":"+"title"+numero);
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                         startActivity(intent);
 
@@ -343,37 +348,11 @@ public class BaseActivity extends AppCompatActivity {
     private Map<String, String> getListaRemoteConfig() {
         Map<String, String> map = new HashMap<String, String>();
 
-        //Criar dentro de um FOR
-
-        map.put("id0", mFirebaseRemoteConfig.getString("id0") );
-        map.put("title0",  mFirebaseRemoteConfig.getString("title0") );
-
-        map.put("id1", mFirebaseRemoteConfig.getString("id1") );
-        map.put("title1",  mFirebaseRemoteConfig.getString("title1") );
-
-        map.put("id2", mFirebaseRemoteConfig.getString("id2") );
-        map.put("title2",  mFirebaseRemoteConfig.getString("title2") );
-
-        map.put("id3", mFirebaseRemoteConfig.getString("id3") );
-        map.put("title3",  mFirebaseRemoteConfig.getString("title3") );
-
-        map.put("id4", mFirebaseRemoteConfig.getString("id4") );
-        map.put("title4",  mFirebaseRemoteConfig.getString("title4") );
-
-        map.put("id5", mFirebaseRemoteConfig.getString("id5") );
-        map.put("title5",  mFirebaseRemoteConfig.getString("title5") );
-
-        map.put("id6", mFirebaseRemoteConfig.getString("id6") );
-        map.put("title6",  mFirebaseRemoteConfig.getString("title6") );
-
-        map.put("id7", mFirebaseRemoteConfig.getString("id7") );
-        map.put("title7",  mFirebaseRemoteConfig.getString("title7") );
-
-        map.put("id8", mFirebaseRemoteConfig.getString("id8") );
-        map.put("title8",  mFirebaseRemoteConfig.getString("title8") );
-
-        map.put("id9", mFirebaseRemoteConfig.getString("id9") );
-        map.put("title9",  mFirebaseRemoteConfig.getString("title9") );
+        for(int i =0; i <= 9; i++){
+            map.put("id"+i, mFirebaseRemoteConfig.getString("id"+i) );
+            map.put("title"+i,  mFirebaseRemoteConfig.getString("title"+i) );
+           // Log.d("Log", "numero "+i);
+        }
 
         return map;
     }
@@ -412,7 +391,7 @@ public class BaseActivity extends AppCompatActivity {
 
         if (!file.exists()) {
             file.mkdir();
-            Log.e("salvarArqNaMemoriaIn", "Directory created");
+            //Log.e("salvarArqNaMemoriaIn", "Directory created");
         }
         File dir = new File(file, endereco);
         ImageView imageView = new ImageView(context);
@@ -441,7 +420,7 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Log.d("setupNavDrawer", "Login");
+              //  Log.d("setupNavDrawer", "Login");
                 final Dialog alertDialog = new Dialog(BaseActivity.this);
                 alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 alertDialog.setContentView(R.layout.adialog_custom_login);
@@ -470,7 +449,7 @@ public class BaseActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d(TAG, "Adialog Login");
+                       // Log.d(TAG, "Adialog Login");
                         final ProgressDialog progressDialog = new ProgressDialog(BaseActivity.this,
                                 android.R.style.Theme_Material_Dialog);
                         user = eLogin.getText().toString();
@@ -551,7 +530,7 @@ public class BaseActivity extends AppCompatActivity {
             if (account == null && user != null && pass != null) {
                 account = FilmeService.getAccount(user, pass);
             }
-            Log.d(TAG, "doInBackground - Login");
+           // Log.d(TAG, "doInBackground - Login");
             return null;
         }
 

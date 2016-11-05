@@ -79,7 +79,7 @@ public class ListaGenericaActivity  extends BaseActivity{
         protected Void doInBackground(Void... voids) {
             if (lista == null) {
                 lista = FilmeService.getLista(list_id);
-                //Metodos criados. Tudo gambiara. Precisa arrumar
+                //Metodos criados. Tudo gambiara. Precisa arrumar - 11060
                 if (lista.getItems() != null) {
                     Collections.sort(lista.getItems());
                 }

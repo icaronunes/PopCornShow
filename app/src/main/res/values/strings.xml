@@ -137,5 +137,5 @@
     <string name="writer">Written</string>
     <string name="sem_informacao_colletion">No information about the collection</string>
     <string name="erro_ainda_sem_imagem">Still no image, try again.</string>
-    <string name="random" translatable="false">Random</string>
+    <string name="random">Random</string>
 </resources>

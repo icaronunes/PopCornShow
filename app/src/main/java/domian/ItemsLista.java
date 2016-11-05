@@ -1,18 +1,15 @@
 package domian;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-
-import static android.R.attr.data;
 
 /**
  * Created by icaro on 03/10/16.
  */
-public class ItemsLista implements Comparable<ItemsLista>{
+public class ItemsLista  implements Comparable<ItemsLista>{
 
     @SerializedName("poster_path")
     private String posterPath;
@@ -168,6 +165,29 @@ public class ItemsLista implements Comparable<ItemsLista>{
 
     @Override
     public int compareTo(ItemsLista itemsLista) {
+            if (this.getReleaseDate() == null){
+                Log.d("Log", "Filme sem Realease This title : " +this.title);
+                Log.d("Log", "Filme sem Realease This title : " +this.getOriginalTitle());
+                Log.d("Log", "Filme sem Realease This id : " +this.getId());
+                Log.d("Log", "Filme sem Realease itemLista id: " +this.getPosterPath());
+                return 1;
+        }
+
+        if (itemsLista.getReleaseDate() == null){
+            Log.d("Log", "Filme sem Realease itemLista title: " +itemsLista.getTitle());
+            Log.d("Log", "Filme sem Realease itemLista title: " +itemsLista.getOriginalTitle());
+            Log.d("Log", "Filme sem Realease itemLista id: " +itemsLista.getId());
+            Log.d("Log", "Filme sem Realease itemLista id: " +itemsLista.getPosterPath());
+            return 1;
+        }
+
+        if ((this.releaseDate.length() < 4)){
+
+//            Log.d("Log", "Filme sem Realease itemLista length: " +itemsLista.getTitle());
+//            Log.d("Log", "Filme sem Realease this length: " +this.getTitle());
+//            Log.d("Log", "Filme sem Realease itemLista length: " +itemsLista.releaseDate);
+//            Log.d("Log", "Filme sem Realease this length: " +this.releaseDate);
+        }
         int date = Integer.parseInt(this.getReleaseDate().substring(0,4));
         int date2  = Integer.parseInt(itemsLista.getReleaseDate().substring(0,4));
 

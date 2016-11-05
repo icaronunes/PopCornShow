@@ -71,7 +71,7 @@ public class FilmeService {
     }
 
     public static TmdbSearch getTmdbSearch() {
-        Log.d("SuggestionProvider", "getTmdbSearch");
+
         return new TmdbApi(Config.TMDB_API_KEY).getSearch();
     }
 
@@ -111,7 +111,7 @@ public class FilmeService {
     }
 
     public static Account getAccount(String user, String pass) {
-        Log.d("TmdbAuthentication", "TmdbAuthentication");
+
         TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
         try {
             TokenSession authentication = tmdbApi
@@ -128,7 +128,6 @@ public class FilmeService {
                 FirebaseCrash.report(e);
             }
         }
-        Log.d("getAccount", "Account Nulo");
         return null;
     }
 
@@ -224,14 +223,14 @@ public class FilmeService {
     public static Lista getLista(String stringExtra) {
         OkHttpClient client = new OkHttpClient();
         String url = "https://api.themoviedb.org/3/list/" + stringExtra +
-                "?api_key=fb14e77a32282ed59a8122a266010b70&language=en-US&order_by=release.date.asc";
+                "?api_key="+ Config.TMDB_API_KEY+"&language=en-US&sort_by=release.date.desc";
         Request request = new Request.Builder()
                 .url(url)
                 .build();
         Lista items = null;
         try {
             Response response = client.newCall(request).execute();
-            Log.d("domian.Lista", String.valueOf(response.body().charStream()));
+          //  Log.d("domian.Lista", String.valueOf(response.body().charStream()));
             items =  parseJSON(response);
         } catch (IOException e) {
             e.printStackTrace();
