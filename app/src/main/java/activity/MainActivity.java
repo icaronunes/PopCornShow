@@ -30,6 +30,8 @@ import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.UtilsFilme;
 
+import static android.app.Activity.DEFAULT_KEYS_SEARCH_LOCAL;
+
 
 public class MainActivity extends BaseActivity {
 

@@ -73,6 +73,9 @@ public class TvShowActivity extends BaseActivity {
     private boolean addFavorite = true;
     private boolean addWatch = true;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,13 +106,19 @@ public class TvShowActivity extends BaseActivity {
 
     private void getExtras(){
         if (getIntent().getAction() == null){
-            nome = getIntent().getStringExtra(Constantes.NOME_TVSHOW);// usado????????
+           nome = getIntent().getStringExtra(Constantes.NOME_TVSHOW);// usado????????
+            //nome = "BBT";
             color_top = getIntent().getIntExtra(Constantes.COLOR_TOP, R.color.colorFAB);
+            //color_top = -13565;
             id_tvshow = getIntent().getIntExtra(Constantes.TVSHOW_ID, 0);
+            //id_tvshow = 1418;
         } else{
             nome = getIntent().getStringExtra(Constantes.NOME_TVSHOW);// usado????????
+            //nome = "BBT";
             color_top = Integer.parseInt(getIntent().getStringExtra(Constantes.COLOR_TOP));
+            //color_top = -13565;
             id_tvshow = Integer.parseInt(getIntent().getStringExtra(Constantes.TVSHOW_ID));
+            //id_tvshow = 1418;
         }
     }
 

@@ -3,4 +3,11 @@
 
     <string name="API_KEY" translatable="false">5886e2bfb2c71f60701457d9453825e8</string>
     <string name="admob" translatable="false">ca-app-pub-7639270198633263/7125334030 123</string>
+
+    <string name="facebook_application_id" translatable="false">880015148798069</string>
+    <string name="fb_login_protocol_scheme">fb320635351628431</string>
+    <string name="web_client_id">1040550353675-bs9boom6psciiiti1rd1ea8qv9fca96t.apps.googleusercontent.com</string>
+
+
+
 </resources>

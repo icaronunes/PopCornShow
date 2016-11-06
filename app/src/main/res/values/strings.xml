@@ -138,4 +138,7 @@
     <string name="sem_informacao_colletion">No information about the collection</string>
     <string name="erro_ainda_sem_imagem">Still no image, try again.</string>
     <string name="random">Random</string>
+    <string name="seguindo">Seguindo</string>
+    <string name="seguir">Seguir</string>
+    <string name="erro_seguir">OPS! Something went wrong.</string>
 </resources>

@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -19,18 +20,29 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.crash.FirebaseCrash;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import activity.BaseActivity;
@@ -44,9 +56,17 @@ import activity.TemporadaActivity;
 import activity.TreilerActivity;
 import adapter.TemporadasAdapter;
 import br.com.icaro.filme.R;
+import domian.UserEp;
+import domian.UserSeasons;
+import domian.UserTvshow;
+import info.movito.themoviedbapi.TmdbApi;
+import info.movito.themoviedbapi.TmdbTV;
+import info.movito.themoviedbapi.TmdbTvSeasons;
 import info.movito.themoviedbapi.model.Genre;
 import info.movito.themoviedbapi.model.people.PersonCast;
 import info.movito.themoviedbapi.model.people.PersonCrew;
+import info.movito.themoviedbapi.model.tv.TvEpisode;
+import info.movito.themoviedbapi.model.tv.TvSeason;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Config;
 import utils.Constantes;
@@ -65,12 +85,17 @@ public class TvShowFragment extends Fragment {
     final String TAG = TvShowFragment.class.getName();
     int tipo, color;
     TvSeries series;
-
+    Button seguir;
     TextView titulo, categoria, descricao, voto_media, produtora,
             original_title, spoken_languages, production_countries, end, status, temporada,
             imdb, tmdb, popularity, lancamento, textview_crews, textview_elenco;
     ImageView  icon_site, img_poster, img_star;
     LinearLayout linear_container;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private FirebaseAuth mFirebaseRef;
+
 
 
     public static Fragment newInstance(int tipo, TvSeries series, int color) {
@@ -93,12 +118,18 @@ public class TvShowFragment extends Fragment {
             series = (TvSeries) getArguments().getSerializable(Constantes.SERIE);
             color = getArguments().getInt(Constantes.COLOR_TOP);
         }
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseRef = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        myRef =  database.getReference("users");
+
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (tipo == R.string.informacoes) {
+            isSeguindo();
             setSinopse();//Chamar depois? pelo metodo setTvShowInfomation?
             setTitulo();
             setCategoria();
@@ -251,6 +282,28 @@ public class TvShowFragment extends Fragment {
 
     }
 
+    private void isSeguindo() {
+        myRef.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(series.getId())).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Get user value
+                        if (dataSnapshot.exists()){
+                            seguir.setText(R.string.seguindo);
+                            Log.w(TAG, "Seguindo");
+                        } else {
+                            seguir.setText(R.string.seguir);
+                            Log.w(TAG, "Não Seguindo");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                    }
+                });
+    }
+
     private void setStatus() {
         if (series.getStatus() != null) {
             status.setTextColor(color);
@@ -368,10 +421,86 @@ public class TvShowFragment extends Fragment {
         linear_container = (LinearLayout) view.findViewById(R.id.linear_container);
         textview_crews = (TextView) view.findViewById(R.id.textview_crews);
         textview_elenco = (TextView) view.findViewById(R.id.textview_elenco);
+        seguir = (Button) view.findViewById(R.id.seguir);
+
+        seguir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                seguir.setText(R.string.seguindo);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        TmdbTV tmdbTV = new TmdbApi(Config.TMDB_API_KEY).getTvSeries();
+                        TmdbTvSeasons tvSeasons = new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
+
+                        final TvSeries serie = tmdbTV.getSeries(series.getId(), "en", TmdbTV.TvMethod.external_ids);
+                        UserTvshow userTvshow = setUserTvShow(serie);
+
+                        for (int i = 0; i < serie.getSeasons().size(); i++) {
+                            TvSeason tvS = serie.getSeasons().get(i);
+                            TvSeason tvSeason = tvSeasons.getSeason(serie.getId(), tvS.getSeasonNumber(), "en", null); //?
+                            userTvshow.getSeasons().get(i).setUserEps(setEp(tvSeason));
+                        }
+                        myRef = database.getReference("users");
+                        myRef.child(mAuth.getCurrentUser()
+                                .getUid())
+                                .child(String.valueOf(userTvshow.getId()))
+                                .setValue(userTvshow)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful() ){
+                                    seguir.setText(R.string.seguindo);
+                                    //Por animação
+                                } else {
+                                    seguir.setText(R.string.seguir);
+                                    Toast.makeText(getActivity(), R.string.erro_seguir, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                }).start();
+            }
+        });
 
         return view;
     }
 
+    private List<UserEp> setEp(TvSeason tvSeason) {
+        List<UserEp>  eps = new ArrayList<>();
+        for (TvEpisode tvEpisode : tvSeason.getEpisodes()) {
+            UserEp userEp = new UserEp();
+            userEp.setEpisodeNumber(tvEpisode.getEpisodeNumber());
+            userEp.setId(tvEpisode.getId());
+            userEp.setSeasonNumber(tvEpisode.getSeasonNumber());
+            eps.add(userEp);
+        }
+        return eps;
+    }
+
+    private UserTvshow setUserTvShow(TvSeries serie) {
+        UserTvshow userTvshow = new UserTvshow();
+        userTvshow.setId(serie.getId());
+        userTvshow.setNome(serie.getOriginalName());
+        userTvshow.setExternalIds(serie.getExternalIds());
+        userTvshow.setNumberOfEpisodes(serie.getNumberOfEpisodes());
+        userTvshow.setNumberOfSeasons(serie.getNumberOfSeasons());
+        userTvshow.setSeasons(setUserSeasson(serie));
+        return userTvshow;
+    }
+
+    private List<UserSeasons> setUserSeasson(TvSeries serie) {
+        List<UserSeasons> list = new ArrayList<>();
+        for (TvSeason tvSeason : serie.getSeasons()) {
+            UserSeasons userSeasons = new UserSeasons();
+
+            userSeasons.setId(tvSeason.getId());
+            userSeasons.setSeasonNumber(tvSeason.getSeasonNumber());
+
+            list.add(userSeasons);
+        }
+        return list;
+    }
 
     private void setSinopse() {
         Log.d("SetSinopse", "OverView" + series.getOverview());
