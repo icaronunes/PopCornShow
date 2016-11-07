@@ -65,6 +65,7 @@ import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.videos;
 
 public class FilmeActivity extends BaseActivity {
 
+    private static final String TAG = FilmeActivity.class.getName();
     ViewPager viewPager;
     int color_fundo;
     FloatingActionButton menu_item_favorite, menu_item_watchlist, menu_item_rated;

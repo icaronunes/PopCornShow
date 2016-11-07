@@ -44,5 +44,6 @@ public class Constantes {
     public static final String ID = "id";
     public static final String MAIN = "main";
     public static final String LISTA_GENERICA = "generica_nome";
+    public static final String USER = "user";
 }
 

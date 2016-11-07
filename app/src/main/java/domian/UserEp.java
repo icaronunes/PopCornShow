@@ -1,11 +1,13 @@
 package domian;
 
+import java.io.Serializable;
+
 /**
  * Created by icaro on 03/11/16.
  */
 
 
-public class UserEp {
+public class UserEp implements Serializable{
 
     private int id;
     private Integer seasonNumber;

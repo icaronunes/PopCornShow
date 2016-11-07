@@ -58,7 +58,7 @@ import utils.UtilsFilme;
 
 public class BaseActivity extends AppCompatActivity {
 
-    static String TAG = "BaseActivity";
+    private static String TAG = "BaseActivity";
     static Account account = null;
     protected DrawerLayout drawerLayout;
     protected NavigationView navigationView;

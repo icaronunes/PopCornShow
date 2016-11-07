@@ -4,9 +4,9 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 
 import br.com.icaro.filme.R;
+import domian.UserTvshow;
 import fragment.TvShowFragment;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
@@ -15,26 +15,30 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
  */
 public class TvShowAdapter extends FragmentPagerAdapter {
 
+    public static final String TAG = TvShowAdapter.class.getName();
     Context context;
     TvSeries series;
     int color;
+    UserTvshow userTvshow;
 
 
-    public TvShowAdapter(Context context, FragmentManager supportFragmentManager, TvSeries series, int color_top) {
+    public TvShowAdapter(Context context, FragmentManager supportFragmentManager, TvSeries series, int color_top, UserTvshow userTvshow) {
         super(supportFragmentManager);
         this.context = context;
         this.series = series;
         this.color = color_top;
+        this.userTvshow = userTvshow;
+        //Log.d(TAG, "Adapter " +userTvshow.getNome());
     }
 
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            Log.d("TvShowAdapter", "Series " + series.getName());
-            return TvShowFragment.newInstance(R.string.informacoes,  series, color);
+           // Log.d("TvShowAdapter", "Series " + series.getName());
+            return TvShowFragment.newInstance(R.string.informacoes,  series, color, userTvshow);
         }
         if (position == 1) {
-            return TvShowFragment.newInstance(R.string.temporadas, series, color);
+            return TvShowFragment.newInstance(R.string.temporadas, series, color, userTvshow);
         }
         return null;
     }

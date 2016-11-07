@@ -21,7 +21,6 @@ public class UserTvshow implements Serializable {
 
     private int numberOfEpisodes;
 
-
     private int numberOfSeasons;
 
 

@@ -33,6 +33,12 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -45,6 +51,7 @@ import adapter.TvShowAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
+import domian.UserTvshow;
 import info.movito.themoviedbapi.TmdbAccount;
 import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.model.core.ResponseStatus;
@@ -60,6 +67,7 @@ import static info.movito.themoviedbapi.TmdbTV.TvMethod.videos;
 
 public class TvShowActivity extends BaseActivity {
 
+    private static final String TAG = TvShowActivity.class.getName();
     int id_tvshow;
     String nome;
     int color_top;
@@ -73,7 +81,10 @@ public class TvShowActivity extends BaseActivity {
     private boolean addFavorite = true;
     private boolean addWatch = true;
 
-
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    UserTvshow userTvshow = null ;
 
 
     @Override
@@ -95,13 +106,22 @@ public class TvShowActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         imageView = (ImageView) findViewById(R.id.img_top_tvshow);
         setColorFab(color_top);
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+        iniciarFirebases();
+
 
         if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
             new TMDVAsync().execute();
         } else {
             snack();
         }
+    }
+
+    private void iniciarFirebases() {
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        myRef =  database.getReference("users");
     }
 
     private void getExtras(){
@@ -457,7 +477,7 @@ public class TvShowActivity extends BaseActivity {
     private void setupViewPagerTabs() {
 
         viewPager.setOffscreenPageLimit(1);
-        viewPager.setAdapter(new TvShowAdapter(this, getSupportFragmentManager(), series, color_top));
+        viewPager.setAdapter(new TvShowAdapter(this, getSupportFragmentManager(), series, color_top, userTvshow));
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager.setCurrentItem(0);
         tabLayout.setupWithViewPager(viewPager);
@@ -509,16 +529,43 @@ public class TvShowActivity extends BaseActivity {
                 series = FilmeService.getTmdbTvShow()
                         .getSeries(id_tvshow, null, images, credits, videos, external_ids);
             }
+
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+
+            if (mAuth.getCurrentUser().getUid() != null && series != null) {
+                myRef.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(series.getId())).addListenerForSingleValueEvent(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                // Get user value
+                                if (dataSnapshot.exists()) {
+
+                                    userTvshow = dataSnapshot.getValue(UserTvshow.class);
+                                    Log.d(TAG, "Ep:> " + userTvshow.getSeasons().get(0).getId());
+                                } else {
+
+                                    Log.d(TAG, "onDataChange " + "Não seguindo.");
+                                }
+                                setupViewPagerTabs();
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                            }
+                        });
+            } else {
+                setupViewPagerTabs();
+            }
+
             setCoordinator();
             setImageTop();
-            setupViewPagerTabs();
-
+            //setupViewPagerTabs();
             if (FilmeApplication.getInstance().isLogado()) { // Arrumar
                 Log.d("FAB", "FAB " + color_top);
                 Date date = null;

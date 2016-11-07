@@ -82,29 +82,45 @@ import static com.squareup.picasso.Picasso.with;
  */
 public class TvShowFragment extends Fragment {
 
-    final String TAG = TvShowFragment.class.getName();
-    int tipo, color;
-    TvSeries series;
-    Button seguir;
-    TextView titulo, categoria, descricao, voto_media, produtora,
+    private final String TAG = TvShowFragment.class.getName();
+
+    private int tipo, color;
+    private TvSeries series;
+    private Button seguir;
+    private TextView titulo, categoria, descricao, voto_media, produtora,
             original_title, spoken_languages, production_countries, end, status, temporada,
             imdb, tmdb, popularity, lancamento, textview_crews, textview_elenco;
-    ImageView  icon_site, img_poster, img_star;
-    LinearLayout linear_container;
+    private ImageView icon_site, img_poster, img_star;
+    private LinearLayout linear_container;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
-    private FirebaseAuth mFirebaseRef;
+    private UserTvshow userTvshow;
+    ValueEventListener postListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
 
+            userTvshow = dataSnapshot.getValue(UserTvshow.class);
+            Log.w(TAG, "Mudou");
 
+        }
 
-    public static Fragment newInstance(int tipo, TvSeries series, int color) {
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            // Getting Post failed, log a message
+            Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            // ...
+        }
+    };
+    private RecyclerView recyclerViewTemporada;
+
+    public static Fragment newInstance(int tipo, TvSeries series, int color, UserTvshow userTvshow) {
         TvShowFragment fragment = new TvShowFragment();
         Bundle bundle = new Bundle();
-        Log.d("TvShowFragment", "Series " + series.getName());
         bundle.putSerializable(Constantes.SERIE, series);
         bundle.putInt(Constantes.COLOR_TOP, color);
         bundle.putInt(Constantes.ABA, tipo);
+        bundle.putSerializable(Constantes.USER, userTvshow);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -117,11 +133,15 @@ public class TvShowFragment extends Fragment {
             tipo = getArguments().getInt(Constantes.ABA);
             series = (TvSeries) getArguments().getSerializable(Constantes.SERIE);
             color = getArguments().getInt(Constantes.COLOR_TOP);
+            userTvshow = (UserTvshow) getArguments().getSerializable(Constantes.USER);
         }
+
+        //Validar se esta logado. CAso não, não precisa instanciar nada.
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseRef = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        myRef =  database.getReference("users");
+        myRef = database.getReference("users");
+        myRef.addValueEventListener(postListener);
+
 
     }
 
@@ -161,7 +181,7 @@ public class TvShowFragment extends Fragment {
                         startActivity(intent);
 
                         Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_homepage" );
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_homepage");
                         bundle.putString(FirebaseAnalytics.Param.DESTINATION, "Navegador");
                         FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
@@ -169,7 +189,7 @@ public class TvShowFragment extends Fragment {
                         BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
                                 getString(R.string.no_site));
                         Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_homepage" );
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_homepage");
                         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Sem homepage");
                         FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                     }
@@ -203,7 +223,7 @@ public class TvShowFragment extends Fragment {
                     startActivity(intent);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_tmdb" );
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_tmdb");
                     bundle.putString(FirebaseAnalytics.Param.DESTINATION, Site.class.getName());
                     FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
@@ -220,8 +240,8 @@ public class TvShowFragment extends Fragment {
                                         + " " + getString(R.string.person_vote));
 
                         Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star" );
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star_SnackBar" );
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star");
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star_SnackBar");
                         FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                     } else {
@@ -230,8 +250,8 @@ public class TvShowFragment extends Fragment {
                                         + " " + getString(R.string.no_vote));
 
                         Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star" );
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "SnarBar_sem_informaçao" );
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star");
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "SnarBar_sem_informaçao");
                         FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                     }
@@ -250,7 +270,7 @@ public class TvShowFragment extends Fragment {
                     startActivity(intent);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, ElencoActivity.class.getName() );
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, ElencoActivity.class.getName());
                     bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
                     bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
                     FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
@@ -269,7 +289,7 @@ public class TvShowFragment extends Fragment {
                     startActivity(intent);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, CrewsActivity.class.getName() );
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, CrewsActivity.class.getName());
                     bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
                     bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
                     FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
@@ -283,25 +303,15 @@ public class TvShowFragment extends Fragment {
     }
 
     private void isSeguindo() {
-        myRef.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(series.getId())).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // Get user value
-                        if (dataSnapshot.exists()){
-                            seguir.setText(R.string.seguindo);
-                            Log.w(TAG, "Seguindo");
-                        } else {
-                            seguir.setText(R.string.seguir);
-                            Log.w(TAG, "Não Seguindo");
-                        }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.w(TAG, "getUser:onCancelled", databaseError.toException());
-                    }
-                });
+        if (userTvshow != null) {
+            Log.d(TAG, "userTvShow: " + userTvshow.getNome());
+            Log.d(TAG, "userTvShow: " + userTvshow.getId());
+            seguir.setText(R.string.seguindo);
+        } else {
+            seguir.setText(R.string.seguir);
+            Log.d(TAG, "userTvShow: null");
+        }
     }
 
     private void setStatus() {
@@ -317,19 +327,19 @@ public class TvShowFragment extends Fragment {
 
                 if (series.getStatus().equals("Returning Series")) {
                     status.setText(R.string.returnin_series);
-                    bundle.putString("status_da_serie", getString(R.string.returnin_series) );
+                    bundle.putString("status_da_serie", getString(R.string.returnin_series));
                 }
                 if (series.getStatus().equals("Ended")) {
                     status.setText(R.string.ended);
-                    bundle.putString("status_da_serie", getString(R.string.ended) );
+                    bundle.putString("status_da_serie", getString(R.string.ended));
                 }
                 if (series.getStatus().equals("Canceled")) {
                     status.setText(R.string.canceled);
-                    bundle.putString("status_da_serie", getString(R.string.canceled) );
+                    bundle.putString("status_da_serie", getString(R.string.canceled));
                 }
                 if (series.getStatus().equals("In Production")) {
                     status.setText(in_production);
-                    bundle.putString("status_da_serie", getString(in_production) );
+                    bundle.putString("status_da_serie", getString(in_production));
                 }
             } else {
                 status.setText(series.getStatus());
@@ -339,11 +349,10 @@ public class TvShowFragment extends Fragment {
         }
     }
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView");
+
         switch (tipo) {
 
             case R.string.temporadas: {
@@ -358,11 +367,11 @@ public class TvShowFragment extends Fragment {
 
     private View getViewTemporadas(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.temporadas, container, false);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.temporadas_recycle);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new TemporadasAdapter(getActivity(), series, onClickListener(), color));
+        recyclerViewTemporada = (RecyclerView) view.findViewById(R.id.temporadas_recycle);
+        recyclerViewTemporada.setHasFixedSize(true);
+        recyclerViewTemporada.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewTemporada.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewTemporada.setAdapter(new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow));
 
         return view;
     }
@@ -388,7 +397,7 @@ public class TvShowFragment extends Fragment {
                 getContext().startActivity(intent);
 
                 Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TemporadaActivity.class.getName() );
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TemporadaActivity.class.getName());
                 bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
                 FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
@@ -423,51 +432,77 @@ public class TvShowFragment extends Fragment {
         textview_elenco = (TextView) view.findViewById(R.id.textview_elenco);
         seguir = (Button) view.findViewById(R.id.seguir);
 
-        seguir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                seguir.setText(R.string.seguindo);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        TmdbTV tmdbTV = new TmdbApi(Config.TMDB_API_KEY).getTvSeries();
-                        TmdbTvSeasons tvSeasons = new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
-
-                        final TvSeries serie = tmdbTV.getSeries(series.getId(), "en", TmdbTV.TvMethod.external_ids);
-                        UserTvshow userTvshow = setUserTvShow(serie);
-
-                        for (int i = 0; i < serie.getSeasons().size(); i++) {
-                            TvSeason tvS = serie.getSeasons().get(i);
-                            TvSeason tvSeason = tvSeasons.getSeason(serie.getId(), tvS.getSeasonNumber(), "en", null); //?
-                            userTvshow.getSeasons().get(i).setUserEps(setEp(tvSeason));
-                        }
-                        myRef = database.getReference("users");
-                        myRef.child(mAuth.getCurrentUser()
-                                .getUid())
-                                .child(String.valueOf(userTvshow.getId()))
-                                .setValue(userTvshow)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful() ){
-                                    seguir.setText(R.string.seguindo);
-                                    //Por animação
-                                } else {
-                                    seguir.setText(R.string.seguir);
-                                    Toast.makeText(getActivity(), R.string.erro_seguir, Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                    }
-                }).start();
-            }
-        });
+        seguir.setOnClickListener(ListenerSeguir());
 
         return view;
     }
 
+    private View.OnClickListener ListenerSeguir() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userTvshow == null) {
+                    Log.d(TAG, "incluir");
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            TmdbTV tmdbTV = new TmdbApi(Config.TMDB_API_KEY).getTvSeries();
+                            TmdbTvSeasons tvSeasons = new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
+
+                            final TvSeries serie = tmdbTV.getSeries(series.getId(), "en", TmdbTV.TvMethod.external_ids);
+                            UserTvshow userTvshow = setUserTvShow(serie);
+
+                            for (int i = 0; i < serie.getSeasons().size(); i++) {
+                                TvSeason tvS = serie.getSeasons().get(i);
+                                TvSeason tvSeason = tvSeasons.getSeason(serie.getId(), tvS.getSeasonNumber(), "en", null); //?
+                                userTvshow.getSeasons().get(i).setUserEps(setEp(tvSeason));
+                            }
+
+                            //myRef = database.getReference("users");
+                            myRef.child(mAuth.getCurrentUser()
+                                    .getUid())
+                                    .child(String.valueOf(userTvshow.getId()))
+                                    .setValue(userTvshow)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                seguir.setText(R.string.seguindo);
+
+
+                                            } else {
+                                                seguir.setText(R.string.seguir);
+                                                Toast.makeText(getActivity(), R.string.erro_seguir, Toast.LENGTH_SHORT).show();
+                                                recyclerViewTemporada.invalidate();
+                                            }
+                                        }
+                                    });
+                        }
+                    }).start();
+
+                } else {
+                    Log.d(TAG, "delete");
+                    userTvshow = null;
+                    //myRef = database.getReference("users");
+                    myRef.child(mAuth.getCurrentUser()
+                            .getUid())
+                            .child(String.valueOf(series.getId()))
+                            .removeValue();
+                    isSeguindo();
+                }
+            }
+        };
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        myRef.removeEventListener(postListener);
+    }
+
+
     private List<UserEp> setEp(TvSeason tvSeason) {
-        List<UserEp>  eps = new ArrayList<>();
+        List<UserEp> eps = new ArrayList<>();
         for (TvEpisode tvEpisode : tvSeason.getEpisodes()) {
             UserEp userEp = new UserEp();
             userEp.setEpisodeNumber(tvEpisode.getEpisodeNumber());
@@ -515,15 +550,15 @@ public class TvShowFragment extends Fragment {
 
     private void setAnimacao() {
 
-            AnimatorSet animatorSet = new AnimatorSet();
-            ObjectAnimator alphaStar = ObjectAnimator.ofFloat(img_star, "alpha", 0, 1)
-                    .setDuration(2000);
-            ObjectAnimator alphaMedia = ObjectAnimator.ofFloat(voto_media, "alpha", 0, 1)
-                    .setDuration(2300);
-            ObjectAnimator alphaSite = ObjectAnimator.ofFloat(icon_site, "alpha", 0, 1)
-                    .setDuration(3000);
-            animatorSet.playTogether(alphaStar,  alphaMedia,  alphaSite);
-            animatorSet.start();
+        AnimatorSet animatorSet = new AnimatorSet();
+        ObjectAnimator alphaStar = ObjectAnimator.ofFloat(img_star, "alpha", 0, 1)
+                .setDuration(2000);
+        ObjectAnimator alphaMedia = ObjectAnimator.ofFloat(voto_media, "alpha", 0, 1)
+                .setDuration(2300);
+        ObjectAnimator alphaSite = ObjectAnimator.ofFloat(icon_site, "alpha", 0, 1)
+                .setDuration(3000);
+        animatorSet.playTogether(alphaStar, alphaMedia, alphaSite);
+        animatorSet.start();
     }
 
     private void setPoster() {
@@ -541,7 +576,7 @@ public class TvShowFragment extends Fragment {
                     Log.d("FilmeInfoFragment", "setPoster: -> " + series.getPosterPath());
 
                     Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PosterGridActivity.class.getName() );
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PosterGridActivity.class.getName());
                     bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
                     bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
                     FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
@@ -701,7 +736,7 @@ public class TvShowFragment extends Fragment {
                         getContext().startActivity(intent);
 
                         Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PersonActivity.class.getName() );
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PersonActivity.class.getName());
                         bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, personCast.getId());
                         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, personCast.getName());
                         FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
@@ -756,7 +791,7 @@ public class TvShowFragment extends Fragment {
                         getContext().startActivity(intent);
 
                         Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PersonActivity.class.getName() );
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PersonActivity.class.getName());
                         bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, crew.getId());
                         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, crew.getName());
                         FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
@@ -828,7 +863,6 @@ public class TvShowFragment extends Fragment {
         }
     }
 
-
     private YouTubeThumbnailView.OnInitializedListener OnInitializedListener(final String youtube_key) {
         return new YouTubeThumbnailView.OnInitializedListener() {
 
@@ -839,7 +873,7 @@ public class TvShowFragment extends Fragment {
 
             @Override
             public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
-                FirebaseCrash.report(new Exception("Erro em \"onInitializationFailure\" dentro de "+this.getClass()));
+                FirebaseCrash.report(new Exception("Erro em \"onInitializationFailure\" dentro de " + this.getClass()));
             }
         };
     }
