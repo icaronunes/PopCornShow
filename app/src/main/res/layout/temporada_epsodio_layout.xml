@@ -10,6 +10,8 @@
         android:layout_width="wrap_content"
         android:minWidth="170dp"
         android:minHeight="80dp"
+        android:maxWidth="170dp"
+        android:maxHeight="80dp"
         android:layout_height="wrap_content" />
 
 

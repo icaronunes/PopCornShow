@@ -15,4 +15,8 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keepattributes Signature
+-keepclassmembers class br.com.icaro.filme.domain.** {
+  *;
+}
 

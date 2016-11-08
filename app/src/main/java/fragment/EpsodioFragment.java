@@ -96,9 +96,10 @@ public class EpsodioFragment extends Fragment {
         setTvshow();
         setSinopse();
         setName();
-        if (!episode.getAirDate().isEmpty()) {
-            setButtonRating();
-        }
+            if (episode.getAirDate() != null ) {
+                setButtonRating();
+            }
+
     }
 
 
@@ -198,7 +199,7 @@ public class EpsodioFragment extends Fragment {
 
     private void setImage() {
 
-        Log.d("Entrou", UtilsFilme.getBaseUrlImagem(5) + episode.getStillPath());
+
         Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(5) + episode.getStillPath())
                 .error(R.drawable.top_empty)
                 .into(ep_image, new Callback() {
@@ -209,7 +210,6 @@ public class EpsodioFragment extends Fragment {
 
                     @Override
                     public void onError() {
-                        Log.d("Entrou", "");
 
                     }
                 });
@@ -217,6 +217,7 @@ public class EpsodioFragment extends Fragment {
     }
 
     private void setVote() {
+
         if (episode.getVoteAverage() > 0) {
             String votos = (String) String.valueOf(episode.getVoteAverage()).subSequence(0, 3);
 

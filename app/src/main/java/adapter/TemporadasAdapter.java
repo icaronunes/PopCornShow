@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,18 +14,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import activity.CrewsActivity;
 import activity.ElencoActivity;
 import br.com.icaro.filme.R;
-import domian.UserEp;
 import domian.UserTvshow;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
@@ -35,6 +27,8 @@ import utils.UtilsFilme;
 /**
  * Created by icaro on 26/08/16.
  */
+
+
 public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.HoldeTemporada> {
 
     public static final String TAG = TemporadasAdapter.class.getName();
@@ -44,10 +38,11 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
     int color;
     TemporadaOnClickListener onClickListener;
     UserTvshow userTvshow;
-    private FirebaseAuth mAuth;
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
 
+    public interface TemporadaOnClickListener {
+        void onClickTemporada(View view, int position, int color);
+        void onClickCheckTemporada(View view, int position);
+    }
 
     public TemporadasAdapter(FragmentActivity activity, TvSeries series,
                              TemporadaOnClickListener temporadaOnClickListener, int color, UserTvshow userTvshow) {
@@ -56,9 +51,6 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
         this.onClickListener = temporadaOnClickListener;
         this.color = color;
         this.userTvshow = userTvshow;
-        mAuth = FirebaseAuth.getInstance();
-        myRef = FirebaseDatabase.getInstance().getReference("users");
-
     }
 
     @Override
@@ -110,10 +102,9 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
 
         holder.temporada.setText(context.getString(R.string.temporada) + " " + series.getSeasons().get(position).getSeasonNumber());
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + series.getSeasons().get(position).getPosterPath())
-                .error(R.drawable.poster_empty)
+                //.error(R.drawable.poster_empty)
                 .into(holder.image_temporada);
         holder.data.setText(series.getSeasons().get(position).getAirDate() != null ? series.getSeasons().get(position).getAirDate() : "");
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,8 +112,6 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
             }
         });
 
-     //   Log.d(TAG, "tamanho do id " + userTvshow.getSeasons().get(position).getUserEps().size());
-       // Log.d(TAG, "tamanho do eps " + userTvshow.getSeasons().get(position).getId());
 
         holder.popup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,62 +122,21 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
 
         holder.bt_seguindo.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if ( isVisto(position)) {
-
-                    final String user = mAuth.getCurrentUser().getUid();
-                    final String id_serie  = String.valueOf(userTvshow.getId());
-                    final String sessao = String.valueOf(userTvshow.getSeasons().get(position).getSeasonNumber());
-
-                    Map<String, Object> childUpdates = new HashMap<String, Object>();
-
-                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+sessao+"/visto", false);
-                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+sessao+"/userEps", userTvshow.getSeasons().get(position).getUserEps());
-                    Log.d(TAG, "UserEP " + userTvshow.getSeasons().get(position).getUserEps().get(0).getSeasonNumber() );
-                    myRef.updateChildren(childUpdates);
-                    userTvshow.getSeasons().get(position).setVisto(false);
-
-                    holder.bt_seguindo.setBackgroundColor(context.getResources().getColor(R.color.gray));
-                    Log.d(TAG, "desvisto");
-
-                } else {
-
-                    final String user = mAuth.getCurrentUser().getUid();
-                    final String id_serie  = String.valueOf(userTvshow.getId());
-                    final String sessao = String.valueOf(userTvshow.getSeasons().get(position).getSeasonNumber());
-
-                    Map<String, Object> childUpdates = new HashMap<String, Object>();
-                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+sessao+"/visto", true);
-                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+sessao+"/userEps", new UserEp());
-
-                    myRef.updateChildren(childUpdates);
-                    holder.bt_seguindo.setBackgroundColor(context.getResources().getColor(R.color.gray));
-                    userTvshow.getSeasons().get(position).setVisto(true);
-                    Log.d(TAG, "visto");
-                }
+            public void onClick(View view) {
+                onClickListener.onClickCheckTemporada(view, position);
             }
         });
 
-        if (isVisto(position)) {
+        if (userTvshow == null){
+            holder.bt_seguindo.setVisibility(View.GONE);
+        } else {
+            if (isVisto(position)) {
                 holder.bt_seguindo.setBackgroundColor(context.getResources().getColor(R.color.green));
-        }
-
-    }
-
-    private void zerarEpVisto(int position) {
-       if (userTvshow != null) {
-           for (int i = 0; i < userTvshow.getSeasons().get(position).getUserEps().size(); i++) {
-               userTvshow.getSeasons().get(position).getUserEps().get(i).setAssistido(false);
-           }
-       }
-    }
-
-    private void TotalEpVisto(int position) {
-        if (userTvshow != null) {
-            for (int i = 0; i < userTvshow.getSeasons().get(position).getUserEps().size(); i++) {
-                userTvshow.getSeasons().get(position).getUserEps().get(i).setAssistido(true);
+            } else {
+                holder.bt_seguindo.setBackgroundColor(context.getResources().getColor(R.color.gray));
             }
         }
+
     }
 
     private boolean isVisto(int position) {
@@ -204,14 +152,9 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
     public int getItemCount() {
 
         if (series.getNumberOfSeasons() > 0) {
-            Log.d("getNumberOfSeason", "" + series.getSeasons().size());
             return series.getSeasons().size();
         }
         return 0;
-    }
-
-    public interface TemporadaOnClickListener {
-        void onClickTemporada(View view, int position, int color);
     }
 
     public class HoldeTemporada extends RecyclerView.ViewHolder {

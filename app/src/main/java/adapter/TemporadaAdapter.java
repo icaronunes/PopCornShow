@@ -73,6 +73,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
 
         Log.d("Temporada", "Rating " + episode.getUserRating());
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(4) + episode.getStillPath())
+                .error(R.drawable.top_empty)
                 .into(holder.poster);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

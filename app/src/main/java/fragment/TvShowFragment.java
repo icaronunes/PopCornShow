@@ -43,7 +43,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import activity.BaseActivity;
 import activity.CrewsActivity;
@@ -85,6 +87,7 @@ public class TvShowFragment extends Fragment {
     private final String TAG = TvShowFragment.class.getName();
 
     private int tipo, color;
+    private boolean seguindo;
     private TvSeries series;
     private Button seguir;
     private TextView titulo, categoria, descricao, voto_media, produtora,
@@ -96,31 +99,18 @@ public class TvShowFragment extends Fragment {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private UserTvshow userTvshow;
-    ValueEventListener postListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-
-            userTvshow = dataSnapshot.getValue(UserTvshow.class);
-            Log.w(TAG, "Mudou");
-
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-            // Getting Post failed, log a message
-            Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            // ...
-        }
-    };
     private RecyclerView recyclerViewTemporada;
+    private View view;
+    private TemporadasAdapter adapter;
+    private ValueEventListener postListener;
 
-    public static Fragment newInstance(int tipo, TvSeries series, int color, UserTvshow userTvshow) {
+    public static Fragment newInstance(int tipo, TvSeries series, int color, boolean seguindo) {
         TvShowFragment fragment = new TvShowFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constantes.SERIE, series);
         bundle.putInt(Constantes.COLOR_TOP, color);
         bundle.putInt(Constantes.ABA, tipo);
-        bundle.putSerializable(Constantes.USER, userTvshow);
+        bundle.putSerializable(Constantes.USER, seguindo);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -133,17 +123,19 @@ public class TvShowFragment extends Fragment {
             tipo = getArguments().getInt(Constantes.ABA);
             series = (TvSeries) getArguments().getSerializable(Constantes.SERIE);
             color = getArguments().getInt(Constantes.COLOR_TOP);
-            userTvshow = (UserTvshow) getArguments().getSerializable(Constantes.USER);
+            seguindo = getArguments().getBoolean(Constantes.USER);
         }
 
-        //Validar se esta logado. CAso não, não precisa instanciar nada.
-        mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("users");
-        myRef.addValueEventListener(postListener);
-
+        //Validar se esta logado. Caso não, não precisa instanciar nada.
+        //if (seguindo) {
+            mAuth = FirebaseAuth.getInstance();
+            database = FirebaseDatabase.getInstance();
+            myRef = database.getReference("users");
+        //}
 
     }
+
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -304,14 +296,53 @@ public class TvShowFragment extends Fragment {
 
     private void isSeguindo() {
 
-        if (userTvshow != null) {
-            Log.d(TAG, "userTvShow: " + userTvshow.getNome());
-            Log.d(TAG, "userTvShow: " + userTvshow.getId());
+        if (seguindo) {
             seguir.setText(R.string.seguindo);
         } else {
             seguir.setText(R.string.seguir);
-            Log.d(TAG, "userTvShow: null");
         }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+                    Log.d(TAG, "has: " + dataSnapshot.child(String.valueOf(series.getId())));
+                    Log.d(TAG, "key: " + dataSnapshot.child(String.valueOf(series.getId())).getKey());
+                    Log.w(TAG, "Mudou  - Seguindo");
+
+                    userTvshow = dataSnapshot.getValue(UserTvshow.class);
+                    recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
+                    adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
+                    recyclerViewTemporada.setAdapter(adapter);
+
+                } else {
+
+                    Log.d(TAG, "has: " + dataSnapshot.child(String.valueOf(series.getId())));
+                    Log.d(TAG, "key: " + dataSnapshot.child(String.valueOf(series.getId())).getKey());
+                    Log.w(TAG, "Mudou - Não seguindo");
+
+                    userTvshow = null; // ???????????
+                  //  recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
+                    recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
+                    adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
+                    recyclerViewTemporada.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+        myRef.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(series.getId())).addValueEventListener(postListener);
     }
 
     private void setStatus() {
@@ -366,12 +397,11 @@ public class TvShowFragment extends Fragment {
     }
 
     private View getViewTemporadas(LayoutInflater inflater, ViewGroup container) {
-        View view = inflater.inflate(R.layout.temporadas, container, false);
+        view = inflater.inflate(R.layout.temporadas, container, false);
         recyclerViewTemporada = (RecyclerView) view.findViewById(R.id.temporadas_recycle);
         recyclerViewTemporada.setHasFixedSize(true);
         recyclerViewTemporada.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTemporada.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerViewTemporada.setAdapter(new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow));
 
         return view;
     }
@@ -403,7 +433,62 @@ public class TvShowFragment extends Fragment {
                 FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
             }
+
+            @Override
+            public void onClickCheckTemporada(View view, final int position) {
+
+                if ( isVisto(position)) {
+                    //Trasferir para a TvShowFragment via interface
+                    //Enviar class de sessoes não UserTvshow inteira;
+                    final String user = mAuth.getCurrentUser().getUid();
+                    final String id_serie  = String.valueOf(series.getId());
+                    final String sessao = String.valueOf(series.getSeasons().get(position).getSeasonNumber());
+                    Map<String, Object> childUpdates = new HashMap<String, Object>();
+
+                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+sessao+"/visto", false);
+                    setStatusEps(position, false);
+                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+sessao+"/userEps", userTvshow.getSeasons().get(position).getUserEps());
+
+                    myRef.updateChildren(childUpdates);
+                    view.setBackgroundColor(getResources().getColor(R.color.green));
+
+                    Log.d(TAG, "desvisto");
+
+                } else {
+
+                    final String user = mAuth.getCurrentUser().getUid();
+                    final String id_serie  = String.valueOf(userTvshow.getId());
+                    final String sessao = String.valueOf(userTvshow.getSeasons().get(position).getSeasonNumber());
+
+                    Map<String, Object> childUpdates = new HashMap<String, Object>();
+                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+sessao+"/visto", true);
+                    setStatusEps(position, true);
+                    //Fazer metodo para verificar, se 'quer' marcas temporadas anteriores.
+                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+sessao+"/userEps", userTvshow.getSeasons().get(position).getUserEps());
+
+                    myRef.updateChildren(childUpdates);
+                    view.setBackgroundColor(getResources().getColor(R.color.gray));
+
+                    Log.d(TAG, "visto");
+                }
+            }
         };
+    }
+
+    private boolean isVisto(int position) {
+        if (userTvshow.getSeasons() != null) {
+            return userTvshow.getSeasons().get(position).isVisto();
+        } else {
+            return false;
+        }
+    }
+
+    private void setStatusEps(int position, boolean status) {
+        if (userTvshow != null) {
+            for (int i = 0; i < userTvshow.getSeasons().get(position).getUserEps().size(); i++) {
+                userTvshow.getSeasons().get(position).getUserEps().get(i).setAssistido(status);
+            }
+        }
     }
 
     private View getViewInformacoes(LayoutInflater inflater, ViewGroup container) {
@@ -441,8 +526,10 @@ public class TvShowFragment extends Fragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userTvshow == null) {
+                if (!seguindo) {
                     Log.d(TAG, "incluir");
+                    seguindo = !seguindo;
+                    isSeguindo();
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -450,7 +537,8 @@ public class TvShowFragment extends Fragment {
                             TmdbTvSeasons tvSeasons = new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
 
                             final TvSeries serie = tmdbTV.getSeries(series.getId(), "en", TmdbTV.TvMethod.external_ids);
-                            UserTvshow userTvshow = setUserTvShow(serie);
+                            userTvshow = new UserTvshow();
+                            userTvshow = setUserTvShow(serie);
 
                             for (int i = 0; i < serie.getSeasons().size(); i++) {
                                 TvSeason tvS = serie.getSeasons().get(i);
@@ -458,22 +546,19 @@ public class TvShowFragment extends Fragment {
                                 userTvshow.getSeasons().get(i).setUserEps(setEp(tvSeason));
                             }
 
-                            //myRef = database.getReference("users");
                             myRef.child(mAuth.getCurrentUser()
                                     .getUid())
-                                    .child(String.valueOf(userTvshow.getId()))
+                                    .child(String.valueOf(serie.getId()))
                                     .setValue(userTvshow)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                seguir.setText(R.string.seguindo);
 
-
+                                                Log.d(TAG, "Seguir foi apertado. Datasnap mudou?");
                                             } else {
                                                 seguir.setText(R.string.seguir);
                                                 Toast.makeText(getActivity(), R.string.erro_seguir, Toast.LENGTH_SHORT).show();
-                                                recyclerViewTemporada.invalidate();
                                             }
                                         }
                                     });
@@ -482,12 +567,13 @@ public class TvShowFragment extends Fragment {
 
                 } else {
                     Log.d(TAG, "delete");
-                    userTvshow = null;
+                    //userTvshow = null;
                     //myRef = database.getReference("users");
                     myRef.child(mAuth.getCurrentUser()
                             .getUid())
                             .child(String.valueOf(series.getId()))
                             .removeValue();
+                    seguindo = !seguindo;
                     isSeguindo();
                 }
             }

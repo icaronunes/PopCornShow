@@ -80,7 +80,7 @@ public class TvShowActivity extends BaseActivity {
     FirebaseAnalytics firebaseAnalytics;
     private boolean addFavorite = true;
     private boolean addWatch = true;
-
+    private boolean seguindo;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
@@ -108,7 +108,6 @@ public class TvShowActivity extends BaseActivity {
         setColorFab(color_top);
 
         iniciarFirebases();
-
 
         if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
             new TMDVAsync().execute();
@@ -477,11 +476,12 @@ public class TvShowActivity extends BaseActivity {
     private void setupViewPagerTabs() {
 
         viewPager.setOffscreenPageLimit(1);
-        viewPager.setAdapter(new TvShowAdapter(this, getSupportFragmentManager(), series, color_top, userTvshow));
+        viewPager.setAdapter(new TvShowAdapter(this, getSupportFragmentManager(), series, color_top, seguindo));
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager.setCurrentItem(0);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(color_top);
+
     }
 
     private void setImageTop() {
@@ -538,15 +538,39 @@ public class TvShowActivity extends BaseActivity {
             super.onPostExecute(aVoid);
 
             if (mAuth.getCurrentUser().getUid() != null && series != null) {
-                myRef.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(series.getId())).addListenerForSingleValueEvent(
+
+//                myRef.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(series.getId()))
+//                        .addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        if (dataSnapshot.exists()) {
+//
+//                            userTvshow = dataSnapshot.getValue(UserTvshow.class);
+//                            Log.d(TAG, "Ep:> " + userTvshow.getSeasons().get(0).getId());
+//                            Log.d(TAG, "visto? :> " + userTvshow.getSeasons().get(0).isVisto());
+//                        } else {
+//
+//                            Log.d(TAG, "onDataChange " + "Não seguindo.");
+//                        }
+//                        setupViewPagerTabs();
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                        Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+//                    }
+//
+//                });
+
+                myRef.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(series.getId()))
+                        .addListenerForSingleValueEvent(
                         new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 // Get user value
                                 if (dataSnapshot.exists()) {
-
-                                    userTvshow = dataSnapshot.getValue(UserTvshow.class);
-                                    Log.d(TAG, "Ep:> " + userTvshow.getSeasons().get(0).getId());
+                                    //userTvshow = dataSnapshot.getValue(UserTvshow.class);
+                                    seguindo = true;
                                 } else {
 
                                     Log.d(TAG, "onDataChange " + "Não seguindo.");
@@ -560,6 +584,7 @@ public class TvShowActivity extends BaseActivity {
                             }
                         });
             } else {
+                seguindo = false;
                 setupViewPagerTabs();
             }
 
