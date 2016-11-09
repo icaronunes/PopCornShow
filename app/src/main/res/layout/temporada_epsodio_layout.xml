@@ -26,25 +26,35 @@
             android:id="@+id/ep_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pilot"
+            android:text=""
             android:textStyle="normal|bold" />
 
         <TextView
             android:id="@+id/ep_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pilot" />
-
-        <TextView
-            android:id="@+id/ep_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Pilot" />
+            android:text="" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ep_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -53,10 +63,21 @@
 
             <TextView
                 android:id="@+id/ep_nota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8.6/10" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pilot" />
-        </LinearLayout>
+                android:src="@drawable/icon_movie_now"
+                android:id="@+id/bt_visto" />
+
+    </LinearLayout>
 
     </LinearLayout>
 

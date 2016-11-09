@@ -9,17 +9,25 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
 
 import adapter.TemporadaAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
+import domian.UserSeasons;
 import info.movito.themoviedbapi.model.tv.TvSeason;
 import utils.Constantes;
 
@@ -33,6 +41,14 @@ public class TemporadaActivity extends BaseActivity {
     int serie_id, color;
     TvSeason tvSeason;
     RecyclerView recyclerView;
+    private boolean seguindo;
+    UserSeasons seasons;
+    public static final String TAG = TemporadaActivity.class.getName();
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference myRef;
+    private ValueEventListener postListener;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +75,51 @@ public class TemporadaActivity extends BaseActivity {
                 .build();
         adview.loadAd(adRequest);
 
+        mAuth = FirebaseAuth.getInstance();
+        myRef =  FirebaseDatabase.getInstance().getReference("users");
+
         new TMDVAsync().execute();
+
+//        postListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                if (dataSnapshot.exists()) {
+//                    Log.d(TAG, "key listener: " + dataSnapshot.getKey());
+//                    seasons = dataSnapshot.getValue(UserSeasons.class);
+//                    recyclerView
+//                            .setAdapter(new TemporadaAdapter(TemporadaActivity
+//                                    .this, tvSeason, serie_id, nome, color, nome_temporada, seasons, seguindo));
+//                    Log.d(TAG, "true");
+//                    Log.d(TAG, tvSeason.getName());
+//                } else {
+//                    recyclerView
+//                            .setAdapter(new TemporadaAdapter(TemporadaActivity
+//                                    .this, tvSeason, serie_id, nome, color, nome_temporada, seasons, seguindo));
+//                    Log.d(TAG, "key listener: " + dataSnapshot.getKey());
+//                    Log.d(TAG, "False");
+//
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                // Getting Post failed, log a message
+//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+//                // ...
+//            }
+//        };
+//        myRef.child(mAuth.getCurrentUser().getUid())
+//                .child(String.valueOf(serie_id))
+//                .child("seasons")
+//                .child(String.valueOf(temporada_id)).addValueEventListener(postListener);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+       // myRef.removeEventListener(postListener);
     }
 
     @Override
@@ -84,18 +144,57 @@ public class TemporadaActivity extends BaseActivity {
             if (idioma_padrao) {
                 tvSeason = FilmeService.getTmdbTvSeasons()
                         .getSeason(serie_id, temporada_id, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry() + ",en,null");
-                return null; // ????????
+                Log.w(TAG, tvSeason.getName());
+                return null;
             }else {
                 tvSeason = FilmeService.getTmdbTvSeasons()
                         .getSeason(serie_id, temporada_id, ",en,null"); //????
+                Log.w(TAG, tvSeason.getName());
                 return null;
-                }
+            }
+
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            recyclerView.setAdapter(new TemporadaAdapter(TemporadaActivity.this, tvSeason, serie_id, nome, color, nome_temporada));
+
+
+                myRef.child(mAuth.getCurrentUser().getUid())
+                        .child(String.valueOf(serie_id))
+                        .child("seasons")
+                        .child(String.valueOf(temporada_id))
+                        .addListenerForSingleValueEvent(
+                                new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        // Get user value
+                                        if (dataSnapshot.exists()) {
+                                            seguindo = true;
+                                            Log.w(TAG, "seguindo - true");
+                                            seasons = dataSnapshot.getValue(UserSeasons.class);
+                                            recyclerView
+                                                    .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
+                                                            tvSeason, serie_id, nome, color, nome_temporada, seasons ,seguindo));
+                                        } else {
+                                            Log.d(TAG, "onDataChange " + "Não seguindo.");
+                                            seguindo = false;
+                                            recyclerView
+                                                    .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
+                                                            tvSeason, serie_id, nome, color, nome_temporada, seasons ,seguindo));
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                                    }
+                                });
+
+            //recyclerView.addItemDecoration(new DividerItemDecoration(TemporadaActivity.this, DividerItemDecoration.VERTICAL_LIST));
+            //recyclerView.setAdapter(new SampleAdapter(TemporadaActivity.this, recyclerView, tvSeason, serie_id, nome, color, nome_temporada));
+            //recyclerView
+            //        .setAdapter(new TemporadaAdapter(TemporadaActivity.this, tvSeason, serie_id, nome, color, nome_temporada, seasons ,seguindo));
         }
     }
 }

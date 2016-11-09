@@ -12,11 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import activity.EpsodioActivity;
 import activity.TemporadaActivity;
 import br.com.icaro.filme.R;
+import domian.UserSeasons;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
 import info.movito.themoviedbapi.model.tv.TvSeason;
 import utils.Constantes;
@@ -26,14 +30,21 @@ import utils.UtilsFilme;
  * Created by icaro on 26/08/16.
  */
 public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.HoldeTemporada> {
+
+    public static final String TAG = TemporadaAdapter.class.getName();
+
     Context context;
     TvSeason tvSeason;
     String nome_serie, nome_temporada;
     TvEpisode episode;
     int serie_id, color;
+    UserSeasons seasons;
+    private FirebaseAuth mAuth;
+    private DatabaseReference myRef;
+    boolean seguindo;
 
     public TemporadaAdapter(TemporadaActivity temporadaActivity, TvSeason tvSeason,
-                            int serie_id, String nome, int color, String nome_temporada) {
+                            int serie_id, String nome, int color, String nome_temporada, UserSeasons seasons, boolean seguindo) {
 
         this.tvSeason = tvSeason;
         this.context = temporadaActivity;
@@ -41,15 +52,21 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         this.nome_serie = nome;
         this.color = color;
         this.nome_temporada = nome_temporada;
+        this.seasons = seasons;
+        this.seguindo = seguindo;
     }
 
     @Override
     public HoldeTemporada onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.temporada_epsodio_layout, parent, false);
         HoldeTemporada holdeTemporada = new HoldeTemporada(view);
+        mAuth = FirebaseAuth.getInstance();
+        myRef = FirebaseDatabase.getInstance().getReference("users");
 
         return holdeTemporada;
     }
+
+
 
     @Override
     public void onBindViewHolder(HoldeTemporada holder, final int position) {
@@ -71,10 +88,41 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
             holder.nota.setText(context.getString(R.string.sem_nota));
         }
 
-        Log.d("Temporada", "Rating " + episode.getUserRating());
+        //Log.d("Temporada", "Rating " + episode.getUserRating());
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(4) + episode.getStillPath())
                 .error(R.drawable.top_empty)
                 .into(holder.poster);
+
+        if (seguindo){
+            Log.d(TAG, "seguindo");
+        } else {
+            holder.bt_visto.setVisibility(View.GONE);
+        }
+
+        if (seasons != null) {
+            if (seasons.getUserEps().get(position).isAssistido()) {
+                Log.d(TAG, "visto");
+            } else {
+                Log.d(TAG, "não visto");
+            }
+        }
+
+        holder.bt_visto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = String.valueOf(serie_id);
+                myRef.child(mAuth.getCurrentUser().getUid())
+                        .child(id)
+                        .child("seasons")
+                        .child(String.valueOf(tvSeason.getSeasonNumber()))
+                        .child("userEps")
+                        .child(String.valueOf(position))
+                        .child("assistido")
+                        .setValue(true);
+
+            }
+
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +161,8 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
     public class HoldeTemporada extends RecyclerView.ViewHolder {
 
         TextView nome, numero, nota, data;
-        ImageView poster;
+        ImageView poster, bt_visto;
+
 
         public HoldeTemporada(View itemView) {
             super(itemView);
@@ -122,6 +171,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
             nota = (TextView) itemView.findViewById(R.id.ep_nota);
             data = (TextView) itemView.findViewById(R.id.ep_date);
             poster = (ImageView) itemView.findViewById(R.id.image_temp_ep);
+            bt_visto = (ImageView) itemView.findViewById(R.id.bt_visto);
         }
     }
 

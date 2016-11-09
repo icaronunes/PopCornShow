@@ -62,7 +62,6 @@ import domian.UserEp;
 import domian.UserSeasons;
 import domian.UserTvshow;
 import info.movito.themoviedbapi.TmdbApi;
-import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.TmdbTvSeasons;
 import info.movito.themoviedbapi.model.Genre;
 import info.movito.themoviedbapi.model.people.PersonCast;
@@ -316,22 +315,27 @@ public class TvShowFragment extends Fragment {
                     Log.d(TAG, "key: " + dataSnapshot.child(String.valueOf(series.getId())).getKey());
                     Log.w(TAG, "Mudou  - Seguindo");
 
-                    userTvshow = dataSnapshot.getValue(UserTvshow.class);
-                    recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
-                    adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
-                    recyclerViewTemporada.setAdapter(adapter);
+                    if (getView() != null) {
+                        userTvshow = dataSnapshot.getValue(UserTvshow.class);
+                        Log.w(TAG, "Passou");
+                        recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
+                        adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
+                        recyclerViewTemporada.setAdapter(adapter);
+                    }
 
                 } else {
 
                     Log.d(TAG, "has: " + dataSnapshot.child(String.valueOf(series.getId())));
                     Log.d(TAG, "key: " + dataSnapshot.child(String.valueOf(series.getId())).getKey());
                     Log.w(TAG, "Mudou - Não seguindo");
-
-                    userTvshow = null; // ???????????
-                  //  recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
-                    recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
-                    adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
-                    recyclerViewTemporada.setAdapter(adapter);
+                    if (getView() != null) {
+                        Log.w(TAG, "Passou");
+                        userTvshow = null; // ???????????
+                        recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
+                        recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
+                        adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
+                        recyclerViewTemporada.setAdapter(adapter);
+                    }
                 }
             }
 
@@ -416,8 +420,7 @@ public class TvShowFragment extends Fragment {
         return new TemporadasAdapter.TemporadaOnClickListener() {
             @Override
             public void onClickTemporada(View view, int position, int color) {
-                Log.d("onClickMovieListener", "id " + series.getId());
-                Log.d("onClickMovieListener", "season " + series.getSeasons().get(position).getSeasonNumber());
+
                 Intent intent = new Intent(getContext(), TemporadaActivity.class);
                 intent.putExtra(Constantes.NOME, getString(R.string.temporada) + " " + series.getSeasons().get(position).getSeasonNumber());
                 intent.putExtra(Constantes.TEMPORADA_ID, series.getSeasons().get(position).getSeasonNumber());
@@ -438,16 +441,14 @@ public class TvShowFragment extends Fragment {
             public void onClickCheckTemporada(View view, final int position) {
 
                 if ( isVisto(position)) {
-                    //Trasferir para a TvShowFragment via interface
-                    //Enviar class de sessoes não UserTvshow inteira;
+
                     final String user = mAuth.getCurrentUser().getUid();
                     final String id_serie  = String.valueOf(series.getId());
-                    final String sessao = String.valueOf(series.getSeasons().get(position).getSeasonNumber());
                     Map<String, Object> childUpdates = new HashMap<String, Object>();
 
-                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+sessao+"/visto", false);
+                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+position+"/visto", false);
                     setStatusEps(position, false);
-                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+sessao+"/userEps", userTvshow.getSeasons().get(position).getUserEps());
+                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+position+"/userEps", userTvshow.getSeasons().get(position).getUserEps());
 
                     myRef.updateChildren(childUpdates);
                     view.setBackgroundColor(getResources().getColor(R.color.green));
@@ -458,13 +459,16 @@ public class TvShowFragment extends Fragment {
 
                     final String user = mAuth.getCurrentUser().getUid();
                     final String id_serie  = String.valueOf(userTvshow.getId());
-                    final String sessao = String.valueOf(userTvshow.getSeasons().get(position).getSeasonNumber());
+
+                    if (!isVisto(position == 0 ? 0 : position-1)){
+                        Log.d(TAG, "anterior não visto");
+                    }
 
                     Map<String, Object> childUpdates = new HashMap<String, Object>();
-                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+sessao+"/visto", true);
+                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+position+"/visto", true);
                     setStatusEps(position, true);
                     //Fazer metodo para verificar, se 'quer' marcas temporadas anteriores.
-                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+sessao+"/userEps", userTvshow.getSeasons().get(position).getUserEps());
+                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+position+"/userEps", userTvshow.getSeasons().get(position).getUserEps());
 
                     myRef.updateChildren(childUpdates);
                     view.setBackgroundColor(getResources().getColor(R.color.gray));
@@ -479,7 +483,7 @@ public class TvShowFragment extends Fragment {
         if (userTvshow.getSeasons() != null) {
             return userTvshow.getSeasons().get(position).isVisto();
         } else {
-            return false;
+            return false; //segurança
         }
     }
 
@@ -533,22 +537,20 @@ public class TvShowFragment extends Fragment {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            TmdbTV tmdbTV = new TmdbApi(Config.TMDB_API_KEY).getTvSeries();
+
                             TmdbTvSeasons tvSeasons = new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
 
-                            final TvSeries serie = tmdbTV.getSeries(series.getId(), "en", TmdbTV.TvMethod.external_ids);
-                            userTvshow = new UserTvshow();
-                            userTvshow = setUserTvShow(serie);
+                            userTvshow = setUserTvShow(series);
 
-                            for (int i = 0; i < serie.getSeasons().size(); i++) {
-                                TvSeason tvS = serie.getSeasons().get(i);
-                                TvSeason tvSeason = tvSeasons.getSeason(serie.getId(), tvS.getSeasonNumber(), "en", null); //?
+                            for (int i = 0; i < series.getSeasons().size(); i++) {
+                                TvSeason tvS = series.getSeasons().get(i);
+                                TvSeason tvSeason = tvSeasons.getSeason(series.getId(), tvS.getSeasonNumber(), "en", null); //?
                                 userTvshow.getSeasons().get(i).setUserEps(setEp(tvSeason));
                             }
 
                             myRef.child(mAuth.getCurrentUser()
                                     .getUid())
-                                    .child(String.valueOf(serie.getId()))
+                                    .child(String.valueOf(series.getId()))
                                     .setValue(userTvshow)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override

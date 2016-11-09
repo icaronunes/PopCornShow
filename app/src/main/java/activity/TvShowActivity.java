@@ -51,7 +51,6 @@ import adapter.TvShowAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
-import domian.UserTvshow;
 import info.movito.themoviedbapi.TmdbAccount;
 import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.model.core.ResponseStatus;
@@ -82,9 +81,8 @@ public class TvShowActivity extends BaseActivity {
     private boolean addWatch = true;
     private boolean seguindo;
     private FirebaseAuth mAuth;
-    private FirebaseDatabase database;
     private DatabaseReference myRef;
-    UserTvshow userTvshow = null ;
+    private FirebaseDatabase database;
 
 
     @Override
@@ -539,29 +537,6 @@ public class TvShowActivity extends BaseActivity {
 
             if (mAuth.getCurrentUser().getUid() != null && series != null) {
 
-//                myRef.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(series.getId()))
-//                        .addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        if (dataSnapshot.exists()) {
-//
-//                            userTvshow = dataSnapshot.getValue(UserTvshow.class);
-//                            Log.d(TAG, "Ep:> " + userTvshow.getSeasons().get(0).getId());
-//                            Log.d(TAG, "visto? :> " + userTvshow.getSeasons().get(0).isVisto());
-//                        } else {
-//
-//                            Log.d(TAG, "onDataChange " + "Não seguindo.");
-//                        }
-//                        setupViewPagerTabs();
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//                        Log.w(TAG, "getUser:onCancelled", databaseError.toException());
-//                    }
-//
-//                });
-
                 myRef.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(series.getId()))
                         .addListenerForSingleValueEvent(
                         new ValueEventListener() {
@@ -569,7 +544,6 @@ public class TvShowActivity extends BaseActivity {
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 // Get user value
                                 if (dataSnapshot.exists()) {
-                                    //userTvshow = dataSnapshot.getValue(UserTvshow.class);
                                     seguindo = true;
                                 } else {
 
