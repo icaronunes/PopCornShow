@@ -33,6 +33,7 @@
             android:id="@+id/ep_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="" />
 
         <LinearLayout
@@ -65,8 +66,7 @@
                 android:id="@+id/ep_nota"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="8.6/10" />
-
+                android:text="" />
                 </LinearLayout>
 
             </LinearLayout>

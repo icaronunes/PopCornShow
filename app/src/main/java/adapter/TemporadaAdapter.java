@@ -12,9 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import activity.EpsodioActivity;
@@ -33,18 +30,22 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
 
     public static final String TAG = TemporadaAdapter.class.getName();
 
-    Context context;
-    TvSeason tvSeason;
-    String nome_serie, nome_temporada;
-    TvEpisode episode;
-    int serie_id, color;
-    UserSeasons seasons;
-    private FirebaseAuth mAuth;
-    private DatabaseReference myRef;
-    boolean seguindo;
+    private Context context;
+    private TvSeason tvSeason;
+    private String nome_serie, nome_temporada;
+    private TvEpisode episode;
+    private int serie_id, color;
+    private UserSeasons seasons;
+    private boolean seguindo;
+    private TemporadaOnClickListener temporadaOnClickListener;
+
+    public interface TemporadaOnClickListener {
+        void onClickVerTemporada(View view, int position);
+    }
 
     public TemporadaAdapter(TemporadaActivity temporadaActivity, TvSeason tvSeason,
-                            int serie_id, String nome, int color, String nome_temporada, UserSeasons seasons, boolean seguindo) {
+                            int serie_id, String nome, int color, String nome_temporada,
+                            UserSeasons seasons, boolean seguindo, TemporadaOnClickListener temporadaOnClickListener) {
 
         this.tvSeason = tvSeason;
         this.context = temporadaActivity;
@@ -54,14 +55,13 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         this.nome_temporada = nome_temporada;
         this.seasons = seasons;
         this.seguindo = seguindo;
+        this.temporadaOnClickListener = temporadaOnClickListener;
     }
 
     @Override
     public HoldeTemporada onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.temporada_epsodio_layout, parent, false);
         HoldeTemporada holdeTemporada = new HoldeTemporada(view);
-        mAuth = FirebaseAuth.getInstance();
-        myRef = FirebaseDatabase.getInstance().getReference("users");
 
         return holdeTemporada;
     }
@@ -99,27 +99,20 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
             holder.bt_visto.setVisibility(View.GONE);
         }
 
-        if (seasons != null) {
+        if (seasons != null && seguindo) {
             if (seasons.getUserEps().get(position).isAssistido()) {
                 Log.d(TAG, "visto");
+                holder.bt_visto.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_visto));
             } else {
                 Log.d(TAG, "não visto");
+                holder.bt_visto.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_movie_now));
             }
         }
 
         holder.bt_visto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String id = String.valueOf(serie_id);
-                myRef.child(mAuth.getCurrentUser().getUid())
-                        .child(id)
-                        .child("seasons")
-                        .child(String.valueOf(tvSeason.getSeasonNumber()))
-                        .child("userEps")
-                        .child(String.valueOf(position))
-                        .child("assistido")
-                        .setValue(true);
-
+                temporadaOnClickListener.onClickVerTemporada(v, position);
             }
 
         });

@@ -330,7 +330,7 @@ public class TvShowFragment extends Fragment {
                     Log.w(TAG, "Mudou - Não seguindo");
                     if (getView() != null) {
                         Log.w(TAG, "Passou");
-                        userTvshow = null; // ???????????
+                        userTvshow = null; // ??????????
                         recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
                         recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
                         adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
@@ -416,8 +416,8 @@ public class TvShowFragment extends Fragment {
         }
     }
 
-    private TemporadasAdapter.TemporadaOnClickListener onClickListener() {
-        return new TemporadasAdapter.TemporadaOnClickListener() {
+    private TemporadasAdapter.TemporadasOnClickListener onClickListener() {
+        return new TemporadasAdapter.TemporadasOnClickListener() {
             @Override
             public void onClickTemporada(View view, int position, int color) {
 

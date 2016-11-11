@@ -36,16 +36,16 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
     Context context;
     TvSeries series;
     int color;
-    TemporadaOnClickListener onClickListener;
+    TemporadasOnClickListener onClickListener;
     UserTvshow userTvshow;
 
-    public interface TemporadaOnClickListener {
+    public interface TemporadasOnClickListener {
         void onClickTemporada(View view, int position, int color);
         void onClickCheckTemporada(View view, int position);
     }
 
     public TemporadasAdapter(FragmentActivity activity, TvSeries series,
-                             TemporadaOnClickListener temporadaOnClickListener, int color, UserTvshow userTvshow) {
+                             TemporadasOnClickListener temporadaOnClickListener, int color, UserTvshow userTvshow) {
         this.context = activity;
         this.series = series;
         this.onClickListener = temporadaOnClickListener;
@@ -127,7 +127,7 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
             }
         });
 
-        if (userTvshow == null){
+        if (userTvshow == null ){
             holder.bt_seguindo.setVisibility(View.GONE);
         } else {
             if (isVisto(position)) {

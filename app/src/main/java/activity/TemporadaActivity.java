@@ -6,12 +6,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -36,14 +36,25 @@ import utils.Constantes;
  */
 public class TemporadaActivity extends BaseActivity {
 
-    int temporada_id;
-    String nome, nome_temporada;
-    int serie_id, color;
-    TvSeason tvSeason;
-    RecyclerView recyclerView;
-    private boolean seguindo;
-    UserSeasons seasons;
     public static final String TAG = TemporadaActivity.class.getName();
+
+    int temporada_id;
+    private String nome, nome_temporada;
+    int serie_id, color;
+    private TvSeason tvSeason;
+    private RecyclerView recyclerView;
+    private boolean seguindo;
+    private UserSeasons seasons;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    private int position;
 
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
@@ -66,7 +77,9 @@ public class TemporadaActivity extends BaseActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_temporada);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+       // recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
 
         AdView adview = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
@@ -80,46 +93,95 @@ public class TemporadaActivity extends BaseActivity {
 
         new TMDVAsync().execute();
 
-//        postListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                if (dataSnapshot.exists()) {
-//                    Log.d(TAG, "key listener: " + dataSnapshot.getKey());
-//                    seasons = dataSnapshot.getValue(UserSeasons.class);
-//                    recyclerView
-//                            .setAdapter(new TemporadaAdapter(TemporadaActivity
-//                                    .this, tvSeason, serie_id, nome, color, nome_temporada, seasons, seguindo));
-//                    Log.d(TAG, "true");
-//                    Log.d(TAG, tvSeason.getName());
-//                } else {
-//                    recyclerView
-//                            .setAdapter(new TemporadaAdapter(TemporadaActivity
-//                                    .this, tvSeason, serie_id, nome, color, nome_temporada, seasons, seguindo));
-//                    Log.d(TAG, "key listener: " + dataSnapshot.getKey());
-//                    Log.d(TAG, "False");
-//
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                // Getting Post failed, log a message
-//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-//                // ...
-//            }
-//        };
-//        myRef.child(mAuth.getCurrentUser().getUid())
-//                .child(String.valueOf(serie_id))
-//                .child("seasons")
-//                .child(String.valueOf(temporada_id)).addValueEventListener(postListener);
+    }
+
+    private TemporadaAdapter.TemporadaOnClickListener onClickListener(){
+        return new TemporadaAdapter.TemporadaOnClickListener() {
+
+            @Override
+            public void onClickVerTemporada(View view, int position) {
+                setPosition(position);
+                if (seasons != null) {
+                    if (seasons.getUserEps().get(position).isAssistido()) {
+                        Log.d(TAG, "visto");
+                        String id = String.valueOf(serie_id);
+                        myRef.child(mAuth.getCurrentUser().getUid())
+                                .child(id)
+                                .child("seasons")
+                                .child(String.valueOf(tvSeason.getSeasonNumber()))
+                                .child("userEps")
+                                .child(String.valueOf(position))
+                                .child("assistido")
+                                .setValue(false);
+                    } else {
+                        Log.d(TAG, "não visto");
+                        String id = String.valueOf(serie_id);
+                        myRef.child(mAuth.getCurrentUser().getUid())
+                                .child(id)
+                                .child("seasons")
+                                .child(String.valueOf(tvSeason.getSeasonNumber()))
+                                .child("userEps")
+                                .child(String.valueOf(position))
+                                .child("assistido")
+                                .setValue(true);
+                    }
+                }
+            }
+        };
+    }
+
+
+
+    private void setListener(){
+        postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists() && seguindo) {
+                    Log.d(TAG, "key listener: " + dataSnapshot.getKey());
+                    seasons = dataSnapshot.getValue(UserSeasons.class);
+                    recyclerView
+                            .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
+                                    tvSeason, serie_id, nome, color, nome_temporada, seasons ,seguindo,
+                                    onClickListener() ));
+                  //  recyclerView.getAdapter().notifyDataSetChanged();
+                    //recyclerView.getAdapter().notifyItemChanged(position);
+                    Log.d(TAG, "true");
+                    Log.d(TAG, "assistido " + seasons.getUserEps().get(position).isAssistido());
+                    Log.d(TAG, tvSeason.getName());
+                } else {
+                    seasons = dataSnapshot.getValue(UserSeasons.class);
+                    recyclerView
+                    .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
+                            tvSeason, serie_id, nome, color, nome_temporada, seasons ,seguindo,
+                            onClickListener() ));
+
+                    //recyclerView.getAdapter().notifyDataSetChanged();
+                    //recyclerView.getAdapter().notifyItemChanged(position);
+                    Log.d(TAG, "assistido " + seasons.getUserEps().get(position).isAssistido());
+                    Log.d(TAG, tvSeason.getName());
+                    Log.d(TAG, "key listener: " + dataSnapshot.getKey());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+        myRef.child(mAuth.getCurrentUser().getUid())
+                .child(String.valueOf(serie_id))
+                .child("seasons")
+                .child(String.valueOf(temporada_id)).addValueEventListener(postListener);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-       // myRef.removeEventListener(postListener);
+        myRef.removeEventListener(postListener);
     }
 
     @Override
@@ -159,7 +221,6 @@ public class TemporadaActivity extends BaseActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-
                 myRef.child(mAuth.getCurrentUser().getUid())
                         .child(String.valueOf(serie_id))
                         .child("seasons")
@@ -175,13 +236,15 @@ public class TemporadaActivity extends BaseActivity {
                                             seasons = dataSnapshot.getValue(UserSeasons.class);
                                             recyclerView
                                                     .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
-                                                            tvSeason, serie_id, nome, color, nome_temporada, seasons ,seguindo));
+                                                            tvSeason, serie_id, nome, color, nome_temporada, seasons ,seguindo,
+                                                            onClickListener() ));
                                         } else {
                                             Log.d(TAG, "onDataChange " + "Não seguindo.");
                                             seguindo = false;
                                             recyclerView
                                                     .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
-                                                            tvSeason, serie_id, nome, color, nome_temporada, seasons ,seguindo));
+                                                            tvSeason, serie_id, nome, color, nome_temporada, seasons ,seguindo,
+                                                            onClickListener()));
                                         }
                                     }
 
@@ -190,7 +253,7 @@ public class TemporadaActivity extends BaseActivity {
                                         Log.w(TAG, "getUser:onCancelled", databaseError.toException());
                                     }
                                 });
-
+            setListener();
             //recyclerView.addItemDecoration(new DividerItemDecoration(TemporadaActivity.this, DividerItemDecoration.VERTICAL_LIST));
             //recyclerView.setAdapter(new SampleAdapter(TemporadaActivity.this, recyclerView, tvSeason, serie_id, nome, color, nome_temporada));
             //recyclerView
