@@ -126,11 +126,11 @@ public class TvShowFragment extends Fragment {
         }
 
         //Validar se esta logado. Caso não, não precisa instanciar nada.
-        //if (seguindo) {
+        if (seguindo) {
             mAuth = FirebaseAuth.getInstance();
             database = FirebaseDatabase.getInstance();
             myRef = database.getReference("users");
-        //}
+        }
 
     }
 
@@ -426,7 +426,6 @@ public class TvShowFragment extends Fragment {
                 intent.putExtra(Constantes.TEMPORADA_ID, series.getSeasons().get(position).getSeasonNumber());
                 intent.putExtra(Constantes.TVSHOW_ID, series.getId());
                 intent.putExtra(Constantes.COLOR_TOP, color);
-                intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
                 getContext().startActivity(intent);
 
                 Bundle bundle = new Bundle();
@@ -441,7 +440,7 @@ public class TvShowFragment extends Fragment {
             public void onClickCheckTemporada(View view, final int position) {
 
                 if ( isVisto(position)) {
-
+                    Toast.makeText(getContext(), R.string.marcado_nao_assistido_temporada, Toast.LENGTH_SHORT).show();
                     final String user = mAuth.getCurrentUser().getUid();
                     final String id_serie  = String.valueOf(series.getId());
                     Map<String, Object> childUpdates = new HashMap<String, Object>();
@@ -451,12 +450,10 @@ public class TvShowFragment extends Fragment {
                     childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+position+"/userEps", userTvshow.getSeasons().get(position).getUserEps());
 
                     myRef.updateChildren(childUpdates);
-                    view.setBackgroundColor(getResources().getColor(R.color.green));
-
                     Log.d(TAG, "desvisto");
 
                 } else {
-
+                    Toast.makeText(getContext(), R.string.marcado_assistido_temporada, Toast.LENGTH_SHORT).show();
                     final String user = mAuth.getCurrentUser().getUid();
                     final String id_serie  = String.valueOf(userTvshow.getId());
 
@@ -471,7 +468,6 @@ public class TvShowFragment extends Fragment {
                     childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+position+"/userEps", userTvshow.getSeasons().get(position).getUserEps());
 
                     myRef.updateChildren(childUpdates);
-                    view.setBackgroundColor(getResources().getColor(R.color.gray));
 
                     Log.d(TAG, "visto");
                 }

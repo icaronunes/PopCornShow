@@ -1,8 +1,6 @@
 package adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,16 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
-import activity.EpsodioActivity;
 import activity.TemporadaActivity;
 import br.com.icaro.filme.R;
 import domian.UserSeasons;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
 import info.movito.themoviedbapi.model.tv.TvSeason;
-import utils.Constantes;
 import utils.UtilsFilme;
 
 /**
@@ -32,27 +27,21 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
 
     private Context context;
     private TvSeason tvSeason;
-    private String nome_serie, nome_temporada;
     private TvEpisode episode;
-    private int serie_id, color;
     private UserSeasons seasons;
     private boolean seguindo;
     private TemporadaOnClickListener temporadaOnClickListener;
 
     public interface TemporadaOnClickListener {
         void onClickVerTemporada(View view, int position);
+        void onClickTemporada(View view, int position);
     }
 
     public TemporadaAdapter(TemporadaActivity temporadaActivity, TvSeason tvSeason,
-                            int serie_id, String nome, int color, String nome_temporada,
                             UserSeasons seasons, boolean seguindo, TemporadaOnClickListener temporadaOnClickListener) {
 
         this.tvSeason = tvSeason;
         this.context = temporadaActivity;
-        this.serie_id = serie_id;
-        this.nome_serie = nome;
-        this.color = color;
-        this.nome_temporada = nome_temporada;
         this.seasons = seasons;
         this.seguindo = seguindo;
         this.temporadaOnClickListener = temporadaOnClickListener;
@@ -120,25 +109,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, EpsodioActivity.class);
-                intent.putExtra(Constantes.TVSHOW_ID, serie_id);
-                intent.putExtra(Constantes.TVSEASON_ID, tvSeason.getId());
-                intent.putExtra(Constantes.EPSODIO_ID, episode.getId());
-                intent.putExtra(Constantes.POSICAO, position);
-                intent.putExtra(Constantes.TVSEASONS, tvSeason);
-                intent.putExtra(Constantes.COLOR_TOP, color);
-                intent.putExtra(Constantes.NOME_TVSHOW, nome_serie);
-                intent.putExtra(Constantes.NOME, nome_temporada);
-                context.startActivity(intent);
-
-                FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TemporadaAdapter.class.getName());
-                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, tvSeason.getId());
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeason.getName());
-                bundle.putString(FirebaseAnalytics.Param.DESTINATION, EpsodioActivity.class.getName());
-                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
+                temporadaOnClickListener.onClickTemporada(view, position);
             }
         });
     }

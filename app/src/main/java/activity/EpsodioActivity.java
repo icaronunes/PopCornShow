@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import adapter.EpsodioAdapter;
 import br.com.icaro.filme.R;
+import domian.UserSeasons;
 import info.movito.themoviedbapi.model.tv.TvSeason;
 import utils.Constantes;
 
@@ -22,10 +23,10 @@ public class EpsodioActivity extends BaseActivity {
     int tvshow_id, posicao, color;
     ViewPager viewPager;
     TabLayout tabLayout;
-    String nome_serie = null;
     String nome_temporada;
     TvSeason tvSeason;
     FragmentManager fragmentManager;
+    UserSeasons seasons;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,36 +36,35 @@ public class EpsodioActivity extends BaseActivity {
         setUpToolBar();
         viewPager = (ViewPager) findViewById(R.id.viewpager_epsodio);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout_epsodio);
-        getExtras();
+        setExtras();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         fragmentManager = getSupportFragmentManager();
         viewPager.setOffscreenPageLimit(4);
-        viewPager.setAdapter(new EpsodioAdapter(this, fragmentManager, tvSeason, nome_serie, tvshow_id, color));
+        viewPager.setAdapter(new EpsodioAdapter(this, fragmentManager, tvSeason, nome_temporada, tvshow_id, color));
         viewPager.setCurrentItem(posicao);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(color);
 
     }
 
-    private void getExtras() {
+    private void setExtras() {
 
         if (getIntent().getAction() == null) {
             tvshow_id = getIntent().getIntExtra(Constantes.TVSHOW_ID, 0);
             posicao = getIntent().getIntExtra(Constantes.POSICAO, 0);
-            nome_serie = getIntent().getStringExtra(Constantes.NOME_TVSHOW);
             color = getIntent().getIntExtra(Constantes.COLOR_TOP, 0);
             tvSeason = (TvSeason) getIntent().getSerializableExtra(Constantes.TVSEASONS);
             nome_temporada = getIntent().getStringExtra(Constantes.NOME);
+            seasons = (UserSeasons) getIntent().getSerializableExtra(Constantes.USER);
+            getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada );
 
-            getSupportActionBar().setTitle(!nome_temporada.isEmpty() ? nome_temporada : tvSeason.getName());
         } else {
             tvshow_id = Integer.parseInt(getIntent().getStringExtra(Constantes.TVSHOW_ID));
             posicao = Integer.parseInt(getIntent().getStringExtra(Constantes.POSICAO));
-            nome_serie = getIntent().getStringExtra(Constantes.NOME_TVSHOW);
             color = Integer.parseInt(getIntent().getStringExtra(Constantes.COLOR_TOP));
             tvSeason = (TvSeason) getIntent().getSerializableExtra(Constantes.TVSEASONS);
             nome_temporada = getIntent().getStringExtra(Constantes.NOME);
-            getSupportActionBar().setTitle(!!nome_temporada.isEmpty() ? nome_temporada : tvSeason.getName());
+            getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada );
         }
     }
 

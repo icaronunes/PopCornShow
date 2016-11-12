@@ -130,4 +130,8 @@
     <string name="sem_informacao_colletion">Não há informação sobre a coleção</string>
     <string name="erro_ainda_sem_imagem">Ainda sem imagem, tente novamente.</string>
     <string name="random">Random</string>
+    <string name="marcado_assistido">Marcado como assistido. Avalie o epsódio.</string>
+    <string name="marcado_nao_assistido">Marcado como não assistido.</string>
+    <string name="marcado_assistido_temporada">Marcado como assistido.</string>
+    <string name="marcado_nao_assistido_temporada">Marcado como não assistido.</string>
 </resources>

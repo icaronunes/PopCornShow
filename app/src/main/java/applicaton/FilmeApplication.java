@@ -34,6 +34,8 @@ public class FilmeApplication extends Application {
     private boolean logado = false;
     private static String user, pass;
 
+
+
     public boolean isLogado() {
         return logado;
     }
@@ -63,8 +65,9 @@ public class FilmeApplication extends Application {
                 .setNotificationReceivedHandler(new CustomNotificationReceivedHandler())
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .init();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFirebaseAnalytics.setAnalyticsCollectionEnabled(false);
 
-       // mFirebaseAnalytics.setAnalyticsCollectionEnabled(Config.getAnalytucs_enable);
 
     }
 

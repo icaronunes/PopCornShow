@@ -1,20 +1,24 @@
 package activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,21 +43,12 @@ public class TemporadaActivity extends BaseActivity {
     public static final String TAG = TemporadaActivity.class.getName();
 
     int temporada_id;
-    private String nome, nome_temporada;
+    private String nome_temporada;
     int serie_id, color;
     private TvSeason tvSeason;
     private RecyclerView recyclerView;
     private boolean seguindo;
     private UserSeasons seasons;
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
     private int position;
 
     private FirebaseAuth mAuth;
@@ -68,18 +63,12 @@ public class TemporadaActivity extends BaseActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        temporada_id = getIntent().getIntExtra(Constantes.TEMPORADA_ID, 0);
-        serie_id = getIntent().getIntExtra(Constantes.TVSHOW_ID, 0);
-        color = getIntent().getIntExtra(Constantes.COLOR_TOP, 0);
-        nome_temporada = getIntent().getStringExtra(Constantes.NOME);
-        getSupportActionBar().setTitle(nome_temporada);
-        nome = getIntent().getStringExtra(Constantes.NOME_TVSHOW);
+        getExtras();
+        getSupportActionBar().setTitle("");
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_temporada);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-       // recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         AdView adview = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
@@ -95,12 +84,29 @@ public class TemporadaActivity extends BaseActivity {
 
     }
 
+    public void getExtras() {
+
+        if (getIntent().getAction() == null){
+            temporada_id = getIntent().getIntExtra(Constantes.TEMPORADA_ID, 0);
+            serie_id = getIntent().getIntExtra(Constantes.TVSHOW_ID, 0);
+            nome_temporada = getIntent().getStringExtra(Constantes.NOME);
+            color = getIntent().getIntExtra(Constantes.COLOR_TOP, 0);
+
+        } else {
+            temporada_id = Integer.parseInt(getIntent().getStringExtra(Constantes.TEMPORADA_ID));
+            serie_id = Integer.parseInt(getIntent().getStringExtra(Constantes.TVSHOW_ID));
+            nome_temporada = getIntent().getStringExtra(Constantes.NOME);
+            color = Integer.parseInt(getIntent().getStringExtra(Constantes.COLOR_TOP));
+        }
+
+    }
+
     private TemporadaAdapter.TemporadaOnClickListener onClickListener(){
         return new TemporadaAdapter.TemporadaOnClickListener() {
 
             @Override
             public void onClickVerTemporada(View view, int position) {
-                setPosition(position);
+               TemporadaActivity.this.position = position;
                 if (seasons != null) {
                     if (seasons.getUserEps().get(position).isAssistido()) {
                         Log.d(TAG, "visto");
@@ -113,6 +119,7 @@ public class TemporadaActivity extends BaseActivity {
                                 .child(String.valueOf(position))
                                 .child("assistido")
                                 .setValue(false);
+                        Toast.makeText(TemporadaActivity.this, R.string.marcado_nao_assistido, Toast.LENGTH_SHORT).show();
                     } else {
                         Log.d(TAG, "não visto");
                         String id = String.valueOf(serie_id);
@@ -124,8 +131,31 @@ public class TemporadaActivity extends BaseActivity {
                                 .child(String.valueOf(position))
                                 .child("assistido")
                                 .setValue(true);
+                        Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
                     }
                 }
+            }
+
+            @Override
+            public void onClickTemporada(View view, int position) {
+                Intent intent = new Intent(TemporadaActivity.this, EpsodioActivity.class);
+                intent.putExtra(Constantes.TVSHOW_ID, serie_id);
+                intent.putExtra(Constantes.TVSEASON_ID, tvSeason.getId());
+                intent.putExtra(Constantes.EPSODIO_ID, tvSeason.getEpisodes().get(position).getId());
+                intent.putExtra(Constantes.POSICAO, position);
+                intent.putExtra(Constantes.TVSEASONS, tvSeason);
+                intent.putExtra(Constantes.COLOR_TOP, color);
+                intent.putExtra(Constantes.NOME, nome_temporada);
+                intent.putExtra(Constantes.USER, seasons );
+                startActivity(intent);
+
+                FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(TemporadaActivity.this);
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TemporadaAdapter.class.getName());
+                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, tvSeason.getId());
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeason.getName());
+                bundle.putString(FirebaseAnalytics.Param.DESTINATION, EpsodioActivity.class.getName());
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             }
         };
     }
@@ -133,6 +163,7 @@ public class TemporadaActivity extends BaseActivity {
 
 
     private void setListener(){
+
         postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -142,26 +173,18 @@ public class TemporadaActivity extends BaseActivity {
                     seasons = dataSnapshot.getValue(UserSeasons.class);
                     recyclerView
                             .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
-                                    tvSeason, serie_id, nome, color, nome_temporada, seasons ,seguindo,
+                                    tvSeason, seasons ,seguindo,
                                     onClickListener() ));
-                  //  recyclerView.getAdapter().notifyDataSetChanged();
-                    //recyclerView.getAdapter().notifyItemChanged(position);
                     Log.d(TAG, "true");
                     Log.d(TAG, "assistido " + seasons.getUserEps().get(position).isAssistido());
                     Log.d(TAG, tvSeason.getName());
+
                 } else {
                     seasons = dataSnapshot.getValue(UserSeasons.class);
                     recyclerView
-                    .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
-                            tvSeason, serie_id, nome, color, nome_temporada, seasons ,seguindo,
-                            onClickListener() ));
-
-                    //recyclerView.getAdapter().notifyDataSetChanged();
-                    //recyclerView.getAdapter().notifyItemChanged(position);
-                    Log.d(TAG, "assistido " + seasons.getUserEps().get(position).isAssistido());
-                    Log.d(TAG, tvSeason.getName());
-                    Log.d(TAG, "key listener: " + dataSnapshot.getKey());
-
+                            .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
+                                    tvSeason, seasons ,seguindo,
+                                    onClickListener() ));
                 }
             }
 
@@ -181,7 +204,10 @@ public class TemporadaActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        myRef.removeEventListener(postListener);
+        myRef.child(mAuth.getCurrentUser().getUid())
+                .child(String.valueOf(serie_id))
+                .child("seasons")
+                .child(String.valueOf(temporada_id)).removeEventListener(postListener);
     }
 
     @Override
@@ -191,11 +217,14 @@ public class TemporadaActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
+
+
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
@@ -206,12 +235,11 @@ public class TemporadaActivity extends BaseActivity {
             if (idioma_padrao) {
                 tvSeason = FilmeService.getTmdbTvSeasons()
                         .getSeason(serie_id, temporada_id, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry() + ",en,null");
-                Log.w(TAG, tvSeason.getName());
+                Log.d("TemporadaActivity", tvSeason.getName());
                 return null;
             }else {
                 tvSeason = FilmeService.getTmdbTvSeasons()
                         .getSeason(serie_id, temporada_id, ",en,null"); //????
-                Log.w(TAG, tvSeason.getName());
                 return null;
             }
 
@@ -220,6 +248,7 @@ public class TemporadaActivity extends BaseActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada );
 
                 myRef.child(mAuth.getCurrentUser().getUid())
                         .child(String.valueOf(serie_id))
@@ -236,15 +265,15 @@ public class TemporadaActivity extends BaseActivity {
                                             seasons = dataSnapshot.getValue(UserSeasons.class);
                                             recyclerView
                                                     .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
-                                                            tvSeason, serie_id, nome, color, nome_temporada, seasons ,seguindo,
+                                                            tvSeason, seasons ,seguindo,
                                                             onClickListener() ));
                                         } else {
                                             Log.d(TAG, "onDataChange " + "Não seguindo.");
                                             seguindo = false;
                                             recyclerView
                                                     .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
-                                                            tvSeason, serie_id, nome, color, nome_temporada, seasons ,seguindo,
-                                                            onClickListener()));
+                                                            tvSeason, seasons ,seguindo,
+                                                            onClickListener() ));
                                         }
                                     }
 
@@ -254,10 +283,6 @@ public class TemporadaActivity extends BaseActivity {
                                     }
                                 });
             setListener();
-            //recyclerView.addItemDecoration(new DividerItemDecoration(TemporadaActivity.this, DividerItemDecoration.VERTICAL_LIST));
-            //recyclerView.setAdapter(new SampleAdapter(TemporadaActivity.this, recyclerView, tvSeason, serie_id, nome, color, nome_temporada));
-            //recyclerView
-            //        .setAdapter(new TemporadaAdapter(TemporadaActivity.this, tvSeason, serie_id, nome, color, nome_temporada, seasons ,seguindo));
         }
     }
 }

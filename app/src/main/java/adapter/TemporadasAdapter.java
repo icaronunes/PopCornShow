@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -131,9 +130,9 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
             holder.bt_seguindo.setVisibility(View.GONE);
         } else {
             if (isVisto(position)) {
-                holder.bt_seguindo.setBackgroundColor(context.getResources().getColor(R.color.green));
+                holder.bt_seguindo.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_visto));
             } else {
-                holder.bt_seguindo.setBackgroundColor(context.getResources().getColor(R.color.gray));
+                holder.bt_seguindo.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_movie_now));
             }
         }
 
@@ -162,7 +161,7 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
         TextView temporada, data, numero_ep;
         ImageView image_temporada;
         ImageButton popup;
-        Button bt_seguindo;
+        ImageView bt_seguindo;
 
         public HoldeTemporada(View itemView) {
             super(itemView);
@@ -171,7 +170,7 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
             data = (TextView) itemView.findViewById(R.id.date_temporada);
             temporada = (TextView) itemView.findViewById(R.id.temporada);
             popup = (ImageButton) itemView.findViewById(R.id.popup_temporada);
-            bt_seguindo = (Button) itemView.findViewById(R.id.bt_assistido);
+            bt_seguindo = (ImageView) itemView.findViewById(R.id.bt_assistido);
         }
     }
 }

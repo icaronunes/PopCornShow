@@ -123,7 +123,7 @@
                 android:value="activity.SearchMultiActivity" />
         </activity>
 
-        <activity android:name="activity.TemporadaActivity"/>
+        <activity android:name="activity.TemporadaActivity" android:parentActivityName="activity.MainActivity"/>
 
 
         <activity android:name="activity.EpsodioActivity"/>

@@ -163,13 +163,13 @@ public class TvShowActivity extends BaseActivity {
         searchView.setQueryHint("Procura Filme");
         searchView.setEnabled(false);
 
-
         return true;
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         if (item.getItemId() == R.id.share) {
             File file = null;
             if (series != null) {

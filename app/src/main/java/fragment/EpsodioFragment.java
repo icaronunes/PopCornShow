@@ -33,6 +33,7 @@ import activity.PersonActivity;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
+import domian.UserSeasons;
 import info.movito.themoviedbapi.model.Credits;
 import info.movito.themoviedbapi.model.people.PersonCrew;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
@@ -59,6 +60,7 @@ public class EpsodioFragment extends Fragment {
     ImageView ep_image;
     RatingBar ep_ratingBar;
     Button ep_rating_button;
+    UserSeasons seasons;
 
 
     public static Fragment newInstance(TvEpisode tvEpisode, String nome_serie, int tvshow_id, int color) {
@@ -83,6 +85,7 @@ public class EpsodioFragment extends Fragment {
             nome_serie = getArguments().getString(Constantes.NOME_TVSHOW);
             tvshow_id = getArguments().getInt(Constantes.TVSHOW_ID);
             color = getArguments().getInt(Constantes.COLOR_TOP);
+            seasons = (UserSeasons) getArguments().getSerializable(Constantes.USER);
         }
     }
 
@@ -200,7 +203,7 @@ public class EpsodioFragment extends Fragment {
     private void setImage() {
 
 
-        Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(5) + episode.getStillPath())
+        Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(4) + episode.getStillPath())
                 .error(R.drawable.top_empty)
                 .into(ep_image, new Callback() {
                     @Override

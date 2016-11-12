@@ -23,6 +23,7 @@ import activity.ProdutoraActivity;
 import activity.ReviewsActivity;
 import activity.SimilaresActivity;
 import activity.Site;
+import activity.TemporadaActivity;
 import activity.TreilerActivity;
 import activity.TvShowActivity;
 import activity.TvShowsActivity;
@@ -259,6 +260,22 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     stackBuilder.addNextIntent(intent);
                     stackBuilder.startActivities();
                     // }
+                }
+
+                if (action.equals("TemporadaActivity")) {
+                    Intent intent = new Intent(context, TemporadaActivity.class);
+
+                    if (object.has("temporada_id") && object.has("tvshow_id")) {
+                        intent.putExtra(Constantes.TVSHOW_ID, object.getInt("tvshow_id"));
+                        intent.putExtra(Constantes.TEMPORADA_ID, object.getString("temporada_id"));
+                        intent.putExtra(Constantes.NOME, object.getString("nome"));
+                        intent.putExtra(Constantes.COLOR_TOP, object.getString("color"));
+
+                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                        stackBuilder.addParentStack(TemporadaActivity.class);
+                        stackBuilder.addNextIntent(intent);
+                        stackBuilder.startActivities();
+                    }
                 }
 
 
