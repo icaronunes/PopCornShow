@@ -27,6 +27,7 @@ public class EpsodioActivity extends BaseActivity {
     TvSeason tvSeason;
     FragmentManager fragmentManager;
     UserSeasons seasons;
+    boolean seguindo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class EpsodioActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         fragmentManager = getSupportFragmentManager();
         viewPager.setOffscreenPageLimit(4);
-        viewPager.setAdapter(new EpsodioAdapter(this, fragmentManager, tvSeason, nome_temporada, tvshow_id, color));
+        viewPager.setAdapter(new EpsodioAdapter(this, fragmentManager, tvSeason, nome_temporada, tvshow_id, color, seguindo, seasons));
         viewPager.setCurrentItem(posicao);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(color);
@@ -56,6 +57,7 @@ public class EpsodioActivity extends BaseActivity {
             tvSeason = (TvSeason) getIntent().getSerializableExtra(Constantes.TVSEASONS);
             nome_temporada = getIntent().getStringExtra(Constantes.NOME);
             seasons = (UserSeasons) getIntent().getSerializableExtra(Constantes.USER);
+            seguindo = getIntent().getBooleanExtra(Constantes.SEGUINDO, false);
             getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada );
 
         } else {
@@ -64,6 +66,7 @@ public class EpsodioActivity extends BaseActivity {
             color = Integer.parseInt(getIntent().getStringExtra(Constantes.COLOR_TOP));
             tvSeason = (TvSeason) getIntent().getSerializableExtra(Constantes.TVSEASONS);
             nome_temporada = getIntent().getStringExtra(Constantes.NOME);
+            seguindo = getIntent().getBooleanExtra(Constantes.SEGUINDO, false);
             getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada );
         }
     }

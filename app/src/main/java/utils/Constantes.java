@@ -45,5 +45,6 @@ public class Constantes {
     public static final String MAIN = "main";
     public static final String LISTA_GENERICA = "generica_nome";
     public static final String USER = "user";
+    public static final String SEGUINDO = "seguindo";
 }
 

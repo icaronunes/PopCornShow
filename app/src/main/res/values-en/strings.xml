@@ -129,4 +129,5 @@ No information about the collection.</string>
     <string name="marcado_nao_assistido">Marked as unassisted.</string>
     <string name="marcado_assistido_temporada">Marked as watched.</string>
     <string name="marcado_nao_assistido_temporada">Marked as unassisted.</string>
+    <string name="salvando">Saving...</string>
 </resources>

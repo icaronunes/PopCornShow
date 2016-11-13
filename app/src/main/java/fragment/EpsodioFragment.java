@@ -22,14 +22,24 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import activity.PersonActivity;
+import activity.TemporadaActivity;
+import adapter.TemporadaAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
@@ -40,6 +50,7 @@ import info.movito.themoviedbapi.model.tv.TvEpisode;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static android.R.attr.id;
 import static br.com.icaro.filme.R.id.ep_rating;
 
 
@@ -48,7 +59,7 @@ import static br.com.icaro.filme.R.id.ep_rating;
  */
 public class EpsodioFragment extends Fragment {
 
-    int tvshow_id, color;
+    int tvshow_id, color, position;
     Credits credits;
     TvEpisode episode;
     final String TAG = this.getClass().getName();
@@ -61,9 +72,14 @@ public class EpsodioFragment extends Fragment {
     RatingBar ep_ratingBar;
     Button ep_rating_button;
     UserSeasons seasons;
+    boolean seguindo;
+
+    FirebaseAuth auth;
+    DatabaseReference reference;
 
 
-    public static Fragment newInstance(TvEpisode tvEpisode, String nome_serie, int tvshow_id, int color) {
+    public static Fragment newInstance(TvEpisode tvEpisode, String nome_serie,
+                                       int tvshow_id, int color, boolean seguindo, int position, UserSeasons seasons) {
 
         EpsodioFragment fragment = new EpsodioFragment();
         Bundle bundle = new Bundle();
@@ -72,6 +88,9 @@ public class EpsodioFragment extends Fragment {
         bundle.putInt(Constantes.TVSHOW_ID, tvshow_id);
         bundle.putInt(Constantes.COLOR_TOP, color);
         bundle.putString(Constantes.NOME_TVSHOW, nome_serie);
+        bundle.putBoolean(Constantes.SEGUINDO, seguindo);
+        bundle.putInt(Constantes.POSICAO, position);
+        bundle.putSerializable(Constantes.USER, seasons);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -86,6 +105,18 @@ public class EpsodioFragment extends Fragment {
             tvshow_id = getArguments().getInt(Constantes.TVSHOW_ID);
             color = getArguments().getInt(Constantes.COLOR_TOP);
             seasons = (UserSeasons) getArguments().getSerializable(Constantes.USER);
+            seguindo = getArguments().getBoolean(Constantes.SEGUINDO);
+            position = getArguments().getInt(Constantes.POSICAO);
+            seasons = (UserSeasons) getArguments().getSerializable(Constantes.USER);
+        }
+
+        if (seguindo){
+            auth = FirebaseAuth.getInstance();
+            reference =  FirebaseDatabase.getInstance().getReference("users").child(auth.getCurrentUser().getUid())
+                    .child(String.valueOf(tvshow_id))
+                    .child("seasons")
+                    .child(String.valueOf(episode.getSeasonNumber()))
+                    .child("userEps");
         }
     }
 
@@ -99,12 +130,59 @@ public class EpsodioFragment extends Fragment {
         setTvshow();
         setSinopse();
         setName();
-            if (episode.getAirDate() != null ) {
+
+        if (episode.getAirDate() != null ) {
                 setButtonRating();
             }
 
     }
 
+    private void setListener(){
+
+        postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists() && seguindo) {
+                    Log.d(TAG, "key listener: " + dataSnapshot.getKey());
+                    seasons = dataSnapshot.getValue(UserSeasons.class);
+                    recyclerView
+                            .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
+                                    tvSeason, seasons ,seguindo,
+                                    onClickListener() ));
+                    Log.d(TAG, "true");
+                    Log.d(TAG, "assistido " + seasons.getUserEps().get(position).isAssistido());
+                    Log.d(TAG, tvSeason.getName());
+
+                } else {
+                    Log.d(TAG, "false");
+                    Log.d(TAG, "nao assistido " + seasons.getUserEps().get(position).isAssistido());
+                    seasons = dataSnapshot.getValue(UserSeasons.class);
+                    recyclerView
+                            .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
+                                    tvSeason, seasons ,seguindo,
+                                    onClickListener() ));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+        reference.child(mAuth.getCurrentUser().getUid())
+                .child(String.valueOf(serie_id))
+                .child("seasons")
+                .child(String.valueOf(temporada_id)).addValueEventListener(postListener);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        reference.removeEventListener(postListener);
+    }
 
     private void setButtonRating() {
         //Arrumar. Ta esquisito.
@@ -119,6 +197,12 @@ public class EpsodioFragment extends Fragment {
 
         if (UtilsFilme.verificaLancamento(date) && FilmeApplication.getInstance().isLogado()) {
 
+            if (seguindo){
+                if (seasons.getUserEps().get(position).isAssistido()){
+                    ep_rating_button.setBackground(getResources().getDrawable(R.drawable.button_visto));
+                    ep_rating_button.setText(getResources().getText(R.string.classificar_visto));
+                }
+            }
 
             ep_rating_button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -128,20 +212,45 @@ public class EpsodioFragment extends Fragment {
                     alertDialog.setContentView(R.layout.adialog_custom_rated);
 
                     Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
+                    Button nao_vister = (Button )  alertDialog.findViewById(R.id.cancel_rated);
+                    if (!seasons.getUserEps().get(position).isAssistido()){
+                        nao_vister.setVisibility(View.INVISIBLE);
+                    }
+                    TextView title = (TextView) alertDialog.findViewById(R.id.rating_title);
+                    title.setText(episode.getName() != null ? episode.getName() : "");
                     final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
-                    int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
+                    int width = getResources().getDimensionPixelSize(R.dimen.popup_width);
                     int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
 
                     alertDialog.getWindow().setLayout(width, height);
                     final ProgressDialog progressDialog = new ProgressDialog(getContext(),
                             android.R.style.Theme_Material_Dialog);
+
+                    nao_vister.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            if (seguindo) {
+                                DatabaseReference  reference = FirebaseDatabase.getInstance().getReference("users");
+                                String user = auth.getCurrentUser().getUid();
+
+                                Map<String, Object> childUpdates = new HashMap<String, Object>();
+
+                                childUpdates.put("/" + user + "/" + id + "/seasons/" + episode.getSeasonNumber() + "/userEps/" + position + "/assistido", false);
+                                childUpdates.put("/" + user + "/" + id + "/seasons/" + episode.getSeasonNumber() + "/visto/", false);
+                                reference.updateChildren(childUpdates);
+                            }
+                        }
+                    });
+
+
                     ok.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Log.d(TAG, "Adialog Rated");
 
                             progressDialog.setIndeterminate(true);
-                            progressDialog.setMessage("Salvando...");
+                            progressDialog.setMessage(getContext().getResources().getString(R.string.salvando));
                             progressDialog.show();
 
                             new Thread() {
@@ -162,7 +271,11 @@ public class EpsodioFragment extends Fragment {
                                                         public void run() {
                                                             Toast.makeText(getContext(), getResources().getString(R.string.tvshow_rated), Toast.LENGTH_SHORT)
                                                                     .show();
-
+                                                            if (seguindo) {
+                                                                reference.child(String.valueOf(position)).child("assistido").setValue(true);
+                                                                ep_rating_button.setText(R.string.classificar_visto);
+                                                                ep_rating_button.setBackground(getResources().getDrawable(R.drawable.button_visto));
+                                                            }
                                                             progressDialog.dismiss();
                                                         }
                                                     });

@@ -26,7 +26,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import adapter.TemporadaAdapter;
 import br.com.icaro.filme.R;
@@ -111,15 +113,19 @@ public class TemporadaActivity extends BaseActivity {
                     if (seasons.getUserEps().get(position).isAssistido()) {
                         Log.d(TAG, "visto");
                         String id = String.valueOf(serie_id);
-                        myRef.child(mAuth.getCurrentUser().getUid())
-                                .child(id)
-                                .child("seasons")
-                                .child(String.valueOf(tvSeason.getSeasonNumber()))
-                                .child("userEps")
-                                .child(String.valueOf(position))
-                                .child("assistido")
-                                .setValue(false);
+
                         Toast.makeText(TemporadaActivity.this, R.string.marcado_nao_assistido, Toast.LENGTH_SHORT).show();
+
+                        String user = mAuth.getCurrentUser().getUid();
+
+                        Map<String, Object> childUpdates = new HashMap<String, Object>();
+
+                        childUpdates.put("/"+user+"/"+id+"/seasons/"+tvSeason.getSeasonNumber()+"/userEps/"+position+"/assistido", false);
+                        childUpdates.put("/"+user+"/"+id+"/seasons/"+tvSeason.getSeasonNumber()+"/visto/", false);
+
+                        myRef.updateChildren(childUpdates);
+                        Log.d(TAG, "desvisto");
+
                     } else {
                         Log.d(TAG, "não visto");
                         String id = String.valueOf(serie_id);
@@ -147,6 +153,7 @@ public class TemporadaActivity extends BaseActivity {
                 intent.putExtra(Constantes.COLOR_TOP, color);
                 intent.putExtra(Constantes.NOME, nome_temporada);
                 intent.putExtra(Constantes.USER, seasons );
+                intent.putExtra(Constantes.SEGUINDO, seguindo);
                 startActivity(intent);
 
                 FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(TemporadaActivity.this);
@@ -180,6 +187,8 @@ public class TemporadaActivity extends BaseActivity {
                     Log.d(TAG, tvSeason.getName());
 
                 } else {
+                    Log.d(TAG, "false");
+                    Log.d(TAG, "nao assistido " + seasons.getUserEps().get(position).isAssistido());
                     seasons = dataSnapshot.getValue(UserSeasons.class);
                     recyclerView
                             .setAdapter(new TemporadaAdapter(TemporadaActivity.this,

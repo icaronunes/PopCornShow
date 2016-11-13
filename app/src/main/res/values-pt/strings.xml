@@ -134,4 +134,5 @@
     <string name="marcado_nao_assistido">Marcado como não assistido.</string>
     <string name="marcado_assistido_temporada">Marcado como assistido.</string>
     <string name="marcado_nao_assistido_temporada">Marcado como não assistido.</string>
+    <string name="salvando">Salvando...</string>
 </resources>

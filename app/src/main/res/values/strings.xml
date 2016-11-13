@@ -23,6 +23,7 @@
     <string name="canceled">Canceled</string>
     <string name="categoria">Category:</string>
     <string name="classificar">To Rank</string>
+    <string name="classificar_visto" translatable="false">✔</string>
     <string name="collecion_off">No collection</string>
     <string name="compartilhar_filme">Share Movie</string>
     <string name="compartilhar_tvshow">Sharing Series</string>
@@ -145,4 +146,5 @@
     <string name="marcado_nao_assistido">Marked as unassisted.</string>
     <string name="marcado_assistido_temporada">Marked as watched.</string>
     <string name="marcado_nao_assistido_temporada">Marked as unassisted.</string>
+    <string name="salvando">Saving...</string>
 </resources>

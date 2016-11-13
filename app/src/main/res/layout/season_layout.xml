@@ -7,7 +7,8 @@
     android:background="?attr/selectableItemBackground"
     android:orientation="horizontal"
     android:baselineAligned="false"
-    android:padding="1dp">
+    android:paddingRight="1dp"
+    android:paddingLeft="1dp">
 
     <ImageView
         android:id="@+id/image_temporada"
@@ -20,7 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginLeft="3dp">
+        android:layout_marginRight="1dp"
+        android:layout_marginLeft="1dp">
 
         <ImageButton
             android:id="@+id/popup_temporada"
@@ -59,7 +61,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:id="@+id/bt_assistido"
-            android:layout_height="28dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal" />
 
     </LinearLayout>

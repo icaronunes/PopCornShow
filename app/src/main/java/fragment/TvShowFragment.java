@@ -126,14 +126,13 @@ public class TvShowFragment extends Fragment {
         }
 
         //Validar se esta logado. Caso não, não precisa instanciar nada.
-        if (seguindo) {
+
             mAuth = FirebaseAuth.getInstance();
             database = FirebaseDatabase.getInstance();
             myRef = database.getReference("users");
-        }
+
 
     }
-
 
 
     @Override
@@ -333,8 +332,7 @@ public class TvShowFragment extends Fragment {
                         userTvshow = null; // ??????????
                         recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
                         recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
-                        adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
-                        recyclerViewTemporada.setAdapter(adapter);
+                        recyclerViewTemporada.setAdapter(new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow));
                     }
                 }
             }
@@ -346,7 +344,9 @@ public class TvShowFragment extends Fragment {
                 // ...
             }
         };
+
         myRef.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(series.getId())).addValueEventListener(postListener);
+
     }
 
     private void setStatus() {
@@ -552,7 +552,6 @@ public class TvShowFragment extends Fragment {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-
                                                 Log.d(TAG, "Seguir foi apertado. Datasnap mudou?");
                                             } else {
                                                 seguir.setText(R.string.seguir);
@@ -565,8 +564,6 @@ public class TvShowFragment extends Fragment {
 
                 } else {
                     Log.d(TAG, "delete");
-                    //userTvshow = null;
-                    //myRef = database.getReference("users");
                     myRef.child(mAuth.getCurrentUser()
                             .getUid())
                             .child(String.valueOf(series.getId()))
@@ -581,7 +578,9 @@ public class TvShowFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        myRef.removeEventListener(postListener);
+        if (seguindo) {
+            myRef.removeEventListener(postListener);
+        }
     }
 
 
