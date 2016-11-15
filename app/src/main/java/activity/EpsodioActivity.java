@@ -45,7 +45,6 @@ public class EpsodioActivity extends BaseActivity {
         viewPager.setCurrentItem(posicao);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(color);
-
     }
 
     private void setExtras() {

@@ -187,9 +187,7 @@ public class TemporadaActivity extends BaseActivity {
                     Log.d(TAG, tvSeason.getName());
 
                 } else {
-                    Log.d(TAG, "false");
-                    Log.d(TAG, "nao assistido " + seasons.getUserEps().get(position).isAssistido());
-                    seasons = dataSnapshot.getValue(UserSeasons.class);
+
                     recyclerView
                             .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
                                     tvSeason, seasons ,seguindo,

@@ -140,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:background="@drawable/button_radius"
+                android:background="@drawable/button_nao_visto"
                 android:padding="3dp"
                 android:text="@string/classificar" />
 
