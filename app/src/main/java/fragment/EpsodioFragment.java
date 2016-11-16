@@ -57,7 +57,7 @@ import static br.com.icaro.filme.R.id.ep_rating;
  */
 public class EpsodioFragment extends Fragment {
 
-    int tvshow_id, color, position;
+    int tvshow_id, color, position, temporada_position;
     Credits credits;
     TvEpisode episode;
     final String TAG = this.getClass().getName();
@@ -69,18 +69,16 @@ public class EpsodioFragment extends Fragment {
     ImageView ep_image;
     RatingBar ep_ratingBar;
     Button ep_rating_button;
-    UserSeasons seasons;
     UserEp userEp;
     boolean seguindo;
 
     FirebaseAuth auth;
-    DatabaseReference referenceUser;
     DatabaseReference referenceEps;
     private ValueEventListener postListener;
 
 
     public static Fragment newInstance(TvEpisode tvEpisode, String nome_serie,
-                                       int tvshow_id, int color, boolean seguindo, int position, UserSeasons seasons) {
+                                       int tvshow_id, int color, boolean seguindo, int position, UserSeasons seasons, int temporada_position) {
 
         EpsodioFragment fragment = new EpsodioFragment();
         Bundle bundle = new Bundle();
@@ -92,6 +90,8 @@ public class EpsodioFragment extends Fragment {
         bundle.putBoolean(Constantes.SEGUINDO, seguindo);
         bundle.putInt(Constantes.POSICAO, position);
         bundle.putSerializable(Constantes.USER, seasons);
+        bundle.putInt(Constantes.TEMPORADA_POSITION, temporada_position);
+
         fragment.setArguments(bundle);
 
         return fragment;
@@ -105,9 +105,9 @@ public class EpsodioFragment extends Fragment {
             nome_serie = getArguments().getString(Constantes.NOME_TVSHOW);
             tvshow_id = getArguments().getInt(Constantes.TVSHOW_ID);
             color = getArguments().getInt(Constantes.COLOR_TOP);
-            seasons = (UserSeasons) getArguments().getSerializable(Constantes.USER);
             seguindo = getArguments().getBoolean(Constantes.SEGUINDO);
             position = getArguments().getInt(Constantes.POSICAO);
+            temporada_position = getArguments().getInt(Constantes.TEMPORADA_POSITION);
         }
 
         if (seguindo) {
@@ -117,7 +117,7 @@ public class EpsodioFragment extends Fragment {
             referenceEps = FirebaseDatabase.getInstance().getReference("users").child(auth.getCurrentUser().getUid())
                     .child(String.valueOf(tvshow_id))
                     .child("seasons")
-                    .child(String.valueOf(episode.getSeasonNumber()))
+                    .child(String.valueOf(temporada_position))
                     .child("userEps")
                     .child(String.valueOf(position));
         }
@@ -127,7 +127,6 @@ public class EpsodioFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.epsodio_fragment, container, false);
-
 
         linear_air_date = (LinearLayout) view.findViewById(R.id.linear_air_date);
         linear_director = (LinearLayout) view.findViewById(R.id.linear_director);
@@ -157,12 +156,14 @@ public class EpsodioFragment extends Fragment {
         adview.loadAd(adRequest);
 
         new TvEpisodeAsync().execute();
+
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setListener();
 
         setAirDate();
         setVote();
@@ -172,9 +173,8 @@ public class EpsodioFragment extends Fragment {
         setName();
 
         if (episode.getAirDate() != null ) {
-                setButtonRating();
-            }
-        setListener();
+            setButtonRating();
+        }
     }
 
     private void setListener(){
@@ -184,6 +184,7 @@ public class EpsodioFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userEp = dataSnapshot.getValue(UserEp.class);
+
                 if (userEp != null) {
                     Log.d(TAG, "onDataChange");
                     Log.d(TAG, "key: " + dataSnapshot.getKey());
@@ -234,15 +235,6 @@ public class EpsodioFragment extends Fragment {
 
         if (UtilsFilme.verificaLancamento(date) && FilmeApplication.getInstance().isLogado()) {
 
-//            if (seguindo && userEp != null){
-//                if (userEp.isAssistido()){
-//                    ep_rating_button.setBackground(getResources().getDrawable(R.drawable.button_visto));
-//                    ep_rating_button.setText(getResources().getText(R.string.classificar_visto));
-//                }
-//            }  else {
-//                ep_rating_button.setBackground(getResources().getDrawable(R.drawable.button_nao_visto));
-//                ep_rating_button.setText(getResources().getText(R.string.classificar));
-//            }
 
             ep_rating_button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -252,10 +244,17 @@ public class EpsodioFragment extends Fragment {
                     alertDialog.setContentView(R.layout.adialog_custom_rated);
 
                     Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
-                    Button nao_vister = (Button )  alertDialog.findViewById(R.id.cancel_rated);
-                    if (!userEp.isAssistido()){
-                        nao_vister.setVisibility(View.INVISIBLE);
+                    Button nao_visto = (Button )  alertDialog.findViewById(R.id.cancel_rated);
+
+                    if (userEp != null) {
+                        if (!userEp.isAssistido()) {
+                            nao_visto.setVisibility(View.INVISIBLE);
+                        }
+                    } else {
+                        nao_visto.setVisibility(View.INVISIBLE);
                     }
+
+
                     TextView title = (TextView) alertDialog.findViewById(R.id.rating_title);
                     title.setText(episode.getName() != null ? episode.getName() : "");
                     final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
@@ -267,7 +266,7 @@ public class EpsodioFragment extends Fragment {
                             android.R.style.Theme_Material_Dialog);
 
 
-                    nao_vister.setOnClickListener(new View.OnClickListener() {
+                    nao_visto.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
@@ -276,7 +275,7 @@ public class EpsodioFragment extends Fragment {
                                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(auth.getCurrentUser().getUid())
                                         .child(String.valueOf(tvshow_id))
                                         .child("seasons")
-                                        .child(String.valueOf(episode.getSeasonNumber()));
+                                        .child(String.valueOf(temporada_position));
                                 Map<String, Object> childUpdates = new HashMap<String, Object>();
 
                                 childUpdates.put("/userEps/" + position + "/assistido", false);
@@ -286,7 +285,6 @@ public class EpsodioFragment extends Fragment {
                             alertDialog.dismiss();
                         }
                     });
-
 
                     ok.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -476,7 +474,7 @@ public class EpsodioFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            Log.d("TvEpisodeAsync", "" + tvshow_id + " " + episode.getSeasonNumber() + " " + episode.getEpisodeNumber());
+            Log.d(TAG, "" + tvshow_id + " " + episode.getSeasonNumber() + " " + episode.getEpisodeNumber());
 
             credits = FilmeService.getTmdbTvEpisodes()
                     .getCredits(tvshow_id, episode.getSeasonNumber(), episode.getEpisodeNumber(), "en");

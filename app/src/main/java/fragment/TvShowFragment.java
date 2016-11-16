@@ -424,6 +424,7 @@ public class TvShowFragment extends Fragment {
                 Intent intent = new Intent(getContext(), TemporadaActivity.class);
                 intent.putExtra(Constantes.NOME, getString(R.string.temporada) + " " + series.getSeasons().get(position).getSeasonNumber());
                 intent.putExtra(Constantes.TEMPORADA_ID, series.getSeasons().get(position).getSeasonNumber());
+                intent.putExtra(Constantes.TEMPORADA_POSITION, position);
                 intent.putExtra(Constantes.TVSHOW_ID, series.getId());
                 intent.putExtra(Constantes.COLOR_TOP, color);
                 getContext().startActivity(intent);

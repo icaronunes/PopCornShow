@@ -19,11 +19,12 @@ public class EpsodioAdapter extends FragmentPagerAdapter {
     Context context;
     TvSeason tvSeason;
     String nome_serie;
-    int tvshow_id, color;
+    int tvshow_id, color, temporada_position;
     UserSeasons seasons;
 
+
     public EpsodioAdapter(EpsodioActivity epsodioActivity, FragmentManager supportFragmentManager,
-                          TvSeason tvSeason, String nome_serie, int tvshowid, int color, boolean seguindo, UserSeasons seasons) {
+                          TvSeason tvSeason, String nome_serie, int tvshowid, int color, boolean seguindo, UserSeasons seasons, int temporada_position) {
         super(supportFragmentManager);
         this.context = epsodioActivity;
         this.tvSeason = tvSeason;
@@ -32,12 +33,13 @@ public class EpsodioAdapter extends FragmentPagerAdapter {
         this.color = color;
         this.seguindo = seguindo;
         this.seasons = seasons;
+        this.temporada_position = temporada_position;
 
     }
 
     @Override
     public Fragment getItem(int position) {
-        return EpsodioFragment.newInstance(tvSeason.getEpisodes().get(position), nome_serie, tvshow_id, color, seguindo, position, seasons);
+        return EpsodioFragment.newInstance(tvSeason.getEpisodes().get(position), nome_serie, tvshow_id, color, seguindo, position, seasons, temporada_position);
     }
 
     @Override

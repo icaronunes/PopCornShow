@@ -112,8 +112,8 @@ public class FilmeService {
 
     public static Account getAccount(String user, String pass) {
 
-        TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
         try {
+            TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
             TokenSession authentication = tmdbApi
                     .getAuthentication().getSessionLogin(user, pass);
             String session = authentication.getSessionId();

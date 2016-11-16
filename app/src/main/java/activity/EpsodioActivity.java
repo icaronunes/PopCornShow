@@ -20,7 +20,7 @@ import utils.Constantes;
  */
 public class EpsodioActivity extends BaseActivity {
 
-    int tvshow_id, posicao, color;
+    int tvshow_id, posicao, color, temporada_position;
     ViewPager viewPager;
     TabLayout tabLayout;
     String nome_temporada;
@@ -41,7 +41,7 @@ public class EpsodioActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         fragmentManager = getSupportFragmentManager();
         viewPager.setOffscreenPageLimit(4);
-        viewPager.setAdapter(new EpsodioAdapter(this, fragmentManager, tvSeason, nome_temporada, tvshow_id, color, seguindo, seasons));
+        viewPager.setAdapter(new EpsodioAdapter(this, fragmentManager, tvSeason, nome_temporada, tvshow_id, color, seguindo, seasons, temporada_position));
         viewPager.setCurrentItem(posicao);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(color);
@@ -55,6 +55,8 @@ public class EpsodioActivity extends BaseActivity {
             color = getIntent().getIntExtra(Constantes.COLOR_TOP, 0);
             tvSeason = (TvSeason) getIntent().getSerializableExtra(Constantes.TVSEASONS);
             nome_temporada = getIntent().getStringExtra(Constantes.NOME);
+            temporada_position = getIntent().getIntExtra(Constantes.TEMPORADA_POSITION, 0);
+            //colocar no Signal
             seasons = (UserSeasons) getIntent().getSerializableExtra(Constantes.USER);
             seguindo = getIntent().getBooleanExtra(Constantes.SEGUINDO, false);
             getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada );
@@ -64,6 +66,7 @@ public class EpsodioActivity extends BaseActivity {
             posicao = Integer.parseInt(getIntent().getStringExtra(Constantes.POSICAO));
             color = Integer.parseInt(getIntent().getStringExtra(Constantes.COLOR_TOP));
             tvSeason = (TvSeason) getIntent().getSerializableExtra(Constantes.TVSEASONS);
+            temporada_position = getIntent().getIntExtra(Constantes.TEMPORADA_POSITION, 0);
             nome_temporada = getIntent().getStringExtra(Constantes.NOME);
             seguindo = getIntent().getBooleanExtra(Constantes.SEGUINDO, false);
             getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada );
