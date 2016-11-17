@@ -124,8 +124,8 @@ public class TemporadaActivity extends BaseActivity {
 
                         Map<String, Object> childUpdates = new HashMap<String, Object>();
 
-                        childUpdates.put("/"+user+"/"+id+"/seasons/"+temporada_position+"/userEps/"+position+"/assistido", false);
-                        childUpdates.put("/"+user+"/"+id+"/seasons/"+temporada_position+"/visto/", false);
+                        childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/userEps/"+position+"/assistido", false);
+                        childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/visto/", false);
 
                         myRef.updateChildren(childUpdates);
                         Log.d(TAG, "desvisto");
@@ -133,7 +133,9 @@ public class TemporadaActivity extends BaseActivity {
                     } else {
                         Log.d(TAG, "não visto");
                         String id = String.valueOf(serie_id);
-                        myRef.child(mAuth.getCurrentUser().getUid())
+                        String user = mAuth.getCurrentUser().getUid();
+                        myRef.child(user)
+                                .child("seguindo")
                                 .child(id)
                                 .child("seasons")
                                 .child(String.valueOf(temporada_position))
@@ -208,6 +210,7 @@ public class TemporadaActivity extends BaseActivity {
             }
         };
         myRef.child(mAuth.getCurrentUser().getUid())
+                .child("seguindo")
                 .child(String.valueOf(serie_id))
                 .child("seasons")
                 .child(String.valueOf(temporada_position)).addValueEventListener(postListener);
@@ -218,6 +221,7 @@ public class TemporadaActivity extends BaseActivity {
         super.onDestroy();
         if (seguindo) {
             myRef.child(mAuth.getCurrentUser().getUid())
+                    .child("seguindo")
                     .child(String.valueOf(serie_id))
                     .child("seasons")
                     .child(String.valueOf(temporada_position)).removeEventListener(postListener);
@@ -265,6 +269,7 @@ public class TemporadaActivity extends BaseActivity {
             getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada );
 
                 myRef.child(mAuth.getCurrentUser().getUid())
+                        .child("seguindo")
                         .child(String.valueOf(serie_id))
                         .child("seasons")
                         .child(String.valueOf(temporada_position))

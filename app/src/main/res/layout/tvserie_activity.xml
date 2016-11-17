@@ -14,13 +14,15 @@
         android:fillViewport="false"
         android:fitsSystemWindows="false">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPager_tvshow"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="top|start"
-            android:background="@color/transparent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager_tvshow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="top|start"
+                android:background="@color/transparent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
         <!-- Layout da app bar -->
         <android.support.design.widget.AppBarLayout

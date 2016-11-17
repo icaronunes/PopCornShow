@@ -51,7 +51,6 @@ import adapter.TvShowAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
-import info.movito.themoviedbapi.TmdbAccount;
 import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.model.core.ResponseStatus;
 import info.movito.themoviedbapi.model.tv.TvSeries;
@@ -79,9 +78,17 @@ public class TvShowActivity extends BaseActivity {
     FirebaseAnalytics firebaseAnalytics;
     private boolean addFavorite = true;
     private boolean addWatch = true;
+    private boolean addRated = true;
     private boolean seguindo;
+    private ValueEventListener valueEventWatch;
+    private ValueEventListener valueEventRated;
+    private ValueEventListener valueEventFavorite;
+
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
+    private DatabaseReference myFavorite;
+    private DatabaseReference myWatch;
+    private DatabaseReference myRated;
     private FirebaseDatabase database;
 
 
@@ -107,6 +114,7 @@ public class TvShowActivity extends BaseActivity {
 
         iniciarFirebases();
 
+
         if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
             new TMDVAsync().execute();
         } else {
@@ -114,11 +122,95 @@ public class TvShowActivity extends BaseActivity {
         }
     }
 
+    private void setEventListenerWatch() {
+
+        valueEventWatch = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.child(String.valueOf(id_tvshow)).exists()) {
+                        addWatch = true;
+                        Log.d(TAG, "False");
+                    } else {
+                        addWatch = false;
+                        Log.d(TAG, "True");
+                    }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        myWatch.addValueEventListener(valueEventWatch);
+
+    }
+
+    private void setEventListenerFavorite() {
+        valueEventRated = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(String.valueOf(id_tvshow)).exists()){
+                    addRated = true;
+                    Log.d(TAG, "False");
+                } else {
+                    addRated = false;
+                    Log.d(TAG, "True");
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        myRated.addValueEventListener(valueEventRated);
+
+    }
+
+    private void setEventListenerRated() {
+        valueEventFavorite = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(String.valueOf(id_tvshow)).exists()){
+                    addFavorite = true;
+                    Log.d(TAG, "True");
+                } else {
+                    addFavorite = false;
+                    Log.d(TAG, "False");
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        myFavorite.addValueEventListener(valueEventFavorite);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myWatch.removeEventListener(valueEventWatch);
+    }
+
     private void iniciarFirebases() {
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         myRef =  database.getReference("users");
+        myWatch = database.getReference("users").child(mAuth.getCurrentUser()
+                .getUid()).child("watch")
+                .child("tvshow");
+
+        myFavorite = database.getReference("users").child(mAuth.getCurrentUser()
+                .getUid()).child("favorites")
+                .child("tvshow");
+
+        myRated = database.getReference("users").child(mAuth.getCurrentUser()
+                .getUid()).child("rated")
+                .child("tvshow");
+
+
+
     }
 
     private void getExtras(){
@@ -218,8 +310,19 @@ public class TvShowActivity extends BaseActivity {
                     @Override
                     public void run() {
                         if (!isDestroyed()) {
-                            status[0] = FilmeService.addOrRemoverWatchList(id_tvshow, addWatch, TmdbAccount.MediaType.TV);
-                            if (!isDestroyed()) {
+                            //status[0] = FilmeService.addOrRemoverWatchList(id_tvshow, addWatch, TmdbAccount.MediaType.TV);
+                            if (addWatch){
+                                Log.d(TAG, "Apagou Watch");
+                                myWatch.child(String.valueOf(series.getId())).setValue(null);
+                                addWatch = !addWatch;
+                            } else {
+                                Log.d(TAG, "Gravou Watch");
+                                myWatch.child(String.valueOf(series.getId())).setValue(series.getExternalIds());
+                                addWatch = !addWatch;
+
+                            }
+
+                            if (!isDestroyed() && false) {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -273,6 +376,7 @@ public class TvShowActivity extends BaseActivity {
                         }
                     }
                 }).start();
+                fab.close(true);
             }
         };
     }
@@ -310,8 +414,21 @@ public class TvShowActivity extends BaseActivity {
                         @Override
                         public void run() {
                             if (!isDestroyed()) {
-                                status[0] = FilmeService.addOrRemoverFavorite(id_tvshow, addFavorite, TmdbAccount.MediaType.TV);
-                                if (!isDestroyed()) {
+
+                                if (addFavorite){
+                                    Log.d(TAG, "Apagou Favorite");
+                                    myFavorite.child(String.valueOf(id_tvshow)).setValue(null);
+                                    addFavorite = !addFavorite;
+
+                                } else {
+                                    Log.d(TAG, "Gravou Favorite");
+                                    myFavorite.child(String.valueOf(id_tvshow)).setValue(series.getExternalIds());
+                                    addFavorite = !addFavorite;
+                                }
+
+                               // status[0] = FilmeService.addOrRemoverFavorite(id_tvshow, addFavorite, TmdbAccount.MediaType.TV);
+
+                                if (!isDestroyed() && false) {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -365,6 +482,7 @@ public class TvShowActivity extends BaseActivity {
                             }
                         }
                     }).start();
+                    fab.close(true);
                 }
             }
         };
@@ -393,6 +511,7 @@ public class TvShowActivity extends BaseActivity {
                     alertDialog.setContentView(R.layout.adialog_custom_rated);
 
                     Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
+                    Button no = (Button) alertDialog.findViewById(R.id.cancel_rated);
                     TextView title = (TextView) alertDialog.findViewById(R.id.rating_title);
                     title.setText(series.getName());
                     final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
@@ -401,6 +520,22 @@ public class TvShowActivity extends BaseActivity {
 
                     alertDialog.getWindow().setLayout(width, height);
 
+                    if (addRated){
+                        no.setVisibility(View.VISIBLE);
+                    } else {
+                        no.setVisibility(View.GONE);
+                    }
+
+                    no.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Log.d(TAG, "Apagou Rated");
+                            myRated.child(String.valueOf(id_tvshow)).setValue(null);
+                            addRated = !addRated;
+                            alertDialog.dismiss();
+                        }
+                    });
+
                     ok.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -408,7 +543,7 @@ public class TvShowActivity extends BaseActivity {
                             final ProgressDialog progressDialog = new ProgressDialog(TvShowActivity.this,
                                     android.R.style.Theme_Material_Dialog);
                             progressDialog.setIndeterminate(true);
-                            progressDialog.setMessage("Salvando...");
+                            progressDialog.setMessage(getResources().getString(R.string.salvando));
                             progressDialog.show();
 
                             new Thread() {
@@ -418,50 +553,56 @@ public class TvShowActivity extends BaseActivity {
                                 public void run() {
                                     if (UtilsFilme.isNetWorkAvailable(TvShowActivity.this)) {
                                         if (isAlive()) {
-                                            status = FilmeService.setRatedTvShow(id_tvshow, ratingBar.getRating());
-                                        }
-                                        try {
-                                            Thread.sleep(150);
-                                            if (isAlive()) {
-                                                runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        Log.d("Status", "" + status);
-                                                        if (status) {
-                                                            Toast.makeText(TvShowActivity.this,
-                                                                    getString(R.string.tvshow_rated), Toast.LENGTH_SHORT)
-                                                                    .show();
-                                                            Bundle bundle = new Bundle();
-                                                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,
-                                                                    getString(R.string.tvshow_rated));
-                                                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
-                                                            bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
-                                                            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                                                            fab.close(true);
-                                                        } else {
-                                                            Toast.makeText(TvShowActivity.this,
-                                                                    getString(R.string.falha_rated), Toast.LENGTH_SHORT)
-                                                                    .show();
-                                                            Bundle bundle = new Bundle();
-                                                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,
-                                                                    getString(R.string.falha_rated));
-                                                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
-                                                            bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
-                                                            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                                                            fab.close(true);
-                                                        }
-                                                        progressDialog.dismiss();
-                                                    }
-                                                });
-                                            }
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
+                                            //status = FilmeService.setRatedTvShow(id_tvshow, ratingBar.getRating());
+
+                                            Log.d(TAG, "Gravou Rated");
+                                            myRated.child(String.valueOf(id_tvshow)).setValue(series.getExternalIds());
+                                            myRated.child(String.valueOf(id_tvshow)).child("nota").setValue(ratingBar.getRating());
                                         }
                                     }
+                                    try {
+                                        Thread.sleep(150);
+                                        if (isAlive()) {
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Log.d("Status", "" + status);
+//                                                        if (status) {
+//                                                            Toast.makeText(TvShowActivity.this,
+//                                                                    getString(R.string.tvshow_rated), Toast.LENGTH_SHORT)
+//                                                                    .show();
+//                                                            Bundle bundle = new Bundle();
+//                                                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,
+//                                                                    getString(R.string.tvshow_rated));
+//                                                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+//                                                            bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+//                                                            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+//                                                            fab.close(true);
+//                                                        } else {
+//                                                            Toast.makeText(TvShowActivity.this,
+//                                                                    getString(R.string.falha_rated), Toast.LENGTH_SHORT)
+//                                                                    .show();
+//                                                            Bundle bundle = new Bundle();
+//                                                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,
+//                                                                    getString(R.string.falha_rated));
+//                                                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+//                                                            bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
+//                                                            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+//                                                            fab.close(true);
+//                                                        }
+                                                    progressDialog.dismiss();
+                                                }
+                                            });
+                                        }
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
+                          //  }
                             }.start();
-
+                            fab.close(true);
                             alertDialog.dismiss();
+
                         }
 
                     });
@@ -505,6 +646,9 @@ public class TvShowActivity extends BaseActivity {
 
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
+
+
+
         @Override
         protected Void doInBackground(Void... voids) {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(TvShowActivity.this);
@@ -512,7 +656,7 @@ public class TvShowActivity extends BaseActivity {
 
             if (idioma_padrao) {
                 TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
-                Log.d("FilmeActivity", "true - ");
+                Log.d("FilmeActivity", "true ");
                 series = tmdbTv
                         .getSeries(id_tvshow, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
                                 //.toLanguageTag() não funciona na API 14
@@ -523,7 +667,7 @@ public class TvShowActivity extends BaseActivity {
                 series.getImages().setPosters(tmdbTv.getSeries(id_tvshow, null, images).getImages().getPosters());
 
             } else {
-                Log.d("FilmeActivity", "false - ");
+                Log.d("FilmeActivity", "false ");
                 series = FilmeService.getTmdbTvShow()
                         .getSeries(id_tvshow, null, images, credits, videos, external_ids);
             }
@@ -537,7 +681,7 @@ public class TvShowActivity extends BaseActivity {
 
             if (mAuth.getCurrentUser().getUid() != null && series != null) {
 
-                myRef.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(series.getId()))
+                myRef.child(mAuth.getCurrentUser().getUid()).child("seguindo").child(String.valueOf(series.getId()))
                         .addListenerForSingleValueEvent(
                         new ValueEventListener() {
                             @Override
@@ -564,7 +708,10 @@ public class TvShowActivity extends BaseActivity {
 
             setCoordinator();
             setImageTop();
-            //setupViewPagerTabs();
+            setEventListenerWatch();
+            setEventListenerFavorite();
+            setEventListenerRated();
+
             if (FilmeApplication.getInstance().isLogado()) { // Arrumar
                 Log.d("FAB", "FAB " + color_top);
                 Date date = null;
@@ -591,5 +738,7 @@ public class TvShowActivity extends BaseActivity {
             }
         }
     }
+
+
 
 }

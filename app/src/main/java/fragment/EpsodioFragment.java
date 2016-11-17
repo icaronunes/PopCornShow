@@ -57,10 +57,11 @@ import static br.com.icaro.filme.R.id.ep_rating;
  */
 public class EpsodioFragment extends Fragment {
 
+    final String TAG = this.getClass().getName();
+
     int tvshow_id, color, position, temporada_position;
     Credits credits;
     TvEpisode episode;
-    final String TAG = this.getClass().getName();
 
     String nome_serie;
     LinearLayout linear_director, linear_air_date, linear_write, linear_vote;
@@ -73,7 +74,7 @@ public class EpsodioFragment extends Fragment {
     boolean seguindo;
 
     FirebaseAuth auth;
-    DatabaseReference referenceEps;
+    DatabaseReference myRef;
     private ValueEventListener postListener;
 
 
@@ -114,7 +115,8 @@ public class EpsodioFragment extends Fragment {
             auth = FirebaseAuth.getInstance();
             //referenceUser = FirebaseDatabase.getInstance().getReference("users");
 
-            referenceEps = FirebaseDatabase.getInstance().getReference("users").child(auth.getCurrentUser().getUid())
+            myRef = FirebaseDatabase.getInstance().getReference("users").child(auth.getCurrentUser().getUid())
+                    .child("seguindo")
                     .child(String.valueOf(tvshow_id))
                     .child("seasons")
                     .child(String.valueOf(temporada_position))
@@ -209,7 +211,7 @@ public class EpsodioFragment extends Fragment {
         };
 
         if (seguindo) {
-            referenceEps.
+            myRef.
                     addValueEventListener(postListener);
         }
     }
@@ -218,7 +220,7 @@ public class EpsodioFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         if (seguindo) {
-            referenceEps.removeEventListener(postListener);
+            myRef.removeEventListener(postListener);
         }
     }
 
@@ -272,7 +274,10 @@ public class EpsodioFragment extends Fragment {
 
                             if (seguindo) {
                                 Log.d(TAG, "não visto");
-                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(auth.getCurrentUser().getUid())
+                                DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                                        .getReference("users")
+                                        .child(auth.getCurrentUser().getUid())
+                                        .child("seguindo")
                                         .child(String.valueOf(tvshow_id))
                                         .child("seasons")
                                         .child(String.valueOf(temporada_position));
@@ -315,7 +320,7 @@ public class EpsodioFragment extends Fragment {
                                                                     .show();
                                                             if (seguindo) {
 
-                                                                referenceEps.child("assistido").setValue(true);
+                                                                myRef.child("assistido").setValue(true);
                                                                 ep_rating_button.setText(R.string.classificar_visto);
                                                                 ep_rating_button.setBackground(getResources().getDrawable(R.drawable.button_visto));
                                                             }

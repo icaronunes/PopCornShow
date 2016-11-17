@@ -90,18 +90,17 @@ public class TvShowFragment extends Fragment {
     private TvSeries series;
     private Button seguir;
     private TextView titulo, categoria, descricao, voto_media, produtora,
-            original_title, spoken_languages, production_countries, end, status, temporada,
+            original_title, production_countries, status, temporada,
             imdb, tmdb, popularity, lancamento, textview_crews, textview_elenco;
     private ImageView icon_site, img_poster, img_star;
-    private LinearLayout linear_container;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private UserTvshow userTvshow;
     private RecyclerView recyclerViewTemporada;
-    private View view;
     private TemporadasAdapter adapter;
     private ValueEventListener postListener;
+    private ProgressBar progressBar, progressBarTemporada;
 
     public static Fragment newInstance(int tipo, TvSeries series, int color, boolean seguindo) {
         TvShowFragment fragment = new TvShowFragment();
@@ -124,14 +123,11 @@ public class TvShowFragment extends Fragment {
             color = getArguments().getInt(Constantes.COLOR_TOP);
             seguindo = getArguments().getBoolean(Constantes.USER);
         }
-
         //Validar se esta logado. Caso não, não precisa instanciar nada.
 
-            mAuth = FirebaseAuth.getInstance();
-            database = FirebaseDatabase.getInstance();
-            myRef = database.getReference("users");
-
-
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("users");
     }
 
 
@@ -157,6 +153,7 @@ public class TvShowFragment extends Fragment {
             setPoster();
             setStatus();
             setAnimacao();
+            setProgressBar();
 
 
             icon_site.setOnClickListener(new View.OnClickListener() {
@@ -292,6 +289,11 @@ public class TvShowFragment extends Fragment {
 
     }
 
+    private void setProgressBar() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+
     private void isSeguindo() {
 
         if (seguindo) {
@@ -310,9 +312,9 @@ public class TvShowFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()) {
-                    Log.d(TAG, "has: " + dataSnapshot.child(String.valueOf(series.getId())));
-                    Log.d(TAG, "key: " + dataSnapshot.child(String.valueOf(series.getId())).getKey());
-                    Log.w(TAG, "Mudou  - Seguindo");
+//                    Log.d(TAG, "has: " + dataSnapshot.child(String.valueOf(series.getId())));
+//                    Log.d(TAG, "key: " + dataSnapshot.child(String.valueOf(series.getId())).getKey());
+//                    Log.w(TAG, "Mudou  - Seguindo");
 
                     if (getView() != null) {
                         userTvshow = dataSnapshot.getValue(UserTvshow.class);
@@ -320,32 +322,39 @@ public class TvShowFragment extends Fragment {
                         recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
                         adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
                         recyclerViewTemporada.setAdapter(adapter);
+                        if (progressBarTemporada != null) {
+                            Log.w(TAG, "Mudou - GONE");
+                            progressBarTemporada.setVisibility(View.INVISIBLE);
+                        }
                     }
 
                 } else {
 
-                    Log.d(TAG, "has: " + dataSnapshot.child(String.valueOf(series.getId())));
-                    Log.d(TAG, "key: " + dataSnapshot.child(String.valueOf(series.getId())).getKey());
-                    Log.w(TAG, "Mudou - Não seguindo");
+//                    Log.d(TAG, "has: " + dataSnapshot.child(String.valueOf(series.getId())));
+//                    Log.d(TAG, "key: " + dataSnapshot.child(String.valueOf(series.getId())).getKey());
+//                    Log.w(TAG, "Mudou - Não seguindo");
                     if (getView() != null) {
                         Log.w(TAG, "Passou");
                         userTvshow = null; // ??????????
                         recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
                         recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
                         recyclerViewTemporada.setAdapter(new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow));
+                        if (progressBarTemporada != null) {
+                            Log.w(TAG, "Mudou - GONE");
+                            progressBarTemporada.setVisibility(View.INVISIBLE);
+                        }
                     }
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // ...
+
             }
         };
 
-        myRef.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(series.getId())).addValueEventListener(postListener);
+        myRef.child(mAuth.getCurrentUser().getUid()).child("seguindo").child(String.valueOf(series.getId())).addValueEventListener(postListener);
 
     }
 
@@ -401,7 +410,8 @@ public class TvShowFragment extends Fragment {
     }
 
     private View getViewTemporadas(LayoutInflater inflater, ViewGroup container) {
-        view = inflater.inflate(R.layout.temporadas, container, false);
+        View view = inflater.inflate(R.layout.temporadas, container, false);
+        progressBarTemporada = (ProgressBar) view.findViewById(R.id.progressBarTemporadas);
         recyclerViewTemporada = (RecyclerView) view.findViewById(R.id.temporadas_recycle);
         recyclerViewTemporada.setHasFixedSize(true);
         recyclerViewTemporada.setItemAnimator(new DefaultItemAnimator());
@@ -446,9 +456,9 @@ public class TvShowFragment extends Fragment {
                     final String id_serie  = String.valueOf(series.getId());
                     Map<String, Object> childUpdates = new HashMap<String, Object>();
 
-                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+position+"/visto", false);
+                    childUpdates.put("/"+user+"/seguindo/"+id_serie+"/seasons/"+position+"/visto", false);
                     setStatusEps(position, false);
-                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+position+"/userEps", userTvshow.getSeasons().get(position).getUserEps());
+                    childUpdates.put("/"+user+"/seguindo/"+id_serie+"/seasons/"+position+"/userEps", userTvshow.getSeasons().get(position).getUserEps());
 
                     myRef.updateChildren(childUpdates);
                     Log.d(TAG, "desvisto");
@@ -463,10 +473,10 @@ public class TvShowFragment extends Fragment {
                     }
 
                     Map<String, Object> childUpdates = new HashMap<String, Object>();
-                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+position+"/visto", true);
+                    childUpdates.put("/"+user+"/seguindo/"+id_serie+"/seasons/"+position+"/visto", true);
                     setStatusEps(position, true);
                     //Fazer metodo para verificar, se 'quer' marcas temporadas anteriores.
-                    childUpdates.put("/"+user+"/"+id_serie+"/seasons/"+position+"/userEps", userTvshow.getSeasons().get(position).getUserEps());
+                    childUpdates.put("/"+user+"/seguindo/"+id_serie+"/seasons/"+position+"/userEps", userTvshow.getSeasons().get(position).getUserEps());
 
                     myRef.updateChildren(childUpdates);
 
@@ -495,17 +505,17 @@ public class TvShowFragment extends Fragment {
     private View getViewInformacoes(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.tvshow_info, container, false);
 
+        progressBar = (ProgressBar) view.findViewById(R.id.progress);
+
         titulo = (TextView) view.findViewById(R.id.titulo_tvshow);
         categoria = (TextView) view.findViewById(R.id.categoria_tvshow);
         descricao = (TextView) view.findViewById(R.id.descricao);
-        end = (TextView) view.findViewById(R.id.end);
         status = (TextView) view.findViewById(R.id.status);
         temporada = (TextView) view.findViewById(R.id.temporadas);
         lancamento = (TextView) view.findViewById(R.id.lancamento);
         voto_media = (TextView) view.findViewById(R.id.voto_media);
         produtora = (TextView) view.findViewById(R.id.produtora);
         original_title = (TextView) view.findViewById(R.id.original_title);
-        spoken_languages = (TextView) view.findViewById(R.id.spoken_languages);
         production_countries = (TextView) view.findViewById(R.id.production_countries);
         popularity = (TextView) view.findViewById(R.id.popularity);
         imdb = (TextView) view.findViewById(R.id.imdb_site);
@@ -513,7 +523,6 @@ public class TvShowFragment extends Fragment {
         img_poster = (ImageView) view.findViewById(R.id.img_poster);
         img_star = (ImageView) view.findViewById(R.id.img_star);
         icon_site = (ImageView) view.findViewById(R.id.icon_site);
-        linear_container = (LinearLayout) view.findViewById(R.id.linear_container);
         textview_crews = (TextView) view.findViewById(R.id.textview_crews);
         textview_elenco = (TextView) view.findViewById(R.id.textview_elenco);
         seguir = (Button) view.findViewById(R.id.seguir);
@@ -527,6 +536,12 @@ public class TvShowFragment extends Fragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (getView().getRootView().findViewById(R.id.progressBarTemporadas) != null) {
+                    progressBarTemporada =  (ProgressBar) getView().getRootView().findViewById(R.id.progressBarTemporadas);
+                    progressBarTemporada.setVisibility(View.VISIBLE);
+                }
+
                 if (!seguindo) {
                     Log.d(TAG, "incluir");
                     seguindo = !seguindo;
@@ -547,6 +562,7 @@ public class TvShowFragment extends Fragment {
 
                             myRef.child(mAuth.getCurrentUser()
                                     .getUid())
+                                    .child("seguindo")
                                     .child(String.valueOf(series.getId()))
                                     .setValue(userTvshow)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -560,6 +576,7 @@ public class TvShowFragment extends Fragment {
                                             }
                                         }
                                     });
+
                         }
                     }).start();
 
@@ -567,6 +584,7 @@ public class TvShowFragment extends Fragment {
                     Log.d(TAG, "delete");
                     myRef.child(mAuth.getCurrentUser()
                             .getUid())
+                            .child("seguindo")
                             .child(String.valueOf(series.getId()))
                             .removeValue();
                     seguindo = !seguindo;
@@ -630,7 +648,6 @@ public class TvShowFragment extends Fragment {
             descricao.setText(getString(R.string.sem_sinopse));
         }
     }
-
 
     private void setAnimacao() {
 

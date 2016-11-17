@@ -91,7 +91,6 @@ public class FilmeActivity extends BaseActivity {
         setTitle(" ");
         getExtras();
         Log.d("color", "Cor do fab " + color_fundo);
-        //Toast.makeText(this, "FAB = "+ color_fundo, Toast.LENGTH_LONG).show();
         menu_item_favorite = (FloatingActionButton) findViewById(R.id.menu_item_favorite);
         menu_item_watchlist = (FloatingActionButton) findViewById(R.id.menu_item_watchlist);
         menu_item_rated = (FloatingActionButton) findViewById(R.id.menu_item_rated);
