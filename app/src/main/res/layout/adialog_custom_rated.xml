@@ -36,9 +36,10 @@
         android:text="Não Visto"
         android:background="@drawable/button_nao_visto"
         android:layout_gravity="center"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginStart="2dp" />
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp" />
 
         <Button
             android:id="@+id/ok_rated"
@@ -47,7 +48,10 @@
             android:text="OK"
             android:background="@drawable/button_nao_visto"
             android:layout_gravity="center"
-            />
+            android:layout_marginEnd="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginStart="6dp" />
 
     </LinearLayout>
 

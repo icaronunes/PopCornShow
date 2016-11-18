@@ -135,4 +135,12 @@
     <string name="marcado_assistido_temporada">Marcado como assistido.</string>
     <string name="marcado_nao_assistido_temporada">Marcado como não assistido.</string>
     <string name="salvando">Salvando...</string>
+    <string name="tvshow_watch_remove">Tvshow retirada da watchlist.</string>
+    <string name="tvshow_remove_rated">Removida nota da  Série</string>
+    <string name="adicionar_favorite">Adicionar aos favoritos</string>
+    <string name="remover_favorite">Remover de favoritos</string>
+    <string name="adicionar_watch">Adicionar ao WatchList</string>
+    <string name="remover_watch">Remover do Watchlist</string>
+    <string name="adicionar_rated">Adicionar aos Classificados</string>
+    <string name="remover_rated">Remover dos Classificados</string>
 </resources>

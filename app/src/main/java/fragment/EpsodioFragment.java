@@ -1,10 +1,10 @@
 package fragment;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,6 +52,7 @@ import utils.Constantes;
 import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.id.ep_rating;
+import static java.lang.String.valueOf;
 
 
 /**
@@ -75,7 +78,10 @@ public class EpsodioFragment extends Fragment {
 
     FirebaseAuth auth;
     DatabaseReference myRef;
-    private ValueEventListener postListener;
+    DatabaseReference databaseReference;
+    private ValueEventListener userListener;
+    private ValueEventListener epsListener;
+    private float numero_rated;
 
 
     public static Fragment newInstance(TvEpisode tvEpisode, String nome_serie,
@@ -113,15 +119,23 @@ public class EpsodioFragment extends Fragment {
 
         if (seguindo) {
             auth = FirebaseAuth.getInstance();
-            //referenceUser = FirebaseDatabase.getInstance().getReference("users");
 
             myRef = FirebaseDatabase.getInstance().getReference("users").child(auth.getCurrentUser().getUid())
                     .child("seguindo")
-                    .child(String.valueOf(tvshow_id))
+                    .child(valueOf(tvshow_id))
                     .child("seasons")
-                    .child(String.valueOf(temporada_position))
+                    .child(valueOf(temporada_position))
                     .child("userEps")
-                    .child(String.valueOf(position));
+                    .child(valueOf(position));
+
+            databaseReference = FirebaseDatabase.getInstance()
+                    .getReference("users")
+                    .child(auth.getCurrentUser().getUid())
+                    .child("seguindo")
+                    .child(valueOf(tvshow_id))
+                    .child("seasons")
+                    .child(valueOf(temporada_position));
+
         }
     }
 
@@ -174,14 +188,14 @@ public class EpsodioFragment extends Fragment {
         setSinopse();
         setName();
 
-        if (episode.getAirDate() != null ) {
+        if (episode.getAirDate() != null) {
             setButtonRating();
         }
     }
 
-    private void setListener(){
+    private void setListener() {
 
-        postListener = new ValueEventListener() {
+        userListener = new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -192,7 +206,7 @@ public class EpsodioFragment extends Fragment {
                     Log.d(TAG, "key: " + dataSnapshot.getKey());
                     Log.d(TAG, "assistido " + userEp.isAssistido());
 
-                    if (userEp.isAssistido()){
+                    if (userEp.isAssistido()) {
                         ep_rating_button.setBackground(getResources().getDrawable(R.drawable.button_visto));
                         ep_rating_button.setText(getResources().getText(R.string.classificar_visto));
                     } else {
@@ -202,7 +216,6 @@ public class EpsodioFragment extends Fragment {
 
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -211,8 +224,27 @@ public class EpsodioFragment extends Fragment {
         };
 
         if (seguindo) {
-            myRef.
-                    addValueEventListener(postListener);
+            myRef.addValueEventListener(userListener);
+        }
+
+        epsListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.child("userEps").child(valueOf(position)).child("nota").exists()) {
+                    String nota = String.valueOf(dataSnapshot.child("userEps").child(valueOf(position)).child("nota").getValue());
+                    numero_rated = Float.parseFloat(nota);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        if (seguindo) {
+            databaseReference.addValueEventListener(epsListener);
         }
     }
 
@@ -220,7 +252,8 @@ public class EpsodioFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         if (seguindo) {
-            myRef.removeEventListener(postListener);
+            myRef.removeEventListener(userListener);
+            databaseReference.removeEventListener(epsListener);
         }
     }
 
@@ -230,23 +263,23 @@ public class EpsodioFragment extends Fragment {
         Date date = null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            date = sdf.parse(episode.getAirDate() != null ? episode.getAirDate() : null );
+            date = sdf.parse(episode.getAirDate() != null ? episode.getAirDate() : null);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        if (UtilsFilme.verificaLancamento(date) && FilmeApplication.getInstance().isLogado()) {
-
+        if (UtilsFilme.verificaLancamento(date) && FilmeApplication.getInstance().isLogado() && seguindo) {
 
             ep_rating_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     final Dialog alertDialog = new Dialog(getContext());
                     alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     alertDialog.setContentView(R.layout.adialog_custom_rated);
 
                     Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
-                    Button nao_visto = (Button )  alertDialog.findViewById(R.id.cancel_rated);
+                    Button nao_visto = (Button) alertDialog.findViewById(R.id.cancel_rated);
 
                     if (userEp != null) {
                         if (!userEp.isAssistido()) {
@@ -256,17 +289,15 @@ public class EpsodioFragment extends Fragment {
                         nao_visto.setVisibility(View.INVISIBLE);
                     }
 
-
                     TextView title = (TextView) alertDialog.findViewById(R.id.rating_title);
                     title.setText(episode.getName() != null ? episode.getName() : "");
                     final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
+                    ratingBar.setRating(numero_rated);
                     int width = getResources().getDimensionPixelSize(R.dimen.popup_width);
                     int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
 
                     alertDialog.getWindow().setLayout(width, height);
-                    final ProgressDialog progressDialog = new ProgressDialog(getContext(),
-                            android.R.style.Theme_Material_Dialog);
-
+                    alertDialog.show();
 
                     nao_visto.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -274,17 +305,12 @@ public class EpsodioFragment extends Fragment {
 
                             if (seguindo) {
                                 Log.d(TAG, "não visto");
-                                DatabaseReference databaseReference = FirebaseDatabase.getInstance()
-                                        .getReference("users")
-                                        .child(auth.getCurrentUser().getUid())
-                                        .child("seguindo")
-                                        .child(String.valueOf(tvshow_id))
-                                        .child("seasons")
-                                        .child(String.valueOf(temporada_position));
+
                                 Map<String, Object> childUpdates = new HashMap<String, Object>();
 
                                 childUpdates.put("/userEps/" + position + "/assistido", false);
                                 childUpdates.put("/visto/", false);
+                                childUpdates.put("/userEps/" + position + "/nota", 0 );
                                 databaseReference.updateChildren(childUpdates);
                             }
                             alertDialog.dismiss();
@@ -295,57 +321,34 @@ public class EpsodioFragment extends Fragment {
                         @Override
                         public void onClick(View view) {
 
-
-                            progressDialog.setIndeterminate(true);
-                            progressDialog.setMessage(getContext().getResources().getString(R.string.salvando));
-                            progressDialog.show();
-
-                            new Thread() {
-                                boolean status = false;
-
-                                @Override
-                                public void run() {
-                                    if (UtilsFilme.isNetWorkAvailable(getContext())) {
-                                        status = FilmeService
-                                                .setRatedTvShowEpsodio(tvshow_id, episode.getSeasonNumber(),
-                                                        episode.getEpisodeNumber(), ratingBar.getRating());
-                                        try {
-                                            if (getActivity() != null) { //usada para não crash quando activity e destruida antes do fim do metodo
-                                                Thread.sleep(200);
-                                                if (getActivity() != null) {
-                                                    getActivity().runOnUiThread(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            Toast.makeText(getContext(), getResources().getString(R.string.tvshow_rated), Toast.LENGTH_SHORT)
-                                                                    .show();
-                                                            if (seguindo) {
-
-                                                                myRef.child("assistido").setValue(true);
-                                                                ep_rating_button.setText(R.string.classificar_visto);
-                                                                ep_rating_button.setBackground(getResources().getDrawable(R.drawable.button_visto));
-                                                            }
-                                                            progressDialog.dismiss();
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
+                            myRef.child("assistido").setValue(true)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Toast.makeText(getContext(), getResources().getString(R.string.tvshow_rated), Toast.LENGTH_SHORT)
+                                                    .show();
                                         }
-                                    }
-                                }
-                            }.start();
+                                    });
+
+                            myRef.child("nota").setValue(ratingBar.getRating())
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                        }
+                                    });
+
                             alertDialog.dismiss();
+
+
                         }
                     });
-                    alertDialog.show();
                 }
             });
         } else {
             ep_rating_button.setVisibility(View.GONE);
         }
     }
-
 
     private void setTvshow() {
         if (nome_serie != null) {
@@ -383,7 +386,7 @@ public class EpsodioFragment extends Fragment {
     private void setVote() {
 
         if (episode.getVoteAverage() > 0) {
-            String votos = (String) String.valueOf(episode.getVoteAverage()).subSequence(0, 3);
+            String votos = (String) valueOf(episode.getVoteAverage()).subSequence(0, 3);
 
             if (episode.getVoteAverage() < 10) {
                 ep_votos.setText(votos + "/" + episode.getVoteCount());

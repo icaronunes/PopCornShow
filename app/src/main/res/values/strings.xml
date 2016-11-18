@@ -128,7 +128,7 @@
     <string name="tvshow_nao_lancado">Series not yet released</string>
     <string name="tvshow_rated">Epsodio Rated</string>
     <string name="tvshow_re_add">Serie added again</string>
-    <string name="tvshow_remove_favorite">Series removed from the Favorites list</string>
+    <string name="tvshow_remove_favorite">Tvshow removed from the Favorites list</string>
     <string name="upcoming">Coming soon</string>
     <string name="usuario">User\'s TMDB</string>
     <string name="ver_imdb">See IMDB</string>
@@ -147,4 +147,12 @@
     <string name="marcado_assistido_temporada">Marked as watched.</string>
     <string name="marcado_nao_assistido_temporada">Marked as unassisted.</string>
     <string name="salvando">Saving...</string>
+    <string name="tvshow_watch_remove">Tvshow removed from watchlist.</string>
+    <string name="tvshow_remove_rated">Removed note from Serie</string>
+    <string name="adicionar_favorite">Add to Favorites</string>
+    <string name="remover_favorite">Remove from favorites</string>
+    <string name="adicionar_rated">Add to Classifieds</string>
+    <string name="adicionar_watch">Add to Watchlist</string>
+    <string name="remover_rated">Remove from Classifieds</string>
+    <string name="remover_watch">Remove from Watchlist</string>
 </resources>

@@ -13,6 +13,7 @@ public class UserEp implements Serializable{
     private Integer seasonNumber;
     private int episodeNumber;
     private boolean assistido = false;
+    private float nota;
 
     public UserEp() {
 
@@ -49,5 +50,13 @@ public class UserEp implements Serializable{
 
     public void setAssistido(boolean assistido) {
         this.assistido = assistido;
+    }
+
+    public float getNota() {
+        return nota;
+    }
+
+    public void setNota(int nota) {
+        this.nota = nota;
     }
 }

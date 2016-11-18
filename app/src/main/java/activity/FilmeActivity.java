@@ -66,6 +66,7 @@ import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.videos;
 public class FilmeActivity extends BaseActivity {
 
     private static final String TAG = FilmeActivity.class.getName();
+
     ViewPager viewPager;
     int color_fundo;
     FloatingActionButton menu_item_favorite, menu_item_watchlist, menu_item_rated;
@@ -75,10 +76,12 @@ public class FilmeActivity extends BaseActivity {
     private ProgressBar progressBar;
     private MovieDb movieDb = null;
     private boolean addFavorite = true;
-    private boolean addWatch = true; // Retirar quando metodo de saber, estiver pronto
+    private boolean addWatch = true;
     private MovieResultsPage similarMovies;
     private FirebaseAnalytics mFirebaseAnalytics;
     private Bundle bundle;
+
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -300,26 +303,6 @@ public class FilmeActivity extends BaseActivity {
         menu_item_watchlist.setColorNormal(color);
         menu_item_rated.setColorNormal(color);
     }
-
-//    public void setAnimacao() {
-//        AnimatorSet animatorSet = new AnimatorSet();
-//        ObjectAnimator alphaStar = ObjectAnimator.ofFloat(img_star, "alpha", 0, 1)
-//                .setDuration(2000);
-//        ObjectAnimator alphaMedia = ObjectAnimator.ofFloat(voto_media, "alpha", 0, 1)
-//                .setDuration(2300);
-//        ObjectAnimator alphaBuget = ObjectAnimator.ofFloat(img_budget, "alpha", 0, 1)
-//                .setDuration(2500);
-//        ObjectAnimator alphaReviews = ObjectAnimator.ofFloat(icon_reviews, "alpha", 0, 1)
-//                .setDuration(2800);
-//        ObjectAnimator alphaSite = ObjectAnimator.ofFloat(icon_site, "alpha", 0, 1)
-//                .setDuration(3000);
-//        ObjectAnimator alphaCollecton = ObjectAnimator.ofFloat(icon_collection, "alpha", 0, 1)
-//                .setDuration(3300);
-//        animatorSet.playTogether(alphaStar, alphaBuget, alphaMedia, alphaReviews, alphaSite, alphaCollecton);
-//        animatorSet.playSequentially();
-//        animatorSet.start();
-//    }
-
 
     private View.OnClickListener addOrRemoveFavorite() {
         return new View.OnClickListener() {

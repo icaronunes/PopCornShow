@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/icon_heart"
-        fab:fab_label="Favoritar"
+        fab:fab_label="@string/adicionar_favorite"
         fab:fab_size="mini" />
 
     <com.github.clans.fab.FloatingActionButton
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/fab_calendar2"
-        fab:fab_label="Adicionar a Watchlist"
+        fab:fab_label="@string/adicionar_watch"
         fab:fab_size="mini" />
 
     <com.github.clans.fab.FloatingActionButton
@@ -32,6 +32,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/fab_star2"
-        fab:fab_label="Avaliar"
+        fab:fab_label="@string/adicionar_rated"
         fab:fab_size="mini" />
 </com.github.clans.fab.FloatingActionMenu>

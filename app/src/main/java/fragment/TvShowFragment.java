@@ -312,9 +312,6 @@ public class TvShowFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()) {
-//                    Log.d(TAG, "has: " + dataSnapshot.child(String.valueOf(series.getId())));
-//                    Log.d(TAG, "key: " + dataSnapshot.child(String.valueOf(series.getId())).getKey());
-//                    Log.w(TAG, "Mudou  - Seguindo");
 
                     if (getView() != null) {
                         userTvshow = dataSnapshot.getValue(UserTvshow.class);
@@ -330,9 +327,6 @@ public class TvShowFragment extends Fragment {
 
                 } else {
 
-//                    Log.d(TAG, "has: " + dataSnapshot.child(String.valueOf(series.getId())));
-//                    Log.d(TAG, "key: " + dataSnapshot.child(String.valueOf(series.getId())).getKey());
-//                    Log.w(TAG, "Mudou - Não seguindo");
                     if (getView() != null) {
                         Log.w(TAG, "Passou");
                         userTvshow = null; // ??????????
