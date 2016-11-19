@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,22 +14,40 @@ import android.widget.ProgressBar;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import adapter.FavoriteAdapater;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
-import info.movito.themoviedbapi.TvResultsPage;
-import info.movito.themoviedbapi.model.core.MovieResultsPage;
+import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.UtilsFilme;
 
 public class FavoriteActivity extends BaseActivity {
 
+    private static final String TAG = FavoriteActivity.class.getName();
     ViewPager viewPager;
     TabLayout tabLayout;
-    TvResultsPage tvResultsPage;
-    MovieResultsPage movieResultsPage;
+    List<MovieDb> movieDbs = new ArrayList<>();
+    List<TvSeries> tvSeries = new ArrayList<>();
     ProgressBar progressBar;
     LinearLayout linearLayout;
+    List<String> listMovie = new ArrayList<>();
+    List<String> listTv = new ArrayList<>();
+
+    private DatabaseReference favoriteMovie, favoriteTv;
+    private FirebaseDatabase database;
+    private FirebaseAuth mAuth;
+    private ValueEventListener valueEventFavoriteMovie;
+    private ValueEventListener valueEventFavoriteTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +69,24 @@ public class FavoriteActivity extends BaseActivity {
                 .build();
         adview.loadAd(adRequest);
 
-        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
-            new FavoriteAsync().execute();
-        } else {
-            snack();
-        }
+
+        iniciarFirebases();
+        setEventListenerFavorite();
+
+    }
+
+    private void iniciarFirebases() {
+
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+
+        favoriteMovie = database.getReference("users").child(mAuth.getCurrentUser()
+                .getUid()).child("favorites")
+                .child("movie");
+
+        favoriteTv = database.getReference("users").child(mAuth.getCurrentUser()
+                .getUid()).child("favorites")
+                .child("tvshow");
     }
 
     protected void snack() {
@@ -88,15 +120,100 @@ public class FavoriteActivity extends BaseActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.accent));
         viewPager.setAdapter(new FavoriteAdapater(FavoriteActivity.this, getSupportFragmentManager(),
-                tvResultsPage, movieResultsPage));
+                movieDbs, tvSeries));
+
+    }
+
+    private void setEventListenerFavorite() {
+        valueEventFavoriteMovie = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Log.d(TAG, "Movie " + snapshot.getKey() );
+                        if (snapshot.exists()) {
+                            String movie = snapshot.getKey();
+                            listMovie.add(movie);
+                        }
+                    }
+                }
+                setEventListenerFavoriteTv();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        favoriteMovie.addValueEventListener(valueEventFavoriteMovie);
+    }
+
+    private void setEventListenerFavoriteTv() {
+        valueEventFavoriteTv = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Log.d(TAG, "TV " + snapshot.getKey() );
+                        if (snapshot.exists()) {
+                            String tv = snapshot.getKey();
+                            listTv.add(tv);
+                        }
+                    }
+                }
+
+                if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                    new FavoriteAsync().execute();
+                } else {
+                    snack();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        favoriteTv.addValueEventListener(valueEventFavoriteTv);
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (favoriteMovie != null){
+            favoriteMovie.removeEventListener(valueEventFavoriteMovie);
+        }
+        if (favoriteTv != null) {
+            favoriteTv.removeEventListener(valueEventFavoriteTv);
+        }
+    }
+
     private class FavoriteAsync extends AsyncTask<Void, Void, Void> {
+
         @Override
         protected Void doInBackground(Void... voids) {
-            movieResultsPage = FilmeService.getTotalFavorite();
-            tvResultsPage = FilmeService.getTotalFavoriteTvShow();
+
+            for (String id : listMovie) {
+
+               movieDbs.add(FilmeService.getTmdbMovies().getMovie(Integer.parseInt(id), "en", null));
+            }
+
+            for (MovieDb movieDb : movieDbs) {
+                Log.d(TAG, movieDb.getTitle());
+            }
+
+            for (String id : listTv) {
+
+                tvSeries.add(FilmeService.getTmdbTvShow().getSeries(Integer.parseInt(id), "en", null));
+            }
+
+            for (TvSeries movieDb : tvSeries) {
+                Log.d(TAG, movieDb.getName());
+            }
+
             return null;
         }
 
@@ -104,6 +221,7 @@ public class FavoriteActivity extends BaseActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             setupViewPagerTabs();
+            Log.d(TAG, "Progress");
             progressBar.setVisibility(View.GONE);
         }
     }

@@ -433,7 +433,7 @@ public class FilmeInfoFragment extends Fragment {
         Collection collection = movieDb.getBelongsToCollection();
         String data = movieDb.getReleaseDate();
         String query = collection.getTitle();
-        StringBuilder stringBuilder = new StringBuilder("https://play.google.com/store/search?c=tvSeries&q=");
+        StringBuilder stringBuilder = new StringBuilder("https://play.google.com/store/search?c=movieDbs&q=");
         stringBuilder.append(query);
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

@@ -5,12 +5,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.util.List;
+
 import br.com.icaro.filme.R;
-import fragment.FavoriteFragment;
 import fragment.ListaFavoriteFragment;
-import fragment.ListaRatedFragment;
-import info.movito.themoviedbapi.TvResultsPage;
-import info.movito.themoviedbapi.model.core.MovieResultsPage;
+import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.tv.TvSeries;
 
 /**
  * Created by icaro on 23/08/16.
@@ -18,25 +18,25 @@ import info.movito.themoviedbapi.model.core.MovieResultsPage;
 public class FavoriteAdapater extends FragmentPagerAdapter {
 
     Context context;
-    TvResultsPage tvResultsPage;
-    MovieResultsPage movieResultsPage;
+    List<MovieDb> movies;
+    List<TvSeries> series;
 
 
     public FavoriteAdapater(Context context, FragmentManager supportFragmentManager,
-                            TvResultsPage series, MovieResultsPage movies) {
+                            List<MovieDb> movies, List<TvSeries> series) {
         super(supportFragmentManager);
         this.context = context;
-        this.tvResultsPage = series;
-        this.movieResultsPage = movies;
+        this.series = series;
+        this.movies = movies;
     }
 
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return ListaFavoriteFragment.newInstanceMovie(R.string.filme, movieResultsPage);
+            return ListaFavoriteFragment.newInstanceMovie(R.string.filme, movies);
         }
         if (position == 1) {
-            return ListaFavoriteFragment.newInstanceTvShow(R.string.tvshow, tvResultsPage);
+            return ListaFavoriteFragment.newInstanceTvShow(R.string.tvshow, series);
         }
         return null;
     }

@@ -24,7 +24,11 @@
             android:layout_marginBottom="50dp"
             android:layout_height="match_parent"/>
 
-        <include layout="@layout/include_progress"/>
+        <include layout="@layout/include_progress"
+            android:visibility="visible"
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"

@@ -277,8 +277,8 @@ public class ListaRatedFragment extends Fragment {
         recyclerViewFilme.setHasFixedSize(true);
         recyclerViewFilme.setItemAnimator(new DefaultItemAnimator());
         recyclerViewFilme.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        recyclerViewFilme.setAdapter(new ListaFilmeAdapter(getActivity(), movies,
-                onclickListerne(), true));
+//        recyclerViewFilme.setAdapter(new ListaFilmeAdapter(getActivity(), movies,
+//                onclickListerne(), true));
 
         return view;
     }
@@ -289,8 +289,8 @@ public class ListaRatedFragment extends Fragment {
         recyclerViewTvShow.setHasFixedSize(true);
         recyclerViewTvShow.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTvShow.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        recyclerViewTvShow.setAdapter(new ListaTvShowAdapter(getActivity(), tvSeries,
-                onclickTvShowListerne(), true));
+//        recyclerViewTvShow.setAdapter(new ListaTvShowAdapter(getActivity(), tvSeries,
+//                onclickTvShowListerne(), true));
         return view;
     }
 }

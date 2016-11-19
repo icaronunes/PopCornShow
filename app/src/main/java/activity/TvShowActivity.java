@@ -4,6 +4,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -32,9 +33,7 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -66,6 +65,7 @@ import static info.movito.themoviedbapi.TmdbTV.TvMethod.credits;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.external_ids;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.images;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.videos;
+import static utils.UtilsFilme.getContext;
 
 
 public class TvShowActivity extends BaseActivity {
@@ -510,6 +510,12 @@ public class TvShowActivity extends BaseActivity {
                         public void onClick(View view) {
                             Log.d(TAG, "Adialog Rated");
 
+                            final ProgressDialog progressDialog = new ProgressDialog(getContext(),
+                                    android.R.style.Theme_Material_Dialog);
+                            progressDialog.setIndeterminate(true);
+                            progressDialog.setMessage(getResources().getString(R.string.salvando));
+                            progressDialog.show();
+
                             if (UtilsFilme.isNetWorkAvailable(TvShowActivity.this)) {
 
                                 Log.d(TAG, "Gravou Rated");
@@ -573,43 +579,6 @@ public class TvShowActivity extends BaseActivity {
         menu_item_watchlist.setColorNormal(color);
         menu_item_rated.setColorNormal(color);
     }
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("TvShow Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
-    }
-
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 

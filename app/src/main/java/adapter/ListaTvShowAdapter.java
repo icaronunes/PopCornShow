@@ -14,8 +14,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.UtilsFilme;
 
@@ -25,7 +26,7 @@ import utils.UtilsFilme;
  */
 public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.FavoriteViewHolder> {
 
-    TvResultsPage favoritos;
+    List<TvSeries> favoritos;
     Context context;
     ListaOnClickListener onClickListener;
     boolean status = false;
@@ -36,7 +37,7 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
         void onClickLong(View view,final int posicao);
     }
 
-    public ListaTvShowAdapter(Context activity, TvResultsPage tvSeries,
+    public ListaTvShowAdapter(Context activity, List<TvSeries> tvSeries,
                               ListaOnClickListener ratedOnClickListener, boolean b) {
         this.context = activity;
         this.favoritos = tvSeries;
@@ -56,7 +57,7 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
     @Override
     public void onBindViewHolder(final FavoriteViewHolder holder, final int position) {
 
-        final TvSeries series = favoritos.getResults().get(position);
+        final TvSeries series = favoritos.get(position);
         Log.d("onBindViewHolder", "position" + position);
 
         if (status) {
@@ -111,7 +112,7 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
     @Override
     public int getItemCount() {
         if (favoritos != null) {
-            return favoritos.getResults().size();
+            return favoritos.size();
         }
         return 0;
     }

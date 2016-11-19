@@ -18,6 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import java.io.Serializable;
+import java.util.List;
+
 import activity.FilmeActivity;
 import activity.TvShowActivity;
 import adapter.ListaFilmeAdapter;
@@ -25,9 +28,9 @@ import adapter.ListaTvShowAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import info.movito.themoviedbapi.TmdbAccount;
-import info.movito.themoviedbapi.TvResultsPage;
-import info.movito.themoviedbapi.model.core.MovieResultsPage;
+import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.core.ResponseStatus;
+import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 
 
@@ -39,25 +42,25 @@ public class ListaFavoriteFragment extends Fragment {
     final String TAG = TvShowFragment.class.getName();
     ResponseStatus status;
     int tipo;
-    MovieResultsPage movies;
-    TvResultsPage tvSeries;
+    List<TvSeries> tvSeries;
+    List<MovieDb> movieDbs;
     RecyclerView recyclerViewFilme;
     RecyclerView recyclerViewTvShow;
 
-    public static Fragment newInstanceMovie(int tipo, MovieResultsPage series) {
+    public static Fragment newInstanceMovie(int tipo, List<MovieDb> movie) {
         ListaFavoriteFragment fragment = new ListaFavoriteFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.FILME, series);
+        bundle.putSerializable(Constantes.FILME, (Serializable) movie);
         bundle.putInt(Constantes.ABA, tipo);
         fragment.setArguments(bundle);
 
         return fragment;
     }
 
-    public static Fragment newInstanceTvShow(int tvshow, TvResultsPage results) {
+    public static Fragment newInstanceTvShow(int tvshow, List<TvSeries> tvshows) {
         ListaFavoriteFragment fragment = new ListaFavoriteFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.SERIE, results);
+        bundle.putSerializable(Constantes.SERIE, (Serializable) tvshows);
         bundle.putInt(Constantes.ABA, tvshow);
         fragment.setArguments(bundle);
 
@@ -69,8 +72,8 @@ public class ListaFavoriteFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             tipo = getArguments().getInt(Constantes.ABA);
-            movies = (MovieResultsPage) getArguments().getSerializable(Constantes.FILME);
-            tvSeries = (TvResultsPage) getArguments().getSerializable(Constantes.SERIE);
+            movieDbs  = (List<MovieDb>) getArguments().getSerializable(Constantes.FILME);
+            tvSeries = (List<TvSeries>) getArguments().getSerializable(Constantes.SERIE);
         }
     }
 
@@ -108,19 +111,19 @@ public class ListaFavoriteFragment extends Fragment {
                         intent.putExtra(Constantes.COLOR_TOP, swatch.getRgb());
                     }
                 }
-                intent.putExtra(Constantes.FILME_ID, movies.getResults().get(position).getId());
-                intent.putExtra(Constantes.NOME_FILME, movies.getResults().get(position).getTitle());
+                intent.putExtra(Constantes.FILME_ID, tvSeries.get(position).getId());
+                intent.putExtra(Constantes.NOME_FILME, tvSeries.get(position).getName());
                 startActivity(intent);
 
             }
 
             @Override
             public void onClickLong(View view, final int position) {
-                final int id = movies.getResults().get(position).getId();
+                final int id = tvSeries.get(position).getId();
                 Log.d("OnClick", "Onclick");
                 new AlertDialog.Builder(getActivity())
                         .setIcon(R.drawable.icon_agenda)
-                        .setTitle(movies.getResults().get(position).getTitle())
+                        .setTitle(tvSeries.get(position).getName())
                         .setMessage(getResources().getString(R.string.excluir_filme))
                         .setNegativeButton("Não", new DialogInterface.OnClickListener() {
                             @Override
@@ -139,7 +142,7 @@ public class ListaFavoriteFragment extends Fragment {
                                             @Override
                                             public void run() {
                                                 if (status.getStatusCode() == 13) {
-                                                    movies.getResults().remove(movies.getResults().get(position));
+                                                    tvSeries.remove(tvSeries.get(position));
                                                     recyclerViewFilme.getAdapter().notifyItemRemoved(position);
                                                     recyclerViewFilme.getAdapter().notifyItemChanged(position);
                                                 }
@@ -170,18 +173,18 @@ public class ListaFavoriteFragment extends Fragment {
                         intent.putExtra(Constantes.COLOR_TOP, swatch.getRgb());
                     }
                 }
-                intent.putExtra(Constantes.TVSHOW_ID, tvSeries.getResults().get(position).getId());
-                intent.putExtra(Constantes.NOME_TVSHOW, tvSeries.getResults().get(position).getName());
+                intent.putExtra(Constantes.TVSHOW_ID, movieDbs.get(position).getId());
+                intent.putExtra(Constantes.NOME_TVSHOW, movieDbs.get(position).getTitle());
                 startActivity(intent);
             }
 
             @Override
             public void onClickLong(View view, final int position) {
-                final int id = tvSeries.getResults().get(position).getId();
+                final int id = movieDbs.get(position).getId();
                 Log.d("OnClick", "onClickLong");
                 new AlertDialog.Builder(getActivity())
                         .setIcon(R.drawable.icon_agenda)
-                        .setTitle(tvSeries.getResults().get(position).getName())
+                        .setTitle(movieDbs.get(position).getTitle())
                         .setMessage(getResources().getString(R.string.excluir_tvshow))
                         .setNegativeButton("Não", new DialogInterface.OnClickListener() {
                             @Override
@@ -201,7 +204,7 @@ public class ListaFavoriteFragment extends Fragment {
                                             @Override
                                             public void run() {
                                                 if (status.getStatusCode() == 13) {
-                                                    tvSeries.getResults().remove(tvSeries.getResults().get(position));
+                                                    movieDbs.remove(movieDbs.get(position));
                                                     recyclerViewTvShow.getAdapter().notifyItemRemoved(position);
                                                     recyclerViewTvShow.getAdapter().notifyItemChanged(position);
                                                 }
@@ -222,7 +225,7 @@ public class ListaFavoriteFragment extends Fragment {
         recyclerViewFilme.setHasFixedSize(true);
         recyclerViewFilme.setItemAnimator(new DefaultItemAnimator());
         recyclerViewFilme.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        recyclerViewFilme.setAdapter(new ListaFilmeAdapter(getActivity(), movies, onclickListerne(), false));
+        recyclerViewFilme.setAdapter(new ListaFilmeAdapter(getActivity(),  movieDbs, onclickListerne(), false));
 
         return view;
     }

@@ -192,7 +192,7 @@ public class ListaFragment extends Fragment {
         recyclerViewFilme.setHasFixedSize(true);
         recyclerViewFilme.setItemAnimator(new DefaultItemAnimator());
         recyclerViewFilme.setLayoutManager(new GridLayoutManager(getContext(), 2));
-       // recyclerViewFilme.setAdapter(new ListaFilmeAdapter(getActivity(), tvSeries));
+       // recyclerViewFilme.setAdapter(new ListaFilmeAdapter(getActivity(), movieDbs));
 
         return view;
     }
@@ -203,7 +203,7 @@ public class ListaFragment extends Fragment {
         recyclerViewTvShow.setHasFixedSize(true);
         recyclerViewTvShow.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTvShow.setLayoutManager(new GridLayoutManager(getContext(), 2));
-      //  recyclerViewTvShow.setAdapter(new ListaTvShowAdapter(getActivity(), tvSeries));
+      //  recyclerViewTvShow.setAdapter(new ListaTvShowAdapter(getActivity(), movieDbs));
 
         return view;
     }

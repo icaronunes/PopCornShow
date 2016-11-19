@@ -15,9 +15,10 @@ import android.widget.TextView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.MovieDb;
-import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.UtilsFilme;
 
 
@@ -26,12 +27,12 @@ import utils.UtilsFilme;
  */
 public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.FavoriteViewHolder> {
 
-    MovieResultsPage favoritos;
+    List<MovieDb> favoritos;
     Context context;
     ListaOnClickListener onClickListener;
     boolean status = false;
 
-    public ListaFilmeAdapter(FragmentActivity favotireActivity, MovieResultsPage favoritos,
+    public ListaFilmeAdapter(FragmentActivity favotireActivity, List<MovieDb> favoritos,
                              ListaOnClickListener onClickListener, boolean b) {
         this.context = favotireActivity;
         this.favoritos = favoritos;
@@ -49,7 +50,7 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
     @Override
     public void onBindViewHolder(final FavoriteViewHolder holder, final int position) {
 
-        final MovieDb movie = favoritos.getResults().get(position);
+        final MovieDb movie = favoritos.get(position);
         Log.d("onBindViewHolder", "position" + position);
         if (status) {
             String valor = String.valueOf(movie.getUserRating());
@@ -100,7 +101,7 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
     @Override
     public int getItemCount() {
         if (favoritos != null) {
-            return favoritos.getResults().size();
+            return favoritos.size();
         }
         return 0;
     }
