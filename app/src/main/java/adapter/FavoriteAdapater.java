@@ -8,9 +8,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.List;
 
 import br.com.icaro.filme.R;
+import domian.FilmeDB;
+import domian.TvshowDB;
 import fragment.ListaFavoriteFragment;
-import info.movito.themoviedbapi.model.MovieDb;
-import info.movito.themoviedbapi.model.tv.TvSeries;
 
 /**
  * Created by icaro on 23/08/16.
@@ -18,12 +18,12 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
 public class FavoriteAdapater extends FragmentPagerAdapter {
 
     Context context;
-    List<MovieDb> movies;
-    List<TvSeries> series;
+    List<FilmeDB> movies;
+    List<TvshowDB> series;
 
 
     public FavoriteAdapater(Context context, FragmentManager supportFragmentManager,
-                            List<MovieDb> movies, List<TvSeries> series) {
+                            List<FilmeDB> movies, List<TvshowDB> series) {
         super(supportFragmentManager);
         this.context = context;
         this.series = series;

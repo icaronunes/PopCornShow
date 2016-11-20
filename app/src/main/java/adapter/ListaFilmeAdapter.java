@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.model.MovieDb;
+import domian.FilmeDB;
 import utils.UtilsFilme;
 
 
@@ -27,12 +27,12 @@ import utils.UtilsFilme;
  */
 public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.FavoriteViewHolder> {
 
-    List<MovieDb> favoritos;
+    List<FilmeDB> favoritos;
     Context context;
     ListaOnClickListener onClickListener;
     boolean status = false;
 
-    public ListaFilmeAdapter(FragmentActivity favotireActivity, List<MovieDb> favoritos,
+    public ListaFilmeAdapter(FragmentActivity favotireActivity, List<FilmeDB> favoritos,
                              ListaOnClickListener onClickListener, boolean b) {
         this.context = favotireActivity;
         this.favoritos = favoritos;
@@ -50,10 +50,12 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
     @Override
     public void onBindViewHolder(final FavoriteViewHolder holder, final int position) {
 
-        final MovieDb movie = favoritos.get(position);
+        final FilmeDB movie = favoritos.get(position);
         Log.d("onBindViewHolder", "position" + position);
+        if (movie != null) {
+
         if (status) {
-            String valor = String.valueOf(movie.getUserRating());
+            String valor = String.valueOf(movie.getNota());
             Log.d("Rated", "" + valor);
             if (valor.length() > 3) {
                 valor = valor.substring(0, 2);
@@ -63,11 +65,10 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
             holder.text_rated_favoritos.setText(valor);
             holder.text_rated_favoritos.setVisibility(View.VISIBLE);
         }
-        if (movie != null) {
 
             holder.img_button_coracao_favorite.setVisibility(View.GONE);
 
-            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
+            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + movie.getPoster())
                     .into(holder.img_favorite, new Callback() {
                         @Override
                         public void onSuccess() {

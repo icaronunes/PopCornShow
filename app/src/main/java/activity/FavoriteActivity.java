@@ -1,7 +1,6 @@
 package activity;
 
 import android.content.pm.ActivityInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -26,9 +25,8 @@ import java.util.List;
 
 import adapter.FavoriteAdapater;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
-import info.movito.themoviedbapi.model.MovieDb;
-import info.movito.themoviedbapi.model.tv.TvSeries;
+import domian.FilmeDB;
+import domian.TvshowDB;
 import utils.UtilsFilme;
 
 public class FavoriteActivity extends BaseActivity {
@@ -36,16 +34,12 @@ public class FavoriteActivity extends BaseActivity {
     private static final String TAG = FavoriteActivity.class.getName();
     ViewPager viewPager;
     TabLayout tabLayout;
-    List<MovieDb> movieDbs = new ArrayList<>();
-    List<TvSeries> tvSeries = new ArrayList<>();
+    List<FilmeDB> movieDbs = new ArrayList<>();
+    List<TvshowDB> tvSeries = new ArrayList<>();
     ProgressBar progressBar;
     LinearLayout linearLayout;
-    List<String> listMovie = new ArrayList<>();
-    List<String> listTv = new ArrayList<>();
 
     private DatabaseReference favoriteMovie, favoriteTv;
-    private FirebaseDatabase database;
-    private FirebaseAuth mAuth;
     private ValueEventListener valueEventFavoriteMovie;
     private ValueEventListener valueEventFavoriteTv;
 
@@ -70,15 +64,20 @@ public class FavoriteActivity extends BaseActivity {
         adview.loadAd(adRequest);
 
 
-        iniciarFirebases();
-        setEventListenerFavorite();
+        if (UtilsFilme.isNetWorkAvailable(this)){
+
+            iniciarFirebases();
+            setEventListenerFavorite();
+        } else {
+            snack();
+        }
 
     }
 
     private void iniciarFirebases() {
 
-        mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         favoriteMovie = database.getReference("users").child(mAuth.getCurrentUser()
                 .getUid()).child("favorites")
@@ -96,7 +95,7 @@ public class FavoriteActivity extends BaseActivity {
                     public void onClick(View view) {
                         if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
                             //text_elenco_no_internet.setVisibility(View.GONE);
-                            new FavoriteAsync().execute();
+                            setEventListenerFavorite();
                         } else {
                             snack();
                         }
@@ -131,11 +130,8 @@ public class FavoriteActivity extends BaseActivity {
                 if (dataSnapshot.exists()) {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Log.d(TAG, "Movie " + snapshot.getKey() );
-                        if (snapshot.exists()) {
-                            String movie = snapshot.getKey();
-                            listMovie.add(movie);
-                        }
+                        movieDbs.add(snapshot.getValue(FilmeDB.class));
+                        Log.d(TAG, snapshot.getValue(FilmeDB.class).getTitle());
                     }
                 }
                 setEventListenerFavoriteTv();
@@ -146,7 +142,8 @@ public class FavoriteActivity extends BaseActivity {
 
             }
         };
-        favoriteMovie.addValueEventListener(valueEventFavoriteMovie);
+        favoriteMovie.addListenerForSingleValueEvent(valueEventFavoriteMovie);
+        //Chamando apenas uma vez, necessario? não poderia deixar o firebases atualizar?
     }
 
     private void setEventListenerFavoriteTv() {
@@ -156,19 +153,13 @@ public class FavoriteActivity extends BaseActivity {
                 if (dataSnapshot.exists()) {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Log.d(TAG, "TV " + snapshot.getKey() );
-                        if (snapshot.exists()) {
-                            String tv = snapshot.getKey();
-                            listTv.add(tv);
-                        }
+                        tvSeries.add(snapshot.getValue(TvshowDB.class));
+                        Log.d(TAG, snapshot.getValue(TvshowDB.class).getTitle());
                     }
                 }
 
-                if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
-                    new FavoriteAsync().execute();
-                } else {
-                    snack();
-                }
+                setupViewPagerTabs();
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -176,7 +167,8 @@ public class FavoriteActivity extends BaseActivity {
 
             }
         };
-        favoriteTv.addValueEventListener(valueEventFavoriteTv);
+        favoriteTv.addListenerForSingleValueEvent(valueEventFavoriteTv);
+        //Chamando apenas uma vez, necessario? não poderia deixar o firebases atualizar?
     }
 
 
@@ -188,41 +180,6 @@ public class FavoriteActivity extends BaseActivity {
         }
         if (favoriteTv != null) {
             favoriteTv.removeEventListener(valueEventFavoriteTv);
-        }
-    }
-
-    private class FavoriteAsync extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            for (String id : listMovie) {
-
-               movieDbs.add(FilmeService.getTmdbMovies().getMovie(Integer.parseInt(id), "en", null));
-            }
-
-            for (MovieDb movieDb : movieDbs) {
-                Log.d(TAG, movieDb.getTitle());
-            }
-
-            for (String id : listTv) {
-
-                tvSeries.add(FilmeService.getTmdbTvShow().getSeries(Integer.parseInt(id), "en", null));
-            }
-
-            for (TvSeries movieDb : tvSeries) {
-                Log.d(TAG, movieDb.getName());
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            setupViewPagerTabs();
-            Log.d(TAG, "Progress");
-            progressBar.setVisibility(View.GONE);
         }
     }
 

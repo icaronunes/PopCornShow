@@ -3,12 +3,10 @@ package fragment;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,20 +18,28 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.Serializable;
+import java.util.List;
 
 import activity.FilmeActivity;
 import activity.TvShowActivity;
 import adapter.ListaFilmeAdapter;
 import adapter.ListaTvShowAdapter;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
-import info.movito.themoviedbapi.TvResultsPage;
-import info.movito.themoviedbapi.model.core.MovieResultsPage;
-import info.movito.themoviedbapi.model.core.ResponseStatus;
+import domian.FilmeDB;
+import domian.TvshowDB;
 import utils.Constantes;
 import utils.UtilsFilme;
+
+import static android.R.attr.id;
 
 
 /**
@@ -42,27 +48,27 @@ import utils.UtilsFilme;
 public class ListaRatedFragment extends Fragment {
 
     final String TAG = TvShowFragment.class.getName();
-    ResponseStatus status;
     int tipo;
-    MovieResultsPage movies;
-    TvResultsPage tvSeries;
+    List<FilmeDB> movies;
+    List<TvshowDB> tvSeries;
     RecyclerView recyclerViewFilme;
     RecyclerView recyclerViewTvShow;
+    private FirebaseAnalytics firebaseAnalytics;
 
-    public static Fragment newInstanceMovie(int tipo, MovieResultsPage series) {
+    public static Fragment newInstanceMovie(int tipo, List<FilmeDB> filmeDBs) {
         ListaRatedFragment fragment = new ListaRatedFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.FILME, series);
+        bundle.putSerializable(Constantes.FILME, (Serializable) filmeDBs);
         bundle.putInt(Constantes.ABA, tipo);
         fragment.setArguments(bundle);
 
         return fragment;
     }
 
-    public static Fragment newInstanceTvShow(int tvshow, TvResultsPage results) {
+    public static Fragment newInstanceTvShow(int tvshow, List<TvshowDB> tvshowDBs) {
         ListaRatedFragment fragment = new ListaRatedFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.SERIE, results);
+        bundle.putSerializable(Constantes.SERIE, (Serializable) tvshowDBs);
         bundle.putInt(Constantes.ABA, tvshow);
         fragment.setArguments(bundle);
 
@@ -74,9 +80,10 @@ public class ListaRatedFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             tipo = getArguments().getInt(Constantes.ABA);
-            movies = (MovieResultsPage) getArguments().getSerializable(Constantes.FILME);
-            tvSeries = (TvResultsPage) getArguments().getSerializable(Constantes.SERIE);
+            movies = (List<FilmeDB>) getArguments().getSerializable(Constantes.FILME);
+            tvSeries = (List<TvshowDB>) getArguments().getSerializable(Constantes.SERIE);
         }
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
 
 
@@ -104,18 +111,19 @@ public class ListaRatedFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), FilmeActivity.class);
                 Log.d("ListaFilmeAdapter", "ListaFilmeAdapter");
                 ImageView imageView = (ImageView) view;
-                BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-                if (drawable != null) {
-                    Bitmap bitmap = drawable.getBitmap();
-                    Palette.Builder builder = new Palette.Builder(bitmap);
-                    Palette palette = builder.generate();
-                    for (Palette.Swatch swatch : palette.getSwatches()) {
-                        intent.putExtra(Constantes.COLOR_TOP, swatch.getRgb());
-                    }
-                }
-                intent.putExtra(Constantes.FILME_ID, movies.getResults().get(position).getId());
-                intent.putExtra(Constantes.NOME_FILME, movies.getResults().get(position).getTitle());
+                int color = UtilsFilme.loadPalette(imageView);
+                intent.putExtra(Constantes.COLOR_TOP, color);
+                intent.putExtra(Constantes.FILME_ID, movies.get(position).getId());
+                intent.putExtra(Constantes.NOME_FILME, movies.get(position).getTitle());
                 startActivity(intent);
+
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaRatedFragment:ListaFilmeAdapter.ListaOnClickListener:onClick");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getTitle());
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tv");
+                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
             }
 
@@ -128,11 +136,38 @@ public class ListaRatedFragment extends Fragment {
                 alertDialog.setContentView(R.layout.adialog_custom_rated);
 
                 Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
+                Button no = (Button) alertDialog.findViewById(R.id.cancel_rated);
                 final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
                 int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
                 int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
-                Log.d(TAG, "Valor Rated" + movies.getResults().get(position).getUserRating());
-                ratingBar.setRating(movies.getResults().get(position).getUserRating());
+                Log.d(TAG, "Valor Rated" + movies.get(position).getNota());
+                ratingBar.setRating(movies.get(position).getNota());
+
+
+                no.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(TAG, "Apagou Rated");
+
+                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+                        DatabaseReference myRated = database.getReference("users").child(mAuth.getCurrentUser()
+                                .getUid()).child("rated")
+                                .child("movie").child(String.valueOf(movies.get(position).getId()));
+
+                        myRated.setValue(null)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        movies.remove(movies.get(position));
+                                        recyclerViewFilme.getAdapter().notifyItemRemoved(position);
+                                        recyclerViewFilme.getAdapter().notifyItemChanged(position);
+                                    }
+                                });
+                        alertDialog.dismiss();
+                    }
+                });
 
                 alertDialog.getWindow().setLayout(width, height);
 
@@ -143,43 +178,42 @@ public class ListaRatedFragment extends Fragment {
                         final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
                                 android.R.style.Theme_Material_Dialog);
                         progressDialog.setIndeterminate(true);
-                        progressDialog.setMessage("Salvando...");
+                        progressDialog.setMessage(getResources().getString(R.string.salvando));
                         progressDialog.show();
 
-                        new Thread() {
-                            @Override
-                            public void run() {
-                                if (UtilsFilme.isNetWorkAvailable(getActivity())) {
-                                    status[0] = FilmeService.setRatedMovie(movies.getResults().get(position).getId(), ratingBar.getRating());
-                                }
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (status[0]) {
-                                            Toast.makeText(getActivity(), getResources().getString(R.string.filme_rated), Toast.LENGTH_SHORT)
-                                                    .show();
-                                            RecyclerView.ViewHolder view = recyclerViewFilme.findViewHolderForAdapterPosition(position);
-                                            TextView textView = (TextView) view.itemView.findViewById(R.id.text_rated_favoritos);
-                                            String valor = String.valueOf((ratingBar.getRating()));
-                                            textView.setText(valor);
+                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-                                        } else {
-                                            Toast.makeText(getActivity(), getResources().getString(R.string.falha_rated), Toast.LENGTH_SHORT)
-                                                    .show();
+                        DatabaseReference myRated = database.getReference("users").child(mAuth.getCurrentUser()
+                                .getUid()).child("rated")
+                                .child("movie").child(String.valueOf(movies.get(position).getId()));
+
+                        if (ratingBar.getRating() > 0) {
+
+                            movies.get(position).setNota((int) ratingBar.getRating());
+
+                            myRated.setValue(movies.get(position))
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                            recyclerViewFilme.getAdapter().notifyItemChanged(position);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaRatedFragment:ListaFilmeAdapter.ListaOnClickListener:onLongClick");
+                                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getTitle());
+                                            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tv");
+                                            bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
+                                            bundle.putString("AlertDialog-WatchList", "Excluiu TvShow");
+                                            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                         }
-                                        progressDialog.dismiss();
-                                    }
-                                });
-                            }
-                        }.start();
-
+                                    });
+                        }
+                        progressDialog.dismiss();
                         alertDialog.dismiss();
                     }
 
                 });
-
                 alertDialog.show();
-                recyclerViewFilme.getAdapter().notifyItemChanged(position);
             }
         };
     }
@@ -192,18 +226,19 @@ public class ListaRatedFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), TvShowActivity.class);
                 Log.d("OnClick", "Onclick");
                 ImageView imageView = (ImageView) view;
-                BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-                if (drawable != null) {
-                    Bitmap bitmap = drawable.getBitmap();
-                    Palette.Builder builder = new Palette.Builder(bitmap);
-                    Palette palette = builder.generate();
-                    for (Palette.Swatch swatch : palette.getSwatches()) {
-                        intent.putExtra(Constantes.COLOR_TOP, swatch.getRgb());
-                    }
-                }
-                intent.putExtra(Constantes.TVSHOW_ID, tvSeries.getResults().get(position).getId());
-                intent.putExtra(Constantes.NOME_TVSHOW, tvSeries.getResults().get(position).getName());
+                int color = UtilsFilme.loadPalette(imageView);
+                intent.putExtra(Constantes.COLOR_TOP, color);
+                intent.putExtra(Constantes.TVSHOW_ID, tvSeries.get(position).getId());
+                intent.putExtra(Constantes.NOME_TVSHOW, tvSeries.get(position).getTitle());
                 startActivity(intent);
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaRatedFragment:ListaTvShowAdapter.ListaOnClickListener:onClick");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getTitle());
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tv");
+                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             }
 
             @Override
@@ -215,13 +250,37 @@ public class ListaRatedFragment extends Fragment {
                 alertDialog.setContentView(R.layout.adialog_custom_rated);
 
                 Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
+                Button no = (Button) alertDialog.findViewById(R.id.cancel_rated);
                 final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
                 int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
                 int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
-                Log.d(TAG, "Valor Rated" + tvSeries.getResults().get(position).getUserRating());
-                ratingBar.setRating(tvSeries.getResults().get(position).getUserRating());
 
                 alertDialog.getWindow().setLayout(width, height);
+
+                no.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(TAG, "Apagou Rated");
+
+                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+                        DatabaseReference myRated = database.getReference("users").child(mAuth.getCurrentUser()
+                                .getUid()).child("rated")
+                                .child("tvshow").child(String.valueOf(tvSeries.get(position).getId()));
+
+                        myRated.setValue(null)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        tvSeries.remove(tvSeries.get(position));
+                                        recyclerViewTvShow.getAdapter().notifyItemRemoved(position);
+                                        recyclerViewTvShow.getAdapter().notifyItemChanged(position);
+                                    }
+                                });
+                        alertDialog.dismiss();
+                    }
+                });
 
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -230,42 +289,44 @@ public class ListaRatedFragment extends Fragment {
                         final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
                                 android.R.style.Theme_Material_Dialog);
                         progressDialog.setIndeterminate(true);
-                        progressDialog.setMessage("Salvando...");
+                        progressDialog.setMessage(getResources().getString(R.string.salvando));
                         progressDialog.show();
 
-                        new Thread() {
-                            @Override
-                            public void run() {
-                                if (UtilsFilme.isNetWorkAvailable(getActivity())) {
-                                    status[0] = FilmeService.setRatedTvShow(tvSeries.getResults().get(position).getId(), ratingBar.getRating());
-                                }
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (status[0]) {
-                                            Toast.makeText(getActivity(), getResources().getString(R.string.tvshow_rated), Toast.LENGTH_SHORT)
-                                                    .show();
-                                            RecyclerView.ViewHolder view = recyclerViewTvShow.findViewHolderForAdapterPosition(position);
-                                            TextView textView = (TextView) view.itemView.findViewById(R.id.text_rated_favoritos);
-                                            String valor = String.valueOf((ratingBar.getRating()));
-                                            textView.setText(valor);
+                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-                                        } else {
-                                            Toast.makeText(getActivity(), getResources().getString(R.string.falha_rated), Toast.LENGTH_SHORT)
-                                                    .show();
+                        DatabaseReference myRated = database.getReference("users").child(mAuth.getCurrentUser()
+                                .getUid()).child("rated")
+                                .child("tvshow").child(String.valueOf(tvSeries.get(position).getId()));
+
+                        if (ratingBar.getRating() > 0) {
+
+                            tvSeries.get(position).setNota((int) ratingBar.getRating());
+
+                            myRated.setValue(tvSeries.get(position))
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                            recyclerViewTvShow.getAdapter().notifyItemChanged(position);
+
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaRatedFragment:ListaTvShowAdapter.ListaOnClickListener:onClickLong");
+                                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getTitle());
+                                            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tv");
+                                            bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
+                                            bundle.putString("AlertDialog-WatchList", "Excluiu TvShow");
+                                            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                                         }
-                                        progressDialog.dismiss();
-                                    }
-                                });
-                            }
-                        }.start();
+                                    });
+                        }
+                        progressDialog.dismiss();
                         alertDialog.dismiss();
                     }
 
                 });
-
                 alertDialog.show();
-                recyclerViewTvShow.getAdapter().notifyItemChanged(position);
             }
         };
     }
@@ -273,24 +334,26 @@ public class ListaRatedFragment extends Fragment {
 
     private View getViewMovie(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.temporadas, container, false); // Criar novo layout
+        view.findViewById(R.id.progressBarTemporadas).setVisibility(View.GONE);
         recyclerViewFilme = (RecyclerView) view.findViewById(R.id.temporadas_recycle);
         recyclerViewFilme.setHasFixedSize(true);
         recyclerViewFilme.setItemAnimator(new DefaultItemAnimator());
         recyclerViewFilme.setLayoutManager(new GridLayoutManager(getContext(), 2));
-//        recyclerViewFilme.setAdapter(new ListaFilmeAdapter(getActivity(), movies,
-//                onclickListerne(), true));
+        recyclerViewFilme.setAdapter(new ListaFilmeAdapter(getActivity(), movies,
+                onclickListerne(), true));
 
         return view;
     }
 
     private View getViewTvShow(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.temporadas, container, false);// Criar novo layout
+        view.findViewById(R.id.progressBarTemporadas).setVisibility(View.GONE);
         recyclerViewTvShow = (RecyclerView) view.findViewById(R.id.temporadas_recycle);
         recyclerViewTvShow.setHasFixedSize(true);
         recyclerViewTvShow.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTvShow.setLayoutManager(new GridLayoutManager(getContext(), 2));
-//        recyclerViewTvShow.setAdapter(new ListaTvShowAdapter(getActivity(), tvSeries,
-//                onclickTvShowListerne(), true));
+        recyclerViewTvShow.setAdapter(new ListaTvShowAdapter(getActivity(), tvSeries,
+                onclickTvShowListerne(), true));
         return view;
     }
 }

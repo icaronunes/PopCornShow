@@ -52,6 +52,7 @@ import java.util.Locale;
 
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
+import domian.FilmeDB;
 import domian.FilmeService;
 import fragment.FilmeInfoFragment;
 import fragment.ImagemTopFilmeScrollFragment;
@@ -391,29 +392,34 @@ public class FilmeActivity extends BaseActivity {
 
                             if (UtilsFilme.isNetWorkAvailable(FilmeActivity.this)) {
 
-                                if (ratingBar.getRating() == 0){
+                                if (ratingBar.getRating() == 0) {
                                     progressDialog.dismiss();
                                     alertDialog.dismiss();
                                     return;
                                 }
 
-                                    myRated.child(String.valueOf(id_filme)).setValue(movieDb.getImdbID());
+                                FilmeDB filmeDB = new FilmeDB();
+                                filmeDB.setId(movieDb.getId());
+                                filmeDB.setIdImdb(movieDb.getImdbID());
+                                filmeDB.setTitle(movieDb.getTitle());
+                                filmeDB.setNota((int) ratingBar.getRating());
+                                filmeDB.setPoster(movieDb.getPosterPath());
 
-                                    myRated.child(String.valueOf(id_filme)).child("nota").setValue(ratingBar.getRating())
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    Toast.makeText(FilmeActivity.this, getResources().getString(R.string.filme_rated), Toast.LENGTH_SHORT)
-                                                            .show();
-                                                    bundle = new Bundle();
-                                                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getResources()
-                                                            .getString(R.string.filme_rated));
-                                                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
-                                                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
-                                                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                                                    fab.close(true);
-                                                }
-                                            });
+                                myRated.child(String.valueOf(id_filme)).setValue(filmeDB)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Toast.makeText(FilmeActivity.this, getResources().getString(R.string.filme_rated), Toast.LENGTH_SHORT)
+                                                        .show();
+                                                bundle = new Bundle();
+                                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getResources()
+                                                        .getString(R.string.filme_rated));
+                                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
+                                                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
+                                                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                                                fab.close(true);
+                                            }
+                                        });
                             }
                             progressDialog.dismiss();
                             alertDialog.dismiss();
@@ -476,13 +482,19 @@ public class FilmeActivity extends BaseActivity {
                                     }
                                 });
                     } else {
-                        myFavorite.child(String.valueOf(id_filme)).setValue(movieDb.getImdbID())
+
+                        FilmeDB filmeDB = new FilmeDB();
+                        filmeDB.setId(movieDb.getId());
+                        filmeDB.setIdImdb(movieDb.getImdbID());
+                        filmeDB.setTitle(movieDb.getTitle());
+                        filmeDB.setPoster(movieDb.getPosterPath());
+
+                        myFavorite.child(String.valueOf(id_filme)).setValue(filmeDB)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         Toast.makeText(FilmeActivity.this, getString(R.string.filme_add_favorite), Toast.LENGTH_SHORT)
                                                 .show();
-
                                         bundle = new Bundle();
                                         bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_remove_favorite));
                                         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
@@ -530,7 +542,13 @@ public class FilmeActivity extends BaseActivity {
 
                 } else {
 
-                    myWatch.child(String.valueOf(id_filme)).setValue(movieDb.getImdbID())
+                    FilmeDB filmeDB = new FilmeDB();
+                    filmeDB.setIdImdb(movieDb.getImdbID());
+                    filmeDB.setId(movieDb.getId());
+                    filmeDB.setTitle(movieDb.getTitle());
+                    filmeDB.setPoster(movieDb.getPosterPath());
+
+                    myWatch.child(String.valueOf(id_filme)).setValue(filmeDB)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {

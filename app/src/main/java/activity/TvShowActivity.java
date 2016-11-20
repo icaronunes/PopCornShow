@@ -33,8 +33,6 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -56,6 +54,7 @@ import adapter.TvShowAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
+import domian.TvshowDB;
 import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
@@ -65,12 +64,12 @@ import static info.movito.themoviedbapi.TmdbTV.TvMethod.credits;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.external_ids;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.images;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.videos;
-import static utils.UtilsFilme.getContext;
 
 
 public class TvShowActivity extends BaseActivity {
 
     private static final String TAG = TvShowActivity.class.getName();
+
     int id_tvshow;
     String nome;
     int color_top;
@@ -96,12 +95,6 @@ public class TvShowActivity extends BaseActivity {
     private DatabaseReference myRated;
     private FirebaseDatabase database;
     private float numero_rated;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,9 +124,7 @@ public class TvShowActivity extends BaseActivity {
         } else {
             snack();
         }
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
 
     private void setEventListenerWatch() {
@@ -223,9 +214,15 @@ public class TvShowActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        myWatch.removeEventListener(valueEventWatch);
-        myRated.removeEventListener(valueEventRated);
-        myFavorite.removeEventListener(valueEventFavorite);
+        if (myWatch != null) {
+            myWatch.removeEventListener(valueEventWatch);
+        }
+        if (myRated != null) {
+            myRated.removeEventListener(valueEventRated);
+        }
+        if (myFavorite != null) {
+            myFavorite.removeEventListener(valueEventFavorite);
+        }
     }
 
     private void iniciarFirebases() {
@@ -359,7 +356,15 @@ public class TvShowActivity extends BaseActivity {
 
                 } else {
                     Log.d(TAG, "Gravou Watch");
-                    myWatch.child(String.valueOf(series.getId())).setValue(series.getExternalIds())
+
+                    TvshowDB tvshowDB = new TvshowDB();
+                    tvshowDB.setExternalIds(series.getExternalIds());
+                    tvshowDB.setTitle(series.getName());
+                    tvshowDB.setId(series.getId());
+                    tvshowDB.setPoster(series.getPosterPath());
+                    tvshowDB.getExternalIds().setId(series.getId());
+
+                    myWatch.child(String.valueOf(series.getId())).setValue(tvshowDB)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -424,7 +429,15 @@ public class TvShowActivity extends BaseActivity {
 
                     } else {
                         Log.d(TAG, "Gravou Favorite");
-                        myFavorite.child(String.valueOf(id_tvshow)).setValue(series.getExternalIds())
+
+                        TvshowDB tvshowDB = new TvshowDB();
+                        tvshowDB.setExternalIds(series.getExternalIds());
+                        tvshowDB.setTitle(series.getName());
+                        tvshowDB.setId(series.getId());
+                        tvshowDB.setPoster(series.getPosterPath());
+                        tvshowDB.getExternalIds().setId(series.getId());
+
+                        myFavorite.child(String.valueOf(id_tvshow)).setValue(tvshowDB)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
@@ -510,7 +523,7 @@ public class TvShowActivity extends BaseActivity {
                         public void onClick(View view) {
                             Log.d(TAG, "Adialog Rated");
 
-                            final ProgressDialog progressDialog = new ProgressDialog(getContext(),
+                            final ProgressDialog progressDialog = new ProgressDialog(TvShowActivity.this,
                                     android.R.style.Theme_Material_Dialog);
                             progressDialog.setIndeterminate(true);
                             progressDialog.setMessage(getResources().getString(R.string.salvando));
@@ -520,9 +533,15 @@ public class TvShowActivity extends BaseActivity {
 
                                 Log.d(TAG, "Gravou Rated");
 
-                                myRated.child(String.valueOf(id_tvshow)).setValue(series.getExternalIds());
+                                TvshowDB tvshowDB = new TvshowDB();
+                                tvshowDB.setExternalIds(series.getExternalIds());
+                                tvshowDB.setNota((int) ratingBar.getRating());
+                                tvshowDB.setId(series.getId());
+                                tvshowDB.setTitle(series.getName());
+                                tvshowDB.setPoster(series.getPosterPath());
+                                tvshowDB.getExternalIds().setId(series.getId());
 
-                                myRated.child(String.valueOf(id_tvshow)).child("nota").setValue(ratingBar.getRating())
+                                myRated.child(String.valueOf(id_tvshow)).setValue(tvshowDB)
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
@@ -535,9 +554,11 @@ public class TvShowActivity extends BaseActivity {
                                                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
                                                 bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
                                                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                                             }
                                         });
                             }
+                            progressDialog.dismiss();
                             alertDialog.dismiss();
                             fab.close(true);
                         }

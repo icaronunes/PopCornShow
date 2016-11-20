@@ -280,7 +280,6 @@ import static utils.UtilsFilme.getTimezone;
                             bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Tvshow");
                             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
                             intent.putExtra(Constantes.ABA, R.id.popular);
                             intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.popular);

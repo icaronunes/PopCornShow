@@ -5,10 +5,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.util.List;
+
 import br.com.icaro.filme.R;
+import domian.FilmeDB;
+import domian.TvshowDB;
 import fragment.ListaWatchlistFragment;
-import info.movito.themoviedbapi.TvResultsPage;
-import info.movito.themoviedbapi.model.core.MovieResultsPage;
 
 /**
  * Created by icaro on 23/08/16.
@@ -16,25 +18,25 @@ import info.movito.themoviedbapi.model.core.MovieResultsPage;
 public class WatchListAdapter extends FragmentPagerAdapter {
 
     Context context;
-    TvResultsPage tvResultsPage;
-    MovieResultsPage movieResultsPage;
+    List<TvshowDB> series;
+    List<FilmeDB> movies;
 
 
     public WatchListAdapter(Context context, FragmentManager supportFragmentManager,
-                          TvResultsPage series, MovieResultsPage movies) {
+                            List<TvshowDB> series, List<FilmeDB> movies) {
         super(supportFragmentManager);
         this.context = context;
-        this.tvResultsPage = series;
-        this.movieResultsPage = movies;
+        this.series = series;
+        this.movies = movies;
     }
 
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return ListaWatchlistFragment.newInstanceMovie(R.string.filme, movieResultsPage);
+            return ListaWatchlistFragment.newInstanceMovie(R.string.filme, movies);
         }
         if (position == 1) {
-            return ListaWatchlistFragment.newInstanceTvShow(R.string.tvshow, tvResultsPage);
+            return ListaWatchlistFragment.newInstanceTvShow(R.string.tvshow, series);
         }
         return null;
     }

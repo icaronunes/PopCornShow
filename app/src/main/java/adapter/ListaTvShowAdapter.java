@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.model.tv.TvSeries;
+import domian.TvshowDB;
 import utils.UtilsFilme;
 
 
@@ -26,7 +26,7 @@ import utils.UtilsFilme;
  */
 public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.FavoriteViewHolder> {
 
-    List<TvSeries> favoritos;
+    List<TvshowDB> favoritos;
     Context context;
     ListaOnClickListener onClickListener;
     boolean status = false;
@@ -37,7 +37,7 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
         void onClickLong(View view,final int posicao);
     }
 
-    public ListaTvShowAdapter(Context activity, List<TvSeries> tvSeries,
+    public ListaTvShowAdapter(Context activity, List<TvshowDB> tvSeries,
                               ListaOnClickListener ratedOnClickListener, boolean b) {
         this.context = activity;
         this.favoritos = tvSeries;
@@ -57,11 +57,11 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
     @Override
     public void onBindViewHolder(final FavoriteViewHolder holder, final int position) {
 
-        final TvSeries series = favoritos.get(position);
+        final TvshowDB series = favoritos.get(position);
         Log.d("onBindViewHolder", "position" + position);
 
         if (status) {
-            String valor = String.valueOf(series.getUserRating());
+            String valor = String.valueOf(series.getNota());
             Log.d("Rated", "" + valor);
             if (valor.length() > 3) {
                 valor = valor.substring(0, 2);
@@ -77,7 +77,7 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
 
             holder.img_button_coracao_favorite.setVisibility(View.GONE);
 
-            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + series.getPosterPath())
+            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + series.getPoster())
                     .into(holder.img_favorite, new Callback() {
                         @Override
                         public void onSuccess() {

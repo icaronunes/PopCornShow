@@ -1,31 +1,48 @@
 package activity;
 
 import android.content.pm.ActivityInfo;
-import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import adapter.RatedAdapater;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
-import info.movito.themoviedbapi.TvResultsPage;
-import info.movito.themoviedbapi.model.core.MovieResultsPage;
+import domian.FilmeDB;
+import domian.TvshowDB;
+import utils.UtilsFilme;
 
 public class RatedActivity extends BaseActivity {
 
+    private static final String TAG = RatedActivity.class.getName();
+
     ViewPager viewPager;
     TabLayout tabLayout;
-    TvResultsPage tvResultsPage;
-    MovieResultsPage movieResultsPage;
+    List<FilmeDB> movieDbs = new ArrayList<>();
+    List<TvshowDB> tvSeries = new ArrayList<>();
+    LinearLayout linearLayout;
     ProgressBar progressBar;
+
+    private DatabaseReference favoriteMovie, favoriteTv;
+    private ValueEventListener valueEventFavoriteMovie;
+    private ValueEventListener valueEventFavoriteTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +63,92 @@ public class RatedActivity extends BaseActivity {
                 .build();
         adview.loadAd(adRequest);
 
-        new WatchlistAsync().execute();
+
+        if (UtilsFilme.isNetWorkAvailable(this)){
+
+            iniciarFirebases();
+            setEventListenerFavorite();
+        } else {
+            snack();
+        }
+
+    }
+
+    private void iniciarFirebases() {
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        favoriteMovie = database.getReference("users").child(mAuth.getCurrentUser()
+                .getUid()).child("rated")
+                .child("movie");
+
+        favoriteTv = database.getReference("users").child(mAuth.getCurrentUser()
+                .getUid()).child("rated")
+                .child("tvshow");
+    }
+
+    protected void snack() {
+        Snackbar.make(linearLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                            //text_elenco_no_internet.setVisibility(View.GONE);
+                            setEventListenerFavorite();
+                        } else {
+                            snack();
+                        }
+                    }
+                }).show();
+    }
+
+    private void setEventListenerFavorite() {
+        valueEventFavoriteMovie = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        movieDbs.add(snapshot.getValue(FilmeDB.class));
+                        Log.d(TAG, snapshot.getValue(FilmeDB.class).getTitle());
+                    }
+                }
+                setEventListenerFavoriteTv();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        favoriteMovie.addListenerForSingleValueEvent(valueEventFavoriteMovie);
+        //Chamando apenas uma vez, necessario? não poderia deixar o firebases atualizar?
+    }
+
+    private void setEventListenerFavoriteTv() {
+        valueEventFavoriteTv = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        tvSeries.add(snapshot.getValue(TvshowDB.class));
+                        Log.d(TAG, snapshot.getValue(TvshowDB.class).getTitle());
+                    }
+                }
+
+                setupViewPagerTabs();
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        favoriteTv.addListenerForSingleValueEvent(valueEventFavoriteTv);
+        //Chamando apenas uma vez, necessario? não poderia deixar o firebases atualizar?
     }
 
     @Override
@@ -65,25 +167,17 @@ public class RatedActivity extends BaseActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.accent));
         viewPager.setAdapter(new RatedAdapater(RatedActivity.this, getSupportFragmentManager(),
-                tvResultsPage, movieResultsPage));
+                tvSeries, movieDbs));
     }
 
-
-    private class WatchlistAsync extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            movieResultsPage = FilmeService.getRatedMovieListTotal();
-            tvResultsPage = FilmeService.getRatedListTotal();
-            return null;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (valueEventFavoriteMovie != null){
+            favoriteMovie.removeEventListener(valueEventFavoriteMovie);
         }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            Log.d("RatedActivity", "WatchlistAsync");
-            setupViewPagerTabs();
-            progressBar.setVisibility(View.GONE);
+        if (valueEventFavoriteMovie != null) {
+            favoriteTv.removeEventListener(valueEventFavoriteTv);
         }
     }
 }
