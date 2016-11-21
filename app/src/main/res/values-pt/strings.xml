@@ -125,7 +125,7 @@
     <string name="suas_listas">Suas listas</string>
     <string name="person_rated">Pessoas Populares</string>
     <string name="oscar">Vencedores de Oscar</string>
-    <string name="criar_login_tmdb">Criar Login no TMDB</string>
+    <string name="criar_login_popcorn">Criar Login no PopCorn</string>
     <string name="erro">Erro Youtube</string>
     <string name="sem_informacao_colletion">Não há informação sobre a coleção</string>
     <string name="erro_ainda_sem_imagem">Ainda sem imagem, tente novamente.</string>
@@ -143,4 +143,5 @@
     <string name="remover_watch">Remover do Watchlist</string>
     <string name="adicionar_rated">Adicionar aos Classificados</string>
     <string name="remover_rated">Remover dos Classificados</string>
+    <string name="sem_login">Usuario não logado</string>
 </resources>

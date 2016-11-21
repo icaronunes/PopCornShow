@@ -268,6 +268,7 @@ public class TemporadaActivity extends BaseActivity {
             super.onPostExecute(aVoid);
             getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada );
 
+            if (mAuth.getCurrentUser() != null) {
                 myRef.child(mAuth.getCurrentUser().getUid())
                         .child("seguindo")
                         .child(String.valueOf(serie_id))
@@ -284,15 +285,15 @@ public class TemporadaActivity extends BaseActivity {
                                             seasons = dataSnapshot.getValue(UserSeasons.class);
                                             recyclerView
                                                     .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
-                                                            tvSeason, seasons ,seguindo,
-                                                            onClickListener() ));
+                                                            tvSeason, seasons, seguindo,
+                                                            onClickListener()));
                                         } else {
                                             Log.d(TAG, "onDataChange " + "Não seguindo.");
                                             seguindo = false;
                                             recyclerView
                                                     .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
-                                                            tvSeason, seasons ,seguindo,
-                                                            onClickListener() ));
+                                                            tvSeason, seasons, seguindo,
+                                                            onClickListener()));
                                         }
                                     }
 
@@ -301,7 +302,14 @@ public class TemporadaActivity extends BaseActivity {
                                         Log.w(TAG, "getUser:onCancelled", databaseError.toException());
                                     }
                                 });
-            setListener();
+                setListener();
+            } else {
+                recyclerView
+                        .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
+                                tvSeason, seasons, seguindo,
+                                onClickListener()));
+            }
+
         }
     }
 }

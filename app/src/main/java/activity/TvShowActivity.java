@@ -51,7 +51,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import adapter.TvShowAdapter;
-import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import domian.TvshowDB;
@@ -89,12 +88,11 @@ public class TvShowActivity extends BaseActivity {
     private ValueEventListener valueEventFavorite;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference myRef;
     private DatabaseReference myFavorite;
     private DatabaseReference myWatch;
     private DatabaseReference myRated;
-    private FirebaseDatabase database;
     private float numero_rated;
+    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,11 +133,9 @@ public class TvShowActivity extends BaseActivity {
 
                 if (dataSnapshot.child(String.valueOf(id_tvshow)).exists()) {
                     addWatch = true;
-                    Log.d(TAG, "False");
                     menu_item_watchlist.setLabelText(getResources().getString(R.string.remover_watch));
                 } else {
                     addWatch = false;
-                    Log.d(TAG, "True");
                     menu_item_watchlist.setLabelText(getResources().getString(R.string.adicionar_watch));
                 }
             }
@@ -159,8 +155,7 @@ public class TvShowActivity extends BaseActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(String.valueOf(id_tvshow)).exists()) {
                     addRated = true;
-                    Log.d(TAG, "False");
-                    Log.d(TAG, "nota " + dataSnapshot.child(String.valueOf(id_tvshow)).child("nota"));
+
                     if (dataSnapshot.child(String.valueOf(id_tvshow)).child("nota").exists()) {
                         String nota = String.valueOf(dataSnapshot.child(String.valueOf(id_tvshow)).child("nota").getValue());
                         numero_rated = Float.parseFloat(nota);
@@ -193,11 +188,9 @@ public class TvShowActivity extends BaseActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(String.valueOf(id_tvshow)).exists()) {
                     addFavorite = true;
-                    Log.d(TAG, "True");
                     menu_item_favorite.setLabelText(getResources().getString(R.string.remover_favorite));
                 } else {
                     addFavorite = false;
-                    Log.d(TAG, "False");
                     menu_item_favorite.setLabelText(getResources().getString(R.string.adicionar_favorite));
 
                 }
@@ -229,19 +222,20 @@ public class TvShowActivity extends BaseActivity {
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("users");
 
-        myWatch = database.getReference("users").child(mAuth.getCurrentUser()
-                .getUid()).child("watch")
-                .child("tvshow");
+        if (mAuth.getCurrentUser() != null) {
+            myWatch = database.getReference("users").child(mAuth.getCurrentUser()
+                    .getUid()).child("watch")
+                    .child("tvshow");
 
-        myFavorite = database.getReference("users").child(mAuth.getCurrentUser()
-                .getUid()).child("favorites")
-                .child("tvshow");
+            myFavorite = database.getReference("users").child(mAuth.getCurrentUser()
+                    .getUid()).child("favorites")
+                    .child("tvshow");
 
-        myRated = database.getReference("users").child(mAuth.getCurrentUser()
-                .getUid()).child("rated")
-                .child("tvshow");
+            myRated = database.getReference("users").child(mAuth.getCurrentUser()
+                    .getUid()).child("rated")
+                    .child("tvshow");
+        }
 
     }
 
@@ -570,7 +564,7 @@ public class TvShowActivity extends BaseActivity {
     }
 
     private void setupViewPagerTabs() {
-
+        Log.w(TAG, "setupViewPagerTabs " + seguindo);
         viewPager.setOffscreenPageLimit(1);
         viewPager.setAdapter(new TvShowAdapter(this, getSupportFragmentManager(), series, color_top, seguindo));
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -611,18 +605,16 @@ public class TvShowActivity extends BaseActivity {
 
             if (idioma_padrao) {
                 TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
-                Log.d("FilmeActivity", "true ");
                 series = tmdbTv
                         .getSeries(id_tvshow, Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry()
                                         //.toLanguageTag() não funciona na API 14
                                         + ",en,null"
                                 , images, credits, videos, external_ids);
-                Log.d("FilmeActivity", Locale.getDefault().getLanguage());
+
                 series.getVideos().addAll(tmdbTv.getSeries(id_tvshow, null, videos).getVideos());
                 series.getImages().setPosters(tmdbTv.getSeries(id_tvshow, null, images).getImages().getPosters());
 
             } else {
-                Log.d("FilmeActivity", "false ");
                 series = FilmeService.getTmdbTvShow()
                         .getSeries(id_tvshow, null, images, credits, videos, external_ids);
             }
@@ -634,8 +626,8 @@ public class TvShowActivity extends BaseActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if (mAuth.getCurrentUser().getUid() != null && series != null) {
-
+            if (mAuth.getCurrentUser() != null && series != null) {
+                DatabaseReference myRef = database.getReference("users");
                 myRef.child(mAuth.getCurrentUser().getUid()).child("seguindo").child(String.valueOf(series.getId()))
                         .addListenerForSingleValueEvent(
                                 new ValueEventListener() {
@@ -643,12 +635,18 @@ public class TvShowActivity extends BaseActivity {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         // Get user value
                                         if (dataSnapshot.exists()) {
+                                            Log.d(TAG, "onDataChange " + "seguindo.");
                                             seguindo = true;
+                                            setupViewPagerTabs();
+                                            setCoordinator();
+                                            setImageTop();
                                         } else {
-
+                                            setupViewPagerTabs();
+                                            setCoordinator();
+                                            setImageTop();
                                             Log.d(TAG, "onDataChange " + "Não seguindo.");
                                         }
-                                        setupViewPagerTabs();
+
                                     }
 
                                     @Override
@@ -658,17 +656,22 @@ public class TvShowActivity extends BaseActivity {
                                 });
             } else {
                 seguindo = false;
+                Log.d(TAG, "onDataChange " + "False - Não seguindo.");
+                setCoordinator();
                 setupViewPagerTabs();
+                setImageTop();
             }
 
-            setCoordinator();
-            setImageTop();
-            setEventListenerWatch();
-            setEventListenerFavorite();
-            setEventListenerRated();
 
-            if (FilmeApplication.getInstance().isLogado()) { // Arrumar
+
+            if (mAuth.getCurrentUser() != null) { // Arrumar
+
+                setEventListenerWatch();
+                setEventListenerFavorite();
+                setEventListenerRated();
+
                 Log.d("FAB", "FAB " + color_top);
+
                 Date date = null;
                 fab.setAlpha(1);
                 if (series.getFirstAirDate() != null) {

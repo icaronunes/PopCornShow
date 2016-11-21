@@ -7,10 +7,10 @@ import android.content.Intent;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import activity.MainActivity;
-import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
 
 /**
  * Created by icaro on 15/09/16.
@@ -18,9 +18,12 @@ import domian.FilmeService;
 
 public class LogoffDialog extends DialogPreference {
 
+    private final FirebaseAuth mAuth;
+
     public LogoffDialog(Context context, AttributeSet attrs) {
         super(context, attrs);
         setPersistent(false);
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -32,13 +35,11 @@ public class LogoffDialog extends DialogPreference {
                 .getResources().getString(R.string.sair), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Prefs.apagarLoginSenha(getContext(), Prefs.LOGIN_PASS);
-                FilmeApplication.getInstance().setLogado(false);
-                FilmeApplication.getInstance().setAccount(null);
-                FilmeApplication.getInstance().setAccount(null);
+
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 getContext().startActivity(intent);
+                mAuth.signOut();
             }
         });
         super.onPrepareDialogBuilder(builder);

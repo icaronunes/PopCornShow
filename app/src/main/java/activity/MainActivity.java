@@ -93,6 +93,33 @@ public class MainActivity extends BaseActivity {
         circlePageIndicator = (CirclePageIndicator) findViewById(R.id.indication_main);
         viewpage_top_main.setAdapter(new ViewPageMainTopFragment(getSupportFragmentManager(), multi));
         circlePageIndicator.setViewPager(viewpage_top_main);
+
+        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.blue_main));
+        tabLayout.setTabTextColors(getResources().getColor(R.color.red), getResources().getColor(R.color.white));
+
+        viewPager_main.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0){
+                    tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.blue_main));
+                    tabLayout.setTabTextColors(getResources().getColor(R.color.red), getResources().getColor(R.color.white));
+                } else {
+                    tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.red));
+                    tabLayout.setTabTextColors(getResources().getColor(R.color.blue_main), getResources().getColor(R.color.white));
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
 
     @Override

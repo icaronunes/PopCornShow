@@ -14,7 +14,7 @@
     <string name="compartilhar_tvshow">Sharing Series</string>
     <string name="configuracoes">Settings</string>
     <string name="criado">Created by:</string>
-    <string name="criar_login_tmdb">Create a Log in TMDB</string>
+    <string name="criar_login_popcorn">Create a Login in PopCorn</string>
     <string name="desfazer">Undo</string>
     <string name="director">Directed</string>
     <string name="elenco">Cast</string>
@@ -138,4 +138,5 @@ No information about the collection.</string>
     <string name="adicionar_watch">Add to Watchlist</string>
     <string name="remover_rated">Remove from Classifieds</string>
     <string name="remover_watch">Remove from Watchlist</string>
+    <string name="sem_login">User not logged</string>
 </resources>

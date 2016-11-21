@@ -40,7 +40,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import activity.PersonActivity;
-import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import domian.UserEp;
@@ -76,7 +75,7 @@ public class EpsodioFragment extends Fragment {
     UserEp userEp;
     boolean seguindo;
 
-    FirebaseAuth auth;
+    FirebaseAuth mAuth;
     DatabaseReference myRef;
     DatabaseReference databaseReference;
     private ValueEventListener userListener;
@@ -104,6 +103,7 @@ public class EpsodioFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,10 +117,11 @@ public class EpsodioFragment extends Fragment {
             temporada_position = getArguments().getInt(Constantes.TEMPORADA_POSITION);
         }
 
-        if (seguindo) {
-            auth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
-            myRef = FirebaseDatabase.getInstance().getReference("users").child(auth.getCurrentUser().getUid())
+        if (seguindo) {
+
+            myRef = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid())
                     .child("seguindo")
                     .child(valueOf(tvshow_id))
                     .child("seasons")
@@ -130,7 +131,7 @@ public class EpsodioFragment extends Fragment {
 
             databaseReference = FirebaseDatabase.getInstance()
                     .getReference("users")
-                    .child(auth.getCurrentUser().getUid())
+                    .child(mAuth.getCurrentUser().getUid())
                     .child("seguindo")
                     .child(valueOf(tvshow_id))
                     .child("seasons")
@@ -268,7 +269,7 @@ public class EpsodioFragment extends Fragment {
             e.printStackTrace();
         }
 
-        if (UtilsFilme.verificaLancamento(date) && FilmeApplication.getInstance().isLogado() && seguindo) {
+        if (UtilsFilme.verificaLancamento(date) && mAuth.getCurrentUser() != null && seguindo) {
 
             ep_rating_button.setOnClickListener(new View.OnClickListener() {
                 @Override

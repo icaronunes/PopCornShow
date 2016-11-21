@@ -20,12 +20,12 @@
         android:id="@+id/tmdb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/tmdb" />
+        android:src="@drawable/icon_visto" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/criar_login_tmdb"
+        android:text="@string/criar_login_popcorn"
         android:textStyle="normal|italic"
         android:layout_gravity="bottom|center_horizontal" />
 

@@ -50,7 +50,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domian.FilmeDB;
 import domian.FilmeService;
@@ -242,17 +241,20 @@ public class FilmeActivity extends BaseActivity {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
-        myWatch = database.getReference("users").child(mAuth.getCurrentUser()
-                .getUid()).child("watch")
-                .child("movie");
+        if (mAuth.getCurrentUser() != null) {
 
-        myFavorite = database.getReference("users").child(mAuth.getCurrentUser()
-                .getUid()).child("favorites")
-                .child("movie");
+            myWatch = database.getReference("users").child(mAuth.getCurrentUser()
+                    .getUid()).child("watch")
+                    .child("movie");
 
-        myRated = database.getReference("users").child(mAuth.getCurrentUser()
-                .getUid()).child("rated")
-                .child("movie");
+            myFavorite = database.getReference("users").child(mAuth.getCurrentUser()
+                    .getUid()).child("favorites")
+                    .child("movie");
+
+            myRated = database.getReference("users").child(mAuth.getCurrentUser()
+                    .getUid()).child("rated")
+                    .child("movie");
+        }
     }
 
     private void getExtras() {
@@ -668,13 +670,14 @@ public class FilmeActivity extends BaseActivity {
             viewPager.setAdapter(new ImagemTopFragment(getSupportFragmentManager()));
             progressBar.setVisibility(View.INVISIBLE);
 
-            setEventListenerFavorite();
-            setEventListenerRated();
-            setEventListenerWatch();
-
             setFragmentInfo();
 
-            if (FilmeApplication.getInstance().isLogado()) { // Arrumar
+            if (mAuth.getCurrentUser() != null) { // Arrumar
+
+                setEventListenerFavorite();
+                setEventListenerRated();
+                setEventListenerWatch();
+
                 Log.d("FAB", "FAB " + color_fundo);
                 fab.setAlpha(1);
                 setColorFab(color_fundo);

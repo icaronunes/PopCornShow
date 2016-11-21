@@ -33,10 +33,10 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
     public static final String TAG = TemporadasAdapter.class.getName();
 
     Context context;
-    TvSeries series;
-    int color;
-    TemporadasOnClickListener onClickListener;
-    UserTvshow userTvshow;
+    private TvSeries series;
+    private int color;
+    private TemporadasOnClickListener onClickListener;
+    private UserTvshow userTvshow;
 
     public interface TemporadasOnClickListener {
         void onClickTemporada(View view, int position, int color);

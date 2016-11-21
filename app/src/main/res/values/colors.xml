@@ -12,6 +12,7 @@
     <color name="black_transparente_produtora">#36000000</color>
     <color name="white">#ffffff</color>
     <color name="blue">#00f</color>
+
     <color name="red">#f00</color>
     <color name="green">#0f0</color>
     <color name="yellow">#fff000</color>
@@ -31,6 +32,7 @@
     <color name="yellow_transparente">#a9ffea00</color>
     <color name="tmdb">#34a34e</color>
     <color name="imdb">#e3ba24</color>
+    <color name="blue_main">#ef0f0ffc</color>
 
 
 </resources>

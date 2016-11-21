@@ -15,8 +15,9 @@
             android:layout_width="174dp"
             android:layout_height="261dp"
             android:background="@color/transparent"
-            android:scaleType="fitStart"
-             />
+            android:scaleType="centerCrop"
+            android:cropToPadding="true"
+            android:layout_gravity="center_vertical|center_horizontal" />
 
 
         <TextView

@@ -323,4 +323,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Log.d(TAG, "falhou:" + connectionResult.getErrorMessage());
     }
 
+    public void onclickMain(View view) {
+        startActivity(new Intent(this, MainActivity.class));
+    }
 }

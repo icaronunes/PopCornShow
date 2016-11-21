@@ -78,6 +78,7 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
             holder.img_button_coracao_favorite.setVisibility(View.GONE);
 
             Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + series.getPoster())
+                    .error(R.drawable.poster_empty)
                     .into(holder.img_favorite, new Callback() {
                         @Override
                         public void onSuccess() {
@@ -86,7 +87,7 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
 
                         @Override
                         public void onError() {
-
+                            holder.progressBar.setVisibility(View.GONE);
                         }
                     });
 

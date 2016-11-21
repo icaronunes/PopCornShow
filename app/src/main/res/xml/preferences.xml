@@ -12,6 +12,7 @@
         android:summary="@string/text_logoff_dialog"
         android:title="@string/title_logoff_dialog" />
 
+
     <utils.Sobre
         android:key="pref_sobre"
         android:summary="@string/infor_app"

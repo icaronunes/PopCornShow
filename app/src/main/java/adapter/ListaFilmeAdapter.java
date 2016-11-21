@@ -43,8 +43,7 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
     @Override
     public FavoriteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.usuario_list_adapter, parent, false);
-        FavoriteViewHolder holder = new FavoriteViewHolder(view);
-        return holder;
+        return new FavoriteViewHolder(view);
     }
 
     @Override

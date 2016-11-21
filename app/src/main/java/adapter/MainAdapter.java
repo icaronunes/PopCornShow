@@ -4,15 +4,10 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 
 import activity.MainActivity;
 import br.com.icaro.filme.R;
 import fragment.MainFragment;
-import fragment.TvShowFragment;
-import info.movito.themoviedbapi.TmdbMovies;
-import info.movito.themoviedbapi.TmdbTV;
-import info.movito.themoviedbapi.model.tv.TvSeries;
 
 /**
  * Created by icaro on 23/08/16.
@@ -49,6 +44,7 @@ public class MainAdapter extends FragmentPagerAdapter {
         }
         return null;
     }
+
 
     @Override
     public int getCount() {

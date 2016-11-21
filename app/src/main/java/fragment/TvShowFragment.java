@@ -94,7 +94,6 @@ public class TvShowFragment extends Fragment {
             imdb, tmdb, popularity, lancamento, textview_crews, textview_elenco;
     private ImageView icon_site, img_poster, img_star;
     private FirebaseAuth mAuth;
-    private FirebaseDatabase database;
     private DatabaseReference myRef;
     private UserTvshow userTvshow;
     private RecyclerView recyclerViewTemporada;
@@ -126,7 +125,7 @@ public class TvShowFragment extends Fragment {
         //Validar se esta logado. Caso não, não precisa instanciar nada.
 
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("users");
     }
 
@@ -295,11 +294,16 @@ public class TvShowFragment extends Fragment {
 
 
     private void isSeguindo() {
+        Log.d(TAG, "Seguindo " + seguindo);
+        if (mAuth.getCurrentUser() != null) {
 
-        if (seguindo) {
-            seguir.setText(R.string.seguindo);
+            if (seguindo) {
+                seguir.setText(R.string.seguindo);
+            } else {
+                seguir.setText(R.string.seguir);
+            }
         } else {
-            seguir.setText(R.string.seguir);
+            setStatusButton();
         }
     }
 
@@ -307,60 +311,62 @@ public class TvShowFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        if (mAuth.getCurrentUser() != null) {
+            postListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.exists()) {
+                    if (dataSnapshot.exists()) {
 
-                    if (getView() != null) {
-                        userTvshow = dataSnapshot.getValue(UserTvshow.class);
-                        Log.w(TAG, "Passou");
-                        recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
-                        adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
-                        recyclerViewTemporada.setAdapter(adapter);
-                        if (progressBarTemporada != null) {
-                            Log.w(TAG, "Mudou - GONE");
-                            progressBarTemporada.setVisibility(View.INVISIBLE);
+                        if (getView() != null) {
+                            userTvshow = dataSnapshot.getValue(UserTvshow.class);
+                            Log.w(TAG, "Passou");
+                            recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
+                            adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
+                            recyclerViewTemporada.setAdapter(adapter);
+                            if (progressBarTemporada != null) {
+                                Log.w(TAG, "Mudou - GONE");
+                                progressBarTemporada.setVisibility(View.INVISIBLE);
+                            }
                         }
-                    }
 
-                } else {
+                    } else {
 
-                    if (getView() != null) {
-                        Log.w(TAG, "Passou");
-                        userTvshow = null; // ??????????
-                        recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
-                        recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
-                        recyclerViewTemporada.setAdapter(new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow));
-                        if (progressBarTemporada != null) {
-                            Log.w(TAG, "Mudou - GONE");
-                            progressBarTemporada.setVisibility(View.INVISIBLE);
+                        if (getView() != null) {
+                            Log.w(TAG, "Passou");
+                            userTvshow = null; // ??????????
+                            recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
+                            recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
+                            recyclerViewTemporada.setAdapter(new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow));
+                            if (progressBarTemporada != null) {
+                                Log.w(TAG, "Mudou - GONE");
+                                progressBarTemporada.setVisibility(View.INVISIBLE);
+                            }
                         }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
 
-            }
-        };
+                }
+            };
 
-        myRef.child(mAuth.getCurrentUser().getUid()).child("seguindo").child(String.valueOf(series.getId())).addValueEventListener(postListener);
-
+            myRef.child(mAuth.getCurrentUser().getUid()).child("seguindo").child(String.valueOf(series.getId())).addValueEventListener(postListener);
+        }
     }
 
     private void setStatus() {
         if (series.getStatus() != null) {
             status.setTextColor(color);
-            Log.d("setStatus", series.getStatus());
+
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             Bundle bundle = new Bundle();
             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
             FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             if (idioma_padrao) {
 
                 if (series.getStatus().equals("Returning Series")) {
@@ -387,6 +393,27 @@ public class TvShowFragment extends Fragment {
         }
     }
 
+    private void setStatusButton(){
+        seguir.setTextColor(color);
+        seguir.setEnabled(false);
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+        if (idioma_padrao) {
+
+            seguir.setText(getResources().getText(R.string.sem_login));
+
+        } else {
+            seguir.setText(series.getStatus());
+            bundle.putString("status_da_serie", series.getStatus() + " Idioma Original");
+        }
+        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -410,6 +437,14 @@ public class TvShowFragment extends Fragment {
         recyclerViewTemporada.setHasFixedSize(true);
         recyclerViewTemporada.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTemporada.setLayoutManager(new LinearLayoutManager(getContext()));
+        if (mAuth.getCurrentUser() == null) {
+            adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
+            recyclerViewTemporada.setAdapter(adapter);
+            if (progressBarTemporada != null) {
+                Log.w(TAG, "Mudou - GONE");
+                progressBarTemporada.setVisibility(View.INVISIBLE);
+            }
+        }
 
         return view;
     }
@@ -446,7 +481,7 @@ public class TvShowFragment extends Fragment {
 
                 if ( isVisto(position)) {
                     Toast.makeText(getContext(), R.string.marcado_nao_assistido_temporada, Toast.LENGTH_SHORT).show();
-                    final String user = mAuth.getCurrentUser().getUid();
+                    final String user = mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "";
                     final String id_serie  = String.valueOf(series.getId());
                     Map<String, Object> childUpdates = new HashMap<String, Object>();
 
@@ -459,7 +494,7 @@ public class TvShowFragment extends Fragment {
 
                 } else {
                     Toast.makeText(getContext(), R.string.marcado_assistido_temporada, Toast.LENGTH_SHORT).show();
-                    final String user = mAuth.getCurrentUser().getUid();
+                    final String user = mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "";
                     final String id_serie  = String.valueOf(userTvshow.getId());
 
                     if (!isVisto(position == 0 ? 0 : position-1)){
@@ -531,7 +566,7 @@ public class TvShowFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (getView().getRootView().findViewById(R.id.progressBarTemporadas) != null) {
+                if (getView() != null) {
                     progressBarTemporada =  (ProgressBar) getView().getRootView().findViewById(R.id.progressBarTemporadas);
                     progressBarTemporada.setVisibility(View.VISIBLE);
                 }
@@ -554,8 +589,7 @@ public class TvShowFragment extends Fragment {
                                 userTvshow.getSeasons().get(i).setUserEps(setEp(tvSeason));
                             }
 
-                            myRef.child(mAuth.getCurrentUser()
-                                    .getUid())
+                            myRef.child(mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "")
                                     .child("seguindo")
                                     .child(String.valueOf(series.getId()))
                                     .setValue(userTvshow)
@@ -576,8 +610,7 @@ public class TvShowFragment extends Fragment {
 
                 } else {
                     Log.d(TAG, "delete");
-                    myRef.child(mAuth.getCurrentUser()
-                            .getUid())
+                    myRef.child(mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "")
                             .child("seguindo")
                             .child(String.valueOf(series.getId()))
                             .removeValue();
@@ -591,7 +624,7 @@ public class TvShowFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (seguindo) {
+        if (myRef != null && mAuth.getCurrentUser() != null) {
             myRef.removeEventListener(postListener);
         }
     }

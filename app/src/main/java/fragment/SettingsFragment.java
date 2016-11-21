@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.util.Log;
 
-import applicaton.FilmeApplication;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import br.com.icaro.filme.R;
 import utils.LogoffDialog;
 
@@ -25,7 +27,8 @@ public class SettingsFragment extends PreferenceFragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (FilmeApplication.getInstance().isLogado()) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
             LogoffDialog emailPrefs = (LogoffDialog) findPreference("pref_logoff");
             Log.d("SettingsFragment", "true" );
             emailPrefs.setEnabled(true);

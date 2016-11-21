@@ -56,8 +56,8 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
                     .into(holder.imagem_filme, new Callback() {
                         @Override
                         public void onSuccess() {
-                            String title = movie.getReleaseDate();
-                            holder.title.setText(title);
+                            String date = movie.getReleaseDate();
+                            holder.title.setText(date);
                         }
 
                         @Override
