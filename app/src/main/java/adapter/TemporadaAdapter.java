@@ -78,8 +78,8 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         }
 
         //Log.d("Temporada", "Rating " + episode.getUserRating());
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(4) + episode.getStillPath())
-                .error(R.drawable.top_empty)
+        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + episode.getStillPath())
+                //.error(R.drawable.empty_popcorn)
                 .into(holder.poster);
 
         if (seguindo){

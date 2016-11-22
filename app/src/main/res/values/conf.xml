@@ -5,9 +5,7 @@
     <string name="admob" translatable="false">ca-app-pub-7639270198633263/7125334030 123</string>
 
     <string name="facebook_application_id" translatable="false">880015148798069</string>
-    <string name="fb_login_protocol_scheme">fb320635351628431</string>
-    <string name="web_client_id">1040550353675-bs9boom6psciiiti1rd1ea8qv9fca96t.apps.googleusercontent.com</string>
-
-
+    <string name="fb_login_protocol_scheme" translatable="false">fb880015148798069</string>
+    <string name="web_client_id" translatable="false">101446616560-mnmuu6nt1hkrd98frh7g9opp3qovu4gu.apps.googleusercontent.com</string>
 
 </resources>

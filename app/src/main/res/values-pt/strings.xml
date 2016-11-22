@@ -67,7 +67,7 @@
     <string name="filme_remove_favorite">Filme removido da lista Favoritos</string>
     <string name="tvshow_remove_favorite">Série removido da lista Favoritos</string>
     <string name="erro_add_or_remove">Ops! Algo deu errado.</string>
-    <string name="filme_add_watchlist">Adicionado ao \"Assistir Mais Tarde\"</string>
+    <string name="filme_add_watchlist">Adicionado ao \"Ver depois\"</string>
     <string name="filme_remove">Filme removido</string>
     <!--<string name="crews">Outros</string>-->
     <string name="imagem_person">Fotos</string>
@@ -135,13 +135,25 @@
     <string name="marcado_assistido_temporada">Marcado como assistido.</string>
     <string name="marcado_nao_assistido_temporada">Marcado como não assistido.</string>
     <string name="salvando">Salvando...</string>
-    <string name="tvshow_watch_remove">Tvshow retirada da watchlist.</string>
+    <string name="tvshow_watch_remove">Tvshow retirada da Ver depois.</string>
     <string name="tvshow_remove_rated">Removida nota da  Série</string>
     <string name="adicionar_favorite">Adicionar aos favoritos</string>
     <string name="remover_favorite">Remover de favoritos</string>
-    <string name="adicionar_watch">Adicionar ao WatchList</string>
-    <string name="remover_watch">Remover do Watchlist</string>
+    <string name="adicionar_watch">Adicionar ao Ver depois</string>
+    <string name="remover_watch">Remover do Ver depois</string>
     <string name="adicionar_rated">Adicionar aos Classificados</string>
     <string name="remover_rated">Remover dos Classificados</string>
     <string name="sem_login">Usuario não logado</string>
+    <string name="title_intro_1">PopCorn</string>
+    <string name="subtitle_intro_1">Bem-vindo ao novo PopCorn</string>
+    <string name="title_intro_2">Mudanças</string>
+    <string name="subtitle_intro_2">Criamos nosso proprio sistema de login</string>
+    <string name="subtitle_intro_3">Agora temos um sistema de \"seguir\" uma série. Saiba quando o episódio da temporada vai passar</string>
+    <string name="title_intro_3">Seguindo</string>
+    <string name="seguir">Seguir</string>
+    <string name="seguindo">Seguindo</string>
+    <string name="title_intro_4">Listas</string>
+    <string name="subtitle_intro_4">Favoritos, Avaliados e Ver Depois continuam mas agora é dentro do PopCorn</string>
+    <string name="reset_password">Esqueceu a senha?</string>
+    <string name="bt_signin">Logar</string>
 </resources>

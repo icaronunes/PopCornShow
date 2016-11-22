@@ -21,8 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginRight="1dp"
-        android:layout_marginLeft="1dp">
+        android:layout_marginRight="2dp"
+        android:layout_marginLeft="8dp">
 
         <ImageButton
             android:id="@+id/popup_temporada"
@@ -33,7 +33,7 @@
             android:src="@drawable/ic_toc_black_24dp"
             android:paddingLeft="12dp"
             android:paddingStart="12dp"
-            android:paddingBottom="12dp"
+            android:paddingBottom="2dp"
             android:paddingRight="12dp" />
 
         <TextView
@@ -42,7 +42,8 @@
             android:layout_height="match_parent"
             android:gravity="left"
             android:text="Temporada"
-            android:textStyle="normal|bold|italic" />
+            android:textStyle="normal|bold|italic"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/date_temporada"

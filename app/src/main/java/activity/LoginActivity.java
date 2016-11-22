@@ -10,6 +10,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -20,12 +27,15 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import java.util.Arrays;
 
 import br.com.icaro.filme.R;
 
@@ -44,17 +54,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private SignInButton signInButton;
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mAuthProgressDialog;
+    private CallbackManager mCallbackManager;
 
     public LoginActivity() {
+
     }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //FirebaseApp.initializeApp(getBaseContext());
+        FirebaseApp.initializeApp(getBaseContext());
         mAuth = FirebaseAuth.getInstance();
-        //FacebookSdk.sdkInitialize(getBaseContext());
+        FacebookSdk.sdkInitialize(getBaseContext());
         setContentView(R.layout.activity_login);
         email = (EditText) findViewById(R.id.login);
         pass = (EditText) findViewById(R.id.pass);
@@ -62,7 +74,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         stateListener = getAuthStateListener();
 
         setGoogle();
-       // setFacebook();
+        setFacebook();
 
 
         mAuthProgressDialog = new ProgressDialog(this);
@@ -99,7 +111,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         // difference.
         signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
-        signInButton.setColorScheme(SignInButton.SIZE_WIDE);
+        signInButton.setColorScheme(SignInButton.SIZE_STANDARD);
         signInButton.setScopes(gso.getScopeArray());
         signInButton.setOnClickListener(new View.OnClickListener() {
 
@@ -110,59 +122,60 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         });
     }
 
-//    private void setFacebook() {
-//        mCallbackManager = CallbackManager.Factory.create();
-//        LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-//                Log.d(TAG, "facebook:onSuccess: " + loginResult.getAccessToken());
-//                accessFacebook(loginResult.getAccessToken());
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//                Log.d(TAG, "facebook:onCancel ");
-//            }
-//
-//            @Override
-//            public void onError(FacebookException error) {
-//                Log.d(TAG, "facebook:onError ", error);
-//            }
-//        });
-//    }
+    private void setFacebook() {
+        mCallbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(TAG, "facebook:onSuccess: " + loginResult.getAccessToken());
+                accessFacebook(loginResult.getAccessToken());
+            }
 
-//    private void accessFacebook(AccessToken accessToken) {
-//        accessLoginData("facebook",  accessToken.getToken());
-//    }
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "facebook:onCancel ");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d(TAG, "facebook:onError ", error);
+            }
+        });
+    }
+
+    private void accessFacebook(AccessToken accessToken) {
+        accessLoginData("facebook",  accessToken.getToken());
+    }
 
     public void onclick(View view) {
         switch (view.getId()) {
 
-//            case R.id.facebook: {
-//                Log.d(TAG, "Facebook");
-//                LogarFacebook();
+            case R.id.facebook: {
+                Log.d(TAG, "Facebook");
+                LogarFacebook();
+                break;
+            }
+//            case R.id.criar: {
+//                criarLoginEmail();
 //                break;
 //            }
-            case R.id.criar: {
-                criarLoginEmail();
-                break;
-            }
-            case R.id.logar: {
-                LogarComEmail();
-                break;
-            }
+                case R.id.logar: {
+                    LogarComEmail();
+                    break;
+                }
 
         }
     }
 
-//    private void LogarFacebook() {
-//        LoginManager
-//                .getInstance()
-//                .logInWithReadPermissions(
-//                        this,
-//                        Arrays.asList("public_profile", "user_friends", "email")
-//                );
-//    }
+
+    private void LogarFacebook() {
+        LoginManager
+                .getInstance()
+                .logInWithReadPermissions(
+                        this,
+                        Arrays.asList("public_profile", "email")
+                );
+    }
 
     private void LogarComEmail() {
         mAuth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
@@ -228,7 +241,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Log.d(TAG, "Falha no login Google");
             }
         } else {
-          //  mCallbackManager.onActivityResult(requestCode, resultCode, data);
+            mCallbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -243,9 +256,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 && tokens[0] != null ){
 
             AuthCredential credential = FacebookAuthProvider.getCredential( tokens[0]);
-            credential = provider.equalsIgnoreCase("google") ? GoogleAuthProvider.getCredential( tokens[0], null) : credential;
 
             Log.d(TAG, "credencial :" + credential.getProvider());
+            credential = provider.equalsIgnoreCase("google") ? GoogleAuthProvider.getCredential( tokens[0], null) : credential;
 
             mAuth.signInWithCredential(credential)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -262,6 +275,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.d(TAG, e.getMessage());
+                            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                             mAuthProgressDialog.dismiss();
                         }
                     });

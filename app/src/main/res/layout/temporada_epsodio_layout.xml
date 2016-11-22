@@ -12,7 +12,11 @@
         android:minHeight="80dp"
         android:maxWidth="170dp"
         android:maxHeight="80dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:background="@drawable/empty_popcorn"
+        android:cropToPadding="false"
+        android:adjustViewBounds="false" />
 
 
     <LinearLayout
@@ -20,7 +24,7 @@
         android:orientation="vertical"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:layout_margin="2dp">
+        android:layout_marginLeft="6dp">
 
         <TextView
             android:id="@+id/ep_number"
@@ -39,7 +43,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginLeft="8dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"

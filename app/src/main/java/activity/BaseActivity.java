@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -138,27 +139,72 @@ public class BaseActivity extends AppCompatActivity {
 
     private void validarNavDrawerComLogin() {
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         Menu grupo_login = navigationView.getMenu();
-        if (user == null) {
+
+
+        if (auth.getCurrentUser() == null) {
             textLogin.setText(R.string.fazer_login);
             textLogin.setTextSize(20);
             textLogin.setVisibility(View.VISIBLE);
             imgUserPhoto.setImageResource(R.drawable.add_user);
             grupo_login = navigationView.getMenu();
             grupo_login.removeGroup(R.id.menu_drav_logado);
-            //imgUserPhoto.setOnClickListener(onClickListenerLogar());
+            imgUserPhoto.setOnClickListener(onClickListenerLogar());
 
         } else {
-            if (user.getProviderId().equalsIgnoreCase("firebase")) {
-                textLogin.setVisibility(View.GONE);
-                grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-                tLogin.setText(user.getDisplayName());
-                tUserName.setText(user.getEmail());
-                imgUserPhoto.setImageResource(R.drawable.user);
-                imgUserPhoto.setOnClickListener(onClickListenerlogado());
+                FirebaseUser user = auth.getCurrentUser();
+                Log.d(TAG, user.getProviders().get(0));
+                switch (user.getProviders().get(0)) {
+
+                    case "google.com": {
+                        textLogin.setVisibility(View.VISIBLE);
+                        grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+                        tLogin.setText(user.getDisplayName());
+                        tUserName.setText(user.getEmail());
+                        Picasso.with(getBaseContext()).load(user.getPhotoUrl())
+                                .into(imgUserPhoto);
+                        imgUserPhoto.setOnClickListener(onClickListenerlogado());
+                        //Log.d(TAG, user.getProviders().get(0));
+
+                        break;
+                    }
+
+                    case "facebook":{
+                        textLogin.setVisibility(View.VISIBLE);
+                        grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+                        tLogin.setText(user.getDisplayName());
+                        tUserName.setText(user.getEmail());
+                        //imgUserPhoto.setImageResource(user.getPhotoUrl().getEncodedPath());
+                        imgUserPhoto.setOnClickListener(onClickListenerlogado());
+
+                        //Log.d(TAG, user.getPhotoUrl().getEncodedPath());
+                        break;
+                    }
+
+                    case "password": {
+                        textLogin.setVisibility(View.GONE);
+                        grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+                        tLogin.setText(user.getDisplayName());
+                        tUserName.setText(user.getEmail());
+                        imgUserPhoto.setImageResource(R.drawable.user);
+                        imgUserPhoto.setOnClickListener(onClickListenerlogado());
+
+                        Log.d(TAG, "passWORD");
+                        break;
+                    }
+
+
+                }
+//                if (user.getProviderId().equalsIgnoreCase("firebase")) {
+//                    textLogin.setVisibility(View.GONE);
+//                    grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+//                    tLogin.setText(user.getDisplayName());
+//                    tUserName.setText(user.getEmail());
+//                   // imgUserPhoto.setImageResource(user);
+//                    imgUserPhoto.setOnClickListener(onClickListenerlogado());
+//                }
             }
-        }
     }
 
 
@@ -425,96 +471,18 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-//    protected View.OnClickListener onClickListenerLogar() {
-//        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
-//        Bundle bundle = new Bundle();
-//        bundle.putString(FirebaseAnalytics.Event.LOGIN, "Tentativa de login");
-//        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-//        return new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//              //  Log.d("setupNavDrawer", "Login");
-//                final Dialog alertDialog = new Dialog(BaseActivity.this);
-//                alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                alertDialog.setContentView(R.layout.adialog_custom_login);
-//
-//                Button button = (Button) alertDialog.findViewById(R.id.button_login_ok);
-//                LinearLayout criar_login = (LinearLayout) alertDialog.findViewById(R.id.criar_login);
-//                final EditText eLogin = (EditText) alertDialog.findViewById(R.id.text_login);
-//                final EditText ePass = (EditText) alertDialog.findViewById(R.id.text_pass_login);
-//                int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
-//                int height = getResources().getDimensionPixelSize(R.dimen.popup_height);
-//
-//                alertDialog.getWindow().setLayout(width, height);
-//
-//                criar_login.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
-//                        startActivity(intent);
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString(FirebaseAnalytics.Event.SIGN_UP, "Tentativa de criar login - site TMDB");
-//                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-//                    }
-//                });
-//
-//                button.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                       // Log.d(TAG, "Adialog Login");
-//                        final ProgressDialog progressDialog = new ProgressDialog(BaseActivity.this,
-//                                android.R.style.Theme_Material_Dialog);
-//                        user = eLogin.getText().toString();
-//                        pass = ePass.getText().toString();
-//                        //Log.d(TAG, "Login/Pass " + user + " " + pass);//
-//                        progressDialog.setIndeterminate(true);
-//                        progressDialog.setMessage("Authenticating...");
-//                        progressDialog.show();
-//
-//                        new Thread() {
-//                            private Intent intent;
-//
-//                            @Override
-//                            public void run() {
-//                                if (FilmeService.getAccount(user, pass) == null) {
-//                                    Log.d(TAG, "Não logou");
-//                                    runOnUiThread(new Runnable() {
-//                                        @Override
-//                                        public void run() {
-//                                            Toast.makeText(BaseActivity.this, R.string.no_login, Toast.LENGTH_SHORT).show();
-//                                            Bundle bundle = new Bundle();
-//                                            bundle.putString(FirebaseAnalytics.Event.LOGIN, "Sucesso");
-//                                            bundle.putString(FirebaseAnalytics.Param.DESTINATION, "MainActivity.class");
-//                                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-//                                        }
-//                                    });
-//                                    progressDialog.dismiss();
-//                                } else {
-//                                    Prefs.setString(BaseActivity.this, Prefs.LOGIN, user, Prefs.LOGIN_PASS);
-//                                    Prefs.setString(BaseActivity.this, Prefs.PASS, pass, Prefs.LOGIN_PASS);
-//                                    FilmeApplication.getInstance().setAccount(account);
-//                                    intent = new Intent(BaseActivity.this, MainActivity.class);
-//                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                                    startActivity(intent);
-//                                    finish();
-//                                    Bundle bundle = new Bundle();
-//                                    bundle.putString(FirebaseAnalytics.Event.LOGIN, "Sucesso");
-//                                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, "MainActivity.class");
-//                                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-//
-//                                    progressDialog.dismiss();
-//                                }
-//                            }
-//                        }.start();
-//
-//                        alertDialog.dismiss();
-//                    }
-//                });
-//                alertDialog.show();
-//            }
-//        };
-//    }
+    protected View.OnClickListener onClickListenerLogar() {
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
+        final Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Event.LOGIN, "Tentativa de login");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(BaseActivity.this, LoginActivity.class));
+            }
+        };
+    }
 
     //Fecha Menu Lateral
     protected void closeDrawer() {
@@ -531,48 +499,4 @@ public class BaseActivity extends AppCompatActivity {
             }
         };
     }
-
-//    private class TMDVAsync extends AsyncTask<Void, Void, Void> {
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//
-//            account = FilmeApplication.getInstance().getAccount();
-//            user = Prefs.getString(getBaseContext(), Prefs.LOGIN, Prefs.LOGIN_PASS);
-//            pass = Prefs.getString(getBaseContext(), Prefs.PASS, Prefs.LOGIN_PASS);
-//            if (account == null && user != null && pass != null) {
-//                account = FilmeService.getAccount(user, pass);
-//            }
-//            // Log.d(TAG, "doInBackground - Login");
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void aVoid) {
-//            super.onPostExecute(aVoid);
-//
-//            Menu grupo_login = navigationView.getMenu();
-//            if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
-//                if (account == null) {
-//                    textLogin.setText(R.string.fazer_login);
-//                    textLogin.setTextSize(20);
-//                    textLogin.setVisibility(View.VISIBLE);
-//                    imgUserPhoto.setImageResource(R.drawable.add_user);
-//                    grupo_login = navigationView.getMenu();
-//                    grupo_login.removeGroup(R.id.menu_drav_logado);
-//                    imgUserPhoto.setOnClickListener(onClickListenerLogar());
-//                    FilmeApplication.getInstance().setLogado(false);
-//
-//                } else {
-//                    FilmeApplication.getInstance().setLogado(true);
-//                    textLogin.setVisibility(View.VISIBLE);
-//                    grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-//                    tLogin.setText(account.getUserName());
-//                    tUserName.setText(account.getName());
-//                    imgUserPhoto.setImageResource(R.drawable.user);
-//                    imgUserPhoto.setOnClickListener(onClickListenerlogado());
-//                }
-//            }
-//        }
-//    }
 }

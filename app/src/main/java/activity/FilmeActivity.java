@@ -576,12 +576,13 @@ public class FilmeActivity extends BaseActivity {
     }
 
     private void setFragmentInfo() {
-        Log.d("FilmeActivity", Locale.getDefault().getLanguage());
+
         FilmeInfoFragment filmeFrag = new FilmeInfoFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constantes.FILME, movieDb);
         bundle.putSerializable(Constantes.SIMILARES, similarMovies);
         filmeFrag.setArguments(bundle);
+
         if (!isFinishing() && !isDestroyed()) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -589,7 +590,6 @@ public class FilmeActivity extends BaseActivity {
                     .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                     .commit();
         }
-
     }
 
     @Override
@@ -641,53 +641,58 @@ public class FilmeActivity extends BaseActivity {
 
         @Override
         protected MovieDb doInBackground(Void... voids) {//
-            TmdbMovies movies = FilmeService.getTmdbMovies();
-            Log.d("FilmeActivity", "Filme ID - " + id_filme);
-//
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
-            boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-            if (idioma_padrao) {
-                movieDb = movies.getMovie(id_filme, Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry()
-                                //.toLanguageTag() não funciona na API 14
-                                + ",en,null"
-                        , credits, releases, videos, reviews, similar, alternative_titles, images);
-                movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
-                movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());
+            if (UtilsFilme.isNetWorkAvailable(FilmeActivity.this)) {
+                TmdbMovies movies = FilmeService.getTmdbMovies();
+                Log.d("FilmeActivity", "Filme ID - " + id_filme);
 
-            } else {
-                Log.d("FilmeActivity", "False - " + id_filme);
-                movieDb = movies.getMovie(id_filme, "en,null"
-                        , credits, releases, videos, reviews, similar, alternative_titles, images);
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
+                boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+                if (idioma_padrao) {
+                    movieDb = movies.getMovie(id_filme, Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry()
+                                    //.toLanguageTag() não funciona na API 14
+                                    + ",en,null"
+                            , credits, releases, videos, reviews, similar, alternative_titles, images);
+                    movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
+                    movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());
+
+                } else {
+                    Log.d("FilmeActivity", "False - " + id_filme);
+                    movieDb = movies.getMovie(id_filme, "en,null"
+                            , credits, releases, videos, reviews, similar, alternative_titles, images);
+                }
+                similarMovies = movies.getSimilarMovies(movieDb.getId(), null, 1);
+                return movieDb;
             }
-            similarMovies = movies.getSimilarMovies(movieDb.getId(), null, 1);
-            return movieDb;
+            return null;
         }
 
         @Override
         protected void onPostExecute(MovieDb movieDb) {
             super.onPostExecute(movieDb);
-            setTitle(movieDb.getTitle());
-            viewPager.setAdapter(new ImagemTopFragment(getSupportFragmentManager()));
-            progressBar.setVisibility(View.INVISIBLE);
+            if (movieDb != null) {
+                setTitle(movieDb.getTitle());
+                viewPager.setAdapter(new ImagemTopFragment(getSupportFragmentManager()));
+                progressBar.setVisibility(View.INVISIBLE);
 
-            setFragmentInfo();
+                setFragmentInfo();
 
-            if (mAuth.getCurrentUser() != null) { // Arrumar
+                if (mAuth.getCurrentUser() != null) { // Arrumar
 
-                setEventListenerFavorite();
-                setEventListenerRated();
-                setEventListenerWatch();
+                    setEventListenerFavorite();
+                    setEventListenerRated();
+                    setEventListenerWatch();
 
-                Log.d("FAB", "FAB " + color_fundo);
-                fab.setAlpha(1);
-                setColorFab(color_fundo);
-                menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
-                menu_item_rated.setOnClickListener(RatedFilme());
-                menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
-            } else {
-                fab.setAlpha(0);
+                    Log.d("FAB", "FAB " + color_fundo);
+                    fab.setAlpha(1);
+                    setColorFab(color_fundo);
+                    menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
+                    menu_item_rated.setOnClickListener(RatedFilme());
+                    menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
+                } else {
+                    fab.setAlpha(0);
+                }
+
             }
-
         }
     }
 

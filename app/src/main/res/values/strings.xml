@@ -139,8 +139,8 @@
     <string name="sem_informacao_colletion">No information about the collection</string>
     <string name="erro_ainda_sem_imagem">Still no image, try again.</string>
     <string name="random">Random</string>
-    <string name="seguindo">Seguindo</string>
-    <string name="seguir">Seguir</string>
+    <string name="seguindo">Following</string>
+    <string name="seguir">Follow</string>
     <string name="erro_seguir">OPS! Something went wrong.</string>
     <string name="marcado_assistido">Marked as watched. Rate the episode.</string>
     <string name="marcado_nao_assistido">Marked as unassisted.</string>
@@ -156,4 +156,14 @@
     <string name="remover_rated">Remove from Classifieds</string>
     <string name="remover_watch">Remove from Watchlist</string>
     <string name="sem_login">User not logged</string>
+    <string name="title_intro_1">PopCorn</string>
+    <string name="subtitle_intro_1">Welcome to the new PopCorn</string>
+    <string name="title_intro_2">News</string>
+    <string name="subtitle_intro_2">We have created our own login system</string>
+    <string name="title_intro_3">Following</string>
+    <string name="subtitle_intro_3">Now we have a system of \"following\" a series. Know when the episode of the season will pass</string>
+    <string name="title_intro_4">Lists</string>
+    <string name="subtitle_intro_4" >Favorites, Evaluated and Watchlist continue but now within PopCorn.</string>
+    <string name="reset_password">Forgot Password?</string>
+    <string name="bt_signin">Sign In</string>
 </resources>
