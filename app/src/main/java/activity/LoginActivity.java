@@ -4,10 +4,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -76,12 +80,60 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setGoogle();
         setFacebook();
 
-
         mAuthProgressDialog = new ProgressDialog(this);
         mAuthProgressDialog.setTitle("Loading");
         mAuthProgressDialog.setMessage("Authenticating with Firebase...");
         mAuthProgressDialog.setCancelable(false);
 
+        TextView criar_login = (TextView) findViewById(R.id.criar_login);
+        criar_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog dialog = new AlertDialog.Builder(LoginActivity.this)
+                        .setView(R.layout.criar_login)
+                        .create();
+                dialog.show();
+
+                Button cancel = (Button) dialog.findViewById(R.id.bt_new_login_cancel);
+                final TextInputLayout login = (TextInputLayout) dialog.findViewById(R.id.criar_login);
+                final TextInputLayout senha = (TextInputLayout) dialog.findViewById(R.id.criar_pass);
+                final TextInputLayout repetirSenha = (TextInputLayout) dialog.findViewById(R.id.criar_repetir_pass);
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                Button ok = (Button) dialog.findViewById(R.id.bt_new_login_ok);
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (validarParametros(login, senha, repetirSenha)) {
+                            criarLoginEmail(login.getEditText().getText().toString(), senha.getEditText().getText().toString() );
+                            dialog.dismiss();
+                        }
+                    }
+                });
+            }
+        });
+
+    }
+
+    private boolean validarParametros(TextInputLayout login, TextInputLayout senha, TextInputLayout repetirSenha) {
+        String Slogin, Ssenha, Srepetir;
+        Slogin = login.getEditText().getText().toString();
+        Ssenha = senha.getEditText().getText().toString();
+        Srepetir = repetirSenha.getEditText().getText().toString();
+
+        if (Slogin.contains("@") && Slogin.contains(".")){
+            if (Ssenha.equals(Srepetir)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void setGoogle() {
@@ -144,7 +196,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void accessFacebook(AccessToken accessToken) {
-        accessLoginData("facebook",  accessToken.getToken());
+        accessLoginData("facebook", accessToken.getToken());
     }
 
     public void onclick(View view) {
@@ -155,15 +207,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 LogarFacebook();
                 break;
             }
-//            case R.id.criar: {
-//                criarLoginEmail();
-//                break;
-//            }
-                case R.id.logar: {
-                    LogarComEmail();
-                    break;
-                }
-
+            case R.id.logar: {
+                LogarComEmail();
+                break;
+            }
         }
     }
 
@@ -178,12 +225,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void LogarComEmail() {
+
+
         mAuth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-
+                        Log.d(TAG, "signInWithEmail:onComplete: " + email.getText().toString() + " " + pass.getText().toString());
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
@@ -201,7 +250,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
     }
-
 
 
     private FirebaseAuth.AuthStateListener getAuthStateListener() {
@@ -249,24 +297,24 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         accessLoginData("google", token);
     }
 
-    private void accessLoginData( String provider, String... tokens ){
+    private void accessLoginData(String provider, String... tokens) {
         mAuthProgressDialog.show();
-        if( tokens != null
+        if (tokens != null
                 && tokens.length > 0
-                && tokens[0] != null ){
+                && tokens[0] != null) {
 
-            AuthCredential credential = FacebookAuthProvider.getCredential( tokens[0]);
+            AuthCredential credential = FacebookAuthProvider.getCredential(tokens[0]);
 
             Log.d(TAG, "credencial :" + credential.getProvider());
-            credential = provider.equalsIgnoreCase("google") ? GoogleAuthProvider.getCredential( tokens[0], null) : credential;
+            credential = provider.equalsIgnoreCase("google") ? GoogleAuthProvider.getCredential(tokens[0], null) : credential;
 
             mAuth.signInWithCredential(credential)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
-                            if( !task.isSuccessful() ){
-                                Toast.makeText(LoginActivity.this,"Login social falhou", Toast.LENGTH_SHORT ).show();
+                            if (!task.isSuccessful()) {
+                                //Toast.makeText(LoginActivity.this,"Login social falhou", Toast.LENGTH_SHORT ).show();
                             }
                             mAuthProgressDialog.dismiss();
                         }
@@ -275,22 +323,21 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.d(TAG, e.getMessage());
-                            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                             mAuthProgressDialog.dismiss();
                         }
                     });
-        }
-        else{
+        } else {
             mAuth.signOut();
         }
 
     }
 
 
-    public void criarLoginEmail() {
-        Log.d(TAG, "createUserWithEmail:Email:" + String.valueOf(email.getText()));
+    public void criarLoginEmail(String email, String pass) {
+        Log.d(TAG, "createUserWithEmail:Email: " + email);
         mAuthProgressDialog.show();
-        mAuth.createUserWithEmailAndPassword(String.valueOf(email.getText()), String.valueOf(pass.getText()))
+        mAuth.createUserWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -302,15 +349,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         if (!task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Login Falhou", Toast.LENGTH_SHORT).show();
                         }
-//                        else {
-//                            finish();
-//                            startActivity(new Intent(MainActivity.this, LogadoActivity.class));
-//                        }
+                        else {
+                            Toast.makeText(LoginActivity.this, "Login", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d(TAG, "getMessage : " + e.getMessage());
+                Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -338,6 +385,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     public void onclickMain(View view) {
-        startActivity(new Intent(this, MainActivity.class));
+        mAuth.signInAnonymously()
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInAnonymously:onComplete:" + task.isSuccessful());
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInAnonymously", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

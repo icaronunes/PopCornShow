@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -19,8 +20,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -60,6 +63,7 @@ public class BaseActivity extends AppCompatActivity {
     TextView textLogin;
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    private FirebaseUser user;
 
     public static void SnackBar(final View view, String msg) {
 
@@ -109,16 +113,16 @@ public class BaseActivity extends AppCompatActivity {
 
             View view = getLayoutInflater().inflate(R.layout.nav_drawer_header, navigationView);
             view.setVisibility(View.VISIBLE);
-             view.findViewById(R.id.textLogin);
+            view.findViewById(R.id.textLogin);
             imgUserBackground = (ImageView) view.findViewById(R.id.imgUserBackground);
             imgUserPhoto = (ImageView) view.findViewById(R.id.imgUserPhoto);
             Random random = new Random();
-            // Log.d("randon", ""+random.nextInt(7));
+
             imgUserBackground.setImageResource(drawer[random.nextInt(7)]);
             tUserName = (TextView) view.findViewById(R.id.tUserName);
             tLogin = (TextView) view.findViewById(R.id.tLogin);
             textLogin = (TextView) view.findViewById(R.id.textLogin);
-            //  Log.d(TAG, "BASEACTIVITY");
+
 
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -153,58 +157,55 @@ public class BaseActivity extends AppCompatActivity {
             imgUserPhoto.setOnClickListener(onClickListenerLogar());
 
         } else {
-                FirebaseUser user = auth.getCurrentUser();
-                Log.d(TAG, user.getProviders().get(0));
-                switch (user.getProviders().get(0)) {
+            user = auth.getCurrentUser();
 
-                    case "google.com": {
-                        textLogin.setVisibility(View.VISIBLE);
-                        grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-                        tLogin.setText(user.getDisplayName());
-                        tUserName.setText(user.getEmail());
-                        Picasso.with(getBaseContext()).load(user.getPhotoUrl())
-                                .into(imgUserPhoto);
-                        imgUserPhoto.setOnClickListener(onClickListenerlogado());
-                        //Log.d(TAG, user.getProviders().get(0));
+            if (user.isAnonymous()) {
+                textLogin.setVisibility(View.VISIBLE);
+                grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+                tLogin.setText(R.string.anonymous);
+                tUserName.setText(R.string.criar_login_popcorn);
+                imgUserPhoto.setImageResource(R.drawable.add_user);
+                imgUserPhoto.setOnClickListener(onClickListenerlogado());
+            } else {
+                if (user.getProviders() != null)
+                    Log.d(TAG, user.getProviders().get(0));
+                    switch (user.getProviders().get(0)) {
 
-                        break;
+                        case "google.com": {
+                            textLogin.setVisibility(View.VISIBLE);
+                            grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+                            tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
+                            tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
+                            Picasso.with(getBaseContext()).load(user.getPhotoUrl())
+                                    .into(imgUserPhoto);
+                            imgUserPhoto.setOnClickListener(onClickListenerlogado());
+                            break;
+                        }
+
+                        case "facebook.com": {
+                            textLogin.setVisibility(View.VISIBLE);
+                            grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+                            tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
+                            tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
+                            Picasso.with(getBaseContext()).load(user.getPhotoUrl())
+                                    .into(imgUserPhoto);
+                            imgUserPhoto.setOnClickListener(onClickListenerlogado());
+
+                            break;
+                        }
+
+                        case "password": {
+                            textLogin.setVisibility(View.GONE);
+                            grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+                            tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
+                            tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
+                            imgUserPhoto.setImageResource(R.drawable.user);
+                            imgUserPhoto.setOnClickListener(onClickListenerlogado());
+                            break;
+                        }
                     }
-
-                    case "facebook":{
-                        textLogin.setVisibility(View.VISIBLE);
-                        grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-                        tLogin.setText(user.getDisplayName());
-                        tUserName.setText(user.getEmail());
-                        //imgUserPhoto.setImageResource(user.getPhotoUrl().getEncodedPath());
-                        imgUserPhoto.setOnClickListener(onClickListenerlogado());
-
-                        //Log.d(TAG, user.getPhotoUrl().getEncodedPath());
-                        break;
-                    }
-
-                    case "password": {
-                        textLogin.setVisibility(View.GONE);
-                        grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-                        tLogin.setText(user.getDisplayName());
-                        tUserName.setText(user.getEmail());
-                        imgUserPhoto.setImageResource(R.drawable.user);
-                        imgUserPhoto.setOnClickListener(onClickListenerlogado());
-
-                        Log.d(TAG, "passWORD");
-                        break;
-                    }
-
-
-                }
-//                if (user.getProviderId().equalsIgnoreCase("firebase")) {
-//                    textLogin.setVisibility(View.GONE);
-//                    grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-//                    tLogin.setText(user.getDisplayName());
-//                    tUserName.setText(user.getEmail());
-//                   // imgUserPhoto.setImageResource(user);
-//                    imgUserPhoto.setOnClickListener(onClickListenerlogado());
-//                }
             }
+        }
     }
 
 
@@ -381,10 +382,7 @@ public class BaseActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             mFirebaseRemoteConfig.activateFetched();
 
-                        } else {
-
                         }
-
                         Map<String, String> map = new HashMap<String, String>();
                         map = getListaRemoteConfig();
 
@@ -489,14 +487,118 @@ public class BaseActivity extends AppCompatActivity {
         if (drawerLayout != null) {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
+
     }
 
     protected View.OnClickListener onClickListenerlogado() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //  Log.d(TAG, "Login");
+                if (user != null) {
+                    final android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog
+                            .Builder(BaseActivity.this)
+                            .setView(R.layout.user)
+                            .create();
+                    alertDialog.show();
+
+                    ImageView user_img = (ImageView) alertDialog.findViewById(R.id.userImage);
+                    Picasso.with(BaseActivity.this)
+                            .load(user.getPhotoUrl())
+                            .placeholder(R.drawable.user)
+                            .into(user_img);
+
+                    TextView email = (TextView) alertDialog.findViewById(R.id.text_user_email);
+                    email.setText(user.getEmail() != null ? user.getEmail() : "N/A");
+                    TextView uid = (TextView) alertDialog.findViewById(R.id.text_user_uid);
+                    uid.setText(user.getUid());
+                    TextView login = (TextView) alertDialog.findViewById(R.id.text_user_login);
+                    login.setText(user.getDisplayName() != null ? user.getDisplayName() : "N/A");
+                    Button reset = (Button) alertDialog.findViewById(R.id.bt_reset);
+                    Button desativar = (Button) alertDialog.findViewById(R.id.bt_desativar);
+                    Button criar_login = (Button) alertDialog.findViewById(R.id.criar_login);
+
+                    criar_login.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                            mAuth.signOut();
+                            startActivity(new Intent(BaseActivity.this, LoginActivity.class));
+                        }
+                    });
+
+                    reset.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            final android.support.v7.app.AlertDialog alertDialogReset = new android.support.v7.app.AlertDialog
+                                    .Builder(BaseActivity.this)
+                                    .setView(R.layout.reset_senha)
+                                    .create();
+                            alertDialogReset.show();
+
+                            final TextInputLayout senha = (TextInputLayout) alertDialogReset.findViewById(R.id.pass);
+                            final TextInputLayout repetir_senha = (TextInputLayout) alertDialogReset.findViewById(R.id.repetir_pass);
+
+                            Button cancel = (Button) alertDialogReset.findViewById(R.id.bt_cancel);
+                            cancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    alertDialogReset.dismiss();
+                                }
+                            });
+
+                            Button ok = (Button) alertDialogReset.findViewById(R.id.bt_ok);
+                            ok.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String senhaString = senha.getEditText().getText().toString();
+                                    String repetirSenha = repetir_senha.getEditText().getText().toString();
+
+                                    boolean tamanhoSenha = validatePassword(repetirSenha);
+                                    boolean tamanhoRetiriSenha = validatePassword(senhaString);
+
+                                    Log.d(TAG, "Senha " + senhaString);
+                                    Log.d(TAG, "Senha rep " + repetirSenha);
+
+                                    if (tamanhoSenha && tamanhoRetiriSenha
+                                            && senhaString.equals(repetirSenha)) {
+                                        user.updatePassword(senha.getEditText().toString())
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Log.d(TAG, senha.getEditText().getText().toString());
+                                                            Log.d(TAG, repetir_senha.getEditText().getText().toString());
+                                                            alertDialogReset.dismiss();
+                                                            Toast.
+                                                                    makeText(BaseActivity.this,
+                                                                            getResources().getString(R.string.reset_senha_ok), Toast.LENGTH_LONG).show();
+                                                        } else {
+                                                            Toast.
+                                                                    makeText(BaseActivity.this,
+                                                                            getResources().getString(R.string.falha_reset_senha), Toast.LENGTH_LONG).show();
+                                                        }
+                                                    }
+                                                });
+                                    } else {
+                                        Log.d(TAG, "Não entrou");
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+                    if (user.isAnonymous()) {
+                        reset.setVisibility(View.GONE);
+                        desativar.setVisibility(View.GONE);
+                        criar_login.setVisibility(View.VISIBLE);
+                    }
+
+                }
             }
         };
+    }
+
+    public boolean validatePassword(String password) {
+        return password.length() > 5;
     }
 }

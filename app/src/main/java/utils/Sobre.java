@@ -19,7 +19,6 @@ import br.com.icaro.filme.R;
 public class Sobre extends DialogPreference {
 
     private LinearLayout linearLayout;
-    private ImageView tmdb;
 
     public Sobre(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -33,7 +32,17 @@ public class Sobre extends DialogPreference {
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
         linearLayout = (LinearLayout) view.findViewById(R.id.play_rated);
-        tmdb = (ImageView) view.findViewById(R.id.img_tmdb);
+        ImageView tmdb = (ImageView) view.findViewById(R.id.img_tmdb);
+        ImageView popcorn = (ImageView) view.findViewById(R.id.img_popcorn);
+
+        popcorn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), Site.class);
+                intent.putExtra(Constantes.SITE, "https://twitter.com/appopcorn");
+                getContext().startActivity(intent);
+            }
+        });
 
         tmdb.setOnClickListener(new View.OnClickListener() {
             @Override

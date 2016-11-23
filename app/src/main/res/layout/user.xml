@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp">
+
+    <ImageView
+        android:layout_height="@dimen/user_image"
+        android:layout_width="@dimen/user_image"
+        android:id="@+id/userImage"
+        android:layout_gravity="center"
+        android:padding="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:textStyle="normal|italic" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_user_login"
+            android:layout_marginLeft="3dp"
+            android:textStyle="normal|bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_email"
+            android:textStyle="normal|italic" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_user_email"
+            android:paddingLeft="3dp"
+            android:textStyle="normal|bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/uid"
+            android:textStyle="normal|italic" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_user_uid"
+            android:paddingLeft="3dp"
+            android:textStyle="normal|bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <Button
+            android:text="@string/bt_desativar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bt_desativar"
+            android:textSize="10sp" />
+
+        <Button
+            android:text="@string/bt_reset_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bt_reset"
+            android:layout_weight="1" />
+
+
+    </LinearLayout>
+    <Button
+        android:text="@string/criar_login_popcorn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/criar_login"
+        android:visibility="gone"
+        android:layout_weight="1"
+        android:background="@drawable/button_visto"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="15dp" />
+
+</LinearLayout>

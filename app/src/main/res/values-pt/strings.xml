@@ -156,4 +156,15 @@
     <string name="subtitle_intro_4">Favoritos, Avaliados e Ver Depois continuam mas agora é dentro do PopCorn</string>
     <string name="reset_password">Esqueceu a senha?</string>
     <string name="bt_signin">Logar</string>
+    <string name="anonymous">Anônimo</string>
+    <string name="user_email">E-mail:</string>
+    <string name="uid">Uid:</string>
+    <string name="bt_reset_password">Mudar Senha</string>
+    <string name="bt_desativar">Desativar Conta</string>
+    <string name="nova_senha">Nova Senha</string>
+    <string name="repetir_nova_senha">Repetir Senha</string>
+    <string name="ok">OK</string>
+    <string name="reset_senha_ok">Senha alterada.</string>
+    <string name="falha_reset_senha">Falha ao alterar a senha. Tente logar novamente antes de tentar.</string>
+    <string name="logar_como_anonimo">Logar como Anônimo</string>
 </resources>

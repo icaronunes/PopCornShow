@@ -12,6 +12,7 @@
     <string name="tvshow_main" translatable="false">tvshow_main</string>
     <string name="populares" translatable="false">Populares</string>
     <string name="email" translatable="false">icarornunes@gmail.com</string>
+    <string name="email_tx">E-Mail</string>
     <string name="infor_tmdb" translatable="false">"This product uses the TMDb API but is not endorsed or certified by TMDb."</string>
     <string name="app_name">PopCorn</string>
     <string name="about">About</string>
@@ -166,4 +167,15 @@
     <string name="subtitle_intro_4" >Favorites, Evaluated and Watchlist continue but now within PopCorn.</string>
     <string name="reset_password">Forgot Password?</string>
     <string name="bt_signin">Sign In</string>
+    <string name="anonymous">Anonymous</string>
+    <string name="user_email">E-mail:</string>
+    <string name="uid">Uid:</string>
+    <string name="bt_reset_password">Reset Password</string>
+    <string name="bt_desativar">Deactivate Account</string>
+    <string name="nova_senha">New Password</string>
+    <string name="repetir_nova_senha">Repeat Password</string>
+    <string name="ok">OK</string>
+    <string name="falha_reset_senha">Failed to change password. Please try logging again before trying.</string>
+    <string name="reset_senha_ok">Password changed.</string>
+    <string name="logar_como_anonimo">Log in as Anonymous</string>
 </resources>

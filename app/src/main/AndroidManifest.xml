@@ -52,7 +52,7 @@
 
         </activity>
 
-        <activity android:name="activity.MyIntro">
+        <activity android:name="activity.IntroActivity">
 
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->

@@ -15,7 +15,7 @@ import fragment.ThirdSlide;
  * Created by icaro on 21/11/16.
  */
 
-public class MyIntro extends AppIntro {
+public class IntroActivity extends AppIntro {
 
     // Please DO NOT override onCreate. Use init
     @Override
