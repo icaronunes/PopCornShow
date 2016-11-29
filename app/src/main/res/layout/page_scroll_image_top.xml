@@ -39,7 +39,7 @@
         android:id="@+id/title"
         android:textStyle="normal|bold"
         android:textColor="@color/white"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:typeface="serif" />
 
 

@@ -13,7 +13,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/criar_login"
+        android:id="@+id/vincular_login"
         android:layout_marginTop="5dp">
 
         <EditText
@@ -79,7 +79,9 @@
             android:text="@string/cancel"
             android:layout_weight="0.1"
             android:id="@+id/bt_new_login_cancel"
-            android:layout_marginRight="6dp" />
+            android:layout_marginRight="6dp"
+            android:background="@color/play_video"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
 
         <Button
             android:layout_width="wrap_content"

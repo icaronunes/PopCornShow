@@ -82,7 +82,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/bt_desativar"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            style="@style/Widget.AppCompat.Button" />
 
         <Button
             android:text="@string/bt_reset_password"
@@ -93,11 +94,12 @@
 
 
     </LinearLayout>
+
     <Button
-        android:text="@string/criar_login_popcorn"
+        android:text="@string/vincular_login_popcorn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/criar_login"
+        android:id="@+id/vincular_login"
         android:visibility="gone"
         android:layout_weight="1"
         android:background="@drawable/button_visto"

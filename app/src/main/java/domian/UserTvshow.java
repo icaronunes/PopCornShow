@@ -23,6 +23,8 @@ public class UserTvshow implements Serializable {
 
     private int numberOfSeasons;
 
+    private String poster;
+
 
     private List<UserSeasons> seasons;
 
@@ -76,5 +78,13 @@ public class UserTvshow implements Serializable {
 
     public void setSeasons(List<UserSeasons> seasons) {
         this.seasons = seasons;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 }

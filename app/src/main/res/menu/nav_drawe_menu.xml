@@ -36,6 +36,12 @@
         android:checkableBehavior="single"
         android:visible="false">
         <!-- Todos os item Checked?! -->
+
+        <item
+            android:id="@+id/seguindo"
+            android:icon="@drawable/icon_favorite"
+            android:title="@string/seguindo" />
+
         <item
             android:id="@+id/favorite"
             android:icon="@drawable/icon_favorite"

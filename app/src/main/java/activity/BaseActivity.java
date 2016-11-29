@@ -2,9 +2,11 @@ package activity;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,6 +15,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -36,6 +39,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -169,41 +173,44 @@ public class BaseActivity extends AppCompatActivity {
             } else {
                 if (user.getProviders() != null)
                     Log.d(TAG, user.getProviders().get(0));
-                    switch (user.getProviders().get(0)) {
+                switch (user.getProviders().get(0)) {
 
-                        case "google.com": {
-                            textLogin.setVisibility(View.VISIBLE);
-                            grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-                            tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
-                            tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
-                            Picasso.with(getBaseContext()).load(user.getPhotoUrl())
-                                    .into(imgUserPhoto);
-                            imgUserPhoto.setOnClickListener(onClickListenerlogado());
-                            break;
-                        }
-
-                        case "facebook.com": {
-                            textLogin.setVisibility(View.VISIBLE);
-                            grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-                            tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
-                            tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
-                            Picasso.with(getBaseContext()).load(user.getPhotoUrl())
-                                    .into(imgUserPhoto);
-                            imgUserPhoto.setOnClickListener(onClickListenerlogado());
-
-                            break;
-                        }
-
-                        case "password": {
-                            textLogin.setVisibility(View.GONE);
-                            grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-                            tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
-                            tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
-                            imgUserPhoto.setImageResource(R.drawable.user);
-                            imgUserPhoto.setOnClickListener(onClickListenerlogado());
-                            break;
-                        }
+                    case "google.com": {
+                        textLogin.setVisibility(View.VISIBLE);
+                        grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+                        tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
+                        tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
+                        Picasso.with(getBaseContext()).load(user.getPhotoUrl())
+                                .placeholder(R.drawable.user)
+                                .into(imgUserPhoto);
+                        imgUserPhoto.setOnClickListener(onClickListenerlogado());
+                        break;
                     }
+
+                    case "facebook.com": {
+                        textLogin.setVisibility(View.VISIBLE);
+                        grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+                        tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
+                        tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
+                        Picasso.with(getBaseContext()).load(user.getPhotoUrl())
+                                .placeholder(R.drawable.user)
+                                .into(imgUserPhoto);
+                        imgUserPhoto.setOnClickListener(onClickListenerlogado());
+                        break;
+                    }
+
+                    case "password": {
+                        textLogin.setVisibility(View.GONE);
+                        grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+                        tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
+                        tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
+                        Picasso.with(getBaseContext()).load(user.getPhotoUrl())
+                                .placeholder(R.drawable.user)
+                                .into(imgUserPhoto);
+                        imgUserPhoto.setOnClickListener(onClickListenerlogado());
+                        break;
+                    }
+                }
             }
         }
     }
@@ -234,7 +241,11 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.menu_drav_oscar: {
                 this.navigationView.setCheckedItem(id);
             }
+            case R.id.seguindo :
+            {
+                this.navigationView.setCheckedItem(id);
 
+            }
 //            case R.id.list: {
 //                this.navigationView.setCheckedItem(id);
 //            } //Metoda da API não carrega filmes_main da list.
@@ -345,14 +356,22 @@ public class BaseActivity extends AppCompatActivity {
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_PersonPopular");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);//
                 intent = new Intent(this, OscarActivity.class);
-                intent.putExtra(Constantes.LISTA_ID, "28");
+                intent.putExtra(Constantes.LISTA_ID, getResources().getString(R.string.id_oscar));
                 intent.putExtra(Constantes.LISTA_NOME, R.string.oscar);
                 startActivity(intent);
-
                 break;
 
             case R.id.menu_drav_surpresa:
                 getParametrosDoRemoteConfig();
+                break;
+
+            case R.id.seguindo:
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_Seguindo");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);//
+                intent = new Intent(this, SeguindoActivity.class);
+                intent.putExtra(Constantes.LISTA_ID, "28");
+                intent.putExtra(Constantes.LISTA_NOME, R.string.oscar);
+                startActivity(intent);
                 break;
         }
     }
@@ -515,14 +534,49 @@ public class BaseActivity extends AppCompatActivity {
                     login.setText(user.getDisplayName() != null ? user.getDisplayName() : "N/A");
                     Button reset = (Button) alertDialog.findViewById(R.id.bt_reset);
                     Button desativar = (Button) alertDialog.findViewById(R.id.bt_desativar);
-                    Button criar_login = (Button) alertDialog.findViewById(R.id.criar_login);
+                    Button vincular_login = (Button) alertDialog.findViewById(R.id.vincular_login);
 
-                    criar_login.setOnClickListener(new View.OnClickListener() {
+                    vincular_login.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                            mAuth.signOut();
-                            startActivity(new Intent(BaseActivity.this, LoginActivity.class));
+                            startActivity(new Intent(BaseActivity.this, VincularLoginActivity.class));
+                        }
+                    });
+
+                    desativar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            AlertDialog dialog = new AlertDialog.Builder(BaseActivity.this)
+                                        .setTitle(getResources().getString(R.string.deletar_conta))
+                                    .setMessage(getResources().getString(R.string.deletar_conta_txt))
+                                    .setNegativeButton(getResources().getString(R.string.cancel), null)
+                                    .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            user.delete()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                Toast.
+                                                                        makeText(BaseActivity.this, getResources().getString(R.string.conta_deletada), Toast.LENGTH_LONG)
+                                                                        .show();
+                                                                FirebaseAuth.getInstance().signOut();
+                                                                finish();
+                                                                startActivity(new Intent(BaseActivity.this, LoginActivity.class));
+
+                                                            } else {
+                                                                Toast.
+                                                                        makeText(BaseActivity.this, getResources().getString(R.string.falha_delete_conta), Toast.LENGTH_LONG)
+                                                                        .show();
+                                                            }
+                                                        }
+                                                    });
+                                        }
+
+                                    }).create();
+                       dialog.show();
                         }
                     });
 
@@ -556,12 +610,9 @@ public class BaseActivity extends AppCompatActivity {
                                     boolean tamanhoSenha = validatePassword(repetirSenha);
                                     boolean tamanhoRetiriSenha = validatePassword(senhaString);
 
-                                    Log.d(TAG, "Senha " + senhaString);
-                                    Log.d(TAG, "Senha rep " + repetirSenha);
-
                                     if (tamanhoSenha && tamanhoRetiriSenha
                                             && senhaString.equals(repetirSenha)) {
-                                        user.updatePassword(senha.getEditText().toString())
+                                        user.updatePassword(senhaString)
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
@@ -590,7 +641,7 @@ public class BaseActivity extends AppCompatActivity {
                     if (user.isAnonymous()) {
                         reset.setVisibility(View.GONE);
                         desativar.setVisibility(View.GONE);
-                        criar_login.setVisibility(View.VISIBLE);
+                        vincular_login.setVisibility(View.VISIBLE);
                     }
 
                 }
@@ -600,5 +651,15 @@ public class BaseActivity extends AppCompatActivity {
 
     public boolean validatePassword(String password) {
         return password.length() > 5;
+    }
+
+
+    static public String getLocale(){
+
+        if  ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
+            return Locale.getDefault().toLanguageTag();
+        } else {
+            return Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry();
+        }
     }
 }

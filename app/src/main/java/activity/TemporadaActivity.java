@@ -27,7 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import adapter.TemporadaAdapter;
@@ -93,7 +92,7 @@ public class TemporadaActivity extends BaseActivity {
             temporada_position = getIntent().getIntExtra(Constantes.TEMPORADA_POSITION, 0);
             serie_id = getIntent().getIntExtra(Constantes.TVSHOW_ID, 0);
             nome_temporada = getIntent().getStringExtra(Constantes.NOME);
-            color = getIntent().getIntExtra(Constantes.COLOR_TOP, 0);
+            color = getIntent().getIntExtra(Constantes.COLOR_TOP, getResources().getColor(R.color.red));
 
 
         } else {
@@ -189,9 +188,6 @@ public class TemporadaActivity extends BaseActivity {
                             .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
                                     tvSeason, seasons ,seguindo,
                                     onClickListener() ));
-                    Log.d(TAG, "true");
-                    Log.d(TAG, "assistido " + seasons.getUserEps().get(position).isAssistido());
-                    Log.d(TAG, tvSeason.getName());
 
                 } else {
 
@@ -242,8 +238,6 @@ public class TemporadaActivity extends BaseActivity {
         return true;
     }
 
-
-
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -252,8 +246,8 @@ public class TemporadaActivity extends BaseActivity {
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             if (idioma_padrao) {
                 tvSeason = FilmeService.getTmdbTvSeasons()
-                        .getSeason(serie_id, temporada_id, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry() + ",en,null");
-                Log.d("TemporadaActivity", tvSeason.getName());
+                        .getSeason(serie_id, temporada_id, getLocale() + ",en,null");
+//                Log.d("TemporadaActivity", tvSeason.getName());
                 return null;
             }else {
                 tvSeason = FilmeService.getTmdbTvSeasons()

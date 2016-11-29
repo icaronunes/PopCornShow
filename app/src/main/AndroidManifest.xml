@@ -306,10 +306,18 @@
         <activity android:name="activity.Site"
             android:parentActivityName="activity.MainActivity">
 
+        <meta-data android:name="android.support.PARENT_ACTIVITY"
+            android:value="activity.MainActivity"/>
+        </activity>
+
+        <activity android:name="activity.SeguindoActivity"
+            android:parentActivityName="activity.MainActivity">
 
         <meta-data android:name="android.support.PARENT_ACTIVITY"
             android:value="activity.MainActivity"/>
         </activity>
+
+        <activity android:name="activity.VincularLoginActivity"/>
 
         <service
             android:name="onsignal.CustomNotificationExtenderService"

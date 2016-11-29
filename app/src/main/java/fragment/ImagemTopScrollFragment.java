@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,7 @@ public class ImagemTopScrollFragment extends Fragment {
 
 
         if (topMains.getMediaType().equalsIgnoreCase(Multi.MediaType.MOVIE.name())) {
-            Log.d("ImagemTopScrollFragment", "Movie " + topMains.getNome());
+           // Log.d("ImagemTopScrollFragment", "Movie " + topMains.getNome());
             Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(4) + topMains.getImagem())
                     .error(R.drawable.top_empty)
                     .into(imageView);
@@ -72,7 +71,7 @@ public class ImagemTopScrollFragment extends Fragment {
             });
             title.setText(topMains.getNome());
         } else {
-            Log.d("ImagemTopScrollFragment", "TVshow " + topMains.getNome());
+           // Log.d("ImagemTopScrollFragment", "TVshow " + topMains.getNome());
             Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(4) + topMains.getImagem())
                     .error(R.drawable.top_empty)
                     .into(imageView);
@@ -91,7 +90,7 @@ public class ImagemTopScrollFragment extends Fragment {
 
         AnimatorSet animatorSet = new AnimatorSet();
         ObjectAnimator alphaStar = ObjectAnimator.ofFloat(imageView, "y", -100, 0)
-                .setDuration(900);
+                .setDuration(800);
         animatorSet.playTogether(alphaStar);
 
         return view;

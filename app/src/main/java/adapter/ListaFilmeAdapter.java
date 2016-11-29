@@ -110,7 +110,6 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
     // Colocar em apenas um lugar
     public interface ListaOnClickListener {
         void onClick(View view, int posicao);
-
         void onClickLong(View view, final int posicao);
     }
 

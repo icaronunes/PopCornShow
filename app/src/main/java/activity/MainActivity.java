@@ -18,7 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import adapter.MainAdapter;
 import br.com.icaro.filme.R;
@@ -173,11 +172,9 @@ public class MainActivity extends BaseActivity {
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             if (idioma_padrao) {
                 tmdbTv = FilmeService.getTmdbTvShow()
-                        .getAiringToday(Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
-                                //.toLanguageTag()
+                        .getAiringToday(getLocale()
                                 , 1, UtilsFilme.getTimezone());
-                tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies(Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
-                        //.toLanguageTag()
+                tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies(getLocale()
                          , 1);
 
             } else {

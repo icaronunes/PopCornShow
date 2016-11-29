@@ -48,7 +48,6 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import br.com.icaro.filme.R;
 import domian.FilmeDB;
@@ -648,7 +647,7 @@ public class FilmeActivity extends BaseActivity {
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
                 boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
                 if (idioma_padrao) {
-                    movieDb = movies.getMovie(id_filme, Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry()
+                    movieDb = movies.getMovie(id_filme, getLocale()
                                     //.toLanguageTag() não funciona na API 14
                                     + ",en,null"
                             , credits, releases, videos, reviews, similar, alternative_titles, images);

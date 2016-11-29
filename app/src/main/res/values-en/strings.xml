@@ -14,7 +14,7 @@
     <string name="compartilhar_tvshow">Sharing Series</string>
     <string name="configuracoes">Settings</string>
     <string name="criado">Created by:</string>
-    <string name="criar_login_popcorn">Create a Login in PopCorn</string>
+    <string name="criar_login_popcorn">Create login PopCorn</string>
     <string name="desfazer">Undo</string>
     <string name="director">Directed</string>
     <string name="elenco">Cast</string>
@@ -162,4 +162,14 @@ No information about the collection.</string>
     <string name="falha_reset_senha">Failed to change password. Please try logging again before trying.</string>
     <string name="reset_senha_ok">Password changed.</string>
     <string name="logar_como_anonimo">Log in as Anonymous</string>
+    <string name="anonimo_alerta">This type of login is not secure. You may lose everything if the application fails. We recommend creating a login.</string>
+    <string name="vincular_login_popcorn">Link to another login</string>
+    <string name="email_invalido">Invalid email</string>
+    <string name="email_recuperacao_enviado">Sent password reset email</string>
+    <string name="deletar_conta">Delete account?</string>
+    <string name="deletar_conta_txt">Would you like to delete your account? You have lost all account information.  It will not be possible to recover.</string>
+    <string name="conta_deletada">Deleted account</string>
+    <string name="falha_delete_conta">Error while trying to delete account. You must have logged in to this process recently.</string>
+    <string name="calendar">Calendar</string>
+    <string name="no_epsodio">Nameless</string>
 </resources>

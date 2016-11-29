@@ -125,7 +125,7 @@
     <string name="suas_listas">Suas listas</string>
     <string name="person_rated">Pessoas Populares</string>
     <string name="oscar">Vencedores de Oscar</string>
-    <string name="criar_login_popcorn">Criar Login no PopCorn</string>
+    <string name="criar_login_popcorn">Criar login PopCorn</string>
     <string name="erro">Erro Youtube</string>
     <string name="sem_informacao_colletion">Não há informação sobre a coleção</string>
     <string name="erro_ainda_sem_imagem">Ainda sem imagem, tente novamente.</string>
@@ -167,4 +167,13 @@
     <string name="reset_senha_ok">Senha alterada.</string>
     <string name="falha_reset_senha">Falha ao alterar a senha. Tente logar novamente antes de tentar.</string>
     <string name="logar_como_anonimo">Logar como Anônimo</string>
+    <string name="anonimo_alerta">Este tipo de login não é seguro. Você pode perder tudo se o aplicativo falhar. Recomendamos criar um login.</string>
+    <string name="vincular_login_popcorn">Vincular com outra conta</string>
+    <string name="email_invalido">E-mail invalido</string>
+    <string name="email_recuperacao_enviado">Enviado e-mail de redefinição de senha</string>
+    <string name="deletar_conta">Deletar Conta?</string>
+    <string name="deletar_conta_txt">Você gostaria de deletar sua conta? Perdera todas as informações da conta.  Não será possível recuperar.</string>
+    <string name="falha_delete_conta">Erro ao tentar deletar conta. Necessario ter logado recentemente para esse processo.</string>
+    <string name="calendar">Calendário</string>
+    <string name="no_epsodio">Sem nome</string>
 </resources>

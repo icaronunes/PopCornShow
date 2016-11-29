@@ -597,7 +597,6 @@ public class TvShowFragment extends Fragment {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                Log.d(TAG, "Seguir foi apertado. Datasnap mudou?");
                                             } else {
                                                 seguir.setText(R.string.seguir);
                                                 Toast.makeText(getActivity(), R.string.erro_seguir, Toast.LENGTH_SHORT).show();
@@ -644,6 +643,7 @@ public class TvShowFragment extends Fragment {
 
     private UserTvshow setUserTvShow(TvSeries serie) {
         UserTvshow userTvshow = new UserTvshow();
+        userTvshow.setPoster(serie.getPosterPath());
         userTvshow.setId(serie.getId());
         userTvshow.setNome(serie.getOriginalName());
         userTvshow.setExternalIds(serie.getExternalIds());

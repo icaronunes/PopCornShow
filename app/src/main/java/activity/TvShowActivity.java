@@ -48,7 +48,6 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import adapter.TvShowAdapter;
 import br.com.icaro.filme.R;
@@ -207,13 +206,13 @@ public class TvShowActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (myWatch != null) {
+        if (valueEventWatch != null) {
             myWatch.removeEventListener(valueEventWatch);
         }
-        if (myRated != null) {
+        if (valueEventRated != null) {
             myRated.removeEventListener(valueEventRated);
         }
-        if (myFavorite != null) {
+        if (valueEventFavorite != null) {
             myFavorite.removeEventListener(valueEventFavorite);
         }
     }
@@ -606,7 +605,7 @@ public class TvShowActivity extends BaseActivity {
             if (idioma_padrao) {
                 TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
                 series = tmdbTv
-                        .getSeries(id_tvshow, Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry()
+                        .getSeries(id_tvshow,getLocale()
                                         //.toLanguageTag() não funciona na API 14
                                         + ",en,null"
                                 , images, credits, videos, external_ids);

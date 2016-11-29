@@ -1,6 +1,7 @@
 package activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -20,7 +21,7 @@ public class IntroActivity extends AppIntro {
     // Please DO NOT override onCreate. Use init
     @Override
     public void init(Bundle savedInstanceState) {
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // Add your slide's fragments here
         // AppIntro will automatically generate the dots indicator and buttons.
         addSlide(new FirstSlide(), getApplicationContext());

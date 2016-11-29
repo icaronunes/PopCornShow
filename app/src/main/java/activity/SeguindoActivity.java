@@ -2,6 +2,7 @@ package activity;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -23,28 +24,28 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.FavoriteAdapater;
+import adapter.SeguindoAdapater;
 import br.com.icaro.filme.R;
-import domian.FilmeDB;
-import domian.TvshowDB;
+import domian.UserTvshow;
 import utils.UtilsFilme;
 
-public class FavoriteActivity extends BaseActivity {
+/**
+ * Created by icaro on 25/11/16.
+ */
+public class SeguindoActivity extends BaseActivity{
 
-    private static final String TAG = FavoriteActivity.class.getName();
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private List<FilmeDB> movieDbs = new ArrayList<>();
-    private List<TvshowDB> tvSeries = new ArrayList<>();
     private ProgressBar progressBar;
     private LinearLayout linearLayout;
+    private DatabaseReference seguindoDataBase;
+    private ValueEventListener eventListener;
+    private List<UserTvshow> userTvshows = new ArrayList<>();
+    private final String TAG = SeguindoActivity.class.getName();
 
-    private DatabaseReference favoriteMovie, favoriteTv;
-    private ValueEventListener valueEventFavoriteMovie;
-    private ValueEventListener valueEventFavoriteTv;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuario_list);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -63,7 +64,6 @@ public class FavoriteActivity extends BaseActivity {
                 .build();
         adview.loadAd(adRequest);
 
-
         if (UtilsFilme.isNetWorkAvailable(this)){
 
             iniciarFirebases();
@@ -71,7 +71,6 @@ public class FavoriteActivity extends BaseActivity {
         } else {
             snack();
         }
-
     }
 
     private void iniciarFirebases() {
@@ -79,13 +78,9 @@ public class FavoriteActivity extends BaseActivity {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        favoriteMovie = database.getReference("users").child(mAuth.getCurrentUser()
-                .getUid()).child("favorites")
-                .child("movie");
+        seguindoDataBase = database.getReference("users").child(mAuth.getCurrentUser()
+                .getUid()).child("seguindo");
 
-        favoriteTv = database.getReference("users").child(mAuth.getCurrentUser()
-                .getUid()).child("favorites")
-                .child("tvshow");
     }
 
     protected void snack() {
@@ -118,46 +113,24 @@ public class FavoriteActivity extends BaseActivity {
         viewPager.setCurrentItem(0);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.accent));
-        viewPager.setAdapter(new FavoriteAdapater(FavoriteActivity.this, getSupportFragmentManager(),
-                movieDbs, tvSeries));
+        viewPager.setAdapter(new SeguindoAdapater(SeguindoActivity.this, getSupportFragmentManager(),
+                userTvshows));
     }
 
     private void setEventListenerFavorite() {
-        valueEventFavoriteMovie = new ValueEventListener() {
+        eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        movieDbs.add(snapshot.getValue(FilmeDB.class));
-                        Log.d(TAG, snapshot.getValue(FilmeDB.class).getTitle());
+                        userTvshows.add(snapshot.getValue(UserTvshow.class));
+                        Log.d(TAG, snapshot.getValue(UserTvshow.class).getNome());
                     }
+
                 }
-                setEventListenerFavoriteTv();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        favoriteMovie.addListenerForSingleValueEvent(valueEventFavoriteMovie);
-        //Chamando apenas uma vez, necessario? não poderia deixar o firebases atualizar?
-    }
-
-    private void setEventListenerFavoriteTv() {
-        valueEventFavoriteTv = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        tvSeries.add(snapshot.getValue(TvshowDB.class));
-                        Log.d(TAG, snapshot.getValue(TvshowDB.class).getTitle());
-                    }
-                }
-
                 setupViewPagerTabs();
+
                 progressBar.setVisibility(View.GONE);
             }
 
@@ -166,7 +139,7 @@ public class FavoriteActivity extends BaseActivity {
 
             }
         };
-        favoriteTv.addListenerForSingleValueEvent(valueEventFavoriteTv);
+        seguindoDataBase.addListenerForSingleValueEvent(eventListener);
         //Chamando apenas uma vez, necessario? não poderia deixar o firebases atualizar?
     }
 
@@ -174,11 +147,8 @@ public class FavoriteActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (valueEventFavoriteMovie != null){
-            favoriteMovie.removeEventListener(valueEventFavoriteMovie);
-        }
-        if (valueEventFavoriteTv != null) {
-            favoriteTv.removeEventListener(valueEventFavoriteTv);
+        if (eventListener != null){
+            seguindoDataBase.removeEventListener(eventListener);
         }
     }
 
