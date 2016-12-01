@@ -59,7 +59,6 @@ public class ListaFavoriteFragment extends Fragment {
         bundle.putSerializable(Constantes.FILME, (Serializable) movie);
         bundle.putInt(Constantes.ABA, tipo);
         fragment.setArguments(bundle);
-
         return fragment;
     }
 
@@ -69,7 +68,6 @@ public class ListaFavoriteFragment extends Fragment {
         bundle.putSerializable(Constantes.SERIE, (Serializable) tvshows);
         bundle.putInt(Constantes.ABA, tvshow);
         fragment.setArguments(bundle);
-
         return fragment;
     }
 

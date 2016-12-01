@@ -176,4 +176,5 @@
     <string name="falha_delete_conta">Erro ao tentar deletar conta. Necessario ter logado recentemente para esse processo.</string>
     <string name="calendar">Calendário</string>
     <string name="no_epsodio">Sem nome</string>
+    <string name="faltando">Faltando</string>
 </resources>

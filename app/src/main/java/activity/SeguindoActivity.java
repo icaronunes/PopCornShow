@@ -50,7 +50,7 @@ public class SeguindoActivity extends BaseActivity{
         setContentView(R.layout.activity_usuario_list);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
-        getSupportActionBar().setTitle(R.string.favorite);
+        getSupportActionBar().setTitle(R.string.seguindo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         viewPager = (ViewPager) findViewById(R.id.viewpage_usuario);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -121,16 +121,15 @@ public class SeguindoActivity extends BaseActivity{
         eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                userTvshows = new ArrayList<>();
                 if (dataSnapshot.exists()) {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         userTvshows.add(snapshot.getValue(UserTvshow.class));
                         Log.d(TAG, snapshot.getValue(UserTvshow.class).getNome());
                     }
-
                 }
                 setupViewPagerTabs();
-
                 progressBar.setVisibility(View.GONE);
             }
 

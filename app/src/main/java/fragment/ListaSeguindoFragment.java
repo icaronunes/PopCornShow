@@ -6,13 +6,20 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import adapter.CalendarAdapter;
@@ -28,8 +35,9 @@ public class ListaSeguindoFragment extends Fragment {
     final String TAG = ListaSeguindoFragment.class.getName();
     private List<UserTvshow> userTvshows;
     private int tipo;
-    private FirebaseAnalytics firebaseAnalytics;
     private RecyclerView recyclerViewCalendar;
+    private ValueEventListener eventListener;
+    private DatabaseReference seguindoDataBase;
 
     public static Fragment newInstanceMovie(int tipo, List<UserTvshow> userTvshows) {
         ListaSeguindoFragment fragment = new ListaSeguindoFragment();
@@ -47,9 +55,12 @@ public class ListaSeguindoFragment extends Fragment {
         if (getArguments() != null) {
             tipo = getArguments().getInt(Constantes.ABA);
             userTvshows = (List<UserTvshow>) getArguments().getSerializable(Constantes.SEGUINDO);
-
         }
-        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        seguindoDataBase = database.getReference("users").child(mAuth.getCurrentUser()
+                .getUid()).child("seguindo");
     }
 
     @Nullable
@@ -72,6 +83,34 @@ public class ListaSeguindoFragment extends Fragment {
         return null;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userTvshows = new ArrayList<>();
+                if (dataSnapshot.exists()) {
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        userTvshows.add(snapshot.getValue(UserTvshow.class));
+                        Log.d(TAG, snapshot.getValue(UserTvshow.class).getNome());
+                    }
+
+                    recyclerViewCalendar.setAdapter(new CalendarAdapter(getActivity(), userTvshows));
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        seguindoDataBase.addValueEventListener(eventListener);
+
+    }
+
     private View getViewCalendar(LayoutInflater inflater, ViewGroup container) {
             View view = inflater.inflate(R.layout.temporadas, container, false); // Criar novo layout
             view.findViewById(R.id.progressBarTemporadas).setVisibility(View.GONE);
@@ -79,9 +118,15 @@ public class ListaSeguindoFragment extends Fragment {
             recyclerViewCalendar.setHasFixedSize(true);
             recyclerViewCalendar.setItemAnimator(new DefaultItemAnimator());
             recyclerViewCalendar.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerViewCalendar.setAdapter(new CalendarAdapter(getActivity(), userTvshows
-                     ));
+            recyclerViewCalendar.setAdapter(new CalendarAdapter(getActivity(), userTvshows));
             return view;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (eventListener != null){
+            seguindoDataBase.removeEventListener(eventListener);
+        }
+    }
 }

@@ -127,7 +127,6 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         TextView nome, numero, nota, data;
         ImageView poster, bt_visto;
 
-
         public HoldeTemporada(View itemView) {
             super(itemView);
             nome = (TextView) itemView.findViewById(R.id.ep_name);

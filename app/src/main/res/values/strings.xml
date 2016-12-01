@@ -189,4 +189,5 @@
     <string name="id_oscar" translatable="false">28</string>
     <string name="calendar">Calendar</string>
     <string name="no_epsodio">Nameless</string>
+    <string name="faltando">Missing</string>
 </resources>

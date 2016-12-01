@@ -606,7 +606,6 @@ public class TvShowActivity extends BaseActivity {
                 TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
                 series = tmdbTv
                         .getSeries(id_tvshow,getLocale()
-                                        //.toLanguageTag() não funciona na API 14
                                         + ",en,null"
                                 , images, credits, videos, external_ids);
 
@@ -660,8 +659,6 @@ public class TvShowActivity extends BaseActivity {
                 setupViewPagerTabs();
                 setImageTop();
             }
-
-
 
             if (mAuth.getCurrentUser() != null) { // Arrumar
 

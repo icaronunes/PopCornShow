@@ -17,6 +17,7 @@ import java.util.List;
 
 import activity.BaseActivity;
 import activity.TemporadaActivity;
+import activity.TvShowActivity;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import domian.UserEp;
@@ -71,6 +72,17 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
                     }
                 });
+
+        holder.poster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, TvShowActivity.class);
+                intent.putExtra(Constantes.NOME_TVSHOW, userTvshow.getNome());
+                intent.putExtra(Constantes.TVSHOW_ID, userTvshow.getId());
+                intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(holder.poster));
+                context.startActivity(intent);
+            }
+        });
     }
 
     private int contagemDeFaltantes(UserTvshow userTvshow) {

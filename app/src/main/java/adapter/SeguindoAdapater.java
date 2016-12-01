@@ -49,7 +49,7 @@ public class SeguindoAdapater extends FragmentPagerAdapter {
             return context.getString(R.string.calendar);
         }
         if (position == 1) {
-            return context.getString(R.string.tvshow);
+            return context.getString(R.string.faltando);
         }
         return null;
     }

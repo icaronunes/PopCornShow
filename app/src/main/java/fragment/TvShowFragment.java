@@ -336,7 +336,6 @@ public class TvShowFragment extends Fragment {
                             Log.w(TAG, "Passou");
                             userTvshow = null; // ??????????
                             recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
-                            recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
                             recyclerViewTemporada.setAdapter(new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow));
                             if (progressBarTemporada != null) {
                                 Log.w(TAG, "Mudou - GONE");
@@ -353,7 +352,9 @@ public class TvShowFragment extends Fragment {
                 }
             };
 
-            myRef.child(mAuth.getCurrentUser().getUid()).child("seguindo").child(String.valueOf(series.getId())).addValueEventListener(postListener);
+            myRef.child(mAuth.getCurrentUser()
+                    .getUid()).child("seguindo").child(String.valueOf(series.getId()))
+                    .addValueEventListener(postListener);
         }
     }
 
