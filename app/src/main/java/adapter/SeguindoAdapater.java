@@ -33,11 +33,11 @@ public class SeguindoAdapater extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return ListaSeguindoFragment.newInstanceMovie(position, userTvshows);
+            return ListaSeguindoFragment.newInstance(position, userTvshows);
         }
 
-        if (position ==1){
-            return ListaSeguindoFragment.newInstanceMovie(position, userTvshows);
+        if (position == 1){
+            return ListaSeguindoFragment.newInstance(position, userTvshows);
         }
 
         return null;
@@ -46,10 +46,10 @@ public class SeguindoAdapater extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
-            return context.getString(R.string.calendar);
+            return context.getString(R.string.proximos);
         }
         if (position == 1) {
-            return context.getString(R.string.faltando);
+            return context.getString(R.string.seguindo);
         }
         return null;
     }

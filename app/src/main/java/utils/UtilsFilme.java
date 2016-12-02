@@ -24,13 +24,14 @@ import java.util.Locale;
 import domian.FilmeService;
 import info.movito.themoviedbapi.model.config.Timezone;
 
+
 /**
  * Created by icaro on 24/06/16.
  */
 
 public class UtilsFilme {
 
-    private static final String TAG = "UtilsFilme";
+    private static final String TAG = UtilsFilme.class.getName();
 
     public static void toast(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
@@ -69,21 +70,45 @@ public class UtilsFilme {
     }
 
     public static  boolean verificaDataProximaLancamento(Date air_date) {
-        boolean data;
-        //Arrumar. Ta esquisito.
-        Date myDate = Calendar.getInstance().getTime();
-        Log.d(TAG, "Hoje " + myDate);
-        Log.d(TAG, "Emissao " + air_date);
-        myDate.setMonth(myDate.getMonth() + 1);
-        Log.d(TAG, "Depois " + myDate);
-        if (air_date.before(myDate)) {
-            data = true;
-        } else if (air_date.after(myDate))
-            data = false;
-        else
-            data = true;
-        return data;
+
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(air_date);
+        Calendar hoje = Calendar.getInstance();
+        hoje.setTime(Calendar.getInstance().getTime());
+        //Log.d(TAG, "" + calendar.get(Calendar.WEEK_OF_YEAR));
+       // Log.d(TAG, "" + hoje.get(Calendar.WEEK_OF_YEAR));
+
+        if (calendar.after(hoje) ){
+            return false;
+        } else {
+            if (calendar.get(Calendar.YEAR) == hoje.get(Calendar.YEAR)){
+                if (calendar.get(Calendar.WEEK_OF_YEAR) == hoje.get(Calendar.WEEK_OF_YEAR) ){
+
+                    return true;
+                }
+
+            }
+            return false;
+        }
     }
+
+//    public static  boolean verificaDataProximaLancamento(Date air_date) {
+//        boolean data;
+//        //Arrumar. Ta esquisito.
+//        Date myDate = Calendar.getInstance().getTime();
+//        Log.d(TAG, "Hoje " + myDate);
+//        Log.d(TAG, "Emissao " + air_date);
+//        myDate.setMonth(myDate.getMonth() + 1);
+//        Log.d(TAG, "Depois " + myDate);
+//        if (air_date.before(myDate)) {
+//            data = true;
+//        } else if (air_date.after(myDate))
+//            data = false;
+//        else
+//            data = true;
+//        return data;
+//    }
 
     public static void writeBytes(File file, byte[] bytes) {
         try {

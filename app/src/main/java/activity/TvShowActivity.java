@@ -611,6 +611,7 @@ public class TvShowActivity extends BaseActivity {
 
                 series.getVideos().addAll(tmdbTv.getSeries(id_tvshow, null, videos).getVideos());
                 series.getImages().setPosters(tmdbTv.getSeries(id_tvshow, null, images).getImages().getPosters());
+                Log.d(TAG, String.valueOf(series.getNumberOfEpisodes()));
 
             } else {
                 series = FilmeService.getTmdbTvShow()

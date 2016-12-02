@@ -172,5 +172,6 @@ No information about the collection.</string>
     <string name="falha_delete_conta">Error while trying to delete account. You must have logged in to this process recently.</string>
     <string name="calendar">Calendar</string>
     <string name="no_epsodio">Nameless</string>
-    <string name="faltando">Missing</string>
+    <string name="proximos">Upcoming</string>
+    <string name="new_segiundo">New</string>
 </resources>

@@ -3,6 +3,7 @@ package adapter;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import activity.BaseActivity;
@@ -30,35 +34,39 @@ import utils.UtilsFilme;
 /**
  * Created by icaro on 25/11/16.
  */
-public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder> {
-    private static final String TAG = CalendarAdapter.class.getName();
+public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.CalendarViewHolder> {
+    private static final String TAG = ProximosAdapter.class.getName();
     FragmentActivity context;
     List<UserTvshow> userTvshows;
     int color;
 
-    public CalendarAdapter(FragmentActivity activity, List<UserTvshow> userTvshows) {
+    public ProximosAdapter(FragmentActivity activity, List<UserTvshow> userTvshows) {
         this.context = activity;
         this.userTvshows = userTvshows;
+        Log.d(TAG,"ProximosAdapter" );
     }
 
 
     @Override
     public CalendarViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.calendar_adapter, parent, false);
-        return new CalendarAdapter.CalendarViewHolder(view);
+        Log.d(TAG,"CalendarViewHolder" );
+        return new ProximosAdapter.CalendarViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final CalendarViewHolder holder, int position) {
-        int vistos;
+        Log.d(TAG,"onBindViewHolder" );
+        int vistos, total;
         final UserTvshow userTvshow = userTvshows.get(position);
         holder.title.setText(userTvshow.getNome());
 
         vistos  = contagemDeFaltantes(userTvshow);
-        holder.faltando.setText(vistos + "/" + userTvshow.getNumberOfEpisodes());
+        total = contamgeTotalEp(userTvshow);
+        holder.faltando.setText(vistos + "/" + total);
         holder.progressBar.setMax(userTvshow.getNumberOfEpisodes());
         holder.progressBar.setProgress(vistos);
-        getEpTitle(userTvshow, holder.ep_title, holder.proximo, holder.date, holder.itemView);
+        getEpTitle(userTvshow, holder.ep_title, holder.proximo, holder.date, holder.itemView, holder.new_seguindo);
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + userTvshow.getPoster())
                 .error(R.drawable.poster_empty)
                 .into(holder.poster, new Callback() {
@@ -83,6 +91,20 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                 context.startActivity(intent);
             }
         });
+        if ((userTvshow.getNumberOfEpisodes() - vistos) > 0) {
+            holder.eps_faltantes.setText("+" + String.valueOf(userTvshow.getNumberOfEpisodes() - vistos));
+        }
+    }
+
+    private int contamgeTotalEp(UserTvshow userTvshow) {
+        int total =0;
+
+        for (UserSeasons seasons : userTvshow.getSeasons()) {
+            if (seasons.getSeasonNumber() != 0)
+            total = total + seasons.getUserEps().size();
+        }
+
+        return total;
     }
 
     private int contagemDeFaltantes(UserTvshow userTvshow) {
@@ -101,6 +123,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
     @Override
     public int getItemCount() {
+        Log.d(TAG,"getItemCount" );
         if (userTvshows != null) {
             return userTvshows.size();
         }
@@ -108,7 +131,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     }
 
     public void getEpTitle(final UserTvshow userTvshow, final TextView ep_title, final TextView proximo,
-                           final TextView date, final View itemView) {
+                           final TextView date, final View itemView, final TextView new_seguindo) {
         int posicao = 0; //Gambiara. Tentar arrumar
         for (final UserSeasons seasons : userTvshow.getSeasons()) {
 
@@ -130,6 +153,19 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                                                 .setText(tvEpisode.getName() != null && !tvEpisode.getName().equals("") ? tvEpisode.getName() :
                                                         context.getResources().getString(R.string.no_epsodio));
                                         date.setText(" - " +tvEpisode.getAirDate());
+
+                                        Date date = null;
+                                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                        try {
+                                            date = sdf.parse(tvEpisode.getAirDate());
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        if (UtilsFilme.verificaDataProximaLancamento(date)){
+                                            new_seguindo.setVisibility(View.VISIBLE);
+                                        }
+
                                         itemView.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
@@ -140,7 +176,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                                                 intent.putExtra(Constantes.NOME, userTvshow.getNome());
                                                 intent.putExtra(Constantes.COLOR_TOP, color);
                                                 context.startActivity(intent);
-
                                             }
                                         });
                                     }
@@ -158,7 +193,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     public class CalendarViewHolder extends RecyclerView.ViewHolder {
 
         ImageView poster;
-        TextView proximo, title, faltando, ep_title, date;
+        TextView proximo, title, faltando, ep_title, date, eps_faltantes, new_seguindo;
         ProgressBar progressBar;
 
         public CalendarViewHolder(View itemView) {
@@ -168,9 +203,12 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             proximo = (TextView) itemView.findViewById(R.id.calendar_proximo_ver);
             title = (TextView) itemView.findViewById(R.id.calendar_title);
             date = (TextView) itemView.findViewById(R.id.calendar_date);
-            faltando = (TextView) itemView.findViewById(R.id.calendar_faltantes);
+            faltando = (TextView) itemView.findViewById(R.id.calendar_faltante);
             ep_title = (TextView) itemView.findViewById(R.id.calendar_ep_title);
             progressBar = (ProgressBar) itemView.findViewById(R.id.calendar_progress);
+            eps_faltantes = (TextView) itemView.findViewById(R.id.calendar_eps_faltantes);
+            new_seguindo = (TextView) itemView.findViewById(R.id.new_seguindo);
+
 
         }
     }

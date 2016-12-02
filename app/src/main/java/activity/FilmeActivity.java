@@ -334,13 +334,13 @@ public class FilmeActivity extends BaseActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+
                 if (!UtilsFilme.verificaLancamento(date)) {
                     bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Tentativa de Rated fora da data de lançamento");
                     mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                     Toast.makeText(FilmeActivity.this, getString(R.string.filme_nao_lancado), Toast.LENGTH_SHORT).show();
                 } else {
-
                     final Dialog alertDialog = new Dialog(FilmeActivity.this);
                     alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     alertDialog.setContentView(R.layout.adialog_custom_rated);
