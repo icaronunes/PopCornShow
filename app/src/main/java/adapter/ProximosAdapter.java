@@ -37,26 +37,26 @@ import utils.UtilsFilme;
 public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.CalendarViewHolder> {
     private static final String TAG = ProximosAdapter.class.getName();
     FragmentActivity context;
-    List<UserTvshow> userTvshows;
+    final List<UserTvshow> userTvshows;
     int color;
 
     public ProximosAdapter(FragmentActivity activity, List<UserTvshow> userTvshows) {
         this.context = activity;
         this.userTvshows = userTvshows;
-        Log.d(TAG,"ProximosAdapter" );
+        //Log.d(TAG,"ProximosAdapter" );
     }
 
 
     @Override
     public CalendarViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.calendar_adapter, parent, false);
-        Log.d(TAG,"CalendarViewHolder" );
+        final View view = LayoutInflater.from(context).inflate(R.layout.calendar_adapter, parent, false);
+        //Log.d(TAG,"CalendarViewHolder" );
         return new ProximosAdapter.CalendarViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final CalendarViewHolder holder, int position) {
-        Log.d(TAG,"onBindViewHolder" );
+        //Log.d(TAG,"onBindViewHolder" );
         int vistos, total;
         final UserTvshow userTvshow = userTvshows.get(position);
         holder.title.setText(userTvshow.getNome());
@@ -134,7 +134,6 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
                            final TextView date, final View itemView, final TextView new_seguindo) {
         int posicao = 0; //Gambiara. Tentar arrumar
         for (final UserSeasons seasons : userTvshow.getSeasons()) {
-
             if (seasons.getSeasonNumber() != 0) {
                 for (final UserEp userEp : seasons.getUserEps()) {
                     if (!userEp.isAssistido()) {
@@ -164,6 +163,8 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
 
                                         if (UtilsFilme.verificaDataProximaLancamento(date)){
                                             new_seguindo.setVisibility(View.VISIBLE);
+                                        } else {
+                                            new_seguindo.setVisibility(View.GONE);
                                         }
 
                                         itemView.setOnClickListener(new View.OnClickListener() {

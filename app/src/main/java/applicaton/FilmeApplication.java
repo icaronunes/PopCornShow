@@ -36,7 +36,7 @@ public class FilmeApplication extends Application {
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .init();
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        mFirebaseAnalytics.setAnalyticsCollectionEnabled(false);
+        mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
 
     }
 

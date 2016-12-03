@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -43,7 +45,21 @@ public class SeguindodAdapter extends RecyclerView.Adapter<SeguindodAdapter.Segu
         final UserTvshow userTvshow = userTvshows.get(position);
         Picasso.with(activity).load(UtilsFilme.getBaseUrlImagem(2) + userTvshow.getPoster())
                 .error(R.drawable.poster_empty)
-                .into(holder.poster);
+                .into(holder.poster, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+                        holder.title.setText(userTvshow.getNome());
+                        holder.title.setVisibility(View.VISIBLE);
+                    }
+                });
+
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,10 +85,12 @@ public class SeguindodAdapter extends RecyclerView.Adapter<SeguindodAdapter.Segu
     public class SeguindoViewHolder extends RecyclerView.ViewHolder {
 
         ImageView poster;
+        TextView title;
 
         public SeguindoViewHolder(View itemView) {
             super(itemView);
             poster = (ImageView) itemView.findViewById(R.id.seguindo_imageView);
+            title = (TextView) itemView.findViewById(R.id.seguindo_title);
         }
     }
 }

@@ -56,7 +56,7 @@ public class UtilsFilme {
         return false;
     }
 
-    public static  boolean verificaLancamento(Date air_date) {
+    public static boolean verificaLancamento(Date air_date) {
         boolean data;
         //Arrumar. Ta esquisito.
         Date myDate = Calendar.getInstance().getTime();
@@ -69,25 +69,25 @@ public class UtilsFilme {
         return data;
     }
 
-    public static  boolean verificaDataProximaLancamento(Date air_date) {
+    public static boolean verificaDataProximaLancamento(Date air_date) {
 
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(air_date);
         Calendar hoje = Calendar.getInstance();
         hoje.setTime(Calendar.getInstance().getTime());
-        //Log.d(TAG, "" + calendar.get(Calendar.WEEK_OF_YEAR));
-       // Log.d(TAG, "" + hoje.get(Calendar.WEEK_OF_YEAR));
+      //  Log.d(TAG, "" + calendar.get(Calendar.DATE));
+      //  Log.d(TAG, "" + hoje.get(Calendar.DATE));
 
-        if (calendar.after(hoje) ){
+        if (calendar.after(hoje)) {
             return false;
         } else {
-            if (calendar.get(Calendar.YEAR) == hoje.get(Calendar.YEAR)){
-                if (calendar.get(Calendar.WEEK_OF_YEAR) == hoje.get(Calendar.WEEK_OF_YEAR) ){
-
-                    return true;
-                }
-
+            if (calendar.get(Calendar.YEAR) == hoje.get(Calendar.YEAR)) {
+                    if (calendar.get(Calendar.WEEK_OF_YEAR) == hoje.get(Calendar.WEEK_OF_YEAR)) {
+                        Log.d(TAG, "calendar " + calendar.get(Calendar.WEEK_OF_YEAR));
+                        Log.d(TAG, "hoje " + hoje.get(Calendar.WEEK_OF_YEAR));
+                        return true;
+                    }
             }
             return false;
         }
@@ -124,7 +124,7 @@ public class UtilsFilme {
 
     }
 
-    public static  File salvaImagemMemoriaCache(Context context, ImageView imageView, String endereco) {
+    public static File salvaImagemMemoriaCache(Context context, ImageView imageView, String endereco) {
         //Usar metodo do BaseActivity
         File file = context.getExternalCacheDir();
 
@@ -193,7 +193,7 @@ public class UtilsFilme {
 
     public static Timezone getTimezone() {
         for (Timezone timezone : FilmeService.getTimeZone()) {
-            if (timezone.getCountry().equals(Locale.getDefault().getCountry())){
+            if (timezone.getCountry().equals(Locale.getDefault().getCountry())) {
                 Log.d("Timezone", timezone.getCountry());
                 return timezone;
             }
@@ -211,7 +211,7 @@ public class UtilsFilme {
             Palette.Builder builder = new Palette.Builder(bitmap);
             Palette palette = builder.generate();
             for (Palette.Swatch swatch : palette.getSwatches()) {
-               return swatch.getRgb();
+                return swatch.getRgb();
             }
         }
         return 0;

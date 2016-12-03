@@ -9,8 +9,7 @@
 
     <string name="top_rated">Melhores Avaliados</string>
     <string name="upcoming">Em Breve</string>
-    <string name="categoria">Categoria:</string>
-    <string name="time">Tempo:</string>
+
     <string name="sem_sinopse">Sem Sinopse</string>
     <string name="minutos">mins</string>
     <string name="não_informado">N/A</string>
@@ -30,7 +29,7 @@
     <string name="horas">horas</string>
     <string name="hora">hora</string>
     <string name="author">Autor:</string>
-    <string name="treiler">Treiler</string>
+
     <string name="por_tras_camera_filme">Produção do Filme</string>
     <string name="por_tras_camera_tvshow">Produção da Série</string>
 
@@ -57,16 +56,16 @@
     <string name="quero_assistir">Quero Assistir</string>
 
     <string name="excluir_filme">Excluir Filme ?</string>
-    <string name="desfazer">Desfazer</string>
+
     <string name="no">Não</string>
     <string name="filme_rated">Filme Classificado</string>
     <string name="falha_rated">Falha na classificação</string>
     <string name="filme_add_favorite">Filme Adicionado ao Favoritos</string>
-    <string name="filme_re_add">Filme adicionado novamente</string>
-    <string name="tvshow_re_add">Série adicionado novamente</string>
+
+
     <string name="filme_remove_favorite">Filme removido da lista Favoritos</string>
     <string name="tvshow_remove_favorite">Série removido da lista Favoritos</string>
-    <string name="erro_add_or_remove">Ops! Algo deu errado.</string>
+
     <string name="filme_add_watchlist">Adicionado ao \"Ver depois\"</string>
     <string name="filme_remove">Filme removido</string>
     <!--<string name="crews">Outros</string>-->
@@ -88,7 +87,7 @@
     <string name="writer">Escrito</string>
     <string name="air_date">Passando na TV</string>
     <string name="vote_average">Votos</string>
-    <string name="sem_titulo">Sem Titulo</string>
+
     <string name="tvshow_rated">Epsodio Classificado</string>
     <string name="classificar">Classificar</string>
     <string name="returnin_series">Renovada</string>
@@ -101,10 +100,10 @@
     <string name="compartilhar_tvshow">Compartilhando Séries</string>
     <string name="idioma_padrao">Idioma do Android</string>
     <string name="idioma_padrao_subtitle">Idioma Inglês contem mais informações no TMDB. Caso não uso o padrão do Android, este será usado.</string>
-    <string name="pref_idioma_en">Idioma com mais informações é o Inglês (\"En\")</string>
+
     <string name="ver_imdb">Ver no IMDB</string>
     <string name="ver_tmdb">Ver no TMDB</string>
-    <string name="na_tv">Passando na TV</string>
+
     <string name="today">Na Tv Hoje</string>
     <string name="em_breve">Em Breve</string>
     <string name="home">Principal</string>
@@ -112,7 +111,7 @@
     <string name="title_logoff_dialog">Deslogar do TMDB?</string>
     <string name="cancel">Cancelar</string>
     <string name="text_logoff_dialog">Apos deslogar, não será possivel interagir com o aplicativo.</string>
-    <string name="no_login">Não conectou</string>
+
     <string name="tvshow_add_favorite">Série adicionada aos Favoritos</string>
     <string name="filme_nao_lancado">Filme ainda não foi lançado</string>
     <string name="tvshow_nao_lancado">Série ainda não lançada</string>
@@ -126,7 +125,7 @@
     <string name="person_rated">Pessoas Populares</string>
     <string name="oscar">Vencedores de Oscar</string>
     <string name="criar_login_popcorn">Criar login PopCorn</string>
-    <string name="erro">Erro Youtube</string>
+
     <string name="sem_informacao_colletion">Não há informação sobre a coleção</string>
     <string name="erro_ainda_sem_imagem">Ainda sem imagem, tente novamente.</string>
     <string name="random">Random</string>
@@ -178,4 +177,9 @@
     <string name="no_epsodio">Sem nome</string>
     <string name="proximos">Próximos</string>
     <string name="new_segiundo">Novo</string>
+    <string name="conta_deletada">Conta deletada</string>
+    <string name="msg_parar_seguir">Se parar de seguir, perde todo o progresso da Série</string>
+    <string name="title_delete">Para de seguir a Série?</string>
+    <string name="erro_seguir">Erro, tente novamente</string>
+    <string name="subtitle_intro_5">Crie seu login e aproveite</string>
 </resources>

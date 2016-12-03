@@ -39,7 +39,7 @@
 
         <item
             android:id="@+id/seguindo"
-            android:icon="@drawable/icon_favorite"
+            android:icon="@drawable/seguindo"
             android:title="@string/seguindo" />
 
         <item

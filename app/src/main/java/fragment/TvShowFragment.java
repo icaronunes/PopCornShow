@@ -3,6 +3,7 @@ package fragment;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -610,12 +612,24 @@ public class TvShowFragment extends Fragment {
 
                 } else {
                     Log.d(TAG, "delete");
-                    myRef.child(mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "")
-                            .child("seguindo")
-                            .child(String.valueOf(series.getId()))
-                            .removeValue();
-                    seguindo = !seguindo;
-                    isSeguindo();
+
+                    AlertDialog dialog = new AlertDialog.Builder(getContext())
+                            .setTitle(R.string.title_delete)
+                            .setMessage(R.string.msg_parar_seguir)
+                            .setNegativeButton(R.string.no, null)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    myRef.child(mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "")
+                                            .child("seguindo")
+                                            .child(String.valueOf(series.getId()))
+                                            .removeValue();
+                                    seguindo = !seguindo;
+                                    isSeguindo();
+                                }
+                            }).create();
+
+                    dialog.show();
                 }
             }
         };
