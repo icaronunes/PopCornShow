@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.graphics.Palette;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,14 +56,14 @@ public class CollectionPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        Log.d("CollectionPagerAdapter", "getCount");
-        Log.d("CollectionPagerAdapter", ""+ info.getParts().size());
+       // Log.d("CollectionPagerAdapter", "getCount");
+      //  Log.d("CollectionPagerAdapter", ""+ info.getParts().size());
         return info.getParts().size() > 0 ? info.getParts().size() : 0;
     }
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        Log.d("CollectionPagerAdapter", "isViewFromObject");
+      //  Log.d("CollectionPagerAdapter", "isViewFromObject");
         return view == object;
 
     }
@@ -98,7 +97,7 @@ public class CollectionPagerAdapter extends PagerAdapter {
         interno.setOnClickListener(this.onClickListenerInterno(position));
         externo = (Button) view.findViewById(R.id.dialogExterno);
         externo.setOnClickListener(this.onClickListenerExterno(position));
-        Log.d("CollectionPagerAdapter", "instantiateItem");
+       // Log.d("CollectionPagerAdapter", "instantiateItem");
         String ano = "xxxx";
         if (info.getParts().get(position).getReleaseDate() != null) {
             ano = info.getParts().get(position).getReleaseDate();
@@ -158,7 +157,7 @@ public class CollectionPagerAdapter extends PagerAdapter {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(string));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Log.d("icon_collection", string.toString());
+              //  Log.d("icon_collection", string.toString());
                 getContext().startActivity(intent);
 
                 Bundle bundle = new Bundle();
@@ -174,7 +173,7 @@ public class CollectionPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        Log.d("CollectionPagerAdapter", "destroyItem");
+       // Log.d("CollectionPagerAdapter", "destroyItem");
         ((ViewPager) container).removeView((View) object);
     }
 

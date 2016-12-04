@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -148,7 +147,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     public void onClick(View view) {
                         TextInputLayout editText = (TextInputLayout) dialog.findViewById(R.id.ed_email_recuperar);
                         final String email = editText.getEditText().getText().toString();
-                        Log.d(TAG, email);
+                       // Log.d(TAG, email);
                         if (email.contains("@") && email.contains(".")){
                             mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -226,18 +225,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.d(TAG, "facebook:onSuccess: " + loginResult.getAccessToken());
+              //  Log.d(TAG, "facebook:onSuccess: " + loginResult.getAccessToken());
                 accessFacebook(loginResult.getAccessToken());
             }
 
             @Override
             public void onCancel() {
-                Log.d(TAG, "facebook:onCancel ");
+               // Log.d(TAG, "facebook:onCancel ");
             }
 
             @Override
             public void onError(FacebookException error) {
-                Log.d(TAG, "facebook:onError ", error);
+               // Log.d(TAG, "facebook:onError ", error);
             }
         });
 
@@ -281,8 +280,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                        Log.d(TAG, "signInWithEmail:onComplete: " + email.getText().toString() + " " + pass.getText().toString());
+                      //  Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                     //   Log.d(TAG, "signInWithEmail:onComplete: " + email.getText().toString() + " " + pass.getText().toString());
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
@@ -296,7 +295,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "signInWithEmail:failed " + e.getMessage());
+              //  Log.w(TAG, "signInWithEmail:failed " + e.getMessage());
             }
         });
     }
@@ -311,7 +310,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 } else {
-                    Log.d(TAG, "não logou... ");
+                 //   Log.d(TAG, "não logou... ");
                 }
             }
         };
@@ -333,10 +332,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
-                Log.d(TAG, account.getDisplayName());
+               // Log.d(TAG, account.getDisplayName());
                 accessGoogle(account.getIdToken());
             } else {
-                Log.d(TAG, "Falha no login Google");
+               // Log.d(TAG, "Falha no login Google");
             }
         } else {
             mCallbackManager.onActivityResult(requestCode, resultCode, data);
@@ -355,7 +354,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             AuthCredential credential = FacebookAuthProvider.getCredential(tokens[0]);
 
-            Log.d(TAG, "credencial :" + credential.getProvider());
+          //  Log.d(TAG, "credencial :" + credential.getProvider());
             credential = provider.equalsIgnoreCase("google") ? GoogleAuthProvider.getCredential(tokens[0], null) : credential;
 
             mAuth.signInWithCredential(credential)
@@ -372,7 +371,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d(TAG, e.getMessage());
+                         //   Log.d(TAG, e.getMessage());
                             Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                             mAuthProgressDialog.dismiss();
                         }
@@ -388,13 +387,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
     public void criarLoginEmail(String email, String pass) {
-        Log.d(TAG, "createUserWithEmail:Email: " + email);
+      //  Log.d(TAG, "createUserWithEmail:Email: " + email);
         mAuthProgressDialog.show();
         mAuth.createUserWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                     //   Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
@@ -409,7 +408,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "getMessage : " + e.getMessage());
+             //   Log.d(TAG, "getMessage : " + e.getMessage());
                 Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
@@ -434,7 +433,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, "falhou:" + connectionResult.getErrorMessage());
+      //  Log.d(TAG, "falhou:" + connectionResult.getErrorMessage());
     }
 
     public void logarAnonimous() {
@@ -442,14 +441,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInAnonymously:onComplete:" + task.isSuccessful());
+                      //  Log.d(TAG, "signInAnonymously:onComplete:" + task.isSuccessful());
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         Toast.makeText(LoginActivity.this, getResources().getString(R.string.anonimo_alerta),
                                 Toast.LENGTH_LONG).show();
                         if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInAnonymously", task.getException());
+                        //    Log.w(TAG, "signInAnonymously", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }

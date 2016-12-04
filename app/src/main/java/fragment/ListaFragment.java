@@ -12,7 +12,6 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +84,7 @@ public class ListaFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView");
+       // Log.d(TAG, "onCreateView");
         switch (tipo) {
 
             case R.string.filme: {
@@ -122,7 +121,7 @@ public class ListaFragment extends Fragment {
 
             @Override
             public void onClickLong(View view, final int position) {
-                Log.d("setupNavDrawer", "Login");
+               // Log.d("setupNavDrawer", "Login");
                 final boolean[] status = {false};
                 final Dialog alertDialog = new Dialog(getActivity());
                 alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -132,7 +131,7 @@ public class ListaFragment extends Fragment {
                 final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
                 int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
                 int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
-                Log.d(TAG, "Valor Rated" + movies.getResults().get(position).getUserRating());
+               // Log.d(TAG, "Valor Rated" + movies.getResults().get(position).getUserRating());
                 ratingBar.setRating(movies.getResults().get(position).getUserRating());
 
                 alertDialog.getWindow().setLayout(width, height);
@@ -140,7 +139,7 @@ public class ListaFragment extends Fragment {
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d(TAG, "Adialog Rated");
+                       // Log.d(TAG, "Adialog Rated");
                         final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
                                 android.R.style.Theme_Material_Dialog);
                         progressDialog.setIndeterminate(true);

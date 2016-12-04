@@ -1,7 +1,5 @@
 package onsignal;
 
-import android.util.Log;
-
 import com.onesignal.OSNotification;
 import com.onesignal.OneSignal;
 
@@ -18,7 +16,7 @@ public class CustomNotificationReceivedHandler implements OneSignal.Notification
         JSONObject data = notification.payload.additionalData;
 
         if (data != null) {
-            Log.i("Log", "notificationReceived: " + data);
+           // Log.i("Log", "notificationReceived: " + data);
         }
     }
 }

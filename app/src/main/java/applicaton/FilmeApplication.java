@@ -3,7 +3,6 @@ package applicaton;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
-import android.util.Log;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.onesignal.OneSignal;
@@ -29,7 +28,7 @@ public class FilmeApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        Log.d(TAG, "FilmeApplication.onCreate");
+       // Log.d(TAG, "FilmeApplication.onCreate");
         OneSignal.startInit(this)
                 .setNotificationOpenedHandler(new CustomNotificationOpenedHandler())
                 .setNotificationReceivedHandler(new CustomNotificationReceivedHandler())

@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -142,10 +141,10 @@ public class ElencoActivity extends BaseActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            Log.d("ElencoActivity", "ID " + id);
+          //  Log.d("ElencoActivity", "ID " + id);
 
             if (Multi.MediaType.TV_SERIES.equals(mediaType) && season != -100){
-                Log.d("ElencoActivity", "" + season);
+          //      Log.d("ElencoActivity", "" + season);
                 creditsTvShow = FilmeService.getTmdbTvSeasons().getSeason(id, season, "en", TmdbTvSeasons.SeasonMethod.credits).getCredits();
             }
 
@@ -156,7 +155,7 @@ public class ElencoActivity extends BaseActivity {
             if (Multi.MediaType.MOVIE.equals(mediaType)) {
                 TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
                 movies = tmdbMovies.getMovie(id, "en", TmdbMovies.MovieMethod.credits);
-                Log.d("ElencoActivity", "" + movies.getCredits().getCast().size());
+            //    Log.d("ElencoActivity", "" + movies.getCredits().getCast().size());
             }
             return null;
         }
@@ -164,7 +163,7 @@ public class ElencoActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(Void aVoid){
-            Log.d("ElencoActivity", "onPostExecute");
+          //  Log.d("ElencoActivity", "onPostExecute");
             progressBar.setVisibility(View.GONE);
             if (Multi.MediaType.MOVIE.equals(mediaType)) {
                 recyclerView.setAdapter(new ElencoAdapter(ElencoActivity.this, movies.getCredits().getCast()));

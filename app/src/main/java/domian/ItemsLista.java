@@ -1,7 +1,5 @@
 package domian;
 
-import android.util.Log;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -166,18 +164,18 @@ public class ItemsLista  implements Comparable<ItemsLista>{
     @Override
     public int compareTo(ItemsLista itemsLista) {
             if (this.getReleaseDate() == null){
-                Log.d("Log", "Filme sem Realease This title : " +this.title);
-                Log.d("Log", "Filme sem Realease This title : " +this.getOriginalTitle());
-                Log.d("Log", "Filme sem Realease This id : " +this.getId());
-                Log.d("Log", "Filme sem Realease itemLista id: " +this.getPosterPath());
+//                Log.d("Log", "Filme sem Realease This title : " +this.title);
+//                Log.d("Log", "Filme sem Realease This title : " +this.getOriginalTitle());
+//                Log.d("Log", "Filme sem Realease This id : " +this.getId());
+//                Log.d("Log", "Filme sem Realease itemLista id: " +this.getPosterPath());
                 return 1;
         }
 
         if (itemsLista.getReleaseDate() == null){
-            Log.d("Log", "Filme sem Realease itemLista title: " +itemsLista.getTitle());
-            Log.d("Log", "Filme sem Realease itemLista title: " +itemsLista.getOriginalTitle());
-            Log.d("Log", "Filme sem Realease itemLista id: " +itemsLista.getId());
-            Log.d("Log", "Filme sem Realease itemLista id: " +itemsLista.getPosterPath());
+//            Log.d("Log", "Filme sem Realease itemLista title: " +itemsLista.getTitle());
+//            Log.d("Log", "Filme sem Realease itemLista title: " +itemsLista.getOriginalTitle());
+//            Log.d("Log", "Filme sem Realease itemLista id: " +itemsLista.getId());
+//            Log.d("Log", "Filme sem Realease itemLista id: " +itemsLista.getPosterPath());
             return 1;
         }
 

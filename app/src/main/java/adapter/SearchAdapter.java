@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +66,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
                     int color = UtilsFilme.loadPalette(imageView);
                     intent.putExtra(Constantes.COLOR_TOP, color);
                     intent.putExtra(Constantes.FILME_ID, movieDb.getId());
-                    Log.d("setOnItemClickListener", movieDb.getOriginalTitle());
+                  //  Log.d("setOnItemClickListener", movieDb.getOriginalTitle());
                     intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
                     context.startActivity(intent);
 
@@ -102,7 +101,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
                     int color = UtilsFilme.loadPalette(imageView);
                     intent.putExtra(Constantes.COLOR_TOP, color);
                     intent.putExtra(Constantes.TVSHOW_ID, series.getId());
-                    Log.d("setOnItemClickListener", series.getName());
+                  //  Log.d("setOnItemClickListener", series.getName());
                     intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
                     context.startActivity(intent);
 
@@ -137,7 +136,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
                     int color = UtilsFilme.loadPalette(imageView);
                     intent.putExtra(Constantes.COLOR_TOP, color);
                     intent.putExtra(Constantes.PERSON_ID, person.getId());
-                    Log.d("setOnItemClickListener", person.getName());
+                  //  Log.d("setOnItemClickListener", person.getName());
                     intent.putExtra(Constantes.NOME_PERSON, person.getName());
                     context.startActivity(intent);
 

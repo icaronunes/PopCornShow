@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +87,7 @@ public class EpsodioFragment extends Fragment {
 
         EpsodioFragment fragment = new EpsodioFragment();
         Bundle bundle = new Bundle();
-        Log.d("TvShowFragment", "Series " + tvEpisode.getName());
+       // Log.d("TvShowFragment", "Series " + tvEpisode.getName());
         bundle.putSerializable(Constantes.EPSODIO, tvEpisode);
         bundle.putInt(Constantes.TVSHOW_ID, tvshow_id);
         bundle.putInt(Constantes.COLOR_TOP, color);
@@ -203,9 +202,9 @@ public class EpsodioFragment extends Fragment {
                 userEp = dataSnapshot.getValue(UserEp.class);
 
                 if (userEp != null) {
-                    Log.d(TAG, "onDataChange");
-                    Log.d(TAG, "key: " + dataSnapshot.getKey());
-                    Log.d(TAG, "assistido " + userEp.isAssistido());
+                 //   Log.d(TAG, "onDataChange");
+                //    Log.d(TAG, "key: " + dataSnapshot.getKey());
+                 //   Log.d(TAG, "assistido " + userEp.isAssistido());
 
                     if (userEp.isAssistido()) {
                         ep_rating_button.setBackground(getResources().getDrawable(R.drawable.button_visto));
@@ -305,7 +304,7 @@ public class EpsodioFragment extends Fragment {
                         public void onClick(View v) {
 
                             if (seguindo) {
-                                Log.d(TAG, "não visto");
+                               // Log.d(TAG, "não visto");
 
                                 Map<String, Object> childUpdates = new HashMap<String, Object>();
 
@@ -483,7 +482,7 @@ public class EpsodioFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            Log.d(TAG, "" + tvshow_id + " " + episode.getSeasonNumber() + " " + episode.getEpisodeNumber());
+          //  Log.d(TAG, "" + tvshow_id + " " + episode.getSeasonNumber() + " " + episode.getEpisodeNumber());
 
             credits = FilmeService.getTmdbTvEpisodes()
                     .getCredits(tvshow_id, episode.getSeasonNumber(), episode.getEpisodeNumber(), "en");

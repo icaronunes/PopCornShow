@@ -19,7 +19,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -172,7 +171,7 @@ public class BaseActivity extends AppCompatActivity {
                 imgUserPhoto.setOnClickListener(onClickListenerlogado());
             } else {
                 if (user.getProviders() != null)
-                    Log.d(TAG, user.getProviders().get(0));
+                   // Log.d(TAG, user.getProviders().get(0));
                 switch (user.getProviders().get(0)) {
 
                     case "google.com": {
@@ -617,8 +616,8 @@ public class BaseActivity extends AppCompatActivity {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful()) {
-                                                            Log.d(TAG, senha.getEditText().getText().toString());
-                                                            Log.d(TAG, repetir_senha.getEditText().getText().toString());
+                                                           // Log.d(TAG, senha.getEditText().getText().toString());
+                                                           // Log.d(TAG, repetir_senha.getEditText().getText().toString());
                                                             alertDialogReset.dismiss();
                                                             Toast.
                                                                     makeText(BaseActivity.this,
@@ -631,7 +630,7 @@ public class BaseActivity extends AppCompatActivity {
                                                     }
                                                 });
                                     } else {
-                                        Log.d(TAG, "Não entrou");
+                                       // Log.d(TAG, "Não entrou");
                                     }
                                 }
                             });

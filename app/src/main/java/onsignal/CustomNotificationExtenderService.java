@@ -1,7 +1,5 @@
 package onsignal;
 
-import android.util.Log;
-
 import com.onesignal.NotificationExtenderService;
 import com.onesignal.OSNotificationReceivedResult;
 
@@ -17,7 +15,7 @@ public class CustomNotificationExtenderService extends NotificationExtenderServi
         JSONObject data = notification.payload.additionalData;
 
         if( data != null ){
-            Log.i("Log", "onNotificationProcessing: "+data);
+            //Log.i("Log", "onNotificationProcessing: "+data);
         }
         return false;
     }

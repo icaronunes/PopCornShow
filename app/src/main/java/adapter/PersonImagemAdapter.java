@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +50,7 @@ public class PersonImagemAdapter extends RecyclerView.Adapter<PersonImagemAdapte
     @Override
     public void onBindViewHolder(final PersonImagemAdapter.PersonImageViewHolder holder, final int position) {
         final Artwork artwork = artworks.get(position);
-        Log.d("PersonImagemAdapter", artwork.getFilePath());
+       // Log.d("PersonImagemAdapter", artwork.getFilePath());
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + artwork.getFilePath())
                 .placeholder(R.drawable.person)
                 .into(holder.imageButton, new Callback() {
@@ -90,7 +89,7 @@ public class PersonImagemAdapter extends RecyclerView.Adapter<PersonImagemAdapte
     @Override
     public int getItemCount() {
         if (artworks != null && !artworks.isEmpty()) {
-            Log.d("Image", "Tamanho " + artworks.size());
+           // Log.d("Image", "Tamanho " + artworks.size());
             return artworks.size();
         }
         return 0;

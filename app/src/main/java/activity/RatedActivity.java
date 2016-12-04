@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -111,7 +110,7 @@ public class RatedActivity extends BaseActivity {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         movieDbs.add(snapshot.getValue(FilmeDB.class));
-                        Log.d(TAG, snapshot.getValue(FilmeDB.class).getTitle());
+                       // Log.d(TAG, snapshot.getValue(FilmeDB.class).getTitle());
                     }
                 }
                 setEventListenerFavoriteTv();
@@ -134,7 +133,7 @@ public class RatedActivity extends BaseActivity {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         tvSeries.add(snapshot.getValue(TvshowDB.class));
-                        Log.d(TAG, snapshot.getValue(TvshowDB.class).getTitle());
+                       // Log.d(TAG, snapshot.getValue(TvshowDB.class).getTitle());
                     }
                 }
 

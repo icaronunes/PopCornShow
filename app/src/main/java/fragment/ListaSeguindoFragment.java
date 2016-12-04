@@ -7,7 +7,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,7 +96,7 @@ public class ListaSeguindoFragment extends Fragment {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         userTvshows.add(snapshot.getValue(UserTvshow.class));
-                        Log.d(TAG, snapshot.getValue(UserTvshow.class).getNome());
+                      //  Log.d(TAG, snapshot.getValue(UserTvshow.class).getNome());
                     }
                     if (getView().getRootView() != null) {
                         recyclerViewMissing = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);

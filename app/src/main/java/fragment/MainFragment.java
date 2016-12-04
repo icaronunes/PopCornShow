@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -182,7 +181,7 @@ import static utils.UtilsFilme.getTimezone;
         final List<TvSeries> tvSeries;
         if (popularTvshow.getResults().size() > 0 & isAdded()) {
             int tamanho = popularTvshow.getResults().size() < 15 ? popularTvshow.getResults().size() : 15;
-            Log.d("MainFragment", "Tamanho " + popularTvshow.getResults().size());
+           // Log.d("MainFragment", "Tamanho " + popularTvshow.getResults().size());
             tvSeries = popularTvshow.getResults();
             for (int i = 0; i < tamanho; i++) {
                 final TvSeries series = tvSeries.get(i);
@@ -311,7 +310,7 @@ import static utils.UtilsFilme.getTimezone;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView");
+       // Log.d(TAG, "onCreateView");
         switch (tipo) {
 
             case filmes_main: {
@@ -343,7 +342,7 @@ import static utils.UtilsFilme.getTimezone;
         List<TvSeries> tvSeries;
         if (toDay.getResults().size() > 0 & isAdded()) {
             int tamanho = toDay.getResults().size() < 15 ? toDay.getResults().size() : 15;
-            Log.d("MainFragment", "Tamanho " + toDay.getResults().size());
+          //  Log.d("MainFragment", "Tamanho " + toDay.getResults().size());
             tvSeries = toDay.getResults();
             for (int i = 0; i < tamanho; i++) {
                 final TvSeries series = tvSeries.get(i);
@@ -412,7 +411,7 @@ import static utils.UtilsFilme.getTimezone;
 
         @Override
         protected Void doInBackground(Void... voids) {
-            Log.d("PersonFragment", "doInBackground");
+           // Log.d("PersonFragment", "doInBackground");
 
             if (isDetached()){
                 return null;
@@ -473,7 +472,7 @@ import static utils.UtilsFilme.getTimezone;
 
         if (cinema.getResults().size() > 0 & isAdded()) {
             int tamanho = cinema.getResults().size() < 15 ? cinema.getResults().size() : 15;
-            Log.d("MainFragment", "Tamanho " + cinema.getResults().size());
+           // Log.d("MainFragment", "Tamanho " + cinema.getResults().size());
             movie = cinema.getResults();
             for (int i = 0; i < tamanho; i++) {
                 final MovieDb movieDb = movie.get(i);
@@ -530,7 +529,7 @@ import static utils.UtilsFilme.getTimezone;
 
         if (popularMovie.getResults().size() > 0 & isAdded()) {
             int tamanho = popularMovie.getResults().size() < 15 ? popularMovie.getResults().size() : 15;
-            Log.d("MainFragment", "Tamanho " + popularMovie.getResults().size());
+           // Log.d("MainFragment", "Tamanho " + popularMovie.getResults().size());
             movie = popularMovie.getResults();
             for (int i = 0; i < tamanho; i++) {
                 final MovieDb movieDb = movie.get(i);

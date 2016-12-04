@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +57,7 @@ public class PersonFragment extends Fragment {
     FirebaseAnalytics firebaseAnalytics;
 
     public static PersonFragment newInstance(int aba, int id_person) {
-        Log.d("PersonFragment", "newInstance");
+      //  Log.d("PersonFragment", "newInstance");
         Bundle args = new Bundle();
         args.putInt(Constantes.ABA, aba);
         args.putInt(Constantes.PERSON_ID, id_person);
@@ -70,7 +69,7 @@ public class PersonFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
+      //  Log.d(TAG, "onCreate");
         setRetainInstance(true);
         if (getArguments() != null) {
             tipo = getArguments().getInt(Constantes.ABA);
@@ -89,7 +88,7 @@ public class PersonFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView");
+      //  Log.d(TAG, "onCreateView");
         switch (tipo) {
 
             case R.string.filme: {
@@ -132,7 +131,7 @@ public class PersonFragment extends Fragment {
     }
 
     private View getViewPersonImage(LayoutInflater inflater, ViewGroup container) {
-        Log.d(TAG, "getViewPersonImage");
+      //  Log.d(TAG, "getViewPersonImage");
         View view = inflater.inflate(R.layout.activity_person_imagem, container, false);
         recyclerViewImagem = (RecyclerView) view.findViewById(R.id.recycleView_person_imagem);
         sem_fotos = (TextView) view.findViewById(R.id.sem_fotos);
@@ -145,7 +144,7 @@ public class PersonFragment extends Fragment {
     }
 
     private View getViewPersonCrews(LayoutInflater inflater, ViewGroup container) {
-        Log.d(TAG, "getViewPersonCrews");
+      //  Log.d(TAG, "getViewPersonCrews");
         View view = inflater.inflate(R.layout.activity_person_crews, container, false);
         recyclerViewCrews = (RecyclerView) view.findViewById(R.id.recycleView_person_crews);
         sem_crews = (TextView) view.findViewById(R.id.sem_crews);
@@ -165,7 +164,7 @@ public class PersonFragment extends Fragment {
     }
 
     private View getViewPerson(LayoutInflater inflater, ViewGroup container) {
-        Log.d(TAG, "getViewPerson");
+       // Log.d(TAG, "getViewPerson");
         View view = inflater.inflate(R.layout.activity_person_perfil, container, false);
         nome_person = (TextView) view.findViewById(R.id.nome_person);
         linear_person = (LinearLayout) view.findViewById(R.id.linear_person);
@@ -184,7 +183,7 @@ public class PersonFragment extends Fragment {
     }
 
     private View getViewPersonMovie(LayoutInflater inflater, ViewGroup container) {
-        Log.d(TAG, "getViewPersonMovie");
+      //  Log.d(TAG, "getViewPersonMovie");
         View view = inflater.inflate(R.layout.activity_person_movies, container, false); // ? activity???
         recyclerViewMovie = (RecyclerView) view.findViewById(R.id.recycleView_person_movies);
         sem_filmes = (TextView) view.findViewById(R.id.sem_filmes);
@@ -203,7 +202,7 @@ public class PersonFragment extends Fragment {
     }
 
     private void setPersonInformation(final PersonPeople information) {
-        Log.d(TAG, "setPersonInformation");
+      //  Log.d(TAG, "setPersonInformation");
         if (!information.getName().isEmpty() && information.getName().length() > 1) {
             nome_person.setText(information.getName());
             nome_person.setVisibility(View.VISIBLE);
@@ -359,11 +358,11 @@ public class PersonFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            Log.d("PersonFragment", "doInBackground");
+           // Log.d("PersonFragment", "doInBackground");
 
             personPeople = getTmdbPerson()
                     .getPersonInfo(id_person, "&language=pt");
-            Log.d("PersonFragment", "doInBackground entrou");
+          //  Log.d("PersonFragment", "doInBackground entrou");
             artworks = FilmeService.getTmdbPerson().getPersonImages(id_person);
             personCredits = FilmeService.getTmdbPerson().getPersonCredits(id_person);
             personCreditsTvshow = FilmeService.getPersonCreditsCombinado(id_person);
@@ -375,7 +374,7 @@ public class PersonFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Log.d("PersonFragment", "onPostExecute");
+          //  Log.d("PersonFragment", "onPostExecute");
             if (tipo == R.string.person) {
                 setPersonInformation(personPeople);
             }

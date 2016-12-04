@@ -5,7 +5,6 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -75,7 +74,7 @@ public class ListUserActivity extends BaseActivity {
                     Intent intent = new Intent(ListUserActivity.this, ListaUserActivity.class);
                     intent.putExtra(Constantes.LISTA_ID, lists.getResults().get(i).getId());
                     intent.putExtra(Constantes.LISTA_NOME, lists.getResults().get(i).getName());
-                    Log.d("ListUserActivity", lists.getResults().get(i).getId());
+                    //Log.d("ListUserActivity", lists.getResults().get(i).getId());
                     startActivity(intent);
                 }
             });

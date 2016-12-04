@@ -43,7 +43,6 @@ import okhttp3.Response;
 import utils.Config;
 import utils.Prefs;
 
-import static android.R.attr.id;
 import static info.movito.themoviedbapi.TmdbAccount.PARAM_SESSION;
 import static info.movito.themoviedbapi.TmdbAccount.TMDB_METHOD_ACCOUNT;
 import static info.movito.themoviedbapi.TmdbPeople.TMDB_METHOD_PERSON;
@@ -105,7 +104,7 @@ public class FilmeService {
 
     public static TmdbCollections getTmdbCollections() {
         TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
-        Log.d("getTmdbMovie", "Id: " + id);
+       // Log.d("getTmdbMovie", "Id: " + id);
 
         return tmdbApi.getCollections();
     }
@@ -194,7 +193,7 @@ public class FilmeService {
             try {
                 status = account.addFavorite(token, accountID, id, mediaType);
             } catch (Exception e) {
-                Log.d("addOrRemoverFavoriteM", e.toString());
+             //   Log.d("addOrRemoverFavoriteM", e.toString());
 
             } finally {
 
@@ -207,7 +206,7 @@ public class FilmeService {
             try {
                 status = account.removeFavorite(token, accountID, id, mediaType);
             } catch (Exception e) {
-                Log.d("addOrRemoverFavoriteM", e.toString());
+             //   Log.d("addOrRemoverFavoriteM", e.toString());
 
             } finally {
 
@@ -259,7 +258,7 @@ public class FilmeService {
                         favoritosTvshow.getResults().addAll(getFavoriteTvShow(user, pass, i).getResults());
                     }
                 }
-                Log.d("getTotalFavorite", "Total page" + favoritosTvshow.getTotalPages());
+              //  Log.d("getTotalFavorite", "Total page" + favoritosTvshow.getTotalPages());
             }
             return favoritosTvshow;
         }
@@ -278,7 +277,7 @@ public class FilmeService {
                         favoritos.getResults().addAll(FilmeService.getFavoriteMovies(user, pass, i).getResults());
                     }
                 }
-                Log.d("getTotalFavorite", "Total page" + favoritos.getTotalPages());
+              //  Log.d("getTotalFavorite", "Total page" + favoritos.getTotalPages());
             }
             return favoritos;
         }
@@ -394,8 +393,8 @@ public class FilmeService {
             TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
             TmdbAccount tmdbAccount = tmdbApi.getAccount();
             Account account = tmdbApi.getAccount().getAccount(token);
-            Log.d("MovieResultsPage", account.getName());
-            Log.d("MovieResultsPage", user + "  " + password);
+          //  Log.d("MovieResultsPage", account.getName());
+          //  Log.d("MovieResultsPage", user + "  " + password);
             AccountID accountID = new AccountID(account.getId());
 
             return tmdbAccount.getRatedMovies(token, accountID, pagina);
@@ -529,7 +528,7 @@ public class FilmeService {
             TmdbAccount account = tmdbApi.getAccount();
             if (nota != 0) {
                 boolean status = account.postMovieRating(token, id_filme, (int) nota);
-                Log.d("setRatedMovie", "" + status);
+               // Log.d("setRatedMovie", "" + status);
                 return status;
             }
         }
@@ -568,7 +567,7 @@ public class FilmeService {
 
             if (nota != 0) {
                 boolean status = account.postTvSeriesRating(token, id_tvshow, (int) nota);
-                Log.d("setRatedMovie", "" + status);
+              //  Log.d("setRatedMovie", "" + status);
                 return status;
             }
         }

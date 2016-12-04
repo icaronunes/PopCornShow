@@ -160,11 +160,11 @@ public class TvShowFragment extends Fragment {
             icon_site.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d(TAG, "Home " + series.getHomepage());
+                   // Log.d(TAG, "Home " + series.getHomepage());
                     if (series.getHomepage() != "" && series.getHomepage() != null) {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse(series.getHomepage()));
-                        Log.d(TAG, "Home " + series.getHomepage());
+                       // Log.d(TAG, "Home " + series.getHomepage());
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
 
@@ -296,7 +296,7 @@ public class TvShowFragment extends Fragment {
 
 
     private void isSeguindo() {
-        Log.d(TAG, "Seguindo " + seguindo);
+       // Log.d(TAG, "Seguindo " + seguindo);
         if (mAuth.getCurrentUser() != null) {
 
             if (seguindo) {
@@ -322,12 +322,12 @@ public class TvShowFragment extends Fragment {
 
                         if (getView() != null) {
                             userTvshow = dataSnapshot.getValue(UserTvshow.class);
-                            Log.w(TAG, "Passou");
+                           // Log.w(TAG, "Passou");
                             recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
                             adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
                             recyclerViewTemporada.setAdapter(adapter);
                             if (progressBarTemporada != null) {
-                                Log.w(TAG, "Mudou - GONE");
+                              //  Log.w(TAG, "Mudou - GONE");
                                 progressBarTemporada.setVisibility(View.INVISIBLE);
                             }
                         }
@@ -335,12 +335,12 @@ public class TvShowFragment extends Fragment {
                     } else {
 
                         if (getView() != null) {
-                            Log.w(TAG, "Passou");
+                          //  Log.w(TAG, "Passou");
                             userTvshow = null; // ??????????
                             recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
                             recyclerViewTemporada.setAdapter(new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow));
                             if (progressBarTemporada != null) {
-                                Log.w(TAG, "Mudou - GONE");
+                                //Log.w(TAG, "Mudou - GONE");
                                 progressBarTemporada.setVisibility(View.INVISIBLE);
                             }
                         }
@@ -349,7 +349,7 @@ public class TvShowFragment extends Fragment {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                   // Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
 
                 }
             };
@@ -444,7 +444,7 @@ public class TvShowFragment extends Fragment {
             adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
             recyclerViewTemporada.setAdapter(adapter);
             if (progressBarTemporada != null) {
-                Log.w(TAG, "Mudou - GONE");
+               // Log.w(TAG, "Mudou - GONE");
                 progressBarTemporada.setVisibility(View.INVISIBLE);
             }
         }
@@ -493,7 +493,7 @@ public class TvShowFragment extends Fragment {
                     childUpdates.put("/"+user+"/seguindo/"+id_serie+"/seasons/"+position+"/userEps", userTvshow.getSeasons().get(position).getUserEps());
 
                     myRef.updateChildren(childUpdates);
-                    Log.d(TAG, "desvisto");
+                   // Log.d(TAG, "desvisto");
 
                 } else {
                     Toast.makeText(getContext(), R.string.marcado_assistido_temporada, Toast.LENGTH_SHORT).show();
@@ -501,7 +501,7 @@ public class TvShowFragment extends Fragment {
                     final String id_serie  = String.valueOf(userTvshow.getId());
 
                     if (!isVisto(position == 0 ? 0 : position-1)){
-                        Log.d(TAG, "anterior não visto");
+                       // Log.d(TAG, "anterior não visto");
                     }
 
                     Map<String, Object> childUpdates = new HashMap<String, Object>();
@@ -512,7 +512,7 @@ public class TvShowFragment extends Fragment {
 
                     myRef.updateChildren(childUpdates);
 
-                    Log.d(TAG, "visto");
+                   // Log.d(TAG, "visto");
                 }
             }
         };
@@ -575,7 +575,7 @@ public class TvShowFragment extends Fragment {
                 }
 
                 if (!seguindo) {
-                    Log.d(TAG, "incluir");
+                   // Log.d(TAG, "incluir");
                     seguindo = !seguindo;
                     isSeguindo();
                     new Thread(new Runnable() {
@@ -611,7 +611,7 @@ public class TvShowFragment extends Fragment {
                     }).start();
 
                 } else {
-                    Log.d(TAG, "delete");
+                   // Log.d(TAG, "delete");
 
                     AlertDialog dialog = new AlertDialog.Builder(getContext())
                             .setTitle(R.string.title_delete)
@@ -682,7 +682,7 @@ public class TvShowFragment extends Fragment {
     }
 
     private void setSinopse() {
-        Log.d("SetSinopse", "OverView" + series.getOverview());
+       // Log.d("SetSinopse", "OverView" + series.getOverview());
         if (series.getOverview() != null) {
 
             descricao.setText(series.getOverview());
@@ -716,7 +716,7 @@ public class TvShowFragment extends Fragment {
                     ActivityOptionsCompat compat = ActivityOptionsCompat
                             .makeSceneTransitionAnimation(getActivity(), img_poster, transition);
                     ActivityCompat.startActivity(getActivity(), intent, compat.toBundle());
-                    Log.d("FilmeInfoFragment", "setPoster: -> " + series.getPosterPath());
+                   // Log.d("FilmeInfoFragment", "setPoster: -> " + series.getPosterPath());
 
                     Bundle bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PosterGridActivity.class.getName());
@@ -749,11 +749,11 @@ public class TvShowFragment extends Fragment {
 
         List<Genre> genres = series.getGenres();
         StringBuilder stringBuilder = new StringBuilder("");
-        Log.d("getGeneros", "" + genres.size());
+       // Log.d("getGeneros", "" + genres.size());
         if (!genres.isEmpty()) {
             for (Genre genre : genres) {
                 stringBuilder.append(" | " + genre.getName());
-                Log.d("Genero", " " + genre.getName());
+               // Log.d("Genero", " " + genre.getName());
             }
         }
         categoria.setText(stringBuilder.toString());
@@ -801,7 +801,7 @@ public class TvShowFragment extends Fragment {
 
         ValueAnimator animatorCompat = ValueAnimator.ofFloat(1, series.getPopularity());
         if (series.getPopularity() > 0) {
-            Log.d("POPULARIDADE", " " + series.getPopularity());
+           // Log.d("POPULARIDADE", " " + series.getPopularity());
 
             animatorCompat.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
@@ -897,7 +897,7 @@ public class TvShowFragment extends Fragment {
         if (series.getCredits().getCrew().size() > 0) {
             int tamanho = series.getCredits().getCrew().size() < 15 ? series.getCredits().getCrew().size() : 15;
             textview_crews.setVisibility(View.VISIBLE);
-            Log.d("setCrews", "Tamanho " + series.getCredits().getCrew().size());
+           // Log.d("setCrews", "Tamanho " + series.getCredits().getCrew().size());
             for (int i = 0; i < tamanho; i++) {
                 final PersonCrew crew = series.getCredits().getCrew().get(i);
                 View view = getActivity().getLayoutInflater().inflate(R.layout.scroll_crews, (ViewGroup) getView(), false);
@@ -965,9 +965,9 @@ public class TvShowFragment extends Fragment {
 
         if (series.getVideos().size() > 0) {
             int tamanho = series.getVideos().size();
-            Log.d("TAG", "SetTreiler: -> " + series.getVideos().size());
+           // Log.d("TAG", "SetTreiler: -> " + series.getVideos().size());
             for (int i = 0; i < tamanho; i++) {
-                Log.d("SetTreiler", "" + series.getVideos().get(i).getKey());
+               // Log.d("SetTreiler", "" + series.getVideos().get(i).getKey());
                 final String youtube_key = series.getVideos().get(i).getKey();
                 View view = getActivity().getLayoutInflater().inflate(R.layout.scroll_treiler, (ViewGroup) getView(), false);
                 LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.scroll_treiler_linerlayout);
@@ -998,7 +998,7 @@ public class TvShowFragment extends Fragment {
                 if (isAdded()) {
                     thumbnailView.initialize(Config.YOUTUBE_API_KEY, OnInitializedListener(youtube_key));
                 }
-                Log.d("OnClick", youtube_key);
+               // Log.d("OnClick", youtube_key);
                 //Acontence erros - Necessario corrigir
                 linearLayout.addView(linearteste);
             }
@@ -1024,7 +1024,7 @@ public class TvShowFragment extends Fragment {
     private void setHome() {
         if (series.getHomepage() != null) {
             if (series.getHomepage().length() > 5) {
-                Log.d("SETHOME", series.getHomepage());
+               // Log.d("SETHOME", series.getHomepage());
                 icon_site.setImageResource(R.drawable.site_on);
             } else {
                 icon_site.setImageResource(R.drawable.site_off);

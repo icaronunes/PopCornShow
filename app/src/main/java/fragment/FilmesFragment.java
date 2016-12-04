@@ -11,7 +11,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +93,7 @@ public class FilmesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if (!UtilsFilme.isNetWorkAvailable(getContext())) {
-            Log.d("onActivityCreated", "Sem internet");
+          //  Log.d("onActivityCreated", "Sem internet");
             textView.setVisibility(View.VISIBLE);
             textView.setText("SEM INTERNET");
             swipeRefreshLayout.setEnabled(false);
@@ -137,8 +136,8 @@ public class FilmesFragment extends Fragment {
         return new FilmesAdapter.FilmeOnClickListener() {
             @Override
             public void onClickFilme(View view, int position) {
-                Log.d("onClickMovieListener", "" + position);
-                Log.d("onClickMovieListener", "" + movies.get(position).getTitle());
+              //  Log.d("onClickMovieListener", "" + position);
+               // Log.d("onClickMovieListener", "" + movies.get(position).getTitle());
                 Intent intent = new Intent(getActivity(), FilmeActivity.class);
                 intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(view));
                 intent.putExtra(Constantes.FILME_ID, movies.get(position).getId());
@@ -160,7 +159,7 @@ public class FilmesFragment extends Fragment {
 
         @Override
         protected List<MovieDb> doInBackground(Void... voids) {
-            Log.d("doInBackground", "doInBackground");
+          //  Log.d("doInBackground", "doInBackground");
             TmdbMovies movies = FilmeService.getTmdbMovies();
             List<MovieDb> dbList = getListaTipo(movies);
             return dbList;
@@ -169,7 +168,7 @@ public class FilmesFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<MovieDb> tmdbMovies) {
-            Log.d("onPostExecute", "onPostExecute");
+           // Log.d("onPostExecute", "onPostExecute");
             process.setVisibility(View.GONE);
             if (tmdbMovies != null && pagina != 1) {
                 List<MovieDb> x = movies;

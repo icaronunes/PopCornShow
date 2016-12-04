@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,7 @@ public class ProdutoraAdapter extends RecyclerView.Adapter<ProdutoraAdapter.Prod
             String title = movie.getName();
             if (title != null) {
                 holder.title.setText(title);
-                Log.d("onBindViewHolder", title);
+             //   Log.d("onBindViewHolder", title);
             }
 
             Picasso.with(context)

@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Window;
 
 import com.viewpagerindicator.LinePageIndicator;
@@ -37,11 +36,11 @@ public class PosterActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
-        Log.d("PosterActivity", "onCreate");
+       // Log.d("PosterActivity", "onCreate");
         setContentView(R.layout.activity_scroll_poster);
         artworks = (List<Artwork>) getIntent().getBundleExtra(Constantes.BUNDLE).getSerializable(Constantes.ARTWORKS);
         nome = getIntent().getStringExtra(Constantes.NOME);
-        Log.d("posterAcvitivy", String.valueOf(getWindow().getContext().getTheme()));
+       // Log.d("posterAcvitivy", String.valueOf(getWindow().getContext().getTheme()));
         viewPager = (ViewPager) findViewById(pager);
         titlePageIndicator = (LinePageIndicator) findViewById(R.id.indicator);
         viewPager.setAdapter(new PosterFragment(getSupportFragmentManager()));

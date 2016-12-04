@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -161,19 +160,19 @@ public class CrewsActivity extends BaseActivity {
         protected Void doInBackground(Void... voids) {
             if (Multi.MediaType.TV_SERIES.equals(mediaType)) {
                 creditsTvShow = FilmeService.getTmdbTvShow().getCredits(id, "en");
-                Log.d("CrewsActivity", "IF " + creditsTvShow.getCrew().size());
+               // Log.d("CrewsActivity", "IF " + creditsTvShow.getCrew().size());
             }
             if (Multi.MediaType.TV_SERIES.equals(mediaType) && season != -100){
                 creditsTvShow = FilmeService.getTmdbTvSeasons()
                         .getSeason(id, season,"en", TmdbTvSeasons.SeasonMethod.credits)
                         .getCredits();
-                Log.d("CrewsActivity", "-100 " + creditsTvShow.getCrew().size());
+               // Log.d("CrewsActivity", "-100 " + creditsTvShow.getCrew().size());
             }
 
             if (Multi.MediaType.MOVIE.equals(mediaType)) {
                 TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
                 movies = tmdbMovies.getMovie(id, "en", TmdbMovies.MovieMethod.credits);
-                Log.d("CrewsActivity", "" + movies.getCredits().getCast().size());
+               // Log.d("CrewsActivity", "" + movies.getCredits().getCast().size());
             }
             return null;
         }
@@ -181,13 +180,13 @@ public class CrewsActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(Void aVoid){
-            Log.d("CrewsActivity", "onPostExecute");
+         //   Log.d("CrewsActivity", "onPostExecute");
             progressBar.setVisibility(View.GONE);
             if (Multi.MediaType.MOVIE.equals(mediaType)) {
                 recyclerView.setAdapter(new CrewsAdapter(CrewsActivity.this, movies.getCredits().getCrew()));
             }
             if (Multi.MediaType.TV_SERIES.equals(mediaType)) {
-                Log.d("CrewsActivity", "IF " + creditsTvShow.getCrew().size());
+            //    Log.d("CrewsActivity", "IF " + creditsTvShow.getCrew().size());
                 recyclerView.setAdapter(new CrewsAdapter(CrewsActivity.this, creditsTvShow.getCrew()));
             }
         }

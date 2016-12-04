@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Window;
 
 import com.viewpagerindicator.LinePageIndicator;
@@ -40,12 +39,12 @@ public class FotoPersonActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scroll_poster);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        Log.d("PosterActivity", "onCreate");
+       // Log.d("PosterActivity", "onCreate");
         getExtras();
 
         viewPager = (ViewPager) findViewById(pager);
         titlePageIndicator = (LinePageIndicator) findViewById(R.id.indicator);
-        Log.d("PosterActivity", "onCreate ID: " + id_foto);
+       // Log.d("PosterActivity", "onCreate ID: " + id_foto);
 
     }
 

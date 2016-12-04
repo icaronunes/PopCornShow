@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -126,7 +125,7 @@ public class SeguindoActivity extends BaseActivity{
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         userTvshows.add(snapshot.getValue(UserTvshow.class));
-                        Log.d(TAG, snapshot.getValue(UserTvshow.class).getNome());
+                      //  Log.d(TAG, snapshot.getValue(UserTvshow.class).getNome());
                     }
                 }
                 setupViewPagerTabs();

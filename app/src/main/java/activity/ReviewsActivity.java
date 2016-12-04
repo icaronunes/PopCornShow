@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -39,7 +38,7 @@ public class ReviewsActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(getIntent().getStringExtra(Constantes.NOME_FILME));
         id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
-        Log.d("ReviewsActivity", "onCreate " + id_filme);
+      //  Log.d("ReviewsActivity", "onCreate " + id_filme);
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_reviews);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -76,7 +75,7 @@ public class ReviewsActivity extends BaseActivity {
         @Override
         protected MovieDb doInBackground(Void... voids) {
             TmdbMovies movies = FilmeService.getTmdbMovies();
-            Log.d("FilmeInfoFragment", "doInBackground: -> " + id_filme);
+          //  Log.d("FilmeInfoFragment", "doInBackground: -> " + id_filme);
 
             movieDb = movies.getMovie(id_filme, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry() , reviews);
             movieDb.getReviews().addAll(movies.getMovie(id_filme, "en, null", reviews).getReviews());

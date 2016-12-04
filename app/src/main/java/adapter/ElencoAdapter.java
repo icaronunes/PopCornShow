@@ -3,7 +3,6 @@ package adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +13,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import activity.CrewsActivity;
-import activity.ElencoActivity;
 import activity.PersonActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.people.PersonCast;
-import info.movito.themoviedbapi.model.people.PersonCrew;
 import utils.Constantes;
 import utils.UtilsFilme;
 
@@ -36,7 +32,7 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
 
         this.context = elencoActivity;
         this.casts = casts;
-        Log.d("ElencoAdapter", "Tamanho " + casts.size());
+       // Log.d("ElencoAdapter", "Tamanho " + casts.size());
     }
 
 
@@ -72,7 +68,7 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
 
     @Override
     public int getItemCount() {
-        Log.d("ElencoAdapter", "Tamanho " + casts.size());
+      //  Log.d("ElencoAdapter", "Tamanho " + casts.size());
         return casts.size() > 0 ? casts.size() : 0;
     }
 

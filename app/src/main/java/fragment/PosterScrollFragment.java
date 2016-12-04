@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +48,7 @@ public class PosterScrollFragment extends Fragment {
         args.putString(Constantes.ENDERECO, endereco);
         args.putString(Constantes.NOME_FILME, nome);
         posterScrollFragment.setArguments(args);
-        Log.d("PosterScrollFragment", "newInstance: -> " + endereco);
+      //  Log.d("PosterScrollFragment", "newInstance: -> " + endereco);
         return posterScrollFragment;
     }
 
@@ -58,7 +57,7 @@ public class PosterScrollFragment extends Fragment {
         super.onCreate(savedInstanceState);
         endereco = getArguments().getString(Constantes.ENDERECO); // não usado!?!?!!
         nome = getArguments().getString(Constantes.NOME_FILME);
-        Log.d("PosterScrollFragment", "onCreate: -> " + endereco);
+       // Log.d("PosterScrollFragment", "onCreate: -> " + endereco);
         firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
 
@@ -69,7 +68,7 @@ public class PosterScrollFragment extends Fragment {
         imageView = (ImageView) view.findViewById(R.id.img_poster_scroll);
         Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(5) + endereco).into(imageView);
 
-        Log.d("PosterScrollFragment", "onCreateView: -> " + endereco);
+       // Log.d("PosterScrollFragment", "onCreateView: -> " + endereco);
 
         return view;
     }
@@ -111,7 +110,7 @@ public class PosterScrollFragment extends Fragment {
                 if (UtilsFilme.isExternalStorageWritable()) {
                     salvarArquivoNaMemoriaInterna(getContext(), imageView);
                 } else {
-                    Log.e("salvarArqNaMemoriaIn", "Directory not created");
+                  //  Log.e("salvarArqNaMemoriaIn", "Directory not created");
                 }
             }
 
@@ -160,7 +159,7 @@ public class PosterScrollFragment extends Fragment {
 
         if (!file.exists()) {
             file.mkdir();
-            Log.e("salvarArqNaMemoriaIn", "Directory created");
+          //  Log.e("salvarArqNaMemoriaIn", "Directory created");
         }
         File dir = new File(file, endereco);
 
@@ -179,7 +178,7 @@ public class PosterScrollFragment extends Fragment {
 
         if (!file.exists()) {
             file.mkdir();
-            Log.e("salvarArqNaMemoriaIn", "Directory created");
+           // Log.e("salvarArqNaMemoriaIn", "Directory created");
         }
         File dir = new File(file, endereco);
 

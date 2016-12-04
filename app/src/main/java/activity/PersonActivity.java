@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -100,7 +99,7 @@ public class PersonActivity extends BaseActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Log.d(TAG, tab.getText().toString());
+               // Log.d(TAG, tab.getText().toString());
                 Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "TabLayout " + tab.getText());
                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);

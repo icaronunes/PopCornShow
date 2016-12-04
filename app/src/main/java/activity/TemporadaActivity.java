@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -114,7 +113,7 @@ public class TemporadaActivity extends BaseActivity {
                TemporadaActivity.this.position = position;
                 if (seasons != null) {
                     if (seasons.getUserEps().get(position).isAssistido()) {
-                        Log.d(TAG, "visto");
+                       // Log.d(TAG, "visto");
                         String id = String.valueOf(serie_id);
 
                         Toast.makeText(TemporadaActivity.this, R.string.marcado_nao_assistido, Toast.LENGTH_SHORT).show();
@@ -127,10 +126,10 @@ public class TemporadaActivity extends BaseActivity {
                         childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/visto/", false);
 
                         myRef.updateChildren(childUpdates);
-                        Log.d(TAG, "desvisto");
+                    //    Log.d(TAG, "desvisto");
 
                     } else {
-                        Log.d(TAG, "não visto");
+                      //  Log.d(TAG, "não visto");
                         String id = String.valueOf(serie_id);
                         String user = mAuth.getCurrentUser().getUid();
                         myRef.child(user)
@@ -182,7 +181,7 @@ public class TemporadaActivity extends BaseActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists() && seguindo) {
-                    Log.d(TAG, "key listener: " + dataSnapshot.getKey());
+                  //  Log.d(TAG, "key listener: " + dataSnapshot.getKey());
                     seasons = dataSnapshot.getValue(UserSeasons.class);
                     recyclerView
                             .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
@@ -201,7 +200,7 @@ public class TemporadaActivity extends BaseActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+               // Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
                 // ...
             }
         };
@@ -275,14 +274,14 @@ public class TemporadaActivity extends BaseActivity {
                                         // Get user value
                                         if (dataSnapshot.exists()) {
                                             seguindo = true;
-                                            Log.w(TAG, "seguindo - true");
+                                          //  Log.w(TAG, "seguindo - true");
                                             seasons = dataSnapshot.getValue(UserSeasons.class);
                                             recyclerView
                                                     .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
                                                             tvSeason, seasons, seguindo,
                                                             onClickListener()));
                                         } else {
-                                            Log.d(TAG, "onDataChange " + "Não seguindo.");
+                                         //   Log.d(TAG, "onDataChange " + "Não seguindo.");
                                             seguindo = false;
                                             recyclerView
                                                     .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
@@ -293,7 +292,7 @@ public class TemporadaActivity extends BaseActivity {
 
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
-                                        Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                                      //  Log.w(TAG, "getUser:onCancelled", databaseError.toException());
                                     }
                                 });
                 setListener();

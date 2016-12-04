@@ -10,7 +10,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +86,7 @@ public class ListaFavoriteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView");
+      //  Log.d(TAG, "onCreateView");
         switch (tipo) {
 
             case R.string.filme: {
@@ -106,7 +105,7 @@ public class ListaFavoriteFragment extends Fragment {
             @Override
             public void onClick(final View view, final int position) {
                 Intent intent = new Intent(getActivity(), FilmeActivity.class);
-                Log.d("ListaFilmeAdapter", "ListaFilmeAdapter");
+              //  Log.d("ListaFilmeAdapter", "ListaFilmeAdapter");
                 ImageView imageView = (ImageView) view;
                 int color = UtilsFilme.loadPalette(imageView);
                 intent.putExtra(Constantes.COLOR_TOP, color);
@@ -119,7 +118,7 @@ public class ListaFavoriteFragment extends Fragment {
             @Override
             public void onClickLong(View view, final int position) {
                 final int id = movieDbs.get(position).getId();
-                Log.d("OnClick", "Onclick");
+               // Log.d("OnClick", "Onclick");
                 new AlertDialog.Builder(getActivity())
                         .setIcon(R.drawable.icon_agenda)
                         .setTitle(movieDbs.get(position).getTitle())
@@ -159,7 +158,7 @@ public class ListaFavoriteFragment extends Fragment {
             @Override
             public void onClick(final View view, final int position) {
                 Intent intent = new Intent(getActivity(), TvShowActivity.class);
-                Log.d("OnClick", "Onclick");
+              //  Log.d("OnClick", "Onclick");
                 ImageView imageView = (ImageView) view;
                 int color = UtilsFilme.loadPalette(imageView);
                 intent.putExtra(Constantes.COLOR_TOP, color);
@@ -179,7 +178,7 @@ public class ListaFavoriteFragment extends Fragment {
             public void onClickLong(View view, final int position) {
 
                 final TvshowDB tvshowDB = tvSeries.get(position);
-                Log.d("OnClick", "onClickLong");
+               // Log.d("OnClick", "onClickLong");
                 new AlertDialog.Builder(getActivity())
                         .setIcon(R.drawable.icon_agenda)
                         .setTitle(tvshowDB.getTitle())

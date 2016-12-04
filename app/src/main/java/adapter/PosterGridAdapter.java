@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +23,6 @@ import java.util.List;
 import activity.PosterActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.Artwork;
-import info.movito.themoviedbapi.model.MovieDb;
-import info.movito.themoviedbapi.model.Multi;
-import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;
 
@@ -50,14 +46,14 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
     public PosterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.poster_grid_image, parent, false);
         PosterViewHolder posterViewHolder = new PosterViewHolder(view);
-        Log.d("PosterGridActivity", "onCreateViewHolder ");
+       // Log.d("PosterGridActivity", "onCreateViewHolder ");
         return posterViewHolder;
     }
 
     @Override
     public void onBindViewHolder(final PosterViewHolder holder, final int position) {
         if (artworks.size() > 0) {
-            Log.d("PosterGridActivity", "onBindViewHolder ");
+          //  Log.d("PosterGridActivity", "onBindViewHolder ");
             Picasso.with(context).load(UtilsFilme
                     .getBaseUrlImagem(3) + artworks.get(position).getFilePath())
                     .into(holder.img, new Callback() {
@@ -92,7 +88,7 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
 
     @Override
     public int getItemCount() {
-        Log.d("PosterGridActivity", "getItemCount " + artworks.size());
+       // Log.d("PosterGridActivity", "getItemCount " + artworks.size());
         return artworks.size() > 0 ? artworks.size() : 0;
     }
 
@@ -104,7 +100,7 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
             super(itemView);
             img = (ImageView) itemView.findViewById(R.id.img_poster_grid);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress_poster_grid);
-            Log.d("PosterGridActivity", "PosterViewHolder " + artworks.size());
+           // Log.d("PosterGridActivity", "PosterViewHolder " + artworks.size());
         }
     }
 }

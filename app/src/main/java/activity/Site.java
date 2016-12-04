@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -39,7 +38,7 @@ public class Site extends AppCompatActivity {
         url = getIntent().getStringExtra(Constantes.SITE);
 
         if (url.contains("https://play.google.com/store/apps/details?id=")) {
-            Log.d("Site", url);
+          //  Log.d("Site", url);
             final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
             try {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));

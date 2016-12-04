@@ -16,7 +16,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -231,14 +230,14 @@ public class ProdutoraActivity extends BaseActivity {
                             .getCompanyMovies(id_produtora, "en,null", pagina);
                 }
             }
-            Log.d("PRODUTORA", "Total : " + resultsPage.getTotalPages());
+          //  Log.d("PRODUTORA", "Total : " + resultsPage.getTotalPages());
             return null;
         }
 
         @Override
         protected void onPostExecute(MovieDb movieDb) {
             super.onPostExecute(movieDb);
-            Log.d("PRODUTORA", "post : " + resultsPage.getTotalPages());
+          //  Log.d("PRODUTORA", "post : " + resultsPage.getTotalPages());
             refreshLayout.setRefreshing(false);
             if (pagina == 1) {
                 setImageTop();

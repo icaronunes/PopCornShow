@@ -2,7 +2,6 @@ package adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,17 +82,17 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
                 .into(holder.poster);
 
         if (seguindo){
-            Log.d(TAG, "seguindo");
+         //   Log.d(TAG, "seguindo");
         } else {
             holder.bt_visto.setVisibility(View.GONE);
         }
 
         if (seasons != null && seguindo) {
             if (seasons.getUserEps().get(position).isAssistido()) {
-                Log.d(TAG, "visto");
+             //   Log.d(TAG, "visto");
                 holder.bt_visto.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_visto));
             } else {
-                Log.d(TAG, "não visto");
+              //  Log.d(TAG, "não visto");
                 holder.bt_visto.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_movie_now));
             }
         }

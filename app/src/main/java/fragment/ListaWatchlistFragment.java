@@ -10,7 +10,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +87,7 @@ public class ListaWatchlistFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView");
+       // Log.d(TAG, "onCreateView");
         switch (tipo) {
 
             case R.string.filme: {
@@ -125,7 +124,7 @@ public class ListaWatchlistFragment extends Fragment {
             @Override
             public void onClickLong(View view, final int position) {
                 final int id = movies.get(position).getId();
-                Log.d("OnClick", "Onclick");
+               // Log.d("OnClick", "Onclick");
                 new AlertDialog.Builder(getActivity())
                         .setIcon(R.drawable.icon_agenda)
                         .setTitle(movies.get(position).getTitle())
@@ -180,7 +179,7 @@ public class ListaWatchlistFragment extends Fragment {
             @Override
             public void onClick(final View view, final int position) {
                 Intent intent = new Intent(getActivity(), TvShowActivity.class);
-                Log.d("OnClick", "Onclick");
+               // Log.d("OnClick", "Onclick");
                 ImageView imageView = (ImageView) view;
                 int color = UtilsFilme.loadPalette(imageView);
                 intent.putExtra(Constantes.COLOR_TOP, color);
@@ -199,7 +198,7 @@ public class ListaWatchlistFragment extends Fragment {
             @Override
             public void onClickLong(View view, final int position) {
                 final int id = tvSeries.get(position).getId();
-                Log.d("OnClick", "onClickLong");
+               // Log.d("OnClick", "onClickLong");
                 new AlertDialog.Builder(getActivity())
                         .setIcon(R.drawable.icon_agenda)
                         .setTitle(tvSeries.get(position).getTitle())

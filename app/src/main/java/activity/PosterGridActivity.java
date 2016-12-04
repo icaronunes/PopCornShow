@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Window;
 
 import com.google.android.gms.ads.AdRequest;
@@ -54,14 +53,14 @@ public class PosterGridActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             if (getIntent().getSerializableExtra(Constantes.SERIE) != null) {
                 series = (TvSeries) getIntent().getSerializableExtra(Constantes.SERIE);
-                Log.d("PosterGridActivity", "SERIE " + series.getName());
+              //  Log.d("PosterGridActivity", "SERIE " + series.getName());
                 List<Artwork> artworks = series.getImages().getPosters();
                 recyclerView.setAdapter(new PosterGridAdapter(PosterGridActivity.this, artworks, series.getName()));
                 return;
             }
             if (getIntent().getSerializableExtra(Constantes.FILME) != null) {
                 movieDb = (MovieDb) getIntent().getSerializableExtra(Constantes.FILME);
-                Log.d("PosterGridActivity", "FILME" + movieDb.getTitle());
+              //  Log.d("PosterGridActivity", "FILME" + movieDb.getTitle());
                 List<Artwork> artworks = movieDb.getImages(ArtworkType.POSTER);
                 recyclerView.setAdapter(new PosterGridAdapter(PosterGridActivity.this, artworks, movieDb.getTitle()));
                 return;

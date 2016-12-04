@@ -3,7 +3,6 @@ package adapter;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,15 +49,15 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
     public void onBindViewHolder(final FavoriteViewHolder holder, final int position) {
 
         final FilmeDB movie = favoritos.get(position);
-        Log.d("onBindViewHolder", "position" + position);
+       // Log.d("onBindViewHolder", "position" + position);
         if (movie != null) {
 
         if (status) {
             String valor = String.valueOf(movie.getNota());
-            Log.d("Rated", "" + valor);
+           // Log.d("Rated", "" + valor);
             if (valor.length() > 3) {
                 valor = valor.substring(0, 2);
-                Log.d("Rated 2", "" + valor);
+               // Log.d("Rated 2", "" + valor);
                 holder.text_rated_favoritos.setText(valor);
             }
             holder.text_rated_favoritos.setText(valor);

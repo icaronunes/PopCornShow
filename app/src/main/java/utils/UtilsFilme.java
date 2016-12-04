@@ -84,8 +84,8 @@ public class UtilsFilme {
         } else {
             if (calendar.get(Calendar.YEAR) == hoje.get(Calendar.YEAR)) {
                     if (calendar.get(Calendar.WEEK_OF_YEAR) == hoje.get(Calendar.WEEK_OF_YEAR)) {
-                        Log.d(TAG, "calendar " + calendar.get(Calendar.WEEK_OF_YEAR));
-                        Log.d(TAG, "hoje " + hoje.get(Calendar.WEEK_OF_YEAR));
+                       // Log.d(TAG, "calendar " + calendar.get(Calendar.WEEK_OF_YEAR));
+                      //  Log.d(TAG, "hoje " + hoje.get(Calendar.WEEK_OF_YEAR));
                         return true;
                     }
             }
@@ -117,7 +117,7 @@ public class UtilsFilme {
             stream.flush();
             stream.close();
         } catch (IOException e) {
-            Log.e(TAG, e.getMessage(), e);
+           // Log.e(TAG, e.getMessage(), e);
             FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
             FirebaseCrash.report(e);
         }
@@ -130,7 +130,7 @@ public class UtilsFilme {
 
         if (!file.exists()) {
             file.mkdir();
-            Log.e("salvarArqNaMemoriaIn", "Directory created");
+          //  Log.e("salvarArqNaMemoriaIn", "Directory created");
         }
         File dir = new File(file, endereco);
 
@@ -154,7 +154,7 @@ public class UtilsFilme {
         } catch (IOException e) {
             FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
             FirebaseCrash.report(e);
-            Log.e(TAG, e.getMessage(), e);
+           // Log.e(TAG, e.getMessage(), e);
         }
     }
 
@@ -194,7 +194,7 @@ public class UtilsFilme {
     public static Timezone getTimezone() {
         for (Timezone timezone : FilmeService.getTimeZone()) {
             if (timezone.getCountry().equals(Locale.getDefault().getCountry())) {
-                Log.d("Timezone", timezone.getCountry());
+              //  Log.d("Timezone", timezone.getCountry());
                 return timezone;
             }
         }

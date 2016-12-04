@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +90,7 @@ public class ListaRatedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView");
+       // Log.d(TAG, "onCreateView");
         switch (tipo) {
 
             case R.string.filme: {
@@ -109,7 +108,7 @@ public class ListaRatedFragment extends Fragment {
             @Override
             public void onClick(final View view, final int position) {
                 Intent intent = new Intent(getActivity(), FilmeActivity.class);
-                Log.d("ListaFilmeAdapter", "ListaFilmeAdapter");
+              //  Log.d("ListaFilmeAdapter", "ListaFilmeAdapter");
                 ImageView imageView = (ImageView) view;
                 int color = UtilsFilme.loadPalette(imageView);
                 intent.putExtra(Constantes.COLOR_TOP, color);
@@ -129,7 +128,7 @@ public class ListaRatedFragment extends Fragment {
 
             @Override
             public void onClickLong(View view, final int position) {
-                Log.d("setupNavDrawer", "Login");
+               // Log.d("setupNavDrawer", "Login");
                 final boolean[] status = {false};
                 final Dialog alertDialog = new Dialog(getActivity());
                 alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -140,14 +139,14 @@ public class ListaRatedFragment extends Fragment {
                 final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
                 int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
                 int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
-                Log.d(TAG, "Valor Rated" + movies.get(position).getNota());
+               // Log.d(TAG, "Valor Rated" + movies.get(position).getNota());
                 ratingBar.setRating(movies.get(position).getNota());
 
 
                 no.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d(TAG, "Apagou Rated");
+                       // Log.d(TAG, "Apagou Rated");
 
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -174,7 +173,7 @@ public class ListaRatedFragment extends Fragment {
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d(TAG, "Adialog Rated");
+                       // Log.d(TAG, "Adialog Rated");
                         final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
                                 android.R.style.Theme_Material_Dialog);
                         progressDialog.setIndeterminate(true);
@@ -224,7 +223,7 @@ public class ListaRatedFragment extends Fragment {
             @Override
             public void onClick(final View view, final int position) {
                 Intent intent = new Intent(getActivity(), TvShowActivity.class);
-                Log.d("OnClick", "Onclick");
+               // Log.d("OnClick", "Onclick");
                 ImageView imageView = (ImageView) view;
                 int color = UtilsFilme.loadPalette(imageView);
                 intent.putExtra(Constantes.COLOR_TOP, color);
@@ -243,7 +242,7 @@ public class ListaRatedFragment extends Fragment {
 
             @Override
             public void onClickLong(View view, final int position) {
-                Log.d("setupNavDrawer", "Login");
+               // Log.d("setupNavDrawer", "Login");
                 final boolean[] status = {false};
                 final Dialog alertDialog = new Dialog(getActivity());
                 alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -260,7 +259,7 @@ public class ListaRatedFragment extends Fragment {
                 no.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d(TAG, "Apagou Rated");
+                       // Log.d(TAG, "Apagou Rated");
 
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -285,7 +284,7 @@ public class ListaRatedFragment extends Fragment {
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d(TAG, "Adialog Rated");
+                      //  Log.d(TAG, "Adialog Rated");
                         final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
                                 android.R.style.Theme_Material_Dialog);
                         progressDialog.setIndeterminate(true);

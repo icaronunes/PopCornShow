@@ -3,7 +3,6 @@ package adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +45,7 @@ public class PersonPopularAdapter extends RecyclerView.Adapter<PersonPopularAdap
         if (personResultsPage != null){
 
             final Person person =  personResultsPage.getResults().get(position);
-            Log.d("PersonPopularActivity", person.getName());
+          //  Log.d("PersonPopularActivity", person.getName());
             Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + person.getProfilePath())
                     .error(R.drawable.person)
                     .into(holder.img_person, new Callback() {
@@ -79,7 +78,7 @@ public class PersonPopularAdapter extends RecyclerView.Adapter<PersonPopularAdap
     @Override
     public int getItemCount() {
 
-        Log.d("PersonPopularActivity", "tamanho "+personResultsPage.getResults().size());
+       // Log.d("PersonPopularActivity", "tamanho "+personResultsPage.getResults().size());
         return personResultsPage.getResults().size();
     }
 

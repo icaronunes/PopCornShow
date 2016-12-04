@@ -3,7 +3,6 @@ package onsignal;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
 
 import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OneSignal;
@@ -41,7 +40,7 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
         Context context = FilmeApplication.getInstance().getBaseContext();
         JSONObject jsonData = result.notification.payload.additionalData;
         if (jsonData != null) {
-            Log.d("mesaj", " jsonData.length(): " + jsonData.length());
+           // Log.d("mesaj", " jsonData.length(): " + jsonData.length());
             try {
                 JSONObject object = jsonData;
                 String action = (String) object.get("action");
@@ -107,7 +106,7 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
 
                 if (action.equals("ListaGenericaActivity")) {
                     Intent intent = new Intent(context, ListaGenericaActivity.class);
-                    Log.d("ListaGenericaActivity", "ListaGenericaActivity");
+                   // Log.d("ListaGenericaActivity", "ListaGenericaActivity");
                     if (object.has("nome"))
                         intent.putExtra(Constantes.LISTA_GENERICA, object.getString("nome"));
 

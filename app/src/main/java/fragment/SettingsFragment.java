@@ -2,7 +2,6 @@ package fragment;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,7 +18,7 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         // Load the preferences from an XML resource
-        Log.d("SettingsFragment", "onCreate");
+       // Log.d("SettingsFragment", "onCreate");
         addPreferencesFromResource(R.xml.preferences);
 
     }
@@ -30,11 +29,11 @@ public class SettingsFragment extends PreferenceFragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             LogoffDialog emailPrefs = (LogoffDialog) findPreference("pref_logoff");
-            Log.d("SettingsFragment", "true" );
+           // Log.d("SettingsFragment", "true" );
             emailPrefs.setEnabled(true);
         } else {
             LogoffDialog emailPrefs = (LogoffDialog) findPreference("pref_logoff");
-            Log.d("SettingsFragment", "false");
+           // Log.d("SettingsFragment", "false");
             emailPrefs.setEnabled(false);
         }
     }

@@ -10,7 +10,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +90,7 @@ public class TvShowsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if (!UtilsFilme.isNetWorkAvailable(getContext())) {
-            Log.d("onActivityCreated", "Sem internet");
+          //  Log.d("onActivityCreated", "Sem internet");
             textView.setVisibility(View.VISIBLE);
             textView.setText("SEM INTERNET");
             swipeRefreshLayout.setEnabled(false);
@@ -165,7 +164,7 @@ public class TvShowsFragment extends Fragment {
 
         @Override
         protected List<TvSeries> doInBackground(Void... voids) {
-            Log.d("doInBackground", "doInBackground");
+           // Log.d("doInBackground", "doInBackground");
             TmdbTV tvShow = FilmeService.getTmdbTvShow();
             List<TvSeries> dbList = getListaTipo(tvShow);
             return dbList;
@@ -174,7 +173,7 @@ public class TvShowsFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<TvSeries> tmdbMovies) {
-            Log.d("onPostExecute", "onPostExecute");
+           // Log.d("onPostExecute", "onPostExecute");
             process.setVisibility(View.GONE);
             if (tmdbMovies != null && pagina != 1) {
                 List<TvSeries> x = tvSeries;
@@ -199,7 +198,7 @@ public class TvShowsFragment extends Fragment {
 
                     case R.string.air_date: {
                         results = tmdbTV.getOnTheAir(language, pagina).getResults();
-                        Log.d("Air Date", "" + results.size());
+                      //  Log.d("Air Date", "" + results.size());
                         return  results;
                     }
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +16,11 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import activity.FilmeActivity;
-import activity.Site;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.people.PersonCredit;
 import info.movito.themoviedbapi.model.people.PersonCredits;
 import utils.Constantes;
 import utils.UtilsFilme;
-
-import static android.R.attr.id;
 
 /**
  * Created by icaro on 18/08/16.
@@ -53,20 +49,20 @@ public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.
         final PersonCredit credit = personCredits.getCast().get(position);
         if (credit != null) {
 
-            Log.d("PersonMovieAdapter", "True - " + personCredits.getCast().get(position).getMovieTitle() + " " + credit.getPosterPath());
+           // Log.d("PersonMovieAdapter", "True - " + personCredits.getCast().get(position).getMovieTitle() + " " + credit.getPosterPath());
             Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + credit.getPosterPath())
                     .error(R.drawable.poster_empty)
                     .into(holder.poster, new Callback() {
                         @Override
                         public void onSuccess() {
                             holder.progressBar.setVisibility(View.INVISIBLE);
-                            Log.d("PersonMovieAdapter", "Sucesso");
+                            //Log.d("PersonMovieAdapter", "Sucesso");
                             holder.title.setVisibility(View.GONE);
                         }
 
                         @Override
                         public void onError() {
-                            Log.d("PersonMovieAdapter", "ERRO " + credit.getMovieTitle());
+                           // Log.d("PersonMovieAdapter", "ERRO " + credit.getMovieTitle());
                             holder.progressBar.setVisibility(View.INVISIBLE);
                             holder.title.setVisibility(View.VISIBLE);
                             holder.title.setText(credit.getMovieTitle());
@@ -80,8 +76,8 @@ public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.
                     ImageView imageView = (ImageView) view;
                     int color = UtilsFilme.loadPalette(imageView);
                     intent.putExtra(Constantes.COLOR_TOP, color);
-                    Log.d("PersonMovieAdapter", "ID - " + credit.getMovieId());
-                    Log.d("PersonMovieAdapter", "ID - " + credit.getMovieTitle());
+                  //  Log.d("PersonMovieAdapter", "ID - " + credit.getMovieId());
+                  //  Log.d("PersonMovieAdapter", "ID - " + credit.getMovieTitle());
                     intent.putExtra(Constantes.FILME_ID, credit.getMovieId());
                     intent.putExtra(Constantes.NOME_FILME, credit.getMovieTitle());
                     context.startActivity(intent);
@@ -101,7 +97,7 @@ public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.
     @Override
     public int getItemCount() {
         if (personCredits.getCast() != null) {
-            Log.d("getItemCount", "Tamanho "+personCredits.getCast().size());
+           // Log.d("getItemCount", "Tamanho "+personCredits.getCast().size());
             return personCredits.getCast().size();
         }
         return 0;

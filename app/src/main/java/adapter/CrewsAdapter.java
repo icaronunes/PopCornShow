@@ -3,7 +3,6 @@ package adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,7 @@ public class CrewsAdapter extends RecyclerView.Adapter<CrewsAdapter.CrewsViewHol
 
         this.context = crewsActivity;
         this.crews = crew;
-        Log.d("CrewsAdapter", "Tamanho " + crews.size());
+      //  Log.d("CrewsAdapter", "Tamanho " + crews.size());
     }
 
     @Override
@@ -66,7 +65,7 @@ public class CrewsAdapter extends RecyclerView.Adapter<CrewsAdapter.CrewsViewHol
 
     @Override
     public int getItemCount() {
-        Log.d("CrewsAdapter", "Tamanho " + crews.size());
+       // Log.d("CrewsAdapter", "Tamanho " + crews.size());
         return crews.size() > 0 ? crews.size() : 0;
     }
 

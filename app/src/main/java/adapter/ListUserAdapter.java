@@ -3,7 +3,6 @@ package adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +16,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import activity.FilmeActivity;
-import domian.ItemsLista;
-import activity.ListaUserActivity;
 import activity.TvShowActivity;
 import br.com.icaro.filme.R;
+import domian.ItemsLista;
 import utils.Constantes;
 import utils.UtilsFilme;
 
@@ -50,7 +48,7 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListVi
     public void onBindViewHolder(final ListViewHolder holder, int position) {
 
 
-            Log.d("domian.Lista", lista.get(position).getMediaType());
+          //  Log.d("domian.Lista", lista.get(position).getMediaType());
             final ItemsLista movie = lista.get(position);
 
             if (movie.getReleaseDate() != null){

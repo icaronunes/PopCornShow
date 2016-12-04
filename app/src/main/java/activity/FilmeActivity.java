@@ -21,7 +21,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -110,7 +109,7 @@ public class FilmeActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(" ");
         getExtras();
-        Log.d("color", "Cor do fab " + color_fundo);
+      //  Log.d("color", "Cor do fab " + color_fundo);
         menu_item_favorite = (FloatingActionButton) findViewById(R.id.menu_item_favorite);
         menu_item_watchlist = (FloatingActionButton) findViewById(R.id.menu_item_watchlist);
         menu_item_rated = (FloatingActionButton) findViewById(R.id.menu_item_rated);
@@ -159,11 +158,11 @@ public class FilmeActivity extends BaseActivity {
 
                 if (dataSnapshot.child(String.valueOf(id_filme)).exists()) {
                     addWatch = true;
-                    Log.d(TAG, "False");
+                  //  Log.d(TAG, "False");
                     menu_item_watchlist.setLabelText(getResources().getString(R.string.remover_watch));
                 } else {
                     addWatch = false;
-                    Log.d(TAG, "True");
+                   // Log.d(TAG, "True");
                     menu_item_watchlist.setLabelText(getResources().getString(R.string.adicionar_watch));
                 }
             }
@@ -183,8 +182,8 @@ public class FilmeActivity extends BaseActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(String.valueOf(id_filme)).exists()) {
                     addRated = true;
-                    Log.d(TAG, "False");
-                    Log.d(TAG, "nota " + dataSnapshot.child(String.valueOf(id_filme)).child("nota"));
+                   // Log.d(TAG, "False");
+                   // Log.d(TAG, "nota " + dataSnapshot.child(String.valueOf(id_filme)).child("nota"));
                     if (dataSnapshot.child(String.valueOf(id_filme)).child("nota").exists()) {
                         String nota = String.valueOf(dataSnapshot.child(String.valueOf(id_filme)).child("nota").getValue());
                         numero_rated = Float.parseFloat(nota);
@@ -198,7 +197,7 @@ public class FilmeActivity extends BaseActivity {
                     addRated = false;
                     numero_rated = 0;
                     menu_item_rated.setLabelText(getResources().getString(R.string.adicionar_rated));
-                    Log.d(TAG, "True");
+                  //  Log.d(TAG, "True");
                 }
             }
 
@@ -217,11 +216,11 @@ public class FilmeActivity extends BaseActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(String.valueOf(id_filme)).exists()) {
                     addFavorite = true;
-                    Log.d(TAG, "True");
+                  //  Log.d(TAG, "True");
                     menu_item_favorite.setLabelText(getResources().getString(R.string.remover_favorite));
                 } else {
                     addFavorite = false;
-                    Log.d(TAG, "False");
+                   // Log.d(TAG, "False");
                     menu_item_favorite.setLabelText(getResources().getString(R.string.adicionar_favorite));
 
                 }
@@ -366,7 +365,7 @@ public class FilmeActivity extends BaseActivity {
                     no.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Log.d(TAG, "Apagou Rated");
+                           // Log.d(TAG, "Apagou Rated");
                             myRated.child(String.valueOf(id_filme)).setValue(null)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
@@ -383,7 +382,7 @@ public class FilmeActivity extends BaseActivity {
                     ok.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Log.d(TAG, "Adialog Rated");
+                          //  Log.d(TAG, "Adialog Rated");
 
                             final ProgressDialog progressDialog = new ProgressDialog(FilmeActivity.this,
                                     android.R.style.Theme_Material_Dialog);
@@ -468,7 +467,7 @@ public class FilmeActivity extends BaseActivity {
                 } else {
 
                     if (addFavorite) {
-                        Log.d(TAG, "Apagou Favorite");
+                      //  Log.d(TAG, "Apagou Favorite");
                         myFavorite.child(String.valueOf(id_filme)).setValue(null)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
@@ -617,7 +616,7 @@ public class FilmeActivity extends BaseActivity {
                 if (position == 0) {
                     return new ImagemTopFilmeScrollFragment().newInstance(movieDb.getBackdropPath());
                 }
-                Log.d("FilmeActivity", "getItem: ->  " + movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
+               // Log.d("FilmeActivity", "getItem: ->  " + movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
                 return new ImagemTopFilmeScrollFragment().newInstance(movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
             }
             return null;
@@ -629,7 +628,7 @@ public class FilmeActivity extends BaseActivity {
             if (movieDb.getImages(ArtworkType.BACKDROP) != null) {
 
                 int tamanho = movieDb.getImages(ArtworkType.BACKDROP).size();
-                Log.d("FilmeActivity", "getCount: ->  " + tamanho);
+               // Log.d("FilmeActivity", "getCount: ->  " + tamanho);
                 return tamanho > 0 ? tamanho : 1;
             }
             return 0;
@@ -642,7 +641,7 @@ public class FilmeActivity extends BaseActivity {
         protected MovieDb doInBackground(Void... voids) {//
             if (UtilsFilme.isNetWorkAvailable(FilmeActivity.this)) {
                 TmdbMovies movies = FilmeService.getTmdbMovies();
-                Log.d("FilmeActivity", "Filme ID - " + id_filme);
+               // Log.d("FilmeActivity", "Filme ID - " + id_filme);
 
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
                 boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
@@ -655,7 +654,7 @@ public class FilmeActivity extends BaseActivity {
                     movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());
 
                 } else {
-                    Log.d("FilmeActivity", "False - " + id_filme);
+                  //  Log.d("FilmeActivity", "False - " + id_filme);
                     movieDb = movies.getMovie(id_filme, "en,null"
                             , credits, releases, videos, reviews, similar, alternative_titles, images);
                 }
@@ -681,7 +680,7 @@ public class FilmeActivity extends BaseActivity {
                     setEventListenerRated();
                     setEventListenerWatch();
 
-                    Log.d("FAB", "FAB " + color_fundo);
+                  //  Log.d("FAB", "FAB " + color_fundo);
                     fab.setAlpha(1);
                     setColorFab(color_fundo);
                     menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
