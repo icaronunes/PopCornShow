@@ -33,15 +33,15 @@ import utils.UtilsFilme;
 public class CollectionPagerAdapter extends PagerAdapter {
 
 
-    public static CollectionInfo info;
-    Context context;
-    int id;
-    ImageView imageView;
-    LinearLayout linearLayout;
-    TextView nome;
-    Button externo;
-    FirebaseAnalytics firebaseAnalytics;
-    Button interno;
+    private CollectionInfo info;
+    private Context context;
+    private int id;
+    private ImageView imageView;
+    private LinearLayout linearLayout;
+    private TextView nome;
+    private Button externo;
+    private FirebaseAnalytics firebaseAnalytics;
+    private Button interno;
 
 
     public CollectionPagerAdapter(CollectionInfo info, Context context, int id) {

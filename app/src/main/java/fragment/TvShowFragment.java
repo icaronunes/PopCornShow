@@ -604,6 +604,7 @@ public class TvShowFragment extends Fragment {
                                                 seguir.setText(R.string.seguir);
                                                 Toast.makeText(getActivity(), R.string.erro_seguir, Toast.LENGTH_SHORT).show();
                                             }
+
                                         }
                                     });
 
@@ -617,6 +618,12 @@ public class TvShowFragment extends Fragment {
                             .setTitle(R.string.title_delete)
                             .setMessage(R.string.msg_parar_seguir)
                             .setNegativeButton(R.string.no, null)
+                            .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                @Override
+                                public void onDismiss(DialogInterface dialogInterface) {
+                                    progressBarTemporada.setVisibility(View.GONE);
+                                }
+                            })
                             .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -626,6 +633,7 @@ public class TvShowFragment extends Fragment {
                                             .removeValue();
                                     seguindo = !seguindo;
                                     isSeguindo();
+                                    progressBarTemporada.setVisibility(View.GONE);
                                 }
                             }).create();
 

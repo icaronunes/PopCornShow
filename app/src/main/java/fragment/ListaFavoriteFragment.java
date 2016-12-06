@@ -123,13 +123,13 @@ public class ListaFavoriteFragment extends Fragment {
                         .setIcon(R.drawable.icon_agenda)
                         .setTitle(movieDbs.get(position).getTitle())
                         .setMessage(getResources().getString(R.string.excluir_filme))
-                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
                             }
                         })
-                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -183,13 +183,13 @@ public class ListaFavoriteFragment extends Fragment {
                         .setIcon(R.drawable.icon_agenda)
                         .setTitle(tvshowDB.getTitle())
                         .setMessage(getResources().getString(R.string.excluir_tvshow))
-                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
                             }
                         })
-                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 FirebaseAuth mAuth = FirebaseAuth.getInstance();

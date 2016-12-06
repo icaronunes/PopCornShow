@@ -581,7 +581,7 @@ public class FilmeActivity extends BaseActivity {
         bundle.putSerializable(Constantes.SIMILARES, similarMovies);
         filmeFrag.setArguments(bundle);
 
-        if (!isFinishing() && !isDestroyed()) {
+        if (!isFinishing()) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.filme_container, filmeFrag, null)

@@ -6,7 +6,6 @@ package activity;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -16,11 +15,9 @@ import android.view.MenuItem;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import fragment.TvShowsFragment;
 import utils.Constantes;
-import utils.Prefs;
 
 
 public class TvShowsActivity extends BaseActivity {
@@ -49,7 +46,7 @@ public class TvShowsActivity extends BaseActivity {
             setCheckable(getIntent().getIntExtra(Constantes.ABA, 0));
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.container, tvShowsFragment)
+                    .add(R.id.container_list_main, tvShowsFragment)
                     .commit();
         }
     }

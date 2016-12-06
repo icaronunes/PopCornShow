@@ -35,13 +35,15 @@ public class IntroActivity extends AppIntro {
         boolean valor = preferences.getBoolean(VISTO, false);
         if (valor){
             startActivity(new Intent(this, LoginActivity.class));
-        }
+            finish();
+        } else {
 
-        addSlide(new FirstSlide(), getApplicationContext());
-        addSlide(new SecondSlide(), getApplicationContext());
-        addSlide(new ThirdSlide(), getApplicationContext());
-        addSlide(new FourthSlide(), getApplicationContext());
-        addSlide(new FiveSlide(), getApplicationContext());
+            addSlide(new FirstSlide(), getApplicationContext());
+            addSlide(new SecondSlide(), getApplicationContext());
+            addSlide(new ThirdSlide(), getApplicationContext());
+            addSlide(new FourthSlide(), getApplicationContext());
+            addSlide(new FiveSlide(), getApplicationContext());
+        }
 
         // OPTIONAL METHODS
         // Override bar/separator color
@@ -65,6 +67,7 @@ public class IntroActivity extends AppIntro {
         editor.putBoolean(VISTO, true);
         editor.commit();
         startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @Override
@@ -75,5 +78,6 @@ public class IntroActivity extends AppIntro {
         editor.putBoolean(VISTO, true);
         editor.commit();
         startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 }

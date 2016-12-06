@@ -95,7 +95,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_visto"
             android:onClick="onclick"
-
             android:text="@string/bt_signin"
             android:textCursorDrawable="@drawable/button_visto" />
 

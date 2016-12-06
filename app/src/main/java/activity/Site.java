@@ -21,7 +21,6 @@ import utils.Constantes;
  */
 public class Site extends AppCompatActivity {
 
-    private static String url = "https://www.themoviedb.org/account/signup";
     protected SwipeRefreshLayout swipeRefreshLayout;
     private WebView webView;
     private ProgressBar progressBar;
@@ -35,7 +34,7 @@ public class Site extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.webView);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
-        url = getIntent().getStringExtra(Constantes.SITE);
+        String url = getIntent().getStringExtra(Constantes.SITE);
 
         if (url.contains("https://play.google.com/store/apps/details?id=")) {
           //  Log.d("Site", url);

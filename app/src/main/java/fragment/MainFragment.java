@@ -453,7 +453,7 @@ import static utils.UtilsFilme.getTimezone;
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            if (status & isAdded()) {
+            if (status && isAdded()) {
                 if (tipo == R.string.tvshow_main) {
                     setScrollTvShowPopulares();
                     setScrollTvShowToDay();
@@ -470,7 +470,7 @@ import static utils.UtilsFilme.getTimezone;
     private void setScrollMovieOntheAir() {
         List<MovieDb> movie;
 
-        if (cinema.getResults().size() > 0 & isAdded()) {
+        if (cinema.getResults().size() > 0 && isAdded()) {
             int tamanho = cinema.getResults().size() < 15 ? cinema.getResults().size() : 15;
            // Log.d("MainFragment", "Tamanho " + cinema.getResults().size());
             movie = cinema.getResults();

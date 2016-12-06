@@ -19,8 +19,8 @@ public class FilmesActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setContentView(R.layout.activity_list_main);
         setUpToolBar();
         setupNavDrawer();
         getExtras();
@@ -38,7 +38,7 @@ public class FilmesActivity extends BaseActivity {
             filmesFragment.setArguments(getIntent().getExtras());
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.container, filmesFragment)
+                    .add(R.id.container_list_main, filmesFragment)
                     .commit();
         }
 

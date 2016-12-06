@@ -275,29 +275,33 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void LogarComEmail() {
+        if (pass.getText().toString().length() > 4 && email.getText().toString().length() > 4) {
+            mAuth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            //  Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                            //   Log.d(TAG, "signInWithEmail:onComplete: " + email.getText().toString() + " " + pass.getText().toString());
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "Falhou",
+                                        Toast.LENGTH_SHORT).show();
+                            }
 
-        mAuth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                      //  Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                     //   Log.d(TAG, "signInWithEmail:onComplete: " + email.getText().toString() + " " + pass.getText().toString());
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Falhou",
-                                    Toast.LENGTH_SHORT).show();
+
                         }
-
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-              //  Log.w(TAG, "signInWithEmail:failed " + e.getMessage());
-            }
-        });
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    //  Log.w(TAG, "signInWithEmail:failed " + e.getMessage());
+                }
+            });
+        } else {
+            Toast.makeText(LoginActivity.this, "Falhou",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
 

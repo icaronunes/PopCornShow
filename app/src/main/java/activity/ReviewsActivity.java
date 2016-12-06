@@ -85,7 +85,7 @@ public class ReviewsActivity extends BaseActivity {
         @Override
         protected void onPostExecute(MovieDb movieDb) {
             super.onPostExecute(movieDb);
-            if (!movieDb.getReviews().isEmpty());
+            if (!movieDb.getReviews().isEmpty())
             recyclerView.setAdapter(new ReviewsAdapter(getBaseContext(), movieDb.getReviews()));
         }
     }

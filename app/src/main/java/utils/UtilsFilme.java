@@ -10,7 +10,6 @@ import android.support.v7.graphics.Palette;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 
@@ -33,9 +32,6 @@ public class UtilsFilme {
 
     private static final String TAG = UtilsFilme.class.getName();
 
-    public static void toast(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-    }
 
     /* Checks if external storage is available for read and write */
     public static boolean isExternalStorageWritable() {
@@ -156,10 +152,6 @@ public class UtilsFilme {
             FirebaseCrash.report(e);
            // Log.e(TAG, e.getMessage(), e);
         }
-    }
-
-    public static Context getContext() {
-        return getContext();
     }
 
     public static boolean isNetWorkAvailable(Context context) {

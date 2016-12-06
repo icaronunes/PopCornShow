@@ -129,7 +129,7 @@ public class ListaWatchlistFragment extends Fragment {
                         .setIcon(R.drawable.icon_agenda)
                         .setTitle(movies.get(position).getTitle())
                         .setMessage(getResources().getString(R.string.excluir_filme))
-                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Bundle bundle = new Bundle();
@@ -141,7 +141,7 @@ public class ListaWatchlistFragment extends Fragment {
                                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             }
                         })
-                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -203,7 +203,7 @@ public class ListaWatchlistFragment extends Fragment {
                         .setIcon(R.drawable.icon_agenda)
                         .setTitle(tvSeries.get(position).getTitle())
                         .setMessage(getResources().getString(R.string.excluir_filme))
-                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Bundle bundle = new Bundle();
@@ -215,7 +215,7 @@ public class ListaWatchlistFragment extends Fragment {
                                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             }
                         })
-                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 FirebaseAuth mAuth = FirebaseAuth.getInstance();

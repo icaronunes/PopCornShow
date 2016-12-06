@@ -103,7 +103,7 @@ public class OscarActivity  extends BaseActivity{
             if (lista == null) {
                 lista = FilmeService.getLista(list_id);
                 //Metodos criados. Tudo gambiara. Precisa arrumar
-                if (lista.getItems() != null) {
+                if (lista != null) {
                     Collections.sort(lista.getItems());
                 }
             }

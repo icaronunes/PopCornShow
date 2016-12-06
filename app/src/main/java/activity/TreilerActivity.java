@@ -65,5 +65,4 @@ public class TreilerActivity extends YouTubeBaseActivity implements YouTubePlaye
     public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
 
     }
-
 }

@@ -18,7 +18,6 @@ public class FilmeApplication extends Application {
 
     private static final String TAG = FilmeApplication.class.getName();
     private static FilmeApplication instance = null;
-    private FirebaseAnalytics mFirebaseAnalytics;
 
     public static FilmeApplication getInstance() {
         return instance;
@@ -34,7 +33,7 @@ public class FilmeApplication extends Application {
                 .setNotificationReceivedHandler(new CustomNotificationReceivedHandler())
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .init();
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
 
     }
