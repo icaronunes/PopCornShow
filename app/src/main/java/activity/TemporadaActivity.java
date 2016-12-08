@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +35,7 @@ import domian.FilmeService;
 import domian.UserSeasons;
 import info.movito.themoviedbapi.model.tv.TvSeason;
 import utils.Constantes;
+import utils.UtilsFilme;
 
 /**
  * Created by icaro on 26/08/16.
@@ -80,8 +82,26 @@ public class TemporadaActivity extends BaseActivity {
         mAuth = FirebaseAuth.getInstance();
         myRef =  FirebaseDatabase.getInstance().getReference("users");
 
-        new TMDVAsync().execute();
+        if (UtilsFilme.isNetWorkAvailable(this)) {
+            new TMDVAsync().execute();
+        } else {
+            snack();
+        }
 
+    }
+
+    protected void snack() {
+        Snackbar.make(recyclerView, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                            new TMDVAsync().execute();
+                        } else {
+                            snack();
+                        }
+                    }
+                }).show();
     }
 
     public void getExtras() {

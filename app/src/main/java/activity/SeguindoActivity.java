@@ -79,7 +79,6 @@ public class SeguindoActivity extends BaseActivity{
 
         seguindoDataBase = database.getReference("users").child(mAuth.getCurrentUser()
                 .getUid()).child("seguindo");
-
     }
 
     protected void snack() {
@@ -89,6 +88,7 @@ public class SeguindoActivity extends BaseActivity{
                     public void onClick(View view) {
                         if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
                             //text_elenco_no_internet.setVisibility(View.GONE);
+                            iniciarFirebases();
                             setEventListenerFavorite();
                         } else {
                             snack();

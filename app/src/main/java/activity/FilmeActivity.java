@@ -586,7 +586,7 @@ public class FilmeActivity extends BaseActivity {
                     .beginTransaction()
                     .add(R.id.filme_container, filmeFrag, null)
                     .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                    .commit();
+                    .commitAllowingStateLoss();
         }
     }
 

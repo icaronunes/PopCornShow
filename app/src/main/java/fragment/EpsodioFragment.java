@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,6 +81,8 @@ public class EpsodioFragment extends Fragment {
     private ValueEventListener userListener;
     private ValueEventListener epsListener;
     private float numero_rated;
+    private LinearLayout relativeLayout;
+    private AdView adview;
 
 
     public static Fragment newInstance(TvEpisode tvEpisode, String nome_serie,
@@ -150,6 +153,7 @@ public class EpsodioFragment extends Fragment {
         linear_vote = (LinearLayout) view.findViewById(R.id.linear_vote);
         frame_meio_ep_cima = (FrameLayout) view.findViewById(R.id.linear_meio_ep_cima);
         frame_meio_ep_baixo = (FrameLayout) view.findViewById(R.id.linear_meio_ep_baixo);
+        relativeLayout = (LinearLayout) view.findViewById(R.id.epsodio_ll);
 
         ep_title = (TextView) view.findViewById(R.id.ep_title);
         ep_tvshow = (TextView) view.findViewById(R.id.ep_tvshow);
@@ -164,16 +168,39 @@ public class EpsodioFragment extends Fragment {
         ep_rating_button = (Button) view.findViewById(R.id.ep_rating_button);
         ep_rating_button.setTextColor(color);
 
-        AdView adview = (AdView) view.findViewById(R.id.adView);
+        adview = (AdView) view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
                 .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
                 .build();
         adview.loadAd(adRequest);
 
-        new TvEpisodeAsync().execute();
-
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (UtilsFilme.isNetWorkAvailable(getActivity())) {
+            new TvEpisodeAsync().execute();
+        } else {
+            snack();
+        }
+
+    }
+
+    protected void snack() {
+        Snackbar.make(relativeLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (UtilsFilme.isNetWorkAvailable(getActivity())) {
+                            new TvEpisodeAsync().execute();
+                        } else {
+                            snack();
+                        }
+                    }
+                }).show();
     }
 
     @Override
@@ -207,10 +234,12 @@ public class EpsodioFragment extends Fragment {
                  //   Log.d(TAG, "assistido " + userEp.isAssistido());
 
                     if (userEp.isAssistido()) {
-                        ep_rating_button.setBackground(getResources().getDrawable(R.drawable.button_visto));
+                        ep_rating_button.setBackground(getResources().getDrawable(R.drawable.button_visto, null));
                         ep_rating_button.setText(getResources().getText(R.string.classificar_visto));
                     } else {
-                        ep_rating_button.setBackground(getResources().getDrawable(R.drawable.button_nao_visto));
+                        ep_rating_button.setBackground(getResources().getDrawable(R.drawable.button_nao_visto, null));
+                        //ep_rating_button.setBackground(getResources()
+                                //.getValue(R.drawable.button_nao_visto, TypedValue.COMPLEX_UNIT_MASK, false));
                         ep_rating_button.setText(getResources().getText(R.string.classificar));
                     }
 
