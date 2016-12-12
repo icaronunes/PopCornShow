@@ -164,31 +164,21 @@ public class ItemsLista  implements Comparable<ItemsLista>{
     @Override
     public int compareTo(ItemsLista itemsLista) {
             if (this.getReleaseDate() == null){
-//                Log.d("Log", "Filme sem Realease This title : " +this.title);
-//                Log.d("Log", "Filme sem Realease This title : " +this.getOriginalTitle());
-//                Log.d("Log", "Filme sem Realease This id : " +this.getId());
-//                Log.d("Log", "Filme sem Realease itemLista id: " +this.getPosterPath());
+
                 return 1;
         }
 
         if (itemsLista.getReleaseDate() == null){
-//            Log.d("Log", "Filme sem Realease itemLista title: " +itemsLista.getTitle());
-//            Log.d("Log", "Filme sem Realease itemLista title: " +itemsLista.getOriginalTitle());
-//            Log.d("Log", "Filme sem Realease itemLista id: " +itemsLista.getId());
-//            Log.d("Log", "Filme sem Realease itemLista id: " +itemsLista.getPosterPath());
             return 1;
         }
-
-        if ((this.releaseDate.length() < 4)){
-
-//            Log.d("Log", "Filme sem Realease itemLista length: " +itemsLista.getTitle());
-//            Log.d("Log", "Filme sem Realease this length: " +this.getTitle());
-//            Log.d("Log", "Filme sem Realease itemLista length: " +itemsLista.releaseDate);
-//            Log.d("Log", "Filme sem Realease this length: " +this.releaseDate);
+        int date = 0;
+        int date2 = 0;
+        if (this.getReleaseDate().length() >= 4){
+            date = Integer.parseInt(this.getReleaseDate().substring(0,4));
         }
-        int date = Integer.parseInt(this.getReleaseDate().substring(0,4));
-        int date2  = Integer.parseInt(itemsLista.getReleaseDate().substring(0,4));
-
+        if (itemsLista.getReleaseDate().length() >= 4) {
+            date2 = Integer.parseInt(itemsLista.getReleaseDate().substring(0, 4));
+        }
         if (date > date2) {
             return -1;
         }

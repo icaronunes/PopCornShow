@@ -581,33 +581,34 @@ public class TvShowFragment extends Fragment {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
+                            if (UtilsFilme.isNetWorkAvailable(getActivity())) {
+                                TmdbTvSeasons tvSeasons = new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
 
-                            TmdbTvSeasons tvSeasons = new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
+                                userTvshow = setUserTvShow(series);
 
-                            userTvshow = setUserTvShow(series);
+                                for (int i = 0; i < series.getSeasons().size(); i++) {
+                                    TvSeason tvS = series.getSeasons().get(i);
+                                    TvSeason tvSeason = tvSeasons.getSeason(series.getId(), tvS.getSeasonNumber(), "en", null); //?
+                                    userTvshow.getSeasons().get(i).setUserEps(setEp(tvSeason));
+                                }
 
-                            for (int i = 0; i < series.getSeasons().size(); i++) {
-                                TvSeason tvS = series.getSeasons().get(i);
-                                TvSeason tvSeason = tvSeasons.getSeason(series.getId(), tvS.getSeasonNumber(), "en", null); //?
-                                userTvshow.getSeasons().get(i).setUserEps(setEp(tvSeason));
-                            }
+                                myRef.child(mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "")
+                                        .child("seguindo")
+                                        .child(String.valueOf(series.getId()))
+                                        .setValue(userTvshow)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                } else {
+                                                    seguir.setText(R.string.seguir);
+                                                    Toast.makeText(getActivity(), R.string.erro_seguir, Toast.LENGTH_SHORT).show();
+                                                }
 
-                            myRef.child(mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "")
-                                    .child("seguindo")
-                                    .child(String.valueOf(series.getId()))
-                                    .setValue(userTvshow)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                            } else {
-                                                seguir.setText(R.string.seguir);
-                                                Toast.makeText(getActivity(), R.string.erro_seguir, Toast.LENGTH_SHORT).show();
                                             }
+                                        });
 
-                                        }
-                                    });
-
+                            }
                         }
                     }).start();
 

@@ -88,18 +88,15 @@ public class FilmeService {
 
 
     public static TmdbMovies getTmdbMovies() {
-        TmdbMovies movies = new TmdbApi(Config.TMDB_API_KEY).getMovies();
-        return movies;
+        return new TmdbApi(Config.TMDB_API_KEY).getMovies();
     }
 
     public static TmdbCompany getTmdbCompany() {
-        TmdbCompany company = new TmdbApi(Config.TMDB_API_KEY).getCompany();
-        return company;
+        return new TmdbApi(Config.TMDB_API_KEY).getCompany();
     }
 
     public static TmdbPeople getTmdbPerson() {
-        TmdbPeople people = new TmdbApi(Config.TMDB_API_KEY).getPeople();
-        return people;
+        return new TmdbApi(Config.TMDB_API_KEY).getPeople();
     }
 
     public static TmdbCollections getTmdbCollections() {

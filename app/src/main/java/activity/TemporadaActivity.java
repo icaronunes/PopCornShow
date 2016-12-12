@@ -234,7 +234,7 @@ public class TemporadaActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (seguindo) {
+        if (postListener != null) {
             myRef.child(mAuth.getCurrentUser().getUid())
                     .child("seguindo")
                     .child(String.valueOf(serie_id))

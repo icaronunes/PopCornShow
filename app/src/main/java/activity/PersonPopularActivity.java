@@ -29,7 +29,6 @@ public class PersonPopularActivity extends BaseActivity {
 
     private TmdbPeople.PersonResultsPage personResultsPage;
     private RecyclerView recyclerView;
-    private AdView adView;
     private ProgressBar progressBar;
     private LinearLayout linearLayout;
 
@@ -43,7 +42,7 @@ public class PersonPopularActivity extends BaseActivity {
         getSupportActionBar().setTitle(R.string.person_rated);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         linearLayout = (LinearLayout) findViewById(R.id.linear_person_popular);
-        adView = (AdView) findViewById(R.id.adView);
+        AdView adView = (AdView) findViewById(R.id.adView);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_person_popular);
         recyclerView.setHasFixedSize(true);
@@ -92,7 +91,7 @@ public class PersonPopularActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+        if (UtilsFilme.isNetWorkAvailable(this)) {
             new PersonPopularAsync().execute();
         } else {
             snack();

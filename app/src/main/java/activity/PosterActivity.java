@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Window;
 
 import com.viewpagerindicator.LinePageIndicator;
@@ -25,7 +26,7 @@ import static br.com.icaro.filme.R.id.pager;
 
 
 
-public class PosterActivity extends BaseActivity {
+public class PosterActivity extends ActionBarActivity {
 
     ViewPager viewPager;
     List<Artwork> artworks;
@@ -36,8 +37,8 @@ public class PosterActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
-       // Log.d("PosterActivity", "onCreate");
         setContentView(R.layout.activity_scroll_poster);
+        // Log.d("PosterActivity", "onCreate");
         artworks = (List<Artwork>) getIntent().getBundleExtra(Constantes.BUNDLE).getSerializable(Constantes.ARTWORKS);
         nome = getIntent().getStringExtra(Constantes.NOME);
        // Log.d("posterAcvitivy", String.valueOf(getWindow().getContext().getTheme()));

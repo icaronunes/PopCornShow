@@ -21,6 +21,7 @@ import br.com.icaro.filme.R;
 import domian.FilmeService;
 import domian.Lista;
 import utils.Constantes;
+import utils.UtilsFilme;
 
 /**
  * Created by icaro on 04/10/16.
@@ -58,7 +59,9 @@ public class ListaGenericaActivity  extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        new TMDVAsync().execute();
+        if(UtilsFilme.isNetWorkAvailable(this)) {
+            new TMDVAsync().execute();
+        }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

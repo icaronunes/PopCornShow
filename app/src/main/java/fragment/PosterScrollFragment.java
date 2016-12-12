@@ -148,7 +148,7 @@ public class PosterScrollFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         File file = getContext().getExternalCacheDir();
-        if (file.exists()) {
+        if (file != null && file.exists()) {
             getContext().deleteDatabase(getContext().getExternalCacheDir().getPath()); //Funciona??????
         }
     }
@@ -157,9 +157,11 @@ public class PosterScrollFragment extends Fragment {
         //USar metodo do BaseActivity
         File file = context.getExternalCacheDir();
 
-        if (!file.exists()) {
-            file.mkdir();
-          //  Log.e("salvarArqNaMemoriaIn", "Directory created");
+        if (file != null) {
+            if (!file.exists()) {
+                file.mkdir();
+                //  Log.e("salvarArqNaMemoriaIn", "Directory created");
+            }
         }
         File dir = new File(file, endereco);
 
@@ -173,12 +175,14 @@ public class PosterScrollFragment extends Fragment {
 
     private File salvarArquivoNaMemoriaInterna(Context context, ImageView imageView) {
         File file = new File(Environment
-                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + getContext().getPackageName() );
+                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() );
                 //"/Filme");
 
-        if (!file.exists()) {
-            file.mkdir();
-           // Log.e("salvarArqNaMemoriaIn", "Directory created");
+        if (file != null) {
+            if (!file.exists()) {
+                file.mkdir();
+                //  Log.e("salvarArqNaMemoriaIn", "Directory created");
+            }
         }
         File dir = new File(file, endereco);
 
