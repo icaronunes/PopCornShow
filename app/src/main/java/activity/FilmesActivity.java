@@ -61,7 +61,7 @@ public class FilmesActivity extends BaseActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setQueryHint("Procura Filme");
+        searchView.setQueryHint(getResources().getString(R.string.procurar));
         searchView.setEnabled(false);
 
         return true;

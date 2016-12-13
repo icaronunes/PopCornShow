@@ -65,19 +65,11 @@ public class SearchMultiActivity extends BaseActivity {
         text_search_empty = (TextView) findViewById(R.id.text_search_empty);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
         progressBar = (ProgressBar) findViewById(R.id.progress);
-       // Log.d("SearchMultiActivity", "Entrou");
-      //  Log.d("SearchMultiActivity", "onCreate");
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_search);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
 
-        AdView adview = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-                .build();
-        adview.loadAd(adRequest);
 
         /**
          *
@@ -191,14 +183,23 @@ public class SearchMultiActivity extends BaseActivity {
         return true;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AdView adview = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+        adview.loadAd(adRequest);
+    }
+
     private class TMDVAsync extends AsyncTask<Void, Void, List<Multi>> {
 
         @Override
         protected void onPreExecute() {
             swipeRefreshLayout.setEnabled(false);
-            //progressBar.setVisibility(View.VISIBLE);
-
-        }
+           }
 
         @Override
         protected List<Multi> doInBackground(Void... voids) {//

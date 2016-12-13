@@ -19,7 +19,7 @@ import utils.Constantes;
  * Created by icaro on 12/07/16.
  */
 
-public class TreilerActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
+public class TrailerActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
 
     YouTubePlayerView youTubeView;
     String youtube_key;
@@ -41,7 +41,6 @@ public class TreilerActivity extends YouTubeBaseActivity implements YouTubePlaye
         adview.loadAd(adRequest);
 
     }
-
 
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider,

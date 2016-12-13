@@ -57,7 +57,7 @@ import activity.PosterGridActivity;
 import activity.SettingsActivity;
 import activity.Site;
 import activity.TemporadaActivity;
-import activity.TreilerActivity;
+import activity.TrailerActivity;
 import adapter.TemporadasAdapter;
 import br.com.icaro.filme.R;
 import domian.UserEp;
@@ -987,7 +987,7 @@ public class TvShowFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        Intent intent = new Intent(getActivity(), TreilerActivity.class);
+                        Intent intent = new Intent(getActivity(), TrailerActivity.class);
                         intent.putExtra(Constantes.YOU_TUBE_KEY, youtube_key);
                         if ((series.getOverview() != null)) {
                             intent.putExtra(Constantes.SINOPSE, series.getOverview());
@@ -995,7 +995,7 @@ public class TvShowFragment extends Fragment {
                         startActivity(intent);
 
                         Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TreilerActivity.class.getName());
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TrailerActivity.class.getName());
                         bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
                         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
                         bundle.putString("Endereço do youtube", youtube_key);

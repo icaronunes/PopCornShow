@@ -22,10 +22,6 @@
         <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_application_id"/>
 
-        <!--
-         android:name="applicaton.FilmeApplication"
-         android:name="android.support.multidex.MultiDexApplication"
-        -->
         <activity
             android:name="activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar.NavDrawer">
@@ -44,12 +40,6 @@
         </activity>
 
         <activity android:name="activity.LoginActivity">
-
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
 
         </activity>
 
@@ -117,6 +107,7 @@
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
         </activity>
+
         <activity
             android:name="activity.FilmeActivity"
             android:parentActivityName="activity.MainActivity"
@@ -134,7 +125,8 @@
         </activity>
 
         <activity android:name="activity.ListaGenericaActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="activity.MainActivity"
+            >
 
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value="activity.MainActivity"/>
@@ -151,7 +143,7 @@
         </activity>
 
         <activity android:name="activity.TemporadaActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="activity.MainActivity" >
 
         <meta-data android:name="android.support.PARENT_ACTIVITY"
             android:value="activity.MainActivity"/>
@@ -161,8 +153,9 @@
         <activity android:name="activity.EpsodioActivity"/>
 
 
-        <activity android:name="activity.TreilerActivity"
-            android:parentActivityName="activity.MainActivity">
+        <activity android:name="activity.TrailerActivity"
+            android:parentActivityName="activity.MainActivity"
+            >
 
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value="activity.MainActivity"/>
@@ -172,7 +165,7 @@
         <activity
             android:name="activity.PosterActivity"
             android:parentActivityName="activity.MainActivity"
-            >
+           >
 
         <meta-data android:name="android.support.PARENT_ACTIVITY"
             android:value="activity.MainActivity"/>
@@ -181,7 +174,8 @@
 
 
         <activity android:name="activity.ElencoActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="activity.MainActivity"
+            >
 
 
         <meta-data android:name="android.support.PARENT_ACTIVITY"
@@ -192,7 +186,8 @@
 
 
         <activity android:name="activity.CrewsActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="activity.MainActivity"
+            >
 
 
         <meta-data android:name="android.support.PARENT_ACTIVITY"
@@ -256,7 +251,8 @@
         <activity android:name="activity.ListaUserActivity" />
 
         <activity android:name="activity.PersonActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="activity.MainActivity"
+            >
 
             <meta-data
                 android:name="android.app.searchable"
@@ -271,7 +267,8 @@
         </activity>
 
         <activity android:name="activity.ReviewsActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="activity.MainActivity"
+            >
 
 
             <meta-data android:name="android.support.PARENT_ACTIVITY"
@@ -281,7 +278,8 @@
 
 
         <activity android:name="activity.FotoPersonActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="activity.MainActivity"
+            >
 
 
         <meta-data android:name="android.support.PARENT_ACTIVITY"
@@ -305,14 +303,16 @@
         </activity>
 
         <activity android:name="activity.Site"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="activity.MainActivity"
+            >
 
         <meta-data android:name="android.support.PARENT_ACTIVITY"
             android:value="activity.MainActivity"/>
         </activity>
 
         <activity android:name="activity.SeguindoActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="activity.MainActivity"
+           >
 
         <meta-data android:name="android.support.PARENT_ACTIVITY"
             android:value="activity.MainActivity"/>
@@ -339,11 +339,13 @@
         <provider
             android:name="provider.SuggestionRecentProvider"
             android:authorities="br.com.icaro.filme.search2" />
+
         <provider
             android:name="provider.SuggestionProvider"
             android:authorities="br.com.icaro.filme.search"
             android:enabled="true"
-            android:exported="true" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+            android:exported="false" />
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"

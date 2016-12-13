@@ -7,7 +7,7 @@ import android.content.SearchRecentSuggestionsProvider;
  */
 
 public class SuggestionRecentProvider extends SearchRecentSuggestionsProvider {
-    public final static String AUTHORITY = "br.com.icaro.filme.search";
+    public final static String AUTHORITY = "br.com.icaro.filme.search2";
     public final static int MODE = DATABASE_MODE_QUERIES;
 
     public SuggestionRecentProvider() {

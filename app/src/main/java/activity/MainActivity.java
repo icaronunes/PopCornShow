@@ -128,35 +128,36 @@ public class MainActivity extends BaseActivity {
 
 
     private void mescla() {
+        if (tmdbMovies != null && tmdbTv != null) {
+            for (int i = 0; i < 20 && multi.size() < 14; i++) {
+                if (i % 2 == 0) {
+                    TopMain topMain = new TopMain();
+                    MovieDb movieDb = tmdbMovies.getResults().get(i);
+                    topMain.setId(movieDb.getId());
+                    topMain.setNome(movieDb.getTitle());
+                    topMain.setMediaType(movieDb.getMediaType().name());
+                    topMain.setImagem(movieDb.getBackdropPath());
 
-        for (int i = 0; i < 20 && multi.size() < 14; i++) {
-            if (i % 2 == 0) {
-                TopMain topMain = new TopMain();
-                MovieDb movieDb = tmdbMovies.getResults().get(i);
-                topMain.setId(movieDb.getId());
-                topMain.setNome(movieDb.getTitle());
-                topMain.setMediaType(movieDb.getMediaType().name());
-                topMain.setImagem(movieDb.getBackdropPath());
+                    Date date = null;
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-                Date date = null;
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-                try {
-                    date = sdf.parse(movieDb.getReleaseDate());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                if (movieDb.getBackdropPath() != null && UtilsFilme.verificaLancamento(date)) {
-                    multi.add(topMain);
-                }
-            } else {
-                TopMain topMain = new TopMain();
-                topMain.setId(tmdbTv.getResults().get(i).getId());
-                topMain.setNome(tmdbTv.getResults().get(i).getName());
-                topMain.setMediaType(tmdbTv.getResults().get(i).getMediaType().name());
-                topMain.setImagem(tmdbTv.getResults().get(i).getBackdropPath());
-                if (tmdbTv.getResults().get(i).getBackdropPath() != null) {
-                    multi.add(topMain);
+                    try {
+                        date = sdf.parse(movieDb.getReleaseDate());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (movieDb.getBackdropPath() != null && UtilsFilme.verificaLancamento(date)) {
+                        multi.add(topMain);
+                    }
+                } else {
+                    TopMain topMain = new TopMain();
+                    topMain.setId(tmdbTv.getResults().get(i).getId());
+                    topMain.setNome(tmdbTv.getResults().get(i).getName());
+                    topMain.setMediaType(tmdbTv.getResults().get(i).getMediaType().name());
+                    topMain.setImagem(tmdbTv.getResults().get(i).getBackdropPath());
+                    if (tmdbTv.getResults().get(i).getBackdropPath() != null) {
+                        multi.add(topMain);
+                    }
                 }
             }
         }
@@ -167,6 +168,10 @@ public class MainActivity extends BaseActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            if (!UtilsFilme.isNetWorkAvailable(MainActivity.this)){
+                return null;
+            }
+
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             if (idioma_padrao) {

@@ -16,6 +16,7 @@ import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
 import info.movito.themoviedbapi.model.people.Person;
 import info.movito.themoviedbapi.model.tv.TvSeries;
+import utils.Config;
 
 public class SuggestionProvider extends ContentProvider {
 
@@ -36,7 +37,7 @@ public class SuggestionProvider extends ContentProvider {
         String query1 = uri.getLastPathSegment().toLowerCase();
       //  Log.d("SuggestionProvider", query1);
 
-        multis = new TmdbSearch(new TmdbApi("fb14e77a32282ed59a8122a266010b70")).searchMulti(query1, "en", 1);
+        multis = new TmdbSearch(new TmdbApi(Config.TMDB_API_KEY)).searchMulti(query1, "en", 1);
 
         MatrixCursor cursor = new MatrixCursor(
                 new String[]{

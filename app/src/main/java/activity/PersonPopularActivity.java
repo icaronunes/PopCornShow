@@ -42,14 +42,13 @@ public class PersonPopularActivity extends BaseActivity {
         getSupportActionBar().setTitle(R.string.person_rated);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         linearLayout = (LinearLayout) findViewById(R.id.linear_person_popular);
-        AdView adView = (AdView) findViewById(R.id.adView);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_person_popular);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        adView = (AdView) findViewById(R.id.adView);
+        AdView adView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
                 .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID

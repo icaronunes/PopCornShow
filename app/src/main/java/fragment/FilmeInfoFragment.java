@@ -48,7 +48,7 @@ import activity.ReviewsActivity;
 import activity.SettingsActivity;
 import activity.SimilaresActivity;
 import activity.Site;
-import activity.TreilerActivity;
+import activity.TrailerActivity;
 import adapter.CollectionPagerAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
@@ -899,7 +899,7 @@ public class FilmeInfoFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        Intent intent = new Intent(getActivity(), TreilerActivity.class);
+                        Intent intent = new Intent(getActivity(), TrailerActivity.class);
                       //  Log.d("OnClick", youtube_key);
                         intent.putExtra(Constantes.YOU_TUBE_KEY, youtube_key);
                         if ((movieDb.getOverview() != null)) {
@@ -908,7 +908,7 @@ public class FilmeInfoFragment extends Fragment {
                         startActivity(intent);
 
                         bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TreilerActivity.class.getName());
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TrailerActivity.class.getName());
                         bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
                         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
                         bundle.putString("Endereço do youtube", youtube_key);
@@ -918,8 +918,7 @@ public class FilmeInfoFragment extends Fragment {
                 });
                 YouTubeThumbnailView thumbnailView = (YouTubeThumbnailView) linearteste.findViewById(R.id.youtube_view_thumbnail);
                 thumbnailView.initialize(Config.YOUTUBE_API_KEY, OnInitializedListener(youtube_key));
-               // Log.d("OnClick", youtube_key);
-                //Acontence erros - Necessario corrigir
+
                 linearLayout.addView(linearteste);
 
             }

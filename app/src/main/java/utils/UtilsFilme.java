@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Environment;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
@@ -154,34 +153,48 @@ public class UtilsFilme {
         }
     }
 
+//    public static boolean isNetWorkAvailable(Context context)
+//
+//
+//        try {
+//            ConnectivityManager connectivityManager =
+//                    (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
+//            if (connectivityManager == null) {
+//                return false;
+//            } else {
+//
+//                NetworkInfo[] networkInfos = connectivityManager.getAllNetworkInfo();
+//                if (networkInfos != null) {
+//                    for (int i = 0; i < networkInfos.length; i++) {
+//                        if (networkInfos[i].isConnected()) {
+//                            return true;
+//                        }
+//                    }
+//                }
+//            }
+//
+//        } catch (SecurityException e) {
+//            FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
+//            FirebaseCrash.report(e);
+//        }
+//
+//        return false;
+//    }
+    // Verificar se o metodo verificaConexao fica melhor.
+
     public static boolean isNetWorkAvailable(Context context) {
-
-
-        try {
-            ConnectivityManager connectivityManager =
-                    (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
-            if (connectivityManager == null) {
-                return false;
-            } else {
-
-                NetworkInfo[] networkInfos = connectivityManager.getAllNetworkInfo();
-                if (networkInfos != null) {
-                    for (int i = 0; i < networkInfos.length; i++) {
-                        if (networkInfos[i].isConnected()) {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-        } catch (SecurityException e) {
-            FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
-            FirebaseCrash.report(e);
+        boolean conectado;
+        ConnectivityManager conectivtyManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (conectivtyManager.getActiveNetworkInfo() != null
+                && conectivtyManager.getActiveNetworkInfo().isAvailable()
+                && conectivtyManager.getActiveNetworkInfo().isConnected()) {
+            conectado = true;
+        } else {
+            conectado = false;
         }
-
-        return false;
-
+        return conectado;
     }
+
 
     public static Timezone getTimezone() {
         for (Timezone timezone : FilmeService.getTimeZone()) {

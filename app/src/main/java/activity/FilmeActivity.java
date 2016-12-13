@@ -98,6 +98,7 @@ public class FilmeActivity extends BaseActivity {
     private ValueEventListener valueEventFavorite;
 
     private float numero_rated;
+    private TMDVAsync tmdvAsync;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -144,7 +145,8 @@ public class FilmeActivity extends BaseActivity {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         if (UtilsFilme.isNetWorkAvailable(this)) {
-            new TMDVAsync().execute();
+            tmdvAsync =   new TMDVAsync();
+            tmdvAsync.execute();
         } else {
             snack();
         }
@@ -287,7 +289,8 @@ public class FilmeActivity extends BaseActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setQueryHint("Procura Filme");
+        searchView.setQueryHint(getResources().getString(R.string.procurar));
+        
         searchView.setEnabled(false);
 
         return true;
@@ -581,7 +584,7 @@ public class FilmeActivity extends BaseActivity {
         bundle.putSerializable(Constantes.SIMILARES, similarMovies);
         filmeFrag.setArguments(bundle);
 
-        if (!isFinishing()) {
+        if (!isDestroyed() && !isFinishing() && !tmdvAsync.isCancelled() ) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.filme_container, filmeFrag, null)
@@ -593,6 +596,9 @@ public class FilmeActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        tmdvAsync.cancel(true);
+
         if (valueEventWatch != null) {
             myWatch.removeEventListener(valueEventWatch);
         }
@@ -635,6 +641,8 @@ public class FilmeActivity extends BaseActivity {
         }
     }
 
+
+
     private class TMDVAsync extends AsyncTask<Void, Void, MovieDb> {
 
         @Override
@@ -648,7 +656,7 @@ public class FilmeActivity extends BaseActivity {
                 if (idioma_padrao) {
                     movieDb = movies.getMovie(id_filme, getLocale()
                                     //.toLanguageTag() não funciona na API 14
-                                    + ",en,null"
+                             git        + ",en,null"
                             , credits, releases, videos, reviews, similar, alternative_titles, images);
                     movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
                     movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());

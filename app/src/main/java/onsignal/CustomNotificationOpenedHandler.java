@@ -23,7 +23,7 @@ import activity.ReviewsActivity;
 import activity.SimilaresActivity;
 import activity.Site;
 import activity.TemporadaActivity;
-import activity.TreilerActivity;
+import activity.TrailerActivity;
 import activity.TvShowActivity;
 import activity.TvShowsActivity;
 import applicaton.FilmeApplication;
@@ -119,8 +119,8 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     }
                 }
 
-                if (action.equals("TreilerActivity")) {
-                    Intent intent = new Intent(context, TreilerActivity.class);
+                if (action.equals("TrailerActivity")) {
+                    Intent intent = new Intent(context, TrailerActivity.class);
 
                     if (object.has("sinopse"))
                         intent.putExtra(Constantes.SINOPSE, object.getString("sinopse"));
@@ -128,7 +128,7 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     if (object.has("youtube_key")) {
                         intent.putExtra(Constantes.YOU_TUBE_KEY, object.getString("youtube_key"));
                         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-                        stackBuilder.addParentStack(TreilerActivity.class);
+                        stackBuilder.addParentStack(TrailerActivity.class);
                         stackBuilder.addNextIntent(intent);
                         stackBuilder.startActivities();
                     }

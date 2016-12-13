@@ -73,32 +73,32 @@ public class CrewsActivity extends BaseActivity {
     }
 
 
-    private void getExtrass() {
-        if (getIntent().getAction() == null) {
-            id = getIntent().getIntExtra(Constantes.ID, 0);
-            mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
-            season = getIntent().getIntExtra(Constantes.TVSEASONS, -100);
-            title = getIntent().getStringExtra(Constantes.NOME);
-        } else {
-            id = Integer.parseInt(getIntent().getStringExtra(Constantes.ID));
-            String media  = getIntent().getStringExtra(Constantes.MEDIATYPE);
-            switch (media) {
-
-                case "tv": {
-                    mediaType = (Multi.MediaType.TV_SERIES);
-                    if (getIntent().getExtras().containsKey(Constantes.TVSEASONS)) {
-                        season = Integer.parseInt(getIntent().getStringExtra(Constantes.TVSEASONS));
-                    }
-                    break;
-                }
-                case "movie": {
-                    mediaType = (Multi.MediaType.MOVIE);
-                    break;
-                }
-            }
-            title = getIntent().getStringExtra(Constantes.NOME);
-        }
-    }
+//    private void getExtrass() {
+//        if (getIntent().getAction() == null) {
+//            id = getIntent().getIntExtra(Constantes.ID, 0);
+//            mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
+//            season = getIntent().getIntExtra(Constantes.TVSEASONS, -100);
+//            title = getIntent().getStringExtra(Constantes.NOME);
+//        } else {
+//            id = Integer.parseInt(getIntent().getStringExtra(Constantes.ID));
+//            String media  = getIntent().getStringExtra(Constantes.MEDIATYPE);
+//            switch (media) {
+//
+//                case "tv": {
+//                    mediaType = (Multi.MediaType.TV_SERIES);
+//                    if (getIntent().getExtras().containsKey(Constantes.TVSEASONS)) {
+//                        season = Integer.parseInt(getIntent().getStringExtra(Constantes.TVSEASONS));
+//                    }
+//                    break;
+//                }
+//                case "movie": {
+//                    mediaType = (Multi.MediaType.MOVIE);
+//                    break;
+//                }
+//            }
+//            title = getIntent().getStringExtra(Constantes.NOME);
+//        }
+//    }
 
     private void getExtras() {
         if (getIntent().getBooleanExtra("notification" , true)) {

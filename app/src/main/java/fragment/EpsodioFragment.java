@@ -3,6 +3,7 @@ package fragment;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -82,7 +83,6 @@ public class EpsodioFragment extends Fragment {
     private ValueEventListener epsListener;
     private float numero_rated;
     private LinearLayout relativeLayout;
-    private AdView adview;
 
 
     public static Fragment newInstance(TvEpisode tvEpisode, String nome_serie,
@@ -168,7 +168,7 @@ public class EpsodioFragment extends Fragment {
         ep_rating_button = (Button) view.findViewById(R.id.ep_rating_button);
         ep_rating_button.setTextColor(color);
 
-        adview = (AdView) view.findViewById(R.id.adView);
+        AdView adview = (AdView) view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
                 .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
@@ -229,18 +229,23 @@ public class EpsodioFragment extends Fragment {
                 userEp = dataSnapshot.getValue(UserEp.class);
 
                 if (userEp != null) {
-                 //   Log.d(TAG, "onDataChange");
-                //    Log.d(TAG, "key: " + dataSnapshot.getKey());
-                 //   Log.d(TAG, "assistido " + userEp.isAssistido());
 
                     if (userEp.isAssistido()) {
-                        ep_rating_button.setBackground(getResources().getDrawable(R.drawable.button_visto, null));
-                        ep_rating_button.setText(getResources().getText(R.string.classificar_visto));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            ep_rating_button.setBackground(getContext().getResources().getDrawable(R.drawable.button_visto, getActivity().getTheme()));
+                            ep_rating_button.setText(getResources().getText(R.string.classificar_visto));
+                        } else {
+                            ep_rating_button.setBackground(getContext().getResources().getDrawable(R.drawable.button_visto, null));
+                            ep_rating_button.setText(getResources().getText(R.string.classificar_visto));
+                        }
                     } else {
-                        ep_rating_button.setBackground(getResources().getDrawable(R.drawable.button_nao_visto, null));
-                        //ep_rating_button.setBackground(getResources()
-                                //.getValue(R.drawable.button_nao_visto, TypedValue.COMPLEX_UNIT_MASK, false));
-                        ep_rating_button.setText(getResources().getText(R.string.classificar));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            ep_rating_button.setBackground(getContext().getResources().getDrawable(R.drawable.button_nao_visto, getActivity().getTheme()));
+                            ep_rating_button.setText(getResources().getText(R.string.classificar));
+                        } else {
+                            ep_rating_button.setBackground(getContext().getResources().getDrawable(R.drawable.button_nao_visto, null));
+                            ep_rating_button.setText(getResources().getText(R.string.classificar));
+                        }
                     }
 
                 }
