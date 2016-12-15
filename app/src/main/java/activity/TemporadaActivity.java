@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -263,22 +265,37 @@ public class TemporadaActivity extends BaseActivity {
         protected Void doInBackground(Void... voids) {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(TemporadaActivity.this);
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-            if (idioma_padrao) {
-                tvSeason = FilmeService.getTmdbTvSeasons()
-                        .getSeason(serie_id, temporada_id, getLocale() + ",en,null");
+            try {
+                if (idioma_padrao) {
+                    tvSeason = FilmeService.getTmdbTvSeasons()
+                            .getSeason(serie_id, temporada_id, getLocale() + ",en,null");
 //                Log.d("TemporadaActivity", tvSeason.getName());
-                return null;
-            }else {
-                tvSeason = FilmeService.getTmdbTvSeasons()
-                        .getSeason(serie_id, temporada_id, ",en,null"); //????
-                return null;
+                    return null;
+                } else {
+                    tvSeason = FilmeService.getTmdbTvSeasons()
+                            .getSeason(serie_id, temporada_id, ",en,null"); //????
+                    return null;
+                }
+            } catch (Exception e ){
+                Log.d(TAG, e.getMessage());
+                FirebaseCrash.report(e);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(TemporadaActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
+            return null;
 
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+
+            if (tvSeason == null) {return; }
+
             getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada );
 
             if (mAuth.getCurrentUser() != null) {

@@ -68,6 +68,7 @@ import utils.Constantes;
 import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.string.mil;
+import static com.google.android.gms.internal.zzs.TAG;
 import static com.squareup.picasso.Picasso.with;
 
 
@@ -307,14 +308,26 @@ public class FilmeInfoFragment extends Fragment {
                         public void run() {
                             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
                             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-                            if (idioma_padrao) {
-                                info = FilmeService.getTmdbCollections()
-                                        .getCollectionInfo(id, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry() + ",en,null");
-                                getCollection(info);
-                            } else {
-                                info = FilmeService.getTmdbCollections()
-                                        .getCollectionInfo(id, "en");
-                                getCollection(info);
+                            try {
+
+
+                                if (idioma_padrao) {
+                                    info = FilmeService.getTmdbCollections()
+                                            .getCollectionInfo(id, Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry() + ",en,null");
+                                    getCollection(info);
+                                } else {
+                                    info = FilmeService.getTmdbCollections()
+                                            .getCollectionInfo(id, "en");
+                                    getCollection(info);
+                                }
+                            } catch (Exception e){
+                                Log.d(TAG, e.getMessage());
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         }
                     }.start();
@@ -436,7 +449,7 @@ public class FilmeInfoFragment extends Fragment {
         StringBuilder stringBuilder = new StringBuilder("https://play.google.com/store/search?c=movieDbs&q=");
         stringBuilder.append(query);
         Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         format.format(date);
       //  Log.d("Format", format.format(date));
       //  Log.d("Format", movieDb.toString());
@@ -452,7 +465,6 @@ public class FilmeInfoFragment extends Fragment {
         }
         //   https://play.google.com/store/search?c=movies&q=finding%20dory%20201
     }
-
 
     public void setBuget() {
 

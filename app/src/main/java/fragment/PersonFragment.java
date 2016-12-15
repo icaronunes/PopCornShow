@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crash.FirebaseCrash;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -202,6 +205,7 @@ public class PersonFragment extends Fragment {
     }
 
     private void setPersonInformation(final PersonPeople information) {
+        if (information == null) {return;}
       //  Log.d(TAG, "setPersonInformation");
         if (!information.getName().isEmpty() && information.getName().length() > 1) {
             nome_person.setText(information.getName());
@@ -294,6 +298,7 @@ public class PersonFragment extends Fragment {
     }
 
     private void setPersonMovies(PersonCredits personCredits) {
+        if (personCredits == null) {return;}
 
         if (personCredits.getCast() == null || personCredits.getCast().isEmpty()) {
             sem_filmes.setVisibility(View.VISIBLE);
@@ -307,6 +312,9 @@ public class PersonFragment extends Fragment {
     }
 
     private void setPersonCrews(PersonCredits personCredits) {
+
+        if (personCredits == null) { return; }
+
         personCredits = removerDuplicados(personCredits);
 
         if (personCredits.getCrew() == null || personCredits.getCrew().isEmpty()) {
@@ -321,6 +329,8 @@ public class PersonFragment extends Fragment {
     }
 
     private void setPersonImagem(List<Artwork> artworks) {
+        if (artworks == null ) {return; }
+
         if (artworks.isEmpty() || artworks == null) {
             sem_fotos.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
@@ -331,6 +341,8 @@ public class PersonFragment extends Fragment {
     }
 
     private void setPersonCreditsTvshow(PersonCredits personCredits) {
+        if (personCredits == null) {return;}
+
         if (personCreditsTvshow.getCast() == null || personCreditsTvshow.getCast().isEmpty()) {
             sem_serie.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
@@ -359,15 +371,25 @@ public class PersonFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
            // Log.d("PersonFragment", "doInBackground");
+            try {
+                personPeople = getTmdbPerson()
+                        .getPersonInfo(id_person, "&language=pt");
+                //  Log.d("PersonFragment", "doInBackground entrou");
+                artworks = FilmeService.getTmdbPerson().getPersonImages(id_person);
+                personCredits = FilmeService.getTmdbPerson().getPersonCredits(id_person);
+                personCreditsTvshow = FilmeService.getPersonCreditsCombinado(id_person);
+                //FilmeService.getPersonCredits(id_person); Pega TVseries do Ator. Mas não da pra diferenciar dos filmes_main
 
-            personPeople = getTmdbPerson()
-                    .getPersonInfo(id_person, "&language=pt");
-          //  Log.d("PersonFragment", "doInBackground entrou");
-            artworks = FilmeService.getTmdbPerson().getPersonImages(id_person);
-            personCredits = FilmeService.getTmdbPerson().getPersonCredits(id_person);
-            personCreditsTvshow = FilmeService.getPersonCreditsCombinado(id_person);
-            //FilmeService.getPersonCredits(id_person); Pega TVseries do Ator. Mas não da pra diferenciar dos filmes_main
-
+            } catch (Exception e){
+                FirebaseCrash.report(e);
+                Log.d(TAG, e.getMessage());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
             return null;
         }
 

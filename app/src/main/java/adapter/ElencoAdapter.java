@@ -69,7 +69,11 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
     @Override
     public int getItemCount() {
       //  Log.d("ElencoAdapter", "Tamanho " + casts.size());
-        return casts.size() > 0 ? casts.size() : 0;
+        if (casts != null){
+            return  casts.size();
+        } else {
+            return 0;
+        }
     }
 
     public class ElencoViewHolder extends RecyclerView.ViewHolder {

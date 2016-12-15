@@ -20,6 +20,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +37,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -102,7 +104,7 @@ public class TvShowActivity extends BaseActivity {
         getExtras();
         layout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         layout.setBackgroundColor(color_top);
-       // Log.d("color", "Cor do fab " + color_top);
+        // Log.d("color", "Cor do fab " + color_top);
         viewPager = (ViewPager) findViewById(R.id.viewPager_tvshow);
         menu_item_favorite = (FloatingActionButton) findViewById(R.id.menu_item_favorite);
         menu_item_watchlist = (FloatingActionButton) findViewById(R.id.menu_item_watchlist);
@@ -167,7 +169,7 @@ public class TvShowActivity extends BaseActivity {
                     addRated = false;
                     numero_rated = 0;
                     menu_item_rated.setLabelText(getResources().getString(R.string.adicionar_rated));
-                 //   Log.d(TAG, "True");
+                    //   Log.d(TAG, "True");
                 }
             }
 
@@ -330,7 +332,7 @@ public class TvShowActivity extends BaseActivity {
                 animator.start();
 
                 if (addWatch) {
-                   // Log.d(TAG, "Apagou Watch");
+                    // Log.d(TAG, "Apagou Watch");
                     myWatch.child(String.valueOf(series.getId())).setValue(null)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -347,7 +349,7 @@ public class TvShowActivity extends BaseActivity {
                             });
 
                 } else {
-                   // Log.d(TAG, "Gravou Watch");
+                    // Log.d(TAG, "Gravou Watch");
 
                     TvshowDB tvshowDB = new TvshowDB();
                     tvshowDB.setExternalIds(series.getExternalIds());
@@ -405,7 +407,7 @@ public class TvShowActivity extends BaseActivity {
                 } else {
 
                     if (addFavorite) {
-                       // Log.d(TAG, "Apagou Favorite");
+                        // Log.d(TAG, "Apagou Favorite");
                         myFavorite.child(String.valueOf(id_tvshow)).setValue(null)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
@@ -420,7 +422,7 @@ public class TvShowActivity extends BaseActivity {
                                 });
 
                     } else {
-                     //   Log.d(TAG, "Gravou Favorite");
+                        //   Log.d(TAG, "Gravou Favorite");
 
                         TvshowDB tvshowDB = new TvshowDB();
                         tvshowDB.setExternalIds(series.getExternalIds());
@@ -496,7 +498,7 @@ public class TvShowActivity extends BaseActivity {
                     no.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                        //    Log.d(TAG, "Apagou Rated");
+                            //    Log.d(TAG, "Apagou Rated");
                             myRated.child(String.valueOf(id_tvshow)).setValue(null)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
@@ -513,7 +515,7 @@ public class TvShowActivity extends BaseActivity {
                     ok.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                          //  Log.d(TAG, "Adialog Rated");
+                            //  Log.d(TAG, "Adialog Rated");
 
                             final ProgressDialog progressDialog = new ProgressDialog(TvShowActivity.this,
                                     android.R.style.Theme_Material_Dialog);
@@ -523,7 +525,7 @@ public class TvShowActivity extends BaseActivity {
 
                             if (UtilsFilme.isNetWorkAvailable(TvShowActivity.this)) {
 
-                              //  Log.d(TAG, "Gravou Rated");
+                                //  Log.d(TAG, "Gravou Rated");
 
                                 TvshowDB tvshowDB = new TvshowDB();
                                 tvshowDB.setExternalIds(series.getExternalIds());
@@ -562,7 +564,7 @@ public class TvShowActivity extends BaseActivity {
     }
 
     private void setupViewPagerTabs() {
-      //  Log.w(TAG, "setupViewPagerTabs " + seguindo);
+        //  Log.w(TAG, "setupViewPagerTabs " + seguindo);
         viewPager.setOffscreenPageLimit(1);
         viewPager.setAdapter(new TvShowAdapter(this, getSupportFragmentManager(), series, color_top, seguindo));
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -602,27 +604,50 @@ public class TvShowActivity extends BaseActivity {
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
 
             if (idioma_padrao) {
-                TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
-                series = tmdbTv
-                        .getSeries(id_tvshow,getLocale()
-                                        + ",en,null"
-                                , images, credits, videos, external_ids);
+                try {
+                    TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
+                    series = tmdbTv
+                            .getSeries(id_tvshow, getLocale()
+                                            + ",en,null"
+                                    , images, credits, videos, external_ids);
 
-                series.getVideos().addAll(tmdbTv.getSeries(id_tvshow, null, videos).getVideos());
-                series.getImages().setPosters(tmdbTv.getSeries(id_tvshow, null, images).getImages().getPosters());
-               // Log.d(TAG, String.valueOf(series.getNumberOfEpisodes()));
-
+                    series.getVideos().addAll(tmdbTv.getSeries(id_tvshow, null, videos).getVideos());
+                    series.getImages().setPosters(tmdbTv.getSeries(id_tvshow, null, images).getImages().getPosters());
+                    // Log.d(TAG, String.valueOf(series.getNumberOfEpisodes()));
+                } catch (Exception e) {
+                    Log.d(TAG, e.getMessage());
+                    FirebaseCrash.report(e);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(TvShowActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             } else {
-                series = FilmeService.getTmdbTvShow()
-                        .getSeries(id_tvshow, null, images, credits, videos, external_ids);
+                try {
+                    series = FilmeService.getTmdbTvShow()
+                            .getSeries(id_tvshow, null, images, credits, videos, external_ids);
+                } catch (Exception e) {
+                    Log.d(TAG, e.getMessage());
+                    FirebaseCrash.report(e);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(TvShowActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
-
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            if (series == null){
+                return;
+            }
 
             if (mAuth.getCurrentUser() != null && series != null) {
                 DatabaseReference myRef = database.getReference("users");
@@ -633,7 +658,7 @@ public class TvShowActivity extends BaseActivity {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         // Get user value
                                         if (dataSnapshot.exists()) {
-                                          //  Log.d(TAG, "onDataChange " + "seguindo.");
+                                            //  Log.d(TAG, "onDataChange " + "seguindo.");
                                             seguindo = true;
                                             setupViewPagerTabs();
                                             setCoordinator();
@@ -642,19 +667,19 @@ public class TvShowActivity extends BaseActivity {
                                             setupViewPagerTabs();
                                             setCoordinator();
                                             setImageTop();
-                                          //  Log.d(TAG, "onDataChange " + "Não seguindo.");
+                                            //  Log.d(TAG, "onDataChange " + "Não seguindo.");
                                         }
 
                                     }
 
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
-                                      //  Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                                        //  Log.w(TAG, "getUser:onCancelled", databaseError.toException());
                                     }
                                 });
             } else {
                 seguindo = false;
-               // Log.d(TAG, "onDataChange " + "False - Não seguindo.");
+                // Log.d(TAG, "onDataChange " + "False - Não seguindo.");
                 setCoordinator();
                 setupViewPagerTabs();
                 setImageTop();
@@ -666,7 +691,7 @@ public class TvShowActivity extends BaseActivity {
                 setEventListenerFavorite();
                 setEventListenerRated();
 
-               // Log.d("FAB", "FAB " + color_top);
+                // Log.d("FAB", "FAB " + color_top);
 
                 Date date = null;
                 fab.setAlpha(1);

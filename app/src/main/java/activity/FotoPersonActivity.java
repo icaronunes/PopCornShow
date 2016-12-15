@@ -2,13 +2,16 @@ package activity;
 
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Window;
+import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.viewpagerindicator.LinePageIndicator;
 
 import java.util.List;
@@ -35,7 +38,9 @@ public class FotoPersonActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scroll_poster);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -91,17 +96,28 @@ public class FotoPersonActivity extends BaseActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-
-            artworks= FilmeService.getTmdbPerson().getPersonImages(id_foto);
+            try {
+                artworks = FilmeService.getTmdbPerson().getPersonImages(id_foto);
+            } catch (Exception e){
+                FirebaseCrash.report(e);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(FotoPersonActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            viewPager.setAdapter(new PosterFragment(getSupportFragmentManager()));
-            titlePageIndicator.setViewPager(viewPager);
-          //  titlePageIndicator.setFillColor(R.color.black);
-            titlePageIndicator.setCurrentItem(position);
+            if (artworks != null) {
+                viewPager.setAdapter(new PosterFragment(getSupportFragmentManager()));
+                titlePageIndicator.setViewPager(viewPager);
+                //  titlePageIndicator.setFillColor(R.color.black);
+                titlePageIndicator.setCurrentItem(position);
+            }
         }
     }
 }

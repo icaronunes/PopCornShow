@@ -21,6 +21,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +38,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -648,26 +650,36 @@ public class FilmeActivity extends BaseActivity {
         @Override
         protected MovieDb doInBackground(Void... voids) {//
             if (UtilsFilme.isNetWorkAvailable(FilmeActivity.this)) {
-                TmdbMovies movies = FilmeService.getTmdbMovies();
-               // Log.d("FilmeActivity", "Filme ID - " + id_filme);
+                try {
+                    TmdbMovies movies =  FilmeService.getTmdbMovies();
+                    // Log.d("FilmeActivity", "Filme ID - " + id_filme);
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
+                    boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+                    if (idioma_padrao) {
+                        movieDb = movies.getMovie(id_filme, getLocale()
+                                        //.toLanguageTag() não funciona na API 14
+                                        + ",en,null"
+                                , credits, releases, videos, reviews, similar, alternative_titles, images);
+                        movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
+                        movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());
 
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
-                boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-                if (idioma_padrao) {
-                    movieDb = movies.getMovie(id_filme, getLocale()
-                                    //.toLanguageTag() não funciona na API 14
-                             git        + ",en,null"
-                            , credits, releases, videos, reviews, similar, alternative_titles, images);
-                    movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
-                    movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());
-
-                } else {
-                  //  Log.d("FilmeActivity", "False - " + id_filme);
-                    movieDb = movies.getMovie(id_filme, "en,null"
-                            , credits, releases, videos, reviews, similar, alternative_titles, images);
+                    } else {
+                        //  Log.d("FilmeActivity", "False - " + id_filme);
+                        movieDb = movies.getMovie(id_filme, "en,null"
+                                , credits, releases, videos, reviews, similar, alternative_titles, images);
+                    }
+                    similarMovies = movies.getSimilarMovies(movieDb.getId(), null, 1);
+                    return movieDb;
+                } catch (Exception e){
+                    Log.d(TAG, e.getMessage());
+                    FirebaseCrash.report(e);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(FilmeActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
-                similarMovies = movies.getSimilarMovies(movieDb.getId(), null, 1);
-                return movieDb;
             }
             return null;
         }

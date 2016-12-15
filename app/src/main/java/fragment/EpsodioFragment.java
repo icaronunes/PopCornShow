@@ -26,6 +26,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -235,7 +236,7 @@ public class EpsodioFragment extends Fragment {
                             ep_rating_button.setBackground(getContext().getResources().getDrawable(R.drawable.button_visto, getActivity().getTheme()));
                             ep_rating_button.setText(getResources().getText(R.string.classificar_visto));
                         } else {
-                            ep_rating_button.setBackground(getContext().getResources().getDrawable(R.drawable.button_visto, null));
+                            ep_rating_button.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.button_visto, null));
                             ep_rating_button.setText(getResources().getText(R.string.classificar_visto));
                         }
                     } else {
@@ -243,7 +244,7 @@ public class EpsodioFragment extends Fragment {
                             ep_rating_button.setBackground(getContext().getResources().getDrawable(R.drawable.button_nao_visto, getActivity().getTheme()));
                             ep_rating_button.setText(getResources().getText(R.string.classificar));
                         } else {
-                            ep_rating_button.setBackground(getContext().getResources().getDrawable(R.drawable.button_nao_visto, null));
+                            ep_rating_button.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.button_nao_visto, null));
                             ep_rating_button.setText(getResources().getText(R.string.classificar));
                         }
                     }
@@ -517,17 +518,29 @@ public class EpsodioFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
           //  Log.d(TAG, "" + tvshow_id + " " + episode.getSeasonNumber() + " " + episode.getEpisodeNumber());
-
-            credits = FilmeService.getTmdbTvEpisodes()
-                    .getCredits(tvshow_id, episode.getSeasonNumber(), episode.getEpisodeNumber(), "en");
+            try {
+                credits = FilmeService.getTmdbTvEpisodes()
+                        .getCredits(tvshow_id, episode.getSeasonNumber(), episode.getEpisodeNumber(), "en");
+                return null;
+            } catch (Exception e){
+                FirebaseCrash.report(e);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            setDirector();
-            setWrite();
+            if (credits != null) {
+                setDirector();
+                setWrite();
+            }
         }
     }
 

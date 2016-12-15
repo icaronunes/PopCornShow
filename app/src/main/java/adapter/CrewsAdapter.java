@@ -65,8 +65,11 @@ public class CrewsAdapter extends RecyclerView.Adapter<CrewsAdapter.CrewsViewHol
 
     @Override
     public int getItemCount() {
-       // Log.d("CrewsAdapter", "Tamanho " + crews.size());
-        return crews.size() > 0 ? crews.size() : 0;
+       if (crews != null){
+           return crews.size();
+       } else {
+           return 0;
+       }
     }
 
     public class CrewsViewHolder extends RecyclerView.ViewHolder {

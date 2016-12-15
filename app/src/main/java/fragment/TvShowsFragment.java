@@ -10,12 +10,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -31,6 +33,8 @@ import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;
+
+import static com.google.android.gms.internal.zzs.TAG;
 
 /**
  * Created by icaro on 14/09/16.
@@ -164,10 +168,21 @@ public class TvShowsFragment extends Fragment {
 
         @Override
         protected List<TvSeries> doInBackground(Void... voids) {
-           // Log.d("doInBackground", "doInBackground");
-            TmdbTV tvShow = FilmeService.getTmdbTvShow();
-            List<TvSeries> dbList = getListaTipo(tvShow);
-            return dbList;
+
+            try {
+                TmdbTV tvShow = FilmeService.getTmdbTvShow();
+                List<TvSeries> dbList = getListaTipo(tvShow);
+                return dbList;
+            } catch (Exception e ){
+                Log.d(TAG, e.getMessage());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            return null;
         }
 
 
@@ -191,15 +206,13 @@ public class TvShowsFragment extends Fragment {
             pagina++;
         }
 
-        protected List<TvSeries> getListaTipo(TmdbTV tmdbTV) {
+        private List<TvSeries> getListaTipo(TmdbTV tmdbTV) {
             String language = Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry();
             if (language != null) {
                 switch (abaEscolhida) {
 
                     case R.string.air_date: {
-                        results = tmdbTV.getOnTheAir(language, pagina).getResults();
-                      //  Log.d("Air Date", "" + results.size());
-                        return  results;
+                        return  tmdbTV.getOnTheAir(language, pagina).getResults();
                     }
 
                     case R.string.today: {

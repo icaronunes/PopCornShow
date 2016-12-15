@@ -11,12 +11,16 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.List;
 import java.util.Locale;
@@ -29,6 +33,8 @@ import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.MovieDb;
 import utils.Constantes;
 import utils.UtilsFilme;
+
+import static com.google.android.gms.internal.zzs.TAG;
 
 
 /**
@@ -160,9 +166,21 @@ public class FilmesFragment extends Fragment {
         @Override
         protected List<MovieDb> doInBackground(Void... voids) {
           //  Log.d("doInBackground", "doInBackground");
-            TmdbMovies movies = FilmeService.getTmdbMovies();
-            List<MovieDb> dbList = getListaTipo(movies);
-            return dbList;
+            try {
+                TmdbMovies movies = FilmeService.getTmdbMovies();
+                List<MovieDb> dbList = getListaTipo(movies);
+                return dbList;
+            } catch (Exception e){
+                Log.d(TAG, e.getMessage());
+                FirebaseCrash.report(e);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            return null;
         }
 
 
@@ -192,7 +210,7 @@ public class FilmesFragment extends Fragment {
                 switch (abaEscolhida) {
 
                     case R.string.now_playing: {
-                        return tmdbMovies.getNowPlayingMovies(language, pagina).getResults();
+                            return tmdbMovies.getNowPlayingMovies(language, pagina).getResults();
                     }
 
                     case R.string.upcoming: {

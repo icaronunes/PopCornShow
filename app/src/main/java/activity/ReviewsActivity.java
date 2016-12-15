@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.Locale;
 
@@ -27,7 +30,8 @@ import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.reviews;
 public class ReviewsActivity extends BaseActivity {
     int id_filme;
     RecyclerView recyclerView;
-    MovieDb movieDb;
+    MovieDb movieDb = null;
+    private String TAG = this.getClass().getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,19 +78,32 @@ public class ReviewsActivity extends BaseActivity {
 
         @Override
         protected MovieDb doInBackground(Void... voids) {
-            TmdbMovies movies = FilmeService.getTmdbMovies();
-          //  Log.d("FilmeInfoFragment", "doInBackground: -> " + id_filme);
-
-            movieDb = movies.getMovie(id_filme, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry() , reviews);
-            movieDb.getReviews().addAll(movies.getMovie(id_filme, "en, null", reviews).getReviews());
-            return movieDb;
+            try {
+                TmdbMovies movies = FilmeService.getTmdbMovies();
+                movieDb = movies.getMovie(id_filme, Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry(), reviews);
+                movieDb.getReviews().addAll(movies.getMovie(id_filme, "en, null", reviews).getReviews());
+                return movieDb;
+            } catch (Exception e){
+                FirebaseCrash.report(e);
+                Log.d(TAG, e.getMessage());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ReviewsActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            return  null;
         }
 
         @Override
         protected void onPostExecute(MovieDb movieDb) {
             super.onPostExecute(movieDb);
-            if (!movieDb.getReviews().isEmpty())
-            recyclerView.setAdapter(new ReviewsAdapter(getBaseContext(), movieDb.getReviews()));
+            if (movieDb == null) {return;}
+            if (!movieDb.getReviews().isEmpty()) {
+                recyclerView.setAdapter(new ReviewsAdapter(ReviewsActivity.this,
+                        movieDb.getReviews()));
+            }
         }
     }
 

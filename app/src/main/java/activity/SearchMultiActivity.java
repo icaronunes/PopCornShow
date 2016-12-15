@@ -14,16 +14,18 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.List;
-import java.util.Locale;
 
 import adapter.SearchAdapter;
 import br.com.icaro.filme.R;
@@ -50,6 +52,7 @@ public class SearchMultiActivity extends BaseActivity {
     ProgressBar progressBar;
     private int pagina = 1;
     private Intent intent;
+    private String TAG = this.getClass().getName();
 
 
     @Override
@@ -206,16 +209,27 @@ public class SearchMultiActivity extends BaseActivity {
             if (!query.isEmpty()) {
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(SearchMultiActivity.this);
                 boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-                if (idioma_padrao) {
-                    TmdbSearch tmdbSearch = FilmeService.getTmdbSearch();
-                    TmdbSearch.MultiListResultsPage movieResultsPage = tmdbSearch.searchMulti(query,
-                            Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry() + ",en,null", pagina);
-                    return movieResultsPage.getResults();
-                } else {
-                    TmdbSearch tmdbSearch = FilmeService.getTmdbSearch();
-                    TmdbSearch.MultiListResultsPage movieResultsPage = tmdbSearch.searchMulti(query,
-                            "en,null", pagina);
-                    return movieResultsPage.getResults();
+                try {
+                    if (idioma_padrao) {
+                        TmdbSearch tmdbSearch = FilmeService.getTmdbSearch();
+                        TmdbSearch.MultiListResultsPage movieResultsPage = tmdbSearch.searchMulti(query,
+                                getLocale() + ",en,null", pagina);
+                        return movieResultsPage.getResults();
+                    } else {
+                        TmdbSearch tmdbSearch = FilmeService.getTmdbSearch();
+                        TmdbSearch.MultiListResultsPage movieResultsPage = tmdbSearch.searchMulti(query,
+                                "en,null", pagina);
+                        return movieResultsPage.getResults();
+                    }
+                } catch (Exception e ){
+                    FirebaseCrash.report(e);
+                    Log.d(TAG, e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(SearchMultiActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
             return null;

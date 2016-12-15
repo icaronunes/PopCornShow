@@ -188,6 +188,12 @@ public class UtilsFilme {
         if (conectivtyManager.getActiveNetworkInfo() != null
                 && conectivtyManager.getActiveNetworkInfo().isAvailable()
                 && conectivtyManager.getActiveNetworkInfo().isConnected()) {
+           // Log.d(TAG, conectivtyManager.getActiveNetworkInfo().getReason() );
+//            Log.d(TAG, conectivtyManager.getActiveNetworkInfo().getDetailedState().toString() );
+//            Log.d(TAG, conectivtyManager.getActiveNetworkInfo().toString() );
+//            Log.d(TAG, conectivtyManager.getActiveNetworkInfo().getExtraInfo() );
+//            Log.d(TAG, conectivtyManager.getActiveNetworkInfo().getState().toString() );
+
             conectado = true;
         } else {
             conectado = false;

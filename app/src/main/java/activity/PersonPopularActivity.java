@@ -8,13 +8,16 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.crash.FirebaseCrash;
 
 import adapter.PersonPopularAdapter;
 import br.com.icaro.filme.R;
@@ -31,6 +34,7 @@ public class PersonPopularActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private LinearLayout linearLayout;
+    private String TAG = this.getClass().getName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,10 +106,21 @@ public class PersonPopularActivity extends BaseActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            personResultsPage =  FilmeService.getTmdbPerson().getPersonPopular(1);
-            personResultsPage.getResults().addAll(FilmeService.getTmdbPerson().getPersonPopular(2).getResults());
-           // Log.d("PersonPopularActivity", personResultsPage.getResults().get(1).toString());
-           // Log.d("PersonPopularActivity", ""+personResultsPage.getResults().size());
+            try {
+                personResultsPage = FilmeService.getTmdbPerson().getPersonPopular(1);
+                personResultsPage.getResults().addAll(FilmeService.getTmdbPerson().getPersonPopular(2).getResults());
+                // Log.d("PersonPopularActivity", personResultsPage.getResults().get(1).toString());
+                // Log.d("PersonPopularActivity", ""+personResultsPage.getResults().size());
+            } catch (Exception e){
+                FirebaseCrash.report(e);
+                Log.d(TAG, e.getMessage());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(PersonPopularActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
             return null;
         }
 

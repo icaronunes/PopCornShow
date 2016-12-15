@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
@@ -54,8 +56,8 @@ import static utils.UtilsFilme.getTimezone;
     final static String TAG = MainActivity.class.getName();
     static List<String> buttonFilme, buttonTvshow;
     int tipo;
-    TvResultsPage popularTvshow, toDay;
-    MovieResultsPage popularMovie, cinema;
+    TvResultsPage popularTvshow = null, toDay = null;
+    MovieResultsPage popularMovie = null, cinema = null;
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -84,7 +86,11 @@ import static utils.UtilsFilme.getTimezone;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        new MainAsync().execute();
+        if (UtilsFilme.isNetWorkAvailable(getContext())) {
+            new MainAsync().execute();
+        } else {
+            Toast.makeText(getContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
+        }
 
         if (tipo == R.string.tvshow_main) {
             setScrollTvshowButton();
@@ -179,7 +185,7 @@ import static utils.UtilsFilme.getTimezone;
 
     private void setScrollTvShowPopulares() {
         final List<TvSeries> tvSeries;
-        if (popularTvshow.getResults().size() > 0 & isAdded()) {
+        if (popularTvshow != null & isAdded()) {
             int tamanho = popularTvshow.getResults().size() < 15 ? popularTvshow.getResults().size() : 15;
            // Log.d("MainFragment", "Tamanho " + popularTvshow.getResults().size());
             tvSeries = popularTvshow.getResults();
@@ -340,7 +346,7 @@ import static utils.UtilsFilme.getTimezone;
     private void setScrollTvShowToDay() {
 
         List<TvSeries> tvSeries;
-        if (toDay.getResults().size() > 0 & isAdded()) {
+        if (toDay != null & isAdded()) {
             int tamanho = toDay.getResults().size() < 15 ? toDay.getResults().size() : 15;
           //  Log.d("MainFragment", "Tamanho " + toDay.getResults().size());
             tvSeries = toDay.getResults();
@@ -398,32 +404,22 @@ import static utils.UtilsFilme.getTimezone;
 
 
     private class MainAsync extends AsyncTask<Void, Void, Void> {
-        boolean status = false;
-
-        @Override
-        protected void onPreExecute() {
-            if (UtilsFilme.isNetWorkAvailable(getContext())) {
-                status = true;
-            }
-            super.onPreExecute();
-        }
-
 
         @Override
         protected Void doInBackground(Void... voids) {
-           // Log.d("PersonFragment", "doInBackground");
 
             if (isDetached()){
                 return null;
             }
 
-            if (status) {
+            if (UtilsFilme.isNetWorkAvailable(getContext())) {
                 boolean idioma_padrao = false;
                 if (isDetached()) {
                     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
                     idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
                 }
                 if (idioma_padrao) {
+                    try {
                     TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
                     TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
                     popularTvshow = tmdbTv.getPopular(Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
@@ -438,13 +434,20 @@ import static utils.UtilsFilme.getTimezone;
                     cinema = tmdbMovies.getUpcoming(Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
                             //.toLanguageTag()
                             + ",en,null", 1);
+                        } catch (Exception e) {
+                        Log.d(TAG, e.getMessage());
+                    }
                 }else{
-                    TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
-                    TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
-                    popularTvshow = tmdbTv.getPopular("en", 1);
-                    toDay = tmdbTv.getAiringToday("en,null", 1, getTimezone());
-                    popularMovie = tmdbMovies.getPopularMovies("en", 1);
-                    cinema = tmdbMovies.getUpcoming("en", 1);
+                    try {
+                        TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
+                        TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
+                        popularTvshow = tmdbTv.getPopular("en", 1);
+                        toDay = tmdbTv.getAiringToday("en,null", 1, getTimezone());
+                        popularMovie = tmdbMovies.getPopularMovies("en", 1);
+                         cinema = tmdbMovies.getUpcoming("en", 1);
+                    } catch (Exception e ){
+                        Log.d(TAG, e.getMessage());
+                    }
                 }
             }
             return null;
@@ -453,7 +456,7 @@ import static utils.UtilsFilme.getTimezone;
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            if (status && isAdded()) {
+            if (UtilsFilme.isNetWorkAvailable(getContext()) && isAdded()) {
                 if (tipo == R.string.tvshow_main) {
                     setScrollTvShowPopulares();
                     setScrollTvShowToDay();
@@ -470,7 +473,7 @@ import static utils.UtilsFilme.getTimezone;
     private void setScrollMovieOntheAir() {
         List<MovieDb> movie;
 
-        if (cinema.getResults().size() > 0 && isAdded()) {
+        if (cinema != null && isAdded()) {
             int tamanho = cinema.getResults().size() < 15 ? cinema.getResults().size() : 15;
            // Log.d("MainFragment", "Tamanho " + cinema.getResults().size());
             movie = cinema.getResults();
@@ -527,7 +530,7 @@ import static utils.UtilsFilme.getTimezone;
     private void setScrollMoviePopular() {
         List<MovieDb> movie;
 
-        if (popularMovie.getResults().size() > 0 & isAdded()) {
+        if (popularMovie != null && isAdded()) {
             int tamanho = popularMovie.getResults().size() < 15 ? popularMovie.getResults().size() : 15;
            // Log.d("MainFragment", "Tamanho " + popularMovie.getResults().size());
             movie = popularMovie.getResults();

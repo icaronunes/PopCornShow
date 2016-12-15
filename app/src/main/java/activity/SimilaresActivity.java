@@ -7,15 +7,18 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.Locale;
 
@@ -39,6 +42,7 @@ public class SimilaresActivity extends BaseActivity{
     ProgressBar progressBar;
     MovieResultsPage similares;
     String title;
+    private String TAG = this.getClass().getName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -117,8 +121,20 @@ public class SimilaresActivity extends BaseActivity{
 
         @Override
         protected Void doInBackground(Void... voids) {
-            TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
-            similares = tmdbMovies.getSimilarMovies(id_filme, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry(), 1);
+            try {
+                TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
+                similares = tmdbMovies.getSimilarMovies(id_filme, Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry(), 1);
+                return null;
+            } catch (Exception e){
+                Log.d(TAG, e.getMessage());
+                FirebaseCrash.report(e);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(SimilaresActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
             return null;
         }
 

@@ -6,16 +6,20 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.google.firebase.crash.FirebaseCrash;
 
 import adapter.ListUserAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
+import domian.Lista;
 import info.movito.themoviedbapi.model.MovieList;
 import utils.Constantes;
-import domian.Lista;
 
 /**
  * Created by icaro on 14/08/16.
@@ -27,6 +31,7 @@ public class ListaUserActivity extends BaseActivity {
     ProgressBar progressBar;
     String list_id;
     Lista lista;
+    private String TAG = this.getClass().getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +52,7 @@ public class ListaUserActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       new TMDVAsync().execute();
+        new TMDVAsync().execute();
     }
 
     @Override
@@ -59,10 +64,19 @@ public class ListaUserActivity extends BaseActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-
-            lista = FilmeService.getLista(getIntent().getStringExtra(Constantes.LISTA_ID));
-            //Metodos criados. Tudo gambiara. Precisa arrumar
-
+            try {
+                lista = FilmeService.getLista(getIntent().getStringExtra(Constantes.LISTA_ID));
+                //Metodos criados. Tudo gambiara. Precisa arrumar
+            } catch (Exception e) {
+                FirebaseCrash.report(e);
+                Log.d(TAG, e.getMessage());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ListaUserActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
             return null;
         }
 

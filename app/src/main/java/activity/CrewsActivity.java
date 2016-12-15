@@ -7,14 +7,17 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.crash.FirebaseCrash;
 
 import adapter.CrewsAdapter;
 import br.com.icaro.filme.R;
@@ -40,6 +43,7 @@ public class CrewsActivity extends BaseActivity {
     MovieDb movies;
     int season = -100;
     String title;
+    private String TAG = this.getClass().getName();
 
 
     @Override
@@ -158,21 +162,33 @@ public class CrewsActivity extends BaseActivity {
         Credits creditsTvShow;
         @Override
         protected Void doInBackground(Void... voids) {
-            if (Multi.MediaType.TV_SERIES.equals(mediaType)) {
-                creditsTvShow = FilmeService.getTmdbTvShow().getCredits(id, "en");
-               // Log.d("CrewsActivity", "IF " + creditsTvShow.getCrew().size());
-            }
-            if (Multi.MediaType.TV_SERIES.equals(mediaType) && season != -100){
-                creditsTvShow = FilmeService.getTmdbTvSeasons()
-                        .getSeason(id, season,"en", TmdbTvSeasons.SeasonMethod.credits)
-                        .getCredits();
-               // Log.d("CrewsActivity", "-100 " + creditsTvShow.getCrew().size());
-            }
+            try {
+                if (Multi.MediaType.TV_SERIES.equals(mediaType)) {
+                    creditsTvShow = FilmeService.getTmdbTvShow().getCredits(id, "en");
+                    // Log.d("CrewsActivity", "IF " + creditsTvShow.getCrew().size());
+                }
+                if (Multi.MediaType.TV_SERIES.equals(mediaType) && season != -100) {
+                    creditsTvShow = FilmeService.getTmdbTvSeasons()
+                            .getSeason(id, season, "en", TmdbTvSeasons.SeasonMethod.credits)
+                            .getCredits();
+                    // Log.d("CrewsActivity", "-100 " + creditsTvShow.getCrew().size());
+                }
 
-            if (Multi.MediaType.MOVIE.equals(mediaType)) {
-                TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
-                movies = tmdbMovies.getMovie(id, "en", TmdbMovies.MovieMethod.credits);
-               // Log.d("CrewsActivity", "" + movies.getCredits().getCast().size());
+                if (Multi.MediaType.MOVIE.equals(mediaType)) {
+                    TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
+                    movies = tmdbMovies.getMovie(id, "en", TmdbMovies.MovieMethod.credits);
+                    // Log.d("CrewsActivity", "" + movies.getCredits().getCast().size());
+                }
+                return null;
+            } catch (Exception e){
+                Log.d(TAG, e.getMessage());
+                FirebaseCrash.report(e);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(CrewsActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
             return null;
         }
@@ -183,11 +199,13 @@ public class CrewsActivity extends BaseActivity {
          //   Log.d("CrewsActivity", "onPostExecute");
             progressBar.setVisibility(View.GONE);
             if (Multi.MediaType.MOVIE.equals(mediaType)) {
-                recyclerView.setAdapter(new CrewsAdapter(CrewsActivity.this, movies.getCredits().getCrew()));
+                recyclerView.setAdapter(new CrewsAdapter(CrewsActivity.this,
+                        movies != null ? movies.getCredits().getCrew() : null));
             }
             if (Multi.MediaType.TV_SERIES.equals(mediaType)) {
             //    Log.d("CrewsActivity", "IF " + creditsTvShow.getCrew().size());
-                recyclerView.setAdapter(new CrewsAdapter(CrewsActivity.this, creditsTvShow.getCrew()));
+                recyclerView.setAdapter(new CrewsAdapter(CrewsActivity.this,
+                       creditsTvShow != null ? creditsTvShow.getCrew() : null));
             }
         }
     }

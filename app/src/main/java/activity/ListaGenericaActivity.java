@@ -6,13 +6,16 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.Collections;
 
@@ -32,6 +35,7 @@ public class ListaGenericaActivity  extends BaseActivity{
     ProgressBar progressBar;
     String list_id;
     Lista lista = null;
+    private String TAG = this.getClass().getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +85,21 @@ public class ListaGenericaActivity  extends BaseActivity{
         @Override
         protected Void doInBackground(Void... voids) {
             if (lista == null) {
-                lista = FilmeService.getLista(list_id);
-                //Metodos criados. Tudo gambiara. Precisa arrumar - 11060
-                if (lista.getItems() != null) {
-                    Collections.sort(lista.getItems());
+                try {
+                    lista = FilmeService.getLista(list_id);
+                    //Metodos criados. Tudo gambiara. Precisa arrumar - 11060
+                    if (lista.getItems() != null) {
+                        Collections.sort(lista.getItems());
+                    }
+                } catch (Exception e){
+                    FirebaseCrash.report(e);
+                    Log.d(TAG, e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ListaGenericaActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
 

@@ -13,9 +13,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.crash.FirebaseCrash;
 
 import adapter.ElencoAdapter;
 import br.com.icaro.filme.R;
@@ -142,20 +144,30 @@ public class ElencoActivity extends BaseActivity {
         @Override
         protected Void doInBackground(Void... voids) {
           //  Log.d("ElencoActivity", "ID " + id);
+            try {
+                if (Multi.MediaType.TV_SERIES.equals(mediaType) && season != -100) {
+                    //      Log.d("ElencoActivity", "" + season);
+                    creditsTvShow = FilmeService.getTmdbTvSeasons().getSeason(id, season, "en", TmdbTvSeasons.SeasonMethod.credits).getCredits();
+                }
 
-            if (Multi.MediaType.TV_SERIES.equals(mediaType) && season != -100){
-          //      Log.d("ElencoActivity", "" + season);
-                creditsTvShow = FilmeService.getTmdbTvSeasons().getSeason(id, season, "en", TmdbTvSeasons.SeasonMethod.credits).getCredits();
-            }
+                if (Multi.MediaType.TV_SERIES.equals(mediaType) && season == -100) {
+                    creditsTvShow = FilmeService.getTmdbTvShow().getCredits(id, "en");
+                }
 
-            if (Multi.MediaType.TV_SERIES.equals(mediaType) && season == -100) {
-                creditsTvShow = FilmeService.getTmdbTvShow().getCredits(id, "en");
-            }
-
-            if (Multi.MediaType.MOVIE.equals(mediaType)) {
-                TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
-                movies = tmdbMovies.getMovie(id, "en", TmdbMovies.MovieMethod.credits);
-            //    Log.d("ElencoActivity", "" + movies.getCredits().getCast().size());
+                if (Multi.MediaType.MOVIE.equals(mediaType)) {
+                    TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
+                    movies = tmdbMovies.getMovie(id, "en", TmdbMovies.MovieMethod.credits);
+                    //    Log.d("ElencoActivity", "" + movies.getCredits().getCast().size());
+                }
+                return null;
+            } catch (Exception e){
+                FirebaseCrash.report(e);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ElencoActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
             return null;
         }
@@ -166,10 +178,12 @@ public class ElencoActivity extends BaseActivity {
           //  Log.d("ElencoActivity", "onPostExecute");
             progressBar.setVisibility(View.GONE);
             if (Multi.MediaType.MOVIE.equals(mediaType)) {
-                recyclerView.setAdapter(new ElencoAdapter(ElencoActivity.this, movies.getCredits().getCast()));
+                recyclerView.setAdapter(new ElencoAdapter(ElencoActivity.this,
+                        movies != null ?movies.getCredits().getCast() : null));
             }
             if (Multi.MediaType.TV_SERIES.equals(mediaType)) {
-                recyclerView.setAdapter(new ElencoAdapter(ElencoActivity.this, creditsTvShow.getCast()));
+                recyclerView.setAdapter(new ElencoAdapter(ElencoActivity.this,
+                        creditsTvShow != null ? creditsTvShow.getCast() : null));
             }
 
         }

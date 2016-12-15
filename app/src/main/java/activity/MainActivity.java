@@ -8,7 +8,9 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -17,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import adapter.MainAdapter;
 import br.com.icaro.filme.R;
@@ -49,9 +52,9 @@ public class MainActivity extends BaseActivity {
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(" ");
-        if (getIntent().hasExtra("click_action")){
-          //  Log.d("MainActivity", getIntent().getStringExtra("click_action"));
-          //  Log.d("MainActivity", "tamanhao bandle " + getIntent().getExtras().size());
+        if (getIntent().hasExtra("click_action")) {
+            //  Log.d("MainActivity", getIntent().getStringExtra("click_action"));
+            //  Log.d("MainActivity", "tamanhao bandle " + getIntent().getExtras().size());
         }
 
         viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);
@@ -103,7 +106,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 0){
+                if (position == 0) {
                     tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.blue_main));
                     tabLayout.setTabTextColors(getResources().getColor(R.color.red), getResources().getColor(R.color.white));
                 } else {
@@ -139,7 +142,7 @@ public class MainActivity extends BaseActivity {
                     topMain.setImagem(movieDb.getBackdropPath());
 
                     Date date = null;
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
                     try {
                         date = sdf.parse(movieDb.getReleaseDate());
@@ -168,22 +171,42 @@ public class MainActivity extends BaseActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            if (!UtilsFilme.isNetWorkAvailable(MainActivity.this)){
+            if (!UtilsFilme.isNetWorkAvailable(MainActivity.this)) {
                 return null;
             }
 
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             if (idioma_padrao) {
-                tmdbTv = FilmeService.getTmdbTvShow()
-                        .getAiringToday(getLocale()
-                                , 1, UtilsFilme.getTimezone());
-                tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies(getLocale()
-                         , 1);
+                try {
+                    tmdbTv = FilmeService.getTmdbTvShow()
+                            .getAiringToday(getLocale()
+                                    , 1, UtilsFilme.getTimezone());
+                    tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies(getLocale()
+                            , 1);
+                } catch (Exception e) {
+                    Log.d(TAG, e.toString());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
 
             } else {
-                tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("en", 1, UtilsFilme.getTimezone());
-                tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies("en", 1);
+                try {
+                    tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("en", 1, UtilsFilme.getTimezone());
+                    tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies("en", 1);
+                } catch (Exception e) {
+                    Log.d(TAG, e.toString());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
             return null;
         }

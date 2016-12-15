@@ -16,6 +16,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,9 +24,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.crash.FirebaseCrash;
 import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
@@ -60,6 +63,7 @@ public class ProdutoraActivity extends BaseActivity {
     SwipeRefreshLayout refreshLayout;
     TmdbCompany.CollectionResultsPage temp;
     CoordinatorLayout layout;
+    private String TAG = this.getClass().getName();
 
 
     @Override
@@ -210,8 +214,9 @@ public class ProdutoraActivity extends BaseActivity {
             //não é possivel buscar TVShow da company. Esperar API
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ProdutoraActivity.this);
             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-            company = getTmdbCompany().getCompanyInfo(id_produtora);
-            if (pagina == 1) {
+            try {
+                company = getTmdbCompany().getCompanyInfo(id_produtora);
+                if (pagina == 1) {
                 if (idioma_padrao) {
                     resultsPage = FilmeService.getTmdbCompany()
                             .getCompanyMovies(id_produtora, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry() + ",en,null", pagina);
@@ -230,7 +235,16 @@ public class ProdutoraActivity extends BaseActivity {
                             .getCompanyMovies(id_produtora, "en,null", pagina);
                 }
             }
-          //  Log.d("PRODUTORA", "Total : " + resultsPage.getTotalPages());
+            } catch ( Exception e) {
+                FirebaseCrash.report(e);
+                Log.d(TAG, e.getMessage());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ProdutoraActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
             return null;
         }
 
@@ -248,8 +262,11 @@ public class ProdutoraActivity extends BaseActivity {
             progressBar.setVisibility(View.GONE);
             setHome();
             setHeadquarters();
-            getSupportActionBar().setTitle(company.getName().isEmpty() ? "" : company.getName());
-            recyclerView.setAdapter(new ProdutoraAdapter(ProdutoraActivity.this, resultsPage.getResults()));
+            if (company != null) {
+                getSupportActionBar().setTitle(company.getName().isEmpty() ? "" : company.getName());
+            }
+            recyclerView.setAdapter(new ProdutoraAdapter(ProdutoraActivity.this,
+                   resultsPage != null ? resultsPage.getResults() : null ));
         }
     }
 }

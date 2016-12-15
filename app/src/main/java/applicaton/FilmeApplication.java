@@ -3,6 +3,7 @@ package applicaton;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
+import android.util.Log;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.onesignal.OneSignal;
@@ -37,9 +38,11 @@ public class FilmeApplication extends Application {
         if (br.com.icaro.filme.BuildConfig.REPORT_CRASH) {
             FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
             mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
+            Log.d(TAG, "REPORT_CRASH - TRUE");
         } else {
             FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
             mFirebaseAnalytics.setAnalyticsCollectionEnabled(false);
+            Log.d(TAG, "REPORT_CRASH - FALSE");
         }
 
     }
