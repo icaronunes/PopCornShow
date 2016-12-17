@@ -35,6 +35,8 @@ public class FilmeApplication extends Application {
                     .setNotificationReceivedHandler(new CustomNotificationReceivedHandler())
                     .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                     .init();
+
+
         if (br.com.icaro.filme.BuildConfig.REPORT_CRASH) {
             FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
             mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);

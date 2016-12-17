@@ -11,6 +11,7 @@ import fragment.SettingsFragment;
 public class SettingsActivity extends BaseActivity {
 
     public static final String PREF_IDIOMA_PADRAO = "pref_idioma_padrao";
+    public static final String PREF_NOTIFICACAO = "pref_notificacao";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

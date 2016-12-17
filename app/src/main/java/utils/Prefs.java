@@ -20,6 +20,4 @@ public class Prefs {
         return valor;
     }
 
-
-
 }

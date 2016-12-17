@@ -11,7 +11,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -277,7 +276,7 @@ public class TemporadaActivity extends BaseActivity {
                     return null;
                 }
             } catch (Exception e ){
-                Log.d(TAG, e.getMessage());
+                //Log.d(TAG, e.getMessage());
                 FirebaseCrash.report(e);
                 runOnUiThread(new Runnable() {
                     @Override

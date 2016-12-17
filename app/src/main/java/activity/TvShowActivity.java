@@ -296,9 +296,9 @@ public class TvShowActivity extends BaseActivity {
                 if (file != null) {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     //  intent.putExtra(Intent.EXTRA_SUBJECT, series.getOverview());
-                    final String appPackageName = getPackageName();
+                    //final String appPackageName = getPackageName();
                     intent.setType("message/rfc822");
-                    intent.putExtra(Intent.EXTRA_TEXT, series.getName() + "  -  " + "https://play.google.com/store/apps/details?id=" + appPackageName);
+                    intent.putExtra(Intent.EXTRA_TEXT, series.getName() + "  -  " + buildDeepLink());
                     intent.setType("image/*");
                     intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                     startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_tvshow)));
@@ -311,6 +311,44 @@ public class TvShowActivity extends BaseActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public String buildDeepLink() {
+        // Get the unique appcode for this app.
+
+        String link = "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3DTA%26id%3D"
+                +series.getId() +"&apn=br.com.icaro.filme";
+
+        // If the deep link is used in an advertisement, this value must be set to 1.
+        boolean isAd = false;
+        if (isAd) {
+            // builder.appendQueryParameter("ad", "1");
+        }
+
+        // Minimum version is optional.
+//        int minVersion = ;
+//        if (minVersion > 16) {
+//            builder.appendQueryParameter("amv", Integer.toString(minVersion));
+//        }
+
+//        if (!TextUtils.isEmpty(androidLink)) {
+//            builder.appendQueryParameter("al", androidLink);
+//        }
+//
+//        if (!TextUtils.isEmpty(playStoreAppLink)) {
+//            builder.appendQueryParameter("afl", playStoreAppLink);
+//        }
+//
+//        if (!customParameters.isEmpty()) {
+//            for (Map.Entry<String, String> parameter : customParameters.entrySet()) {
+//                builder.appendQueryParameter(parameter.getKey(), parameter.getValue());
+//            }
+//        }
+
+        // Return the completed deep link.
+//        Log.d(TAG, builder.build().toString());
+//        return builder.build().toString();
+        return link;
     }
 
     private void setCoordinator() {

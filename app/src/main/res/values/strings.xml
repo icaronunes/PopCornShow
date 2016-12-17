@@ -14,7 +14,7 @@
     <string name="email" translatable="false">icarornunes@gmail.com</string>
     <string name="email_tx" translatable="false">E-Mail</string>
     <string name="infor_tmdb" translatable="false">"This product uses the TMDb API but is not endorsed or certified by TMDb."</string>
-    <string name="app_name">PopCorn</string>
+    <string name="app_name" translatable="false">PopCorn Show</string>
     <string name="about">About</string>
     <string name="air_date">On the Air</string>
     <string name="apelido">Nickname:</string>
@@ -184,4 +184,7 @@
     <string name="subtitle_intro_5">Create your login and enjoy</string>
     <string name="procurar">Search</string>
     <string name="ops">Oops. something wrong</string>
+    <string name="app_code" translatable="false">q2p5q/</string>
+    <string name="notificacao">Notification</string>
+    <string name="notificacao_summary">Get notification</string>
 </resources>

@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -358,7 +359,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             AuthCredential credential = FacebookAuthProvider.getCredential(tokens[0]);
 
-          //  Log.d(TAG, "credencial :" + credential.getProvider());
+            Log.d(TAG, "credencial :" + credential.getProvider());
             credential = provider.equalsIgnoreCase("google") ? GoogleAuthProvider.getCredential(tokens[0], null) : credential;
 
             mAuth.signInWithCredential(credential)
@@ -367,7 +368,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                             if (!task.isSuccessful()) {
-                                //Toast.makeText(LoginActivity.this,"Login social falhou", Toast.LENGTH_SHORT ).show();
+                                Toast.makeText(LoginActivity.this,"Login social falhou", Toast.LENGTH_SHORT ).show();
                             }
                             mAuthProgressDialog.dismiss();
                         }

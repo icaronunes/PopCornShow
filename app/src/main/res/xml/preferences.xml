@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="pref_idioma_padrao"
         android:summary="@string/idioma_padrao_subtitle"
         android:title="@string/idioma_padrao" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="pref_notificacao"
+        android:summary="@string/notificacao_summary"
+        android:title="@string/notificacao" />
 
     <utils.LogoffDialog
         android:enabled="true"

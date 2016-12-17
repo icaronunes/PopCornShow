@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">PopCorn</string>
     <string name="configuracoes">Configurações</string>
     <string name="now_playing">No Cinema</string>
     <string name="avaliados">Avaliados</string>
@@ -184,4 +183,6 @@
     <string name="subtitle_intro_5">Crie seu login e aproveite</string>
     <string name="procurar">Procurar</string>
     <string name="ops">Oops… Algo deu errado</string>
+    <string name="notificacao">Notificação</string>
+    <string name="notificacao_summary">Receber Notificação</string>
 </resources>

@@ -156,7 +156,6 @@ public class TvShowsFragment extends Fragment {
 
     private class TMDVAsync extends AsyncTask<Void, Void, List<TvSeries>> {
 
-        private List<TvSeries> results;
 
         @Override
         protected void onPreExecute() {

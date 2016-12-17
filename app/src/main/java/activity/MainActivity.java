@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.text.ParseException;
@@ -32,7 +35,7 @@ import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.UtilsFilme;
 
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     public static final String TAG = MainActivity.class.getName();
     ViewPager viewPager_main, viewpage_top_main;
@@ -52,10 +55,7 @@ public class MainActivity extends BaseActivity {
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(" ");
-        if (getIntent().hasExtra("click_action")) {
-            //  Log.d("MainActivity", getIntent().getStringExtra("click_action"));
-            //  Log.d("MainActivity", "tamanhao bandle " + getIntent().getExtras().size());
-        }
+
 
         viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);
         viewpage_top_main = (ViewPager) findViewById(R.id.viewpage_top_main);
@@ -69,6 +69,7 @@ public class MainActivity extends BaseActivity {
         }
 
     }
+
 
     protected void snack() {
         Snackbar.make(viewpage_top_main, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
@@ -165,6 +166,11 @@ public class MainActivity extends BaseActivity {
             }
         }
         setupViewPagerTabs();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.d(TAG, connectionResult.toString());
     }
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {

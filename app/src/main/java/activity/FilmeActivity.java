@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -112,7 +113,7 @@ public class FilmeActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(" ");
         getExtras();
-      //  Log.d("color", "Cor do fab " + color_fundo);
+        //  Log.d("color", "Cor do fab " + color_fundo);
         menu_item_favorite = (FloatingActionButton) findViewById(R.id.menu_item_favorite);
         menu_item_watchlist = (FloatingActionButton) findViewById(R.id.menu_item_watchlist);
         menu_item_rated = (FloatingActionButton) findViewById(R.id.menu_item_rated);
@@ -147,7 +148,7 @@ public class FilmeActivity extends BaseActivity {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         if (UtilsFilme.isNetWorkAvailable(this)) {
-            tmdvAsync =   new TMDVAsync();
+            tmdvAsync = new TMDVAsync();
             tmdvAsync.execute();
         } else {
             snack();
@@ -162,11 +163,11 @@ public class FilmeActivity extends BaseActivity {
 
                 if (dataSnapshot.child(String.valueOf(id_filme)).exists()) {
                     addWatch = true;
-                  //  Log.d(TAG, "False");
+                    //  Log.d(TAG, "False");
                     menu_item_watchlist.setLabelText(getResources().getString(R.string.remover_watch));
                 } else {
                     addWatch = false;
-                   // Log.d(TAG, "True");
+                    // Log.d(TAG, "True");
                     menu_item_watchlist.setLabelText(getResources().getString(R.string.adicionar_watch));
                 }
             }
@@ -186,8 +187,8 @@ public class FilmeActivity extends BaseActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(String.valueOf(id_filme)).exists()) {
                     addRated = true;
-                   // Log.d(TAG, "False");
-                   // Log.d(TAG, "nota " + dataSnapshot.child(String.valueOf(id_filme)).child("nota"));
+                    // Log.d(TAG, "False");
+                    // Log.d(TAG, "nota " + dataSnapshot.child(String.valueOf(id_filme)).child("nota"));
                     if (dataSnapshot.child(String.valueOf(id_filme)).child("nota").exists()) {
                         String nota = String.valueOf(dataSnapshot.child(String.valueOf(id_filme)).child("nota").getValue());
                         numero_rated = Float.parseFloat(nota);
@@ -201,7 +202,7 @@ public class FilmeActivity extends BaseActivity {
                     addRated = false;
                     numero_rated = 0;
                     menu_item_rated.setLabelText(getResources().getString(R.string.adicionar_rated));
-                  //  Log.d(TAG, "True");
+                    //  Log.d(TAG, "True");
                 }
             }
 
@@ -220,11 +221,11 @@ public class FilmeActivity extends BaseActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(String.valueOf(id_filme)).exists()) {
                     addFavorite = true;
-                  //  Log.d(TAG, "True");
+                    //  Log.d(TAG, "True");
                     menu_item_favorite.setLabelText(getResources().getString(R.string.remover_favorite));
                 } else {
                     addFavorite = false;
-                   // Log.d(TAG, "False");
+                    // Log.d(TAG, "False");
                     menu_item_favorite.setLabelText(getResources().getString(R.string.adicionar_favorite));
 
                 }
@@ -292,7 +293,7 @@ public class FilmeActivity extends BaseActivity {
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setQueryHint(getResources().getString(R.string.procurar));
-        
+
         searchView.setEnabled(false);
 
         return true;
@@ -307,8 +308,9 @@ public class FilmeActivity extends BaseActivity {
                 if (file != null) {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("message/rfc822");
-                    final String appPackageName = FilmeActivity.this.getPackageName();
-                    intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() + "  -  " + "https://play.google.com/store/apps/details?id=" + appPackageName);
+                    //final String appPackageName = FilmeActivity.this.getPackageName();
+                    intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() + " " + buildDeepLink());
+                    //intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() + "  -  " + "https://play.google.com/store/apps/details?id=" + appPackageName);
                     intent.setType("image/*");
                     intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                     startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
@@ -326,6 +328,45 @@ public class FilmeActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public String buildDeepLink() {
+        // Get the unique appcode for this app.
+
+        String link = "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3DFA%26id%3D"
+                +movieDb.getId() +"&apn=br.com.icaro.filme";
+
+        // If the deep link is used in an advertisement, this value must be set to 1.
+        boolean isAd = false;
+        if (isAd) {
+           // builder.appendQueryParameter("ad", "1");
+        }
+
+        // Minimum version is optional.
+//        int minVersion = ;
+//        if (minVersion > 16) {
+//            builder.appendQueryParameter("amv", Integer.toString(minVersion));
+//        }
+
+//        if (!TextUtils.isEmpty(androidLink)) {
+//            builder.appendQueryParameter("al", androidLink);
+//        }
+//
+//        if (!TextUtils.isEmpty(playStoreAppLink)) {
+//            builder.appendQueryParameter("afl", playStoreAppLink);
+//        }
+//
+//        if (!customParameters.isEmpty()) {
+//            for (Map.Entry<String, String> parameter : customParameters.entrySet()) {
+//                builder.appendQueryParameter(parameter.getKey(), parameter.getValue());
+//            }
+//        }
+
+        // Return the completed deep link.
+//        Log.d(TAG, builder.build().toString());
+//        return builder.build().toString();
+        return link;
+    }
+
 
     public View.OnClickListener RatedFilme() {
         return new View.OnClickListener() {
@@ -370,7 +411,7 @@ public class FilmeActivity extends BaseActivity {
                     no.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                           // Log.d(TAG, "Apagou Rated");
+                            // Log.d(TAG, "Apagou Rated");
                             myRated.child(String.valueOf(id_filme)).setValue(null)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
@@ -387,7 +428,7 @@ public class FilmeActivity extends BaseActivity {
                     ok.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                          //  Log.d(TAG, "Adialog Rated");
+                            //  Log.d(TAG, "Adialog Rated");
 
                             final ProgressDialog progressDialog = new ProgressDialog(FilmeActivity.this,
                                     android.R.style.Theme_Material_Dialog);
@@ -472,7 +513,7 @@ public class FilmeActivity extends BaseActivity {
                 } else {
 
                     if (addFavorite) {
-                      //  Log.d(TAG, "Apagou Favorite");
+                        //  Log.d(TAG, "Apagou Favorite");
                         myFavorite.child(String.valueOf(id_filme)).setValue(null)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
@@ -585,133 +626,141 @@ public class FilmeActivity extends BaseActivity {
         bundle.putSerializable(Constantes.FILME, movieDb);
         bundle.putSerializable(Constantes.SIMILARES, similarMovies);
         filmeFrag.setArguments(bundle);
-
-        if (!isDestroyed() && !isFinishing() && !tmdvAsync.isCancelled() ) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.filme_container, filmeFrag, null)
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                    .commitAllowingStateLoss();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        tmdvAsync.cancel(true);
-
-        if (valueEventWatch != null) {
-            myWatch.removeEventListener(valueEventWatch);
-        }
-        if (valueEventRated != null) {
-            myRated.removeEventListener(valueEventRated);
-        }
-        if (valueEventFavorite != null) {
-            myFavorite.removeEventListener(valueEventFavorite);
-        }
-    }
-
-    private class ImagemTopFragment extends FragmentPagerAdapter {
-
-        public ImagemTopFragment(FragmentManager supportFragmentManager) {
-            super(supportFragmentManager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            if (movieDb.getImages(ArtworkType.BACKDROP) != null) {
-                if (position == 0) {
-                    return new ImagemTopFilmeScrollFragment().newInstance(movieDb.getBackdropPath());
-                }
-               // Log.d("FilmeActivity", "getItem: ->  " + movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
-                return new ImagemTopFilmeScrollFragment().newInstance(movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            if (!isDestroyed() && !isFinishing() && !tmdvAsync.isCancelled()) { //Isdestroyed valido apenas acima desta api
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.filme_container, filmeFrag, null)
+                        .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                        .commitAllowingStateLoss();
             }
-            return null;
-        }
-
-
-        @Override
-        public int getCount() {
-            if (movieDb.getImages(ArtworkType.BACKDROP) != null) {
-
-                int tamanho = movieDb.getImages(ArtworkType.BACKDROP).size();
-               // Log.d("FilmeActivity", "getCount: ->  " + tamanho);
-                return tamanho > 0 ? tamanho : 1;
+        } else {
+            if (!isFinishing() && !tmdvAsync.isCancelled()) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.filme_container, filmeFrag, null)
+                        .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                        .commitAllowingStateLoss();
             }
-            return 0;
         }
     }
 
-
-
-    private class TMDVAsync extends AsyncTask<Void, Void, MovieDb> {
-
         @Override
-        protected MovieDb doInBackground(Void... voids) {//
-            if (UtilsFilme.isNetWorkAvailable(FilmeActivity.this)) {
-                try {
-                    TmdbMovies movies =  FilmeService.getTmdbMovies();
-                    // Log.d("FilmeActivity", "Filme ID - " + id_filme);
-                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
-                    boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-                    if (idioma_padrao) {
-                        movieDb = movies.getMovie(id_filme, getLocale()
-                                        //.toLanguageTag() não funciona na API 14
-                                        + ",en,null"
-                                , credits, releases, videos, reviews, similar, alternative_titles, images);
-                        movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
-                        movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());
+        protected void onDestroy () {
+            super.onDestroy();
 
-                    } else {
-                        //  Log.d("FilmeActivity", "False - " + id_filme);
-                        movieDb = movies.getMovie(id_filme, "en,null"
-                                , credits, releases, videos, reviews, similar, alternative_titles, images);
+            tmdvAsync.cancel(true);
+
+            if (valueEventWatch != null) {
+                myWatch.removeEventListener(valueEventWatch);
+            }
+            if (valueEventRated != null) {
+                myRated.removeEventListener(valueEventRated);
+            }
+            if (valueEventFavorite != null) {
+                myFavorite.removeEventListener(valueEventFavorite);
+            }
+        }
+
+        private class ImagemTopFragment extends FragmentPagerAdapter {
+
+            public ImagemTopFragment(FragmentManager supportFragmentManager) {
+                super(supportFragmentManager);
+            }
+
+            @Override
+            public Fragment getItem(int position) {
+                if (movieDb.getImages(ArtworkType.BACKDROP) != null) {
+                    if (position == 0) {
+                        return new ImagemTopFilmeScrollFragment().newInstance(movieDb.getBackdropPath());
                     }
-                    similarMovies = movies.getSimilarMovies(movieDb.getId(), null, 1);
-                    return movieDb;
-                } catch (Exception e){
-                    Log.d(TAG, e.getMessage());
-                    FirebaseCrash.report(e);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(FilmeActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                    // Log.d("FilmeActivity", "getItem: ->  " + movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
+                    return new ImagemTopFilmeScrollFragment().newInstance(movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
+                }
+                return null;
+            }
+
+
+            @Override
+            public int getCount() {
+                if (movieDb.getImages(ArtworkType.BACKDROP) != null) {
+
+                    int tamanho = movieDb.getImages(ArtworkType.BACKDROP).size();
+                    // Log.d("FilmeActivity", "getCount: ->  " + tamanho);
+                    return tamanho > 0 ? tamanho : 1;
+                }
+                return 0;
+            }
+        }
+
+
+        private class TMDVAsync extends AsyncTask<Void, Void, MovieDb> {
+
+            @Override
+            protected MovieDb doInBackground(Void... voids) {//
+                if (UtilsFilme.isNetWorkAvailable(FilmeActivity.this)) {
+                    try {
+                        TmdbMovies movies = FilmeService.getTmdbMovies();
+                        // Log.d("FilmeActivity", "Filme ID - " + id_filme);
+                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
+                        boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+                        if (idioma_padrao) {
+                            movieDb = movies.getMovie(id_filme, getLocale()
+                                            //.toLanguageTag() não funciona na API 14
+                                            + ",en,null"
+                                    , credits, releases, videos, reviews, similar, alternative_titles, images);
+                            movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
+                            movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());
+
+                        } else {
+                            //  Log.d("FilmeActivity", "False - " + id_filme);
+                            movieDb = movies.getMovie(id_filme, "en,null"
+                                    , credits, releases, videos, reviews, similar, alternative_titles, images);
                         }
-                    });
+                        similarMovies = movies.getSimilarMovies(movieDb.getId(), null, 1);
+                        return movieDb;
+                    } catch (Exception e) {
+                        Log.d(TAG, e.getMessage());
+                        FirebaseCrash.report(e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(FilmeActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(MovieDb movieDb) {
+                super.onPostExecute(movieDb);
+                if (movieDb != null) {
+                    setTitle(movieDb.getTitle());
+                    viewPager.setAdapter(new ImagemTopFragment(getSupportFragmentManager()));
+                    progressBar.setVisibility(View.INVISIBLE);
+
+                    setFragmentInfo();
+
+                    if (mAuth.getCurrentUser() != null) { // Arrumar
+
+                        setEventListenerFavorite();
+                        setEventListenerRated();
+                        setEventListenerWatch();
+
+                        //  Log.d("FAB", "FAB " + color_fundo);
+                        fab.setAlpha(1);
+                        setColorFab(color_fundo);
+                        menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
+                        menu_item_rated.setOnClickListener(RatedFilme());
+                        menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
+                    } else {
+                        fab.setAlpha(0);
+                    }
+
                 }
             }
-            return null;
         }
 
-        @Override
-        protected void onPostExecute(MovieDb movieDb) {
-            super.onPostExecute(movieDb);
-            if (movieDb != null) {
-                setTitle(movieDb.getTitle());
-                viewPager.setAdapter(new ImagemTopFragment(getSupportFragmentManager()));
-                progressBar.setVisibility(View.INVISIBLE);
-
-                setFragmentInfo();
-
-                if (mAuth.getCurrentUser() != null) { // Arrumar
-
-                    setEventListenerFavorite();
-                    setEventListenerRated();
-                    setEventListenerWatch();
-
-                  //  Log.d("FAB", "FAB " + color_fundo);
-                    fab.setAlpha(1);
-                    setColorFab(color_fundo);
-                    menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
-                    menu_item_rated.setOnClickListener(RatedFilme());
-                    menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
-                } else {
-                    fab.setAlpha(0);
-                }
-
-            }
-        }
     }
-
-}

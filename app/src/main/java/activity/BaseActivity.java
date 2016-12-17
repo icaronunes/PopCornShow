@@ -471,7 +471,7 @@ public class BaseActivity extends AppCompatActivity {
         }
         File dir = new File(file, endereco);
         ImageView imageView = new ImageView(context);
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + endereco).into(imageView);
+        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(4) + endereco).into(imageView);
         BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
         if (drawable != null) {
             Bitmap bitmap = drawable.getBitmap();

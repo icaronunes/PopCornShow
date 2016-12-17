@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -236,7 +237,7 @@ public class EpsodioFragment extends Fragment {
                             ep_rating_button.setBackground(getContext().getResources().getDrawable(R.drawable.button_visto, getActivity().getTheme()));
                             ep_rating_button.setText(getResources().getText(R.string.classificar_visto));
                         } else {
-                            ep_rating_button.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.button_visto, null));
+                            ep_rating_button.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.button_visto));
                             ep_rating_button.setText(getResources().getText(R.string.classificar_visto));
                         }
                     } else {
@@ -244,7 +245,7 @@ public class EpsodioFragment extends Fragment {
                             ep_rating_button.setBackground(getContext().getResources().getDrawable(R.drawable.button_nao_visto, getActivity().getTheme()));
                             ep_rating_button.setText(getResources().getText(R.string.classificar));
                         } else {
-                            ep_rating_button.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.button_nao_visto, null));
+                            ep_rating_button.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.button_nao_visto));
                             ep_rating_button.setText(getResources().getText(R.string.classificar));
                         }
                     }

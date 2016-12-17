@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">PopCorn</string>
     <string name="about">About</string>
     <string name="air_date">On the Air</string>
     <string name="apelido">Nickname:</string>
@@ -175,4 +174,6 @@
     <string name="subtitle_intro_5">Create your login and enjoy</string>
     <string name="procurar">Search</string>
     <string name="ops">Oops. something wrong</string>
+    <string name="notificacao">Notification</string>
+    <string name="notificacao_summary">Get notification</string>
 </resources>

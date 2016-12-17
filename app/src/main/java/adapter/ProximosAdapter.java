@@ -127,6 +127,7 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
             return userTvshows.size();
         }
         return 0;
+
     }
 
     public void getEpTitle(final UserTvshow userTvshow, final TextView ep_title, final TextView proximo,

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crash.FirebaseCrash;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -51,7 +52,7 @@ import static utils.UtilsFilme.getTimezone;
 /**
  * Created by icaro on 23/08/16.
  */
-    public class MainFragment extends Fragment {
+public class MainFragment extends Fragment {
 
     final static String TAG = MainActivity.class.getName();
     static List<String> buttonFilme, buttonTvshow;
@@ -119,7 +120,7 @@ import static utils.UtilsFilme.getTimezone;
                         case 0: {
 
                             Bundle bundle = new Bundle();
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Filme");
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Button_Filme");
                             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
@@ -134,7 +135,7 @@ import static utils.UtilsFilme.getTimezone;
                         case 1: {
 
                             Bundle bundle = new Bundle();
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Filme");
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Button_Filme");
                             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
@@ -149,7 +150,7 @@ import static utils.UtilsFilme.getTimezone;
                         case 2: {
 
                             Bundle bundle = new Bundle();
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Filme");
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Button_Filme");
                             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
@@ -163,7 +164,7 @@ import static utils.UtilsFilme.getTimezone;
                         case 3: {
 
                             Bundle bundle = new Bundle();
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Filme");
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Button_Filme");
                             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
@@ -187,7 +188,7 @@ import static utils.UtilsFilme.getTimezone;
         final List<TvSeries> tvSeries;
         if (popularTvshow != null & isAdded()) {
             int tamanho = popularTvshow.getResults().size() < 15 ? popularTvshow.getResults().size() : 15;
-           // Log.d("MainFragment", "Tamanho " + popularTvshow.getResults().size());
+            // Log.d("MainFragment", "Tamanho " + popularTvshow.getResults().size());
             tvSeries = popularTvshow.getResults();
             for (int i = 0; i < tamanho; i++) {
                 final TvSeries series = tvSeries.get(i);
@@ -220,7 +221,7 @@ import static utils.UtilsFilme.getTimezone;
                     public void onClick(View view) {
 
                         Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"TvShowPopulares");
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "TvShowPopulares");
                         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
                         bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
                         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
@@ -259,7 +260,7 @@ import static utils.UtilsFilme.getTimezone;
                         case 0: {
 
                             Bundle bundle = new Bundle();
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Tvshow");
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Button_Tvshow");
                             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
@@ -271,7 +272,7 @@ import static utils.UtilsFilme.getTimezone;
                         }
                         case 1: {
                             Bundle bundle = new Bundle();
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Tvshow");
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Button_Tvshow");
                             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
@@ -281,7 +282,7 @@ import static utils.UtilsFilme.getTimezone;
                         }
                         case 2: {
                             Bundle bundle = new Bundle();
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Tvshow");
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Button_Tvshow");
                             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
@@ -294,7 +295,7 @@ import static utils.UtilsFilme.getTimezone;
                         case 3: {
 
                             Bundle bundle = new Bundle();
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Button_Tvshow");
+                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Button_Tvshow");
                             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
@@ -316,7 +317,7 @@ import static utils.UtilsFilme.getTimezone;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       // Log.d(TAG, "onCreateView");
+        // Log.d(TAG, "onCreateView");
         switch (tipo) {
 
             case filmes_main: {
@@ -348,7 +349,7 @@ import static utils.UtilsFilme.getTimezone;
         List<TvSeries> tvSeries;
         if (toDay != null & isAdded()) {
             int tamanho = toDay.getResults().size() < 15 ? toDay.getResults().size() : 15;
-          //  Log.d("MainFragment", "Tamanho " + toDay.getResults().size());
+            //  Log.d("MainFragment", "Tamanho " + toDay.getResults().size());
             tvSeries = toDay.getResults();
             for (int i = 0; i < tamanho; i++) {
                 final TvSeries series = tvSeries.get(i);
@@ -382,7 +383,7 @@ import static utils.UtilsFilme.getTimezone;
                     public void onClick(View view) {
 
                         Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Main_TvShowOntheAir");
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Main_TvShowOntheAir");
                         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
                         bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
                         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
@@ -402,80 +403,12 @@ import static utils.UtilsFilme.getTimezone;
 
     }
 
-
-    private class MainAsync extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            if (isDetached()){
-                return null;
-            }
-
-            if (UtilsFilme.isNetWorkAvailable(getContext())) {
-                boolean idioma_padrao = false;
-                if (isDetached()) {
-                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                    idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-                }
-                if (idioma_padrao) {
-                    try {
-                    TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
-                    TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
-                    popularTvshow = tmdbTv.getPopular(Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
-                            //.toLanguageTag()
-                            + ",en,null", 1);
-                    toDay = tmdbTv.getAiringToday(Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
-                            //.toLanguageTag()
-                            + ",en,null", 1, getTimezone());
-                    popularMovie = tmdbMovies.getPopularMovies(Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
-                            //.toLanguageTag()
-                            + ",en,null", 1);
-                    cinema = tmdbMovies.getUpcoming(Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry()
-                            //.toLanguageTag()
-                            + ",en,null", 1);
-                        } catch (Exception e) {
-                        Log.d(TAG, e.getMessage());
-                    }
-                }else{
-                    try {
-                        TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
-                        TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
-                        popularTvshow = tmdbTv.getPopular("en", 1);
-                        toDay = tmdbTv.getAiringToday("en,null", 1, getTimezone());
-                        popularMovie = tmdbMovies.getPopularMovies("en", 1);
-                         cinema = tmdbMovies.getUpcoming("en", 1);
-                    } catch (Exception e ){
-                        Log.d(TAG, e.getMessage());
-                    }
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            if (UtilsFilme.isNetWorkAvailable(getContext()) && isAdded()) {
-                if (tipo == R.string.tvshow_main) {
-                    setScrollTvShowPopulares();
-                    setScrollTvShowToDay();
-                }
-                if (tipo == R.string.filmes_main) {
-                    setScrollMoviePopular();
-                    setScrollMovieOntheAir();
-                }
-            }
-        }
-
-    }
-
     private void setScrollMovieOntheAir() {
         List<MovieDb> movie;
 
         if (cinema != null && isAdded()) {
             int tamanho = cinema.getResults().size() < 15 ? cinema.getResults().size() : 15;
-           // Log.d("MainFragment", "Tamanho " + cinema.getResults().size());
+            // Log.d("MainFragment", "Tamanho " + cinema.getResults().size());
             movie = cinema.getResults();
             for (int i = 0; i < tamanho; i++) {
                 final MovieDb movieDb = movie.get(i);
@@ -508,7 +441,7 @@ import static utils.UtilsFilme.getTimezone;
                     public void onClick(View view) {
 
                         Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Main_MovieOntheAir");
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Main_MovieOntheAir");
                         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
                         bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
                         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
@@ -532,7 +465,7 @@ import static utils.UtilsFilme.getTimezone;
 
         if (popularMovie != null && isAdded()) {
             int tamanho = popularMovie.getResults().size() < 15 ? popularMovie.getResults().size() : 15;
-           // Log.d("MainFragment", "Tamanho " + popularMovie.getResults().size());
+            // Log.d("MainFragment", "Tamanho " + popularMovie.getResults().size());
             movie = popularMovie.getResults();
             for (int i = 0; i < tamanho; i++) {
                 final MovieDb movieDb = movie.get(i);
@@ -565,7 +498,7 @@ import static utils.UtilsFilme.getTimezone;
                     public void onClick(View view) {
 
                         Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,"Main_MoviePopular");
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Main_MoviePopular");
                         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
                         bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
                         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
@@ -581,6 +514,89 @@ import static utils.UtilsFilme.getTimezone;
             }
 
         }
+    }
+
+    private class MainAsync extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            if (isDetached()) {
+                return null;
+            }
+
+            boolean idioma_padrao = false;
+            if (isDetached()) {
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+            }
+            if (idioma_padrao) {
+                try {
+                    if (UtilsFilme.isNetWorkAvailable(getActivity())) {
+                        TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
+                        TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
+                        popularTvshow = tmdbTv.getPopular(Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry()
+                                //.toLanguageTag()
+                                + ",en,null", 1);
+                        toDay = tmdbTv.getAiringToday(Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry()
+                                //.toLanguageTag()
+                                + ",en,null", 1, getTimezone());
+                        popularMovie = tmdbMovies.getPopularMovies(Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry()
+                                //.toLanguageTag()
+                                + ",en,null", 1);
+                        cinema = tmdbMovies.getUpcoming(Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry()
+                                //.toLanguageTag()
+                                + ",en,null", 1);
+                    }
+                } catch (Exception e) {
+                    Log.d(TAG, e.getMessage());
+                    FirebaseCrash.report(e);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            } else {
+                try {
+                    if (UtilsFilme.isNetWorkAvailable(getActivity())) {
+                        TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
+                        TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
+                        popularTvshow = tmdbTv.getPopular("en", 1);
+                        toDay = tmdbTv.getAiringToday("en,null", 1, getTimezone());
+                        popularMovie = tmdbMovies.getPopularMovies("en", 1);
+                        cinema = tmdbMovies.getUpcoming("en", 1);
+                    }
+                } catch (Exception e) {
+                    Log.d(TAG, e.getMessage());
+                    FirebaseCrash.report(e);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if (UtilsFilme.isNetWorkAvailable(getContext()) && isAdded()) {
+                if (tipo == R.string.tvshow_main) {
+                    setScrollTvShowPopulares();
+                    setScrollTvShowToDay();
+                }
+                if (tipo == R.string.filmes_main) {
+                    setScrollMoviePopular();
+                    setScrollMovieOntheAir();
+                }
+            }
+        }
+
     }
 
 }

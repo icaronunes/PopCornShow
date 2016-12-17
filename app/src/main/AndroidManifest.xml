@@ -31,6 +31,8 @@
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
 
+
+
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -47,7 +49,6 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -247,7 +248,7 @@
             android:value="activity.MainActivity"/>
         </activity>
 
-        <activity android:name="activity.ListUserActivity" />
+
         <activity android:name="activity.ListaUserActivity" />
 
         <activity android:name="activity.PersonActivity"
@@ -327,6 +328,18 @@
         </activity>
 
         <activity android:name="activity.VincularLoginActivity"/>
+
+        <activity android:name="activity.DynamicLink">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="br.com.icaro.filme" android:scheme="http"/>
+                <data android:host="br.com.icaro.filme" android:scheme="https"/>
+            </intent-filter>
+
+        </activity>
 
         <service
             android:name="onsignal.CustomNotificationExtenderService"
