@@ -65,8 +65,6 @@ public class UtilsFilme {
     }
 
     public static boolean verificaDataProximaLancamento(Date air_date) {
-
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(air_date);
         Calendar hoje = Calendar.getInstance();

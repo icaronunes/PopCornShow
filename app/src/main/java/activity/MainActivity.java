@@ -142,17 +142,19 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
                     topMain.setMediaType(movieDb.getMediaType().name());
                     topMain.setImagem(movieDb.getBackdropPath());
 
-                    Date date = null;
+
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
                     try {
-                        date = sdf.parse(movieDb.getReleaseDate());
+                        Date date = sdf.parse(movieDb.getReleaseDate());
+                        if (movieDb.getBackdropPath() != null && UtilsFilme.verificaLancamento(date)) {
+                            multi.add(topMain);
+                        }
                     } catch (ParseException e) {
                         e.printStackTrace();
+                        Toast.makeText(this, R.string.ops, Toast.LENGTH_SHORT).show();
                     }
-                    if (movieDb.getBackdropPath() != null && UtilsFilme.verificaLancamento(date)) {
-                        multi.add(topMain);
-                    }
+
                 } else {
                     TopMain topMain = new TopMain();
                     topMain.setId(tmdbTv.getResults().get(i).getId());

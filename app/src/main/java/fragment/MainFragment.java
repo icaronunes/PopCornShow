@@ -569,7 +569,6 @@ public class MainFragment extends Fragment {
                         cinema = tmdbMovies.getUpcoming("en", 1);
                     }
                 } catch (Exception e) {
-                    Log.d(TAG, e.getMessage());
                     FirebaseCrash.report(e);
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -577,6 +576,7 @@ public class MainFragment extends Fragment {
                             Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
                         }
                     });
+                    Log.d(TAG, e.getMessage());
                 }
             }
             return null;
@@ -585,15 +585,20 @@ public class MainFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            if (UtilsFilme.isNetWorkAvailable(getContext()) && isAdded()) {
-                if (tipo == R.string.tvshow_main) {
-                    setScrollTvShowPopulares();
-                    setScrollTvShowToDay();
+            try {
+                if (UtilsFilme.isNetWorkAvailable(getActivity()) && isAdded()) {
+                    if (tipo == R.string.tvshow_main) {
+                        setScrollTvShowPopulares();
+                        setScrollTvShowToDay();
+                    }
+                    if (tipo == R.string.filmes_main) {
+                        setScrollMoviePopular();
+                        setScrollMovieOntheAir();
+                    }
                 }
-                if (tipo == R.string.filmes_main) {
-                    setScrollMoviePopular();
-                    setScrollMovieOntheAir();
-                }
+            } catch (Exception e){
+                FirebaseCrash.report(e);
+                Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
             }
         }
 

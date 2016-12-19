@@ -176,4 +176,5 @@
     <string name="ops">Oops. something wrong</string>
     <string name="notificacao">Notification</string>
     <string name="notificacao_summary">Get notification</string>
+    <string name="ajuda_desenvolvimento">Development</string>
 </resources>

@@ -175,7 +175,7 @@ public class RatedActivity extends BaseActivity {
         if (valueEventFavoriteMovie != null){
             favoriteMovie.removeEventListener(valueEventFavoriteMovie);
         }
-        if (valueEventFavoriteMovie != null) {
+        if (valueEventFavoriteTv != null) {
             favoriteTv.removeEventListener(valueEventFavoriteTv);
         }
     }

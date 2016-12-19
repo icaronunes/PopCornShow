@@ -37,6 +37,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -383,7 +384,6 @@ public class BaseActivity extends AppCompatActivity {
                 .setDeveloperModeEnabled(BuildConfig.DEBUG)
                 .build();
         mFirebaseRemoteConfig.setConfigSettings(configSettings);
-
         mFirebaseRemoteConfig.setDefaults(R.xml.xml_defaults);
 
         long cacheExpiration = 3600; // 1 hour in seconds.
@@ -399,7 +399,6 @@ public class BaseActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             mFirebaseRemoteConfig.activateFetched();
-
                         }
                         Map<String, String> map = new HashMap<String, String>();
                         map = getListaRemoteConfig();
@@ -409,7 +408,7 @@ public class BaseActivity extends AppCompatActivity {
 
                         intent.putExtra(Constantes.LISTA_ID, map.get("id" + numero));
                         intent.putExtra(Constantes.LISTA_GENERICA, map.get("title" + numero));
-
+                        intent.putExtra(Constantes.BUNDLE, (Serializable) map);
 
                         Bundle bundle = new Bundle();
                         bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_Random:List:" + map.get("id" + numero) + ":" + "title" + numero);
@@ -429,7 +428,6 @@ public class BaseActivity extends AppCompatActivity {
             map.put("title" + i, mFirebaseRemoteConfig.getString("title" + i));
             // Log.d("Log", "numero "+i);
         }
-
         return map;
     }
 

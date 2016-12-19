@@ -185,4 +185,5 @@
     <string name="ops">Oops… Algo deu errado</string>
     <string name="notificacao">Notificação</string>
     <string name="notificacao_summary">Receber Notificação</string>
+    <string name="ajuda_desenvolvimento">Desenvolvimento</string>
 </resources>

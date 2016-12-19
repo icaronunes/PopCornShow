@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import activity.Desenvolvimento;
 import activity.Site;
 import br.com.icaro.filme.R;
 
@@ -17,8 +18,6 @@ import br.com.icaro.filme.R;
  */
 
 public class Sobre extends DialogPreference {
-
-    private LinearLayout linearLayout;
 
     public Sobre(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -31,16 +30,16 @@ public class Sobre extends DialogPreference {
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
-        linearLayout = (LinearLayout) view.findViewById(R.id.play_rated);
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.play_rated);
+        LinearLayout desenvolvimento = (LinearLayout) view.findViewById(R.id.development);
+        LinearLayout twitter = (LinearLayout) view.findViewById(R.id.twitter);
         ImageView tmdb = (ImageView) view.findViewById(R.id.img_tmdb);
         ImageView popcorn = (ImageView) view.findViewById(R.id.img_popcorn);
 
         popcorn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), Site.class);
-                intent.putExtra(Constantes.SITE, "https://twitter.com/appopcorn");
-                getContext().startActivity(intent);
+
             }
         });
 
@@ -64,6 +63,23 @@ public class Sobre extends DialogPreference {
                 }
             }
         });
+
+        desenvolvimento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getContext().startActivity(new Intent(getContext(), Desenvolvimento.class));
+            }
+        });
+
+        twitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), Site.class);
+                intent.putExtra(Constantes.SITE, "https://twitter.com/appopcorn");
+                getContext().startActivity(intent);
+            }
+        });
+
     }
 
 }

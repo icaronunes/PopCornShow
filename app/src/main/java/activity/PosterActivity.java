@@ -48,7 +48,6 @@ public class PosterActivity extends ActionBarActivity {
         titlePageIndicator.setViewPager(viewPager);
         titlePageIndicator.setCurrentItem(getIntent().getExtras().getInt(Constantes.POSICAO));
 
-
     }
 
     public class PosterFragment extends FragmentPagerAdapter {

@@ -187,4 +187,6 @@
     <string name="app_code" translatable="false">q2p5q/</string>
     <string name="notificacao">Notification</string>
     <string name="notificacao_summary">Get notification</string>
+    <string name="ajuda_desenvolvimento">Development</string>
+    <string name="twitter_text" translatable="false">Twitter</string>
 </resources>

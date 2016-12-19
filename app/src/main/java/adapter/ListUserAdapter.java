@@ -51,7 +51,7 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListVi
           //  Log.d("domian.Lista", lista.get(position).getMediaType());
             final ItemsLista movie = lista.get(position);
 
-            if (movie.getReleaseDate() != null){
+            if (movie.getReleaseDate() != null && movie.getReleaseDate().length() >= 4){
                 holder.release.setText(movie.getReleaseDate().substring(0,4));
             }
 

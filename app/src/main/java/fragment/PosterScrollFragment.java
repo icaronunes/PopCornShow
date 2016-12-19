@@ -80,7 +80,7 @@ public class PosterScrollFragment extends Fragment {
         compartilhar = (ImageView) view.findViewById(R.id.compartilhar);
         salvar = (ImageView) view.findViewById(R.id.salvar);
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -130,9 +130,9 @@ public class PosterScrollFragment extends Fragment {
                 File file = salvaImagemMemoriaCache(getContext(), imageView);
                 if (file != null) {
                     Intent intent = new Intent(Intent.ACTION_SEND);
-                    final String appPackageName = getContext().getPackageName();
-                    intent.putExtra(Intent.EXTRA_TEXT, nome + "  -  " + "https://play.google.com/store/apps/details?id=" + appPackageName);
-                    intent.setType("image/*");
+                    //final String appPackageName = getContext().getPackageName();
+                    intent.putExtra(Intent.EXTRA_TEXT, nome + "  -  " + "https://q2p5q.app.goo.gl/3hX6");
+                    intent.setType("image/*"); // link dynamic - https://q2p5q.app.goo.gl/3hX6
                     intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                     startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
                 } else {

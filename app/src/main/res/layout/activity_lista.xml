@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linear_lista"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/linear_lista">
+    android:orientation="vertical">
 
     <include layout="@layout/include_toolbar" />
 
-    <FrameLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycleView_favorite"
@@ -21,8 +26,10 @@
 
             </android.support.v7.widget.RecyclerView>
 
-        <include layout="@layout/include_progress" />
-    </FrameLayout>
+
+            <include layout="@layout/include_progress" />
+        </FrameLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
@@ -30,8 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom"
         app:adSize="SMART_BANNER"
-        app:adUnitId="@string/admob"
-        android:layout_gravity="bottom" />
+        app:adUnitId="@string/admob" />
 
 </LinearLayout>

@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -332,6 +331,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+      //  Log.d(TAG, "Google Result");
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
@@ -359,9 +359,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             AuthCredential credential = FacebookAuthProvider.getCredential(tokens[0]);
 
-            Log.d(TAG, "credencial :" + credential.getProvider());
+           // Log.d(TAG, "credencial :" + credential.getProvider());
+           // Log.d(TAG, "credencial :" + provider);
             credential = provider.equalsIgnoreCase("google") ? GoogleAuthProvider.getCredential(tokens[0], null) : credential;
-
+          //  Log.d(TAG, "credencial :" + credential.getProvider());
             mAuth.signInWithCredential(credential)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -431,7 +432,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onStop() {
         super.onStop();
-        if (mAuth != null) {
+        if (stateListener != null) {
             mAuth.removeAuthStateListener(stateListener);
         }
     }
