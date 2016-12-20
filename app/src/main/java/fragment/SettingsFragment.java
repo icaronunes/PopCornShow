@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,24 +30,25 @@ public class SettingsFragment extends PreferenceFragment {
     public void onStart() {
         super.onStart();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        CheckBoxPreference boxPreference = (CheckBoxPreference) findPreference("pref_notificacao");
         if (user != null) {
             LogoffDialog emailPrefs = (LogoffDialog) findPreference("pref_logoff");
            // Log.d("SettingsFragment", "true" );
             emailPrefs.setEnabled(true);
+            boxPreference.setChecked(true);
         } else {
             LogoffDialog emailPrefs = (LogoffDialog) findPreference("pref_logoff");
            // Log.d("SettingsFragment", "false");
             emailPrefs.setEnabled(false);
+            boxPreference.setEnabled(false);
         }
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         boolean notificacao = sharedPref.getBoolean(SettingsActivity.PREF_NOTIFICACAO, true);
 
         if (notificacao) {
-            CheckBoxPreference boxPreference = (CheckBoxPreference) findPreference("pref_notificacao");
             boxPreference.setChecked(true);
         } else {
-            CheckBoxPreference boxPreference = (CheckBoxPreference) findPreference("pref_notificacao");
             boxPreference.setChecked(false);
         }
     }
@@ -60,11 +60,11 @@ public class SettingsFragment extends PreferenceFragment {
         boolean notificacao = sharedPref.getBoolean(SettingsActivity.PREF_NOTIFICACAO, true);
 
         if (notificacao){
-            Log.d(TAG, "True");
+            //Log.d(TAG, "True");
             OneSignal.setSubscription(true);
         } else {
             OneSignal.setSubscription(false);
-            Log.d(TAG, "False");
+            //Log.d(TAG, "False");
         }
 
     }

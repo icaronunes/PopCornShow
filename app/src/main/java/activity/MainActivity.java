@@ -1,5 +1,6 @@
 package activity;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
@@ -9,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -56,7 +58,6 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(" ");
 
-
         viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);
         viewpage_top_main = (ViewPager) findViewById(R.id.viewpage_top_main);
         viewpage_top_main.setOffscreenPageLimit(3);
@@ -68,6 +69,23 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
             snack();
         }
 
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+       // Log.d(TAG, "Share "+sharedPref.getBoolean("18", true));
+        if (sharedPref.getBoolean("18", true)) {
+            AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setTitle(R.string.novidades_title)
+                    .setMessage(R.string.novidades_text)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putBoolean("18", false);
+                            //editor.remove("18");// sempre remover versão anterior
+                            editor.apply();
+                        }
+                    }).create();
+            dialog.show();
+        }
     }
 
 

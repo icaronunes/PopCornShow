@@ -189,4 +189,6 @@
     <string name="notificacao_summary">Get notification</string>
     <string name="ajuda_desenvolvimento">Development</string>
     <string name="twitter_text" translatable="false">Twitter</string>
+    <string name="novidades_title">News</string>
+    <string name="novidades_text">** Updated information in About\n\n** Enabled Facebook login and Gmail \n\n** Disable Notification Option\n \n** Removed some bugs</string>
 </resources>
