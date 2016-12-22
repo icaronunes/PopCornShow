@@ -104,6 +104,7 @@ public class TvShowActivity extends BaseActivity {
         getExtras();
         layout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         layout.setBackgroundColor(color_top);
+        layout.setTitle(" ");
         // Log.d("color", "Cor do fab " + color_top);
         viewPager = (ViewPager) findViewById(R.id.viewPager_tvshow);
         menu_item_favorite = (FloatingActionButton) findViewById(R.id.menu_item_favorite);

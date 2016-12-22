@@ -93,8 +93,7 @@
             android:id="@+id/img_poster"
             android:layout_width="126dp"
             android:layout_height="162dp"
-            android:contentDescription="@string/poster_filme"
-            android:transitionName="poster" />
+            android:contentDescription="@string/poster_filme"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,9 +130,7 @@
                     android:id="@+id/img_budget"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_marginLeft="1dp"
-                    android:elevation="0dp" />
+                    android:layout_gravity="center_vertical|center_horizontal" />
 
                 <ImageView
                     android:id="@+id/icon_site"
@@ -276,7 +273,7 @@
 
         <LinearLayout
             android:id="@+id/scroll_treiler_linerlayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal" />
 
@@ -306,7 +303,7 @@
 
         <LinearLayout
             android:id="@+id/scroll_elenco_linerlayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal" />
 
@@ -336,7 +333,7 @@
 
         <LinearLayout
             android:id="@+id/scroll_crew_liner"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal" />
 
@@ -366,7 +363,7 @@
 
         <LinearLayout
             android:id="@+id/scroll_similares_linerlayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal" />
 

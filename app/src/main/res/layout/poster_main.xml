@@ -6,8 +6,8 @@
     android:orientation="vertical">
 
     <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="100dp"
+        android:layout_height="140dp">
 
         <ProgressBar
             android:id="@+id/progress_poster_grid"
@@ -18,16 +18,16 @@
 
         <ImageButton
             android:id="@+id/img_poster_grid"
-            android:layout_width="@dimen/poster_main_width"
-            android:layout_height="@dimen/poster_main_height"
-            android:layout_margin="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
             android:background="@color/white"
-            android:scaleType="centerInside"
+            android:scaleType="fitCenter"
             android:cropToPadding="false" />
 
         <TextView
             android:id="@+id/title_main"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLength="10"
             android:visibility="invisible" />

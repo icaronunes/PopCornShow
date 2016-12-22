@@ -675,7 +675,7 @@ public class FilmeActivity extends BaseActivity {
                         return new ImagemTopFilmeScrollFragment().newInstance(movieDb.getBackdropPath());
                     }
                     // Log.d("FilmeActivity", "getItem: ->  " + movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
-                    return new ImagemTopFilmeScrollFragment().newInstance(movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
+                        return new ImagemTopFilmeScrollFragment().newInstance(movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
                 }
                 return null;
             }

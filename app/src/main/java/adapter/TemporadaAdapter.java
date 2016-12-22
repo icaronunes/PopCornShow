@@ -49,9 +49,8 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
     @Override
     public HoldeTemporada onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.temporada_epsodio_layout, parent, false);
-        HoldeTemporada holdeTemporada = new HoldeTemporada(view);
 
-        return holdeTemporada;
+        return new HoldeTemporada(view);
     }
 
 
@@ -77,25 +76,24 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         }
 
         //Log.d("Temporada", "Rating " + episode.getUserRating());
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + episode.getStillPath())
+        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + episode.getStillPath())
                 //.error(R.drawable.empty_popcorn)
                 .into(holder.poster);
 
-        if (seguindo){
+        if (!seguindo){
          //   Log.d(TAG, "seguindo");
-        } else {
             holder.bt_visto.setVisibility(View.GONE);
         }
 
-        if (seasons != null && seguindo) {
+        if (seasons != null && seguindo ) {
             if (seasons.getUserEps().get(position).isAssistido()) {
              //   Log.d(TAG, "visto");
                 holder.bt_visto.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_visto));
             } else {
-              //  Log.d(TAG, "não visto");
                 holder.bt_visto.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_movie_now));
             }
         }
+
 
         holder.bt_visto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,8 +113,11 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
 
     @Override
     public int getItemCount() {
-        if (tvSeason.getEpisodes() != null) {
+        if (tvSeason.getEpisodes() != null && !seguindo) {
             return tvSeason.getEpisodes().size();
+        }
+        if (seasons.getUserEps() != null && seguindo) {
+            return seasons.getUserEps().size();
         }
         return 0;
     }

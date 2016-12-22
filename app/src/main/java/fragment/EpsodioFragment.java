@@ -26,6 +26,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DataSnapshot;
@@ -85,6 +86,7 @@ public class EpsodioFragment extends Fragment {
     private ValueEventListener epsListener;
     private float numero_rated;
     private LinearLayout relativeLayout;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
 
     public static Fragment newInstance(TvEpisode tvEpisode, String nome_serie,
@@ -120,6 +122,11 @@ public class EpsodioFragment extends Fragment {
             position = getArguments().getInt(Constantes.POSICAO);
             temporada_position = getArguments().getInt(Constantes.TEMPORADA_POSITION);
         }
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
+        Bundle bundle = getArguments();
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
 
         mAuth = FirebaseAuth.getInstance();
 

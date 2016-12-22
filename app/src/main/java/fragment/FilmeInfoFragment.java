@@ -559,7 +559,9 @@ public class FilmeInfoFragment extends Fragment {
     private void setVotoMedia() {
         if (movieDb.getVoteAverage() > 0) {
             img_star.setImageResource(R.drawable.icon_star);
-            voto_media.setText(Float.toString(movieDb.getVoteAverage()));
+            voto_media.setText(String.format(String.valueOf(movieDb.getVoteAverage()), Locale.getDefault()));
+
+            //voto_media.setText(Float.toString(movieDb.getVoteAverage()));
 
         } else {
             img_star.setImageResource(R.drawable.icon_star_off);

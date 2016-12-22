@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layoyt"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,7 +21,8 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:layout_anchorGravity="top|bottom"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            >
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -64,6 +66,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="bottom|start"
+
                     app:layout_collapseMode="parallax"
                     android:background="@android:drawable/screen_background_light_transparent" />
 

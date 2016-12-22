@@ -187,5 +187,7 @@
     <string name="notificacao_summary">Receber Notificação</string>
     <string name="ajuda_desenvolvimento">Desenvolvimento</string>
     <string name="novidades_title">Novidades</string>
-    <string name="novidades_text">** Atualizada informações em Sobre\n\n** Ativado login no Facebook e Gmail\n \n** Opção de desativar notificação\n \n** Retirado alguns bugs</string>
+    <string name="novidades_text">** Atualizada informações em Sobre\n\n** Ativado login no Facebook\n \n** Opção de desativar notificação\n \n** Retirado alguns bugs</string>
+    <string name="star_avaliados">Avaliação</string>
+    <string name="budget">Orçamento</string>
 </resources>

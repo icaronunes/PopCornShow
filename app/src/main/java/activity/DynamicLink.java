@@ -14,6 +14,7 @@ import com.google.android.gms.appinvite.AppInviteReferral;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import utils.Constantes;
 
@@ -23,13 +24,14 @@ import utils.Constantes;
 
 public class DynamicLink extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-    public static final String TAG = "DynamicLink";
+    public static final String TAG = DynamicLink.class.getName();
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "Entrou");
         setUpDynamicLinks();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     private void setUpDynamicLinks() {
@@ -86,6 +88,11 @@ public class DynamicLink extends AppCompatActivity implements GoogleApiClient.On
             }
 
         }
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(id));
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, action);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
 
         if (action == null || id == 0) {

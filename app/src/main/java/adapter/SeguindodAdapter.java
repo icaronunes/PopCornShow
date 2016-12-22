@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -25,17 +27,17 @@ import utils.UtilsFilme;
  */
 public class SeguindodAdapter extends RecyclerView.Adapter<SeguindodAdapter.SeguindoViewHolder> {
 
-    private FragmentActivity activity;
+    private FragmentActivity context;
     private List<UserTvshow> userTvshows;
 
     public SeguindodAdapter(FragmentActivity activity, List<UserTvshow> userTvshows) {
-        this.activity = activity;
+        this.context = activity;
         this.userTvshows = userTvshows;
     }
 
     @Override
     public SeguindodAdapter.SeguindoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(activity).inflate(R.layout.seguindo_tvshow, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.seguindo_tvshow, parent, false);
         SeguindoViewHolder holder = new SeguindoViewHolder(view);
         return holder;
     }
@@ -43,7 +45,7 @@ public class SeguindodAdapter extends RecyclerView.Adapter<SeguindodAdapter.Segu
     @Override
     public void onBindViewHolder(final SeguindodAdapter.SeguindoViewHolder holder, int position) {
         final UserTvshow userTvshow = userTvshows.get(position);
-        Picasso.with(activity).load(UtilsFilme.getBaseUrlImagem(2) + userTvshow.getPoster())
+        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + userTvshow.getPoster())
                 .error(R.drawable.poster_empty)
                 .into(holder.poster, new Callback() {
                     @Override
@@ -63,11 +65,17 @@ public class SeguindodAdapter extends RecyclerView.Adapter<SeguindodAdapter.Segu
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, TvShowActivity.class);
+                Intent intent = new Intent(context, TvShowActivity.class);
                 intent.putExtra(Constantes.TVSHOW_ID,userTvshow.getId());
                 intent.putExtra(Constantes.NOME_TVSHOW, userTvshow.getNome());
                 intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(holder.poster));
-                activity.startActivity(intent);
+                context.startActivity(intent);
+
+                FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(userTvshow.getId()));
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, userTvshow.getNome());
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
             }
         });

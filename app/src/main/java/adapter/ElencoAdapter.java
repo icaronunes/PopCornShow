@@ -2,6 +2,7 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -24,6 +26,7 @@ import utils.UtilsFilme;
  */
 public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoViewHolder> {
 
+    private final FirebaseAnalytics mFirebaseAnalytics;
     Context context;
     List<PersonCast> casts;
 
@@ -32,6 +35,7 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
 
         this.context = elencoActivity;
         this.casts = casts;
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(elencoActivity);
        // Log.d("ElencoAdapter", "Tamanho " + casts.size());
     }
 
@@ -58,6 +62,12 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(personCast.getId()));
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, personCast.getName());
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 Intent intent = new Intent(context, PersonActivity.class);
                 intent.putExtra(Constantes.PERSON_ID, personCast.getId());
                 intent.putExtra(Constantes.NOME_PERSON, personCast.getName());

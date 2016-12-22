@@ -29,7 +29,7 @@ import utils.UtilsFilme;
 public class SimilaresAdapter extends RecyclerView.Adapter<SimilaresAdapter.SimilareViewHolde> {
 
     Context context;
-    List<MovieDb> similares;
+    private List<MovieDb> similares;
 
     public SimilaresAdapter(SimilaresActivity similaresActivity, List<MovieDb> similarMovies) {
         context = similaresActivity;
@@ -48,7 +48,8 @@ public class SimilaresAdapter extends RecyclerView.Adapter<SimilaresAdapter.Simi
         holder.similares_nome.setText(similares.get(position).getTitle());
         holder.similares_data_lancamento.setText(similares.get(position).getReleaseDate());
         holder.similares_title_original.setText(similares.get(position).getOriginalTitle());
-        holder.similares_voto_media.setText(Float.toString(similares.get(position).getVoteAverage()));
+        holder.similares_voto_media.setText(String
+                .format(String.valueOf(similares.get(position).getVoteAverage())));
 
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + similares.get(position)
                 .getPosterPath()).into(holder.imageView);
@@ -62,6 +63,7 @@ public class SimilaresAdapter extends RecyclerView.Adapter<SimilaresAdapter.Simi
                 intent.putExtra(Constantes.FILME_ID, similares.get(position).getId());
                 intent.putExtra(Constantes.NOME_FILME, similares.get(position).getTitle());
                 context.startActivity(intent);
+
                 FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
                 Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, FilmeActivity.class.getName());

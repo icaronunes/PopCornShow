@@ -601,7 +601,6 @@ public class MainFragment extends Fragment {
                 }
             } catch (Exception e){
                 FirebaseCrash.report(e);
-                if (!getActivity().isDestroyed())
                 Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
             }
         }

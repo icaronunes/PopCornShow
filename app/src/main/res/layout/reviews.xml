@@ -34,9 +34,7 @@
                     android:id="@+id/author"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Chris"
                     android:layout_margin="2dp" />
-                    "3dp"/>
 
             </LinearLayout>
 
@@ -44,7 +42,6 @@
                 android:id="@+id/content_reviews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:layout_margin="1dp" />
 
         </LinearLayout>

@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:layout_marginRight="2dp"
+        android:layout_marginEnd="2dp"
         android:background="@color/black_transparente"
         android:gravity="top|start"
         android:lines="2"
@@ -40,9 +40,9 @@
             android:id="@+id/time_filme"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="1dp"
+            android:layout_marginEnd="1dp"
             android:layout_weight="1"
-            android:gravity="right" />
+            android:gravity="end" />
     </LinearLayout>
 
     <LinearLayout
@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="2dp"
-            android:gravity="right"
+            android:gravity="end"
             android:maxLines="2" />
 
 
@@ -117,12 +117,15 @@
                         android:id="@+id/img_star"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:alpha="0" />
+
+                        android:elevation="6dp"
+                        android:contentDescription="@string/star_avaliados" />
 
                     <TextView
                         android:id="@+id/voto_media"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:elevation="7dp"
                         android:layout_gravity="center"
                         android:textStyle="normal|bold" />
                 </FrameLayout>
@@ -132,14 +135,17 @@
                     android:id="@+id/img_budget"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_marginLeft="1dp"
-                    android:elevation="0dp" />
+                    android:contentDescription="@string/budget"
+                    android:layout_marginStart="1dp"
+                    android:elevation="6dp" />
 
                 <ImageView
                     android:id="@+id/icon_site"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:elevation="6dp"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_margin="1dp" />
 
@@ -148,6 +154,8 @@
                     android:id="@+id/icon_collection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
+                    android:elevation="6dp"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_margin="1dp" />
 
@@ -155,6 +163,8 @@
                     android:id="@+id/icon_reviews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
+                    android:elevation="6dp"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_margin="1dp" />
 
@@ -218,7 +228,6 @@
                     <TextView
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
-
                         android:text="@string/popularity" />
 
                     <TextView
@@ -226,6 +235,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingStart="2dp"
+                        android:paddingEnd="2dp"
                         android:text="" />
 
                 </LinearLayout>
@@ -278,7 +288,7 @@
 
         <LinearLayout
             android:id="@+id/scroll_treiler_linerlayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal" />
 
@@ -308,7 +318,7 @@
 
         <LinearLayout
             android:id="@+id/scroll_elenco_linerlayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal" />
 
@@ -322,7 +332,7 @@
         android:gravity="center_horizontal"
         android:text="@string/por_tras_camera_filme"
         android:textColor="@color/primary_dark"
-        android:textSize="@dimen/abc_text_size_medium_material"
+        android:textSize="18sp"
         android:textStyle="normal|bold"
         android:visibility="invisible" />
 
@@ -338,7 +348,7 @@
 
         <LinearLayout
             android:id="@+id/scroll_crew_liner"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal" />
 
@@ -352,7 +362,7 @@
         android:gravity="center_horizontal"
         android:text="@string/similares"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/abc_text_size_medium_material"
+        android:textSize="18sp"
         android:textStyle="normal|bold"
         android:visibility="invisible" />
 
@@ -368,7 +378,7 @@
 
         <LinearLayout
             android:id="@+id/scroll_similares_linerlayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal" />
 

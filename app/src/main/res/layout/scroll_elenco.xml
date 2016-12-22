@@ -4,7 +4,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="1dp"
     android:weightSum="1">
 
 
@@ -14,16 +13,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="bottom|center_horizontal"
-        android:lines="2" />
+        android:lines="2"
+        android:maxLength="18" />
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <FrameLayout android:layout_height="140dp"
+        android:layout_width="100dp">
 
         <ImageView
             android:id="@+id/imgPager"
-            android:layout_width="76dp"
-            android:layout_height="101dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:foregroundGravity="center_vertical" />
 
         <ProgressBar

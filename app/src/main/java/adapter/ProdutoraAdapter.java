@@ -30,7 +30,7 @@ import utils.UtilsFilme;
  */
 public class ProdutoraAdapter extends RecyclerView.Adapter<ProdutoraAdapter.ProdutoraViewHolde> {
     Context context;
-    List<Collection> movies;
+    private List<Collection> movies;
 
     public ProdutoraAdapter(ProdutoraActivity produtoraActivity, List<Collection> results) {
         this.context = produtoraActivity;
@@ -59,7 +59,7 @@ public class ProdutoraAdapter extends RecyclerView.Adapter<ProdutoraAdapter.Prod
             }
 
             Picasso.with(context)
-                    .load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
+                    .load(UtilsFilme.getBaseUrlImagem(2) + movie.getPosterPath())
                     .error(R.drawable.poster_empty)
                     .into(holder.imageView);
             holder.progressBar.setVisibility(View.INVISIBLE);
@@ -73,6 +73,8 @@ public class ProdutoraAdapter extends RecyclerView.Adapter<ProdutoraAdapter.Prod
                     intent.putExtra(Constantes.FILME_ID, movie.getId());
                     intent.putExtra(Constantes.NOME_FILME, movie.getTitle());
                     context.startActivity(intent);
+
+
                     FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
                     Bundle bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, ProdutoraAdapter.class.getName() );

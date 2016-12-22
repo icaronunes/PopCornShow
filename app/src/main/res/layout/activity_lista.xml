@@ -22,23 +22,24 @@
                 android:id="@+id/recycleView_favorite"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="50dp"
                 android:orientation="vertical">
 
             </android.support.v7.widget.RecyclerView>
 
 
             <include layout="@layout/include_progress" />
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                app:adSize="SMART_BANNER"
+                app:adUnitId="@string/admob" />
+
         </FrameLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="bottom"
-        app:adSize="SMART_BANNER"
-        app:adUnitId="@string/admob" />
 
 </LinearLayout>

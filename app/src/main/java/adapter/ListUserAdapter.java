@@ -2,6 +2,7 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -28,13 +30,16 @@ import utils.UtilsFilme;
 public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListViewHolder> {
 
 
-    List<ItemsLista> lista;
+    private final FirebaseAnalytics mFirebaseAnalytics;
+    private List<ItemsLista> lista;
     Context context;
+
 
 
     public ListUserAdapter(Context listaUserActivity, List<ItemsLista> movieLists) {
         this.context = listaUserActivity;
         lista = movieLists;
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
     }
 
     @Override
@@ -82,12 +87,24 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListVi
                         intent.putExtra(Constantes.NOME_TVSHOW, movie.getTitle());
                         intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(holder.img_rated));
                         context.startActivity(intent);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(movie.getId()));
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movie.getTitle());
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                     } else {
                         Intent intent = new Intent(context, FilmeActivity.class);
                         intent.putExtra(Constantes.FILME_ID, movie.getId());
                         intent.putExtra(Constantes.NOME_FILME, movie.getTitle());
                         intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(holder.img_rated));
                         context.startActivity(intent);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(movie.getId()));
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movie.getTitle());
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                     }
                 }
             });

@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +33,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -55,11 +57,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener stateListener;
     private EditText email, pass;
-    private SignInButton signInButton;
-    private TextView recuperar;
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mAuthProgressDialog;
     private CallbackManager mCallbackManager;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public LoginActivity() {
 
@@ -71,12 +72,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         FirebaseApp.initializeApp(getBaseContext());
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mAuth = FirebaseAuth.getInstance();
         FacebookSdk.sdkInitialize(getBaseContext());
         setContentView(R.layout.activity_login);
         email = (EditText) findViewById(R.id.login);
         pass = (EditText) findViewById(R.id.pass);
-        recuperar = (TextView) findViewById(R.id.recuperar_senha);
+        TextView recuperar = (TextView) findViewById(R.id.recuperar_senha);
 
 
         stateListener = getAuthStateListener();
@@ -191,7 +193,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .requestIdToken(getString(R.string.web_client_id))
                 .build();
 
-
         // Build a GoogleApiClient with access to the Google Sign-In API and the
         // options specified by gso.
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -206,7 +207,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         // may be displayed when only basic profile is requested. Try adding the
         // Scopes.PLUS_LOGIN scope to the GoogleSignInOptions to see the
         // difference.
-        signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.COLOR_LIGHT);
         signInButton.setColorScheme(SignInButton.SIZE_STANDARD);
         signInButton.setScopes(gso.getScopeArray());
@@ -335,6 +336,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "google");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
+
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                // Log.d(TAG, account.getDisplayName());
@@ -344,6 +350,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         } else {
             mCallbackManager.onActivityResult(requestCode, resultCode, data);
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "facebook");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
         }
     }
 
@@ -359,10 +368,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             AuthCredential credential = FacebookAuthProvider.getCredential(tokens[0]);
 
-           // Log.d(TAG, "credencial :" + credential.getProvider());
-           // Log.d(TAG, "credencial :" + provider);
+            Log.d(TAG, "credencial :" + credential.getProvider());
+            Log.d(TAG, "credencial :" + provider);
             credential = provider.equalsIgnoreCase("google") ? GoogleAuthProvider.getCredential(tokens[0], null) : credential;
-          //  Log.d(TAG, "credencial :" + credential.getProvider());
+            Log.d(TAG, "credencial :" + credential.getProvider());
             mAuth.signInWithCredential(credential)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -371,6 +380,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             if (!task.isSuccessful()) {
                                 Toast.makeText(LoginActivity.this,"Login social falhou", Toast.LENGTH_SHORT ).show();
                             }
+
                             mAuthProgressDialog.dismiss();
                         }
                     })
@@ -404,6 +414,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "email");
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
+
                         if (!task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Login Falhou", Toast.LENGTH_SHORT).show();
                         }
@@ -451,6 +466,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "anonimo");
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
                         Toast.makeText(LoginActivity.this, getResources().getString(R.string.anonimo_alerta),
                                 Toast.LENGTH_LONG).show();
                         if (!task.isSuccessful()) {

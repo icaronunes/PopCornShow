@@ -11,7 +11,6 @@
         android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         app:adSize="SMART_BANNER"
         app:adUnitId="@string/admob"
         android:layout_gravity="bottom" />

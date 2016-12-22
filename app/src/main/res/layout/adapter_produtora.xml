@@ -14,22 +14,22 @@
     android:layout_margin="3dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_width="120dp">
 
         <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/imgFilme_produtora"
-                android:layout_width="143dp"
-                android:layout_height="194dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:contentDescription="@string/imagem_filme"
                 android:cropToPadding="true"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 android:adjustViewBounds="true" />
 
             <include layout="@layout/include_progress" />
@@ -46,7 +46,6 @@
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 android:typeface="serif"
-                android:text="dadsasdada"
                 android:layout_margin="1dp" />
 
         </FrameLayout>

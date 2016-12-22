@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 <android.support.v4.widget.NestedScrollView
     android:id="@+id/nested"
@@ -51,7 +52,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
 
-                android:gravity="right"
+                android:gravity="end"
                 android:textStyle="normal|bold" />
 
         </LinearLayout>
@@ -67,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/produtora"
+                tools:text="@string/produtora"
                 android:textStyle="normal|italic" />
 
             <TextView
@@ -74,7 +76,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="2dp"
                 android:layout_marginStart="2dp"
                 android:maxLength="30"
                 android:maxLines="1" />
@@ -82,12 +83,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Renovada"
                 android:id="@+id/status"
                 android:textStyle="normal|bold|italic"
                 android:textSize="18sp"
                 android:layout_gravity="center"
-                android:gravity="right" />
+                android:gravity="end" />
 
         </LinearLayout>
 
@@ -102,6 +102,7 @@
                 android:layout_width="130dp"
                 android:layout_height="166dp"
                 android:contentDescription="@string/poster_filme"
+                android:transitionName="poster"
                 android:scaleType="fitXY"
                 android:padding="4dp" />
 
@@ -147,7 +148,7 @@
                         android:layout_margin="1dp" />
 
                     <Button
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/seguir"
                         android:layout_weight="1"
@@ -174,7 +175,6 @@
                         <TextView
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
-
                             android:text="@string/original_title" />
 
                         <TextView
@@ -198,10 +198,7 @@
                         <TextView
                             android:id="@+id/popularity"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="2dp"
-                            android:paddingStart="2dp"
-                            android:text="" />
+                            android:layout_height="wrap_content" />
 
                     </LinearLayout>
 
@@ -220,8 +217,7 @@
                         <TextView
                             android:id="@+id/production_countries"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="" />
+                            android:layout_height="wrap_content"/>
 
                     </LinearLayout>
 
@@ -239,8 +235,7 @@
                         <TextView
                             android:id="@+id/temporadas"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="" />
+                            android:layout_height="wrap_content" />
 
                     </LinearLayout>
 
@@ -260,7 +255,7 @@
                             android:id="@+id/statusgone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="" />
+                             />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -333,7 +328,7 @@
             android:gravity="center_horizontal"
             android:text="@string/por_tras_camera_tvshow"
             android:textColor="@color/primary_dark"
-            android:textSize="@dimen/abc_text_size_medium_material"
+            android:textSize="18sp"
             android:textStyle="normal|bold"
             android:visibility="invisible" />
 

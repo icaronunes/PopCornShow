@@ -1,42 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="1dp"
+    android:layout_margin="3dp"
     android:background="?attr/selectableItemBackground"
+    android:orientation="horizontal">
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/img_similares"
-        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        />
+        android:layout_width="0dp"
+        android:layout_weight="0.25"
+        android:scaleType="fitStart"
+        android:adjustViewBounds="true" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:orientation="vertical"
         android:layout_height="wrap_content"
-        android:layout_weight="0.75">
-
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="6dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+        android:layout_weight="0.75"
+        android:layout_marginStart="10dp">
 
             <TextView
                 android:id="@+id/similares_nome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Bred Pitt"
+
                 android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/similares_data_lancamento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="1999-10-14"
+
                 android:textSize="12sp" />
 
             <LinearLayout
@@ -58,7 +60,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical|center_horizontal|center"
-                        android:text="7.7" />
+                        />
                 </FrameLayout>
 
 
@@ -66,12 +68,12 @@
                     android:id="@+id/similares_title_original"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Title"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="2dp" />
+                    android:layout_marginStart="2dp"
+                    android:layout_marginLeft="2dp" />
             </LinearLayout>
 
-        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
+</android.support.v7.widget.CardView>

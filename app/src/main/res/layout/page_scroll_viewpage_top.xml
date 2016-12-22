@@ -12,7 +12,6 @@
         android:layout_gravity="center_horizontal"
         android:adjustViewBounds="true"
         android:contentDescription="@string/foto_principal"
-        android:elevation="0dp"
         android:scaleType="centerCrop"
         app:layout_collapseMode="parallax"
         app:layout_collapseParallaxMultiplier="1.0" />

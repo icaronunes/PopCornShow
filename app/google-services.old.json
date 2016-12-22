@@ -15,12 +15,16 @@
       },
       "oauth_client": [
         {
-          "client_id": "101446616560-g3o81adj2bna23jujo4lpn9jgh71001v.apps.googleusercontent.com",
+          "client_id": "101446616560-5d06i3lvfne9gl9s3u2bh4k1rvuhm2dg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "br.com.icaro.filme",
-            "certificate_hash": "0B82D545A66AED35780AE11D7D2127F888804C65"
+            "certificate_hash": "18929FD6F60DB5E44EFC03DB1EF78E0E73CACACD"
           }
+        },
+        {
+          "client_id": "101446616560-mnmuu6nt1hkrd98frh7g9opp3qovu4gu.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [

@@ -1,98 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="?attr/selectableItemBackground"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
+    android:background="?attr/selectableItemBackground"
     app:cardElevation="0dp">
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="6dp">
-
-    <ImageView
-        android:id="@+id/image_temp_ep"
-        android:layout_width="wrap_content"
-        android:minWidth="170dp"
-        android:minHeight="80dp"
-        android:maxWidth="170dp"
-        android:maxHeight="80dp"
-        android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-        android:background="@drawable/empty_popcorn"
-        android:cropToPadding="false"
-        android:adjustViewBounds="false" />
-
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="6dp">
+        android:padding="6dp">
 
-        <TextView
-            android:id="@+id/ep_number"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/image_temp_ep"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textStyle="normal|bold" />
+            android:adjustViewBounds="false"
+            android:background="@drawable/empty_popcorn"
+            android:cropToPadding="false"
+            android:maxHeight="80dp"
+            android:maxWidth="170dp"
+            android:minHeight="80dp"
+            android:minWidth="170dp"
+            android:scaleType="centerCrop" />
 
-        <TextView
-            android:id="@+id/ep_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text=""
-            android:maxLines="1" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_gravity="center"
+            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ep_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:id="@+id/ep_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:maxLines="1" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/ep_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nota" />
+                    <TextView
+                        android:id="@+id/ep_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/ep_nota"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/nota" />
+
+                        <TextView
+                            android:id="@+id/ep_nota"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
                 </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/bt_visto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_movie_now"
-                android:id="@+id/bt_visto" />
+        </LinearLayout>
 
     </LinearLayout>
-
-    </LinearLayout>
-
-</LinearLayout>
 </android.support.v7.widget.CardView>

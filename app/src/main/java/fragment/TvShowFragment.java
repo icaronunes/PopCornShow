@@ -692,11 +692,10 @@ public class TvShowFragment extends Fragment {
 
     private void setSinopse() {
        // Log.d("SetSinopse", "OverView" + series.getOverview());
-        if (series.getOverview() != null) {
-
-            descricao.setText(series.getOverview());
-        } else {
+        if (series.getOverview() == null || series.getOverview().equals("")) {
             descricao.setText(getString(R.string.sem_sinopse));
+        } else {
+            descricao.setText(series.getOverview());
         }
     }
 

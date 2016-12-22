@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.List;
@@ -50,6 +51,7 @@ public class FilmesFragment extends Fragment {
     ProgressBar process;
     int abaEscolhida;
     int pagina = 1;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public FilmesFragment() {
     }
@@ -64,6 +66,8 @@ public class FilmesFragment extends Fragment {
                 this.abaEscolhida = Integer.parseInt(getArguments().getString(Constantes.NAV_DRAW_ESCOLIDO));
             }
         }
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
     }
 
     @Override
@@ -149,6 +153,13 @@ public class FilmesFragment extends Fragment {
                 intent.putExtra(Constantes.FILME_ID, movies.get(position).getId());
                 intent.putExtra(Constantes.NOME_FILME, movies.get(position).getTitle());
                 getContext().startActivity(intent);
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(movies.get(position).getId()));
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME,movies.get(position).getTitle() );
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+
             }
         };
     }

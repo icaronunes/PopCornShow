@@ -2,6 +2,7 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -24,6 +26,7 @@ import utils.UtilsFilme;
  * Created by icaro on 24/07/16.
  */
 public class CrewsAdapter extends RecyclerView.Adapter<CrewsAdapter.CrewsViewHolder> {
+    private final FirebaseAnalytics mFirebaseAnalytics;
     Context context;
     List<PersonCrew> crews;
 
@@ -31,6 +34,7 @@ public class CrewsAdapter extends RecyclerView.Adapter<CrewsAdapter.CrewsViewHol
 
         this.context = crewsActivity;
         this.crews = crew;
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(crewsActivity);
       //  Log.d("CrewsAdapter", "Tamanho " + crews.size());
     }
 
@@ -58,6 +62,12 @@ public class CrewsAdapter extends RecyclerView.Adapter<CrewsAdapter.CrewsViewHol
                 intent.putExtra(Constantes.PERSON_ID, personCrew.getId());
                 intent.putExtra(Constantes.NOME_PERSON, personCrew.getName());
                 context.startActivity(intent);
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(personCrew.getId()));
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, personCrew.getName());
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             }
         });
 
