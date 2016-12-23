@@ -103,7 +103,7 @@
     <string name="ver_imdb">Ver no IMDB</string>
     <string name="ver_tmdb">Ver no TMDB</string>
 
-    <string name="today">Na Tv Hoje</string>
+    <string name="today">Na <p>Tv</p> Hoje</string>
     <string name="em_breve">Em Breve</string>
     <string name="home">Principal</string>
     <string name="sair">Sair</string>
@@ -187,7 +187,7 @@
     <string name="notificacao_summary">Receber Notificação</string>
     <string name="ajuda_desenvolvimento">Desenvolvimento</string>
     <string name="novidades_title">Novidades</string>
-    <string name="novidades_text">** Atualizada informações em Sobre\n\n** Ativado login no Facebook\n \n** Opção de desativar notificação\n \n** Retirado alguns bugs</string>
+    <string name="novidades_text">** Atualizada informações em Sobre\n\n** Ativado login no Facebook\n \n** Opção de desativar notificação\n \n** Retirado alguns bugs\n\n** Fix Compartilhamentos</string>
     <string name="star_avaliados">Avaliação</string>
     <string name="budget">Orçamento</string>
 </resources>

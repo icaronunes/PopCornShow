@@ -304,26 +304,36 @@ public class FilmeActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (movieDb != null) {
             if (item.getItemId() == R.id.share) {
-                File file = salvaImagemMemoriaCache(FilmeActivity.this, movieDb.getPosterPath());
-                if (file != null) {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("message/rfc822");
-                    //final String appPackageName = FilmeActivity.this.getPackageName();
-                    intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() + " " + buildDeepLink());
-                    //intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() + "  -  " + "https://play.google.com/store/apps/details?id=" + appPackageName);
-                    intent.setType("image/*");
-                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-                    startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
 
-                    bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_MainActivity:menu_drav_home");
-                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                salvaImagemMemoriaCache(FilmeActivity.this, movieDb.getPosterPath(), new SalvarImageShare() {
+                    @Override
+                    public void retornaFile(File file) {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("message/rfc822");
+                        //final String appPackageName = FilmeActivity.this.getPackageName();
+                        intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() + " " + buildDeepLink());
+                        //intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() + "  -  " + "https://play.google.com/store/apps/details?id=" + appPackageName);
+                        intent.setType("image/*");
+                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                        startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
 
-                } else {
-                    Toast.makeText(FilmeActivity.this, getResources().getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show();
-                }
+                        bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_MainActivity:menu_drav_home");
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                     //   Log.d(TAG, "TRUE");
+
+                        return;
+                    }
+
+                    @Override
+                    public void RetornoFalha() {
+                        Toast.makeText(FilmeActivity.this, getResources().getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         } else {
+          //  Log.d(TAG, "ELSE");
             Toast.makeText(FilmeActivity.this, getResources().getString(R.string.erro_ainda_sem_imagem), Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
@@ -333,12 +343,12 @@ public class FilmeActivity extends BaseActivity {
         // Get the unique appcode for this app.
 
         String link = "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3DFA%26id%3D"
-                +movieDb.getId() +"&apn=br.com.icaro.filme";
+                + movieDb.getId() + "&apn=br.com.icaro.filme";
 
         // If the deep link is used in an advertisement, this value must be set to 1.
         boolean isAd = false;
         if (isAd) {
-           // builder.appendQueryParameter("ad", "1");
+            // builder.appendQueryParameter("ad", "1");
         }
 
         // Minimum version is optional.
@@ -645,122 +655,122 @@ public class FilmeActivity extends BaseActivity {
         }
     }
 
-        @Override
-        protected void onDestroy () {
-            super.onDestroy();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-            tmdvAsync.cancel(true);
+        tmdvAsync.cancel(true);
 
-            if (valueEventWatch != null) {
-                myWatch.removeEventListener(valueEventWatch);
-            }
-            if (valueEventRated != null) {
-                myRated.removeEventListener(valueEventRated);
-            }
-            if (valueEventFavorite != null) {
-                myFavorite.removeEventListener(valueEventFavorite);
-            }
+        if (valueEventWatch != null) {
+            myWatch.removeEventListener(valueEventWatch);
         }
-
-        private class ImagemTopFragment extends FragmentPagerAdapter {
-
-            public ImagemTopFragment(FragmentManager supportFragmentManager) {
-                super(supportFragmentManager);
-            }
-
-            @Override
-            public Fragment getItem(int position) {
-                if (movieDb.getImages(ArtworkType.BACKDROP) != null) {
-                    if (position == 0) {
-                        return new ImagemTopFilmeScrollFragment().newInstance(movieDb.getBackdropPath());
-                    }
-                    // Log.d("FilmeActivity", "getItem: ->  " + movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
-                        return new ImagemTopFilmeScrollFragment().newInstance(movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
-                }
-                return null;
-            }
-
-
-            @Override
-            public int getCount() {
-                if (movieDb.getImages(ArtworkType.BACKDROP) != null) {
-
-                    int tamanho = movieDb.getImages(ArtworkType.BACKDROP).size();
-                    // Log.d("FilmeActivity", "getCount: ->  " + tamanho);
-                    return tamanho > 0 ? tamanho : 1;
-                }
-                return 0;
-            }
+        if (valueEventRated != null) {
+            myRated.removeEventListener(valueEventRated);
         }
-
-
-        private class TMDVAsync extends AsyncTask<Void, Void, MovieDb> {
-
-            @Override
-            protected MovieDb doInBackground(Void... voids) {//
-                if (UtilsFilme.isNetWorkAvailable(FilmeActivity.this)) {
-                    try {
-                        TmdbMovies movies = FilmeService.getTmdbMovies();
-                        // Log.d("FilmeActivity", "Filme ID - " + id_filme);
-                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
-                        boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-                        if (idioma_padrao) {
-                            movieDb = movies.getMovie(id_filme, getLocale()
-                                            //.toLanguageTag() não funciona na API 14
-                                            + ",en,null"
-                                    , credits, releases, videos, reviews, similar, alternative_titles, images);
-                            movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
-                            movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());
-
-                        } else {
-                            //  Log.d("FilmeActivity", "False - " + id_filme);
-                            movieDb = movies.getMovie(id_filme, "en,null"
-                                    , credits, releases, videos, reviews, similar, alternative_titles, images);
-                        }
-                        similarMovies = movies.getSimilarMovies(movieDb.getId(), null, 1);
-                        return movieDb;
-                    } catch (Exception e) {
-                        Log.d(TAG, e.getMessage());
-                        FirebaseCrash.report(e);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(FilmeActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(MovieDb movieDb) {
-                super.onPostExecute(movieDb);
-                if (movieDb != null) {
-                    setTitle(movieDb.getTitle());
-                    viewPager.setAdapter(new ImagemTopFragment(getSupportFragmentManager()));
-                    progressBar.setVisibility(View.INVISIBLE);
-
-                    setFragmentInfo();
-
-                    if (mAuth.getCurrentUser() != null) { // Arrumar
-
-                        setEventListenerFavorite();
-                        setEventListenerRated();
-                        setEventListenerWatch();
-
-                        //  Log.d("FAB", "FAB " + color_fundo);
-                        fab.setAlpha(1);
-                        setColorFab(color_fundo);
-                        menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
-                        menu_item_rated.setOnClickListener(RatedFilme());
-                        menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
-                    } else {
-                        fab.setAlpha(0);
-                    }
-
-                }
-            }
+        if (valueEventFavorite != null) {
+            myFavorite.removeEventListener(valueEventFavorite);
         }
-
     }
+
+    private class ImagemTopFragment extends FragmentPagerAdapter {
+
+        public ImagemTopFragment(FragmentManager supportFragmentManager) {
+            super(supportFragmentManager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if (movieDb.getImages(ArtworkType.BACKDROP) != null) {
+                if (position == 0) {
+                    return new ImagemTopFilmeScrollFragment().newInstance(movieDb.getBackdropPath());
+                }
+                // Log.d("FilmeActivity", "getItem: ->  " + movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
+                return new ImagemTopFilmeScrollFragment().newInstance(movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
+            }
+            return null;
+        }
+
+
+        @Override
+        public int getCount() {
+            if (movieDb.getImages(ArtworkType.BACKDROP) != null) {
+
+                int tamanho = movieDb.getImages(ArtworkType.BACKDROP).size();
+                // Log.d("FilmeActivity", "getCount: ->  " + tamanho);
+                return tamanho > 0 ? tamanho : 1;
+            }
+            return 0;
+        }
+    }
+
+
+    private class TMDVAsync extends AsyncTask<Void, Void, MovieDb> {
+
+        @Override
+        protected MovieDb doInBackground(Void... voids) {//
+            if (UtilsFilme.isNetWorkAvailable(FilmeActivity.this)) {
+                try {
+                    TmdbMovies movies = FilmeService.getTmdbMovies();
+                    // Log.d("FilmeActivity", "Filme ID - " + id_filme);
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
+                    boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+                    if (idioma_padrao) {
+                        movieDb = movies.getMovie(id_filme, getLocale()
+                                        //.toLanguageTag() não funciona na API 14
+                                        + ",en,null"
+                                , credits, releases, videos, reviews, similar, alternative_titles, images);
+                        movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
+                        movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());
+
+                    } else {
+                        //  Log.d("FilmeActivity", "False - " + id_filme);
+                        movieDb = movies.getMovie(id_filme, "en,null"
+                                , credits, releases, videos, reviews, similar, alternative_titles, images);
+                    }
+                    similarMovies = movies.getSimilarMovies(movieDb.getId(), null, 1);
+                    return movieDb;
+                } catch (Exception e) {
+                    Log.d(TAG, e.getMessage());
+                    FirebaseCrash.report(e);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(FilmeActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(MovieDb movieDb) {
+            super.onPostExecute(movieDb);
+            if (movieDb != null) {
+                setTitle(movieDb.getTitle());
+                viewPager.setAdapter(new ImagemTopFragment(getSupportFragmentManager()));
+                progressBar.setVisibility(View.INVISIBLE);
+
+                setFragmentInfo();
+
+                if (mAuth.getCurrentUser() != null) { // Arrumar
+
+                    setEventListenerFavorite();
+                    setEventListenerRated();
+                    setEventListenerWatch();
+
+                    //  Log.d("FAB", "FAB " + color_fundo);
+                    fab.setAlpha(1);
+                    setColorFab(color_fundo);
+                    menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
+                    menu_item_rated.setOnClickListener(RatedFilme());
+                    menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
+                } else {
+                    fab.setAlpha(0);
+                }
+
+            }
+        }
+    }
+
+}

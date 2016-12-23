@@ -288,28 +288,39 @@ public class TvShowActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (series != null) {
+            if (item.getItemId() == R.id.share) {
 
-        if (item.getItemId() == R.id.share) {
-            File file = null;
-            if (series != null) {
-                file = salvaImagemMemoriaCache(this, series.getPosterPath());
+                salvaImagemMemoriaCache(TvShowActivity.this, series.getPosterPath(), new SalvarImageShare() {
+                    @Override
+                    public void retornaFile(File file) {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("message/rfc822");
+                        //final String appPackageName = FilmeActivity.this.getPackageName();
+                        intent.putExtra(Intent.EXTRA_TEXT, series.getName() + " " + buildDeepLink());
+                        //intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() + "  -  " + "https://play.google.com/store/apps/details?id=" + appPackageName);
+                        intent.setType("image/*");
+                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                        startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
 
-                if (file != null) {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    //  intent.putExtra(Intent.EXTRA_SUBJECT, series.getOverview());
-                    //final String appPackageName = getPackageName();
-                    intent.setType("message/rfc822");
-                    intent.putExtra(Intent.EXTRA_TEXT, series.getName() + "  -  " + buildDeepLink());
-                    intent.setType("image/*");
-                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-                    startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_tvshow)));
-                } else {
-                    Toast.makeText(this, getResources().getString(R.string.erro_na_gravacao_imagem),
-                            Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(this, getResources().getString(R.string.erro_ainda_sem_imagem), Toast.LENGTH_SHORT).show();
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_MainActivity:menu_drav_home");
+                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                        //   Log.d(TAG, "TRUE");
+
+                        return;
+                    }
+
+                    @Override
+                    public void RetornoFalha() {
+                        Toast.makeText(TvShowActivity.this, getResources().getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
+        } else {
+            //  Log.d(TAG, "ELSE");
+            Toast.makeText(TvShowActivity.this, getResources().getString(R.string.erro_ainda_sem_imagem), Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }

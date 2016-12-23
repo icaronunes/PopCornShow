@@ -32,6 +32,7 @@ public class UtilsFilme {
     private static final String TAG = UtilsFilme.class.getName();
 
 
+
     /* Checks if external storage is available for read and write */
     public static boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
@@ -144,6 +145,7 @@ public class UtilsFilme {
             FileOutputStream out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();
+            Log.e("salvarArqNaMemoriaIn", "fechado");
         } catch (IOException e) {
             FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
             FirebaseCrash.report(e);

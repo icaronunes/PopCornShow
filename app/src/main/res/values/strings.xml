@@ -190,7 +190,7 @@
     <string name="ajuda_desenvolvimento">Development</string>
     <string name="twitter_text" translatable="false">Twitter</string>
     <string name="novidades_title">News</string>
-    <string name="novidades_text">** Updated information in About\n\n** Enabled Facebook login\n\n** Disable Notification Option\n \n** Removed some bugs</string>
+    <string name="novidades_text">** Updated information in About\n\n** Enabled Facebook login\n\n** Disable Notification Option\n \n** Removed some bugs\n\n** Fix Shares</string>
     <string name="star_avaliados">Evaluation</string>
     <string name="budget">Budget</string>
     <string name="homepage" translatable="false">Homepager</string>

@@ -34,6 +34,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -68,6 +69,12 @@ public class BaseActivity extends AppCompatActivity {
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private FirebaseUser user;
+
+    public interface SalvarImageShare{
+        void retornaFile(File file);
+        void RetornoFalha();
+    }
+
 
     public static void SnackBar(final View view, String msg) {
 
@@ -460,22 +467,34 @@ public class BaseActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    protected File salvaImagemMemoriaCache(Context context, String endereco) {
-        File file = context.getExternalCacheDir();
+    protected void salvaImagemMemoriaCache(final Context context, final String endereco, final SalvarImageShare callback) {
 
-        if (!file.exists()) {
-            file.mkdir();
-            //Log.e("salvarArqNaMemoriaIn", "Directory created");
-        }
-        File dir = new File(file, endereco);
-        ImageView imageView = new ImageView(context);
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(4) + endereco).into(imageView);
-        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-        if (drawable != null) {
-            Bitmap bitmap = drawable.getBitmap();
-            UtilsFilme.writeBitmap(dir, bitmap);
-        }
-        return dir;
+        final ImageView imageView = new ImageView(context);
+        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(4) + endereco).into(imageView, new Callback() {
+            @Override
+            public void onSuccess() {
+                //Log.d(TAG, "salvaImagemMemoriaCache.onSucess");
+                File file = context.getExternalCacheDir();
+
+                if (!file.exists()) {
+                    file.mkdir();
+                    //Log.e("salvarArqNaMemoriaIn", "Directory created");
+                }
+                File dir = new File(file, endereco);
+                BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+                if (drawable != null) {
+                   // Log.d(TAG, "salvaImagemMemoriaCache.drawble");
+                    Bitmap bitmap = drawable.getBitmap();
+                    UtilsFilme.writeBitmap(dir, bitmap);
+                }
+                callback.retornaFile(dir);
+            }
+
+            @Override
+            public void onError() {
+                callback.RetornoFalha();
+            }
+        });
     }
 
     //Abre Menu Lateral

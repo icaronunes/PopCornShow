@@ -6,7 +6,6 @@
     android:layout_weight="1"
     android:background="@color/white"
     android:orientation="vertical"
-    android:transitionName="poster"
     android:weightSum="1">
 
     <TextView
@@ -14,13 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:layout_marginRight="2dp"
+        android:layout_marginStart="2dp"
         android:background="@color/black_transparente"
         android:gravity="top|start"
         android:lines="2"
         android:maxLines="2"
         android:minLines="1"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_marginLeft="2dp" />
 
 
     <LinearLayout
@@ -40,9 +40,10 @@
             android:id="@+id/time_filme"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
             android:layout_weight="1"
-            android:gravity="right" />
+            android:gravity="end" />
     </LinearLayout>
 
     <LinearLayout
@@ -76,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:gravity="right"
+            android:gravity="end"
             android:maxLines="2" />
 
 
@@ -200,8 +201,7 @@
                     <TextView
                         android:id="@+id/spoken_languages"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="" />
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
@@ -214,14 +214,12 @@
                     <TextView
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
-
                         android:text="@string/popularity" />
 
                     <TextView
                         android:id="@+id/popularity"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="" />
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
@@ -235,15 +233,13 @@
                     <TextView
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
-
                         android:text="@string/production_countries" />
 
 
                     <TextView
                         android:id="@+id/production_countries"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="" />
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -317,7 +313,7 @@
         android:gravity="center_horizontal"
         android:text="@string/por_tras_camera_filme"
         android:textColor="@color/primary_dark"
-        android:textSize="@dimen/abc_text_size_medium_material"
+        android:textSize="18sp"
         android:textStyle="normal|bold"
         android:visibility="invisible" />
 
@@ -347,7 +343,7 @@
         android:gravity="center_horizontal"
         android:text="@string/similares"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/abc_text_size_medium_material"
+        android:textSize="18sp"
         android:textStyle="normal|bold"
         android:visibility="invisible" />
 

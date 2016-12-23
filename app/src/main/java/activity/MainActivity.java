@@ -34,6 +34,7 @@ import fragment.ViewPageMainTopFragment;
 import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
+import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.UtilsFilme;
 
 
@@ -71,16 +72,18 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
 
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
        // Log.d(TAG, "Share "+sharedPref.getBoolean("18", true));
-        if (sharedPref.getBoolean("18", true)) {
+        if (sharedPref.getBoolean("20", true)) {
             AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setIcon(R.drawable.noel)
                     .setTitle(R.string.novidades_title)
                     .setMessage(R.string.novidades_text)
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putBoolean("18", false);
-                            //editor.remove("18");// sempre remover versão anterior
+                            editor.putBoolean("20", false);
+                            editor.remove("19");// sempre remover versão anterior
+                            editor.remove("10");// sempre remover versão anterior
                             editor.apply();
                         }
                     }).create();
@@ -151,36 +154,41 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
 
     private void mescla() {
         if (tmdbMovies != null && tmdbTv != null) {
-            for (int i = 0; i < 20 && multi.size() < 14; i++) {
+            for (int i = 0; i < 20 && multi.size() < 15; i++) {
                 if (i % 2 == 0) {
-                    TopMain topMain = new TopMain();
-                    MovieDb movieDb = tmdbMovies.getResults().get(i);
-                    topMain.setId(movieDb.getId());
-                    topMain.setNome(movieDb.getTitle());
-                    topMain.setMediaType(movieDb.getMediaType().name());
-                    topMain.setImagem(movieDb.getBackdropPath());
+                    if(tmdbMovies.getResults().size() > i) {
+                        TopMain topMain = new TopMain();
+                        final MovieDb movieDb = tmdbMovies.getResults().get(i);
+                        topMain.setId(movieDb.getId());
+                        topMain.setNome(movieDb.getTitle());
+                        topMain.setMediaType(movieDb.getMediaType().name());
+                        topMain.setImagem(movieDb.getBackdropPath());
 
 
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-                    try {
-                        Date date = sdf.parse(movieDb.getReleaseDate());
-                        if (movieDb.getBackdropPath() != null && UtilsFilme.verificaLancamento(date)) {
-                            multi.add(topMain);
+                        try {
+                            Date date = sdf.parse(movieDb.getReleaseDate());
+                            if (movieDb.getBackdropPath() != null && UtilsFilme.verificaLancamento(date)) {
+                                multi.add(topMain);
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            Toast.makeText(this, R.string.ops, Toast.LENGTH_SHORT).show();
                         }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                        Toast.makeText(this, R.string.ops, Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
+                    if(tmdbTv.getResults().size() > i){
                     TopMain topMain = new TopMain();
-                    topMain.setId(tmdbTv.getResults().get(i).getId());
-                    topMain.setNome(tmdbTv.getResults().get(i).getName());
-                    topMain.setMediaType(tmdbTv.getResults().get(i).getMediaType().name());
-                    topMain.setImagem(tmdbTv.getResults().get(i).getBackdropPath());
-                    if (tmdbTv.getResults().get(i).getBackdropPath() != null) {
+                    final TvSeries tv = tmdbTv.getResults().get(i);
+                    topMain.setId(tv.getId());
+                    topMain.setNome(tv.getName());
+                    topMain.setMediaType(tv.getMediaType().name());
+                    topMain.setImagem(tv.getBackdropPath());
+                    if (tv.getBackdropPath() != null) {
                         multi.add(topMain);
+                    }
                     }
                 }
             }

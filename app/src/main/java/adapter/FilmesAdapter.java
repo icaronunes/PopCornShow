@@ -28,6 +28,10 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
     protected List<MovieDb> tmdbMovies;
     private FilmeOnClickListener filmeOnClickListener;
 
+    public interface FilmeOnClickListener {
+        void onClickFilme(View view, int position);
+    }
+
     public FilmesAdapter(Context context, List<MovieDb> tmdbMovies,
                          FilmeOnClickListener filmeOnClickListener) {
 
@@ -90,9 +94,6 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
     }
 
 
-    public interface FilmeOnClickListener {
-        void onClickFilme(View view, int position);
-    }
 
     public static class FilmeViewHolder extends RecyclerView.ViewHolder {
 

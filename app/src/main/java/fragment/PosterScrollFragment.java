@@ -138,7 +138,7 @@ public class PosterScrollFragment extends Fragment {
                 } else {
                     Toast.makeText(getContext(), getResources().getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show();
                 }
-
+        //Avaliar se  é melhor usar, o campartilhamento usado em Tvshowactivity e FilmeActivity
             }
 
         };
