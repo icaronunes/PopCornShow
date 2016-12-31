@@ -140,7 +140,7 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
 
     private boolean isVisto(int position) {
         if (userTvshow != null) {
-            return userTvshow.getSeasons().get(position).isVisto();
+                return userTvshow.getSeasons().get(position).isVisto();
         } else {
             return false;
         }

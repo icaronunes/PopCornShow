@@ -217,7 +217,7 @@ public class TvShowsFragment extends Fragment {
                     case R.string.today: {
                         //transferido para defaul
                     }
-                    case R.string.popular: {
+                    case R.string.populares: {
                         return tmdbTV.getPopular(language, pagina).getResults();
                     }
 

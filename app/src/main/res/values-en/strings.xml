@@ -56,7 +56,6 @@
     <string name="no_vote">No Vote</string>
     <string name="nota">Note:</string>
     <string name="now_playing">Now Playing</string>
-    <string name="não_informado">N/A</string>
     <string name="orcamento_budget">Budget</string>
     <string name="original_title">Original title:</string>
     <string name="oscar">Oscar Winners</string>
@@ -64,7 +63,7 @@
     <string name="person_rated">Popular people</string>
     <string name="person_vote">People voted</string>
     <string name="pesquisar_internet">On the Google Play</string>
-    <string name="popularity">" Popularity:"</string>
+    <string name="popularity">Popularity:</string>
     <string name="por_tras_camera_filme">Film Production</string>
     <string name="por_tras_camera_tvshow">Tvshow Production</string>
     <string name="poster_filme">Movie Poster</string>
@@ -99,7 +98,7 @@
     <string name="text_logoff_dialog">After logging out, it will not be possible to interact with the application.</string>
 
     <string name="title_logoff_dialog">Log out of TMDB?</string>
-    <string name="toast_salvar_imagem">Image saved in the folder of the application.</string>
+    <string name="toast_salvar_imagem">Image saved in the folder of the application</string>
     <string name="today">On Tv Today</string>
     <string name="top_rated">Best Evaluated</string>
 
@@ -116,15 +115,14 @@
     <string name="ver_tmdb">See TMDB</string>
     <string name="vote_average">Vote Average</string>
     <string name="writer">Written</string>
-    <string name="sem_informacao_colletion">No information about the collection.</string>
+    <string name="sem_informacao_colletion">No information about the collection</string>
     <string name="erro_ainda_sem_imagem">Still no image, try again.</string>
-    <string name="random">Random</string>
     <string name="marcado_assistido">Marked as watched. Rate the episode.</string>
     <string name="marcado_nao_assistido">Marked as unassisted.</string>
     <string name="marcado_assistido_temporada">Marked as watched.</string>
     <string name="marcado_nao_assistido_temporada">Marked as unassisted.</string>
-    <string name="salvando">Saving...</string>
-    <string name="tvshow_watch_remove">Tvshow removed from watchlist.</string>
+    <string name="salvando">Saving…</string>
+    <string name="tvshow_watch_remove">Tvshow removed from watchlist</string>
     <string name="tvshow_remove_rated">Removed note from Tvshow</string>
     <string name="adicionar_favorite">Add to Favorites</string>
     <string name="remover_favorite">Remove from favorites</string>
@@ -133,8 +131,8 @@
     <string name="remover_rated">Remove from Classifieds</string>
     <string name="remover_watch">Remove from Watchlist</string>
     <string name="sem_login">User not logged</string>
-    <string name="title_intro_1">PopCorn</string>
-    <string name="subtitle_intro_1">Welcome to the new PopCorn</string>
+    <string name="title_intro_1">PopCorn Show</string>
+    <string name="subtitle_intro_1">Welcome to the new PopCorn Show</string>
     <string name="title_intro_2">News</string>
     <string name="subtitle_intro_2">We have created our own login system</string>
     <string name="title_intro_3">Following</string>
@@ -142,24 +140,20 @@
     <string name="seguindo">Following</string>
     <string name="seguir">Follow</string>
     <string name="title_intro_4">Lists</string>
-    <string name="subtitle_intro_4" >Favorites, Evaluated and Watchlist continue but now within PopCorn.</string>
+    <string name="subtitle_intro_4" >Favorites, Evaluated and Watchlist continue but now within PopCorn Show</string>
     <string name="reset_password">Forgot Password?</string>
     <string name="bt_signin">Sign In</string>
     <string name="anonymous">Anonymous</string>
-    <string name="user_email">E-mail:</string>
-    <string name="uid">Uid:</string>
     <string name="bt_reset_password">Reset Password</string>
-    <string name="bt_desativar">Deactivate Account</string>
     <string name="nova_senha">New Password</string>
     <string name="repetir_nova_senha">Repeat Password</string>
-    <string name="ok">OK</string>
     <string name="falha_reset_senha">Failed to change password. Please try logging again before trying.</string>
-    <string name="reset_senha_ok">Password changed.</string>
-    <string name="logar_como_anonimo">Log in as Anonymous</string>
+    <string name="reset_senha_ok">Password changed</string>
+    <string name="logar_como_anonimo">Login as Anonymous</string>
     <string name="anonimo_alerta">This type of login is not secure. You may lose everything if the application fails. We recommend creating a login.</string>
     <string name="vincular_login_popcorn">Link to another login</string>
     <string name="email_invalido">Invalid email</string>
-    <string name="email_recuperacao_enviado">Sent password reset email</string>
+    <string name="email_recuperacao_enviado">Send password reset email</string>
     <string name="deletar_conta">Delete account?</string>
     <string name="deletar_conta_txt">Would you like to delete your account? You have lost all account information.  It will not be possible to recover.</string>
     <string name="conta_deletada">Deleted account</string>
@@ -178,7 +172,10 @@
     <string name="notificacao_summary">Get notification</string>
     <string name="ajuda_desenvolvimento">Development</string>
     <string name="novidades_title">News</string>
-    <string name="novidades_text" >** Updated information in About\n\n** Enabled Facebook login\n\n** Disable Notification Option\n\n** Removed some bugs</string>
+    <string name="novidades_text" >** Removed some bugs\n\n** Added translation into spanish\n\n** Fixed divergence between number of episodes</string>
     <string name="star_avaliados">Evaluation</string>
     <string name="budget">Budget</string>
+    <string name="bt_desativar">Deactivate Account</string>
+    <string name="person">Profile</string>
+    <string name="populares">Most Popular</string>
 </resources>

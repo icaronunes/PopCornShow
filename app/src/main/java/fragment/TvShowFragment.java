@@ -44,7 +44,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,15 +59,12 @@ import activity.TemporadaActivity;
 import activity.TrailerActivity;
 import adapter.TemporadasAdapter;
 import br.com.icaro.filme.R;
-import domian.UserEp;
-import domian.UserSeasons;
 import domian.UserTvshow;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbTvSeasons;
 import info.movito.themoviedbapi.model.Genre;
 import info.movito.themoviedbapi.model.people.PersonCast;
 import info.movito.themoviedbapi.model.people.PersonCrew;
-import info.movito.themoviedbapi.model.tv.TvEpisode;
 import info.movito.themoviedbapi.model.tv.TvSeason;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Config;
@@ -78,6 +74,8 @@ import utils.UtilsFilme;
 import static br.com.icaro.filme.R.string.in_production;
 import static br.com.icaro.filme.R.string.mil;
 import static com.squareup.picasso.Picasso.with;
+import static utils.UtilsFilme.setEp;
+import static utils.UtilsFilme.setUserTvShow;
 
 
 /**
@@ -319,18 +317,19 @@ public class TvShowFragment extends Fragment {
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
                     if (dataSnapshot.exists()) {
+                        userTvshow = dataSnapshot.getValue(UserTvshow.class);
 
-                        if (getView() != null) {
-                            userTvshow = dataSnapshot.getValue(UserTvshow.class);
-                           // Log.w(TAG, "Passou");
-                            recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
-                            adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
-                            recyclerViewTemporada.setAdapter(adapter);
-                            if (progressBarTemporada != null) {
-                              //  Log.w(TAG, "Mudou - GONE");
-                                progressBarTemporada.setVisibility(View.INVISIBLE);
+                            if (getView() != null) {
+                                userTvshow = dataSnapshot.getValue(UserTvshow.class);
+                                // Log.w(TAG, "Passou");
+                                recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
+                                adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
+                                recyclerViewTemporada.setAdapter(adapter);
+                                if (progressBarTemporada != null) {
+                                    //  Log.w(TAG, "Mudou - GONE");
+                                    progressBarTemporada.setVisibility(View.INVISIBLE);
+                                }
                             }
-                        }
 
                     } else {
 
@@ -520,7 +519,11 @@ public class TvShowFragment extends Fragment {
 
     private boolean isVisto(int position) {
         if (userTvshow.getSeasons() != null) {
-            return userTvshow.getSeasons().get(position).isVisto();
+            if (userTvshow.getSeasons().get(position) != null) {
+                return userTvshow.getSeasons().get(position).isVisto();
+            } else {
+                return false;
+            }
         } else {
             return false; //segurança
         }
@@ -528,6 +531,7 @@ public class TvShowFragment extends Fragment {
 
     private void setStatusEps(int position, boolean status) {
         if (userTvshow != null) {
+            if (userTvshow.getSeasons().get(position).getUserEps() != null)
             for (int i = 0; i < userTvshow.getSeasons().get(position).getUserEps().size(); i++) {
                 userTvshow.getSeasons().get(position).getUserEps().get(i).setAssistido(status);
             }
@@ -588,7 +592,7 @@ public class TvShowFragment extends Fragment {
 
                                 for (int i = 0; i < series.getSeasons().size(); i++) {
                                     TvSeason tvS = series.getSeasons().get(i);
-                                    TvSeason tvSeason = tvSeasons.getSeason(series.getId(), tvS.getSeasonNumber(), "en", null); //?
+                                    TvSeason tvSeason = tvSeasons.getSeason(series.getId(), tvS.getSeasonNumber(), "en", TmdbTvSeasons.SeasonMethod.images); //?
                                     userTvshow.getSeasons().get(i).setUserEps(setEp(tvSeason));
                                 }
 
@@ -599,8 +603,7 @@ public class TvShowFragment extends Fragment {
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                } else {
+                                                if (!task.isSuccessful()) {
                                                     seguir.setText(R.string.seguir);
                                                     Toast.makeText(getActivity(), R.string.erro_seguir, Toast.LENGTH_SHORT).show();
                                                 }
@@ -650,44 +653,6 @@ public class TvShowFragment extends Fragment {
         if (myRef != null && mAuth.getCurrentUser() != null) {
             myRef.removeEventListener(postListener);
         }
-    }
-
-
-    private List<UserEp> setEp(TvSeason tvSeason) {
-        List<UserEp> eps = new ArrayList<>();
-        for (TvEpisode tvEpisode : tvSeason.getEpisodes()) {
-            UserEp userEp = new UserEp();
-            userEp.setEpisodeNumber(tvEpisode.getEpisodeNumber());
-            userEp.setId(tvEpisode.getId());
-            userEp.setSeasonNumber(tvEpisode.getSeasonNumber());
-            eps.add(userEp);
-        }
-        return eps;
-    }
-
-    private UserTvshow setUserTvShow(TvSeries serie) {
-        UserTvshow userTvshow = new UserTvshow();
-        userTvshow.setPoster(serie.getPosterPath());
-        userTvshow.setId(serie.getId());
-        userTvshow.setNome(serie.getOriginalName());
-        userTvshow.setExternalIds(serie.getExternalIds());
-        userTvshow.setNumberOfEpisodes(serie.getNumberOfEpisodes());
-        userTvshow.setNumberOfSeasons(serie.getNumberOfSeasons());
-        userTvshow.setSeasons(setUserSeasson(serie));
-        return userTvshow;
-    }
-
-    private List<UserSeasons> setUserSeasson(TvSeries serie) {
-        List<UserSeasons> list = new ArrayList<>();
-        for (TvSeason tvSeason : serie.getSeasons()) {
-            UserSeasons userSeasons = new UserSeasons();
-
-            userSeasons.setId(tvSeason.getId());
-            userSeasons.setSeasonNumber(tvSeason.getSeasonNumber());
-
-            list.add(userSeasons);
-        }
-        return list;
     }
 
     private void setSinopse() {

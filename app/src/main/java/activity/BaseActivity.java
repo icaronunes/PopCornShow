@@ -304,7 +304,7 @@ public class BaseActivity extends AppCompatActivity {
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 intent = new Intent(this, FilmesActivity.class);
-                intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.popular);
+                intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.populares);
                 intent.putExtra(Constantes.ABA, R.id.popular);
                 startActivity(intent);
 

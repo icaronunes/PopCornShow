@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import activity.BaseActivity;
 import activity.TemporadaActivity;
@@ -28,6 +29,7 @@ import domian.FilmeService;
 import domian.UserEp;
 import domian.UserSeasons;
 import domian.UserTvshow;
+import info.movito.themoviedbapi.TmdbTvEpisodes;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
 import utils.Constantes;
 import utils.UtilsFilme;
@@ -108,7 +110,7 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
         int total =0;
 
         for (UserSeasons seasons : userTvshow.getSeasons()) {
-            if (seasons.getSeasonNumber() != 0)
+            if (seasons.getSeasonNumber() != 0 && seasons.getUserEps() != null)
             total = total + seasons.getUserEps().size();
         }
 
@@ -119,10 +121,12 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
         int contagem = 0;
         for (UserSeasons seasons : userTvshow.getSeasons()) {
             if (seasons.getSeasonNumber() != 0) {
+                if(seasons.getUserEps() != null)
                 for (UserEp userEp : seasons.getUserEps()) {
-                    if (userEp.isAssistido()) {
-                        contagem = contagem + 1;
-                    }
+                        if (userEp.isAssistido()) {
+                            contagem = contagem + 1;
+                        }
+
                 }
             }
         }
@@ -153,7 +157,7 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
                             public void run() {
                                 final TvEpisode tvEpisode = FilmeService.getTmdbTvEpisodes()
                                         .getEpisode(userTvshow.getId(), userEp.getSeasonNumber(), userEp.getEpisodeNumber(),
-                                                BaseActivity.getLocale(), null);
+                                                BaseActivity.getLocale(), TmdbTvEpisodes.EpisodeMethod.images);
                                 context.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -163,7 +167,7 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
                                         date.setText(" - " +tvEpisode.getAirDate());
 
                                         Date date = null;
-                                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                                         try {
                                             date = sdf.parse(tvEpisode.getAirDate());
                                         } catch (ParseException e) {

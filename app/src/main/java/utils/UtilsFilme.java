@@ -15,12 +15,20 @@ import com.google.firebase.crash.FirebaseCrash;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import domian.FilmeService;
+import domian.UserEp;
+import domian.UserSeasons;
+import domian.UserTvshow;
 import info.movito.themoviedbapi.model.config.Timezone;
+import info.movito.themoviedbapi.model.tv.TvEpisode;
+import info.movito.themoviedbapi.model.tv.TvSeason;
+import info.movito.themoviedbapi.model.tv.TvSeries;
 
 
 /**
@@ -31,7 +39,42 @@ public class UtilsFilme {
 
     private static final String TAG = UtilsFilme.class.getName();
 
+    public static  UserTvshow setUserTvShow(TvSeries serie) {
+        UserTvshow userTvshow = new UserTvshow();
+        userTvshow.setPoster(serie.getPosterPath());
+        userTvshow.setId(serie.getId());
+        userTvshow.setNome(serie.getOriginalName());
+        userTvshow.setExternalIds(serie.getExternalIds());
+        userTvshow.setNumberOfEpisodes(serie.getNumberOfEpisodes());
+        userTvshow.setNumberOfSeasons(serie.getNumberOfSeasons());
+        userTvshow.setSeasons(setUserSeasson(serie));
+        return userTvshow;
+    }
 
+    public static  List<UserSeasons> setUserSeasson(TvSeries serie) {
+        List<UserSeasons> list = new ArrayList<>();
+        for (TvSeason tvSeason : serie.getSeasons()) {
+            UserSeasons userSeasons = new UserSeasons();
+
+            userSeasons.setId(tvSeason.getId());
+            userSeasons.setSeasonNumber(tvSeason.getSeasonNumber());
+
+            list.add(userSeasons);
+        }
+        return list;
+    }
+
+    public static List<UserEp> setEp(TvSeason tvSeason) {
+        List<UserEp> eps = new ArrayList<>();
+        for (TvEpisode tvEpisode : tvSeason.getEpisodes()) {
+            UserEp userEp = new UserEp();
+            userEp.setEpisodeNumber(tvEpisode.getEpisodeNumber());
+            userEp.setId(tvEpisode.getId());
+            userEp.setSeasonNumber(tvEpisode.getSeasonNumber());
+            eps.add(userEp);
+        }
+        return eps;
+    }
 
     /* Checks if external storage is available for read and write */
     public static boolean isExternalStorageWritable() {

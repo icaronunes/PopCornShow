@@ -122,7 +122,7 @@ public class ListaSeguindoFragment extends Fragment {
         for (UserTvshow userTvshow : userTvshows) {
             boolean season = true;
             for (UserSeasons seasons : userTvshow.getSeasons()) {
-                if (seasons.getSeasonNumber() != 0 && season)
+                if (seasons.getSeasonNumber() != 0  && seasons.getUserEps() != null && season)
                 for (UserEp userEp : seasons.getUserEps()) {
                     if (!userEp.isAssistido()){
                         x.add(userTvshow);

@@ -49,13 +49,19 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import adapter.TvShowAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
 import domian.TvshowDB;
+import domian.UserTvshow;
+import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbTV;
+import info.movito.themoviedbapi.TmdbTvSeasons;
+import info.movito.themoviedbapi.model.tv.TvSeason;
 import info.movito.themoviedbapi.model.tv.TvSeries;
+import utils.Config;
 import utils.Constantes;
 import utils.UtilsFilme;
 
@@ -63,6 +69,8 @@ import static info.movito.themoviedbapi.TmdbTV.TvMethod.credits;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.external_ids;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.images;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.videos;
+import static utils.UtilsFilme.setEp;
+import static utils.UtilsFilme.setUserTvShow;
 
 
 public class TvShowActivity extends BaseActivity {
@@ -93,6 +101,8 @@ public class TvShowActivity extends BaseActivity {
     private DatabaseReference myRated;
     private float numero_rated;
     private FirebaseDatabase database;
+    private UserTvshow userTvshow;
+    private UserTvshow userTvshowOld;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -337,29 +347,7 @@ public class TvShowActivity extends BaseActivity {
             // builder.appendQueryParameter("ad", "1");
         }
 
-        // Minimum version is optional.
-//        int minVersion = ;
-//        if (minVersion > 16) {
-//            builder.appendQueryParameter("amv", Integer.toString(minVersion));
-//        }
 
-//        if (!TextUtils.isEmpty(androidLink)) {
-//            builder.appendQueryParameter("al", androidLink);
-//        }
-//
-//        if (!TextUtils.isEmpty(playStoreAppLink)) {
-//            builder.appendQueryParameter("afl", playStoreAppLink);
-//        }
-//
-//        if (!customParameters.isEmpty()) {
-//            for (Map.Entry<String, String> parameter : customParameters.entrySet()) {
-//                builder.appendQueryParameter(parameter.getKey(), parameter.getValue());
-//            }
-//        }
-
-        // Return the completed deep link.
-//        Log.d(TAG, builder.build().toString());
-//        return builder.build().toString();
         return link;
     }
 
@@ -708,11 +696,16 @@ public class TvShowActivity extends BaseActivity {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         // Get user value
                                         if (dataSnapshot.exists()) {
-                                            //  Log.d(TAG, "onDataChange " + "seguindo.");
-                                            seguindo = true;
-                                            setupViewPagerTabs();
-                                            setCoordinator();
-                                            setImageTop();
+                                            userTvshowOld = dataSnapshot.getValue(UserTvshow.class);
+                                            Log.d(TAG,"OLD " + userTvshowOld.getNumberOfEpisodes()+ " - TMDB"+ series.getNumberOfEpisodes());
+                                            if (userTvshowOld.getNumberOfEpisodes() == series.getNumberOfEpisodes()) {
+                                                seguindo = true;
+                                                setupViewPagerTabs();
+                                                setCoordinator();
+                                                setImageTop();
+                                            } else {
+                                                atualizarRealDate();
+                                            }
                                         } else {
                                             setupViewPagerTabs();
                                             setCoordinator();
@@ -746,7 +739,7 @@ public class TvShowActivity extends BaseActivity {
                 Date date = null;
                 fab.setAlpha(1);
                 if (series.getFirstAirDate() != null) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                     try {
                         date = sdf.parse(series.getFirstAirDate());
                     } catch (ParseException e) {
@@ -768,5 +761,54 @@ public class TvShowActivity extends BaseActivity {
         }
     }
 
+    private void atualizarRealDate() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TmdbTvSeasons tvSeasons = new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
 
+                userTvshow = setUserTvShow(series);
+
+                for (int i = 0; i < series.getSeasons().size(); i++) {
+                    TvSeason tvS = series.getSeasons().get(i);
+                    TvSeason tvSeason = tvSeasons.getSeason(series.getId(), tvS.getSeasonNumber(), "en", TmdbTvSeasons.SeasonMethod.images); //?
+                    userTvshow.getSeasons().get(i).setUserEps(setEp(tvSeason));
+                }
+
+                final DatabaseReference myRef = database.getReference("users");
+                myRef.child(mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "")
+                        .child("seguindo")
+                        .child(String.valueOf(series.getId()))
+                        .setValue(userTvshow)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    myRef.child(mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "")
+                                            .child("seguindo")
+                                            .child(String.valueOf(series.getId()))
+                                            .child("seasons")
+                                            .setValue(userTvshowOld.getSeasons()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()){
+                                                seguindo = true;
+                                                setupViewPagerTabs();
+                                                setCoordinator();
+                                                setImageTop();
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        Toast.makeText(TvShowActivity.this, "Temporada Atualizada", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                        }
+        }).start();
+    }
 }

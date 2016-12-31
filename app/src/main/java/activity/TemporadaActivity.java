@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +34,7 @@ import java.util.Map;
 import adapter.TemporadaAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
+import domian.UserEp;
 import domian.UserSeasons;
 import info.movito.themoviedbapi.model.tv.TvSeason;
 import utils.Constantes;
@@ -134,7 +136,7 @@ public class TemporadaActivity extends BaseActivity {
                TemporadaActivity.this.position = position;
                 if (seasons != null) {
                     if (seasons.getUserEps().get(position).isAssistido()) {
-                       // Log.d(TAG, "visto");
+                        Log.d(TAG, "FALSE");
                         String id = String.valueOf(serie_id);
 
                         Toast.makeText(TemporadaActivity.this, R.string.marcado_nao_assistido, Toast.LENGTH_SHORT).show();
@@ -150,18 +152,29 @@ public class TemporadaActivity extends BaseActivity {
                     //    Log.d(TAG, "desvisto");
 
                     } else {
-                      //  Log.d(TAG, "não visto");
+                        Log.d(TAG, "TRUE");
                         String id = String.valueOf(serie_id);
+
                         String user = mAuth.getCurrentUser().getUid();
-                        myRef.child(user)
-                                .child("seguindo")
-                                .child(id)
-                                .child("seasons")
-                                .child(String.valueOf(temporada_position))
-                                .child("userEps")
-                                .child(String.valueOf(position))
-                                .child("assistido")
-                                .setValue(true);
+
+                        Map<String, Object> childUpdates = new HashMap<String, Object>();
+
+                        childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/userEps/"+position+"/assistido", true);
+                        childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/visto/",  TemporadaTodaAssistida(position));
+
+                        myRef.updateChildren(childUpdates);
+
+//                        String id = String.valueOf(serie_id);
+//                        String user = mAuth.getCurrentUser().getUid();
+//                        myRef.child(user)
+//                                .child("seguindo")
+//                                .child(id)
+//                                .child("seasons")
+//                                .child(String.valueOf(temporada_position))
+//                                .child("userEps")
+//                                .child(String.valueOf(position))
+//                                .child("assistido")
+//                                .setValue(true);
                         Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -193,6 +206,19 @@ public class TemporadaActivity extends BaseActivity {
         };
     }
 
+    private boolean TemporadaTodaAssistida(int position) {
+       // Log.d(TAG, "TemporadaTodaAssistida");
+        for (UserEp userEp : seasons.getUserEps()) {
+            if (!seasons.getUserEps().get(position).equals(userEp)) {
+                if (!userEp.isAssistido()) {
+              //      Log.d(TAG, "TemporadaTodaAssistida - false");
+                    return false;
+                }
+            }
+        }
+        //Log.d(TAG, "TemporadaTodaAssistida - true");
+        return true;
+    }
 
 
     private void setListener(){

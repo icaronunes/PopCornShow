@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -24,8 +23,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.crash.FirebaseCrash;
@@ -41,6 +38,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import activity.PersonActivity;
@@ -87,6 +85,7 @@ public class EpsodioFragment extends Fragment {
     private float numero_rated;
     private LinearLayout relativeLayout;
     private FirebaseAnalytics mFirebaseAnalytics;
+    private UserSeasons seasons;
 
 
     public static Fragment newInstance(TvEpisode tvEpisode, String nome_serie,
@@ -121,6 +120,7 @@ public class EpsodioFragment extends Fragment {
             seguindo = getArguments().getBoolean(Constantes.SEGUINDO);
             position = getArguments().getInt(Constantes.POSICAO);
             temporada_position = getArguments().getInt(Constantes.TEMPORADA_POSITION);
+            seasons = (UserSeasons) getArguments().getSerializable(Constantes.USER);
         }
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
@@ -238,7 +238,7 @@ public class EpsodioFragment extends Fragment {
                 userEp = dataSnapshot.getValue(UserEp.class);
 
                 if (userEp != null) {
-
+                    try{
                     if (userEp.isAssistido()) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             ep_rating_button.setBackground(getContext().getResources().getDrawable(R.drawable.button_visto, getActivity().getTheme()));
@@ -257,7 +257,11 @@ public class EpsodioFragment extends Fragment {
                         }
                     }
 
+                } catch (NoSuchMethodError e){
+                        Toast.makeText(getContext(), R.string.ops, Toast.LENGTH_SHORT).show();
+                    }
                 }
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -277,6 +281,9 @@ public class EpsodioFragment extends Fragment {
                 if (dataSnapshot.child("userEps").child(valueOf(position)).child("nota").exists()) {
                     String nota = String.valueOf(dataSnapshot.child("userEps").child(valueOf(position)).child("nota").getValue());
                     numero_rated = Float.parseFloat(nota);
+                    //Log.d(TAG, "Mudou");
+                    //Log.d(TAG, dataSnapshot.getKey());
+                    seasons = dataSnapshot.getValue(UserSeasons.class);
                 }
 
             }
@@ -294,7 +301,7 @@ public class EpsodioFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (seguindo) {
+        if (userListener != null && epsListener != null && myRef != null && databaseReference != null)  {
             myRef.removeEventListener(userListener);
             databaseReference.removeEventListener(epsListener);
         }
@@ -304,7 +311,7 @@ public class EpsodioFragment extends Fragment {
         //Arrumar. Ta esquisito.
 
         Date date = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         try {
             date = sdf.parse(episode.getAirDate() != null ? episode.getAirDate() : null);
         } catch (ParseException e) {
@@ -364,22 +371,13 @@ public class EpsodioFragment extends Fragment {
                         @Override
                         public void onClick(View view) {
 
-                            myRef.child("assistido").setValue(true)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            Toast.makeText(getContext(), getResources().getString(R.string.tvshow_rated), Toast.LENGTH_SHORT)
-                                                    .show();
-                                        }
-                                    });
 
-                            myRef.child("nota").setValue(ratingBar.getRating())
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
+                            Map<String, Object> childUpdates = new HashMap<String, Object>();
 
-                                        }
-                                    });
+                            childUpdates.put("/userEps"+"/" + position + "/assistido", true);
+                            childUpdates.put("/visto", TemporadaTodaAssistida());
+                            childUpdates.put("/userEps/" + position + "/nota", ratingBar.getRating() );
+                            databaseReference.updateChildren(childUpdates);
 
                             alertDialog.dismiss();
 
@@ -391,6 +389,22 @@ public class EpsodioFragment extends Fragment {
         } else {
             ep_rating_button.setVisibility(View.GONE);
         }
+    }
+
+    private boolean TemporadaTodaAssistida() {
+       // Log.d(TAG, "tamanho EPS - " +episode.getId());
+        for (UserEp userEp : seasons.getUserEps()) {
+          //  Log.d(TAG, "tamanho UserEPs ID - " +userEp.getId());
+            if (episode.getId() != userEp.getId()) {
+             //   Log.d(TAG, "TemporadaTodaAssistida - Diferente");
+                if (!userEp.isAssistido()) {
+                 //   Log.d(TAG, "TemporadaTodaAssistida - false");
+                    return false;
+                }
+            }
+        }
+       // Log.d(TAG, "TemporadaTodaAssistida - true");
+        return true;
     }
 
     private void setTvshow() {

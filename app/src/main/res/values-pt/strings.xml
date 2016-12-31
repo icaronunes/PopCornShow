@@ -11,7 +11,6 @@
 
     <string name="sem_sinopse">Sem Sinopse</string>
     <string name="minutos">mins</string>
-    <string name="não_informado">N/A</string>
     <string name="tempo_nao_informado">Tempo N/A</string>
     <string name="produtora">Produtora:</string>
 
@@ -67,7 +66,6 @@
 
     <string name="filme_add_watchlist">Adicionado ao \"Ver depois\"</string>
     <string name="filme_remove">Filme removido</string>
-    <!--<string name="crews">Outros</string>-->
     <string name="imagem_person">Fotos</string>
     <string name="apelido">Apelido: </string>
     <string name="sem_biografia">Sem Biografia</string>
@@ -127,7 +125,6 @@
 
     <string name="sem_informacao_colletion">Não há informação sobre a coleção</string>
     <string name="erro_ainda_sem_imagem">Ainda sem imagem, tente novamente.</string>
-    <string name="random">Random</string>
     <string name="marcado_assistido">Marcado como assistido. Avalie o epsódio.</string>
     <string name="marcado_nao_assistido">Marcado como não assistido.</string>
     <string name="marcado_assistido_temporada">Marcado como assistido.</string>
@@ -142,8 +139,8 @@
     <string name="adicionar_rated">Adicionar aos Classificados</string>
     <string name="remover_rated">Remover dos Classificados</string>
     <string name="sem_login">Usuario não logado</string>
-    <string name="title_intro_1">PopCorn</string>
-    <string name="subtitle_intro_1">Bem-vindo ao novo PopCorn</string>
+    <string name="title_intro_1">PopCorn Show</string>
+    <string name="subtitle_intro_1">Bem-vindo ao novo PopCorn Show</string>
     <string name="title_intro_2">Mudanças</string>
     <string name="subtitle_intro_2">Criamos nosso proprio sistema de login</string>
     <string name="subtitle_intro_3">Agora temos um sistema de \"seguir\" uma série. Saiba quando o episódio da temporada vai passar</string>
@@ -151,17 +148,14 @@
     <string name="seguir">Seguir</string>
     <string name="seguindo">Seguindo</string>
     <string name="title_intro_4">Listas</string>
-    <string name="subtitle_intro_4">Favoritos, Avaliados e Ver Depois continuam mas agora é dentro do PopCorn</string>
+    <string name="subtitle_intro_4">Favoritos, Avaliados e Ver Depois continuam mas agora é dentro do PopCorn Show</string>
     <string name="reset_password">Esqueceu a senha?</string>
     <string name="bt_signin">Logar</string>
     <string name="anonymous">Anônimo</string>
-    <string name="user_email">E-mail:</string>
-    <string name="uid">Uid:</string>
     <string name="bt_reset_password">Mudar Senha</string>
     <string name="bt_desativar">Desativar Conta</string>
     <string name="nova_senha">Nova Senha</string>
     <string name="repetir_nova_senha">Repetir Senha</string>
-    <string name="ok">OK</string>
     <string name="reset_senha_ok">Senha alterada.</string>
     <string name="falha_reset_senha">Falha ao alterar a senha. Tente logar novamente antes de tentar.</string>
     <string name="logar_como_anonimo">Logar como Anônimo</string>
@@ -187,7 +181,9 @@
     <string name="notificacao_summary">Receber Notificação</string>
     <string name="ajuda_desenvolvimento">Desenvolvimento</string>
     <string name="novidades_title">Novidades</string>
-    <string name="novidades_text">** Atualizada informações em Sobre\n\n** Ativado login no Facebook\n \n** Opção de desativar notificação\n \n** Retirado alguns bugs\n\n** Fix Compartilhamentos</string>
+    <string name="novidades_text">** Adicionada tradução em espanhol\n\n** Arrumado divergência entre número de episodios\n\n** Retirado alguns bugs</string>
     <string name="star_avaliados">Avaliação</string>
     <string name="budget">Orçamento</string>
+    <string name="person">Perfil</string>
+    <string name="populares">Populares</string>
 </resources>

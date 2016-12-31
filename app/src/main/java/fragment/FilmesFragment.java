@@ -229,7 +229,7 @@ public class FilmesFragment extends Fragment {
                     }
 
 
-                    case R.string.popular: {
+                    case R.string.populares: {
                         return tmdbMovies.getPopularMovies(language, pagina).getResults();
                     }
 

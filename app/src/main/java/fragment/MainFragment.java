@@ -75,9 +75,9 @@ public class MainFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         buttonFilme = new ArrayList<>(asList(getString(R.string.now_playing),
-                getString(R.string.upcoming), getString(R.string.popular), getString(R.string.top_rated)));
+                getString(R.string.upcoming), getString(R.string.populares), getString(R.string.top_rated)));
         buttonTvshow = new ArrayList<>(asList(getString(R.string.air_date),
-                getString(R.string.today), getString(R.string.popular), getString(R.string.top_rated)));
+                getString(R.string.today), getString(R.string.populares), getString(R.string.top_rated)));
         if (getArguments() != null) {
             tipo = getArguments().getInt(Constantes.ABA);
         }
@@ -159,7 +159,7 @@ public class MainFragment extends Fragment {
 
                             Intent intent = new Intent(getActivity(), FilmesActivity.class);
                             intent.putExtra(Constantes.ABA, R.id.popular);
-                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.popular);
+                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.populares);
                             startActivity(intent);
                             break;
                         }
@@ -290,7 +290,7 @@ public class MainFragment extends Fragment {
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
                             intent.putExtra(Constantes.ABA, R.id.popular);
-                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.popular);
+                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.populares);
                             startActivity(intent);
                             break;
                         }
