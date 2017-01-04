@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -52,6 +53,7 @@ import activity.TrailerActivity;
 import adapter.CollectionPagerAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
+import domian.Netflix;
 import info.movito.themoviedbapi.model.ArtworkType;
 import info.movito.themoviedbapi.model.Collection;
 import info.movito.themoviedbapi.model.CollectionInfo;
@@ -79,8 +81,9 @@ import static com.squareup.picasso.Picasso.with;
 public class FilmeInfoFragment extends Fragment {
 
     TextView titulo, categoria, time_filme, descricao, voto_media,  produtora,
-            original_title, spoken_languages, production_countries, imdb, tmdb,
+            original_title, spoken_languages, production_countries,
             popularity, lancamento, textview_crews, textview_elenco, textview_similares;
+    private Button seguir, imdb, tmdb, netflix_button;
     ImageView img_poster, img_star;
     MovieDb movieDb;
     ImageView icon_reviews, img_budget, icon_site, icon_collection, imgPagerSimilares;
@@ -89,6 +92,7 @@ public class FilmeInfoFragment extends Fragment {
     MovieResultsPage similarMovies;
     private int color_top;
     Bundle bundle;
+    private Netflix netflix;
 
     //************* Alguns metodos senco chamados 2 vezes
 
@@ -99,6 +103,7 @@ public class FilmeInfoFragment extends Fragment {
             Bundle bundle = getArguments();
             movieDb = (MovieDb) bundle.getSerializable(Constantes.FILME);
             similarMovies = (MovieResultsPage) bundle.getSerializable(Constantes.SIMILARES);
+            netflix = (Netflix) bundle.getSerializable(Constantes.NETFLIX);
            // Log.d("FilmeInfoFragment", "onCreate");
         }
 
@@ -122,8 +127,9 @@ public class FilmeInfoFragment extends Fragment {
         popularity = (TextView) view.findViewById(R.id.popularity);
         img_poster = (ImageView) view.findViewById(R.id.img_poster);
         img_star = (ImageView) view.findViewById(R.id.img_star);
-        imdb = (TextView) view.findViewById(R.id.imdb_site);
-        tmdb = (TextView) view.findViewById(R.id.tmdb_site);
+        imdb = (Button) view.findViewById(R.id.imdb_site);
+        tmdb = (Button) view.findViewById(R.id.tmdb_site);
+        netflix_button = (Button) view.findViewById(R.id.netflix);
         icon_reviews = (ImageView) view.findViewById(R.id.icon_reviews);
         img_budget = (ImageView) view.findViewById(R.id.img_budget);
         icon_collection = (ImageView) view.findViewById(R.id.icon_collection);
@@ -216,6 +222,29 @@ public class FilmeInfoFragment extends Fragment {
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_tmdb" );
                 bundle.putString(FirebaseAnalytics.Param.DESTINATION, Site.class.getName());
                 FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+            }
+        });
+
+        netflix_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (netflix.showId != 0) {
+                    String url = "https://www.netflix.com/title/" + netflix.showId;
+
+                    Uri webpage = Uri.parse(url);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+                    if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                        startActivity(intent);
+                    }
+                } else {
+                    String url = "https://www.netflix.com/search?q=" + movieDb.getTitle();
+
+                    Uri webpage = Uri.parse(url);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+                    if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                        startActivity(intent);
+                    }
+                }
             }
         });
 

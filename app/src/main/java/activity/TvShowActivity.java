@@ -54,6 +54,7 @@ import java.util.Locale;
 import adapter.TvShowAdapter;
 import br.com.icaro.filme.R;
 import domian.FilmeService;
+import domian.Netflix;
 import domian.TvshowDB;
 import domian.UserTvshow;
 import info.movito.themoviedbapi.TmdbApi;
@@ -103,6 +104,7 @@ public class TvShowActivity extends BaseActivity {
     private FirebaseDatabase database;
     private UserTvshow userTvshow;
     private UserTvshow userTvshowOld;
+    private Netflix netflix;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -604,7 +606,7 @@ public class TvShowActivity extends BaseActivity {
     private void setupViewPagerTabs() {
         //  Log.w(TAG, "setupViewPagerTabs " + seguindo);
         viewPager.setOffscreenPageLimit(1);
-        viewPager.setAdapter(new TvShowAdapter(this, getSupportFragmentManager(), series, color_top, seguindo));
+        viewPager.setAdapter(new TvShowAdapter(this, getSupportFragmentManager(), series, color_top, seguindo, netflix));
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager.setCurrentItem(0);
         tabLayout.setupWithViewPager(viewPager);
@@ -648,10 +650,10 @@ public class TvShowActivity extends BaseActivity {
                             .getSeries(id_tvshow, getLocale()
                                             + ",en,null"
                                     , images, credits, videos, external_ids);
-
                     series.getVideos().addAll(tmdbTv.getSeries(id_tvshow, null, videos).getVideos());
                     series.getImages().setPosters(tmdbTv.getSeries(id_tvshow, null, images).getImages().getPosters());
                     // Log.d(TAG, String.valueOf(series.getNumberOfEpisodes()));
+
                 } catch (Exception e) {
                     Log.d(TAG, e.getMessage());
                     FirebaseCrash.report(e);
@@ -662,8 +664,10 @@ public class TvShowActivity extends BaseActivity {
                         }
                     });
                 }
+
             } else {
                 try {
+
                     series = FilmeService.getTmdbTvShow()
                             .getSeries(id_tvshow, null, images, credits, videos, external_ids);
                 } catch (Exception e) {
@@ -677,6 +681,17 @@ public class TvShowActivity extends BaseActivity {
                     });
                 }
             }
+            try{
+                if (series.getFirstAirDate() != null) {
+                    String date = series.getFirstAirDate().substring(0, 4);
+                   // Log.d(TAG, "doInBackground: "+date);
+                    netflix = FilmeService.getNetflix(series.getOriginalName(), Integer.parseInt(date));
+                }
+            } catch (Exception e){
+               // Log.d(TAG, "doInBackground: "+e.getMessage());
+            }
+            //Log.d(TAG, "doInBackground: "+netflix.showId);
+            //Log.d(TAG, "doInBackground: "+netflix.unit);
             return null;
         }
 
@@ -697,7 +712,7 @@ public class TvShowActivity extends BaseActivity {
                                         // Get user value
                                         if (dataSnapshot.exists()) {
                                             userTvshowOld = dataSnapshot.getValue(UserTvshow.class);
-                                            Log.d(TAG,"OLD " + userTvshowOld.getNumberOfEpisodes()+ " - TMDB"+ series.getNumberOfEpisodes());
+                                           // Log.d(TAG,"OLD " + userTvshowOld.getNumberOfEpisodes()+ " - TMDB"+ series.getNumberOfEpisodes());
                                             if (userTvshowOld.getNumberOfEpisodes() == series.getNumberOfEpisodes()) {
                                                 seguindo = true;
                                                 setupViewPagerTabs();

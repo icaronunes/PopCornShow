@@ -54,6 +54,7 @@ import java.util.Date;
 import br.com.icaro.filme.R;
 import domian.FilmeDB;
 import domian.FilmeService;
+import domian.Netflix;
 import fragment.FilmeInfoFragment;
 import fragment.ImagemTopFilmeScrollFragment;
 import info.movito.themoviedbapi.TmdbMovies;
@@ -102,6 +103,7 @@ public class FilmeActivity extends BaseActivity {
 
     private float numero_rated;
     private TMDVAsync tmdvAsync;
+    private Netflix netflix;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -635,6 +637,7 @@ public class FilmeActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constantes.FILME, movieDb);
         bundle.putSerializable(Constantes.SIMILARES, similarMovies);
+        bundle.putSerializable(Constantes.NETFLIX, netflix);
         filmeFrag.setArguments(bundle);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             if (!isDestroyed() && !isFinishing() && !tmdvAsync.isCancelled()) { //Isdestroyed valido apenas acima desta api
@@ -728,6 +731,14 @@ public class FilmeActivity extends BaseActivity {
                                 , credits, releases, videos, reviews, similar, alternative_titles, images);
                     }
                     similarMovies = movies.getSimilarMovies(movieDb.getId(), null, 1);
+
+                    if (movieDb.getReleaseDate() != null) {
+                        String date = movieDb.getReleaseDate().substring(0, 4);
+                        // Log.d(TAG, "doInBackground: "+date);
+                        netflix = FilmeService.getNetflix(movieDb.getTitle(), Integer.parseInt(date));
+                        Log.d(TAG, "doInBackground: " + netflix.showId);
+                    }
+
                     return movieDb;
                 } catch (Exception e) {
                     Log.d(TAG, e.getMessage());

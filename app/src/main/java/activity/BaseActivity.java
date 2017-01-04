@@ -380,6 +380,14 @@ public class BaseActivity extends AppCompatActivity {
                 intent.putExtra(Constantes.LISTA_NOME, R.string.oscar);
                 startActivity(intent);
                 break;
+            case R.id.menu_drav_netflix:
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_netflix");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);//
+                intent = new Intent(this, NetflixActivity.class);
+                intent.putExtra(Constantes.LISTA_ID, "28");
+                intent.putExtra(Constantes.LISTA_NOME, R.string.oscar);
+                startActivity(intent);
+                break;
         }
     }
 

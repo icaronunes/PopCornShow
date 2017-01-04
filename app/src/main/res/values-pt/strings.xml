@@ -186,4 +186,6 @@
     <string name="budget">Orçamento</string>
     <string name="person">Perfil</string>
     <string name="populares">Populares</string>
+    <string name="ver_netflix">Ver no Netflix</string>
+    <string name="procurar_netflix">Procurar no Netflix</string>
 </resources>

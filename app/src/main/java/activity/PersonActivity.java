@@ -22,7 +22,7 @@ public class PersonActivity extends BaseActivity {
     String nome;
     ViewPager viewPager;
     FirebaseAnalytics firebaseAnalytics;
-    final static String TAG = "PersonActivity";
+    final String TAG = this.getClass().getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

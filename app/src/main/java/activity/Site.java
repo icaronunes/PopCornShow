@@ -28,8 +28,7 @@ public class Site extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_site
-        );
+        setContentView(R.layout.activity_site);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         webView = (WebView) findViewById(R.id.webView);

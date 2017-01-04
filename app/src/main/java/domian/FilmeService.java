@@ -7,6 +7,9 @@ import com.google.firebase.crash.FirebaseCrash;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -227,20 +230,58 @@ public class FilmeService {
         try {
             Response response = client.newCall(request).execute();
           //  Log.d("domian.Lista", String.valueOf(response.body().charStream()));
-            items =  parseJSON(response);
+            items =  parseJSONLista(response);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return items;
-
     }
 
-    public static Lista parseJSON(Response response) {
+    private static Lista parseJSONLista(Response response) {
         Gson gson = new GsonBuilder().create();
         Lista items = null;
         items = gson.fromJson(response.body().charStream(), Lista.class);
             //    Log.d("domian.Lista", items.getName());
         return items;
+    }
+
+    public static String getAllDataNetflix(String title, int year) throws JSONException, IOException {
+        final String API_URL = "http://netflixroulette.net/api/api.php?";
+        title = title.replace(" ", "%20");
+        String message = "place";
+        JSONObject json = RouletteFunctions.readJsonFromUrl(API_URL+ "title=" + title + "&year=" + year);
+        message = json.toString();
+        return message;
+    }
+
+    public static Netflix getNetflix(String title) {
+       return getNetflix(title, 0);
+    }
+
+    public static Netflix getNetflix(String title, int year) {
+        final String API_URL = "http://netflixroulette.net/api/api.php?";
+        final String url = API_URL+ "title=" + title + "&year=" + year;
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        Netflix netflix = null;
+        try {
+            Response response = client.newCall(request).execute();
+            //  Log.d("domian.Lista", String.valueOf(response.body().charStream()));
+            netflix =  parseJSONNetflix(response);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return netflix;
+    }
+
+    public static Netflix parseJSONNetflix(Response response) {
+        Gson gson = new GsonBuilder().create();
+        Netflix netflix = null;
+        netflix = gson.fromJson(response.body().charStream(), Netflix.class);
+        //    Log.d("domian.Lista", items.getName());
+        return netflix;
     }
 
     public static TvResultsPage getTotalFavoriteTvShow() {
@@ -334,7 +375,6 @@ public class FilmeService {
 
     public static PersonCredits getPersonCreditsCombinado(int personId) {
         ApiUrl apiUrl = new ApiUrl(TMDB_METHOD_PERSON, personId, "tv_credits");
-
         return mapJsonResult(apiUrl, PersonCredits.class);
     }
 

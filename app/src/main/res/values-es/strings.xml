@@ -170,4 +170,6 @@
     <string name="writer">Escrito</string>
     <string name="populares">Populares</string>
     <string name="minutos">mins</string>
+    <string name="ver_netflix">Véase Netflix</string>
+    <string name="procurar_netflix">Buscar el Netflix</string>
 </resources>

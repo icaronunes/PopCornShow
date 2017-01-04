@@ -350,29 +350,33 @@
 
         </HorizontalScrollView>
 
-        <TextView
+        <Button
             android:id="@+id/imdb_site"
             android:text="@string/ver_imdb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/imdb"
             android:textAlignment="center"
-            android:background="@color/transparent2"
-            android:padding="3dp"
-            android:textStyle="normal|bold" />
+            android:textSize="16sp" />
 
-        <TextView
+        <Button
             android:id="@+id/tmdb_site"
             android:text="@string/ver_tmdb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textColor="@color/tmdb"
-            android:background="@color/transparent2"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="2dp"
-            android:padding="3dp"
-            android:textStyle="normal|bold" />
+            android:textSize="16sp" />
+
+
+        <Button
+            android:id="@+id/netflix"
+            android:text="@string/ver_netflix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/netflix"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

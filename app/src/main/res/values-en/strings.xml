@@ -178,4 +178,6 @@
     <string name="bt_desativar">Deactivate Account</string>
     <string name="person">Profile</string>
     <string name="populares">Most Popular</string>
+    <string name="ver_netflix">See Netflix</string>
+    <string name="procurar_netflix">Search on Netflix</string>
 </resources>

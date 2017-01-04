@@ -59,6 +59,7 @@ import activity.TemporadaActivity;
 import activity.TrailerActivity;
 import adapter.TemporadasAdapter;
 import br.com.icaro.filme.R;
+import domian.Netflix;
 import domian.UserTvshow;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbTvSeasons;
@@ -88,10 +89,10 @@ public class TvShowFragment extends Fragment {
     private int tipo, color;
     private boolean seguindo;
     private TvSeries series;
-    private Button seguir;
+    private Button seguir, imdb, tmdb, netflix_button;
     private TextView titulo, categoria, descricao, voto_media, produtora,
             original_title, production_countries, status, temporada,
-            imdb, tmdb, popularity, lancamento, textview_crews, textview_elenco;
+             popularity, lancamento, textview_crews, textview_elenco;
     private ImageView icon_site, img_poster, img_star;
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
@@ -100,14 +101,16 @@ public class TvShowFragment extends Fragment {
     private TemporadasAdapter adapter;
     private ValueEventListener postListener;
     private ProgressBar progressBar, progressBarTemporada;
+    private Netflix netflix;
 
-    public static Fragment newInstance(int tipo, TvSeries series, int color, boolean seguindo) {
+    public static Fragment newInstance(int tipo, TvSeries series, int color, boolean seguindo, Netflix netflix) {
         TvShowFragment fragment = new TvShowFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constantes.SERIE, series);
         bundle.putInt(Constantes.COLOR_TOP, color);
         bundle.putInt(Constantes.ABA, tipo);
         bundle.putSerializable(Constantes.USER, seguindo);
+        bundle.putSerializable(Constantes.NETFLIX,  netflix);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -121,6 +124,7 @@ public class TvShowFragment extends Fragment {
             series = (TvSeries) getArguments().getSerializable(Constantes.SERIE);
             color = getArguments().getInt(Constantes.COLOR_TOP);
             seguindo = getArguments().getBoolean(Constantes.USER);
+            netflix = (Netflix) getArguments().getSerializable(Constantes.NETFLIX);
         }
         //Validar se esta logado. Caso não, não precisa instanciar nada.
 
@@ -213,6 +217,30 @@ public class TvShowFragment extends Fragment {
                     bundle.putString(FirebaseAnalytics.Param.DESTINATION, Site.class.getName());
                     FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
+                }
+            });
+
+            netflix_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (netflix.showId != 0) {
+                        String url = "https://www.netflix.com/title/" + netflix.showId;
+                        Uri webpage = Uri.parse(url);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+                        startActivity(intent);
+                        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                            startActivity(intent);
+                        }
+
+                    } else {
+                        String url = "https://www.netflix.com/search?q=" + series.getName();
+
+                        Uri webpage = Uri.parse(url);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+                        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                            startActivity(intent);
+                        }
+                    }
                 }
             });
 
@@ -554,8 +582,9 @@ public class TvShowFragment extends Fragment {
         original_title = (TextView) view.findViewById(R.id.original_title);
         production_countries = (TextView) view.findViewById(R.id.production_countries);
         popularity = (TextView) view.findViewById(R.id.popularity);
-        imdb = (TextView) view.findViewById(R.id.imdb_site);
-        tmdb = (TextView) view.findViewById(R.id.tmdb_site);
+        imdb = (Button) view.findViewById(R.id.imdb_site);
+        tmdb = (Button) view.findViewById(R.id.tmdb_site);
+        netflix_button = (Button) view.findViewById(R.id.netflix);
         img_poster = (ImageView) view.findViewById(R.id.img_poster);
         img_star = (ImageView) view.findViewById(R.id.img_star);
         icon_site = (ImageView) view.findViewById(R.id.icon_site);
@@ -564,6 +593,12 @@ public class TvShowFragment extends Fragment {
         seguir = (Button) view.findViewById(R.id.seguir);
 
         seguir.setOnClickListener(ListenerSeguir());
+        if (netflix.showId == 0){
+                netflix_button.setText(R.string.procurar_netflix);
+        } else {
+            netflix_button.setText(R.string.ver_netflix);
+        }
+
 
         return view;
     }

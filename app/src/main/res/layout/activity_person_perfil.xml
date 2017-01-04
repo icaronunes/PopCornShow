@@ -143,7 +143,18 @@
                     android:src="@drawable/wikipedia"
                     android:visibility="invisible" />
 
+                <Button
+                    android:id="@+id/netflix"
+                    android:text="@string/ver_netflix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:visibility="invisible"
+                    android:textColor="@color/netflix"
+                    android:textSize="16sp" />
+
             </LinearLayout>
+
 
         </LinearLayout>
 

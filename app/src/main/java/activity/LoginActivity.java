@@ -175,7 +175,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Srepetir = repetirSenha.getEditText().getText().toString();
 
         if (Slogin.contains("@") && Slogin.contains(".")){
-            if (Ssenha.equals(Srepetir)){
+            if (Ssenha.equals(Srepetir) && Ssenha.length() > 6){
                 return true;
             }
         }

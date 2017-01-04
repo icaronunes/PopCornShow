@@ -193,4 +193,6 @@
     <string name="star_avaliados">Evaluation</string>
     <string name="budget">Budget</string>
     <string name="homepage" translatable="false">Homepager</string>
+    <string name="ver_netflix">See Netflix</string>
+    <string name="procurar_netflix">Search on Netflix</string>
 </resources>

@@ -1,6 +1,7 @@
 package fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -58,6 +60,7 @@ public class PersonFragment extends Fragment {
     List<Artwork> artworks;
     String TAG = "PersonFragment";
     FirebaseAnalytics firebaseAnalytics;
+    private Button bt_netflix;
 
     public static PersonFragment newInstance(int aba, int id_person) {
       //  Log.d("PersonFragment", "newInstance");
@@ -181,6 +184,7 @@ public class PersonFragment extends Fragment {
         conhecido = (TextView) view.findViewById(R.id.conhecido);
         place_of_birth = (TextView) view.findViewById(R.id.place_of_birth);
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
+        bt_netflix = (Button) view.findViewById(R.id.netflix);
 
         return view;
     }
@@ -286,6 +290,23 @@ public class PersonFragment extends Fragment {
                     bundle.putString("Site", "Wiki_Person " + site);
                     bundle.putString(FirebaseAnalytics.Param.DESTINATION, Site.class.getName());
                     firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+                }
+            });
+        }
+
+        if (!personPeople.getName().isEmpty()) {
+            bt_netflix.setVisibility(View.VISIBLE);
+
+            bt_netflix.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String url = "https://www.netflix.com/search?q=" + personPeople.getName();
+
+                    Uri webpage = Uri.parse(url);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+                    if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                        startActivity(intent);
+                    }
                 }
             });
         }
