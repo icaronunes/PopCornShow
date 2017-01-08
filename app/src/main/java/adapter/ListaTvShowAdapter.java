@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import br.com.icaro.filme.R;
-import domian.TvshowDB;
+import domain.TvshowDB;
 import utils.UtilsFilme;
 
 

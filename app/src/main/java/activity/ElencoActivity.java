@@ -21,7 +21,7 @@ import com.google.firebase.crash.FirebaseCrash;
 
 import adapter.ElencoAdapter;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
+import domain.FilmeService;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbTvSeasons;
 import info.movito.themoviedbapi.model.Credits;

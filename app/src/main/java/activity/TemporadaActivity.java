@@ -33,9 +33,9 @@ import java.util.Map;
 
 import adapter.TemporadaAdapter;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
-import domian.UserEp;
-import domian.UserSeasons;
+import domain.FilmeService;
+import domain.UserEp;
+import domain.UserSeasons;
 import info.movito.themoviedbapi.model.tv.TvSeason;
 import utils.Constantes;
 import utils.UtilsFilme;

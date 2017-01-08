@@ -19,4 +19,13 @@
     <dimen name="popup_height_rated">160dp</dimen>
     <dimen name="poster_main_width">76dp</dimen>
     <dimen name="poster_main_height">111dp</dimen>
+    <dimen name="poster_person_height_padrao">140dp</dimen>
+    <dimen name="poster_person_width_padrao">100dp</dimen>
+    <dimen name="trailer_width">190dp</dimen>
+    <dimen name="trailer_height">140dp</dimen>
+    <dimen name="poster_filme_width_padrao">100dp</dimen>
+    <dimen name="poster_filme_height_padrao">147dp</dimen>
+    <dimen name="poster_activity_width">126dp</dimen>
+    <dimen name="poster_activity_height">162dp</dimen>
+    <dimen name="icon_activity_padrao">42dp</dimen>
 </resources>

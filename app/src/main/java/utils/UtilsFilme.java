@@ -15,16 +15,17 @@ import com.google.firebase.crash.FirebaseCrash;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import domian.FilmeService;
-import domian.UserEp;
-import domian.UserSeasons;
-import domian.UserTvshow;
+import domain.FilmeService;
+import domain.UserEp;
+import domain.UserSeasons;
+import domain.UserTvshow;
 import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
 import info.movito.themoviedbapi.model.tv.TvSeason;
@@ -128,6 +129,14 @@ public class UtilsFilme {
             }
             return false;
         }
+    }
+
+    public static String removerAcentos(String str) {
+        str = str.replace(".", "");
+        str = str.replace(":", "");
+        str = str.replace("/", "");
+        str = str.replace(";", "");
+        return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
 
 //    public static  boolean verificaDataProximaLancamento(Date air_date) {

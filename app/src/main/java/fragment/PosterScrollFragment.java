@@ -131,7 +131,7 @@ public class PosterScrollFragment extends Fragment {
                 if (file != null) {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     //final String appPackageName = getContext().getPackageName();
-                    intent.putExtra(Intent.EXTRA_TEXT, nome + "  -  " + "https://q2p5q.app.goo.gl/3hX6");
+                    intent.putExtra(Intent.EXTRA_TEXT, nome + "  -  " + "https://q2p5q.app.goo.gl/3hX6" + " by: " + Constantes.TWITTER_URL);
                     intent.setType("image/*"); // link dynamic - https://q2p5q.app.goo.gl/3hX6
                     intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                     startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));

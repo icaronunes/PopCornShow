@@ -27,7 +27,7 @@ import java.util.Locale;
 import activity.TvShowActivity;
 import adapter.TvShowsAdapter;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
+import domain.FilmeService;
 import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.tv.TvSeries;

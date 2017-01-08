@@ -16,8 +16,8 @@ import com.google.firebase.crash.FirebaseCrash;
 
 import adapter.ListUserAdapter;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
-import domian.Lista;
+import domain.FilmeService;
+import domain.Lista;
 import info.movito.themoviedbapi.model.MovieList;
 import utils.Constantes;
 

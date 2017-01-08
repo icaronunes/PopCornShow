@@ -3,6 +3,7 @@ package activity;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,68 +14,72 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.firebase.crash.FirebaseCrash;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
-import adapter.ListUserAdapter;
+import adapter.ActorNetflixAdapter;
 import br.com.icaro.filme.R;
 import domain.FilmeService;
-import domain.Lista;
+import domain.Netflix;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-/**
- * Created by icaro on 04/10/16.
- */
-public class OscarActivity  extends BaseActivity{
 
-    RecyclerView recyclerView;
-    ProgressBar progressBar;
-    String list_id;
-    Lista lista;
-    LinearLayout linearLayout;
+/**
+ * Created by icaro on 08/01/17.
+ */
+public class ActivityPersonNetflix extends BaseActivity {
+
+    private RecyclerView recyclerView;
+    private ProgressBar progressBar;
+    private LinearLayout linear_person_netflix_layout;
+    private String nome;
+
     private String TAG = this.getClass().getName();
+    private List<Netflix> netflixs;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista);
+        setContentView(R.layout.activity_person_netflix);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.oscar);
-        list_id = getIntent().getStringExtra(Constantes.LISTA_ID);
-        progressBar = (ProgressBar) findViewById(R.id.progress);
-        linearLayout = (LinearLayout) findViewById(R.id.linear_lista);
-        recyclerView = (RecyclerView) findViewById(R.id.recycleView_favorite);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        getExtras();
+
+        recyclerView = (RecyclerView) findViewById(R.id.person_netflix_recyckeview);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        linear_person_netflix_layout = (LinearLayout) findViewById(R.id.linear_person_netflix_layout);
+        progressBar = (ProgressBar) findViewById(R.id.progress);
 
         AdView adview = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
                 .build();
         adview.loadAd(adRequest);
 
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
         if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
             new TMDVAsync().execute();
         } else {
             snack();
         }
+
+    }
+
+    private void getExtras() {
+        nome = getIntent().getStringExtra(Constantes.NOME_PERSON);
+        getSupportActionBar().setTitle(nome);
     }
 
     protected void snack() {
-        Snackbar.make(linearLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(linear_person_netflix_layout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -88,39 +93,33 @@ public class OscarActivity  extends BaseActivity{
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
+
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            if (lista == null) {
-                try {
-                    lista = FilmeService.getLista(list_id);
-                    //Metodos criados. Tudo gambiara. Precisa arrumar
-                    if (lista != null) {
-                        Collections.sort(lista.getItems());
-                    }
-                } catch (Exception e){
-                    FirebaseCrash.report(e);
-                    Log.d(TAG, e.getMessage());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(OscarActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+           netflixs = new ArrayList<>();
+            try {
+                Netflix[] netflixActors = FilmeService.getNetflixActor(nome);
+                Collections.addAll(netflixs, netflixActors);
+
+                Netflix[] netflixDirector = FilmeService.getNetflixDirector(nome);
+                Collections.addAll(netflixs, netflixDirector);
+
+            } catch (Exception e) {
+                Log.d(TAG, e.getMessage());
             }
 
             return null;
@@ -130,8 +129,10 @@ public class OscarActivity  extends BaseActivity{
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressBar.setVisibility(View.GONE);
-            recyclerView.setAdapter(new ListUserAdapter(OscarActivity.this,
-                    lista != null ? lista.items : null));
+
+                recyclerView.setAdapter(new ActorNetflixAdapter(ActivityPersonNetflix.this,
+                        netflixs != null ? netflixs : null));
+
         }
     }
 }

@@ -8,8 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.List;
 
 import br.com.icaro.filme.R;
-import domian.FilmeDB;
-import domian.TvshowDB;
+import domain.FilmeDB;
+import domain.TvshowDB;
 import fragment.ListaFavoriteFragment;
 
 /**

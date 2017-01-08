@@ -21,7 +21,7 @@ import com.google.firebase.crash.FirebaseCrash;
 
 import adapter.PersonPopularAdapter;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
+import domain.FilmeService;
 import info.movito.themoviedbapi.TmdbPeople;
 import utils.UtilsFilme;
 

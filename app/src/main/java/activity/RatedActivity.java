@@ -24,8 +24,8 @@ import java.util.List;
 
 import adapter.RatedAdapater;
 import br.com.icaro.filme.R;
-import domian.FilmeDB;
-import domian.TvshowDB;
+import domain.FilmeDB;
+import domain.TvshowDB;
 import utils.UtilsFilme;
 
 public class RatedActivity extends BaseActivity {

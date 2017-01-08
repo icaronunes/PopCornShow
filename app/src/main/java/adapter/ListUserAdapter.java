@@ -20,7 +20,7 @@ import java.util.List;
 import activity.FilmeActivity;
 import activity.TvShowActivity;
 import br.com.icaro.filme.R;
-import domian.ItemsLista;
+import domain.ItemsLista;
 import utils.Constantes;
 import utils.UtilsFilme;
 

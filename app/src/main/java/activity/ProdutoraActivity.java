@@ -35,7 +35,7 @@ import java.util.Locale;
 
 import adapter.ProdutoraAdapter;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
+import domain.FilmeService;
 import info.movito.themoviedbapi.TmdbCompany;
 import info.movito.themoviedbapi.model.Company;
 import info.movito.themoviedbapi.model.MovieDb;
@@ -43,7 +43,7 @@ import info.movito.themoviedbapi.model.Multi;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static domian.FilmeService.getTmdbCompany;
+import static domain.FilmeService.getTmdbCompany;
 
 /**
  * Created by icaro on 10/08/16.

@@ -18,6 +18,10 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme.NoActionBar">
 
+        <meta-data android:name="firebase_analytics_collection_deactivated" android:value="true" />
+
+
+
         <meta-data android:name="firebase_analytics_collection_enabled" android:value="false"/>
         <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_application_id"/>
@@ -343,7 +347,7 @@
 
         <activity android:name="activity.Desenvolvimento" />
 
-        <activity android:name="activity.NetflixActivity"/>
+        <activity android:name="activity.ActivityPersonNetflix" />
 
         <service
             android:name="onsignal.CustomNotificationExtenderService"

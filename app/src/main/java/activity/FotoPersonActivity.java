@@ -17,7 +17,7 @@ import com.viewpagerindicator.LinePageIndicator;
 import java.util.List;
 
 import br.com.icaro.filme.R;
-import domian.FilmeService;
+import domain.FilmeService;
 import fragment.PosterScrollFragment;
 import info.movito.themoviedbapi.model.Artwork;
 import utils.Constantes;
@@ -44,12 +44,12 @@ public class FotoPersonActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scroll_poster);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-       // Log.d("PosterActivity", "onCreate");
+
         getExtras();
 
         viewPager = (ViewPager) findViewById(pager);
         titlePageIndicator = (LinePageIndicator) findViewById(R.id.indicator);
-       // Log.d("PosterActivity", "onCreate ID: " + id_foto);
+
 
     }
 

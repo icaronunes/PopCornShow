@@ -44,6 +44,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
+import java.text.Normalizer;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,8 +62,9 @@ import activity.TemporadaActivity;
 import activity.TrailerActivity;
 import adapter.TemporadasAdapter;
 import br.com.icaro.filme.R;
-import domian.Netflix;
-import domian.UserTvshow;
+import domain.Imdb;
+import domain.Netflix;
+import domain.UserTvshow;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbTvSeasons;
 import info.movito.themoviedbapi.model.Genre;
@@ -92,7 +96,7 @@ public class TvShowFragment extends Fragment {
     private Button seguir, imdb, tmdb, netflix_button;
     private TextView titulo, categoria, descricao, voto_media, produtora,
             original_title, production_countries, status, temporada,
-             popularity, lancamento, textview_crews, textview_elenco;
+            popularity, lancamento, textview_crews, textview_elenco;
     private ImageView icon_site, img_poster, img_star;
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
@@ -101,16 +105,18 @@ public class TvShowFragment extends Fragment {
     private TemporadasAdapter adapter;
     private ValueEventListener postListener;
     private ProgressBar progressBar, progressBarTemporada;
-    private Netflix netflix;
+    private Netflix netflix = null;
+    private Imdb imdbDd = null;
 
-    public static Fragment newInstance(int tipo, TvSeries series, int color, boolean seguindo, Netflix netflix) {
+    public static Fragment newInstance(int tipo, TvSeries series, int color, boolean seguindo, Netflix netflix, Imdb imdb) {
         TvShowFragment fragment = new TvShowFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constantes.SERIE, series);
         bundle.putInt(Constantes.COLOR_TOP, color);
         bundle.putInt(Constantes.ABA, tipo);
         bundle.putSerializable(Constantes.USER, seguindo);
-        bundle.putSerializable(Constantes.NETFLIX,  netflix);
+        bundle.putSerializable(Constantes.NETFLIX, netflix);
+        bundle.putSerializable(Constantes.IMDB, imdb);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -125,6 +131,7 @@ public class TvShowFragment extends Fragment {
             color = getArguments().getInt(Constantes.COLOR_TOP);
             seguindo = getArguments().getBoolean(Constantes.USER);
             netflix = (Netflix) getArguments().getSerializable(Constantes.NETFLIX);
+            imdbDd = (Imdb) getArguments().getSerializable(Constantes.IMDB);
         }
         //Validar se esta logado. Caso não, não precisa instanciar nada.
 
@@ -144,6 +151,7 @@ public class TvShowFragment extends Fragment {
             setCategoria();
             setLancamento();
             setProdutora();
+            setNetflix();
             setHome();
             setVotoMedia();
             setOriginalTitle();
@@ -162,11 +170,11 @@ public class TvShowFragment extends Fragment {
             icon_site.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                   // Log.d(TAG, "Home " + series.getHomepage());
+                    // Log.d(TAG, "Home " + series.getHomepage());
                     if (series.getHomepage() != "" && series.getHomepage() != null) {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse(series.getHomepage()));
-                       // Log.d(TAG, "Home " + series.getHomepage());
+                        // Log.d(TAG, "Home " + series.getHomepage());
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
 
@@ -223,6 +231,11 @@ public class TvShowFragment extends Fragment {
             netflix_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    if (netflix == null) {
+                        return;
+                    }
+
                     if (netflix.showId != 0) {
                         String url = "https://www.netflix.com/title/" + netflix.showId;
                         Uri webpage = Uri.parse(url);
@@ -234,7 +247,7 @@ public class TvShowFragment extends Fragment {
 
                     } else {
                         String url = "https://www.netflix.com/search?q=" + series.getName();
-
+                        url = Normalizer.normalize(url, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
                         Uri webpage = Uri.parse(url);
                         Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
                         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
@@ -248,10 +261,130 @@ public class TvShowFragment extends Fragment {
             img_star.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (series.getVoteCount() > 0) {
-                        BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
-                                series.getVoteCount()
-                                        + " " + getString(R.string.person_vote));
+                    if (getMediaNotas() > 0) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        LayoutInflater inflater = getActivity().getLayoutInflater();
+                        View layout = inflater.inflate(R.layout.layout_notas, null);
+
+
+                        if (imdbDd != null) {
+
+                            ((TextView) layout
+                                    .findViewById(R.id.nota_imdb)).setText(imdbDd.getImdbRating() != null ? imdbDd.getImdbRating() + "/10" :
+                                    "- -");
+                            ((TextView) layout
+                                    .findViewById(R.id.nota_metacritic)).setText(imdbDd.getMetascore() != null ? imdbDd.getMetascore() + "/100" :
+                                    "- -");
+                            ((TextView) layout
+                                    .findViewById(R.id.nota_tomatoes)).setText(imdbDd.getTomatoRating() != null ? imdbDd.getTomatoRating() + "/10" :
+                                    "- -");
+                        }
+
+                        if (series != null)
+                            ((TextView) layout
+                                    .findViewById(R.id.nota_tmdb)).setText(String.valueOf(series.getVoteAverage() != 0 ? series.getVoteAverage() + "/10" :
+                                    "- -"));
+
+                        if (netflix != null) {
+                            ((TextView) layout
+                                    .findViewById(R.id.nota_netflix)).setText(String.valueOf(netflix.rating != null ? netflix.rating + "/5" :
+                                    "- -"));
+                        }
+
+                        ((ImageView) layout.findViewById(R.id.image_netflix)).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (netflix == null) {
+                                    return;
+                                }
+
+                                if (netflix.showId != 0) {
+                                    String url = "https://www.netflix.com/title/" + netflix.showId;
+                                    Uri webpage = Uri.parse(url);
+                                    Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+                                    startActivity(intent);
+                                    if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                                        startActivity(intent);
+                                    }
+                                }
+                            }
+                        });
+
+                        ((ImageView) layout.findViewById(R.id.image_metacritic)).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (imdbDd == null) {
+                                    return;
+                                }
+
+                                if (imdbDd.getType() != null) {
+
+                                            String nome = imdbDd.getTitle().replace(" ", "-").toLowerCase();
+                                            nome = UtilsFilme.removerAcentos(nome);
+                                            String url = "http://www.metacritic.com/tv/" + nome;
+
+                                            Intent intent = new Intent(getActivity(), Site.class);
+                                            intent.putExtra(Constantes.SITE, url);
+                                            startActivity(intent);
+                                }
+                            }
+                        });
+
+                        ((ImageView) layout.findViewById(R.id.image_tomatoes)).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (imdbDd == null) {
+                                    return;
+                                }
+
+                                if (imdbDd.getType() != null) {
+
+                                            String nome = imdbDd.getTitle().replace(" ", "_").toLowerCase();
+                                            nome = UtilsFilme.removerAcentos(nome);
+                                            Log.d(TAG, "onClick: "+ nome);
+                                            String url = "https://www.rottentomatoes.com/tv/" + nome;
+                                            Intent intent = new Intent(getActivity(), Site.class);
+                                            intent.putExtra(Constantes.SITE, url);
+                                            startActivity(intent);
+                                }
+                            }
+                        });
+
+                        ((ImageView) layout.findViewById(R.id.image_imdb)).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (imdbDd == null) {
+                                    return;
+                                }
+
+                                if (imdbDd.getType() != null) {
+
+                                            String url = "http://www.imdb.com/title/" + imdbDd.getImdbID();
+                                            Intent intent = new Intent(getActivity(), Site.class);
+                                            intent.putExtra(Constantes.SITE, url);
+                                            startActivity(intent);
+                                }
+                            }
+                        });
+
+                        ((ImageView) layout.findViewById(R.id.image_tmdb)).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (series == null) {
+                                    return;
+                                }
+                                String url = "https://www.themoviedb.org/tv/" + series.getId();
+                                Intent intent = new Intent(getActivity(), Site.class);
+                                intent.putExtra(Constantes.SITE, url);
+                                startActivity(intent);
+
+                            }
+                        });
+
+                        //REFAZER METODOS - MUITO GRANDE.
+
+                        builder.setView(layout);
+                        builder.show();
 
                         Bundle bundle = new Bundle();
                         bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star");
@@ -260,8 +393,7 @@ public class TvShowFragment extends Fragment {
 
                     } else {
                         BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
-                                series.getVoteCount()
-                                        + " " + getString(R.string.no_vote));
+                                getString(R.string.no_vote));
 
                         Bundle bundle = new Bundle();
                         bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star");
@@ -279,7 +411,7 @@ public class TvShowFragment extends Fragment {
                     Intent intent = new Intent(getContext(), ElencoActivity.class);
                     intent.putExtra(Constantes.ID, series.getId());
                     intent.putExtra(Constantes.MEDIATYPE, series.getMediaType());
-                    Log.d("setOnClickListener", "" + series.getName());
+                    //Log.d("setOnClickListener", "" + series.getName());
                     intent.putExtra(Constantes.NOME, series.getName());
                     startActivity(intent);
 
@@ -298,7 +430,7 @@ public class TvShowFragment extends Fragment {
                     Intent intent = new Intent(getContext(), CrewsActivity.class);
                     intent.putExtra(Constantes.ID, series.getId());
                     intent.putExtra(Constantes.MEDIATYPE, series.getMediaType());
-                    Log.d("setOnClickListener", "" + series.getName());
+                    //Log.d("setOnClickListener", "" + series.getName());
                     intent.putExtra(Constantes.NOME, series.getName());
                     startActivity(intent);
 
@@ -322,7 +454,7 @@ public class TvShowFragment extends Fragment {
 
 
     private void isSeguindo() {
-       // Log.d(TAG, "Seguindo " + seguindo);
+        // Log.d(TAG, "Seguindo " + seguindo);
         if (mAuth.getCurrentUser() != null) {
 
             if (seguindo) {
@@ -347,22 +479,22 @@ public class TvShowFragment extends Fragment {
                     if (dataSnapshot.exists()) {
                         userTvshow = dataSnapshot.getValue(UserTvshow.class);
 
-                            if (getView() != null) {
-                                userTvshow = dataSnapshot.getValue(UserTvshow.class);
-                                // Log.w(TAG, "Passou");
-                                recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
-                                adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
-                                recyclerViewTemporada.setAdapter(adapter);
-                                if (progressBarTemporada != null) {
-                                    //  Log.w(TAG, "Mudou - GONE");
-                                    progressBarTemporada.setVisibility(View.INVISIBLE);
-                                }
+                        if (getView() != null) {
+                            userTvshow = dataSnapshot.getValue(UserTvshow.class);
+                            // Log.w(TAG, "Passou");
+                            recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
+                            adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
+                            recyclerViewTemporada.setAdapter(adapter);
+                            if (progressBarTemporada != null) {
+                                //  Log.w(TAG, "Mudou - GONE");
+                                progressBarTemporada.setVisibility(View.INVISIBLE);
                             }
+                        }
 
                     } else {
 
                         if (getView() != null) {
-                          //  Log.w(TAG, "Passou");
+                            //  Log.w(TAG, "Passou");
                             userTvshow = null; // ??????????
                             recyclerViewTemporada = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
                             recyclerViewTemporada.setAdapter(new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow));
@@ -376,7 +508,7 @@ public class TvShowFragment extends Fragment {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                   // Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                    // Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
 
                 }
             };
@@ -423,7 +555,7 @@ public class TvShowFragment extends Fragment {
         }
     }
 
-    private void setStatusButton(){
+    private void setStatusButton() {
         seguir.setTextColor(color);
         seguir.setEnabled(false);
 
@@ -471,7 +603,7 @@ public class TvShowFragment extends Fragment {
             adapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
             recyclerViewTemporada.setAdapter(adapter);
             if (progressBarTemporada != null) {
-               // Log.w(TAG, "Mudou - GONE");
+                // Log.w(TAG, "Mudou - GONE");
                 progressBarTemporada.setVisibility(View.INVISIBLE);
             }
         }
@@ -509,37 +641,37 @@ public class TvShowFragment extends Fragment {
             @Override
             public void onClickCheckTemporada(View view, final int position) {
 
-                if ( isVisto(position)) {
+                if (isVisto(position)) {
                     Toast.makeText(getContext(), R.string.marcado_nao_assistido_temporada, Toast.LENGTH_SHORT).show();
                     final String user = mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "";
-                    final String id_serie  = String.valueOf(series.getId());
+                    final String id_serie = String.valueOf(series.getId());
                     Map<String, Object> childUpdates = new HashMap<String, Object>();
 
-                    childUpdates.put("/"+user+"/seguindo/"+id_serie+"/seasons/"+position+"/visto", false);
+                    childUpdates.put("/" + user + "/seguindo/" + id_serie + "/seasons/" + position + "/visto", false);
                     setStatusEps(position, false);
-                    childUpdates.put("/"+user+"/seguindo/"+id_serie+"/seasons/"+position+"/userEps", userTvshow.getSeasons().get(position).getUserEps());
+                    childUpdates.put("/" + user + "/seguindo/" + id_serie + "/seasons/" + position + "/userEps", userTvshow.getSeasons().get(position).getUserEps());
 
                     myRef.updateChildren(childUpdates);
-                   // Log.d(TAG, "desvisto");
+                    // Log.d(TAG, "desvisto");
 
                 } else {
                     Toast.makeText(getContext(), R.string.marcado_assistido_temporada, Toast.LENGTH_SHORT).show();
                     final String user = mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "";
-                    final String id_serie  = String.valueOf(userTvshow.getId());
+                    final String id_serie = String.valueOf(userTvshow.getId());
 
-                    if (!isVisto(position == 0 ? 0 : position-1)){
-                       // Log.d(TAG, "anterior não visto");
+                    if (!isVisto(position == 0 ? 0 : position - 1)) {
+                        // Log.d(TAG, "anterior não visto");
                     }
 
                     Map<String, Object> childUpdates = new HashMap<String, Object>();
-                    childUpdates.put("/"+user+"/seguindo/"+id_serie+"/seasons/"+position+"/visto", true);
+                    childUpdates.put("/" + user + "/seguindo/" + id_serie + "/seasons/" + position + "/visto", true);
                     setStatusEps(position, true);
                     //Fazer metodo para verificar, se 'quer' marcas temporadas anteriores.
-                    childUpdates.put("/"+user+"/seguindo/"+id_serie+"/seasons/"+position+"/userEps", userTvshow.getSeasons().get(position).getUserEps());
+                    childUpdates.put("/" + user + "/seguindo/" + id_serie + "/seasons/" + position + "/userEps", userTvshow.getSeasons().get(position).getUserEps());
 
                     myRef.updateChildren(childUpdates);
 
-                   // Log.d(TAG, "visto");
+                    // Log.d(TAG, "visto");
                 }
             }
         };
@@ -560,9 +692,9 @@ public class TvShowFragment extends Fragment {
     private void setStatusEps(int position, boolean status) {
         if (userTvshow != null) {
             if (userTvshow.getSeasons().get(position).getUserEps() != null)
-            for (int i = 0; i < userTvshow.getSeasons().get(position).getUserEps().size(); i++) {
-                userTvshow.getSeasons().get(position).getUserEps().get(i).setAssistido(status);
-            }
+                for (int i = 0; i < userTvshow.getSeasons().get(position).getUserEps().size(); i++) {
+                    userTvshow.getSeasons().get(position).getUserEps().get(i).setAssistido(status);
+                }
         }
     }
 
@@ -593,11 +725,6 @@ public class TvShowFragment extends Fragment {
         seguir = (Button) view.findViewById(R.id.seguir);
 
         seguir.setOnClickListener(ListenerSeguir());
-        if (netflix.showId == 0){
-                netflix_button.setText(R.string.procurar_netflix);
-        } else {
-            netflix_button.setText(R.string.ver_netflix);
-        }
 
 
         return view;
@@ -609,12 +736,12 @@ public class TvShowFragment extends Fragment {
             public void onClick(View v) {
 
                 if (getView() != null) {
-                    progressBarTemporada =  (ProgressBar) getView().getRootView().findViewById(R.id.progressBarTemporadas);
+                    progressBarTemporada = (ProgressBar) getView().getRootView().findViewById(R.id.progressBarTemporadas);
                     progressBarTemporada.setVisibility(View.VISIBLE);
                 }
 
                 if (!seguindo) {
-                   // Log.d(TAG, "incluir");
+                    // Log.d(TAG, "incluir");
                     seguindo = !seguindo;
                     isSeguindo();
                     new Thread(new Runnable() {
@@ -651,7 +778,7 @@ public class TvShowFragment extends Fragment {
                     }).start();
 
                 } else {
-                   // Log.d(TAG, "delete");
+                    // Log.d(TAG, "delete");
 
                     AlertDialog dialog = new AlertDialog.Builder(getContext())
                             .setTitle(R.string.title_delete)
@@ -691,11 +818,25 @@ public class TvShowFragment extends Fragment {
     }
 
     private void setSinopse() {
-       // Log.d("SetSinopse", "OverView" + series.getOverview());
+        // Log.d("SetSinopse", "OverView" + series.getOverview());
         if (series.getOverview() == null || series.getOverview().equals("")) {
             descricao.setText(getString(R.string.sem_sinopse));
         } else {
             descricao.setText(series.getOverview());
+        }
+    }
+
+    public void setNetflix() {
+
+        if (netflix != null) {
+            //Log.d(TAG, "setNetflix: "+netflix.showId);
+            if (netflix.showId != 0) {
+                netflix_button.setText(R.string.ver_netflix);
+            } else {
+                netflix_button.setText(R.string.procurar_netflix);
+            }
+        } else {
+            netflix_button.setText(R.string.procurar_netflix);
         }
     }
 
@@ -724,7 +865,7 @@ public class TvShowFragment extends Fragment {
                     ActivityOptionsCompat compat = ActivityOptionsCompat
                             .makeSceneTransitionAnimation(getActivity(), img_poster, transition);
                     ActivityCompat.startActivity(getActivity(), intent, compat.toBundle());
-                   // Log.d("FilmeInfoFragment", "setPoster: -> " + series.getPosterPath());
+                    // Log.d("FilmeInfoFragment", "setPoster: -> " + series.getPosterPath());
 
                     Bundle bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PosterGridActivity.class.getName());
@@ -757,20 +898,22 @@ public class TvShowFragment extends Fragment {
 
         List<Genre> genres = series.getGenres();
         StringBuilder stringBuilder = new StringBuilder("");
-       // Log.d("getGeneros", "" + genres.size());
+        // Log.d("getGeneros", "" + genres.size());
         if (!genres.isEmpty()) {
             for (Genre genre : genres) {
                 stringBuilder.append(" | " + genre.getName());
-               // Log.d("Genero", " " + genre.getName());
+                // Log.d("Genero", " " + genre.getName());
             }
         }
         categoria.setText(stringBuilder.toString());
     }
 
     private void setVotoMedia() {
-        if (series.getVoteAverage() > 0) {
+        float nota = getMediaNotas();
+        if (nota > 0) {
             img_star.setImageResource(R.drawable.icon_star);
-            voto_media.setText(Float.toString(series.getVoteAverage()));
+            NumberFormat formatter = new DecimalFormat("0.0");
+            voto_media.setText(formatter.format(nota));
 
         } else {
             img_star.setImageResource(R.drawable.icon_star_off);
@@ -809,7 +952,7 @@ public class TvShowFragment extends Fragment {
 
         ValueAnimator animatorCompat = ValueAnimator.ofFloat(1, series.getPopularity());
         if (series.getPopularity() > 0) {
-           // Log.d("POPULARIDADE", " " + series.getPopularity());
+            // Log.d("POPULARIDADE", " " + series.getPopularity());
 
             animatorCompat.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
@@ -844,6 +987,66 @@ public class TvShowFragment extends Fragment {
             }
         }
 
+    }
+
+    public float getMediaNotas() {
+        float imdb = 0, tmdb = 0, metascore = 0, tomato = 0;
+        int tamanho = 0;
+
+        if (series != null)
+            if (series.getVoteAverage() > 0) {
+                try {
+                    tmdb = series.getVoteAverage();
+                    // Log.d(TAG, " tmdb "+ tmdb);
+                    tamanho++;
+                } catch (Exception e) {
+                    Log.d(TAG, e.getMessage());
+                }
+            }
+
+        if (imdbDd != null) {
+            if (imdbDd.getImdbRating() != null) {
+                if (!imdbDd.getImdbRating().isEmpty()) {
+                    try {
+                        imdb = Float.parseFloat(imdbDd.getImdbRating());
+                        // Log.d(TAG, " imdb " + imdb);
+                        tamanho++;
+                    } catch (Exception e) {
+                        Log.d(TAG, e.getMessage());
+                    }
+                }
+            }
+
+            if (imdbDd.getMetascore() != null) {
+                if (!imdbDd.getMetascore().isEmpty()) {
+                    try {
+                        float meta = Float.parseFloat(imdbDd.getMetascore());
+                        float nota = meta / 10;
+                        metascore = nota;
+                        // Log.d(TAG, " MetaScore " + metascore);
+                        tamanho++;
+                    } catch (Exception e) {
+                        Log.d(TAG, e.getMessage());
+                    }
+                }
+            }
+
+            if (imdbDd.getTomatoRating() != null) {
+                if (!imdbDd.getTomatoRating().isEmpty()) {
+                    try {
+                        tomato = Float.parseFloat(imdbDd.getTomatoRating());
+                        Log.d(TAG, " tomato " + tomato);
+                        tamanho++;
+                    } catch (Exception e) {
+                        Log.d(TAG, e.getMessage());
+                    }
+                }
+            }
+        }
+
+        float media = (tmdb + imdb + metascore + tomato) / tamanho;
+
+        return media;
     }
 
     private void setCast() {
@@ -905,7 +1108,7 @@ public class TvShowFragment extends Fragment {
         if (series.getCredits().getCrew().size() > 0) {
             int tamanho = series.getCredits().getCrew().size() < 15 ? series.getCredits().getCrew().size() : 15;
             textview_crews.setVisibility(View.VISIBLE);
-           // Log.d("setCrews", "Tamanho " + series.getCredits().getCrew().size());
+            // Log.d("setCrews", "Tamanho " + series.getCredits().getCrew().size());
             for (int i = 0; i < tamanho; i++) {
                 final PersonCrew crew = series.getCredits().getCrew().get(i);
                 View view = getActivity().getLayoutInflater().inflate(R.layout.scroll_crews, (ViewGroup) getView(), false);
@@ -973,11 +1176,11 @@ public class TvShowFragment extends Fragment {
 
         if (series.getVideos().size() > 0) {
             int tamanho = series.getVideos().size();
-           // Log.d("TAG", "SetTreiler: -> " + series.getVideos().size());
+            // Log.d("TAG", "SetTreiler: -> " + series.getVideos().size());
             for (int i = 0; i < tamanho; i++) {
-               // Log.d("SetTreiler", "" + series.getVideos().get(i).getKey());
+                // Log.d("SetTreiler", "" + series.getVideos().get(i).getKey());
                 final String youtube_key = series.getVideos().get(i).getKey();
-                View view = getActivity().getLayoutInflater().inflate(R.layout.scroll_treiler, (ViewGroup) getView(), false);
+                View view = getActivity().getLayoutInflater().inflate(R.layout.scroll_trailer, (ViewGroup) getView(), false);
                 LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.scroll_treiler_linerlayout);
                 View linearteste = view.findViewById(R.id.scroll_treiler_linearlayout);
 
@@ -1006,7 +1209,7 @@ public class TvShowFragment extends Fragment {
                 if (isAdded()) {
                     thumbnailView.initialize(Config.YOUTUBE_API_KEY, OnInitializedListener(youtube_key));
                 }
-               // Log.d("OnClick", youtube_key);
+                // Log.d("OnClick", youtube_key);
                 //Acontence erros - Necessario corrigir
                 linearLayout.addView(linearteste);
             }
@@ -1032,7 +1235,7 @@ public class TvShowFragment extends Fragment {
     private void setHome() {
         if (series.getHomepage() != null) {
             if (series.getHomepage().length() > 5) {
-               // Log.d("SETHOME", series.getHomepage());
+                // Log.d("SETHOME", series.getHomepage());
                 icon_site.setImageResource(R.drawable.site_on);
             } else {
                 icon_site.setImageResource(R.drawable.site_off);

@@ -6,7 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import br.com.icaro.filme.R;
-import domian.Netflix;
+import domain.Imdb;
+import domain.Netflix;
 import fragment.TvShowFragment;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 
@@ -21,15 +22,18 @@ public class TvShowAdapter extends FragmentPagerAdapter {
     int color;
     boolean seguindo;
     Netflix netflix;
+    Imdb imdb;
 
 
-    public TvShowAdapter(Context context, FragmentManager supportFragmentManager, TvSeries series, int color_top, boolean seguindo, Netflix netflix) {
+    public TvShowAdapter(Context context, FragmentManager supportFragmentManager,
+                         TvSeries series, int color_top, boolean seguindo, Netflix netflix, Imdb imdbdb) {
         super(supportFragmentManager);
         this.context = context;
         this.series = series;
         this.color = color_top;
         this.seguindo = seguindo;
         this.netflix = netflix;
+        this.imdb = imdbdb;
         //Log.d(TAG, "Adapter " +userTvshow.getNome());
     }
 
@@ -37,10 +41,10 @@ public class TvShowAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if (position == 0) {
            // Log.d("TvShowAdapter", "Series " + series.getName());
-            return TvShowFragment.newInstance(R.string.informacoes,  series, color, seguindo, netflix);
+            return TvShowFragment.newInstance(R.string.informacoes,  series, color, seguindo, netflix, imdb);
         }
         if (position == 1) {
-            return TvShowFragment.newInstance(R.string.temporadas, series, color, seguindo, netflix);
+            return TvShowFragment.newInstance(R.string.temporadas, series, color, seguindo, netflix, imdb);
         }
         return null;
     }

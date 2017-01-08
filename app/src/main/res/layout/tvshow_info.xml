@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 <android.support.v4.widget.NestedScrollView
     android:id="@+id/nested"
@@ -101,8 +102,8 @@
                 android:id="@+id/img_poster"
                 android:contentDescription="@string/poster_filme"
                 android:padding="4dp"
-                android:layout_width="126dp"
-                android:layout_height="162dp" />
+                android:layout_width="@dimen/poster_activity_width"
+                android:layout_height="@dimen/poster_activity_height" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -122,8 +123,8 @@
 
                         <ImageView
                             android:id="@+id/img_star"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/icon_activity_padrao"
+                            android:layout_height="@dimen/icon_activity_padrao"
                             android:src="@drawable/icon_star"
                             android:alpha="0" />
 
@@ -139,9 +140,9 @@
 
                     <ImageView
                         android:id="@+id/icon_site"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/icon_activity_padrao"
                         android:src="@drawable/site_on"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/icon_activity_padrao"
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:layout_margin="1dp" />
 
@@ -381,7 +382,7 @@
 
         <Button
             android:id="@+id/netflix"
-            android:text="@string/ver_netflix"
+            tools:text="@string/ver_netflix"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"

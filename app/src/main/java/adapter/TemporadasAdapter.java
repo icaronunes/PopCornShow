@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 import activity.CrewsActivity;
 import activity.ElencoActivity;
 import br.com.icaro.filme.R;
-import domian.UserTvshow;
+import domain.UserTvshow;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;

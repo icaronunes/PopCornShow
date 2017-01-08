@@ -52,9 +52,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import br.com.icaro.filme.R;
-import domian.FilmeDB;
-import domian.FilmeService;
-import domian.Netflix;
+import domain.FilmeDB;
+import domain.FilmeService;
+import domain.Imdb;
+import domain.Netflix;
 import fragment.FilmeInfoFragment;
 import fragment.ImagemTopFilmeScrollFragment;
 import info.movito.themoviedbapi.TmdbMovies;
@@ -103,7 +104,8 @@ public class FilmeActivity extends BaseActivity {
 
     private float numero_rated;
     private TMDVAsync tmdvAsync;
-    private Netflix netflix;
+    private Netflix netflix = null;
+    private Imdb imdbdb = null;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -312,9 +314,7 @@ public class FilmeActivity extends BaseActivity {
                     public void retornaFile(File file) {
                         Intent intent = new Intent(Intent.ACTION_SEND);
                         intent.setType("message/rfc822");
-                        //final String appPackageName = FilmeActivity.this.getPackageName();
-                        intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() + " " + buildDeepLink());
-                        //intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() + "  -  " + "https://play.google.com/store/apps/details?id=" + appPackageName);
+                        intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL);
                         intent.setType("image/*");
                         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                         startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
@@ -638,6 +638,7 @@ public class FilmeActivity extends BaseActivity {
         bundle.putSerializable(Constantes.FILME, movieDb);
         bundle.putSerializable(Constantes.SIMILARES, similarMovies);
         bundle.putSerializable(Constantes.NETFLIX, netflix);
+        bundle.putSerializable(Constantes.IMDB, imdbdb);
         filmeFrag.setArguments(bundle);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             if (!isDestroyed() && !isFinishing() && !tmdvAsync.isCancelled()) { //Isdestroyed valido apenas acima desta api
@@ -662,7 +663,9 @@ public class FilmeActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        tmdvAsync.cancel(true);
+        if (tmdvAsync != null) {
+            tmdvAsync.cancel(true);
+        }
 
         if (valueEventWatch != null) {
             myWatch.removeEventListener(valueEventWatch);
@@ -732,14 +735,7 @@ public class FilmeActivity extends BaseActivity {
                     }
                     similarMovies = movies.getSimilarMovies(movieDb.getId(), null, 1);
 
-                    if (movieDb.getReleaseDate() != null) {
-                        String date = movieDb.getReleaseDate().substring(0, 4);
-                        // Log.d(TAG, "doInBackground: "+date);
-                        netflix = FilmeService.getNetflix(movieDb.getTitle(), Integer.parseInt(date));
-                        Log.d(TAG, "doInBackground: " + netflix.showId);
-                    }
 
-                    return movieDb;
                 } catch (Exception e) {
                     Log.d(TAG, e.getMessage());
                     FirebaseCrash.report(e);
@@ -750,8 +746,21 @@ public class FilmeActivity extends BaseActivity {
                         }
                     });
                 }
+                if (movieDb != null) {
+
+                    if (movieDb.getReleaseDate() != null) {
+                        String date = movieDb.getReleaseDate().substring(0, 4);
+                        Log.d(TAG, "doInBackground: " + date);
+                        netflix = FilmeService.getNetflix(movieDb.getTitle(), Integer.parseInt(date));
+                        Log.d(TAG, "doInBackground: " + netflix.showId);
+                    }
+
+                    if (movieDb.getImdbID() != null) {
+                        imdbdb = FilmeService.getImdb(movieDb.getImdbID());
+                    }
+                }
             }
-            return null;
+            return movieDb;
         }
 
         @Override
@@ -779,7 +788,6 @@ public class FilmeActivity extends BaseActivity {
                 } else {
                     fab.setAlpha(0);
                 }
-
             }
         }
     }

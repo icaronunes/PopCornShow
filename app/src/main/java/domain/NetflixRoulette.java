@@ -1,4 +1,4 @@
-package domian;
+package domain;
 
 import org.json.JSONException;
 import org.json.JSONObject;

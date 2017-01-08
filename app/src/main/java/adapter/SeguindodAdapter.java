@@ -18,7 +18,7 @@ import java.util.List;
 
 import activity.TvShowActivity;
 import br.com.icaro.filme.R;
-import domian.UserTvshow;
+import domain.UserTvshow;
 import utils.Constantes;
 import utils.UtilsFilme;
 

@@ -34,7 +34,7 @@ import activity.SettingsActivity;
 import activity.TvShowActivity;
 import activity.TvShowsActivity;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
+import domain.FilmeService;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.TvResultsPage;
@@ -601,6 +601,7 @@ public class MainFragment extends Fragment {
                 }
             } catch (Exception e){
                 FirebaseCrash.report(e);
+                if (getActivity() != null)
                 Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
             }
         }

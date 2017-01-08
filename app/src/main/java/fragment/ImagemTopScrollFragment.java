@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 import activity.FilmeActivity;
 import activity.TvShowActivity;
 import br.com.icaro.filme.R;
-import domian.TopMain;
+import domain.TopMain;
 import info.movito.themoviedbapi.model.Multi;
 import utils.Constantes;
 import utils.UtilsFilme;

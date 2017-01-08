@@ -29,7 +29,7 @@ import java.util.Locale;
 import activity.FilmeActivity;
 import adapter.FilmesAdapter;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
+import domain.FilmeService;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.MovieDb;
 import utils.Constantes;

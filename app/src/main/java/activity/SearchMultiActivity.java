@@ -29,7 +29,7 @@ import java.util.List;
 
 import adapter.SearchAdapter;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
+import domain.FilmeService;
 import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.model.Multi;
 import provider.SuggestionRecentProvider;

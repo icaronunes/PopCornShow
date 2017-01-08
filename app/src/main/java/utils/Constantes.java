@@ -48,5 +48,7 @@ public class Constantes {
     public static final String SEGUINDO = "seguindo";
     public static final String TEMPORADA_POSITION = "temporada_position";
     public static final String NETFLIX = "netflix";
+    public static final String IMDB = "imdb";
+    public static final String TWITTER_URL = "@appopcorn";
 }
 

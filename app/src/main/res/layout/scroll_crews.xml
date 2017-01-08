@@ -4,9 +4,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="1dp"
-    android:weightSum="1">
-
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:weightSum="1"
+    android:padding="2dp">
 
     <TextView
         android:id="@+id/textCrewNome"
@@ -18,15 +19,17 @@
         android:maxLength="18" />
 
     <FrameLayout
-        android:layout_width="100dp"
-        android:layout_height="140dp">
+
+        android:layout_height="@dimen/poster_person_height_padrao"
+        android:layout_width="@dimen/poster_person_width_padrao">
 
         <ImageView
             android:id="@+id/imgPagerCrews"
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:foregroundGravity="center_vertical" />
-
+            android:foregroundGravity="center_vertical"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="false" />
 
 
         <ProgressBar

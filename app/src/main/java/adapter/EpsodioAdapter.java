@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import activity.EpsodioActivity;
-import domian.UserSeasons;
+import domain.UserSeasons;
 import fragment.EpsodioFragment;
 import info.movito.themoviedbapi.model.tv.TvSeason;
 

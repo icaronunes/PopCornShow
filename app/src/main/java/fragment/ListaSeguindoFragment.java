@@ -25,9 +25,9 @@ import java.util.List;
 import adapter.ProximosAdapter;
 import adapter.SeguindodAdapter;
 import br.com.icaro.filme.R;
-import domian.UserEp;
-import domian.UserSeasons;
-import domian.UserTvshow;
+import domain.UserEp;
+import domain.UserSeasons;
+import domain.UserTvshow;
 import utils.Constantes;
 
 /**

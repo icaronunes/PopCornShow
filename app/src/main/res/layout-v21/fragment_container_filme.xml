@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linear_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -92,8 +93,8 @@
 
         <ImageView
             android:id="@+id/img_poster"
-            android:layout_width="126dp"
-            android:layout_height="162dp"
+            android:layout_width="@dimen/poster_activity_width"
+            android:layout_height="@dimen/poster_activity_height"
             android:contentDescription="@string/poster_filme"
             android:transitionName="poster" />
 
@@ -109,23 +110,20 @@
 
                 <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_margin="1dp">
 
                     <ImageView
                         android:id="@+id/img_star"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:elevation="6dp"
-                        android:contentDescription="@string/star_avaliados" />
+                        android:layout_width="@dimen/icon_activity_padrao"
+                        android:layout_height="@dimen/icon_activity_padrao"
+                        tools:src="@drawable/icon_star" />
 
                     <TextView
                         android:id="@+id/voto_media"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:elevation="7dp"
                         android:layout_gravity="center"
                         android:textStyle="normal|bold" />
                 </FrameLayout>
@@ -133,40 +131,35 @@
 
                 <ImageView
                     android:id="@+id/img_budget"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
+                    android:layout_width="@dimen/icon_activity_padrao"
+                    android:layout_height="@dimen/icon_activity_padrao"
                     android:layout_gravity="center_vertical|center_horizontal"
-                    android:contentDescription="@string/budget"
-                    android:layout_marginStart="1dp"
-                    android:elevation="6dp" />
+                    tools:src="@drawable/orcamento" />
 
                 <ImageView
                     android:id="@+id/icon_site"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:elevation="6dp"
+                    android:layout_width="@dimen/icon_activity_padrao"
+                    android:layout_height="@dimen/icon_activity_padrao"
                     android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_margin="1dp" />
+                    android:layout_margin="1dp"
+                    tools:src="@drawable/site_on" />
 
 
                 <ImageView
                     android:id="@+id/icon_collection"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:elevation="6dp"
+                    android:layout_width="@dimen/icon_activity_padrao"
+                    android:layout_height="@dimen/icon_activity_padrao"
                     android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_margin="1dp" />
+                    android:layout_margin="1dp"
+                    tools:src="@drawable/collection_on" />
 
                 <ImageView
                     android:id="@+id/icon_reviews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:elevation="6dp"
+                    android:layout_width="@dimen/icon_activity_padrao"
+                    android:layout_height="@dimen/icon_activity_padrao"
                     android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_margin="1dp" />
+                    android:layout_margin="1dp"
+                    tools:src="@drawable/icon_reviews" />
 
 
             </LinearLayout>
@@ -370,11 +363,11 @@
         android:id="@+id/horizontal_similares"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
         android:scrollbars="none"
         android:fillViewport="false"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
-        android:scrollbarAlwaysDrawVerticalTrack="false">
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:layout_marginTop="3dp">
 
         <LinearLayout
             android:id="@+id/scroll_similares_linerlayout"
@@ -405,7 +398,6 @@
 
     <Button
         android:id="@+id/netflix"
-        android:text="@string/ver_netflix"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"

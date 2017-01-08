@@ -21,7 +21,7 @@ import com.google.firebase.crash.FirebaseCrash;
 
 import adapter.CrewsAdapter;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
+import domain.FilmeService;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbTvSeasons;
 import info.movito.themoviedbapi.model.Credits;
@@ -55,7 +55,7 @@ public class CrewsActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getExtras();
         getSupportActionBar().setTitle(title);
-        recyclerView = (RecyclerView) findViewById(R.id.crews_recyckeview);
+        recyclerView = (RecyclerView) findViewById(R.id.crews_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -75,34 +75,6 @@ public class CrewsActivity extends BaseActivity {
         }
 
     }
-
-
-//    private void getExtrass() {
-//        if (getIntent().getAction() == null) {
-//            id = getIntent().getIntExtra(Constantes.ID, 0);
-//            mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
-//            season = getIntent().getIntExtra(Constantes.TVSEASONS, -100);
-//            title = getIntent().getStringExtra(Constantes.NOME);
-//        } else {
-//            id = Integer.parseInt(getIntent().getStringExtra(Constantes.ID));
-//            String media  = getIntent().getStringExtra(Constantes.MEDIATYPE);
-//            switch (media) {
-//
-//                case "tv": {
-//                    mediaType = (Multi.MediaType.TV_SERIES);
-//                    if (getIntent().getExtras().containsKey(Constantes.TVSEASONS)) {
-//                        season = Integer.parseInt(getIntent().getStringExtra(Constantes.TVSEASONS));
-//                    }
-//                    break;
-//                }
-//                case "movie": {
-//                    mediaType = (Multi.MediaType.MOVIE);
-//                    break;
-//                }
-//            }
-//            title = getIntent().getStringExtra(Constantes.NOME);
-//        }
-//    }
 
     private void getExtras() {
         if (getIntent().getBooleanExtra("notification" , true)) {

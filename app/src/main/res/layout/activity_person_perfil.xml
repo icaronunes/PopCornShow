@@ -145,7 +145,7 @@
 
                 <Button
                     android:id="@+id/netflix"
-                    android:text="@string/ver_netflix"
+                    android:text="@string/procurar_netflix"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"

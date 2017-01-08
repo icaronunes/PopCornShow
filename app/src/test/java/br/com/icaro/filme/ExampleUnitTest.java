@@ -5,7 +5,7 @@ import android.util.Log;
 import org.junit.Assert;
 import org.junit.Test;
 
-import domian.FilmeService;
+import domain.FilmeService;
 import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.model.MovieDb;
 

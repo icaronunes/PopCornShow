@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
-import domian.TopMain;
+import domain.TopMain;
 
 public class ViewPageMainTopFragment extends FragmentPagerAdapter {
 

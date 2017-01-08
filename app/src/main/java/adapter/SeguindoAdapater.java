@@ -9,7 +9,7 @@ import java.util.List;
 
 import activity.SeguindoActivity;
 import br.com.icaro.filme.R;
-import domian.UserTvshow;
+import domain.UserTvshow;
 import fragment.ListaSeguindoFragment;
 
 /**

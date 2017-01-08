@@ -25,7 +25,7 @@ import java.util.List;
 
 import adapter.SeguindoAdapater;
 import br.com.icaro.filme.R;
-import domian.UserTvshow;
+import domain.UserTvshow;
 import utils.UtilsFilme;
 
 /**

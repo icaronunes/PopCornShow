@@ -28,8 +28,8 @@ import java.util.Locale;
 
 import adapter.MainAdapter;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
-import domian.TopMain;
+import domain.FilmeService;
+import domain.TopMain;
 import fragment.ViewPageMainTopFragment;
 import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.MovieDb;

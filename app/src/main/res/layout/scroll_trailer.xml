@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scroll_treiler_linearlayout"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="1dp"
+    android:padding="2dp"
     android:weightSum="1">
 
     <FrameLayout
         android:layout_width="wrap_content"
+        android:id="@+id/frame_youtube_view_thumbnail"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         android:layout_height="wrap_content">
-
 
         <com.google.android.youtube.player.YouTubeThumbnailView
             android:id="@+id/youtube_view_thumbnail"
-            android:layout_width="190dp"
-            android:layout_height="140dp"
+            android:layout_width="@dimen/trailer_width"
+            android:layout_height="@dimen/trailer_height"
             android:layout_gravity="center_vertical|center_horizontal|center" />
 
         <ImageView
@@ -24,7 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:src="@drawable/play"
-            android:contentDescription="Play Treiler" />
+            android:contentDescription="Play Trailer"
+            android:scaleType="centerCrop" />
     </FrameLayout>
 
 </LinearLayout>

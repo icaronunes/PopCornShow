@@ -74,6 +74,12 @@ public class Site extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        webView.destroy();
+    }
+
     private void setWebViewClient(WebView webViewClient) {
         webViewClient.setWebViewClient(new WebViewClient() {
             @Override

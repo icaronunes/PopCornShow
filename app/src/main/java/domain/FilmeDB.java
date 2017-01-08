@@ -1,24 +1,20 @@
-package domian;
+package domain;
 
 import java.io.Serializable;
-
-import info.movito.themoviedbapi.model.ExternalIds;
 
 /**
  * Created by icaro on 20/11/16.
  */
 
-public class TvshowDB implements Serializable {
+public class FilmeDB implements Serializable {
+
 
     private String poster;
-
+    private String idImdb;
     private String title;
+    private int id;
 
     private int nota;
-
-    private ExternalIds externalIds;
-
-    private int id;
 
 
     public void setTitle(String title) {
@@ -45,12 +41,13 @@ public class TvshowDB implements Serializable {
         this.poster = poster;
     }
 
-    public ExternalIds getExternalIds() {
-        return externalIds;
+
+    public String getIdImdb() {
+        return idImdb;
     }
 
-    public void setExternalIds(ExternalIds externalIds) {
-        this.externalIds = externalIds;
+    public void setIdImdb(String idImdb) {
+        this.idImdb = idImdb;
     }
 
     public int getId() {

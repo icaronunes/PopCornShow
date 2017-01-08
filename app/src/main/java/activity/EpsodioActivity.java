@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 import adapter.EpsodioAdapter;
 import br.com.icaro.filme.R;
-import domian.UserSeasons;
+import domain.UserSeasons;
 import info.movito.themoviedbapi.model.tv.TvSeason;
 import utils.Constantes;
 

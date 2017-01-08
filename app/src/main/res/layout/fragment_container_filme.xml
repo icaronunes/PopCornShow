@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linear_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,14 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
+        android:layout_marginLeft="2dp"
         android:layout_marginStart="2dp"
         android:background="@color/black_transparente"
         android:gravity="top|start"
         android:lines="2"
         android:maxLines="2"
         android:minLines="1"
-        android:textSize="20sp"
-        android:layout_marginLeft="2dp" />
+        android:textSize="20sp" />
 
 
     <LinearLayout
@@ -56,8 +57,8 @@
 
 
         <TextView
-            android:layout_width="wrap_content"
             android:id="@+id/label_produtora"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="@string/produtora"
@@ -94,7 +95,8 @@
             android:id="@+id/img_poster"
             android:layout_width="126dp"
             android:layout_height="162dp"
-            android:contentDescription="@string/poster_filme"/>
+            android:contentDescription="@string/poster_filme" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -108,15 +110,15 @@
 
                 <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_margin="1dp">
 
                     <ImageView
                         android:id="@+id/img_star"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:alpha="0" />
+                        android:layout_width="@dimen/icon_activity_padrao"
+                        android:layout_height="@dimen/icon_activity_padrao"
+                        tools:src="@drawable/icon_star" />
 
                     <TextView
                         android:id="@+id/voto_media"
@@ -129,31 +131,35 @@
 
                 <ImageView
                     android:id="@+id/img_budget"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal" />
+                    android:layout_width="@dimen/icon_activity_padrao"
+                    android:layout_height="@dimen/icon_activity_padrao"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    tools:src="@drawable/orcamento" />
 
                 <ImageView
                     android:id="@+id/icon_site"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/icon_activity_padrao"
+                    android:layout_height="@dimen/icon_activity_padrao"
                     android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_margin="1dp" />
+                    android:layout_margin="1dp"
+                    tools:src="@drawable/site_on" />
 
 
                 <ImageView
                     android:id="@+id/icon_collection"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/icon_activity_padrao"
+                    android:layout_height="@dimen/icon_activity_padrao"
                     android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_margin="1dp" />
+                    android:layout_margin="1dp"
+                    tools:src="@drawable/collection_on" />
 
                 <ImageView
                     android:id="@+id/icon_reviews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_margin="1dp" />
+                    android:layout_margin="1dp"
+                    tools:src="@drawable/icon_reviews" />
 
 
             </LinearLayout>
@@ -262,10 +268,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
-        android:scrollbars="none"
         android:fillViewport="false"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
-        android:scrollbarAlwaysDrawVerticalTrack="false">
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/scroll_treiler_linerlayout"
@@ -279,7 +285,6 @@
         android:id="@+id/textview_elenco"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black_transparente"
         android:gravity="center_horizontal"
         android:hint="@string/elenco"
         android:text="@string/elenco"
@@ -293,9 +298,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
-        android:scrollbars="none"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
-        android:scrollbarAlwaysDrawVerticalTrack="false">
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/scroll_elenco_linerlayout"
@@ -322,10 +327,10 @@
         android:id="@+id/horizontal_crew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
         android:layout_margin="3dp"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
-        android:scrollbarAlwaysDrawVerticalTrack="false">
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/scroll_crew_liner"
@@ -351,11 +356,11 @@
         android:id="@+id/horizontal_similares"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:scrollbars="none"
         android:fillViewport="false"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
-        android:scrollbarAlwaysDrawVerticalTrack="false">
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:scrollbars="none"
+        android:layout_marginTop="3dp">
 
         <LinearLayout
             android:id="@+id/scroll_similares_linerlayout"
@@ -367,18 +372,18 @@
 
     <Button
         android:id="@+id/imdb_site"
-        android:text="@string/ver_imdb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/imdb"
+        android:text="@string/ver_imdb"
         android:textAlignment="center"
+        android:textColor="@color/imdb"
         android:textSize="16sp" />
 
     <Button
         android:id="@+id/tmdb_site"
-        android:text="@string/ver_tmdb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/ver_tmdb"
         android:textAlignment="center"
         android:textColor="@color/tmdb"
         android:textSize="16sp" />
@@ -386,7 +391,6 @@
 
     <Button
         android:id="@+id/netflix"
-        android:text="@string/ver_netflix"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"

@@ -43,9 +43,9 @@ import java.util.Map;
 
 import activity.PersonActivity;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
-import domian.UserEp;
-import domian.UserSeasons;
+import domain.FilmeService;
+import domain.UserEp;
+import domain.UserSeasons;
 import info.movito.themoviedbapi.model.Credits;
 import info.movito.themoviedbapi.model.people.PersonCrew;
 import info.movito.themoviedbapi.model.tv.TvEpisode;

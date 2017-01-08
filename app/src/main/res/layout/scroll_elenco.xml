@@ -4,7 +4,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:padding="2dp">
 
 
     <TextView
@@ -16,14 +17,15 @@
         android:lines="2"
         android:maxLength="18" />
 
-    <FrameLayout android:layout_height="140dp"
-        android:layout_width="100dp">
+    <FrameLayout android:layout_height="@dimen/poster_person_height_padrao"
+        android:layout_width="@dimen/poster_person_width_padrao">
 
         <ImageView
             android:id="@+id/imgPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:foregroundGravity="center_vertical" />
+            android:foregroundGravity="center_vertical"
+            android:scaleType="centerCrop" />
 
         <ProgressBar
             android:id="@+id/progressBarCast"

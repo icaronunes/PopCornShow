@@ -1,4 +1,6 @@
-package domian;
+package domain;
+
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,11 +34,12 @@ import java.nio.charset.Charset;
 
         static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
             InputStream is = (new URL(url)).openStream();
-
+            Log.d("Netflix", "readJsonFromUrl: " +is.toString());
             JSONObject var6;
             try {
                 BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
                 String jsonText = readAll(rd);
+                Log.d("Netflix", "readJsonFromUrl: " +jsonText);
                 jsonText = jsonText.replace("[", "");
                 jsonText = jsonText.replace("]", "");
                 JSONObject json = new JSONObject(jsonText);

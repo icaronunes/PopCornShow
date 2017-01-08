@@ -5,18 +5,21 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:weightSum="1"
+    android:padding="2dp">
 
     <FrameLayout
-        android:layout_width="100dp"
-        android:layout_height="140dp">
+        android:layout_width="@dimen/poster_filme_width_padrao"
+        android:layout_height="@dimen/poster_filme_height_padrao">
 
         <ImageView
             android:id="@+id/imgPagerSimilares"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:foregroundGravity="center_vertical"
-            />
+            android:scaleType="centerCrop" />
 
         <ProgressBar
             android:id="@+id/progressBarSimilares"

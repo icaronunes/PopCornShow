@@ -25,8 +25,8 @@ import java.util.Random;
 
 import adapter.ListUserAdapter;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
-import domian.Lista;
+import domain.FilmeService;
+import domain.Lista;
 import utils.Constantes;
 import utils.UtilsFilme;
 

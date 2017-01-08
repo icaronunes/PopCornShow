@@ -1,8 +1,6 @@
-package domian;
+package domain;
 
 import java.io.Serializable;
-
-import info.movito.themoviedbapi.model.Multi;
 
 /**
  * Created by icaro on 26/09/16.

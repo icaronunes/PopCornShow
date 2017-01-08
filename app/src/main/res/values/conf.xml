@@ -2,7 +2,7 @@
 <resources>
 
     <string name="API_KEY" translatable="false">5886e2bfb2c71f60701457d9453825e8</string>
-    <string name="admob" translatable="false">ca-app-pub-7639270198633263/7125334030</string>
+    <string name="admob" translatable="false">ca-app-pub-7639270198633263/7125334030    321</string>
 
     <string name="facebook_application_id" translatable="false">880015148798069</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb880015148798069</string>

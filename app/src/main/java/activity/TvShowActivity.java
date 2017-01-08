@@ -53,10 +53,11 @@ import java.util.Locale;
 
 import adapter.TvShowAdapter;
 import br.com.icaro.filme.R;
-import domian.FilmeService;
-import domian.Netflix;
-import domian.TvshowDB;
-import domian.UserTvshow;
+import domain.FilmeService;
+import domain.Imdb;
+import domain.Netflix;
+import domain.TvshowDB;
+import domain.UserTvshow;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.TmdbTvSeasons;
@@ -104,7 +105,8 @@ public class TvShowActivity extends BaseActivity {
     private FirebaseDatabase database;
     private UserTvshow userTvshow;
     private UserTvshow userTvshowOld;
-    private Netflix netflix;
+    private Netflix netflix= null;
+    private Imdb imdbdb = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -308,9 +310,7 @@ public class TvShowActivity extends BaseActivity {
                     public void retornaFile(File file) {
                         Intent intent = new Intent(Intent.ACTION_SEND);
                         intent.setType("message/rfc822");
-                        //final String appPackageName = FilmeActivity.this.getPackageName();
-                        intent.putExtra(Intent.EXTRA_TEXT, series.getName() + " " + buildDeepLink());
-                        //intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() + "  -  " + "https://play.google.com/store/apps/details?id=" + appPackageName);
+                        intent.putExtra(Intent.EXTRA_TEXT, series.getName() + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL);
                         intent.setType("image/*");
                         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                         startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
@@ -318,9 +318,6 @@ public class TvShowActivity extends BaseActivity {
                         Bundle bundle = new Bundle();
                         bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_MainActivity:menu_drav_home");
                         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                        //   Log.d(TAG, "TRUE");
-
-                        return;
                     }
 
                     @Override
@@ -606,7 +603,7 @@ public class TvShowActivity extends BaseActivity {
     private void setupViewPagerTabs() {
         //  Log.w(TAG, "setupViewPagerTabs " + seguindo);
         viewPager.setOffscreenPageLimit(1);
-        viewPager.setAdapter(new TvShowAdapter(this, getSupportFragmentManager(), series, color_top, seguindo, netflix));
+        viewPager.setAdapter(new TvShowAdapter(this, getSupportFragmentManager(), series, color_top, seguindo, netflix, imdbdb));
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager.setCurrentItem(0);
         tabLayout.setupWithViewPager(viewPager);
@@ -681,6 +678,7 @@ public class TvShowActivity extends BaseActivity {
                     });
                 }
             }
+
             try{
                 if (series.getFirstAirDate() != null) {
                     String date = series.getFirstAirDate().substring(0, 4);
@@ -688,10 +686,30 @@ public class TvShowActivity extends BaseActivity {
                     netflix = FilmeService.getNetflix(series.getOriginalName(), Integer.parseInt(date));
                 }
             } catch (Exception e){
-               // Log.d(TAG, "doInBackground: "+e.getMessage());
+               Log.d(TAG, "doInBackground: "+e.getMessage());
             }
-            //Log.d(TAG, "doInBackground: "+netflix.showId);
-            //Log.d(TAG, "doInBackground: "+netflix.unit);
+
+
+            try{
+                if (series.getFirstAirDate() != null) {
+                    String date = series.getFirstAirDate().substring(0, 4);
+                    // Log.d(TAG, "doInBackground: "+date);
+                    netflix = FilmeService.getNetflix(series.getOriginalName(), Integer.parseInt(date));
+                }
+            } catch (Exception e){
+                Log.d(TAG, "doInBackground: "+e.getMessage());
+            }
+
+            try{
+                if (series.getExternalIds().getImdbId() != null) {
+                   // Log.d(TAG, "IMDB - " + series.getExternalIds().getImdbId());
+                    imdbdb = FilmeService.getImdb(series.getExternalIds().getImdbId());
+                }
+            } catch (Exception e){
+                //Log.d(TAG, "doInBackground: "+e.getMessage());
+            }
+
+
             return null;
         }
 

@@ -33,8 +33,8 @@ import activity.TvShowActivity;
 import adapter.ListaFilmeAdapter;
 import adapter.ListaTvShowAdapter;
 import br.com.icaro.filme.R;
-import domian.FilmeDB;
-import domian.TvshowDB;
+import domain.FilmeDB;
+import domain.TvshowDB;
 import utils.Constantes;
 import utils.UtilsFilme;
 
