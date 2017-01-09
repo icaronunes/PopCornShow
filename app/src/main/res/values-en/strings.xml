@@ -172,7 +172,7 @@
     <string name="notificacao_summary">Get notification</string>
     <string name="ajuda_desenvolvimento">Development</string>
     <string name="novidades_title">News</string>
-    <string name="novidades_text" >** Removed some bugs\n\n** Added translation into spanish\n\n** Fixed divergence between number of episodes</string>
+    <string name="novidades_text" >** Added Netflix integration\n(Still not perfect) **\n\n** Notes button now shows media several notes.\nNotes come from TMDB, IMDb, Tomatoes, Metacritic and Netflix.\nDirect links to their respective sites. **\n\n** Button Reviews now show links to various newspapers in the world.\nIt\'s also in Tvshows. **\n\n** In the artist profile you can see which ones are in the Netflix catalog. **</string>
     <string name="star_avaliados">Evaluation</string>
     <string name="budget">Budget</string>
     <string name="bt_desativar">Deactivate Account</string>

@@ -3,6 +3,7 @@ package adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -24,18 +26,18 @@ import domain.Netflix;
  */
 public class ActorNetflixAdapter extends RecyclerView.Adapter<ActorNetflixAdapter.ActorNetflixViewHolder> {
 
-    private Context actorNetflix = null;
+    private Context context = null;
     private List<Netflix>  netflixActors = null;
 
     public ActorNetflixAdapter(Context actorNetflix, List<Netflix> netflixActors) {
-        this.actorNetflix = actorNetflix;
+        this.context = actorNetflix;
         this.netflixActors = netflixActors;
 
     }
 
     @Override
     public ActorNetflixViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(actorNetflix).inflate(R.layout.actornetflix_list_adapter, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.actornetflix_list_adapter, parent, false);
         return new ActorNetflixViewHolder(view);
     }
 
@@ -43,7 +45,7 @@ public class ActorNetflixAdapter extends RecyclerView.Adapter<ActorNetflixAdapte
     public void onBindViewHolder(final ActorNetflixViewHolder holder, int position) {
         final Netflix netflix = netflixActors.get(position);
 
-        Picasso.with(actorNetflix).load(netflix.poster)
+        Picasso.with(context).load(netflix.poster)
                 .error(R.drawable.poster_empty)
                 .into(holder.img, new Callback() {
             @Override
@@ -66,7 +68,14 @@ public class ActorNetflixAdapter extends RecyclerView.Adapter<ActorNetflixAdapte
                     String url = "https://www.netflix.com/title/" + netflix.showId;
                     Uri webpage = Uri.parse(url);
                     Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-                    actorNetflix.startActivity(intent);
+                    context.startActivity(intent);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "link netflix");
+                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, url);
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, netflix.showTitle);
+                    FirebaseAnalytics.getInstance((context)).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 }
             }
         });

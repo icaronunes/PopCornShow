@@ -82,7 +82,7 @@
     <string name="notificacao">Notificación</string>
     <string name="notificacao_summary">Obtener la notificación</string>
     <string name="nova_senha">Nueva Contraseña</string>
-    <string name="novidades_text">** Removed some bugs\n\n** Añadida traducción al español\n\n** Discrepancia fija entre el número de episodios</string>
+    <string name="novidades_text">** Añadido integración con Netflix\n(Aún no es perfecto)\n\n** Notas botón muestra ahora los medios de comunicación varias notas.\nNotas proviene de TMDB, IMDb, tomates, Metacritic y Netflix.\nLos enlaces directos a sus sitios.\n\n** Los comentarios del botón ahora mostrar enlaces a varios periódicos del mundo.\nTambién en TVShows.\n\n** En el perfil del artista se puede ver que son el catálogo de Netflix.</string>
     <string name="novidades_title">Noticias</string>
     <string name="now_playing">Jugando ahora</string>
     <string name="ops">Oops! algo mal</string>

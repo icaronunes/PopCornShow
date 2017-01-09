@@ -25,9 +25,9 @@ import utils.UtilsFilme;
  */
 public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.FavoriteViewHolder> {
 
-    List<TvshowDB> tvshows;
-    Context context;
-    ListaOnClickListener onClickListener;
+    private List<TvshowDB> tvshows;
+    private Context context;
+    private ListaOnClickListener onClickListener;
     boolean status = false;
 
     // Colocar em apenas um lugar

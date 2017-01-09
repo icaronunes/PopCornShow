@@ -304,9 +304,14 @@ public class TvShowFragment extends Fragment {
                                     Uri webpage = Uri.parse(url);
                                     Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
                                     startActivity(intent);
-                                    if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                                        startActivity(intent);
-                                    }
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "link netflix");
+                                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, url);
+                                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, netflix.showTitle);
+                                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+
                                 }
                             }
                         });
@@ -320,13 +325,19 @@ public class TvShowFragment extends Fragment {
 
                                 if (imdbDd.getType() != null) {
 
-                                            String nome = imdbDd.getTitle().replace(" ", "-").toLowerCase();
-                                            nome = UtilsFilme.removerAcentos(nome);
-                                            String url = "http://www.metacritic.com/tv/" + nome;
+                                    String nome = imdbDd.getTitle().replace(" ", "-").toLowerCase();
+                                    nome = UtilsFilme.removerAcentos(nome);
+                                    String url = "http://www.metacritic.com/tv/" + nome;
 
-                                            Intent intent = new Intent(getActivity(), Site.class);
-                                            intent.putExtra(Constantes.SITE, url);
-                                            startActivity(intent);
+                                    Intent intent = new Intent(getActivity(), Site.class);
+                                    intent.putExtra(Constantes.SITE, url);
+                                    startActivity(intent);
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "link metacritic");
+                                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, url);
+                                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, imdbDd.getTitle());
+                                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                 }
                             }
                         });
@@ -340,13 +351,19 @@ public class TvShowFragment extends Fragment {
 
                                 if (imdbDd.getType() != null) {
 
-                                            String nome = imdbDd.getTitle().replace(" ", "_").toLowerCase();
-                                            nome = UtilsFilme.removerAcentos(nome);
-                                            Log.d(TAG, "onClick: "+ nome);
-                                            String url = "https://www.rottentomatoes.com/tv/" + nome;
-                                            Intent intent = new Intent(getActivity(), Site.class);
-                                            intent.putExtra(Constantes.SITE, url);
-                                            startActivity(intent);
+                                    String nome = imdbDd.getTitle().replace(" ", "_").toLowerCase();
+                                    nome = UtilsFilme.removerAcentos(nome);
+                                    String url = "https://www.rottentomatoes.com/tv/" + nome;
+                                    Intent intent = new Intent(getActivity(), Site.class);
+                                    intent.putExtra(Constantes.SITE, url);
+                                    startActivity(intent);
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "link rottentomatoes");
+                                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, url);
+                                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, netflix.showTitle);
+                                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                                 }
                             }
                         });
@@ -360,10 +377,16 @@ public class TvShowFragment extends Fragment {
 
                                 if (imdbDd.getType() != null) {
 
-                                            String url = "http://www.imdb.com/title/" + imdbDd.getImdbID();
-                                            Intent intent = new Intent(getActivity(), Site.class);
-                                            intent.putExtra(Constantes.SITE, url);
-                                            startActivity(intent);
+                                    String url = "http://www.imdb.com/title/" + imdbDd.getImdbID();
+                                    Intent intent = new Intent(getActivity(), Site.class);
+                                    intent.putExtra(Constantes.SITE, url);
+                                    startActivity(intent);
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "link imdb");
+                                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, url);
+                                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, imdbDd.getTitle());
+                                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                 }
                             }
                         });
@@ -379,6 +402,12 @@ public class TvShowFragment extends Fragment {
                                 intent.putExtra(Constantes.SITE, url);
                                 startActivity(intent);
 
+                                Bundle bundle = new Bundle();
+                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "link themoviedb");
+                                bundle.putString(FirebaseAnalytics.Param.DESTINATION, url);
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
+                                FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                             }
                         });
 
@@ -389,7 +418,6 @@ public class TvShowFragment extends Fragment {
 
                         Bundle bundle = new Bundle();
                         bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star");
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star_SnackBar");
                         FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                     } else {
@@ -412,7 +440,6 @@ public class TvShowFragment extends Fragment {
                     Intent intent = new Intent(getContext(), ElencoActivity.class);
                     intent.putExtra(Constantes.ID, series.getId());
                     intent.putExtra(Constantes.MEDIATYPE, series.getMediaType());
-                    //Log.d("setOnClickListener", "" + series.getName());
                     intent.putExtra(Constantes.NOME, series.getName());
                     startActivity(intent);
 
@@ -431,7 +458,6 @@ public class TvShowFragment extends Fragment {
                     Intent intent = new Intent(getContext(), CrewsActivity.class);
                     intent.putExtra(Constantes.ID, series.getId());
                     intent.putExtra(Constantes.MEDIATYPE, series.getMediaType());
-                    //Log.d("setOnClickListener", "" + series.getName());
                     intent.putExtra(Constantes.NOME, series.getName());
                     startActivity(intent);
 
@@ -448,13 +474,11 @@ public class TvShowFragment extends Fragment {
             icon_reviews.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (!series.getExternalIds().getImdbId().isEmpty() ) {
+                    if (!series.getExternalIds().getImdbId().isEmpty()) {
                         Intent intent = new Intent(getContext(), ReviewsActivity.class);
                         intent.putExtra(Constantes.FILME_ID, series.getExternalIds().getImdbId());
                         intent.putExtra(Constantes.NOME_FILME, series.getName());
                         intent.putExtra(Constantes.MEDIATYPE, series.getMediaType().name());
-
-
                         startActivity(intent);
 
                         Bundle bundle = new Bundle();
@@ -475,7 +499,7 @@ public class TvShowFragment extends Fragment {
 
 
     private void isSeguindo() {
-        // Log.d(TAG, "Seguindo " + seguindo);
+
         if (mAuth.getCurrentUser() != null) {
 
             if (seguindo) {
@@ -529,7 +553,7 @@ public class TvShowFragment extends Fragment {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    // Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+
 
                 }
             };
@@ -964,7 +988,7 @@ public class TvShowFragment extends Fragment {
     private void setProductionCountries() {
 
         if (!series.getOriginCountry().isEmpty()) {
-            production_countries.setText(series.getOriginCountry().get(0).toString());
+            production_countries.setText(series.getOriginCountry().get(0));
 
         } else {
             production_countries.setText(getString(R.string.não_informado));
