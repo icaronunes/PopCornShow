@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -255,7 +256,12 @@ public class ListaWatchlistFragment extends Fragment {
         recyclerViewFilme.setHasFixedSize(true);
         recyclerViewFilme.setItemAnimator(new DefaultItemAnimator());
         recyclerViewFilme.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        recyclerViewFilme.setAdapter(new ListaFilmeAdapter(getActivity(), movies, onclickListerne(), false));
+        if (movies.size() > 0) {
+            recyclerViewFilme.setAdapter(new ListaFilmeAdapter(getActivity(), movies, onclickListerne(), false));
+        } else {
+            view.findViewById(R.id.text_search_empty).setVisibility(View.VISIBLE);
+            ((TextView) view.findViewById(R.id.text_search_empty)).setText(R.string.empty);
+        }
 
         return view;
     }
@@ -267,8 +273,12 @@ public class ListaWatchlistFragment extends Fragment {
         recyclerViewTvShow.setHasFixedSize(true);
         recyclerViewTvShow.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTvShow.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        recyclerViewTvShow.setAdapter(new ListaTvShowAdapter(getActivity(), tvSeries, onclickTvShowListerne(), false));
-
+        if (tvSeries.size() > 0) {
+            recyclerViewTvShow.setAdapter(new ListaTvShowAdapter(getActivity(), tvSeries, onclickTvShowListerne(), false));
+        } else {
+            view.findViewById(R.id.text_search_empty).setVisibility(View.VISIBLE);
+            ((TextView) view.findViewById(R.id.text_search_empty)).setText(R.string.empty);
+        }
         return view;
     }
 }

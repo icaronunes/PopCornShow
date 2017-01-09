@@ -51,7 +51,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-
                 android:gravity="end"
                 android:textStyle="normal|bold" />
 
@@ -145,13 +144,22 @@
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:layout_margin="1dp" />
 
+                    <ImageView
+                        android:id="@+id/icon_reviews"
+                        android:layout_width="@dimen/icon_activity_padrao"
+                        android:layout_height="@dimen/icon_activity_padrao"
+                        android:src="@drawable/icon_reviews"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:layout_margin="1dp" />
+
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/seguir"
                         android:layout_weight="1"
                         android:theme="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
-                        android:visibility="visible" />
+                        android:visibility="visible"
+                        android:textSize="13sp" />
 
 
                 </LinearLayout>

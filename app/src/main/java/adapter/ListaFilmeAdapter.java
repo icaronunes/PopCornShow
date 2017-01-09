@@ -26,7 +26,7 @@ import utils.UtilsFilme;
  */
 public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.FavoriteViewHolder> {
 
-    List<FilmeDB> favoritos;
+    List<FilmeDB> filmes;
     Context context;
     ListaOnClickListener onClickListener;
     boolean status = false;
@@ -34,7 +34,7 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
     public ListaFilmeAdapter(FragmentActivity favotireActivity, List<FilmeDB> favoritos,
                              ListaOnClickListener onClickListener, boolean b) {
         this.context = favotireActivity;
-        this.favoritos = favoritos;
+        this.filmes = favoritos;
         this.onClickListener = onClickListener;
         status = b;
     }
@@ -48,7 +48,7 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
     @Override
     public void onBindViewHolder(final FavoriteViewHolder holder, final int position) {
 
-        final FilmeDB movie = favoritos.get(position);
+        final FilmeDB movie = filmes.get(position);
        // Log.d("onBindViewHolder", "position" + position);
         if (movie != null) {
 
@@ -66,7 +66,7 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
 
             holder.img_button_coracao_favorite.setVisibility(View.GONE);
 
-            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + movie.getPoster())
+            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + movie.getPoster())
                     .into(holder.img_favorite, new Callback() {
                         @Override
                         public void onSuccess() {
@@ -99,8 +99,8 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
 
     @Override
     public int getItemCount() {
-        if (favoritos != null) {
-            return favoritos.size();
+        if (filmes != null) {
+            return filmes.size();
         }
         return 0;
     }

@@ -38,6 +38,16 @@
 
             <include layout="@layout/include_progress" />
 
+            <TextView
+                android:id="@+id/text_netflix_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="2dp"
+                android:gravity="center"
+                android:text="@string/search_empty"
+                android:visibility="invisible" />
+
         </FrameLayout>
 
     </LinearLayout>

@@ -20,8 +20,8 @@
 
         <ImageView
             android:id="@+id/image_tmdb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_activity_padrao"
+            android:layout_height="@dimen/icon_activity_padrao"
             android:src="@drawable/tmdb"
             android:layout_gravity="center" />
 
@@ -46,8 +46,8 @@
 
         <ImageView
             android:id="@+id/image_imdb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_activity_padrao"
+            android:layout_height="@dimen/icon_activity_padrao"
             android:src="@drawable/imdb"
             android:layout_gravity="center" />
 
@@ -71,8 +71,8 @@
 
         <ImageView
             android:id="@+id/image_tomatoes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_activity_padrao"
+            android:layout_height="@dimen/icon_activity_padrao"
             android:src="@drawable/tomatoes"
             android:layout_gravity="center" />
 
@@ -95,8 +95,8 @@
 
         <ImageView
             android:id="@+id/image_metacritic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_activity_padrao"
+            android:layout_height="@dimen/icon_activity_padrao"
             android:src="@drawable/metacritic"
             android:layout_gravity="center" />
 
@@ -120,8 +120,8 @@
 
         <ImageView
             android:id="@+id/image_netflix"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_activity_padrao"
+            android:layout_height="@dimen/icon_activity_padrao"
             android:src="@drawable/netflix"
             android:layout_gravity="center" />
 

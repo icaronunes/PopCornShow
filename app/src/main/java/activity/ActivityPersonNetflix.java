@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -42,6 +43,7 @@ public class ActivityPersonNetflix extends BaseActivity {
 
     private String TAG = this.getClass().getName();
     private List<Netflix> netflixs;
+    private TextView text_netflix_empty;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class ActivityPersonNetflix extends BaseActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         linear_person_netflix_layout = (LinearLayout) findViewById(R.id.linear_person_netflix_layout);
         progressBar = (ProgressBar) findViewById(R.id.progress);
+        text_netflix_empty = (TextView) findViewById(R.id.text_netflix_empty);
 
         AdView adview = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
@@ -128,11 +131,15 @@ public class ActivityPersonNetflix extends BaseActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            progressBar.setVisibility(View.GONE);
 
+            if (netflixs != null && netflixs.size() > 0) {
                 recyclerView.setAdapter(new ActorNetflixAdapter(ActivityPersonNetflix.this,
-                        netflixs != null ? netflixs : null));
-
+                        netflixs));
+                progressBar.setVisibility(View.GONE);
+            } else {
+                text_netflix_empty.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+            }
         }
     }
 }

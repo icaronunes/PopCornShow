@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
@@ -8,11 +8,9 @@
 
     <ImageView
         android:id="@+id/img_collection"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-
-        android:elevation="3dp" />
+        android:layout_width="250dp"
+        android:scaleType="matrix" />
 
     <TextView
         android:id="@+id/dateCollection"
@@ -20,24 +18,9 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:maxLines="2"
-        android:textColor="#000" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/dialogInterno"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ver_no_app" />
-
-        <Button
-            android:id="@+id/dialogExterno"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pesquisar_internet" />
-    </LinearLayout>
+        android:textColor="#000"
+        android:layout_margin="10dp" />
 
 </LinearLayout>
+
+    <!--android:layout_height="440dp"-->

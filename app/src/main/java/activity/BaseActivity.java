@@ -70,12 +70,6 @@ public class BaseActivity extends AppCompatActivity {
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private FirebaseUser user;
 
-    public interface SalvarImageShare{
-        void retornaFile(File file);
-        void RetornoFalha();
-    }
-
-
     public static void SnackBar(final View view, String msg) {
 
         Snackbar.make(view, msg
@@ -96,6 +90,15 @@ public class BaseActivity extends AppCompatActivity {
             }
         })
                 .show();
+    }
+
+    static public String getLocale() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return Locale.getDefault().toLanguageTag();
+        } else {
+            return Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry();
+        }
     }
 
     protected void setUpToolBar() {
@@ -179,45 +182,45 @@ public class BaseActivity extends AppCompatActivity {
                 imgUserPhoto.setOnClickListener(onClickListenerlogado());
             } else {
                 if (user.getProviders() != null)
-                   // Log.d(TAG, user.getProviders().get(0));
-                switch (user.getProviders().get(0)) {
+                    // Log.d(TAG, user.getProviders().get(0));
+                    switch (user.getProviders().get(0)) {
 
-                    case "google.com": {
-                        textLogin.setVisibility(View.VISIBLE);
-                        grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-                        tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
-                        tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
-                        Picasso.with(getBaseContext()).load(user.getPhotoUrl())
-                                .placeholder(R.drawable.user)
-                                .into(imgUserPhoto);
-                        imgUserPhoto.setOnClickListener(onClickListenerlogado());
-                        break;
-                    }
+                        case "google.com": {
+                            textLogin.setVisibility(View.VISIBLE);
+                            grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+                            tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
+                            tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
+                            Picasso.with(getBaseContext()).load(user.getPhotoUrl())
+                                    .placeholder(R.drawable.user)
+                                    .into(imgUserPhoto);
+                            imgUserPhoto.setOnClickListener(onClickListenerlogado());
+                            break;
+                        }
 
-                    case "facebook.com": {
-                        textLogin.setVisibility(View.VISIBLE);
-                        grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-                        tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
-                        tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
-                        Picasso.with(getBaseContext()).load(user.getPhotoUrl())
-                                .placeholder(R.drawable.user)
-                                .into(imgUserPhoto);
-                        imgUserPhoto.setOnClickListener(onClickListenerlogado());
-                        break;
-                    }
+                        case "facebook.com": {
+                            textLogin.setVisibility(View.VISIBLE);
+                            grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+                            tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
+                            tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
+                            Picasso.with(getBaseContext()).load(user.getPhotoUrl())
+                                    .placeholder(R.drawable.user)
+                                    .into(imgUserPhoto);
+                            imgUserPhoto.setOnClickListener(onClickListenerlogado());
+                            break;
+                        }
 
-                    case "password": {
-                        textLogin.setVisibility(View.GONE);
-                        grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-                        tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
-                        tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
-                        Picasso.with(getBaseContext()).load(user.getPhotoUrl())
-                                .placeholder(R.drawable.user)
-                                .into(imgUserPhoto);
-                        imgUserPhoto.setOnClickListener(onClickListenerlogado());
-                        break;
+                        case "password": {
+                            textLogin.setVisibility(View.GONE);
+                            grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+                            tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
+                            tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
+                            Picasso.with(getBaseContext()).load(user.getPhotoUrl())
+                                    .placeholder(R.drawable.user)
+                                    .into(imgUserPhoto);
+                            imgUserPhoto.setOnClickListener(onClickListenerlogado());
+                            break;
+                        }
                     }
-                }
             }
         }
     }
@@ -248,8 +251,7 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.menu_drav_oscar: {
                 this.navigationView.setCheckedItem(id);
             }
-            case R.id.seguindo :
-            {
+            case R.id.seguindo: {
                 this.navigationView.setCheckedItem(id);
 
             }
@@ -483,7 +485,7 @@ public class BaseActivity extends AppCompatActivity {
                 File dir = new File(file, endereco);
                 BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                 if (drawable != null) {
-                   // Log.d(TAG, "salvaImagemMemoriaCache.drawble");
+                    // Log.d(TAG, "salvaImagemMemoriaCache.drawble");
                     Bitmap bitmap = drawable.getBitmap();
                     UtilsFilme.writeBitmap(dir, bitmap);
                 }
@@ -564,7 +566,7 @@ public class BaseActivity extends AppCompatActivity {
                         public void onClick(View view) {
 
                             AlertDialog dialog = new AlertDialog.Builder(BaseActivity.this)
-                                        .setTitle(getResources().getString(R.string.deletar_conta))
+                                    .setTitle(getResources().getString(R.string.deletar_conta))
                                     .setMessage(getResources().getString(R.string.deletar_conta_txt))
                                     .setNegativeButton(getResources().getString(R.string.cancel), null)
                                     .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
@@ -592,7 +594,7 @@ public class BaseActivity extends AppCompatActivity {
                                         }
 
                                     }).create();
-                       dialog.show();
+                            dialog.show();
                         }
                     });
 
@@ -633,8 +635,8 @@ public class BaseActivity extends AppCompatActivity {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful()) {
-                                                           // Log.d(TAG, senha.getEditText().getText().toString());
-                                                           // Log.d(TAG, repetir_senha.getEditText().getText().toString());
+                                                            // Log.d(TAG, senha.getEditText().getText().toString());
+                                                            // Log.d(TAG, repetir_senha.getEditText().getText().toString());
                                                             alertDialogReset.dismiss();
                                                             Toast.
                                                                     makeText(BaseActivity.this,
@@ -647,7 +649,7 @@ public class BaseActivity extends AppCompatActivity {
                                                     }
                                                 });
                                     } else {
-                                       // Log.d(TAG, "Não entrou");
+                                        // Log.d(TAG, "Não entrou");
                                     }
                                 }
                             });
@@ -670,12 +672,9 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    static public String getLocale(){
+    public interface SalvarImageShare {
+        void retornaFile(File file);
 
-        if  ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
-            return Locale.getDefault().toLanguageTag();
-        } else {
-            return Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry();
-        }
+        void RetornoFalha();
     }
 }

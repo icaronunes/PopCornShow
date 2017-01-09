@@ -2,6 +2,7 @@ package activity;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -10,6 +11,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crash.FirebaseCrash;
 
 import br.com.icaro.filme.R;
 import utils.Config;
@@ -45,18 +47,25 @@ public class TrailerActivity extends YouTubeBaseActivity implements YouTubePlaye
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider,
                                         YouTubePlayer player, boolean wasRestored) {
-        if (!wasRestored) {
-            player.cueVideo(youtube_key);
-            player.setFullscreen(true);
-            player.addFullscreenControlFlag(1);
-            player.play();
 
-            FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
-            Bundle bundle = new Bundle();
-            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Play_youTube");
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, youtube_key );
-            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        try {
 
+            if (!wasRestored) {
+                player.cueVideo(youtube_key);
+                player.setFullscreen(true);
+                player.addFullscreenControlFlag(1);
+                player.play();
+
+                FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Play_youTube");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, youtube_key);
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+            }
+        } catch ( Exception e){
+            FirebaseCrash.report(e);
+            Toast.makeText(this, R.string.ops, Toast.LENGTH_LONG).show();
         }
     }
 

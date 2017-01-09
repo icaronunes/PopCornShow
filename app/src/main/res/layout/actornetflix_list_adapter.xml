@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
     android:clickable="true"
+    app:cardBackgroundColor="@color/netflix"
     app:cardCornerRadius="4dp"
     app:cardElevation="2dp"
     card_view:cardElevation="0dp">

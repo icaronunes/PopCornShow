@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -143,7 +144,13 @@ public class ListaSeguindoFragment extends Fragment {
         recyclerViewMissing.setHasFixedSize(true);
         recyclerViewMissing.setItemAnimator(new DefaultItemAnimator());
         recyclerViewMissing.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerViewMissing.setAdapter(new ProximosAdapter(getActivity(), setSeriesMissing(userTvshows)));
+        List<UserTvshow> missing = setSeriesMissing(userTvshows);
+        if (missing.size() > 0) {
+            recyclerViewMissing.setAdapter(new ProximosAdapter(getActivity(), missing));
+        } else {
+            view.findViewById(R.id.text_search_empty).setVisibility(View.VISIBLE);
+            ((TextView) view.findViewById(R.id.text_search_empty)).setText(R.string.empty);
+        }
         return view;
     }
 
@@ -154,7 +161,12 @@ public class ListaSeguindoFragment extends Fragment {
         recyclerViewSeguindo.setHasFixedSize(true);
         recyclerViewSeguindo.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSeguindo.setLayoutManager(new GridLayoutManager(getContext(),4));
-        recyclerViewSeguindo.setAdapter(new SeguindodAdapter(getActivity(), userTvshows));
+        if (userTvshows.size() > 0) {
+            recyclerViewSeguindo.setAdapter(new SeguindodAdapter(getActivity(), userTvshows));
+        } else {
+            view.findViewById(R.id.text_search_empty).setVisibility(View.VISIBLE);
+            ((TextView) view.findViewById(R.id.text_search_empty)).setText(R.string.empty);
+        }
         return view;
     }
 

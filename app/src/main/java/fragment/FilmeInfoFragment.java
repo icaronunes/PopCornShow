@@ -6,6 +6,7 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -164,7 +165,6 @@ public class FilmeInfoFragment extends Fragment {
         setSpokenLanguages();
         setProductionCountries();
         setPopularity();
-        setReviews();
         setCollectoin();
         setCast();
         setCrews();
@@ -175,24 +175,17 @@ public class FilmeInfoFragment extends Fragment {
         icon_reviews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (movieDb.getReviews().size() >= 1) {
+                if (!movieDb.getImdbID().isEmpty() ) {
                     Intent intent = new Intent(getContext(), ReviewsActivity.class);
-                    intent.putExtra(Constantes.FILME_ID, movieDb.getId());
+                    intent.putExtra(Constantes.FILME_ID, movieDb.getImdbID());
                     intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
+                    intent.putExtra(Constantes.MEDIATYPE, movieDb.getMediaType().name());
 
                     startActivity(intent);
 
                     bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_reviews");
                     bundle.putString(FirebaseAnalytics.Param.DESTINATION, ReviewsActivity.class.getName());
-                    FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                } else {
-                    // Log.d("SetSnack", "" + movieDb.getBudget());
-                    BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),
-                            getString(R.string.no_message));
-                    bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_reviews_SnackBar");
                     FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 }
             }
@@ -470,10 +463,11 @@ public class FilmeInfoFragment extends Fragment {
                         public void run() {
                             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
                             boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+
                             try {
                                 if (idioma_padrao) {
                                     info = FilmeService.getTmdbCollections()
-                                            .getCollectionInfo(id, Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry() + ",en,null");
+                                            .getCollectionInfo(id, getLocale() + ",en,null");
                                     getCollection(info);
                                 } else {
                                     info = FilmeService.getTmdbCollections()
@@ -571,7 +565,7 @@ public class FilmeInfoFragment extends Fragment {
                     LayoutInflater inflater = getActivity().getLayoutInflater();
                     View dialog_collection = inflater.inflate(R.layout.dialog_collection, null);
                     ViewPager pager = (ViewPager) dialog_collection.findViewById(R.id.viewpager_collection);
-                    pager.setAdapter(new CollectionPagerAdapter(info, getContext(), movieDb.getId()));
+                    pager.setAdapter(new CollectionPagerAdapter(info, getContext()));
                     builder.setView(dialog_collection);
                     builder.show();
 
@@ -600,6 +594,15 @@ public class FilmeInfoFragment extends Fragment {
             descricao.setText(movieDb.getOverview());
         } else {
             descricao.setText(getString(R.string.sem_sinopse));
+        }
+    }
+
+    public String getLocale(){
+
+        if  ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
+            return Locale.getDefault().toLanguageTag();
+        } else {
+            return Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry();
         }
     }
 
@@ -854,7 +857,7 @@ public class FilmeInfoFragment extends Fragment {
                     textCastPersonagem.setText(personCast.getCharacter());
                     textCastNome.setText(personCast.getName());
                     with(getActivity())
-                            .load(UtilsFilme.getBaseUrlImagem(3) + personCast.getProfilePath())
+                            .load(UtilsFilme.getBaseUrlImagem(2) + personCast.getProfilePath())
                             .placeholder(R.drawable.person)
                             .into(imageView);
                     progressBar.setVisibility(View.INVISIBLE);
@@ -910,7 +913,7 @@ public class FilmeInfoFragment extends Fragment {
                     textCrewJob.setText(crew.getJob());
                     textCrewNome.setText(crew.getName());
                     with(getActivity())
-                            .load(UtilsFilme.getBaseUrlImagem(1) + crew.getProfilePath())
+                            .load(UtilsFilme.getBaseUrlImagem(2) + crew.getProfilePath())
                             .placeholder(getResources().getDrawable(R.drawable.person))
                             .into(imgPagerCrews);
                     progressBarCrew.setVisibility(View.INVISIBLE);
@@ -971,7 +974,7 @@ public class FilmeInfoFragment extends Fragment {
                         textSimilares.setText(movie.getTitle());
                     }
                     with(getActivity())
-                            .load(UtilsFilme.getBaseUrlImagem(1) + movie.getPosterPath())
+                            .load(UtilsFilme.getBaseUrlImagem(2) + movie.getPosterPath())
                             .placeholder(getResources().getDrawable(R.drawable.poster_empty))
                             .into(imgPagerSimilares, new Callback() {
                                 @Override
@@ -1033,15 +1036,6 @@ public class FilmeInfoFragment extends Fragment {
         }
     }
 
-    private void setReviews() {
-
-        if (movieDb.getReviews().size() >= 1) {
-            icon_reviews.setImageResource(R.drawable.icon_reviews);
-        } else {
-            icon_reviews.setImageResource(R.drawable.icon_no_reviews);
-        }
-
-    }
 
     private void setTreiler() {
 
@@ -1181,8 +1175,6 @@ public class FilmeInfoFragment extends Fragment {
             }
         }
 
-        float media = (tmdb + imdb + metascore + tomato) / tamanho;
-
-        return media;
+        return (tmdb + imdb + metascore + tomato) / tamanho;
     }
 }

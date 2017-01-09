@@ -251,7 +251,7 @@ public class SearchMultiActivity extends BaseActivity {
 
                 movieDbList = movieDbs;
             }
-            if (movieDbList != null) {
+            if (movieDbList != null && movieDbList.size() >0) { // TODO: 09/01/17 pode ser null? - vai dar erro?
                 swipeRefreshLayout.setRefreshing(false);
                 recyclerView.setAdapter(new SearchAdapter(SearchMultiActivity.this, movieDbList));
                 swipeRefreshLayout.setEnabled(true);

@@ -25,7 +25,7 @@ import utils.UtilsFilme;
  */
 public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.FavoriteViewHolder> {
 
-    List<TvshowDB> favoritos;
+    List<TvshowDB> tvshows;
     Context context;
     ListaOnClickListener onClickListener;
     boolean status = false;
@@ -39,7 +39,7 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
     public ListaTvShowAdapter(Context activity, List<TvshowDB> tvSeries,
                               ListaOnClickListener ratedOnClickListener, boolean b) {
         this.context = activity;
-        this.favoritos = tvSeries;
+        this.tvshows = tvSeries;
         this.onClickListener  = ratedOnClickListener;
         this.status = b;
 
@@ -56,7 +56,7 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
     @Override
     public void onBindViewHolder(final FavoriteViewHolder holder, final int position) {
 
-        final TvshowDB series = favoritos.get(position);
+        final TvshowDB series = tvshows.get(position);
        // Log.d("onBindViewHolder", "position" + position);
 
         if (status) {
@@ -76,7 +76,7 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
 
             holder.img_button_coracao_favorite.setVisibility(View.GONE);
 
-            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + series.getPoster())
+            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + series.getPoster())
                     .error(R.drawable.poster_empty)
                     .into(holder.img_favorite, new Callback() {
                         @Override
@@ -111,8 +111,8 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
 
     @Override
     public int getItemCount() {
-        if (favoritos != null) {
-            return favoritos.size();
+        if (tvshows != null) {
+            return tvshows.size();
         }
         return 0;
     }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -12,7 +11,6 @@ import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,18 +33,15 @@ public class CollectionPagerAdapter extends PagerAdapter {
 
     private CollectionInfo info;
     private Context context;
-    private int id;
     private ImageView imageView;
     private LinearLayout linearLayout;
     private TextView nome;
-    private Button externo;
     private FirebaseAnalytics firebaseAnalytics;
-    private Button interno;
 
 
-    public CollectionPagerAdapter(CollectionInfo info, Context context, int id) {
+
+    public CollectionPagerAdapter(CollectionInfo info, Context context) {
         this.info = info;
-        this.id = id;
         this.context = context;
     }
 
@@ -90,13 +85,8 @@ public class CollectionPagerAdapter extends PagerAdapter {
                     }
                 });
 
-        interno = (Button) view.findViewById(R.id.dialogInterno);
-        if (info.getParts().get(position).getId() == id) {
-            interno.setVisibility(View.GONE);
-        }
-        interno.setOnClickListener(this.onClickListenerInterno(position));
-        externo = (Button) view.findViewById(R.id.dialogExterno);
-        externo.setOnClickListener(this.onClickListenerExterno(position));
+        imageView.setOnClickListener(this.onClickListenerInterno(position));
+
        // Log.d("CollectionPagerAdapter", "instantiateItem");
         String ano = "xxxx";
         if (info.getParts().get(position).getReleaseDate() != null) {
@@ -147,35 +137,11 @@ public class CollectionPagerAdapter extends PagerAdapter {
         };
     }
 
-    private View.OnClickListener onClickListenerExterno(final int position) {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String string = new String("https://play.google.com/store/search?c=movies&q=");
-                String query = info.getParts().get(position).getName();
-                string = string.concat(query);
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(string));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-              //  Log.d("icon_collection", string.toString());
-                getContext().startActivity(intent);
-
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Collection_externo_site");
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, info.getName());
-                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, info.getId());
-                firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
-                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-            }
-        };
-    }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
        // Log.d("CollectionPagerAdapter", "destroyItem");
         ((ViewPager) container).removeView((View) object);
     }
-
 
 }

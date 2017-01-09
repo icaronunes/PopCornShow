@@ -2,7 +2,7 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,19 +13,26 @@ import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
+import activity.ReviewsActivity;
+import activity.Site;
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.model.Reviews;
+import domain.MessageItem;
+import domain.ReviewsUflixit;
+import utils.Constantes;
 
 /**
  * Created by icaro on 17/07/16.
  */
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.FilmeViewHolder> {
+    private final String TAG = ReviewsActivity.class.getName();
     Context context;
-    private List<Reviews> reviews;
+    private ReviewsUflixit reviews;
 
-    public ReviewsAdapter(Context baseContext, List<Reviews> reviews) {
+    public ReviewsAdapter(Context baseContext, ReviewsUflixit reviews) {
         context = baseContext;
         this.reviews = reviews;
     }
@@ -38,31 +45,73 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.FilmeVie
     }
 
     @Override
-    public void onBindViewHolder(final ReviewsAdapter.FilmeViewHolder holder, final int position) {
-        holder.author.setText(reviews.get(position).getAuthor());
-        holder.reviews_content.setText(reviews.get(position).getContent());
+    public void onBindViewHolder(final ReviewsAdapter.FilmeViewHolder holder,  int position) {
+
+        final MessageItem reportagem = reviews.getMessage().get(position);
+
+        holder.author.setText(reportagem.getAttr() != null  ? reportagem.getAttr() : "...");
+
+        holder.reviews_content.setText(reportagem.getLabel());
+
+        if (verificarImportancia(reportagem)) {
+            holder.reviews_content.setTextColor(context.getResources().getColor(R.color.gray_reviews));
+        }
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(reviews.get(position).getUrl()));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent intent = new Intent(context, Site.class);
+                intent.putExtra(Constantes.SITE, reportagem.getUrl());
                 context.startActivity(intent);
 
                 FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
 
                 Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, reviews.get(position).getUrl());
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, reportagem.getUrl());
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Reviews");
+                bundle.putString("Critito de cinema", reportagem.getAttr() );
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
             }
         });
     }
 
+    private boolean verificarImportancia(MessageItem reportagem) {
+        List<String> importante = Arrays.asList(
+                "New York Times",
+                "Hugo Gomes",
+                "Los Angeles Times",
+                "washington post",
+                "Hollywood News",
+                "rolling stone",
+                "Metro us",
+                "cbs news",
+                "pt-br",
+                "portugueses",
+                "portuguese",
+                "brasil",
+                Locale.getDefault().getDisplayName(),
+                Locale.getDefault().getDisplayCountry(),
+                Locale.getDefault().getDisplayLanguage()
+        );
+
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            importante.add(Locale.getDefault().toLanguageTag());
+        }
+
+        for (String s : importante) {
+
+            if (reportagem.getLabel().toLowerCase().contains(s.toLowerCase())){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public int getItemCount() {
-        return reviews.size() > 0 ? reviews.size() : 0;
+        return reviews.getMessage().size() > 0 ? reviews.getMessage().size() : 0;
     }
 
     public class FilmeViewHolder extends RecyclerView.ViewHolder {

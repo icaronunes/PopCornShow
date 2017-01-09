@@ -56,6 +56,7 @@ import activity.CrewsActivity;
 import activity.ElencoActivity;
 import activity.PersonActivity;
 import activity.PosterGridActivity;
+import activity.ReviewsActivity;
 import activity.SettingsActivity;
 import activity.Site;
 import activity.TemporadaActivity;
@@ -97,7 +98,7 @@ public class TvShowFragment extends Fragment {
     private TextView titulo, categoria, descricao, voto_media, produtora,
             original_title, production_countries, status, temporada,
             popularity, lancamento, textview_crews, textview_elenco;
-    private ImageView icon_site, img_poster, img_star;
+    private ImageView icon_site, img_poster, img_star, icon_reviews;
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
     private UserTvshow userTvshow;
@@ -444,6 +445,26 @@ public class TvShowFragment extends Fragment {
             });
 
 
+            icon_reviews.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!series.getExternalIds().getImdbId().isEmpty() ) {
+                        Intent intent = new Intent(getContext(), ReviewsActivity.class);
+                        intent.putExtra(Constantes.FILME_ID, series.getExternalIds().getImdbId());
+                        intent.putExtra(Constantes.NOME_FILME, series.getName());
+                        intent.putExtra(Constantes.MEDIATYPE, series.getMediaType().name());
+
+
+                        startActivity(intent);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_reviews");
+                        bundle.putString(FirebaseAnalytics.Param.DESTINATION, ReviewsActivity.class.getName());
+                        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                    }
+                }
+            });
+
         }
 
     }
@@ -722,6 +743,7 @@ public class TvShowFragment extends Fragment {
         icon_site = (ImageView) view.findViewById(R.id.icon_site);
         textview_crews = (TextView) view.findViewById(R.id.textview_crews);
         textview_elenco = (TextView) view.findViewById(R.id.textview_elenco);
+        icon_reviews = (ImageView) view.findViewById(R.id.icon_reviews);
         seguir = (Button) view.findViewById(R.id.seguir);
 
         seguir.setOnClickListener(ListenerSeguir());
@@ -849,7 +871,9 @@ public class TvShowFragment extends Fragment {
                 .setDuration(2300);
         ObjectAnimator alphaSite = ObjectAnimator.ofFloat(icon_site, "alpha", 0, 1)
                 .setDuration(3000);
-        animatorSet.playTogether(alphaStar, alphaMedia, alphaSite);
+        ObjectAnimator alphaReviews = ObjectAnimator.ofFloat(icon_reviews, "alpha", 0, 1)
+                .setDuration(3250);
+        animatorSet.playTogether(alphaStar, alphaMedia, alphaSite, alphaReviews);
         animatorSet.start();
     }
 

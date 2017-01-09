@@ -180,4 +180,9 @@
     <string name="populares">Most Popular</string>
     <string name="ver_netflix">See Netflix</string>
     <string name="procurar_netflix">Search on Netflix</string>
+    <string name="alerta_spoiler">Warning</string>
+    <string name="msg_spoiler">These links may contain SPOILERS</string>
+    <string name="empty_favorites">No Favorites</string>
+    <string name="empty_rated">Unclassified</string>
+    <string name="empty">Empty</string>
 </resources>

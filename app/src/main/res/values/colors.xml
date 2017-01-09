@@ -17,7 +17,7 @@
     <color name="green">#0f0</color>
     <color name="yellow">#fff000</color>
     <color name="gray">#cccccc</color>
-
+    <color name="gray_reviews">#74260e</color>
 
     <!-- SwipeRefreshLayout -->
     <color name="refresh_progress_1">#33B5E5</color>

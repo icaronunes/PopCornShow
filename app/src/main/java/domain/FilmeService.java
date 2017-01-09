@@ -40,11 +40,14 @@ import static info.movito.themoviedbapi.TmdbPeople.TMDB_METHOD_PERSON;
 
 public class FilmeService {
 
+    private static final String TAG = FilmeService.class.getName();
+
     private static final Collection<Integer> SUCCESS_STATUS_CODES = Arrays.asList(
             1, // Success
             12, // The item/record was updated successfully.
             13 // The item/record was updated successfully.
     );
+
 
     public static TmdbLists getTmdbList() {
         return new TmdbApi(Config.TMDB_API_KEY).getLists();
@@ -223,6 +226,40 @@ public class FilmeService {
 
         }
         return netflix;
+    }
+
+    public static ReviewsUflixit getReviews(String id, String type) {
+        try {
+        final String url = "https://uflixit.p.mashape.com/"+type + "/reviews?imdb_id=" + id;
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Accept", "application/json")
+                .addHeader("X-Mashape-Key", "BHZzlw5fvGmshgVcYJEYyRfFjEvcp1j3XVrjsndTOINYyd0z47")
+                .build();
+        // These code snippets use an open-source library.
+
+            Response response = client.newCall(request).execute();
+          //  Log.d(TAG, "getReviews: "+ response.body().toString());
+            return parseJSONReviws(response);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    private static ReviewsUflixit parseJSONReviws(Response response) {
+        Gson gson = new GsonBuilder().create();
+        ReviewsUflixit reviewsUflixit = null;
+        try {
+            reviewsUflixit = gson.fromJson(response.body().string(), ReviewsUflixit.class);
+
+        } catch (Exception e){
+
+        }
+        return reviewsUflixit;
     }
 
 

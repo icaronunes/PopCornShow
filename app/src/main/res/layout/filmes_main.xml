@@ -32,7 +32,9 @@
             android:typeface="serif"
             android:layout_marginLeft="6dp"
             android:layout_marginStart="6dp"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="normal|bold"
+            android:textColor="@color/red" />
 
 
         <HorizontalScrollView
@@ -57,7 +59,9 @@
             android:text="@string/em_breve"
             android:typeface="serif"
             android:layout_marginLeft="6dp"
-            android:layout_marginStart="6dp" />
+            android:layout_marginStart="6dp"
+            android:textStyle="normal|bold"
+            android:textColor="@color/blue" />
 
         <HorizontalScrollView
             android:id="@+id/horizontal_filme_ontheair_main"

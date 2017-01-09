@@ -38,8 +38,7 @@ public class SeguindodAdapter extends RecyclerView.Adapter<SeguindodAdapter.Segu
     @Override
     public SeguindodAdapter.SeguindoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.seguindo_tvshow, parent, false);
-        SeguindoViewHolder holder = new SeguindoViewHolder(view);
-        return holder;
+        return new SeguindoViewHolder(view);
     }
 
     @Override

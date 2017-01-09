@@ -29,11 +29,11 @@
             android:icon="@drawable/dado"
             android:title="@string/random" />
 
-        <item
-            android:id="@+id/menu_drav_netflix"
-            android:checkable="true"
-            android:icon="@drawable/dado"
-            android:title="@string/random" />
+        <!--<item-->
+            <!--android:id="@+id/menu_drav_netflix"-->
+            <!--android:checkable="true"-->
+            <!--android:icon="@drawable/dado"-->
+            <!--android:title="@string/random" />-->
 
     </group>
 

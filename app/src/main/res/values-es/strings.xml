@@ -172,4 +172,9 @@
     <string name="minutos">mins</string>
     <string name="ver_netflix">Véase Netflix</string>
     <string name="procurar_netflix">Buscar el Netflix</string>
+    <string name="alerta_spoiler">Advertencia</string>
+    <string name="msg_spoiler">Estos enlaces pueden contener SPOILERS</string>
+    <string name="empty_favorites">Sin Favorita</string>
+    <string name="empty_rated">No se clasifican</string>
+    <string name="empty">Vacía</string>
 </resources>
