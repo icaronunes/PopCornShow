@@ -8,13 +8,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -122,7 +122,8 @@ public class ActivityPersonNetflix extends BaseActivity {
                 Collections.addAll(netflixs, netflixDirector);
 
             } catch (Exception e) {
-                Log.d(TAG, e.getMessage());
+               // Log.d(TAG, e.getMessage());
+                Toast.makeText(ActivityPersonNetflix.this, R.string.ops, Toast.LENGTH_SHORT).show();
             }
 
             return null;

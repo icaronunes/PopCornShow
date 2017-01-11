@@ -144,13 +144,11 @@
     <string name="remover_watch">Remove from Watchlist</string>
     <string name="sem_login">User not logged</string>
     <string name="title_intro_1">PopCorn Show</string>
-    <string name="subtitle_intro_1">Welcome to the new PopCorn Show</string>
+    <string name="subtitle_intro_1">Welcome to the PopCorn Show.\n\nCheck out the latest news</string>
     <string name="title_intro_2">News</string>
-    <string name="subtitle_intro_2">We have created our own login system</string>
+    <string name="subtitle_intro_2">Several links to sites around the world talking about the movie / tvshow</string>
     <string name="title_intro_3">Following</string>
-    <string name="subtitle_intro_3">Now we have a system of \"following\" a Tvshow. Know when the episode of the season will pass</string>
-    <string name="title_intro_4">Lists</string>
-    <string name="subtitle_intro_4" >Favorites, Evaluated and Watchlist continue but now within PopCorn Show</string>
+    <string name="subtitle_intro_3">Our system can now track whether the movie, tvshow or artist is in the Netflix catalog</string>
     <string name="reset_password">Forgot Password?</string>
     <string name="bt_signin">Sign In</string>
     <string name="anonymous">Anonymous</string>

@@ -235,8 +235,8 @@ public class FilmeService {
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("Accept", "application/json")
-                .addHeader("X-Mashape-Key", "BHZzlw5fvGmshgVcYJEYyRfFjEvcp1j3XVrjsndTOINYyd0z47")
-                .build();
+                .addHeader("X-Mashape-Key", "2m7eCR43FVmshfyoDP78TZNfNtgsp1Z0lyAjsnRX3PMQElsJA9")
+                .build(); // Teste - BHZzlw5fvGmshgVcYJEYyRfFjEvcp1j3XVrjsndTOINYyd0z47
         // These code snippets use an open-source library.
 
             Response response = client.newCall(request).execute();

@@ -11,7 +11,6 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -72,7 +71,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
 
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (sharedPref.getBoolean("22", true)) {
+        if (sharedPref.getBoolean("23", true)) {
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setIcon(R.drawable.netflix)
                     .setTitle(R.string.novidades_title)
@@ -81,10 +80,10 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putBoolean("22", false);
+                            editor.putBoolean("23", false);
                             editor.remove("21");
                             editor.remove("20");// sempre remover versão anterior
-                            editor.remove("19");// sempre remover versão anterior
+                            editor.remove("22");// sempre remover versão anterior
                             editor.apply();
                         }
                     }).create();
@@ -199,7 +198,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, connectionResult.toString());
+       // Log.d(TAG, connectionResult.toString());
     }
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
@@ -220,7 +219,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
                     tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies(getLocale()
                             , 1);
                 } catch (Exception e) {
-                    Log.d(TAG, e.toString());
+                   // Log.d(TAG, e.toString());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -234,7 +233,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
                     tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("en", 1, UtilsFilme.getTimezone());
                     tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies("en", 1);
                 } catch (Exception e) {
-                    Log.d(TAG, e.toString());
+                 //   Log.d(TAG, e.toString());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

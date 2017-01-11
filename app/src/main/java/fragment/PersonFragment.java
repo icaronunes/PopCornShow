@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -409,7 +408,7 @@ public class PersonFragment extends Fragment {
 
             } catch (Exception e) {
                 FirebaseCrash.report(e);
-                Log.d(TAG, e.getMessage());
+               // Log.d(TAG, e.getMessage());
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

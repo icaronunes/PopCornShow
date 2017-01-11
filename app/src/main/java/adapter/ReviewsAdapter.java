@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
@@ -77,14 +78,13 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.FilmeVie
     }
 
     private boolean verificarImportancia(MessageItem reportagem) {
-        List<String> importante = Arrays.asList(
+        List<String> importante = new LinkedList<>(Arrays.asList( //Linkedlist pois Arrays.aslist direto é um array umutavel
                 "New York Times",
                 "Hugo Gomes",
                 "Los Angeles Times",
                 "washington post",
                 "french",
                 "spanish",
-                "indonesian",
                 "india",
                 "italian",
                 "Hollywood News",
@@ -98,10 +98,10 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.FilmeVie
                 Locale.getDefault().getDisplayName(),
                 Locale.getDefault().getDisplayCountry(),
                 Locale.getDefault().getDisplayLanguage()
-        );
+        ));
 
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             importante.add(Locale.getDefault().toLanguageTag());
         }
 

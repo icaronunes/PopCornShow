@@ -22,7 +22,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -737,7 +736,6 @@ public class FilmeActivity extends BaseActivity {
 
 
                 } catch (Exception e) {
-                    Log.d(TAG, e.getMessage());
                     FirebaseCrash.report(e);
                     runOnUiThread(new Runnable() {
                         @Override
@@ -750,9 +748,9 @@ public class FilmeActivity extends BaseActivity {
 
                     if (movieDb.getReleaseDate() != null) {
                         String date = movieDb.getReleaseDate().substring(0, 4);
-                        Log.d(TAG, "doInBackground: " + date);
+
                         netflix = FilmeService.getNetflix(movieDb.getTitle(), Integer.parseInt(date));
-                        Log.d(TAG, "doInBackground: " + netflix.showId);
+
                     }
 
                     if (movieDb.getImdbID() != null) {

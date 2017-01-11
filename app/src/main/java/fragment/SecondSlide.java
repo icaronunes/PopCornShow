@@ -17,13 +17,13 @@ public class SecondSlide extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.intro, container, false);
         TextView title = (TextView) v.findViewById(R.id.intro_tite);
-        title.setText(getResources().getString(R.string.title_intro_2));
+        title.setText("Links");
 
         TextView subtitle = (TextView) v.findViewById(R.id.intro_subtitle);
         subtitle.setText(getResources().getText(R.string.subtitle_intro_2));
 
         ImageView imageView = (ImageView) v.findViewById(R.id.intro_img);
-        imageView.setImageDrawable(getResources().getDrawable(R.drawable.icon_movie_now_large));
+        imageView.setImageDrawable(getResources().getDrawable(R.drawable.intro_link));
         return v;
 
     }

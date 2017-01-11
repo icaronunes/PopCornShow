@@ -135,10 +135,9 @@
     <string name="star_avaliados">Evaluación</string>
     <string name="status">Estado:</string>
     <string name="suas_listas">Tus listas</string>
-    <string name="subtitle_intro_1">Bienvenido a la nueva PopCorn Show</string>
-    <string name="subtitle_intro_2">Hemos creado nuestro propio sistema de inicio de sesión</string>
-    <string name="subtitle_intro_3">Ahora tenemos un sistema de \"seguir\" una serie de televisión. Saber cuándo pasará el episodio de la temporada</string>
-    <string name="subtitle_intro_4">Favoritos, Evaluado y Lista de Seguimiento continuar pero ahora en PopCorn Show</string>
+    <string name="subtitle_intro_1">Bienvenido a las palomitas Mostrar.\n\nEcha un vistazo a las últimas noticias</string>
+    <string name="subtitle_intro_2">Varios enlaces a sitios de todo el mundo hablando de la película / tvshow</string>
+    <string name="subtitle_intro_3">Nuestro sistema ahora puede realizar un seguimiento de la tvshow película o artista en este catálogo de Netflix</string>
     <string name="subtitle_intro_5">Crea tu login y disfruta</string>
     <string name="tempo_nao_informado">Tiempo N / A</string>
     <string name="temporada">Temporada</string>
@@ -148,7 +147,6 @@
     <string name="title_intro_1">PopCorn Show</string>
     <string name="title_intro_2">Noticias</string>
     <string name="title_intro_3">Siguiendo</string>
-    <string name="title_intro_4">Liza</string>
     <string name="title_logoff_dialog">Salir del TMDB?</string>
     <string name="toast_salvar_imagem">Imagen guardada en la carpeta de la aplicación</string>
     <string name="today">En la TV hoy</string>

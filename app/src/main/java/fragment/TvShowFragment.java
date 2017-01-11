@@ -18,7 +18,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -1048,7 +1047,7 @@ public class TvShowFragment extends Fragment {
                     // Log.d(TAG, " tmdb "+ tmdb);
                     tamanho++;
                 } catch (Exception e) {
-                    Log.d(TAG, e.getMessage());
+                   // Log.d(TAG, e.getMessage());
                 }
             }
 
@@ -1060,7 +1059,7 @@ public class TvShowFragment extends Fragment {
                         // Log.d(TAG, " imdb " + imdb);
                         tamanho++;
                     } catch (Exception e) {
-                        Log.d(TAG, e.getMessage());
+                       // Log.d(TAG, e.getMessage());
                     }
                 }
             }
@@ -1074,7 +1073,7 @@ public class TvShowFragment extends Fragment {
                         // Log.d(TAG, " MetaScore " + metascore);
                         tamanho++;
                     } catch (Exception e) {
-                        Log.d(TAG, e.getMessage());
+                       // Log.d(TAG, e.getMessage());
                     }
                 }
             }
@@ -1083,10 +1082,10 @@ public class TvShowFragment extends Fragment {
                 if (!imdbDd.getTomatoRating().isEmpty()) {
                     try {
                         tomato = Float.parseFloat(imdbDd.getTomatoRating());
-                        Log.d(TAG, " tomato " + tomato);
+                      //  Log.d(TAG, " tomato " + tomato);
                         tamanho++;
                     } catch (Exception e) {
-                        Log.d(TAG, e.getMessage());
+                      //  Log.d(TAG, e.getMessage());
                     }
                 }
             }

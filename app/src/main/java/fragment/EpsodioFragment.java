@@ -44,6 +44,7 @@ import java.util.Map;
 import activity.PersonActivity;
 import br.com.icaro.filme.R;
 import domain.FilmeService;
+import domain.Imdb;
 import domain.UserEp;
 import domain.UserSeasons;
 import info.movito.themoviedbapi.model.Credits;
@@ -52,7 +53,6 @@ import info.movito.themoviedbapi.model.tv.TvEpisode;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static br.com.icaro.filme.R.id.ep_rating;
 import static java.lang.String.valueOf;
 
 
@@ -72,7 +72,6 @@ public class EpsodioFragment extends Fragment {
     FrameLayout frame_meio_ep_cima, frame_meio_ep_baixo;
     TextView ep_title, ep_tvshow, ep_director, air_date, ep_write, ep_votos, ep_sinopse;
     ImageView ep_image;
-    RatingBar ep_ratingBar;
     Button ep_rating_button;
     UserEp userEp;
     boolean seguindo;
@@ -84,12 +83,12 @@ public class EpsodioFragment extends Fragment {
     private ValueEventListener epsListener;
     private float numero_rated;
     private LinearLayout relativeLayout;
-    private FirebaseAnalytics mFirebaseAnalytics;
     private UserSeasons seasons;
+    private Imdb imdbDd;
 
 
-    public static Fragment newInstance(TvEpisode tvEpisode, String nome_serie,
-                                       int tvshow_id, int color, boolean seguindo, int position, UserSeasons seasons, int temporada_position) {
+    public static Fragment newInstance(TvEpisode tvEpisode, String nome_serie, int tvshow_id,
+                                       int color, boolean seguindo, int position, UserSeasons seasons, int temporada_position) {
 
         EpsodioFragment fragment = new EpsodioFragment();
         Bundle bundle = new Bundle();
@@ -102,9 +101,7 @@ public class EpsodioFragment extends Fragment {
         bundle.putInt(Constantes.POSICAO, position);
         bundle.putSerializable(Constantes.USER, seasons);
         bundle.putInt(Constantes.TEMPORADA_POSITION, temporada_position);
-
         fragment.setArguments(bundle);
-
         return fragment;
     }
 
@@ -123,7 +120,7 @@ public class EpsodioFragment extends Fragment {
             seasons = (UserSeasons) getArguments().getSerializable(Constantes.USER);
         }
 
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
         Bundle bundle = getArguments();
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
@@ -173,7 +170,6 @@ public class EpsodioFragment extends Fragment {
         air_date = (TextView) view.findViewById(R.id.air_date);
 
         ep_image = (ImageView) view.findViewById(R.id.ep_image);
-        ep_ratingBar = (RatingBar) view.findViewById(ep_rating);
         ep_rating_button = (Button) view.findViewById(R.id.ep_rating_button);
         ep_rating_button.setTextColor(color);
 
@@ -443,7 +439,7 @@ public class EpsodioFragment extends Fragment {
     private void setVote() {
 
         if (episode.getVoteAverage() > 0) {
-            String votos = (String) valueOf(episode.getVoteAverage()).subSequence(0, 3);
+            String votos = (String) String.valueOf(episode.getVoteAverage()).subSequence(0, 3);
 
             if (episode.getVoteAverage() < 10) {
                 ep_votos.setText(votos + "/" + episode.getVoteCount());
@@ -455,10 +451,11 @@ public class EpsodioFragment extends Fragment {
             linear_vote.setVisibility(View.GONE);
             frame_meio_ep_baixo.setVisibility(View.GONE);
         }
+
     }
 
     private void setAirDate() {
-        if (episode.getAirDate() != null && episode.getAirDate() != "") {
+        if (episode.getAirDate() != null && episode.getAirDate().equals("")) {
             air_date.setText(episode.getAirDate());
         } else {
             linear_air_date.setVisibility(View.GONE);
@@ -553,6 +550,7 @@ public class EpsodioFragment extends Fragment {
                     }
                 });
             }
+
             return null;
         }
 

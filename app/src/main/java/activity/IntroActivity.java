@@ -11,7 +11,6 @@ import com.github.paolorotolo.appintro.AppIntro;
 
 import fragment.FirstSlide;
 import fragment.FiveSlide;
-import fragment.FourthSlide;
 import fragment.SecondSlide;
 import fragment.ThirdSlide;
 
@@ -33,7 +32,7 @@ public class IntroActivity extends AppIntro {
         // AppIntro will automatically generate the dots indicator and buttons.
         SharedPreferences preferences = getSharedPreferences(INTRO, Context.MODE_PRIVATE);
         boolean valor = preferences.getBoolean(VISTO, false);
-        if (valor){
+        if (valor ){
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         } else {
@@ -41,7 +40,6 @@ public class IntroActivity extends AppIntro {
             addSlide(new FirstSlide(), getApplicationContext());
             addSlide(new SecondSlide(), getApplicationContext());
             addSlide(new ThirdSlide(), getApplicationContext());
-            addSlide(new FourthSlide(), getApplicationContext());
             addSlide(new FiveSlide(), getApplicationContext());
         }
 
@@ -65,7 +63,7 @@ public class IntroActivity extends AppIntro {
         SharedPreferences pref = getSharedPreferences(INTRO, 0);
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(VISTO, true);
-        editor.commit();
+        editor.apply();
         startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
@@ -76,7 +74,7 @@ public class IntroActivity extends AppIntro {
         SharedPreferences pref = getSharedPreferences(INTRO, 0);
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(VISTO, true);
-        editor.commit();
+        editor.apply();
         startActivity(new Intent(this, LoginActivity.class));
         finish();
     }

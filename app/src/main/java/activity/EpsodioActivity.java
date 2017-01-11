@@ -21,13 +21,10 @@ import utils.Constantes;
 public class EpsodioActivity extends BaseActivity {
 
     int tvshow_id, posicao, color, temporada_position;
-    ViewPager viewPager;
-    TabLayout tabLayout;
-    String nome_temporada;
-    TvSeason tvSeason;
-    FragmentManager fragmentManager;
-    UserSeasons seasons;
-    boolean seguindo;
+    private String nome_temporada;
+    private TvSeason tvSeason;
+    private UserSeasons seasons;
+    private boolean seguindo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,13 +32,14 @@ public class EpsodioActivity extends BaseActivity {
         setContentView(R.layout.activity_epsodios);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
-        viewPager = (ViewPager) findViewById(R.id.viewpager_epsodio);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout_epsodio);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager_epsodio);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout_epsodio);
         setExtras();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         viewPager.setOffscreenPageLimit(4);
-        viewPager.setAdapter(new EpsodioAdapter(this, fragmentManager, tvSeason, nome_temporada, tvshow_id, color, seguindo, seasons, temporada_position));
+        viewPager.setAdapter(new EpsodioAdapter(fragmentManager, tvSeason,
+                nome_temporada, tvshow_id, color, seguindo, seasons, temporada_position));
         viewPager.setCurrentItem(posicao);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(color);

@@ -1,11 +1,9 @@
 package adapter;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import activity.EpsodioActivity;
 import domain.UserSeasons;
 import fragment.EpsodioFragment;
 import info.movito.themoviedbapi.model.tv.TvSeason;
@@ -16,17 +14,16 @@ import info.movito.themoviedbapi.model.tv.TvSeason;
 public class EpsodioAdapter extends FragmentPagerAdapter {
 
     private final boolean seguindo;
-    Context context;
-    TvSeason tvSeason;
-    String nome_serie;
-    int tvshow_id, color, temporada_position;
-    UserSeasons seasons;
+    private TvSeason tvSeason;
+    private String nome_serie;
+    private int tvshow_id, color, temporada_position;
+    private UserSeasons seasons;
 
 
-    public EpsodioAdapter(EpsodioActivity epsodioActivity, FragmentManager supportFragmentManager,
-                          TvSeason tvSeason, String nome_serie, int tvshowid, int color, boolean seguindo, UserSeasons seasons, int temporada_position) {
+    public EpsodioAdapter(FragmentManager supportFragmentManager,
+                          TvSeason tvSeason, String nome_serie, int tvshowid,
+                          int color, boolean seguindo, UserSeasons seasons, int temporada_position) {
         super(supportFragmentManager);
-        this.context = epsodioActivity;
         this.tvSeason = tvSeason;
         this.nome_serie = nome_serie;
         this.tvshow_id = tvshowid;
@@ -39,7 +36,8 @@ public class EpsodioAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return EpsodioFragment.newInstance(tvSeason.getEpisodes().get(position), nome_serie, tvshow_id, color, seguindo, position, seasons, temporada_position);
+        return EpsodioFragment.newInstance(tvSeason.getEpisodes().get(position), nome_serie,
+                tvshow_id, color, seguindo, position, seasons, temporada_position);
     }
 
     @Override

@@ -15,7 +15,6 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +94,7 @@ public class FilmeInfoFragment extends Fragment {
     private int color_top;
     private Netflix netflix;
     private Imdb imdbDd;
-    private int mediaNotas;
+
 
     //************* Alguns metodos senco chamados 2 vezes
 
@@ -1128,10 +1127,10 @@ public class FilmeInfoFragment extends Fragment {
         if (movieDb.getVoteAverage() > 0) {
             try {
                 tmdb = movieDb.getVoteAverage();
-                Log.d(TAG, " tmdb "+ tmdb);
+                //Log.d(TAG, " tmdb "+ tmdb);
                 tamanho++;
             } catch (Exception e){
-                Log.d(TAG, e.getMessage());
+               // Log.d(TAG, e.getMessage());
             }
         }
 
@@ -1140,10 +1139,10 @@ public class FilmeInfoFragment extends Fragment {
                 if (!imdbDd.getImdbRating().isEmpty()) {
                     try {
                         imdb = Float.parseFloat(imdbDd.getImdbRating());
-                        Log.d(TAG, " imdb " + imdb);
+                      //  Log.d(TAG, " imdb " + imdb);
                         tamanho++;
                     } catch (Exception e) {
-                        Log.d(TAG, e.getMessage());
+                      //  Log.d(TAG, e.getMessage());
                     }
                 }
             }
@@ -1154,10 +1153,10 @@ public class FilmeInfoFragment extends Fragment {
                         float meta = Float.parseFloat(imdbDd.getMetascore());
                         float nota = meta / 10;
                         metascore = nota;
-                        Log.d(TAG, " MetaScore " + metascore);
+                      //  Log.d(TAG, " MetaScore " + metascore);
                         tamanho++;
                     } catch (Exception e) {
-                        Log.d(TAG, e.getMessage());
+                       // Log.d(TAG, e.getMessage());
                     }
                 }
             }
@@ -1166,10 +1165,10 @@ public class FilmeInfoFragment extends Fragment {
                 if (!imdbDd.getTomatoRating().isEmpty()) {
                     try {
                         tomato = Float.parseFloat(imdbDd.getTomatoRating());
-                        Log.d(TAG, " tomato " + tomato);
+                       // Log.d(TAG, " tomato " + tomato);
                         tamanho++;
                     } catch (Exception e) {
-                        Log.d(TAG, e.getMessage());
+                       // Log.d(TAG, e.getMessage());
                     }
                 }
             }

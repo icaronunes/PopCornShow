@@ -11,7 +11,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,8 +53,6 @@ public class TemporadaActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private boolean seguindo;
     private UserSeasons seasons;
-    private int position;
-
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
     private ValueEventListener postListener;
@@ -133,10 +130,10 @@ public class TemporadaActivity extends BaseActivity {
 
             @Override
             public void onClickVerTemporada(View view, int position) {
-               TemporadaActivity.this.position = position;
+
                 if (seasons != null) {
                     if (seasons.getUserEps().get(position).isAssistido()) {
-                        Log.d(TAG, "FALSE");
+                      //  Log.d(TAG, "FALSE");
                         String id = String.valueOf(serie_id);
 
                         Toast.makeText(TemporadaActivity.this, R.string.marcado_nao_assistido, Toast.LENGTH_SHORT).show();
@@ -152,7 +149,7 @@ public class TemporadaActivity extends BaseActivity {
                     //    Log.d(TAG, "desvisto");
 
                     } else {
-                        Log.d(TAG, "TRUE");
+                      //  Log.d(TAG, "TRUE");
                         String id = String.valueOf(serie_id);
 
                         String user = mAuth.getCurrentUser().getUid();
@@ -164,17 +161,6 @@ public class TemporadaActivity extends BaseActivity {
 
                         myRef.updateChildren(childUpdates);
 
-//                        String id = String.valueOf(serie_id);
-//                        String user = mAuth.getCurrentUser().getUid();
-//                        myRef.child(user)
-//                                .child("seguindo")
-//                                .child(id)
-//                                .child("seasons")
-//                                .child(String.valueOf(temporada_position))
-//                                .child("userEps")
-//                                .child(String.valueOf(position))
-//                                .child("assistido")
-//                                .setValue(true);
                         Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -294,7 +280,7 @@ public class TemporadaActivity extends BaseActivity {
                 if (idioma_padrao) {
                     tvSeason = FilmeService.getTmdbTvSeasons()
                             .getSeason(serie_id, temporada_id, getLocale() + ",en,null");
-//                Log.d("TemporadaActivity", tvSeason.getName());
+
                     return null;
                 } else {
                     tvSeason = FilmeService.getTmdbTvSeasons()
@@ -302,7 +288,7 @@ public class TemporadaActivity extends BaseActivity {
                     return null;
                 }
             } catch (Exception e ){
-                //Log.d(TAG, e.getMessage());
+
                 FirebaseCrash.report(e);
                 runOnUiThread(new Runnable() {
                     @Override
@@ -311,8 +297,8 @@ public class TemporadaActivity extends BaseActivity {
                     }
                 });
             }
-            return null;
 
+            return null;
         }
 
         @Override
