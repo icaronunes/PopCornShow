@@ -30,15 +30,6 @@
 
             <include layout="@layout/include_progress"  />
 
-            <ImageView
-                android:id="@+id/coracao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:alpha="0.8"
-                android:visibility="gone"
-                android:src="@drawable/icon_heart" />
-
             <TextView
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"

@@ -63,6 +63,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
                         public void onSuccess() {
                             String fist = series.getFirstAirDate();
                             holder.title.setText(fist.length() >= 4 ? fist.substring(0,4) : "");
+                            holder.progressBar.setVisibility(View.INVISIBLE);
                         }
 
                         @Override
@@ -70,9 +71,10 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
                             String title = series.getName();
                             String release = series.getFirstAirDate();
                             holder.title.setText(title + " - " + release);
+                            holder.progressBar.setVisibility(View.INVISIBLE);
                         }
                     });
-            holder.progressBar.setVisibility(View.INVISIBLE);
+
             if (tvshowOnClickListener != null) {
                 holder.imagem_filme.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -102,7 +104,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
     public static class TvShowViewHolder extends RecyclerView.ViewHolder {
 
         TextView title;
-        ImageView imagem_filme, coracao;
+        ImageView imagem_filme;
         CardView cardView;
         ProgressBar progressBar;
 
@@ -110,7 +112,6 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.titleTextView);
             imagem_filme = (ImageView) itemView.findViewById(R.id.imgFilme);
-            coracao = (ImageView) itemView.findViewById(R.id.coracao);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
         }

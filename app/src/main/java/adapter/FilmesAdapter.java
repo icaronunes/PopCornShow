@@ -66,6 +66,7 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
                         public void onSuccess() {
                             String date = movie.getReleaseDate();
                             holder.title.setText(date);
+                            holder.progressBar.setVisibility(View.INVISIBLE);
                         }
 
                         @Override
@@ -73,9 +74,11 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
                             String title = movie.getTitle();
                             String release  = movie.getReleaseDate();
                             holder.title.setText(title + " - " + release);
+                            holder.progressBar.setVisibility(View.INVISIBLE);
                         }
                     });
-            holder.progressBar.setVisibility(View.INVISIBLE);
+
+
             if (filmeOnClickListener != null) {
                 holder.imagem_filme.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -102,7 +105,7 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
     public static class FilmeViewHolder extends RecyclerView.ViewHolder {
 
         TextView title;
-        ImageView imagem_filme, coracao;
+        ImageView imagem_filme;
         CardView cardView;
         ProgressBar progressBar;
 
@@ -110,7 +113,6 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.titleTextView);
             imagem_filme = (ImageView) itemView.findViewById(R.id.imgFilme);
-            coracao = (ImageView) itemView.findViewById(R.id.coracao);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
         }

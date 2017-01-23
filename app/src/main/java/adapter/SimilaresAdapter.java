@@ -41,8 +41,7 @@ public class SimilaresAdapter extends RecyclerView.Adapter<SimilaresAdapter.Simi
     @Override
     public SimilareViewHolde onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.adapter_similares, parent, false);
-        SimilareViewHolde holde = new SimilareViewHolde(view);
-        return holde;
+        return new SimilareViewHolde(view);
     }
 
     @Override

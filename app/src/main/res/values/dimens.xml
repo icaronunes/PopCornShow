@@ -33,4 +33,9 @@
     <dimen name="dialog_collection_filme_height">460dp</dimen>
     <dimen name="pessoas_activity_width">135dp</dimen>
     <dimen name="pessoas_activity_height">190dp</dimen>
+    <dimen name="poster_filme_similares_height">140dp</dimen>
+    <dimen name="poster_filme_similares_width">100dp</dimen>
+
+    <dimen name="poster_produtora_width_padrao">120dp</dimen>
+    <dimen name="poster_produtora_height_padrao">170dp</dimen>
 </resources>

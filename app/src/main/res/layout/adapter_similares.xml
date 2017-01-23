@@ -6,7 +6,6 @@
     android:layout_margin="3dp"
     android:background="?attr/selectableItemBackground"
     android:orientation="horizontal">
-    >
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,18 +13,20 @@
 
     <ImageView
         android:id="@+id/img_similares"
-        android:layout_height="wrap_content"
-        android:layout_width="0dp"
-        android:layout_weight="0.25"
-        android:scaleType="fitStart"
-        android:adjustViewBounds="true" />
+        android:layout_height="@dimen/poster_filme_similares_height"
+        android:adjustViewBounds="true"
+        android:layout_width="@dimen/poster_filme_similares_width"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center_vertical" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:orientation="vertical"
         android:layout_height="wrap_content"
         android:layout_weight="0.75"
-        android:layout_marginStart="10dp">
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp">
 
             <TextView
                 android:id="@+id/similares_nome"
@@ -38,7 +39,6 @@
                 android:id="@+id/similares_data_lancamento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:textSize="12sp" />
 
             <LinearLayout
@@ -59,8 +59,7 @@
                         android:id="@+id/similares_voto_media"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|center_horizontal|center"
-                        />
+                        android:layout_gravity="center_vertical|center_horizontal|center" />
                 </FrameLayout>
 
 

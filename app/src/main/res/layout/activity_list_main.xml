@@ -55,4 +55,5 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_drawer_header"
         app:menu="@menu/nav_drawe_menu" />
+
 </android.support.v4.widget.DrawerLayout>

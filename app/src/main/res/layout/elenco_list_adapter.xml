@@ -10,13 +10,13 @@
     <ImageView
         android:id="@+id/img_elenco"
         android:layout_width="@dimen/poster_filme_width_padrao"
-        android:minWidth="80dp"
         android:layout_height="@dimen/poster_filme_height_padrao"
+        android:minWidth="80dp"
         android:layout_gravity="center_vertical"
         android:scaleType="centerCrop" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="88dp"
         android:layout_weight="0.75">
 

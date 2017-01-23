@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,8 +18,6 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.crash.FirebaseCrash;
-
-import java.util.Locale;
 
 import adapter.SimilaresAdapter;
 import br.com.icaro.filme.R;
@@ -123,10 +120,9 @@ public class SimilaresActivity extends BaseActivity{
         protected Void doInBackground(Void... voids) {
             try {
                 TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
-                similares = tmdbMovies.getSimilarMovies(id_filme, Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry(), 1);
+                similares = tmdbMovies.getSimilarMovies(id_filme, getLocale(), 1);
                 return null;
             } catch (Exception e){
-                Log.d(TAG, e.getMessage());
                 FirebaseCrash.report(e);
                 runOnUiThread(new Runnable() {
                     @Override

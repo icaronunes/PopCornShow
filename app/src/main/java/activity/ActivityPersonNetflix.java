@@ -118,8 +118,10 @@ public class ActivityPersonNetflix extends BaseActivity {
                 Netflix[] netflixActors = FilmeService.getNetflixActor(nome);
                 Collections.addAll(netflixs, netflixActors);
 
-                Netflix[] netflixDirector = FilmeService.getNetflixDirector(nome);
-                Collections.addAll(netflixs, netflixDirector);
+                if (netflixs.size() < 1) {
+                    Netflix[] netflixDirector = FilmeService.getNetflixDirector(nome);
+                    Collections.addAll(netflixs, netflixDirector);
+                }
 
             } catch (Exception e) {
                 FirebaseCrash.report(e);
