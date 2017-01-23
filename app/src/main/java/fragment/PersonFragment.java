@@ -22,6 +22,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -34,7 +36,6 @@ import adapter.PersonMovieAdapter;
 import adapter.PersontvAdapter;
 import br.com.icaro.filme.R;
 import domain.FilmeService;
-import domain.NetflixActor;
 import info.movito.themoviedbapi.model.Artwork;
 import info.movito.themoviedbapi.model.people.PersonCredits;
 import info.movito.themoviedbapi.model.people.PersonPeople;
@@ -61,7 +62,6 @@ public class PersonFragment extends Fragment {
     String TAG = this.getClass().getName();
     FirebaseAnalytics firebaseAnalytics;
     private Button bt_netflix;
-    private NetflixActor[] netflixActors = null;
 
     public static PersonFragment newInstance(int aba, int id_person) {
         //  Log.d("PersonFragment", "newInstance");
@@ -300,6 +300,8 @@ public class PersonFragment extends Fragment {
 
         Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(2) + information.getProfilePath())
                 .placeholder(R.drawable.person)
+                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(imageView);
         imageView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);

@@ -104,6 +104,7 @@ public class TemporadaActivity extends BaseActivity {
                 }).show();
     }
 
+    @SuppressWarnings("deprecation")
     public void getExtras() {
 
         if (getIntent().getAction() == null){

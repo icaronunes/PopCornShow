@@ -45,6 +45,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.FilmeVie
         return new ReviewsAdapter.FilmeViewHolder(view);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onBindViewHolder(final ReviewsAdapter.FilmeViewHolder holder,  int position) {
 

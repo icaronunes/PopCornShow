@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import br.com.icaro.filme.R;
@@ -43,7 +45,10 @@ public class ImagemTopFilmeScrollFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.page_scroll_viewpage_top, container, false);
         ImageView imageView = (ImageView) view.findViewById(R.id.img_top_scroll);
-        Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(5) + endereco)
+        Picasso.with(getContext())
+                .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 5)) + endereco)
+                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .error(R.drawable.top_empty)
                 .into(imageView);
 
@@ -55,6 +60,5 @@ public class ImagemTopFilmeScrollFragment extends Fragment {
         // Log.d("PosterScrollFragment", "onCreateView: -> " + UtilsFilme.getBaseUrlImagem(4) + endereco);
         return view;
     }
-
 
 }

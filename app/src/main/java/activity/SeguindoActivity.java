@@ -106,6 +106,7 @@ public class SeguindoActivity extends BaseActivity{
     }
 
 
+    @SuppressWarnings("deprecation")
     private void setupViewPagerTabs() {
 
         viewPager.setOffscreenPageLimit(1);

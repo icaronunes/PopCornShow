@@ -30,27 +30,21 @@ public class SettingsFragment extends PreferenceFragment {
     public void onStart() {
         super.onStart();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        CheckBoxPreference boxPreference = (CheckBoxPreference) findPreference("pref_notificacao");
+
+        CheckBoxPreference box_notificacao = (CheckBoxPreference) findPreference("pref_notificacao");
+
         if (user != null) {
             LogoffDialog emailPrefs = (LogoffDialog) findPreference("pref_logoff");
            // Log.d("SettingsFragment", "true" );
             emailPrefs.setEnabled(true);
-            boxPreference.setChecked(true);
+           // boxPreference.setChecked(true);
         } else {
             LogoffDialog emailPrefs = (LogoffDialog) findPreference("pref_logoff");
            // Log.d("SettingsFragment", "false");
             emailPrefs.setEnabled(false);
-            boxPreference.setEnabled(false);
+            box_notificacao.setEnabled(false);
         }
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        boolean notificacao = sharedPref.getBoolean(SettingsActivity.PREF_NOTIFICACAO, true);
-
-        if (notificacao) {
-            boxPreference.setChecked(true);
-        } else {
-            boxPreference.setChecked(false);
-        }
     }
 
     @Override

@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import activity.PersonActivity;
@@ -46,8 +48,11 @@ public class PersonPopularAdapter extends RecyclerView.Adapter<PersonPopularAdap
 
             final Person person =  personResultsPage.getResults().get(position);
           //  Log.d("PersonPopularActivity", person.getName());
-            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + person.getProfilePath())
+            Picasso.with(context)
+                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + person.getProfilePath())
                     .error(R.drawable.person)
+                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.img_person, new Callback() {
                         @Override
                         public void onSuccess() {

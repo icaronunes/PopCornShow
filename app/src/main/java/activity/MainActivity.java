@@ -3,6 +3,7 @@ package activity;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,6 +15,9 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -46,6 +50,11 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
     TabLayout tabLayout;
     List<TopMain> multi = new ArrayList<>();
     CirclePageIndicator circlePageIndicator;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +70,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
         viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);
         viewpage_top_main = (ViewPager) findViewById(R.id.viewpage_top_main);
         viewpage_top_main.setOffscreenPageLimit(3);
+
 
 
         if (UtilsFilme.isNetWorkAvailable(this)) {
@@ -89,6 +99,9 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
                     }).create();
             dialog.show();
         }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
 
@@ -106,6 +119,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
                 }).show();
     }
 
+    @SuppressWarnings("deprecation")
     private void setupViewPagerTabs() {
 
         viewPager_main.setOffscreenPageLimit(2);
@@ -126,6 +140,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
 
             }
 
+            @SuppressWarnings("deprecation")
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
@@ -156,7 +171,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
         if (tmdbMovies != null && tmdbTv != null) {
             for (int i = 0; i < 20 && multi.size() < 15; i++) {
                 if (i % 2 == 0) {
-                    if(tmdbMovies.getResults().size() > i) {
+                    if (tmdbMovies.getResults().size() > i) {
                         TopMain topMain = new TopMain();
                         final MovieDb movieDb = tmdbMovies.getResults().get(i);
                         topMain.setId(movieDb.getId());
@@ -179,16 +194,16 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
                     }
 
                 } else {
-                    if(tmdbTv.getResults().size() > i){
-                    TopMain topMain = new TopMain();
-                    final TvSeries tv = tmdbTv.getResults().get(i);
-                    topMain.setId(tv.getId());
-                    topMain.setNome(tv.getName());
-                    topMain.setMediaType(tv.getMediaType().name());
-                    topMain.setImagem(tv.getBackdropPath());
-                    if (tv.getBackdropPath() != null) {
-                        multi.add(topMain);
-                    }
+                    if (tmdbTv.getResults().size() > i) {
+                        TopMain topMain = new TopMain();
+                        final TvSeries tv = tmdbTv.getResults().get(i);
+                        topMain.setId(tv.getId());
+                        topMain.setNome(tv.getName());
+                        topMain.setMediaType(tv.getMediaType().name());
+                        topMain.setImagem(tv.getBackdropPath());
+                        if (tv.getBackdropPath() != null) {
+                            multi.add(topMain);
+                        }
                     }
                 }
             }
@@ -198,7 +213,43 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-       // Log.d(TAG, connectionResult.toString());
+        // Log.d(TAG, connectionResult.toString());
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Main Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
@@ -219,7 +270,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
                     tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies(getLocale()
                             , 1);
                 } catch (Exception e) {
-                   // Log.d(TAG, e.toString());
+                    // Log.d(TAG, e.toString());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -228,12 +279,13 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
                     });
                 }
 
+
             } else {
                 try {
                     tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("en", 1, UtilsFilme.getTimezone());
                     tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies("en", 1);
                 } catch (Exception e) {
-                 //   Log.d(TAG, e.toString());
+                    //   Log.d(TAG, e.toString());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

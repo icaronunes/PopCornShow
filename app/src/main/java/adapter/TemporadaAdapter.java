@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import activity.TemporadaActivity;
@@ -55,6 +57,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
 
 
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onBindViewHolder(HoldeTemporada holder, final int position) {
         episode = tvSeason.getEpisodes().get(position);
@@ -76,7 +79,10 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         }
 
         //Log.d("Temporada", "Rating " + episode.getUserRating());
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + episode.getStillPath())
+        Picasso.with(context)
+                .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context,2)) + episode.getStillPath())
+                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 //.error(R.drawable.empty_popcorn)
                 .into(holder.poster);
 

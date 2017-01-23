@@ -3,7 +3,12 @@ package onsignal;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.onesignal.OSNotificationAction;
 import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OneSignal;
 
@@ -27,20 +32,54 @@ import activity.TrailerActivity;
 import activity.TvShowActivity;
 import activity.TvShowsActivity;
 import applicaton.FilmeApplication;
+import domain.FilmeDB;
+import domain.FilmeService;
+import info.movito.themoviedbapi.TmdbMovies;
+import info.movito.themoviedbapi.model.MovieDb;
 import utils.Constantes;
+
+import static activity.BaseActivity.getLocale;
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.alternative_titles;
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.credits;
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.images;
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.releases;
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.similar;
+import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.videos;
 
 /**
  * Created by icaro on 16/10/16.
  */
 
 public class CustomNotificationOpenedHandler implements OneSignal.NotificationOpenedHandler {
+    private static final String TAG = CustomNotificationOpenedHandler.class.getName();
+    private JSONObject jsonData;
+
     // This fires when a notification is opened by tapping on it.
     @Override
     public void notificationOpened(OSNotificationOpenResult result) {
         Context context = FilmeApplication.getInstance().getBaseContext();
-        JSONObject jsonData = result.notification.payload.additionalData;
+        jsonData = result.notification.payload.additionalData;
+        OSNotificationAction.ActionType actionType = result.action.type;
+
+
+        if (actionType == OSNotificationAction.ActionType.ActionTaken) {
+            if ("yes".equals(result.action.actionID)) {
+                isButton();
+                return;
+            }
+
+            if ("no".equals(result.action.actionID)) {
+                //
+                return;
+            }
+
+            if ("talvez".equals(result.action.actionID)) {
+                return;
+            }
+        }
+
         if (jsonData != null) {
-           // Log.d("mesaj", " jsonData.length(): " + jsonData.length());
+
             try {
                 JSONObject object = jsonData;
                 String action = (String) object.get("action");
@@ -94,19 +133,18 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
 
                 if (action.equals("FilmesActivity")) {
                     Intent intent = new Intent(context, FilmesActivity.class);
-
-                   // if (object.has("aba")) {    só funciona para NO CINEMA - ARRUMAR
-                       // intent.putExtra(Constantes.ABA, object.getInt("id"));
-                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-                        stackBuilder.addParentStack(PersonActivity.class);
-                        stackBuilder.addNextIntent(intent);
-                        stackBuilder.startActivities();
-                   // }
+                    // if (object.has("aba")) {    só funciona para NO CINEMA - ARRUMAR
+                    // intent.putExtra(Constantes.ABA, object.getInt("id"));
+                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                    stackBuilder.addParentStack(MainActivity.class);
+                    stackBuilder.addNextIntent(intent);
+                    stackBuilder.startActivities();
+                    // }
                 }
 
                 if (action.equals("ListaGenericaActivity")) {
                     Intent intent = new Intent(context, ListaGenericaActivity.class);
-                   // Log.d("ListaGenericaActivity", "ListaGenericaActivity");
+                    // Log.d("ListaGenericaActivity", "ListaGenericaActivity");
                     if (object.has("nome"))
                         intent.putExtra(Constantes.LISTA_GENERICA, object.getString("nome"));
 
@@ -205,7 +243,7 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     }
                 }
 
-                if (action.equals("ProdutoraActivity")){
+                if (action.equals("ProdutoraActivity")) {
                     Intent intent = new Intent(context, ProdutoraActivity.class);
 
                     if (object.has("id")) {
@@ -217,7 +255,7 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     }
                 }
 
-                if (action.equals("SimilaresActivity")){
+                if (action.equals("SimilaresActivity")) {
                     Intent intent = new Intent(context, SimilaresActivity.class);
                     if (object.has("nome"))
                         intent.putExtra(Constantes.NOME_FILME, object.getString("nome"));
@@ -252,13 +290,12 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                 if (action.equals("TvShowsActivity")) {
                     Intent intent = new Intent(context, TvShowsActivity.class);
 
-                    // if (object.has("aba")) {    só funciona para NO CINEMA - ARRUMAR
-                    // intent.putExtra(Constantes.ABA, object.getInt("id"));
+                    // if (object.has("aba")) {    só funciona para NO CINEM  // intent.putExtra(Constantes.ABA, object.getInt("id"));
                     TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                     stackBuilder.addParentStack(TvShowsActivity.class);
                     stackBuilder.addNextIntent(intent);
                     stackBuilder.startActivities();
-                    // }
+
                 }
 
                 if (action.equals("TemporadaActivity")) {
@@ -280,7 +317,6 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
 
             } catch (JSONException e) {
                 e.printStackTrace();
-
             }
         } else {
             Intent intent = new Intent(context, MainActivity.class);
@@ -288,10 +324,65 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
             context.startActivity(intent);
         }
 
+    }
 
+    public void isButton() {
+        try {
+            String action = (String) jsonData.get("action");
+
+            if (action.equals("FilmeActivity")) {
+                final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+                final int id = jsonData.getInt("id");
+
+
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        TmdbMovies movies = FilmeService.getTmdbMovies();
+                        MovieDb movieDb = movies.getMovie(id, getLocale()
+                                        //.toLanguageTag() não funciona na API 14
+                                        + ",en,null"
+                                , credits, releases, videos, similar, alternative_titles, images);
+                        Log.d(TAG, "run: "+movieDb.getTitle());
+
+                        FilmeDB filmeDB = new FilmeDB();
+                        filmeDB.setIdImdb(movieDb.getImdbID());
+                        filmeDB.setId(movieDb.getId());
+                        filmeDB.setTitle(movieDb.getTitle());
+                        filmeDB.setPoster(movieDb.getPosterPath());
+
+                        DatabaseReference myWatch = database.getReference("users").child(mAuth.getCurrentUser()
+                                .getUid()).child("watch")
+                                .child("movie");
+
+                        myWatch.child(String.valueOf(id)).setValue(filmeDB);
+
+                        Log.d(TAG, "run: "+movieDb.getTitle());
+                    }
+                }.run();
+
+            }
+
+//            if (action.equals("TvshowActivity")) {
+//                FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//                String id_filme = jsonData.getString("id");
+//                DatabaseReference myWatch = database.getReference("users").child(mAuth.getCurrentUser()
+//                        .getUid()).child("watch")
+//                        .child("tvshow");
+//
+//                myWatch.child(String.valueOf(id_filme)).setValue(null);
+//
+//            }
+
+        }catch (Exception e){
+            Log.d(TAG, "isButton: "+e.getMessage());
+            Log.d(TAG, "isButton: "+e.toString());
+        }
     }
 }
-
 // The following can be used to open an Activity of your choice.
 // Replace - getApplicationContext() - with any Android Context.
 // Intent intent = new Intent(getApplicationContext(), YourActivity.class);

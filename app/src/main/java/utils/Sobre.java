@@ -39,7 +39,12 @@ public class Sobre extends DialogPreference {
         popcorn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                final String appPackageName = getContext().getPackageName(); // getPackageName() from Context or Activity object
+                try {
+                    getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
             }
         });
 

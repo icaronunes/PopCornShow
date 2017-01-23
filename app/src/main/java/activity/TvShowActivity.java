@@ -20,7 +20,6 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +42,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -615,6 +616,8 @@ public class TvShowActivity extends BaseActivity {
 
         Picasso.with(TvShowActivity.this)
                 .load(UtilsFilme.getBaseUrlImagem(5) + series.getBackdropPath())
+                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .error(R.drawable.top_empty)
                 .into(imageView);
 
@@ -652,7 +655,7 @@ public class TvShowActivity extends BaseActivity {
                     // Log.d(TAG, String.valueOf(series.getNumberOfEpisodes()));
 
                 } catch (Exception e) {
-                    Log.d(TAG, e.getMessage());
+                   // Log.d(TAG, e.getMessage());
                     FirebaseCrash.report(e);
                     runOnUiThread(new Runnable() {
                         @Override
@@ -668,7 +671,7 @@ public class TvShowActivity extends BaseActivity {
                     series = FilmeService.getTmdbTvShow()
                             .getSeries(id_tvshow, null, images, credits, videos, external_ids);
                 } catch (Exception e) {
-                    Log.d(TAG, e.getMessage());
+
                     FirebaseCrash.report(e);
                     runOnUiThread(new Runnable() {
                         @Override
@@ -686,7 +689,7 @@ public class TvShowActivity extends BaseActivity {
                     netflix = FilmeService.getNetflix(series.getOriginalName(), Integer.parseInt(date));
                 }
             } catch (Exception e){
-               Log.d(TAG, "doInBackground: "+e.getMessage());
+               FirebaseCrash.report(e);
             }
 
 
@@ -697,7 +700,7 @@ public class TvShowActivity extends BaseActivity {
                     netflix = FilmeService.getNetflix(series.getOriginalName(), Integer.parseInt(date));
                 }
             } catch (Exception e){
-                Log.d(TAG, "doInBackground: "+e.getMessage());
+                FirebaseCrash.report(e);
             }
 
             try{

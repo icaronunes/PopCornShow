@@ -12,6 +12,7 @@ public class SettingsActivity extends BaseActivity {
 
     public static final String PREF_IDIOMA_PADRAO = "pref_idioma_padrao";
     public static final String PREF_NOTIFICACAO = "pref_notificacao";
+    public static final String PREF_SAVE_CONEXAO = "pref_save_conexao";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

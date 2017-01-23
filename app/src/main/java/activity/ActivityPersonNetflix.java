@@ -14,10 +14,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,7 +42,7 @@ public class ActivityPersonNetflix extends BaseActivity {
     private String nome;
 
     private String TAG = this.getClass().getName();
-    private List<Netflix> netflixs;
+    private List<Netflix> netflixs = null;
     private TextView text_netflix_empty;
 
     @Override
@@ -122,8 +122,7 @@ public class ActivityPersonNetflix extends BaseActivity {
                 Collections.addAll(netflixs, netflixDirector);
 
             } catch (Exception e) {
-               // Log.d(TAG, e.getMessage());
-                Toast.makeText(ActivityPersonNetflix.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                FirebaseCrash.report(e);
             }
 
             return null;
@@ -133,10 +132,15 @@ public class ActivityPersonNetflix extends BaseActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if (netflixs != null && netflixs.size() > 0) {
-                recyclerView.setAdapter(new ActorNetflixAdapter(ActivityPersonNetflix.this,
-                        netflixs));
-                progressBar.setVisibility(View.GONE);
+            if (netflixs != null) {
+                if (netflixs.size() > 0) {
+                    recyclerView.setAdapter(new ActorNetflixAdapter(ActivityPersonNetflix.this,
+                            netflixs));
+                    progressBar.setVisibility(View.GONE);
+                } else {
+                    text_netflix_empty.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                }
             } else {
                 text_netflix_empty.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);

@@ -96,6 +96,7 @@ public class WatchListActivity extends BaseActivity {
     }
 
 
+    @SuppressWarnings("deprecation")
     private void setupViewPagerTabs() {
 
         viewPager.setOffscreenPageLimit(1);

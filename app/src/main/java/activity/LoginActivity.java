@@ -183,6 +183,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     private void setGoogle() {
         //GOOGLE
         // Configure sign-in to request the user's ID, email address, and basic
@@ -287,7 +288,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             // the auth state listener will be notified and logic to handle the
                             // signed in user can be handled in the listener.
                             if (!task.isSuccessful()) {
-                                Toast.makeText(LoginActivity.this, "Falhou",
+                                Toast.makeText(LoginActivity.this,  R.string.ops,
                                         Toast.LENGTH_SHORT).show();
                             }
 
@@ -300,7 +301,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }
             });
         } else {
-            Toast.makeText(LoginActivity.this, "Falhou",
+            Toast.makeText(LoginActivity.this, R.string.ops,
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -378,7 +379,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                             if (!task.isSuccessful()) {
-                                Toast.makeText(LoginActivity.this,"Login social falhou", Toast.LENGTH_SHORT ).show();
+                                Toast.makeText(LoginActivity.this,  R.string.ops, Toast.LENGTH_SHORT ).show();
                             }
 
                             mAuthProgressDialog.dismiss();
@@ -420,10 +421,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
 
                         if (!task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Login Falhou", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this,  R.string.ops, Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            Toast.makeText(LoginActivity.this, "Login", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this,  R.string.ops, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {

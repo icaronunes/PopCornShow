@@ -164,7 +164,8 @@ public class ProdutoraActivity extends BaseActivity {
 
     private void setImageTop() {
         if (company.getLogoPath() != null) {
-            Picasso.with(this).load(UtilsFilme.getBaseUrlImagem(4) + company.getLogoPath())
+            Picasso.with(this)
+                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(this, 4)) + company.getLogoPath())
                     .into(top_img_produtora);
         } else {
             Picasso.with(this).load(R.drawable.empty_produtora2)

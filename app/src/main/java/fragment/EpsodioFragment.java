@@ -32,6 +32,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -420,8 +422,12 @@ public class EpsodioFragment extends Fragment {
     private void setImage() {
 
 
-        Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(4) + episode.getStillPath())
+        Picasso.with(getContext())
+                .load(UtilsFilme
+                .getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 4)) + episode.getStillPath())
                 .error(R.drawable.top_empty)
+                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(ep_image, new Callback() {
                     @Override
                     public void onSuccess() {

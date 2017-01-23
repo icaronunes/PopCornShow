@@ -15,10 +15,19 @@
         app:adUnitId="@string/admob"
         android:layout_gravity="bottom" />
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/empty"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center"
+            android:visibility="gone"
+            android:id="@+id/textview_reviews_empty"
+            android:layout_marginTop="50dp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycleView_reviews"
@@ -27,6 +36,10 @@
             android:orientation="vertical">
         </android.support.v7.widget.RecyclerView>
 
-    </LinearLayout>
+
+
+    </FrameLayout>
+
+
 
 </LinearLayout>

@@ -1,11 +1,15 @@
 package utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.v7.graphics.Palette;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import activity.SettingsActivity;
 import domain.FilmeService;
 import domain.UserEp;
 import domain.UserSeasons;
@@ -40,7 +45,7 @@ public class UtilsFilme {
 
     private static final String TAG = UtilsFilme.class.getName();
 
-    public static  UserTvshow setUserTvShow(TvSeries serie) {
+    public static UserTvshow setUserTvShow(TvSeries serie) {
         UserTvshow userTvshow = new UserTvshow();
         userTvshow.setPoster(serie.getPosterPath());
         userTvshow.setId(serie.getId());
@@ -52,7 +57,7 @@ public class UtilsFilme {
         return userTvshow;
     }
 
-    public static  List<UserSeasons> setUserSeasson(TvSeries serie) {
+    public static List<UserSeasons> setUserSeasson(TvSeries serie) {
         List<UserSeasons> list = new ArrayList<>();
         for (TvSeason tvSeason : serie.getSeasons()) {
             UserSeasons userSeasons = new UserSeasons();
@@ -114,18 +119,14 @@ public class UtilsFilme {
         calendar.setTime(air_date);
         Calendar hoje = Calendar.getInstance();
         hoje.setTime(Calendar.getInstance().getTime());
-      //  Log.d(TAG, "" + calendar.get(Calendar.DATE));
-      //  Log.d(TAG, "" + hoje.get(Calendar.DATE));
 
         if (calendar.after(hoje)) {
             return false;
         } else {
             if (calendar.get(Calendar.YEAR) == hoje.get(Calendar.YEAR)) {
-                    if (calendar.get(Calendar.WEEK_OF_YEAR) == hoje.get(Calendar.WEEK_OF_YEAR)) {
-                       // Log.d(TAG, "calendar " + calendar.get(Calendar.WEEK_OF_YEAR));
-                      //  Log.d(TAG, "hoje " + hoje.get(Calendar.WEEK_OF_YEAR));
-                        return true;
-                    }
+                if (calendar.get(Calendar.WEEK_OF_YEAR) == hoje.get(Calendar.WEEK_OF_YEAR)) {
+                    return true;
+                }
             }
             return false;
         }
@@ -139,22 +140,6 @@ public class UtilsFilme {
         return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
 
-//    public static  boolean verificaDataProximaLancamento(Date air_date) {
-//        boolean data;
-//        //Arrumar. Ta esquisito.
-//        Date myDate = Calendar.getInstance().getTime();
-//        Log.d(TAG, "Hoje " + myDate);
-//        Log.d(TAG, "Emissao " + air_date);
-//        myDate.setMonth(myDate.getMonth() + 1);
-//        Log.d(TAG, "Depois " + myDate);
-//        if (air_date.before(myDate)) {
-//            data = true;
-//        } else if (air_date.after(myDate))
-//            data = false;
-//        else
-//            data = true;
-//        return data;
-//    }
 
     public static void writeBytes(File file, byte[] bytes) {
         try {
@@ -163,7 +148,7 @@ public class UtilsFilme {
             stream.flush();
             stream.close();
         } catch (IOException e) {
-           // Log.e(TAG, e.getMessage(), e);
+            // Log.e(TAG, e.getMessage(), e);
             FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
             FirebaseCrash.report(e);
         }
@@ -176,7 +161,7 @@ public class UtilsFilme {
 
         if (!file.exists()) {
             file.mkdir();
-          //  Log.e("salvarArqNaMemoriaIn", "Directory created");
+            //  Log.e("salvarArqNaMemoriaIn", "Directory created");
         }
         File dir = new File(file, endereco);
 
@@ -201,7 +186,7 @@ public class UtilsFilme {
         } catch (IOException e) {
             FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
             FirebaseCrash.report(e);
-           // Log.e(TAG, e.getMessage(), e);
+            // Log.e(TAG, e.getMessage(), e);
         }
     }
 
@@ -240,11 +225,6 @@ public class UtilsFilme {
         if (conectivtyManager.getActiveNetworkInfo() != null
                 && conectivtyManager.getActiveNetworkInfo().isAvailable()
                 && conectivtyManager.getActiveNetworkInfo().isConnected()) {
-           // Log.d(TAG, conectivtyManager.getActiveNetworkInfo().getReason() );
-//            Log.d(TAG, conectivtyManager.getActiveNetworkInfo().getDetailedState().toString() );
-//            Log.d(TAG, conectivtyManager.getActiveNetworkInfo().toString() );
-//            Log.d(TAG, conectivtyManager.getActiveNetworkInfo().getExtraInfo() );
-//            Log.d(TAG, conectivtyManager.getActiveNetworkInfo().getState().toString() );
 
             conectado = true;
         } else {
@@ -257,7 +237,7 @@ public class UtilsFilme {
     public static Timezone getTimezone() {
         for (Timezone timezone : FilmeService.getTimeZone()) {
             if (timezone.getCountry().equals(Locale.getDefault().getCountry())) {
-              //  Log.d("Timezone", timezone.getCountry());
+
                 return timezone;
             }
         }
@@ -278,6 +258,63 @@ public class UtilsFilme {
             }
         }
         return 0;
+    }
+
+    public static String getNetworkClass(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+
+        if (info == null || !info.isConnected())
+            return "-"; //sem conexão
+        if (info.getType() == ConnectivityManager.TYPE_WIFI)
+            return "forte"; //WIFI
+        if (info.getType() == ConnectivityManager.TYPE_MOBILE) {
+            int networkType = info.getSubtype();
+            switch (networkType) {
+                case TelephonyManager.NETWORK_TYPE_GPRS:
+                case TelephonyManager.NETWORK_TYPE_EDGE:
+                case TelephonyManager.NETWORK_TYPE_CDMA:
+                case TelephonyManager.NETWORK_TYPE_1xRTT:
+                case TelephonyManager.NETWORK_TYPE_IDEN: //api<8 : troque por 11
+                    return "fraca"; //2G
+                case TelephonyManager.NETWORK_TYPE_UMTS:
+                case TelephonyManager.NETWORK_TYPE_EVDO_0:
+                case TelephonyManager.NETWORK_TYPE_EVDO_A:
+                case TelephonyManager.NETWORK_TYPE_HSDPA:
+                case TelephonyManager.NETWORK_TYPE_HSUPA:
+                case TelephonyManager.NETWORK_TYPE_HSPA:
+                case TelephonyManager.NETWORK_TYPE_EVDO_B: //api<9 : troque por 14
+                case TelephonyManager.NETWORK_TYPE_EHRPD:  //api<11 : troque por 12
+                case TelephonyManager.NETWORK_TYPE_HSPAP:  //api<13 : troque por 15
+                    return "fraca"; //3G
+                case TelephonyManager.NETWORK_TYPE_LTE:    //api<11 : troque por 13
+                    return "forte"; //4G
+                default:
+                    return "?";
+            }
+        }
+        return "?";
+    }
+
+    public static int getTamanhoDaImagem(Context context, int padrao){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean ativo = sharedPref.getBoolean(SettingsActivity.PREF_SAVE_CONEXAO, true);
+
+        if (!ativo){
+            return padrao;
+        }else {
+            String conexao = UtilsFilme.getNetworkClass(context);
+
+            if (conexao.equals("forte")){
+                return padrao;
+            } else {
+                if (padrao >= 2) {
+                    return padrao - 1;
+                } else {
+                    return 1;
+                }
+            }
+        }
     }
 
     public static String getBaseUrlImagem(int tamanho) {

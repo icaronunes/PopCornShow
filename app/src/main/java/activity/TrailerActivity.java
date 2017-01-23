@@ -47,9 +47,7 @@ public class TrailerActivity extends YouTubeBaseActivity implements YouTubePlaye
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider,
                                         YouTubePlayer player, boolean wasRestored) {
-
         try {
-
             if (!wasRestored) {
                 player.cueVideo(youtube_key);
                 player.setFullscreen(true);
@@ -61,7 +59,6 @@ public class TrailerActivity extends YouTubeBaseActivity implements YouTubePlaye
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Play_youTube");
                 bundle.putString(FirebaseAnalytics.Param.ITEM_ID, youtube_key);
                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
             }
         } catch ( Exception e){
             FirebaseCrash.report(e);

@@ -12,6 +12,8 @@ import android.widget.ProgressBar;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -51,8 +53,10 @@ public class PersonImagemAdapter extends RecyclerView.Adapter<PersonImagemAdapte
     public void onBindViewHolder(final PersonImagemAdapter.PersonImageViewHolder holder, final int position) {
         final Artwork artwork = artworks.get(position);
        // Log.d("PersonImagemAdapter", artwork.getFilePath());
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + artwork.getFilePath())
+        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 3)) + artwork.getFilePath())
                 .placeholder(R.drawable.person)
+                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.imageButton, new Callback() {
                     @Override
                     public void onSuccess() {

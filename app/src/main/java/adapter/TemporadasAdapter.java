@@ -96,6 +96,7 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
     }
 
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onBindViewHolder(final TemporadasAdapter.HoldeTemporada holder, final int position) {
 

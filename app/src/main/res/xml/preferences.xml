@@ -13,6 +13,12 @@
         android:summary="@string/notificacao_summary"
         android:title="@string/notificacao" />
 
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="pref_save_conexao"
+        android:summary="@string/save_conexao_summary"
+        android:title="@string/save_conexao" />
+
     <utils.LogoffDialog
         android:enabled="true"
         android:key="pref_logoff"

@@ -32,6 +32,8 @@ import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -71,7 +73,6 @@ import utils.Constantes;
 import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.string.mil;
-import static com.squareup.picasso.Picasso.with;
 
 
 /**
@@ -650,7 +651,12 @@ public class FilmeInfoFragment extends Fragment {
 
     private void setPoster() {
         if (movieDb.getPosterPath() != null && movieDb.getImages(ArtworkType.POSTER).size() > 0) {
-            Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(2) + movieDb.getPosterPath()).into(img_poster);
+            Picasso.with(getContext())
+                    .load(UtilsFilme
+                    .getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2)) + movieDb.getPosterPath())
+                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
+                    .into(img_poster);
             img_poster.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -675,6 +681,7 @@ public class FilmeInfoFragment extends Fragment {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void setProdutora() {
         String primeiraProdutora;
         if (!movieDb.getProductionCompanies().isEmpty()) {
@@ -708,6 +715,7 @@ public class FilmeInfoFragment extends Fragment {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void setVotoMedia() {
         float nota = getMediaNotas();
         if (nota > 0) {
@@ -855,8 +863,8 @@ public class FilmeInfoFragment extends Fragment {
                 if (personCast.getName() != null || personCast.getCharacter() != null) {
                     textCastPersonagem.setText(personCast.getCharacter());
                     textCastNome.setText(personCast.getName());
-                    with(getActivity())
-                            .load(UtilsFilme.getBaseUrlImagem(2) + personCast.getProfilePath())
+                    Picasso.with(getActivity())
+                            .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2)) + personCast.getProfilePath())
                             .placeholder(R.drawable.person)
                             .into(imageView);
                     progressBar.setVisibility(View.INVISIBLE);
@@ -891,6 +899,7 @@ public class FilmeInfoFragment extends Fragment {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void setCrews() {
         if (movieDb.getCredits().getCrew().size() > 0) {
             int tamanho = movieDb.getCredits().getCrew().size() < 15 ? movieDb.getCredits().getCrew().size() : 15;
@@ -911,8 +920,8 @@ public class FilmeInfoFragment extends Fragment {
                 if (crew.getName() != null && crew.getJob() != null) {
                     textCrewJob.setText(crew.getJob());
                     textCrewNome.setText(crew.getName());
-                    with(getActivity())
-                            .load(UtilsFilme.getBaseUrlImagem(2) + crew.getProfilePath())
+                    Picasso.with(getActivity())
+                            .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2)) + crew.getProfilePath())
                             .placeholder(getResources().getDrawable(R.drawable.person))
                             .into(imgPagerCrews);
                     progressBarCrew.setVisibility(View.INVISIBLE);
@@ -946,8 +955,10 @@ public class FilmeInfoFragment extends Fragment {
 
     }
 
+    @SuppressWarnings("deprecation")
     private void setSimilares() {
-        if (similarMovies.getResults().size() > 0 && similarMovies.getResults() != null) {
+        if (similarMovies.getResults() != null)
+        if (similarMovies.getResults().size() > 0 ) {
             int tamanho = similarMovies.getResults().size() < 10 ? similarMovies.getResults().size() : 10;
             getView().findViewById(R.id.textview_similares).setVisibility(View.VISIBLE);
             textview_similares.setTextColor(getResources().getColor(R.color.primary));
@@ -972,8 +983,8 @@ public class FilmeInfoFragment extends Fragment {
                     } else {
                         textSimilares.setText(movie.getTitle());
                     }
-                    with(getActivity())
-                            .load(UtilsFilme.getBaseUrlImagem(2) + movie.getPosterPath())
+                    Picasso.with(getActivity())
+                            .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2)) + movie.getPosterPath())
                             .placeholder(getResources().getDrawable(R.drawable.poster_empty))
                             .into(imgPagerSimilares, new Callback() {
                                 @Override

@@ -34,6 +34,10 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -68,7 +72,6 @@ import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.alternative_title
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.credits;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.images;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.releases;
-import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.reviews;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.similar;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.videos;
 
@@ -105,6 +108,11 @@ public class FilmeActivity extends BaseActivity {
     private TMDVAsync tmdvAsync;
     private Netflix netflix = null;
     private Imdb imdbdb = null;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -156,6 +164,9 @@ public class FilmeActivity extends BaseActivity {
         } else {
             snack();
         }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private void setEventListenerWatch() {
@@ -265,7 +276,7 @@ public class FilmeActivity extends BaseActivity {
 
     private void getExtras() {
         if (getIntent().getAction() == null) {
-            id_filme = (int) getIntent().getIntExtra(Constantes.FILME_ID, 0);
+            id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
             color_fundo = getIntent().getIntExtra(Constantes.COLOR_TOP, R.color.transparent);
         } else {
             id_filme = Integer.parseInt(getIntent().getStringExtra(Constantes.FILME_ID));
@@ -321,7 +332,7 @@ public class FilmeActivity extends BaseActivity {
                         bundle = new Bundle();
                         bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_MainActivity:menu_drav_home");
                         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                     //   Log.d(TAG, "TRUE");
+                        //   Log.d(TAG, "TRUE");
 
                         return;
                     }
@@ -334,7 +345,7 @@ public class FilmeActivity extends BaseActivity {
 
             }
         } else {
-          //  Log.d(TAG, "ELSE");
+            //  Log.d(TAG, "ELSE");
             Toast.makeText(FilmeActivity.this, getResources().getString(R.string.erro_ainda_sem_imagem), Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
@@ -677,6 +688,42 @@ public class FilmeActivity extends BaseActivity {
         }
     }
 
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Filme Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
+    }
+
     private class ImagemTopFragment extends FragmentPagerAdapter {
 
         public ImagemTopFragment(FragmentManager supportFragmentManager) {
@@ -692,6 +739,9 @@ public class FilmeActivity extends BaseActivity {
                 // Log.d("FilmeActivity", "getItem: ->  " + movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
                 return new ImagemTopFilmeScrollFragment().newInstance(movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
             }
+
+
+
             return null;
         }
 
@@ -704,6 +754,7 @@ public class FilmeActivity extends BaseActivity {
                 // Log.d("FilmeActivity", "getCount: ->  " + tamanho);
                 return tamanho > 0 ? tamanho : 1;
             }
+
             return 0;
         }
     }
@@ -723,15 +774,14 @@ public class FilmeActivity extends BaseActivity {
                         movieDb = movies.getMovie(id_filme, getLocale()
                                         //.toLanguageTag() não funciona na API 14
                                         + ",en,null"
-                                , credits, releases, videos, reviews, similar, alternative_titles, images);
+                                , credits, releases, videos, similar, alternative_titles, images);
                         movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
-                        movieDb.getReviews().addAll(movies.getMovie(id_filme, "en", reviews).getReviews());
-
                     } else {
                         //  Log.d("FilmeActivity", "False - " + id_filme);
                         movieDb = movies.getMovie(id_filme, "en,null"
-                                , credits, releases, videos, reviews, similar, alternative_titles, images);
+                                , credits, releases, videos, similar, alternative_titles, images);
                     }
+
                     similarMovies = movies.getSimilarMovies(movieDb.getId(), null, 1);
 
 
@@ -744,18 +794,24 @@ public class FilmeActivity extends BaseActivity {
                         }
                     });
                 }
-                if (movieDb != null) {
 
-                    if (movieDb.getReleaseDate() != null) {
-                        String date = movieDb.getReleaseDate().substring(0, 4);
+                try {
+                    if (movieDb != null) {
 
-                        netflix = FilmeService.getNetflix(movieDb.getTitle(), Integer.parseInt(date));
+                        if (movieDb.getReleaseDate() != null) {
+                            if (movieDb.getReleaseDate().length() >= 4) {
+                                String date = movieDb.getReleaseDate().substring(0, 4);
 
+                                netflix = FilmeService.getNetflix(movieDb.getTitle(), Integer.parseInt(date));
+                            }
+                        }
+
+                        if (movieDb.getImdbID() != null) {
+                            imdbdb = FilmeService.getImdb(movieDb.getImdbID());
+                        }
                     }
-
-                    if (movieDb.getImdbID() != null) {
-                        imdbdb = FilmeService.getImdb(movieDb.getImdbID());
-                    }
+                } catch (Exception e) {
+                    FirebaseCrash.report(e);
                 }
             }
             return movieDb;

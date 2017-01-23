@@ -191,4 +191,6 @@
     <string name="empty_favorites">Sem Favoritos</string>
     <string name="empty_rated">Sem classificados</string>
     <string name="empty">Vazio</string>
+    <string name="save_conexao_summary">PopCorn Show reduz seu uso dados caso esteja em uma conexão lenta.</string>
+    <string name="save_conexao">Conexão inteligente</string>
 </resources>

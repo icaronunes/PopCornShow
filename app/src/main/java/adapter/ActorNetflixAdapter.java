@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -47,6 +49,8 @@ public class ActorNetflixAdapter extends RecyclerView.Adapter<ActorNetflixAdapte
 
         Picasso.with(context).load(netflix.poster)
                 .error(R.drawable.poster_empty)
+                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.img, new Callback() {
             @Override
             public void onSuccess() {

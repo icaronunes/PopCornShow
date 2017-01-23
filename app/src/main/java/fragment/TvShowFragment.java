@@ -41,6 +41,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -78,7 +80,7 @@ import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.string.in_production;
 import static br.com.icaro.filme.R.string.mil;
-import static com.squareup.picasso.Picasso.with;
+
 import static utils.UtilsFilme.setEp;
 import static utils.UtilsFilme.setUserTvShow;
 
@@ -473,7 +475,7 @@ public class TvShowFragment extends Fragment {
             icon_reviews.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (!series.getExternalIds().getImdbId().isEmpty()) {
+                    if (series.getExternalIds().getImdbId() != null) {
                         Intent intent = new Intent(getContext(), ReviewsActivity.class);
                         intent.putExtra(Constantes.FILME_ID, series.getExternalIds().getImdbId());
                         intent.putExtra(Constantes.NOME_FILME, series.getName());
@@ -484,6 +486,10 @@ public class TvShowFragment extends Fragment {
                         bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_reviews");
                         bundle.putString(FirebaseAnalytics.Param.DESTINATION, ReviewsActivity.class.getName());
                         FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                    } else {
+                        if (getActivity() != null) {
+                            Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             });
@@ -902,7 +908,10 @@ public class TvShowFragment extends Fragment {
 
     private void setPoster() {
         if (series.getPosterPath() != null) {
-            Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(2) + series.getPosterPath()).into(img_poster);
+            Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2) ) + series.getPosterPath())
+                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
+                    .into(img_poster);
             img_poster.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -955,6 +964,7 @@ public class TvShowFragment extends Fragment {
         categoria.setText(stringBuilder.toString());
     }
 
+    @SuppressWarnings("deprecation")
     private void setVotoMedia() {
         float nota = getMediaNotas();
         if (nota > 0) {
@@ -1115,8 +1125,10 @@ public class TvShowFragment extends Fragment {
                 if (personCast.getName() != null || personCast.getCharacter() != null) {
                     textCastPersonagem.setText(personCast.getCharacter());
                     textCastNome.setText(personCast.getName());
-                    with(getActivity())
-                            .load(UtilsFilme.getBaseUrlImagem(3) + personCast.getProfilePath())
+                    Picasso.with(getActivity())
+                            .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2)) + personCast.getProfilePath())
+                            .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                            .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                             .placeholder(R.drawable.person)
                             .into(imageView);
                     progressBar.setVisibility(View.INVISIBLE);
@@ -1151,6 +1163,7 @@ public class TvShowFragment extends Fragment {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void setCrews() {
         if (series.getCredits().getCrew().size() > 0) {
             int tamanho = series.getCredits().getCrew().size() < 15 ? series.getCredits().getCrew().size() : 15;
@@ -1171,8 +1184,10 @@ public class TvShowFragment extends Fragment {
                 if (crew.getName() != null && crew.getJob() != null) {
                     textCrewJob.setText(crew.getJob());
                     textCrewNome.setText(crew.getName());
-                    with(getActivity())
-                            .load(UtilsFilme.getBaseUrlImagem(1) + crew.getProfilePath())
+                    Picasso.with(getActivity())
+                            .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2) ) + crew.getProfilePath())
+                            .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                            .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                             .placeholder(getResources().getDrawable(R.drawable.person))
                             .into(imgPagerCrews);
                     progressBarCrew.setVisibility(View.INVISIBLE);
@@ -1254,7 +1269,18 @@ public class TvShowFragment extends Fragment {
                 });
                 YouTubeThumbnailView thumbnailView = (YouTubeThumbnailView) linearteste.findViewById(R.id.youtube_view_thumbnail);
                 if (isAdded()) {
-                    thumbnailView.initialize(Config.YOUTUBE_API_KEY, OnInitializedListener(youtube_key));
+                    try {
+                        thumbnailView.initialize(Config.YOUTUBE_API_KEY, OnInitializedListener(youtube_key));
+                    } catch (Exception e){
+                        if (getActivity() != null){
+                            new Runnable(){
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
+                                }
+                            }.run();
+                        }
+                    }
                 }
                 // Log.d("OnClick", youtube_key);
                 //Acontence erros - Necessario corrigir

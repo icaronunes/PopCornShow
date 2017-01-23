@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -62,7 +64,10 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListVi
 
 
             if (movie != null) {
-                Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + movie.getPosterPath())
+                Picasso.with(context)
+                        .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + movie.getPosterPath())
+                        .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                        .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                         .into(holder.img_rated, new Callback() {
                             @Override
                             public void onSuccess() {

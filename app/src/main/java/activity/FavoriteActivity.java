@@ -111,6 +111,7 @@ public class FavoriteActivity extends BaseActivity {
     }
 
 
+    @SuppressWarnings("deprecation")
     private void setupViewPagerTabs() {
 
         viewPager.setOffscreenPageLimit(1);

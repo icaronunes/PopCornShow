@@ -134,6 +134,7 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     private void setGoogle() {
         //GOOGLE
         // Configure sign-in to request the user's ID, email address, and basic

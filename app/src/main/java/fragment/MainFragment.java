@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ import java.util.Locale;
 
 import activity.FilmeActivity;
 import activity.FilmesActivity;
-import activity.MainActivity;
 import activity.SettingsActivity;
 import activity.TvShowActivity;
 import activity.TvShowsActivity;
@@ -54,11 +52,12 @@ import static utils.UtilsFilme.getTimezone;
  */
 public class MainFragment extends Fragment {
 
-    final static String TAG = MainActivity.class.getName();
+    final static String TAG = MainFragment.class.getName();
     static List<String> buttonFilme, buttonTvshow;
     int tipo;
     TvResultsPage popularTvshow = null, toDay = null;
     MovieResultsPage popularMovie = null, cinema = null;
+
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -82,8 +81,6 @@ public class MainFragment extends Fragment {
             tipo = getArguments().getInt(Constantes.ABA);
         }
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
-
-
 
     }
 
@@ -203,7 +200,8 @@ public class MainFragment extends Fragment {
                 final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress_poster_grid);
                 final TextView title = (TextView) view.findViewById(R.id.title_main);
 
-                Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(2) + series.getPosterPath())
+                Picasso.with(getContext())
+                        .load(UtilsFilme.getBaseUrlImagem( UtilsFilme.getTamanhoDaImagem(getContext(), 2)) + series.getPosterPath())
                         .error(R.drawable.poster_empty)
                         .into(poster, new Callback() {
                             @Override
@@ -365,7 +363,8 @@ public class MainFragment extends Fragment {
                 final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress_poster_grid);
                 final TextView title = (TextView) view.findViewById(R.id.title_main);
 
-                Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(2) + series.getPosterPath())
+                Picasso.with(getContext())
+                        .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2)) + series.getPosterPath())
                         .error(R.drawable.poster_empty)
                         .into(poster, new Callback() {
                             @Override
@@ -423,7 +422,8 @@ public class MainFragment extends Fragment {
                 final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress_poster_grid);
                 final TextView title = (TextView) view.findViewById(R.id.title_main);
 
-                Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(2) + movieDb.getPosterPath())
+                Picasso.with(getContext())
+                        .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2)) + movieDb.getPosterPath())
                         .error(R.drawable.poster_empty)
                         .into(poster, new Callback() {
                             @Override
@@ -480,7 +480,8 @@ public class MainFragment extends Fragment {
                 final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress_poster_grid);
                 final TextView title = (TextView) view.findViewById(R.id.title_main);
 
-                Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(2) + movieDb.getPosterPath())
+                Picasso.with(getContext())
+                        .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2)) + movieDb.getPosterPath())
                         .error(R.drawable.poster_empty)
                         .into(poster, new Callback() {
                             @Override
@@ -552,8 +553,9 @@ public class MainFragment extends Fragment {
                                 + ",en,null", 1);
                     }
                 } catch (Exception e) {
-                    Log.d(TAG, e.getMessage());
+                   // Log.d(TAG, e.getMessage());
                     FirebaseCrash.report(e);
+                    if (getActivity() != null)
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -573,13 +575,14 @@ public class MainFragment extends Fragment {
                     }
                 } catch (Exception e) {
                     FirebaseCrash.report(e);
+                    if (getActivity() != null)
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
                         }
                     });
-                    Log.d(TAG, e.getMessage());
+                    //Log.d(TAG, e.getMessage());
                 }
             }
             return null;

@@ -46,6 +46,7 @@ import java.util.Random;
 
 import br.com.icaro.filme.BuildConfig;
 import br.com.icaro.filme.R;
+import domain.Netflix;
 import utils.Constantes;
 import utils.UtilsFilme;
 
@@ -59,9 +60,6 @@ public class BaseActivity extends AppCompatActivity {
     private static String TAG = BaseActivity.class.getName();
     protected DrawerLayout drawerLayout;
     protected NavigationView navigationView;
-    int[] drawer = {R.drawable.nav_drawer_header, R.drawable.nav_drawer_header2, R.drawable.nav_drawer_header3,
-            R.drawable.nav_drawer_header4, R.drawable.nav_drawer_header5, R.drawable.nav_drawer_header6, R.drawable.nav_drawer_header7};
-    ImageView imgUserBackground;
     ImageView imgUserPhoto;
     TextView tUserName;
     TextView tLogin;
@@ -101,9 +99,12 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+
+    @SuppressWarnings("deprecation")
     protected void setUpToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
+
             toolbar.setTitleTextColor(getResources().getColor(R.color.white));
             setSupportActionBar(toolbar);
         }
@@ -128,11 +129,8 @@ public class BaseActivity extends AppCompatActivity {
             View view = getLayoutInflater().inflate(R.layout.nav_drawer_header, navigationView);
             view.setVisibility(View.VISIBLE);
             view.findViewById(R.id.textLogin);
-            imgUserBackground = (ImageView) view.findViewById(R.id.imgUserBackground);
             imgUserPhoto = (ImageView) view.findViewById(R.id.imgUserPhoto);
-            Random random = new Random();
 
-            imgUserBackground.setImageResource(drawer[random.nextInt(7)]);
             tUserName = (TextView) view.findViewById(R.id.tUserName);
             tLogin = (TextView) view.findViewById(R.id.tLogin);
             textLogin = (TextView) view.findViewById(R.id.textLogin);
@@ -382,6 +380,15 @@ public class BaseActivity extends AppCompatActivity {
                 intent.putExtra(Constantes.LISTA_NOME, R.string.oscar);
                 startActivity(intent);
                 break;
+
+            case R.id.netflix:
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_Netflix");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);//
+                intent = new Intent(this, Netflix.class);
+                startActivity(intent);
+                break;
+
+
         }
     }
 

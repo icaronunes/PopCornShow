@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -51,8 +53,12 @@ public class SimilaresAdapter extends RecyclerView.Adapter<SimilaresAdapter.Simi
         holder.similares_voto_media.setText(String
                 .format(String.valueOf(similares.get(position).getVoteAverage())));
 
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + similares.get(position)
-                .getPosterPath()).into(holder.imageView);
+        Picasso.with(context)
+                .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + similares.get(position)
+                .getPosterPath())
+                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
+                .into(holder.imageView);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -14,8 +14,8 @@
     android:layout_margin="3dp">
 
     <LinearLayout
-        android:layout_width="120dp"
-        android:layout_height="match_parent"
+        android:layout_width="@dimen/poster_activity_width"
+        android:layout_height="@dimen/poster_activity_height"
         android:orientation="vertical">
 
         <FrameLayout

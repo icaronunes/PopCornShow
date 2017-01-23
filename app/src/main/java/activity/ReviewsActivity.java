@@ -8,9 +8,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -29,6 +30,7 @@ public class ReviewsActivity extends BaseActivity {
     private String TAG = this.getClass().getName();
     private ReviewsUflixit reviewsUflixit;
     String type = null;
+    TextView textview_reviews_empty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class ReviewsActivity extends BaseActivity {
         } else {
             type = "movies";
         }
+        textview_reviews_empty = (TextView) findViewById(R.id.textview_reviews_empty);
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_reviews);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -90,7 +93,7 @@ public class ReviewsActivity extends BaseActivity {
 
             } catch (Exception e) {
                 FirebaseCrash.report(e);
-                Log.d(TAG, e.getMessage());
+                //Log.d(TAG, e.getMessage());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -107,13 +110,16 @@ public class ReviewsActivity extends BaseActivity {
             super.onPostExecute(aVoid);
 
             if (reviewsUflixit == null) {
+                textview_reviews_empty.setVisibility(View.VISIBLE);
                 return;
             }
 
             if (!reviewsUflixit.isError()) {
-
                 recyclerView.setAdapter(new ReviewsAdapter(ReviewsActivity.this,
                         reviewsUflixit));
+                textview_reviews_empty.setVisibility(View.GONE);
+            } else {
+                textview_reviews_empty.setVisibility(View.VISIBLE);
             }
         }
     }

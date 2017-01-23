@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -120,7 +119,7 @@ public class ListaGenericaActivity  extends BaseActivity{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Log.d(TAG, list_id);
+           // Log.d(TAG, list_id);
         }
 
         @Override
@@ -135,7 +134,6 @@ public class ListaGenericaActivity  extends BaseActivity{
                     }
                 } catch (Exception e){
                     FirebaseCrash.report(e);
-                    Log.d(TAG, e.getMessage());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

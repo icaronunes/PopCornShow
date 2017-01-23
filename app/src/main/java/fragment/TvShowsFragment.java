@@ -10,7 +10,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +32,6 @@ import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;
-
-import static com.google.android.gms.internal.zzs.TAG;
 
 /**
  * Created by icaro on 14/09/16.
@@ -142,6 +139,7 @@ public class TvShowsFragment extends Fragment {
                 intent.putExtra(Constantes.TVSHOW_ID, tvSeries.get(position).getId());
                 intent.putExtra(Constantes.NOME_TVSHOW, tvSeries.get(position).getName());
                 getContext().startActivity(intent);
+
                 FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
                 Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TvShowActivity.class.getName());
@@ -170,10 +168,9 @@ public class TvShowsFragment extends Fragment {
 
             try {
                 TmdbTV tvShow = FilmeService.getTmdbTvShow();
-                List<TvSeries> dbList = getListaTipo(tvShow);
-                return dbList;
+                return getListaTipo(tvShow);
             } catch (Exception e ){
-                Log.d(TAG, e.getMessage());
+                if (getActivity() != null)
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -225,7 +222,7 @@ public class TvShowsFragment extends Fragment {
                         return tmdbTV.getTopRated(language, pagina).getResults();
                     }
                     default: {
-                        Timezone timezone = new Timezone(Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry(), Locale.getDefault().getCountry());
+                        Timezone timezone = UtilsFilme.getTimezone();
                         return tmdbTV.getAiringToday(language, pagina, timezone).getResults();
                     }
                 }

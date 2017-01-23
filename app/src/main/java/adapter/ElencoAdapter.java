@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -54,8 +56,11 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
         holder.elenco_character.setText(personCast.getCharacter());
 
         holder.elenco_nome.setText(personCast.getName());
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + personCast.getProfilePath())
+        Picasso.with(context).load(UtilsFilme
+                .getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + personCast.getProfilePath())
                 .placeholder(R.drawable.person)
+                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.img_elenco);
 
 

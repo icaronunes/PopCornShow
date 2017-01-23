@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import activity.FilmeActivity;
@@ -50,8 +52,11 @@ public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.
         if (credit != null) {
 
            // Log.d("PersonMovieAdapter", "True - " + personCredits.getCast().get(position).getMovieTitle() + " " + credit.getPosterPath());
-            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(3) + credit.getPosterPath())
+            Picasso.with(context)
+                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context , 3)) + credit.getPosterPath())
                     .error(R.drawable.poster_empty)
+                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.poster, new Callback() {
                         @Override
                         public void onSuccess() {

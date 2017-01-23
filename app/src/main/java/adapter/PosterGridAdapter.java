@@ -15,6 +15,8 @@ import android.widget.ProgressBar;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
@@ -55,7 +57,9 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
         if (artworks.size() > 0) {
           //  Log.d("PosterGridActivity", "onBindViewHolder ");
             Picasso.with(context).load(UtilsFilme
-                    .getBaseUrlImagem(3) + artworks.get(position).getFilePath())
+                    .getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 4)) + artworks.get(position).getFilePath())
+                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.img, new Callback() {
                         @Override
                         public void onSuccess() {

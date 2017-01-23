@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -44,7 +46,9 @@ public class SeguindodAdapter extends RecyclerView.Adapter<SeguindodAdapter.Segu
     @Override
     public void onBindViewHolder(final SeguindodAdapter.SeguindoViewHolder holder, int position) {
         final UserTvshow userTvshow = userTvshows.get(position);
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + userTvshow.getPoster())
+        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context,2)) + userTvshow.getPoster())
+                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .error(R.drawable.poster_empty)
                 .into(holder.poster, new Callback() {
                     @Override

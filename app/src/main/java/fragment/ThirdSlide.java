@@ -14,6 +14,7 @@ import br.com.icaro.filme.R;
  * Created by icaro on 21/11/16.
  */
 public class ThirdSlide extends Fragment {
+    @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.intro, container, false);
         TextView title = (TextView) v.findViewById(R.id.intro_tite);
