@@ -125,7 +125,7 @@ public class MainFragment extends Fragment {
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                             Intent intent = new Intent(getActivity(), FilmesActivity.class);
-                            intent.putExtra(Constantes.ABA, R.id.now_playing);
+                            intent.putExtra(Constantes.ABA, R.string.now_playing);
                             intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing);
                             startActivity(intent);
 
@@ -140,7 +140,7 @@ public class MainFragment extends Fragment {
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                             Intent intent = new Intent(getActivity(), FilmesActivity.class);
-                            intent.putExtra(Constantes.ABA, R.id.upcoming);
+                            intent.putExtra(Constantes.ABA, R.string.upcoming);
                             intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.upcoming);
                             startActivity(intent);
                             break;
@@ -155,7 +155,7 @@ public class MainFragment extends Fragment {
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                             Intent intent = new Intent(getActivity(), FilmesActivity.class);
-                            intent.putExtra(Constantes.ABA, R.id.popular);
+                            intent.putExtra(Constantes.ABA, R.string.populares);
                             intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.populares);
                             startActivity(intent);
                             break;
@@ -169,7 +169,7 @@ public class MainFragment extends Fragment {
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                             Intent intent = new Intent(getActivity(), FilmesActivity.class);
-                            intent.putExtra(Constantes.ABA, R.id.top_rated);
+                            intent.putExtra(Constantes.ABA, R.string.top_rated);
                             intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.top_rated);
                             startActivity(intent);
                             break;
@@ -266,8 +266,7 @@ public class MainFragment extends Fragment {
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
-                            intent.putExtra(Constantes.ABA, R.id.air_date);
-                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.air_date);
+                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, getResources().getString(R.string.air_date));
                             startActivity(intent);
                             break;
                         }
@@ -277,7 +276,7 @@ public class MainFragment extends Fragment {
                             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
-                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.today);
+                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO,  getResources().getString(R.string.today));
                             startActivity(intent);
                             break;
                         }
@@ -287,8 +286,7 @@ public class MainFragment extends Fragment {
                             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
-                            intent.putExtra(Constantes.ABA, R.id.popular);
-                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.populares);
+                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO,  getResources().getString(R.string.populares));
                             startActivity(intent);
                             break;
                         }
@@ -301,8 +299,7 @@ public class MainFragment extends Fragment {
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
-                            intent.putExtra(Constantes.ABA, R.id.top_rated);
-                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.top_rated);
+                            intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO,  getResources().getString(R.string.top_rated));
                             startActivity(intent);
                             break;
                         }

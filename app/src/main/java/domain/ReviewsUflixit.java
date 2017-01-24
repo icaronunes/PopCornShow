@@ -15,6 +15,7 @@ public class ReviewsUflixit implements Serializable{
 	@Expose
 	private boolean error;
 
+
 	@SerializedName("message")
 	@Expose
 	private List<MessageItem> message;

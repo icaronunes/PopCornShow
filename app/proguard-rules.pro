@@ -19,4 +19,12 @@
 -keepclassmembers class br.com.icaro.filme.domain.** {
   *;
 }
-
+# classes duplicadas.
+-keep class org.apache.** { *; }
+-dontwarn org.apache.commons.**
+-dontwarn android.net.**
+-dontwarn com.fasterxml.**
+-dontwarn com.google.**
+-dontwarn com.squareup.**
+-dontwarn info.movito.**
+-dontwarn okio.**

@@ -30,7 +30,6 @@
             android:layout_gravity="center"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:src="@drawable/ic_popcorn"
             android:id="@+id/intro_img" />
     </LinearLayout>
     <TextView

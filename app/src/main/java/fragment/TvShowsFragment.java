@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,6 @@ import android.widget.Toast;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
-import java.util.Locale;
 
 import activity.TvShowActivity;
 import adapter.TvShowsAdapter;
@@ -39,13 +39,14 @@ import utils.UtilsFilme;
 public class TvShowsFragment extends Fragment {
 
 
+    private static final String TAG = TvShowsFragment.class.getName();
     List<TvSeries> tvSeries = null;
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
     TextView textView;
     FrameLayout frameLayout;
     ProgressBar process;
-    int abaEscolhida;
+    String abaEscolhida;
     int pagina = 1;
 
 
@@ -53,7 +54,7 @@ public class TvShowsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.abaEscolhida = getArguments().getInt(Constantes.NAV_DRAW_ESCOLIDO);
+            this.abaEscolhida = getArguments().getString(Constantes.NAV_DRAW_ESCOLIDO);
         }
     }
 
@@ -91,7 +92,7 @@ public class TvShowsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if (!UtilsFilme.isNetWorkAvailable(getContext())) {
-          //  Log.d("onActivityCreated", "Sem internet");
+            //  Log.d("onActivityCreated", "Sem internet");
             textView.setVisibility(View.VISIBLE);
             textView.setText("SEM INTERNET");
             swipeRefreshLayout.setEnabled(false);
@@ -169,14 +170,14 @@ public class TvShowsFragment extends Fragment {
             try {
                 TmdbTV tvShow = FilmeService.getTmdbTvShow();
                 return getListaTipo(tvShow);
-            } catch (Exception e ){
+            } catch (Exception e) {
                 if (getActivity() != null)
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
+                        }
+                    });
             }
             return null;
         }
@@ -184,7 +185,7 @@ public class TvShowsFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<TvSeries> tmdbMovies) {
-           // Log.d("onPostExecute", "onPostExecute");
+            // Log.d("onPostExecute", "onPostExecute");
             process.setVisibility(View.GONE);
             if (tmdbMovies != null && pagina != 1) {
                 List<TvSeries> x = tvSeries;
@@ -203,31 +204,31 @@ public class TvShowsFragment extends Fragment {
         }
 
         private List<TvSeries> getListaTipo(TmdbTV tmdbTV) {
-            String language = Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry();
+            String language = UtilsFilme.getLocale();
             if (language != null) {
-                switch (abaEscolhida) {
 
-                    case R.string.air_date: {
-                        return  tmdbTV.getOnTheAir(language, pagina).getResults();
-                    }
-
-                    case R.string.today: {
-                        //transferido para defaul
-                    }
-                    case R.string.populares: {
-                        return tmdbTV.getPopular(language, pagina).getResults();
-                    }
-
-                    case R.string.top_rated: {
-                        return tmdbTV.getTopRated(language, pagina).getResults();
-                    }
-                    default: {
-                        Timezone timezone = UtilsFilme.getTimezone();
-                        return tmdbTV.getAiringToday(language, pagina, timezone).getResults();
-                    }
+                if (abaEscolhida.equals(getResources().getString(R.string.air_date))) {
+                    Log.d(TAG, "getListaTipo: getOnTheAir");
+                    return tmdbTV.getOnTheAir(language, pagina).getResults();
                 }
+
+                if (abaEscolhida.equals(getResources().getString(R.string.populares))) {
+                    Log.d(TAG, "getListaTipo: getPopular");
+                    return tmdbTV.getPopular(language, pagina).getResults();
+                }
+
+                if (abaEscolhida.equals(getResources().getString(R.string.top_rated))) {
+                    Log.d(TAG, "getListaTipo: getTopRated");
+                    return tmdbTV.getTopRated(language, pagina).getResults();
+                }
+
+                Timezone timezone = UtilsFilme.getTimezone();
+                Log.d(TAG, "getListaTipo: getAiringToday");
+                return tmdbTV.getAiringToday(language, pagina, timezone).getResults();
+
             }
-            return  tmdbTV.getOnTheAir(language, pagina).getResults();
+            Log.d(TAG, "getListaTipo: getAiringToday default");
+            return tmdbTV.getOnTheAir("en", pagina).getResults();
         }
 
     }

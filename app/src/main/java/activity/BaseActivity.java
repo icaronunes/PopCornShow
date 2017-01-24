@@ -228,18 +228,6 @@ public class BaseActivity extends AppCompatActivity {
 
         switch (id) {
 
-            case R.id.now_playing: {
-                this.navigationView.setCheckedItem(id);
-            }
-            case R.id.upcoming: {
-                this.navigationView.setCheckedItem(id);
-            }
-            case R.id.popular: {
-                this.navigationView.setCheckedItem(id);
-            }
-            case R.id.top_rated: {
-                this.navigationView.setCheckedItem(id);
-            }
             case R.id.menu_drav_home: {
                 this.navigationView.setCheckedItem(id);
             }
@@ -277,49 +265,6 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
 
-            case R.id.now_playing:
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_FilmesActivity:now_playing");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                intent = new Intent(this, FilmesActivity.class);
-                intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing);
-                intent.putExtra(Constantes.ABA, R.id.now_playing);
-                startActivity(intent);
-
-                break;
-            case R.id.upcoming:
-
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_FilmesActivity:upcoming");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                intent = new Intent(this, FilmesActivity.class);
-                intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.upcoming);
-                intent.putExtra(Constantes.ABA, R.id.upcoming);
-                startActivity(intent);
-
-                break;
-            case R.id.popular:
-
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_FilmesActivity:popular");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                intent = new Intent(this, FilmesActivity.class);
-                intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.populares);
-                intent.putExtra(Constantes.ABA, R.id.popular);
-                startActivity(intent);
-
-                break;
-            case R.id.top_rated:
-
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_FilmesActivity:top_rated");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                intent = new Intent(this, FilmesActivity.class);
-                intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.top_rated);
-                intent.putExtra(Constantes.ABA, R.id.top_rated);
-                startActivity(intent);
-
-                break;
             case R.id.nav_item_settings:
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_SettingsActivity:item_settings");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);

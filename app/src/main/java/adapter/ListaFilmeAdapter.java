@@ -120,19 +120,16 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
 
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder {
         ImageView img_favorite;
-        ImageButton img_button_coracao_favorite, img_button_estrela_favorite, img_button_relogio_favorite;
+        ImageButton img_button_coracao_favorite;
         ProgressBar progressBar;
         TextView text_rated_favoritos;
 
         public FavoriteViewHolder(View itemView) {
             super(itemView);
             img_favorite = (ImageView) itemView.findViewById(R.id.img_filme_usuario);
-            img_button_coracao_favorite = (ImageButton) itemView.findViewById(R.id.img_button_coracao_usuario);
-            img_button_estrela_favorite = (ImageButton) itemView.findViewById(R.id.img_button_estrela_usuario);
-            img_button_relogio_favorite = (ImageButton) itemView.findViewById(R.id.img_button_relogio_usuario);
             text_rated_favoritos = (TextView) itemView.findViewById(R.id.text_rated_favoritos);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
-            itemView.findViewById(R.id.botoes_lista).setVisibility(View.GONE);
+
         }
     }
 

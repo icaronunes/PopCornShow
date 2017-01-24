@@ -81,18 +81,18 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
 
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (sharedPref.getBoolean("23", true)) {
+        if (sharedPref.getBoolean("24", true)) {
             AlertDialog dialog = new AlertDialog.Builder(this)
-                    .setIcon(R.drawable.netflix)
+                    .setIcon(R.drawable.ic_popcorn2)
                     .setTitle(R.string.novidades_title)
                     .setMessage(R.string.novidades_text)
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putBoolean("23", false);
-                            editor.remove("21");
-                            editor.remove("20");// sempre remover versão anterior
+                            editor.putBoolean("24", false);
+                            editor.remove("23");
+                            editor.remove("21");// sempre remover versão anterior
                             editor.remove("22");// sempre remover versão anterior
                             editor.apply();
                         }

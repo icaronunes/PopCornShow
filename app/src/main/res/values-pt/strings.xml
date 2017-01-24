@@ -179,7 +179,7 @@
     <string name="notificacao_summary">Receber Notificação</string>
     <string name="ajuda_desenvolvimento">Desenvolvimento</string>
     <string name="novidades_title">Novidades</string>
-    <string name="novidades_text">** Adicionada integração com Netflix\n(ainda não está perfeito) **\n\n** Botão de notas agora mostra media de várias notas. \nNotas vem do TMDB, IMDb, Tomatoes, Metacritic e Netflix. \nLinks diretos para respectivos sites. **\n\n** Botão de Reviews agora mostrar links para vários jornais no mundo.\nTambém está em Tvshows. **\n\n** No perfil do artista é possível ver quais estão no catálogo do Netflix. **</string>
+    <string name="novidades_text">**\nAdicionado mecanismo de conexão inteligente.\nPoupando dados de internet se for utilizada uma conexão lenta.\nVeja em \"Configurações\" \n**\n\n**\nPopCorn Show agora gerencia melhor seus dados em cache.\nUtilizando menos memoria interna. \n**\n\n**\nMelhora em algumas telas. \nUm layout melhor\n**\n\n**\n Arrumado opção de recebimento de notificações.\n**</string>
     <string name="star_avaliados">Avaliação</string>
     <string name="budget">Orçamento</string>
     <string name="person">Perfil</string>

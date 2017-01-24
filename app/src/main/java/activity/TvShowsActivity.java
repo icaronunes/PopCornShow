@@ -30,8 +30,8 @@ public class TvShowsActivity extends BaseActivity {
         setUpToolBar();
         setupNavDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getString(getIntent()
-                .getIntExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.tvshow)));
+        getSupportActionBar().setTitle(getIntent()
+                .getStringExtra(Constantes.NAV_DRAW_ESCOLIDO));
 
         AdView adview = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()

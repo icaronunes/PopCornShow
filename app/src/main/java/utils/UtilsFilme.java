@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.graphics.Palette;
@@ -138,6 +139,15 @@ public class UtilsFilme {
         str = str.replace("/", "");
         str = str.replace(";", "");
         return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+    }
+
+    static public String getLocale() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return Locale.getDefault().toLanguageTag();
+        } else {
+            return Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry();
+        }
     }
 
 
