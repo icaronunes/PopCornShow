@@ -32,6 +32,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.squareup.picasso.Callback;
@@ -410,15 +411,21 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        try {
+            getMenuInflater().inflate(R.menu.menu, menu);
 
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setQueryHint(getResources().getString(R.string.procurar));
-        searchView.setEnabled(false);
+            SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+            SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setQueryHint(getResources().getString(R.string.procurar));
+            searchView.setEnabled(false);
 
-        return super.onCreateOptionsMenu(menu);
+            return super.onCreateOptionsMenu(menu);
+        } catch (Exception e){
+            FirebaseCrash.report(e);
+            Toast.makeText(this, R.string.ops, Toast.LENGTH_SHORT).show();
+        }
+        return true;
     }
 
     protected void salvaImagemMemoriaCache(final Context context, final String endereco, final SalvarImageShare callback) {

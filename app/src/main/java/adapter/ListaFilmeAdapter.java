@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -66,7 +65,6 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
             holder.text_rated_favoritos.setVisibility(View.VISIBLE);
         }
 
-            holder.img_button_coracao_favorite.setVisibility(View.GONE);
 
             Picasso.with(context)
                     .load(UtilsFilme
@@ -120,7 +118,6 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
 
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder {
         ImageView img_favorite;
-        ImageButton img_button_coracao_favorite;
         ProgressBar progressBar;
         TextView text_rated_favoritos;
 

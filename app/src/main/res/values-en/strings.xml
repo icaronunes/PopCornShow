@@ -185,4 +185,5 @@
     <string name="empty">Empty</string>
     <string name="save_conexao_summary">PopCorn Show reduces your data usage if you are on a slow connection.</string>
     <string name="save_conexao">Smart connection</string>
+    <string name="compartilhar">To share</string>
 </resources>

@@ -331,29 +331,33 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-      //  Log.d(TAG, "Google Result");
-        if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+            // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+            //  Log.d(TAG, "Google Result");
+            if (requestCode == RC_SIGN_IN) {
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                if (result.isSuccess()) {
 
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "google");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "google");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
 
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = result.getSignInAccount();
-               // Log.d(TAG, account.getDisplayName());
-                accessGoogle(account.getIdToken());
+                    // Google Sign In was successful, authenticate with Firebase
+                    GoogleSignInAccount account = result.getSignInAccount();
+                    // Log.d(TAG, account.getDisplayName());
+                    accessGoogle(account.getIdToken());
+                } else {
+                    // Log.d(TAG, "Falha no login Google");
+                }
             } else {
-               // Log.d(TAG, "Falha no login Google");
+                mCallbackManager.onActivityResult(requestCode, resultCode, data);
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "facebook");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
             }
-        } else {
-            mCallbackManager.onActivityResult(requestCode, resultCode, data);
-            Bundle bundle = new Bundle();
-            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "facebook");
-            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
+        } catch (Exception E){
+            Toast.makeText(this, R.string.ops, Toast.LENGTH_SHORT).show();
         }
     }
 

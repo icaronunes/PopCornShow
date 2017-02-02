@@ -289,14 +289,19 @@ public class TvShowActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_share, menu);
+        try {
+            getMenuInflater().inflate(R.menu.menu_share, menu);
 
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setQueryHint(getResources().getString(R.string.procurar));
-        searchView.setEnabled(false);
+            SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+            SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setQueryHint(getResources().getString(R.string.procurar));
+            searchView.setEnabled(false);
 
+        } catch (Exception e){
+            FirebaseCrash.report(e);
+            Toast.makeText(this, R.string.ops, Toast.LENGTH_SHORT).show();
+        }
         return true;
     }
 

@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -76,7 +75,6 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
 
         if (series != null) {
 
-            holder.img_button_coracao_favorite.setVisibility(View.GONE);
 
             Picasso.with(context)
                     .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + series.getPoster())
@@ -124,7 +122,6 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
 
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder {
         ImageView img_favorite;
-        ImageButton img_button_coracao_favorite;
         ProgressBar progressBar;
         TextView text_rated_favoritos;
 
