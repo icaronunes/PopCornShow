@@ -66,7 +66,7 @@ public class SeguindoActivity extends BaseActivity{
         if (UtilsFilme.isNetWorkAvailable(this)){
 
             iniciarFirebases();
-            setEventListenerFavorite();
+            setEventListenerSeguindo();
         } else {
             snack();
         }
@@ -89,7 +89,7 @@ public class SeguindoActivity extends BaseActivity{
                         if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
                             //text_elenco_no_internet.setVisibility(View.GONE);
                             iniciarFirebases();
-                            setEventListenerFavorite();
+                            setEventListenerSeguindo();
                         } else {
                             snack();
                         }
@@ -117,7 +117,7 @@ public class SeguindoActivity extends BaseActivity{
                 userTvshows));
     }
 
-    private void setEventListenerFavorite() {
+    private void setEventListenerSeguindo() {
         eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

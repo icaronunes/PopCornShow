@@ -107,7 +107,7 @@
     <string name="temporada">Season</string>
     <string name="temporadas">Seasons</string>
     <string name="text_logoff_dialog">After logging out, it will not be possible to interact with the application.</string>
-    <string name="title_logoff_dialog">Log out of TMDB?</string>
+    <string name="title_logoff_dialog">Log out of PopCorn Show?</string>
     <string name="toast_salvar_imagem">Image saved in the folder of the application</string>
     <string name="today">On Tv Today</string>
     <string name="top_rated">Best Evaluated</string>
@@ -187,7 +187,7 @@
     <string name="ajuda_desenvolvimento">Development</string>
     <string name="twitter_text" translatable="false">Twitter</string>
     <string name="novidades_title">News</string>
-    <string name="novidades_text">**\nAdded intelligent connection mechanism.\nSaving internet data if a slow connection is used.\nSee \"Settings\"\n**\n\n**\nPopCorn Show now manages your cached data better.\nUsing less internal memory. \n**\n\n**\nImprovement on some screens.\nA better layout\n**\n\n** \nNeat option to receive notification. \n**</string>
+    <string name="novidades_text">** Small Improvements **\n\n** We are experiencing problems with IMDB data.\nNotes and other data may not work. \nI hope to solve it soon. **</string>
     <string name="star_avaliados">Evaluation</string>
     <string name="budget">Budget</string>
     <string name="homepage" translatable="false">Homepager</string>
@@ -201,4 +201,6 @@
     <string name="save_conexao_summary">PopCorn Show reduces your data usage if you are on a slow connection.</string>
     <string name="save_conexao">Smart connection</string>
     <string name="compartilhar">To share</string>
+    <string name="season_updated">Season Updated</string>
+    <string name="ops_seguir_novamente">Oops. Something went wrong. If it persists, try to follow the Tvshow again.</string>
 </resources>

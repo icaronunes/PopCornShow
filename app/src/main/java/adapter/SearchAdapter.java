@@ -54,7 +54,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
         if (multis.get(position).getMediaType().equals(Multi.MediaType.MOVIE)) {
             final MovieDb movieDb = ((MovieDb) multis.get(position));
 
-            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + movieDb.getPosterPath())
+            Picasso.with(context).load(UtilsFilme.getTamanhoDaImagem(context, 2) + movieDb.getPosterPath())
                     .error(R.drawable.poster_empty)
                     .into(holder.poster);
 

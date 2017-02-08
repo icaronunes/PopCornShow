@@ -24,7 +24,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import activity.FilmeActivity;
 import activity.FilmesActivity;
@@ -44,6 +43,7 @@ import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.string.filmes_main;
 import static java.util.Arrays.asList;
+import static utils.UtilsFilme.getLocale;
 import static utils.UtilsFilme.getTimezone;
 
 
@@ -527,7 +527,7 @@ public class MainFragment extends Fragment {
             }
 
             boolean idioma_padrao = false;
-            if (isDetached()) {
+            if (!isDetached()) {
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             }
@@ -536,18 +536,10 @@ public class MainFragment extends Fragment {
                     if (UtilsFilme.isNetWorkAvailable(getActivity())) {
                         TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
                         TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
-                        popularTvshow = tmdbTv.getPopular(Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry()
-                                //.toLanguageTag()
-                                + ",en,null", 1);
-                        toDay = tmdbTv.getAiringToday(Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry()
-                                //.toLanguageTag()
-                                + ",en,null", 1, getTimezone());
-                        popularMovie = tmdbMovies.getPopularMovies(Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry()
-                                //.toLanguageTag()
-                                + ",en,null", 1);
-                        cinema = tmdbMovies.getUpcoming(Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry()
-                                //.toLanguageTag()
-                                + ",en,null", 1);
+                        popularTvshow = tmdbTv.getPopular(getLocale(), 1);
+                        toDay = tmdbTv.getAiringToday(getLocale(), 1, getTimezone());
+                        popularMovie = tmdbMovies.getPopularMovies(getLocale(), 1);
+                        cinema = tmdbMovies.getUpcoming(getLocale(), 1);
                     }
                 } catch (Exception e) {
                    // Log.d(TAG, e.getMessage());
@@ -561,12 +553,12 @@ public class MainFragment extends Fragment {
                     });
                 }
             } else {
-                try {
+                try { // É preciso? o tmdb não retorna 'en' se não houver o idioma?
                     if (UtilsFilme.isNetWorkAvailable(getActivity())) {
                         TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
                         TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
                         popularTvshow = tmdbTv.getPopular("en", 1);
-                        toDay = tmdbTv.getAiringToday("en,null", 1, getTimezone());
+                        toDay = tmdbTv.getAiringToday("en", 1, getTimezone());
                         popularMovie = tmdbMovies.getPopularMovies("en", 1);
                         cinema = tmdbMovies.getUpcoming("en", 1);
                     }

@@ -771,17 +771,14 @@ public class FilmeActivity extends BaseActivity {
             if (UtilsFilme.isNetWorkAvailable(FilmeActivity.this)) {
                 try {
                     TmdbMovies movies = FilmeService.getTmdbMovies();
-                    // Log.d("FilmeActivity", "Filme ID - " + id_filme);
                     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
                     boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
                     if (idioma_padrao) {
                         movieDb = movies.getMovie(id_filme, getLocale()
-                                        //.toLanguageTag() não funciona na API 14
                                         + ",en,null"
                                 , credits, releases, videos, similar, alternative_titles, images);
                         movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
                     } else {
-                        //  Log.d("FilmeActivity", "False - " + id_filme);
                         movieDb = movies.getMovie(id_filme, "en,null"
                                 , credits, releases, videos, similar, alternative_titles, images);
                     }
@@ -791,6 +788,7 @@ public class FilmeActivity extends BaseActivity {
 
                 } catch (Exception e) {
                     FirebaseCrash.report(e);
+                    if (!isDestroyed())
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -799,23 +797,40 @@ public class FilmeActivity extends BaseActivity {
                     });
                 }
 
+                try{
+                    if (movieDb.getImdbID() != null) {
+                        imdbdb = FilmeService.getImdb(movieDb.getImdbID());
+                    }
+                } catch (Exception e){
+                    FirebaseCrash.report(e);
+                    if (!isDestroyed())
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(FilmeActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                }
+
                 try {
                     if (movieDb != null) {
 
                         if (movieDb.getReleaseDate() != null) {
                             if (movieDb.getReleaseDate().length() >= 4) {
                                 String date = movieDb.getReleaseDate().substring(0, 4);
-
                                 netflix = FilmeService.getNetflix(movieDb.getTitle(), Integer.parseInt(date));
                             }
-                        }
-
-                        if (movieDb.getImdbID() != null) {
-                            imdbdb = FilmeService.getImdb(movieDb.getImdbID());
                         }
                     }
                 } catch (Exception e) {
                     FirebaseCrash.report(e);
+                    if (!isDestroyed())
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(FilmeActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                 }
             }
             return movieDb;

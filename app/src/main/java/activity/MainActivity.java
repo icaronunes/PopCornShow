@@ -3,7 +3,6 @@ package activity;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,9 +14,6 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -50,11 +46,6 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
     TabLayout tabLayout;
     List<TopMain> multi = new ArrayList<>();
     CirclePageIndicator circlePageIndicator;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +72,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
 
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (sharedPref.getBoolean("24", true)) {
+        if (sharedPref.getBoolean("28", true)) {
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_popcorn2)
                     .setTitle(R.string.novidades_title)
@@ -90,18 +81,13 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putBoolean("24", false);
-                            editor.remove("23");
-                            editor.remove("21");// sempre remover versão anterior
-                            editor.remove("22");// sempre remover versão anterior
+                            editor.putBoolean("28", false);
                             editor.apply();
                         }
                     }).create();
             dialog.show();
         }
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
 
 
@@ -216,21 +202,6 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
         // Log.d(TAG, connectionResult.toString());
     }
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Main Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 

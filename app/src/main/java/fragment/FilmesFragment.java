@@ -184,6 +184,7 @@ public class FilmesFragment extends Fragment {
             } catch (Exception e){
                 Log.d(TAG, e.getMessage());
                 FirebaseCrash.report(e);
+                if (getActivity() != null)
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

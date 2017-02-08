@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbSearch;
@@ -16,18 +17,16 @@ import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
 import info.movito.themoviedbapi.model.people.Person;
 import info.movito.themoviedbapi.model.tv.TvSeries;
-import utils.Config;
 
 public class SuggestionProvider extends ContentProvider {
 
-    private TmdbSearch.MultiListResultsPage multis;
     private String id;
     private String mediaType;
     private Bundle bundle;
 
     @Override
     public boolean onCreate() {
-       // Log.d("SuggestionProvider", "Entrou");
+        Log.d("SuggestionProvider", "Entrou");
         return false;
     }
 
@@ -35,9 +34,9 @@ public class SuggestionProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         String query1 = uri.getLastPathSegment().toLowerCase();
-      //  Log.d("SuggestionProvider", query1);
+        Log.d("SuggestionProvider", query1);
 
-        multis = new TmdbSearch(new TmdbApi(Config.TMDB_API_KEY)).searchMulti(query1, "en", 1);
+        TmdbSearch.MultiListResultsPage multis = new TmdbSearch(new TmdbApi("fb14e77a32282ed59a8122a266010b70")).searchMulti(query1, "en", 1);
 
         MatrixCursor cursor = new MatrixCursor(
                 new String[]{
@@ -60,7 +59,7 @@ public class SuggestionProvider extends ContentProvider {
 
 
                 if (multis.getResults().get(position).getMediaType().equals(Multi.MediaType.MOVIE)) {
-                   // Log.d("SuggestionProvider", String.valueOf(Multi.MediaType.MOVIE));
+                    Log.d("SuggestionProvider", String.valueOf(Multi.MediaType.MOVIE));
                     MovieDb movieDb = (MovieDb) multis.getResults().get(position);
                     id = String.valueOf(movieDb.getId());
                     nome = movieDb.getTitle();
@@ -70,7 +69,7 @@ public class SuggestionProvider extends ContentProvider {
                 }
                 if (multis.getResults().get(position).getMediaType().equals(Multi.MediaType.TV_SERIES)) {
                     TvSeries series = (TvSeries) multis.getResults().get(position);
-                   // Log.d("SuggestionProvider", String.valueOf(Multi.MediaType.TV_SERIES));
+                    Log.d("SuggestionProvider", String.valueOf(Multi.MediaType.TV_SERIES));
                     data = series.getFirstAirDate();
                     nome = series.getName();
                     id = String.valueOf(series.getId());
@@ -78,7 +77,7 @@ public class SuggestionProvider extends ContentProvider {
 
                 }
                 if (multis.getResults().get(position).getMediaType().equals(Multi.MediaType.PERSON)) {
-                  //  Log.d("SuggestionProvider", String.valueOf(Multi.MediaType.PERSON));
+                    Log.d("SuggestionProvider", String.valueOf(Multi.MediaType.PERSON));
                     Person person = (Person) multis.getResults().get(position);
                     mediaType = Multi.MediaType.PERSON.name();
                     nome = person.getName();
@@ -86,7 +85,7 @@ public class SuggestionProvider extends ContentProvider {
                     data = "";
                 }
 
-                //Log.d("SuggestionProvider", nome);
+                Log.d("SuggestionProvider", nome);
                 if (nome.toUpperCase().contains(query)) {
                     cursor.addRow(new Object[]{position, nome, data, id, mediaType});
                 }
@@ -116,6 +115,5 @@ public class SuggestionProvider extends ContentProvider {
     public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
         return 0;
     }
-
 
 }

@@ -105,7 +105,7 @@
     <string name="em_breve">Em Breve</string>
     <string name="home">Principal</string>
     <string name="sair">Sair</string>
-    <string name="title_logoff_dialog">Deslogar do TMDB?</string>
+    <string name="title_logoff_dialog">Deslogar do PopCorn Show?</string>
     <string name="cancel">Cancelar</string>
     <string name="text_logoff_dialog">Apos deslogar, não será possivel interagir com o aplicativo.</string>
 
@@ -179,7 +179,7 @@
     <string name="notificacao_summary">Receber Notificação</string>
     <string name="ajuda_desenvolvimento">Desenvolvimento</string>
     <string name="novidades_title">Novidades</string>
-    <string name="novidades_text">**\nAdicionado mecanismo de conexão inteligente.\nPoupando dados de internet se for utilizada uma conexão lenta.\nVeja em \"Configurações\" \n**\n\n**\nPopCorn Show agora gerencia melhor seus dados em cache.\nUtilizando menos memoria interna. \n**\n\n**\nMelhora em algumas telas. \nUm layout melhor\n**\n\n**\n Arrumado opção de recebimento de notificações.\n**</string>
+    <string name="novidades_text">** Pequenas melhorias **\n\n** Estamos enfrentando problemas com dados do IMDB.\nNotas e outros dados podem na funcionar.\nEspero resolver em breve. **</string>
     <string name="star_avaliados">Avaliação</string>
     <string name="budget">Orçamento</string>
     <string name="person">Perfil</string>
@@ -194,4 +194,6 @@
     <string name="save_conexao_summary">PopCorn Show reduz seu uso dados caso esteja em uma conexão lenta.</string>
     <string name="save_conexao">Conexão inteligente</string>
     <string name="compartilhar">Compartilhar</string>
+    <string name="season_updated">Temporada Atualizada</string>
+    <string name="ops_seguir_novamente">Oops. Algo deu errado. Se persistir, tente seguir a série novamente.</string>
 </resources>

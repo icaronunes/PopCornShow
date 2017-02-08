@@ -2,6 +2,7 @@ package domain;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -110,6 +111,7 @@ public class FilmeService {
           //  Log.d("domian.Lista", String.valueOf(response.body().charStream()));
             items =  parseJSONLista(response);
         } catch (IOException e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
         }
         return items;
@@ -137,6 +139,7 @@ public class FilmeService {
             Response response = client.newCall(request).execute();
             netflix =  parseJSONNetflix(response);
         } catch (IOException e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
         }
         return netflix;
@@ -164,6 +167,7 @@ public class FilmeService {
             // Log.d("FilmeService", "parseJSONNetflixActor: " +response.body().string());
             netflix =  parseJSONNetflixActor(response);
         } catch (IOException e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
         }
         return netflix;
@@ -184,6 +188,7 @@ public class FilmeService {
            // Log.d("FilmeService", "parseJSONNetflixActor: " +response.body().string());
             netflix =  parseJSONNetflixActor(response);
         } catch (IOException e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
         }
         return netflix;
@@ -211,6 +216,7 @@ public class FilmeService {
             return parseJSONImdb(response);
 
         } catch (IOException e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
         }
         return null;
@@ -224,7 +230,7 @@ public class FilmeService {
             netflix = gson.fromJson(response.body().string(), Imdb.class);
 
         } catch (Exception e){
-
+            FirebaseCrash.report(e);
         }
         return netflix;
     }
@@ -246,6 +252,7 @@ public class FilmeService {
 
         } catch (IOException e) {
             e.printStackTrace();
+            FirebaseCrash.report(e);
         }
         return null;
 
@@ -258,7 +265,7 @@ public class FilmeService {
             reviewsUflixit = gson.fromJson(response.body().string(), ReviewsUflixit.class);
 
         } catch (Exception e){
-
+            FirebaseCrash.report(e);
         }
         return reviewsUflixit;
     }

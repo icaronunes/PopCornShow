@@ -18,11 +18,11 @@ public class TvShowAdapter extends FragmentPagerAdapter {
 
     public static final String TAG = TvShowAdapter.class.getName();
     Context context;
-    TvSeries series;
+    private TvSeries series;
     int color;
-    boolean seguindo;
-    Netflix netflix;
-    Imdb imdb;
+    private boolean seguindo;
+    private Netflix netflix;
+    private Imdb imdb;
 
 
     public TvShowAdapter(Context context, FragmentManager supportFragmentManager,

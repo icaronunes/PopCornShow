@@ -20,6 +20,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -106,7 +107,7 @@ public class TvShowActivity extends BaseActivity {
     private FirebaseDatabase database;
     private UserTvshow userTvshow;
     private UserTvshow userTvshowOld;
-    private Netflix netflix= null;
+    private Netflix netflix = null;
     private Imdb imdbdb = null;
 
     @Override
@@ -298,7 +299,7 @@ public class TvShowActivity extends BaseActivity {
             searchView.setQueryHint(getResources().getString(R.string.procurar));
             searchView.setEnabled(false);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             FirebaseCrash.report(e);
             Toast.makeText(this, R.string.ops, Toast.LENGTH_SHORT).show();
         }
@@ -344,7 +345,7 @@ public class TvShowActivity extends BaseActivity {
         // Get the unique appcode for this app.
 
         String link = "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3DTA%26id%3D"
-                +series.getId() +"&apn=br.com.icaro.filme";
+                + series.getId() + "&apn=br.com.icaro.filme";
 
         // If the deep link is used in an advertisement, this value must be set to 1.
         boolean isAd = false;
@@ -640,6 +641,79 @@ public class TvShowActivity extends BaseActivity {
         menu_item_rated.setColorNormal(color);
     }
 
+
+    private void atualizarRealDate() {
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    TmdbTvSeasons tvSeasons = new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
+
+                    userTvshow = setUserTvShow(series);
+
+                    for (int i = 0; i < series.getSeasons().size(); i++) {
+                        TvSeason tvS = series.getSeasons().get(i);
+                        TvSeason tvSeason = tvSeasons.getSeason(series.getId(), tvS.getSeasonNumber(), "en", TmdbTvSeasons.SeasonMethod.external_ids); //?
+                        userTvshow.getSeasons().get(i).setUserEps(setEp(tvSeason));
+                        // Atualiza os eps em userTvShow
+                    }
+
+                    for (int i = 0; i < userTvshowOld.getSeasons().size(); i++) {
+                        userTvshow.getSeasons().get(i).setId(userTvshowOld.getSeasons().get(i).getId());
+                        userTvshow.getSeasons().get(i).setSeasonNumber(userTvshowOld.getSeasons().get(i).getSeasonNumber());
+                        userTvshow.getSeasons().get(i).setVisto(userTvshowOld.getSeasons().get(i).isVisto());
+                        //Atualiza somente os campos do temporada em userTvShow
+                    }
+
+                    for (int i = 0; i < userTvshowOld.getSeasons().size(); i++) {
+                        Log.d(TAG, "Numero de eps - "+ userTvshow.getSeasons().get(i).getUserEps().size());
+                        if (userTvshow.getSeasons().get(i).getUserEps().size() > userTvshowOld.getSeasons().get(i).getUserEps().size()) {
+                            userTvshow.getSeasons().get(i).setVisto(false);
+                            // Se huver novos ep. coloca temporada com não 'vista'
+                        }
+                            for (int i1 = 0; i1 < userTvshowOld.getSeasons().get(i).getUserEps().size(); i1++) {
+                                userTvshow.getSeasons().get(i).getUserEps().set(i1, userTvshowOld.getSeasons().get(i).getUserEps().get(i1));
+                                Log.d(TAG, "run: EPS");
+                                //coloca as informações antigas na nova versão dos dados.
+                            }
+                    }
+
+                    final DatabaseReference myRef = database.getReference("users");
+                    myRef.child(mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "")
+                            .child("seguindo")
+                            .child(String.valueOf(series.getId()))
+                            .setValue(userTvshow)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        seguindo = true;
+                                        setupViewPagerTabs();
+                                        setCoordinator();
+                                        setImageTop();
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(TvShowActivity.this, R.string.season_updated, Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+//
+                                    }
+                                }
+                            });
+                }
+            }).start();
+        } catch (Exception e){
+            FirebaseCrash.report(e);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(TvShowActivity.this, R.string.ops_seguir_novamente, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
 
@@ -660,8 +734,9 @@ public class TvShowActivity extends BaseActivity {
                     // Log.d(TAG, String.valueOf(series.getNumberOfEpisodes()));
 
                 } catch (Exception e) {
-                   // Log.d(TAG, e.getMessage());
+                    // Log.d(TAG, e.getMessage());
                     FirebaseCrash.report(e);
+                    if (!isDestroyed())
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -672,12 +747,11 @@ public class TvShowActivity extends BaseActivity {
 
             } else {
                 try {
-
                     series = FilmeService.getTmdbTvShow()
                             .getSeries(id_tvshow, null, images, credits, videos, external_ids);
                 } catch (Exception e) {
-
                     FirebaseCrash.report(e);
+                    if (!isDestroyed())
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -687,36 +761,23 @@ public class TvShowActivity extends BaseActivity {
                 }
             }
 
-            try{
+            try {
                 if (series.getFirstAirDate() != null) {
                     String date = series.getFirstAirDate().substring(0, 4);
-                   // Log.d(TAG, "doInBackground: "+date);
                     netflix = FilmeService.getNetflix(series.getOriginalName(), Integer.parseInt(date));
                 }
-            } catch (Exception e){
-               FirebaseCrash.report(e);
-            }
-
-
-            try{
-                if (series.getFirstAirDate() != null) {
-                    String date = series.getFirstAirDate().substring(0, 4);
-                    // Log.d(TAG, "doInBackground: "+date);
-                    netflix = FilmeService.getNetflix(series.getOriginalName(), Integer.parseInt(date));
-                }
-            } catch (Exception e){
+            } catch (Exception e) {
                 FirebaseCrash.report(e);
             }
 
-            try{
+
+            try {
                 if (series.getExternalIds().getImdbId() != null) {
-                   // Log.d(TAG, "IMDB - " + series.getExternalIds().getImdbId());
                     imdbdb = FilmeService.getImdb(series.getExternalIds().getImdbId());
                 }
-            } catch (Exception e){
-                //Log.d(TAG, "doInBackground: "+e.getMessage());
+            } catch (Exception e) {
+                FirebaseCrash.report(e);
             }
-
 
             return null;
         }
@@ -724,7 +785,7 @@ public class TvShowActivity extends BaseActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            if (series == null){
+            if (series == null) {
                 return;
             }
 
@@ -735,10 +796,10 @@ public class TvShowActivity extends BaseActivity {
                                 new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        // Get user value
+
                                         if (dataSnapshot.exists()) {
                                             userTvshowOld = dataSnapshot.getValue(UserTvshow.class);
-                                           // Log.d(TAG,"OLD " + userTvshowOld.getNumberOfEpisodes()+ " - TMDB"+ series.getNumberOfEpisodes());
+
                                             if (userTvshowOld.getNumberOfEpisodes() == series.getNumberOfEpisodes()) {
                                                 seguindo = true;
                                                 setupViewPagerTabs();
@@ -751,31 +812,26 @@ public class TvShowActivity extends BaseActivity {
                                             setupViewPagerTabs();
                                             setCoordinator();
                                             setImageTop();
-                                            //  Log.d(TAG, "onDataChange " + "Não seguindo.");
                                         }
 
                                     }
 
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
-                                        //  Log.w(TAG, "getUser:onCancelled", databaseError.toException());
                                     }
                                 });
             } else {
                 seguindo = false;
-                // Log.d(TAG, "onDataChange " + "False - Não seguindo.");
                 setCoordinator();
                 setupViewPagerTabs();
                 setImageTop();
             }
 
-            if (mAuth.getCurrentUser() != null) { // Arrumar
+            if (mAuth.getCurrentUser() != null) {
 
                 setEventListenerWatch();
                 setEventListenerFavorite();
                 setEventListenerRated();
-
-                // Log.d("FAB", "FAB " + color_top);
 
                 Date date = null;
                 fab.setAlpha(1);
@@ -800,56 +856,5 @@ public class TvShowActivity extends BaseActivity {
                 fab.setAlpha(0);
             }
         }
-    }
-
-    private void atualizarRealDate() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                TmdbTvSeasons tvSeasons = new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
-
-                userTvshow = setUserTvShow(series);
-
-                for (int i = 0; i < series.getSeasons().size(); i++) {
-                    TvSeason tvS = series.getSeasons().get(i);
-                    TvSeason tvSeason = tvSeasons.getSeason(series.getId(), tvS.getSeasonNumber(), "en", TmdbTvSeasons.SeasonMethod.images); //?
-                    userTvshow.getSeasons().get(i).setUserEps(setEp(tvSeason));
-                }
-
-                final DatabaseReference myRef = database.getReference("users");
-                myRef.child(mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "")
-                        .child("seguindo")
-                        .child(String.valueOf(series.getId()))
-                        .setValue(userTvshow)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    myRef.child(mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "")
-                                            .child("seguindo")
-                                            .child(String.valueOf(series.getId()))
-                                            .child("seasons")
-                                            .setValue(userTvshowOld.getSeasons()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()){
-                                                seguindo = true;
-                                                setupViewPagerTabs();
-                                                setCoordinator();
-                                                setImageTop();
-                                                runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        Toast.makeText(TvShowActivity.this, "Temporada Atualizada", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
-                                            }
-                                        }
-                                    });
-                                }
-                            }
-                        });
-                        }
-        }).start();
     }
 }
