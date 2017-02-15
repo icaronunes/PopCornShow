@@ -1,5 +1,6 @@
 package activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import adapter.TemporadaAdapter;
+import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domain.FilmeService;
 import domain.UserEp;
@@ -46,7 +49,7 @@ public class TemporadaActivity extends BaseActivity {
 
     public static final String TAG = TemporadaActivity.class.getName();
 
-    int temporada_id, temporada_position;
+    int temporada_id, temporada_position, positionep;
     private String nome_temporada;
     int serie_id, color;
     private TvSeason tvSeason;
@@ -82,6 +85,7 @@ public class TemporadaActivity extends BaseActivity {
         mAuth = FirebaseAuth.getInstance();
         myRef =  FirebaseDatabase.getInstance().getReference("users");
 
+
         if (UtilsFilme.isNetWorkAvailable(this)) {
             new TMDVAsync().execute();
         } else {
@@ -104,7 +108,6 @@ public class TemporadaActivity extends BaseActivity {
                 }).show();
     }
 
-    @SuppressWarnings("deprecation")
     public void getExtras() {
 
         if (getIntent().getAction() == null){
@@ -130,8 +133,8 @@ public class TemporadaActivity extends BaseActivity {
         return new TemporadaAdapter.TemporadaOnClickListener() {
 
             @Override
-            public void onClickVerTemporada(View view, int position) {
-
+            public void onClickVerTemporada(View view, final int position) {
+                positionep = position;
                 if (seasons != null) {
                     if (seasons.getUserEps().get(position).isAssistido()) {
                       //  Log.d(TAG, "FALSE");
@@ -151,19 +154,70 @@ public class TemporadaActivity extends BaseActivity {
 
                     } else {
                       //  Log.d(TAG, "TRUE");
-                        String id = String.valueOf(serie_id);
+                            if (isAssistidoAnteriores(position)){
+                                AlertDialog dialog = new AlertDialog.Builder(TemporadaActivity.this)
+                                        .setTitle(R.string.title_marcar_ep_anteriores)
+                                        .setMessage(R.string.msg_marcar_ep_anteriores)
+                                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                String id = String.valueOf(serie_id);
 
-                        String user = mAuth.getCurrentUser().getUid();
+                                                String user = mAuth.getCurrentUser().getUid();
 
-                        Map<String, Object> childUpdates = new HashMap<String, Object>();
+                                                Map<String, Object> childUpdates = new HashMap<String, Object>();
+                                                for (int i = 0; i <= position; i++) {
+                                                    childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/userEps/"+i+"/assistido", true);
+                                                }
 
-                        childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/userEps/"+position+"/assistido", true);
-                        childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/visto/",  TemporadaTodaAssistida(position));
+                                                if (position == seasons.getUserEps().size()-1){
+                                                    childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/visto/",  true);
+                                                } else {
+                                                    childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/visto/",  TemporadaTodaAssistida(position));
+                                                }
 
-                        myRef.updateChildren(childUpdates);
+                                                myRef.updateChildren(childUpdates);
 
-                        Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
-                    }
+                                                Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                String id = String.valueOf(serie_id);
+
+                                                String user = mAuth.getCurrentUser().getUid();
+
+                                                Map<String, Object> childUpdates = new HashMap<String, Object>();
+
+                                                childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/userEps/"+position+"/assistido", true);
+                                                childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/visto/",  TemporadaTodaAssistida(position));
+
+                                                myRef.updateChildren(childUpdates);
+
+                                                Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .create();
+
+                                dialog.show();
+                            } else {
+
+                                String id = String.valueOf(serie_id);
+
+                                String user = mAuth.getCurrentUser().getUid();
+
+                                Map<String, Object> childUpdates = new HashMap<String, Object>();
+
+                                childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/userEps/"+position+"/assistido", true);
+                                childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/visto/",  TemporadaTodaAssistida(position));
+
+                                myRef.updateChildren(childUpdates);
+
+                                Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
                 }
             }
 
@@ -207,6 +261,16 @@ public class TemporadaActivity extends BaseActivity {
         return true;
     }
 
+    private boolean isAssistidoAnteriores(int position) {
+
+        for (int i = 0; i < position; i++) {
+            if (!seasons.getUserEps().get(i).isAssistido()){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private void setListener(){
 
@@ -217,10 +281,18 @@ public class TemporadaActivity extends BaseActivity {
                 if (dataSnapshot.exists() && seguindo) {
                   //  Log.d(TAG, "key listener: " + dataSnapshot.getKey());
                     seasons = dataSnapshot.getValue(UserSeasons.class);
-                    recyclerView
-                            .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
-                                    tvSeason, seasons ,seguindo,
-                                    onClickListener() ));
+
+//                    if (recyclerView.isShown()) {
+//                        recyclerView.getAdapter().notifyItemChanged(positionep);
+//
+//                    } else {
+//                        recyclerView
+//                                .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
+//                                        tvSeason, seasons, seguindo,
+//                                        onClickListener()));
+//                    }
+                    FilmeApplication.getInstance().getBus().post(seasons);
+                    recyclerView.getAdapter().notifyDataSetChanged();
 
                 } else {
 
@@ -280,12 +352,12 @@ public class TemporadaActivity extends BaseActivity {
             try {
                 if (idioma_padrao) {
                     tvSeason = FilmeService.getTmdbTvSeasons()
-                            .getSeason(serie_id, temporada_id, getLocale() + ",en,null");
+                            .getSeason(serie_id, temporada_id, getLocale());
 
                     return null;
                 } else {
                     tvSeason = FilmeService.getTmdbTvSeasons()
-                            .getSeason(serie_id, temporada_id, ",en,null"); //????
+                            .getSeason(serie_id, temporada_id, "en"); //????
                     return null;
                 }
             } catch (Exception e ){

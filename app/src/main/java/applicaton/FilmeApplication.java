@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.onesignal.OneSignal;
+import com.squareup.otto.Bus;
 
 import onsignal.CustomNotificationOpenedHandler;
 import onsignal.CustomNotificationReceivedHandler;
@@ -19,6 +20,7 @@ public class FilmeApplication extends Application {
 
     private static final String TAG = FilmeApplication.class.getName();
     private static FilmeApplication instance = null;
+    private Bus bus = new Bus();
 
     public static FilmeApplication getInstance() {
         return instance;
@@ -58,6 +60,11 @@ public class FilmeApplication extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
+
+    }
+
+    public Bus getBus(){
+        return bus;
     }
 
 }

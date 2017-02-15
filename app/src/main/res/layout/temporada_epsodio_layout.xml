@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
@@ -10,8 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="6dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/image_temp_ep"
@@ -24,7 +24,8 @@
             android:maxWidth="170dp"
             android:minHeight="80dp"
             android:minWidth="170dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:layout_gravity="center" />
 
 
         <LinearLayout
@@ -55,9 +56,10 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:ignore="UselessParent">
 
                     <TextView
                         android:id="@+id/ep_date"
@@ -65,7 +67,7 @@
                         android:layout_height="wrap_content" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
@@ -78,14 +80,19 @@
                             android:id="@+id/ep_nota"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
+
+                        <ImageView
+                            android:id="@+id/bt_visto"
+                            android:src="@drawable/icon_reviews"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="30dp"
+                            android:paddingLeft="30dp" />
+
+
                     </LinearLayout>
 
                 </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/bt_visto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 

@@ -11,7 +11,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +33,6 @@ import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.MovieDb;
 import utils.Constantes;
 import utils.UtilsFilme;
-
-import static com.google.android.gms.internal.zzs.TAG;
 
 
 /**
@@ -182,7 +179,7 @@ public class FilmesFragment extends Fragment {
                 List<MovieDb> dbList = getListaTipo(movies);
                 return dbList;
             } catch (Exception e){
-                Log.d(TAG, e.getMessage());
+               // Log.d(TAG, e.getMessage());
                 FirebaseCrash.report(e);
                 if (getActivity() != null)
                 getActivity().runOnUiThread(new Runnable() {

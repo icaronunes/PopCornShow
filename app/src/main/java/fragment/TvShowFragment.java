@@ -709,9 +709,6 @@ public class TvShowFragment extends Fragment {
                     final String user = mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "";
                     final String id_serie = String.valueOf(userTvshow.getId());
 
-                    if (!isVisto(position == 0 ? 0 : position - 1)) {
-                        // Log.d(TAG, "anterior não visto");
-                    }
 
                     Map<String, Object> childUpdates = new HashMap<String, Object>();
                     childUpdates.put("/" + user + "/seguindo/" + id_serie + "/seasons/" + position + "/visto", true);

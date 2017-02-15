@@ -403,14 +403,13 @@ public class PersonFragment extends Fragment {
             // Log.d("PersonFragment", "doInBackground");
             try {
                 personPeople = getTmdbPerson()
-                        .getPersonInfo(id_person, null); //So retorna ingles
+                        .getPersonInfo(id_person, "null"); //So retorna ingles
                 artworks = FilmeService.getTmdbPerson().getPersonImages(id_person);
                 personCredits = FilmeService.getTmdbPerson().getPersonCredits(id_person);
                 personCreditsTvshow = FilmeService.getPersonCreditsCombinado(id_person);
 
             } catch (Exception e) {
                 FirebaseCrash.report(e);
-               // Log.d(TAG, e.getMessage());
                 if (getActivity() != null)
                 getActivity().runOnUiThread(new Runnable() {
                     @Override

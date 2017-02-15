@@ -799,7 +799,7 @@ public class FilmeActivity extends BaseActivity {
 
                 try{
                     if (movieDb.getImdbID() != null) {
-                        imdbdb = FilmeService.getImdb(movieDb.getImdbID());
+                       // imdbdb = FilmeService.getImdb(movieDb.getImdbID());
                     }
                 } catch (Exception e){
                     FirebaseCrash.report(e);

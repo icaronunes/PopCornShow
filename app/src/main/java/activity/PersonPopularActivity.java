@@ -8,7 +8,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -109,11 +108,9 @@ public class PersonPopularActivity extends BaseActivity {
             try {
                 personResultsPage = FilmeService.getTmdbPerson().getPersonPopular(1);
                 personResultsPage.getResults().addAll(FilmeService.getTmdbPerson().getPersonPopular(2).getResults());
-                // Log.d("PersonPopularActivity", personResultsPage.getResults().get(1).toString());
-                // Log.d("PersonPopularActivity", ""+personResultsPage.getResults().size());
             } catch (Exception e){
                 FirebaseCrash.report(e);
-                Log.d(TAG, e.getMessage());
+               // Log.d(TAG, e.getMessage());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

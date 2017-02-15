@@ -10,7 +10,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -208,26 +207,26 @@ public class TvShowsFragment extends Fragment {
             if (language != null) {
 
                 if (abaEscolhida.equals(getResources().getString(R.string.air_date))) {
-                    Log.d(TAG, "getListaTipo: getOnTheAir");
+                //    Log.d(TAG, "getListaTipo: getOnTheAir");
                     return tmdbTV.getOnTheAir(language, pagina).getResults();
                 }
 
                 if (abaEscolhida.equals(getResources().getString(R.string.populares))) {
-                    Log.d(TAG, "getListaTipo: getPopular");
+                  //  Log.d(TAG, "getListaTipo: getPopular");
                     return tmdbTV.getPopular(language, pagina).getResults();
                 }
 
                 if (abaEscolhida.equals(getResources().getString(R.string.top_rated))) {
-                    Log.d(TAG, "getListaTipo: getTopRated");
+                   // Log.d(TAG, "getListaTipo: getTopRated");
                     return tmdbTV.getTopRated(language, pagina).getResults();
                 }
 
                 Timezone timezone = UtilsFilme.getTimezone();
-                Log.d(TAG, "getListaTipo: getAiringToday");
+               // Log.d(TAG, "getListaTipo: getAiringToday");
                 return tmdbTV.getAiringToday(language, pagina, timezone).getResults();
 
             }
-            Log.d(TAG, "getListaTipo: getAiringToday default");
+           // Log.d(TAG, "getListaTipo: getAiringToday default");
             return tmdbTV.getOnTheAir("en", pagina).getResults();
         }
 

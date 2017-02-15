@@ -716,7 +716,6 @@ public class TvShowActivity extends BaseActivity {
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
-
         @Override
         protected Void doInBackground(Void... voids) {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(TvShowActivity.this);
@@ -725,10 +724,10 @@ public class TvShowActivity extends BaseActivity {
             if (idioma_padrao) {
                 try {
                     TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
+                    String idioma = getLocale();
                     series = tmdbTv
-                            .getSeries(id_tvshow, getLocale()
-                                            + ",en,null"
-                                    , images, credits, videos, external_ids);
+                            .getSeries(id_tvshow, idioma
+                                    ,images, credits, videos, external_ids);
                     series.getVideos().addAll(tmdbTv.getSeries(id_tvshow, null, videos).getVideos());
                     series.getImages().setPosters(tmdbTv.getSeries(id_tvshow, null, images).getImages().getPosters());
                     // Log.d(TAG, String.valueOf(series.getNumberOfEpisodes()));
@@ -773,7 +772,7 @@ public class TvShowActivity extends BaseActivity {
 
             try {
                 if (series.getExternalIds().getImdbId() != null) {
-                    imdbdb = FilmeService.getImdb(series.getExternalIds().getImdbId());
+                    //imdbdb = FilmeService.getImdb(series.getExternalIds().getImdbId());
                 }
             } catch (Exception e) {
                 FirebaseCrash.report(e);

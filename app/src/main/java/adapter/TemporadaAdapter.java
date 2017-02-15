@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.otto.Subscribe;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import activity.TemporadaActivity;
+import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domain.UserSeasons;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
@@ -46,6 +48,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         this.seasons = seasons;
         this.seguindo = seguindo;
         this.temporadaOnClickListener = temporadaOnClickListener;
+        FilmeApplication.getInstance().getBus().register(this);
     }
 
     @Override
@@ -55,9 +58,19 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         return new HoldeTemporada(view);
     }
 
+    @Subscribe
+    public void onBusAtualizarListaCarros(UserSeasons seasons) {
+        //seasons.getUserEps().get(position).setAssistido(!seasons.getUserEps().get(position).isAssistido());
+        //Log.d(TAG, "onBusAtualizarListaCarros: "+ seasons.toString());
+        this.seasons = seasons;
+    }
 
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        FilmeApplication.getInstance().getBus().unregister(this);
+    }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void onBindViewHolder(HoldeTemporada holder, final int position) {
         episode = tvSeason.getEpisodes().get(position);
@@ -105,6 +118,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
             @Override
             public void onClick(View v) {
                 temporadaOnClickListener.onClickVerTemporada(v, position);
+                //seasons.getUserEps().get(position).setAssistido(!seasons.getUserEps().get(position).isAssistido());
             }
 
         });
@@ -115,7 +129,9 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
                 temporadaOnClickListener.onClickTemporada(view, position);
             }
         });
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -127,6 +143,8 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         }
         return 0;
     }
+
+
 
     public class HoldeTemporada extends RecyclerView.ViewHolder {
 
