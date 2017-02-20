@@ -51,6 +51,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         FilmeApplication.getInstance().getBus().register(this);
     }
 
+
     @Override
     public HoldeTemporada onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.temporada_epsodio_layout, parent, false);

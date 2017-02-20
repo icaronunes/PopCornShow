@@ -170,7 +170,7 @@
     <string name="notificacao_summary">Get notification</string>
     <string name="ajuda_desenvolvimento">Development</string>
     <string name="novidades_title">News</string>
-    <string name="novidades_text" >** Small Improvements **</string>
+    <string name="novidades_text" >** Small Improvements **\n\n** We are experiencing problems with IMDB data.\nNotes and other data may not work. \nI hope to solve it soon. **\n\n** Improved home screen performance **\n\n** Improved details in Seasons / Episodes **</string>
     <string name="star_avaliados">Evaluation</string>
     <string name="budget">Budget</string>
     <string name="bt_desativar">Deactivate Account</string>

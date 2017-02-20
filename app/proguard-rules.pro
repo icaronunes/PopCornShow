@@ -28,8 +28,9 @@
 -dontnote org.apache.commons.logging.impl.Jdk14Logger**
 -dontnote com.google.common.collect.** ## são muitas
 -dontnote com.google.common.** ## são muitas
-#-dontwarn com.fasterxml.jackson.databind.ext.DOMSerializer*
-#-dontwarn com.google.common.base**
+-dontwarn com.fasterxml.jackson.databind.ext.DOMSerializer*
+-dontwarn com.google.common.base**
+-dontwarn com.google.**
 #-dontwarn com.google.common.cache.package-info**
 #-dontwarn com.google.common.cache.Cache**
 #-dontwarn com.google.common.cache.RemovalNotification**
@@ -53,12 +54,19 @@
 #-dontwarn com.google.common.cache.cacheBuilder**
 #-dontwarn com.google.common.cache.LocalCache**
 #-dontwarn com.google.common.cache.ForwardingCache**
--keep com.squareup.**
--keep info.movito.**
--keep okio.**
--keep okio.DeflaterSink**
+#-keep com.google.**
+#-keep com.squareup.**
+#-keep info.movito.**
+#-keep okio.**
+#-keep okio.DeflaterSink**
 -dontwarn com.squareup.picasso.OkHttpDownload**
 -dontwarn info.movito.themoviedbapi.tools.HttpClientProxy**
 -dontwarn okio.**
 -dontwarn okio.DeflaterSink**
+-dontwarn android.test.**
+-dontwarn org.apache.**
+-dontwarn org.hamcrest.**
+-dontwarn javax.model.**
+-dontwarn com.squareup.**
+-dontwarn org.junit.**
 # <<<<<<< classes duplicadas..

@@ -824,7 +824,7 @@ public class FilmeActivity extends BaseActivity {
                     }
                 } catch (Exception e) {
                     FirebaseCrash.report(e);
-                    if (!isDestroyed())
+                    if (!isFinishing())
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

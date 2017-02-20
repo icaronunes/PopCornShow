@@ -17,6 +17,7 @@
             android:minHeight="30dp"
             android:layout_marginTop="6dp"
             android:scrollbars="none">
+
             <LinearLayout
                 android:id="@+id/scroll_filme_button_main"
                 android:layout_width="wrap_content"
@@ -36,22 +37,12 @@
             android:textStyle="normal|bold"
             android:textColor="@color/red" />
 
-
-        <HorizontalScrollView
-            android:id="@+id/horizontal_filme_popular_main"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_movie_popular_main"
+            android:minHeight="@dimen/poster_filme_height_padrao"
+            android:minWidth="@dimen/poster_filme_width_padrao"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:minHeight="120dp"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:id="@+id/scroll_filme_popular_main"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
-
-        </HorizontalScrollView>
+            android:layout_height="wrap_content" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -63,22 +54,12 @@
             android:textStyle="normal|bold"
             android:textColor="@color/blue" />
 
-        <HorizontalScrollView
-            android:id="@+id/horizontal_filme_ontheair_main"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_movieontheair_main"
+            android:minHeight="@dimen/poster_filme_height_padrao"
+            android:minWidth="@dimen/poster_filme_width_padrao"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:minHeight="120dp"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:id="@+id/scroll_filme_ontheair_main"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
-
-        </HorizontalScrollView>
-
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </ScrollView>

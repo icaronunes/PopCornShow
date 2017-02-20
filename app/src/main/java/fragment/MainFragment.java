@@ -7,37 +7,33 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import activity.FilmeActivity;
 import activity.FilmesActivity;
 import activity.SettingsActivity;
-import activity.TvShowActivity;
 import activity.TvShowsActivity;
+import adapter.MovieMainAdapter;
+import adapter.TvShowMainAdapter;
 import br.com.icaro.filme.R;
 import domain.FilmeService;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.TvResultsPage;
-import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
-import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsFilme;
 
@@ -60,6 +56,11 @@ public class MainFragment extends Fragment {
 
 
     private FirebaseAnalytics mFirebaseAnalytics;
+    private RecyclerView recycle_tvshow_popular_main;
+    private RecyclerView recycle_tvshowtoday_main;
+    private RecyclerView recycle_movie_popular_main;
+    private RecyclerView recycle_movieontheair_main;
+
 
     public static Fragment newInstance(int informacoes) {
         MainFragment fragment = new MainFragment();
@@ -184,65 +185,6 @@ public class MainFragment extends Fragment {
 
     }
 
-    private void setScrollTvShowPopulares() {
-        final List<TvSeries> tvSeries;
-        if (popularTvshow != null & isAdded()) {
-            int tamanho = popularTvshow.getResults().size() < 15 ? popularTvshow.getResults().size() : 15;
-            // Log.d("MainFragment", "Tamanho " + popularTvshow.getResults().size());
-            tvSeries = popularTvshow.getResults();
-            for (int i = 0; i < tamanho; i++) {
-                final TvSeries series = tvSeries.get(i);
-                View view = getActivity().getLayoutInflater().inflate(R.layout.poster_main, (ViewGroup) getView(), false);
-                LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.scroll_tvshow_popular_main);
-                View layoutScroll = view.findViewById(R.id.layout_poster_main);
-
-                final ImageView poster = (ImageView) view.findViewById(R.id.img_poster_grid);
-                final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress_poster_grid);
-                final TextView title = (TextView) view.findViewById(R.id.title_main);
-
-                Picasso.with(getContext())
-                        .load(UtilsFilme.getBaseUrlImagem( UtilsFilme.getTamanhoDaImagem(getContext(), 2)) + series.getPosterPath())
-                        .error(R.drawable.poster_empty)
-                        .into(poster, new Callback() {
-                            @Override
-                            public void onSuccess() {
-                                progressBar.setVisibility(View.GONE);
-                            }
-
-                            @Override
-                            public void onError() {
-                                progressBar.setVisibility(View.GONE);
-                                title.setText(series.getName());
-                                title.setVisibility(View.VISIBLE);
-                            }
-                        });
-
-                poster.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "TvShowPopulares");
-                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
-                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
-                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                        Intent intent = new Intent(getActivity(), TvShowActivity.class);
-                        intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
-                        intent.putExtra(Constantes.TVSHOW_ID, series.getId());
-                        intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(poster));
-                        startActivity(intent);
-                    }
-                });
-
-                linearLayout.addView(layoutScroll);
-            }
-
-        }
-
-    }
-
-
     private void setScrollTvshowButton() {
         for (int i = 0; i <= 3; i++) {
             View view = getActivity().getLayoutInflater().inflate(R.layout.main_botton, (ViewGroup) getView(), false);
@@ -331,191 +273,52 @@ public class MainFragment extends Fragment {
     private View getViewMovie(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.filmes_main, container, false);
 
+        recycle_movie_popular_main = (RecyclerView) view.findViewById(R.id.recycle_movie_popular_main);
+        recycle_movieontheair_main = (RecyclerView) view.findViewById(R.id.recycle_movieontheair_main);
+
+        recycle_movie_popular_main.setHasFixedSize(true);
+        recycle_movie_popular_main.setItemAnimator(new DefaultItemAnimator());
+        recycle_movie_popular_main.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+        recycle_movieontheair_main.setHasFixedSize(true);
+        recycle_movieontheair_main.setItemAnimator(new DefaultItemAnimator());
+        recycle_movieontheair_main.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
         return view;
     }
 
     private View getViewTvshow(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.tvshow_main, container, false);
+        recycle_tvshow_popular_main = (RecyclerView) view.findViewById(R.id.tvshow_popular_main);
+        recycle_tvshowtoday_main = (RecyclerView) view.findViewById(R.id.recycle_tvshowtoday_main);
 
+        recycle_tvshow_popular_main.setHasFixedSize(true);
+        recycle_tvshow_popular_main.setItemAnimator(new DefaultItemAnimator());
+        recycle_tvshow_popular_main.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+        recycle_tvshowtoday_main.setHasFixedSize(true);
+        recycle_tvshowtoday_main.setItemAnimator(new DefaultItemAnimator());
+        recycle_tvshowtoday_main.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
         return view;
-
     }
 
     private void setScrollTvShowToDay() {
-
-        List<TvSeries> tvSeries;
-        if (toDay != null & isAdded()) {
-            int tamanho = toDay.getResults().size() < 15 ? toDay.getResults().size() : 15;
-            //  Log.d("MainFragment", "Tamanho " + toDay.getResults().size());
-            tvSeries = toDay.getResults();
-            for (int i = 0; i < tamanho; i++) {
-                final TvSeries series = tvSeries.get(i);
-                View view = getActivity().getLayoutInflater().inflate(R.layout.poster_main, (ViewGroup) getView(), false);
-                LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.scroll_tvshow_ontheair_main);
-                View layoutScroll = view.findViewById(R.id.layout_poster_main);
-
-
-                final ImageView poster = (ImageView) view.findViewById(R.id.img_poster_grid);
-                final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress_poster_grid);
-                final TextView title = (TextView) view.findViewById(R.id.title_main);
-
-                Picasso.with(getContext())
-                        .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2)) + series.getPosterPath())
-                        .error(R.drawable.poster_empty)
-                        .into(poster, new Callback() {
-                            @Override
-                            public void onSuccess() {
-                                progressBar.setVisibility(View.GONE);
-                            }
-
-                            @Override
-                            public void onError() {
-                                progressBar.setVisibility(View.GONE);
-                                title.setText(series.getName());
-                                title.setVisibility(View.VISIBLE);
-                            }
-                        });
-
-                poster.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Main_TvShowOntheAir");
-                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
-                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
-                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                        Intent intent = new Intent(getActivity(), TvShowActivity.class);
-                        intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
-                        intent.putExtra(Constantes.TVSHOW_ID, series.getId());
-                        intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(poster));
-                        startActivity(intent);
-                    }
-                });
-
-                linearLayout.addView(layoutScroll);
-            }
-
-        }
-
-    }
-
-    private void setScrollMovieOntheAir() {
-        List<MovieDb> movie;
-
-        if (cinema != null && isAdded()) {
-            int tamanho = cinema.getResults().size() < 15 ? cinema.getResults().size() : 15;
-            // Log.d("MainFragment", "Tamanho " + cinema.getResults().size());
-            movie = cinema.getResults();
-            for (int i = 0; i < tamanho; i++) {
-                final MovieDb movieDb = movie.get(i);
-                View view = getActivity().getLayoutInflater().inflate(R.layout.poster_main, (ViewGroup) getView(), false);
-                LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.scroll_filme_ontheair_main);
-                View layoutScroll = view.findViewById(R.id.layout_poster_main);
-
-                final ImageView poster = (ImageView) view.findViewById(R.id.img_poster_grid);
-                final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress_poster_grid);
-                final TextView title = (TextView) view.findViewById(R.id.title_main);
-
-                Picasso.with(getContext())
-                        .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2)) + movieDb.getPosterPath())
-                        .error(R.drawable.poster_empty)
-                        .into(poster, new Callback() {
-                            @Override
-                            public void onSuccess() {
-                                progressBar.setVisibility(View.GONE);
-                            }
-
-                            @Override
-                            public void onError() {
-                                progressBar.setVisibility(View.GONE);
-                                title.setText(movieDb.getTitle());
-                                title.setVisibility(View.VISIBLE);
-                            }
-                        });
-
-                poster.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Main_MovieOntheAir");
-                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
-                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
-                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                        Intent intent = new Intent(getActivity(), FilmeActivity.class);
-                        intent.putExtra(Constantes.FILME_ID, movieDb.getId());
-                        intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(poster));
-                        startActivity(intent);
-                    }
-                });
-
-                linearLayout.addView(layoutScroll);
-            }
-
-        }
-
+        recycle_tvshowtoday_main.setAdapter(new TvShowMainAdapter(getActivity(), toDay));
     }
 
     private void setScrollMoviePopular() {
-        List<MovieDb> movie;
-
-        if (popularMovie != null && isAdded()) {
-            int tamanho = popularMovie.getResults().size() < 15 ? popularMovie.getResults().size() : 15;
-            // Log.d("MainFragment", "Tamanho " + popularMovie.getResults().size());
-            movie = popularMovie.getResults();
-            for (int i = 0; i < tamanho; i++) {
-                final MovieDb movieDb = movie.get(i);
-                View view = getActivity().getLayoutInflater().inflate(R.layout.poster_main, (ViewGroup) getView(), false);
-                LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.scroll_filme_popular_main);
-                View layoutScroll = view.findViewById(R.id.layout_poster_main);
-
-                final ImageView poster = (ImageView) view.findViewById(R.id.img_poster_grid);
-                final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress_poster_grid);
-                final TextView title = (TextView) view.findViewById(R.id.title_main);
-
-                Picasso.with(getContext())
-                        .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2)) + movieDb.getPosterPath())
-                        .error(R.drawable.poster_empty)
-                        .into(poster, new Callback() {
-                            @Override
-                            public void onSuccess() {
-                                progressBar.setVisibility(View.GONE);
-                            }
-
-                            @Override
-                            public void onError() {
-                                progressBar.setVisibility(View.GONE);
-                                title.setText(movieDb.getTitle());
-                                title.setVisibility(View.VISIBLE);
-                            }
-                        });
-
-                poster.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Main_MoviePopular");
-                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
-                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
-                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                        Intent intent = new Intent(getActivity(), FilmeActivity.class);
-                        intent.putExtra(Constantes.FILME_ID, movieDb.getId());
-                        intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(poster));
-                        startActivity(intent);
-                    }
-                });
-
-                linearLayout.addView(layoutScroll);
-            }
-
-        }
+        recycle_movieontheair_main.setAdapter(new MovieMainAdapter(getActivity(), cinema));
     }
+
+    private void setScrollMovieOntheAir() {
+        recycle_movie_popular_main.setAdapter(new MovieMainAdapter(getActivity(), popularMovie));
+    }
+
+    private void setScrollTvShowPopulares() {
+        recycle_tvshow_popular_main.setAdapter(new TvShowMainAdapter(getActivity(), popularTvshow));
+    }
+
 
     private class MainAsync extends AsyncTask<Void, Void, Void> {
 
@@ -554,7 +357,7 @@ public class MainFragment extends Fragment {
                 }
             } else {
                 try { // É preciso? o tmdb não retorna 'en' se não houver o idioma?
-                    if (UtilsFilme.isNetWorkAvailable(getActivity())) {
+                     if (UtilsFilme.isNetWorkAvailable(getActivity())) {
                         TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
                         TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
                         popularTvshow = tmdbTv.getPopular("en", 1);
@@ -599,5 +402,4 @@ public class MainFragment extends Fragment {
         }
 
     }
-
 }

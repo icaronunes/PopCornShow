@@ -176,16 +176,15 @@ public class FilmesFragment extends Fragment {
           //  Log.d("doInBackground", "doInBackground");
             try {
                 TmdbMovies movies = FilmeService.getTmdbMovies();
-                List<MovieDb> dbList = getListaTipo(movies);
-                return dbList;
+                return getListaTipo(movies);
             } catch (Exception e){
                // Log.d(TAG, e.getMessage());
                 FirebaseCrash.report(e);
-                if (getActivity() != null)
+                if (getContext() != null)
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.ops, Toast.LENGTH_SHORT).show();
                     }
                 });
             }

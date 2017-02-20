@@ -179,7 +179,7 @@
     <string name="notificacao_summary">Receber Notificação</string>
     <string name="ajuda_desenvolvimento">Desenvolvimento</string>
     <string name="novidades_title">Novidades</string>
-    <string name="novidades_text">** Pequenas melhorias **\n\n** Estamos enfrentando problemas com dados do IMDB.\nNotas e outros dados podem na funcionar.\nEspero resolver em breve. **</string>
+    <string name="novidades_text">** Pequenas melhorias **\n\n** Estamos enfrentando problemas com dados do IMDB.\nNotas e outros dados podem na funcionar.\nEsperamos resolver em breve. **\n\n** Melhorado desempenho da tela inicial **\n\n** Melhorado detalhes em Temporadas/Epsodios **</string>
     <string name="star_avaliados">Avaliação</string>
     <string name="budget">Orçamento</string>
     <string name="person">Perfil</string>

@@ -82,7 +82,7 @@
     <string name="notificacao">Notificación</string>
     <string name="notificacao_summary">Obtener la notificación</string>
     <string name="nova_senha">Nueva Contraseña</string>
-    <string name="novidades_text">** Pequeñas Mejoras **\n\n** Estamos experimentando problemas con los datos de IMDb.\nNotas y otros datos de mayo en el trabajo.\nEspero resolver pronto. **</string>
+    <string name="novidades_text">** Pequeñas Mejoras **\n\n** Estamos experimentando problemas con los datos de IMDb.\nNotas y otros datos de mayo en el trabajo.\nEspero resolver pronto. **\n\n** Mejora del rendimiento de la pantalla principal **\n\n** Mejora detalles Temporada / Episodios **</string>
     <string name="novidades_title">Noticias</string>
     <string name="now_playing">Jugando ahora</string>
     <string name="ops">Oops! algo mal</string>
