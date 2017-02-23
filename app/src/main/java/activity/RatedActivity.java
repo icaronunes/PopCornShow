@@ -39,7 +39,7 @@ public class RatedActivity extends BaseActivity {
     LinearLayout linearLayout;
     ProgressBar progressBar;
 
-    private DatabaseReference favoriteMovie, favoriteTv;
+    private DatabaseReference ratedMovie, ratedTv;
     private ValueEventListener valueEventFavoriteMovie;
     private ValueEventListener valueEventFavoriteTv;
 
@@ -78,11 +78,11 @@ public class RatedActivity extends BaseActivity {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        favoriteMovie = database.getReference("users").child(mAuth.getCurrentUser()
+        ratedMovie = database.getReference("users").child(mAuth.getCurrentUser()
                 .getUid()).child("rated")
                 .child("movie");
 
-        favoriteTv = database.getReference("users").child(mAuth.getCurrentUser()
+        ratedTv = database.getReference("users").child(mAuth.getCurrentUser()
                 .getUid()).child("rated")
                 .child("tvshow");
     }
@@ -121,7 +121,7 @@ public class RatedActivity extends BaseActivity {
 
             }
         };
-        favoriteMovie.addListenerForSingleValueEvent(valueEventFavoriteMovie);
+        ratedMovie.addListenerForSingleValueEvent(valueEventFavoriteMovie);
         //Chamando apenas uma vez, necessario? não poderia deixar o firebases atualizar?
     }
 
@@ -146,7 +146,7 @@ public class RatedActivity extends BaseActivity {
 
             }
         };
-        favoriteTv.addListenerForSingleValueEvent(valueEventFavoriteTv);
+        ratedTv.addListenerForSingleValueEvent(valueEventFavoriteTv);
         //Chamando apenas uma vez, necessario? não poderia deixar o firebases atualizar?
     }
 
@@ -157,6 +157,7 @@ public class RatedActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 
     @SuppressWarnings("deprecation")
@@ -174,10 +175,10 @@ public class RatedActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (valueEventFavoriteMovie != null){
-            favoriteMovie.removeEventListener(valueEventFavoriteMovie);
+            ratedMovie.removeEventListener(valueEventFavoriteMovie);
         }
         if (valueEventFavoriteTv != null) {
-            favoriteTv.removeEventListener(valueEventFavoriteTv);
+            ratedTv.removeEventListener(valueEventFavoriteTv);
         }
     }
 }

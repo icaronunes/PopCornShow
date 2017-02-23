@@ -187,7 +187,7 @@
     <string name="ajuda_desenvolvimento">Development</string>
     <string name="twitter_text" translatable="false">Twitter</string>
     <string name="novidades_title">News</string>
-    <string name="novidades_text">** Small Improvements **\n\n** We are experiencing problems with IMDB data.\nNotes and other data may not work. \nI hope to solve it soon. **\n\n** Improved home screen performance **\n\n** Improved details in Seasons / Episodes **</string>
+    <string name="novidades_text">** Small Improvements **\n\n** Problems with notes resolved. **\n\n** Improved home screen performance **\n\n** Improve performance of the Seasons / Episodes / Series / Movie screens **</string>
     <string name="star_avaliados">Evaluation</string>
     <string name="budget">Budget</string>
     <string name="homepage" translatable="false">Homepager</string>

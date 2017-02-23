@@ -42,7 +42,7 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
     }
 
     @Override
-    public void onBindViewHolder(final MovieMainAdapter.MovieViewHolder holder, int position) {
+    public void onBindViewHolder(final MovieMainAdapter.MovieViewHolder holder, final int position) {
 
         final MovieDb movieDb = movieDbs.getResults().get(position);
 
@@ -86,7 +86,10 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
 
     @Override
     public int getItemCount() {
-        return  movieDbs.getResults().size() < 15 ? movieDbs.getResults().size() : 15;
+        if (movieDbs != null){
+            return  movieDbs.getResults().size() < 15 ? movieDbs.getResults().size() : 15;
+        }
+        return 0;
     }
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {

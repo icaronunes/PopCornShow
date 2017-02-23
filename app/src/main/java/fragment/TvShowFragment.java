@@ -23,19 +23,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubeThumbnailLoader;
-import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,14 +50,15 @@ import java.util.Map;
 import activity.BaseActivity;
 import activity.CrewsActivity;
 import activity.ElencoActivity;
-import activity.PersonActivity;
 import activity.PosterGridActivity;
 import activity.ReviewsActivity;
 import activity.SettingsActivity;
 import activity.Site;
 import activity.TemporadaActivity;
-import activity.TrailerActivity;
+import adapter.CastAdapter;
+import adapter.CrewAdapter;
 import adapter.TemporadasAdapter;
+import adapter.TrailerAdapter;
 import br.com.icaro.filme.R;
 import domain.Imdb;
 import domain.Netflix;
@@ -70,8 +66,6 @@ import domain.UserTvshow;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbTvSeasons;
 import info.movito.themoviedbapi.model.Genre;
-import info.movito.themoviedbapi.model.people.PersonCast;
-import info.movito.themoviedbapi.model.people.PersonCrew;
 import info.movito.themoviedbapi.model.tv.TvSeason;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Config;
@@ -80,7 +74,6 @@ import utils.UtilsFilme;
 
 import static br.com.icaro.filme.R.string.in_production;
 import static br.com.icaro.filme.R.string.mil;
-
 import static utils.UtilsFilme.setEp;
 import static utils.UtilsFilme.setUserTvShow;
 
@@ -103,7 +96,7 @@ public class TvShowFragment extends Fragment {
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
     private UserTvshow userTvshow;
-    private RecyclerView recyclerViewTemporada;
+    private RecyclerView recyclerViewTemporada, recycle_tvshow_trailer, recycle_tvshow_elenco, recycle_tvshow_producao;
     private TemporadasAdapter adapter;
     private ValueEventListener postListener;
     private ProgressBar progressBar, progressBarTemporada;
@@ -162,7 +155,7 @@ public class TvShowFragment extends Fragment {
             setTemporada();
             setCast();
             setCrews();
-            setTreiler();
+            setTrailer();
             setPoster();
             setStatus();
             setAnimacao();
@@ -270,7 +263,6 @@ public class TvShowFragment extends Fragment {
 
 
                         if (imdbDd != null) {
-
                             ((TextView) layout
                                     .findViewById(R.id.nota_imdb)).setText(imdbDd.getImdbRating() != null ? imdbDd.getImdbRating() + "/10" :
                                     "- -");
@@ -771,6 +763,10 @@ public class TvShowFragment extends Fragment {
         textview_elenco = (TextView) view.findViewById(R.id.textview_elenco);
         icon_reviews = (ImageView) view.findViewById(R.id.icon_reviews);
         seguir = (Button) view.findViewById(R.id.seguir);
+        recycle_tvshow_trailer = (RecyclerView) view.findViewById(R.id.recycle_tvshow_trailer);
+        recycle_tvshow_elenco = (RecyclerView) view.findViewById(R.id.recycle_tvshow_elenco);
+        recycle_tvshow_producao = (RecyclerView) view.findViewById(R.id.recycle_tvshow_producao);
+
 
         seguir.setOnClickListener(ListenerSeguir());
 
@@ -1103,119 +1099,26 @@ public class TvShowFragment extends Fragment {
         return media;
     }
 
-    private void setCast() {
-        if (series.getCredits().getCast().size() > 0 && isAdded()) {
-            int tamanho = series.getCredits().getCast().size() < 15 ? series.getCredits().getCast().size() : 15;
+    private void setCast(){
+        if (series.getCredits().getCast().size() > 0) {
             textview_elenco.setVisibility(View.VISIBLE);
-            for (int i = 0; i < tamanho; i++) {
-                final PersonCast personCast = series.getCredits().getCast().get(i);
-                View view = getActivity().getLayoutInflater().inflate(R.layout.scroll_elenco, (ViewGroup) getView(), false);
-                LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.scroll_elenco_linerlayout);
-                View linearInterno = view.findViewById(R.id.scroll_elenco_linearlayout);
-
-                TextView textCastNome = (TextView) linearInterno.findViewById(R.id.textCastNomes);
-                TextView textCastPersonagem = (TextView) linearInterno.findViewById(R.id.textCastPersonagem);
-                ImageView imageView = (ImageView) view.findViewById(R.id.imgPager);
-                ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBarCast);
-
-                progressBar.setVisibility(View.VISIBLE);
-                if (personCast.getName() != null || personCast.getCharacter() != null) {
-                    textCastPersonagem.setText(personCast.getCharacter());
-                    textCastNome.setText(personCast.getName());
-                    Picasso.with(getActivity())
-                            .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2)) + personCast.getProfilePath())
-                            .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                            .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-                            .placeholder(R.drawable.person)
-                            .into(imageView);
-                    progressBar.setVisibility(View.INVISIBLE);
-                } else {
-                    textCastPersonagem.setVisibility(View.GONE);
-                    imageView.setVisibility(View.GONE);
-                    textCastNome.setVisibility(View.GONE);
-                    textCastPersonagem.setVisibility(View.GONE);
-                    progressBar.setVisibility(View.GONE);
-                }
-
-                imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), PersonActivity.class);
-                        intent.putExtra(Constantes.PERSON_ID, personCast.getId());
-                        intent.putExtra(Constantes.NOME_PERSON, personCast.getName());
-                        getContext().startActivity(intent);
-
-                        Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PersonActivity.class.getName());
-                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, personCast.getId());
-                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, personCast.getName());
-                        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                    }
-                });
-
-                linearLayout.addView(linearInterno);
-
-            }
+            recycle_tvshow_elenco.setHasFixedSize(true);
+            recycle_tvshow_elenco.setItemAnimator(new DefaultItemAnimator());
+            recycle_tvshow_elenco.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+            recycle_tvshow_elenco
+                    .setAdapter(new CastAdapter(getActivity(), series.getCredits().getCast()));
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private void setCrews() {
+    private void setCrews(){
         if (series.getCredits().getCrew().size() > 0) {
-            int tamanho = series.getCredits().getCrew().size() < 15 ? series.getCredits().getCrew().size() : 15;
             textview_crews.setVisibility(View.VISIBLE);
-            // Log.d("setCrews", "Tamanho " + series.getCredits().getCrew().size());
-            for (int i = 0; i < tamanho; i++) {
-                final PersonCrew crew = series.getCredits().getCrew().get(i);
-                View view = getActivity().getLayoutInflater().inflate(R.layout.scroll_crews, (ViewGroup) getView(), false);
-                LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.scroll_crew_liner);
-                View layoutScroll = view.findViewById(R.id.scroll_crews_linearlayout);
-
-                TextView textCrewJob = (TextView) view.findViewById(R.id.textCrewJob);
-                TextView textCrewNome = (TextView) view.findViewById(R.id.textCrewNome);
-                ImageView imgPagerCrews = (ImageView) view.findViewById(R.id.imgPagerCrews);
-                ProgressBar progressBarCrew = (ProgressBar) view.findViewById(R.id.progressBarCrews);
-
-                progressBarCrew.setVisibility(View.VISIBLE);
-                if (crew.getName() != null && crew.getJob() != null) {
-                    textCrewJob.setText(crew.getJob());
-                    textCrewNome.setText(crew.getName());
-                    Picasso.with(getActivity())
-                            .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2) ) + crew.getProfilePath())
-                            .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                            .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-                            .placeholder(getResources().getDrawable(R.drawable.person))
-                            .into(imgPagerCrews);
-                    progressBarCrew.setVisibility(View.INVISIBLE);
-                } else {
-                    textCrewJob.setVisibility(View.GONE);
-                    textCrewNome.setVisibility(View.GONE);
-                    progressBarCrew.setVisibility(View.GONE);
-                    imgPagerCrews.setVisibility(View.GONE);
-                }
-
-                imgPagerCrews.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), PersonActivity.class);
-                        intent.putExtra(Constantes.PERSON_ID, crew.getId());
-                        intent.putExtra(Constantes.NOME_PERSON, crew.getName());
-                        getContext().startActivity(intent);
-
-                        Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PersonActivity.class.getName());
-                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, crew.getId());
-                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, crew.getName());
-                        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                    }
-                });
-                linearLayout.addView(layoutScroll);
-            }
-
+            recycle_tvshow_producao.setHasFixedSize(true);
+            recycle_tvshow_producao.setItemAnimator(new DefaultItemAnimator());
+            recycle_tvshow_producao.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+            recycle_tvshow_producao
+                    .setAdapter(new CrewAdapter(getActivity(), series.getCredits().getCrew()));
         }
-
     }
 
     private void setLancamento() {
@@ -1231,75 +1134,15 @@ public class TvShowFragment extends Fragment {
 
     }
 
-    private void setTreiler() {
-
+    private void setTrailer(){
         if (series.getVideos().size() > 0) {
-            int tamanho = series.getVideos().size();
-            // Log.d("TAG", "SetTreiler: -> " + series.getVideos().size());
-            for (int i = 0; i < tamanho; i++) {
-                // Log.d("SetTreiler", "" + series.getVideos().get(i).getKey());
-                final String youtube_key = series.getVideos().get(i).getKey();
-                View view = getActivity().getLayoutInflater().inflate(R.layout.scroll_trailer, (ViewGroup) getView(), false);
-                LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.scroll_treiler_linerlayout);
-                View linearteste = view.findViewById(R.id.scroll_treiler_linearlayout);
-
-                final ImageView play_view = (ImageView) view.findViewById(R.id.play_treiler_img);
-                play_view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        Intent intent = new Intent(getActivity(), TrailerActivity.class);
-                        intent.putExtra(Constantes.YOU_TUBE_KEY, youtube_key);
-                        if ((series.getOverview() != null)) {
-                            intent.putExtra(Constantes.SINOPSE, series.getOverview());
-                        }
-                        startActivity(intent);
-
-                        Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TrailerActivity.class.getName());
-                        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
-                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series.getName());
-                        bundle.putString("Endereço do youtube", youtube_key);
-                        FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                    }
-                });
-                YouTubeThumbnailView thumbnailView = (YouTubeThumbnailView) linearteste.findViewById(R.id.youtube_view_thumbnail);
-                if (isAdded()) {
-                    try {
-                        thumbnailView.initialize(Config.YOUTUBE_API_KEY, OnInitializedListener(youtube_key));
-                    } catch (Exception e){
-                        if (getActivity() != null){
-                            new Runnable(){
-                                @Override
-                                public void run() {
-                                    Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
-                                }
-                            }.run();
-                        }
-                    }
-                }
-                // Log.d("OnClick", youtube_key);
-                //Acontence erros - Necessario corrigir
-                linearLayout.addView(linearteste);
-            }
-
+            recycle_tvshow_trailer.setHasFixedSize(true);
+            recycle_tvshow_trailer.setItemAnimator(new DefaultItemAnimator());
+            recycle_tvshow_trailer.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+            recycle_tvshow_trailer
+                    .setAdapter(new TrailerAdapter(getActivity(), series.getVideos(), series.getOverview() != null ? series.getOverview() : ""));
         }
-    }
 
-    private YouTubeThumbnailView.OnInitializedListener OnInitializedListener(final String youtube_key) {
-        return new YouTubeThumbnailView.OnInitializedListener() {
-
-            @Override
-            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
-                youTubeThumbnailLoader.setVideo(youtube_key);
-            }
-
-            @Override
-            public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
-                FirebaseCrash.report(new Exception("Erro em \"onInitializationFailure\" dentro de " + this.getClass()));
-            }
-        };
     }
 
     private void setHome() {

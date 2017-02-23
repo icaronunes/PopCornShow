@@ -44,7 +44,7 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
     }
 
     @Override
-    public void onBindViewHolder(final TvShowMainAdapter.TvShowPopularesViewHolder holder, int position) {
+    public void onBindViewHolder(final TvShowMainAdapter.TvShowPopularesViewHolder holder, final int position) {
         final TvSeries series = popularTvshow.getResults().get(position);
 
         Picasso.with(context)
@@ -87,7 +87,10 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
 
     @Override
     public int getItemCount() {
-        return  popularTvshow.getResults().size() < 15 ? popularTvshow.getResults().size() : 15;
+        if (popularTvshow != null){
+            return  popularTvshow.getResults().size() < 15 ? popularTvshow.getResults().size() : 15;
+        }
+        return  0;
     }
 
     public class TvShowPopularesViewHolder extends RecyclerView.ViewHolder {

@@ -279,23 +279,11 @@
             android:layout_margin="3dp"
             android:textSize="14sp" />
 
-        <HorizontalScrollView
-            android:id="@+id/horizontal_treiler"
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:scrollbars="none"
-            android:fillViewport="false"
-            android:scrollbarAlwaysDrawHorizontalTrack="false"
-            android:scrollbarAlwaysDrawVerticalTrack="false">
+            android:id="@+id/recycle_tvshow_trailer"
+            android:layout_height="wrap_content"/>
 
-            <LinearLayout
-                android:id="@+id/scroll_treiler_linerlayout"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
-
-        </HorizontalScrollView>
 
         <TextView
             android:id="@+id/textview_elenco"
@@ -309,22 +297,11 @@
             android:textStyle="normal|bold"
             android:visibility="invisible" />
 
-        <HorizontalScrollView
-            android:id="@+id/horizontal_elenco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:scrollbars="none"
-            android:scrollbarAlwaysDrawHorizontalTrack="false"
-            android:scrollbarAlwaysDrawVerticalTrack="false">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/recycle_tvshow_elenco"
+            android:layout_height="wrap_content"/>
 
-            <LinearLayout
-                android:id="@+id/scroll_elenco_linerlayout"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
-
-        </HorizontalScrollView>
 
         <TextView
             android:id="@+id/textview_crews"
@@ -338,25 +315,10 @@
             android:textStyle="normal|bold"
             android:visibility="invisible" />
 
-
-        <HorizontalScrollView
-            android:id="@+id/horizontal_crew"
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:elevation="0dp"
-            android:scrollbars="none"
-            android:fillViewport="false"
-            android:scrollbarAlwaysDrawHorizontalTrack="false"
-            android:scrollbarAlwaysDrawVerticalTrack="false">
-
-            <LinearLayout
-                android:id="@+id/scroll_crew_liner"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
-
-        </HorizontalScrollView>
+            android:id="@+id/recycle_tvshow_producao"
+            android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/imdb_site"

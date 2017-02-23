@@ -120,7 +120,7 @@ public class ListaRatedFragment extends Fragment {
 
                 Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaRatedFragment:ListaFilmeAdapter.ListaOnClickListener:onClick");
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getTitle());
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movies.get(position).getTitle());
                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tv");
                 bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
@@ -200,7 +200,7 @@ public class ListaRatedFragment extends Fragment {
                                             recyclerViewFilme.getAdapter().notifyItemChanged(position);
                                             Bundle bundle = new Bundle();
                                             bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaRatedFragment:ListaFilmeAdapter.ListaOnClickListener:onLongClick");
-                                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getTitle());
+                                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movies.get(position).getTitle());
                                             bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tv");
                                             bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
                                             bundle.putString("AlertDialog-WatchList", "Excluiu TvShow");
@@ -254,7 +254,7 @@ public class ListaRatedFragment extends Fragment {
                 final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
                 int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
                 int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
-
+                ratingBar.setRating(tvSeries.get(position).getNota());
                 alertDialog.getWindow().setLayout(width, height);
 
                 no.setOnClickListener(new View.OnClickListener() {

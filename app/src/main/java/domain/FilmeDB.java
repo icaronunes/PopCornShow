@@ -1,11 +1,13 @@
 package domain;
 
+import android.support.annotation.Keep;
+
 import java.io.Serializable;
 
 /**
  * Created by icaro on 20/11/16.
  */
-
+@Keep
 public class FilmeDB implements Serializable {
 
 

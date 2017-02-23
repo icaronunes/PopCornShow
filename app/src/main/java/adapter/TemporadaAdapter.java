@@ -2,6 +2,7 @@ package adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
     @Subscribe
     public void onBusAtualizarListaCarros(UserSeasons seasons) {
         //seasons.getUserEps().get(position).setAssistido(!seasons.getUserEps().get(position).isAssistido());
-        //Log.d(TAG, "onBusAtualizarListaCarros: "+ seasons.toString());
+        Log.d(TAG, "onBusAtualizarListaCarros: "+ seasons.toString());
         this.seasons = seasons;
     }
 

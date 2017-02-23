@@ -357,7 +357,7 @@ public class TvShowActivity extends BaseActivity {
         return link;
     }
 
-    private void setCoordinator() {
+    private void setTitle() {
         layout.setTitle(series.getName());
     }
 
@@ -689,7 +689,7 @@ public class TvShowActivity extends BaseActivity {
                                     if (task.isSuccessful()) {
                                         seguindo = true;
                                         setupViewPagerTabs();
-                                        setCoordinator();
+                                        setTitle();
                                         setImageTop();
                                         runOnUiThread(new Runnable() {
                                             @Override
@@ -724,9 +724,8 @@ public class TvShowActivity extends BaseActivity {
             if (idioma_padrao) {
                 try {
                     TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
-                    String idioma = getLocale();
                     series = tmdbTv
-                            .getSeries(id_tvshow, idioma
+                            .getSeries(id_tvshow, getLocale()
                                     ,images, credits, videos, external_ids);
                     series.getVideos().addAll(tmdbTv.getSeries(id_tvshow, null, videos).getVideos());
                     series.getImages().setPosters(tmdbTv.getSeries(id_tvshow, null, images).getImages().getPosters());
@@ -772,7 +771,7 @@ public class TvShowActivity extends BaseActivity {
 
             try {
                 if (series.getExternalIds().getImdbId() != null) {
-                    //imdbdb = FilmeService.getImdb(series.getExternalIds().getImdbId());
+                    imdbdb = FilmeService.getImdb(series.getExternalIds().getImdbId());
                 }
             } catch (Exception e) {
                 FirebaseCrash.report(e);
@@ -802,14 +801,14 @@ public class TvShowActivity extends BaseActivity {
                                             if (userTvshowOld.getNumberOfEpisodes() == series.getNumberOfEpisodes()) {
                                                 seguindo = true;
                                                 setupViewPagerTabs();
-                                                setCoordinator();
+                                                setTitle();
                                                 setImageTop();
                                             } else {
                                                 atualizarRealDate();
                                             }
                                         } else {
                                             setupViewPagerTabs();
-                                            setCoordinator();
+                                            setTitle();
                                             setImageTop();
                                         }
 
@@ -821,7 +820,7 @@ public class TvShowActivity extends BaseActivity {
                                 });
             } else {
                 seguindo = false;
-                setCoordinator();
+                setTitle();
                 setupViewPagerTabs();
                 setImageTop();
             }
