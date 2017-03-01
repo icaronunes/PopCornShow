@@ -1,11 +1,14 @@
 package domain;
 
+import android.support.annotation.Keep;
+
 import java.io.Serializable;
 
 /**
  * Created by icaro on 26/09/16.
  */
 
+@Keep
 public class TopMain implements Serializable {
 
     int id;

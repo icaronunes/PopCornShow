@@ -26,12 +26,17 @@
 
 -keeppackagenames br.com.icaro.**
 -keep class br.com.icaro.** {*;}
--keep public class * extends java.io.Serializable { *; }
 -keepclassmembers class ** {
     @com.squareup.otto.Subscribe public *;
     @com.squareup.otto.Produce public *;
 }
+-keep class * implements android.os.AsyncTask {
+  public static final android.os.AsyncTask *;
+}
+
 -keep class android.support.** {*;}
+-keep class android.support.v7** {*;}
+-keep class android.content.** {*;}
 -keep class java.nio.** {*;}
 -keepclassmembers class android.support.**
 -keep class android.support.v7.widget.SearchView { *; }

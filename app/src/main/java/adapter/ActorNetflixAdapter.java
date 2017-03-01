@@ -34,7 +34,6 @@ public class ActorNetflixAdapter extends RecyclerView.Adapter<ActorNetflixAdapte
     public ActorNetflixAdapter(Context actorNetflix, List<Netflix> netflixActors) {
         this.context = actorNetflix;
         this.netflixActors = netflixActors;
-
     }
 
     @Override
@@ -44,7 +43,7 @@ public class ActorNetflixAdapter extends RecyclerView.Adapter<ActorNetflixAdapte
     }
 
     @Override
-    public void onBindViewHolder(final ActorNetflixViewHolder holder, int position) {
+    public void onBindViewHolder(final ActorNetflixViewHolder holder, final int position) {
         final Netflix netflix = netflixActors.get(position);
 
         Picasso.with(context).load(netflix.poster)
@@ -97,9 +96,9 @@ public class ActorNetflixAdapter extends RecyclerView.Adapter<ActorNetflixAdapte
 
     public class ActorNetflixViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView img;
-        ProgressBar progressBar;
-        TextView title;
+       private  ImageView img;
+        private ProgressBar progressBar;
+        private TextView title;
 
         public ActorNetflixViewHolder(View itemView) {
             super(itemView);

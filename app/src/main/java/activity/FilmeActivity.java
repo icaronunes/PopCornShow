@@ -728,10 +728,17 @@ public class FilmeActivity extends BaseActivity {
         @Override
         protected MovieDb doInBackground(Void... voids) {//
             if (UtilsFilme.isNetWorkAvailable(FilmeActivity.this)) {
+                boolean idioma_padrao  = false;
+                try{
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
+                    idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+                } catch (Exception e){
+                    FirebaseCrash.report(e);
+                }
+
                 try {
                     TmdbMovies movies = FilmeService.getTmdbMovies();
-                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
-                    boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+
                     if (idioma_padrao) {
                         movieDb = movies.getMovie(id_filme, getLocale()
                                         + ",en,null"

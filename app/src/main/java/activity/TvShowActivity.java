@@ -672,8 +672,9 @@ public class TvShowActivity extends BaseActivity {
                             // Se huver novos ep. coloca temporada com não 'vista'
                         }
                             for (int i1 = 0; i1 < userTvshowOld.getSeasons().get(i).getUserEps().size(); i1++) {
+                                if (i1 < userTvshow.getSeasons().get(i).getUserEps().size())
                                 userTvshow.getSeasons().get(i).getUserEps().set(i1, userTvshowOld.getSeasons().get(i).getUserEps().get(i1));
-                                Log.d(TAG, "run: EPS");
+                                Log.d(TAG, "run: EPS "+ i1);
                                 //coloca as informações antigas na nova versão dos dados.
                             }
                     }
@@ -718,8 +719,14 @@ public class TvShowActivity extends BaseActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(TvShowActivity.this);
-            boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+            boolean idioma_padrao = false;
+            try {
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(TvShowActivity.this);
+                idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+            } catch (Exception e){
+                FirebaseCrash.report(e);
+            }
+
 
             if (idioma_padrao) {
                 try {

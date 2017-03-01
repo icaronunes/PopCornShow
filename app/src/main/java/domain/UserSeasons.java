@@ -1,12 +1,14 @@
 package domain;
 
+import android.support.annotation.Keep;
+
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by icaro on 03/11/16.
  */
-
+@Keep
 public class UserSeasons implements Serializable {
 
     private List<UserEp> userEps;

@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -31,7 +33,6 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
 
     private Context context;
     private TvSeason tvSeason;
-    private TvEpisode episode;
     private UserSeasons seasons;
     private boolean seguindo;
     private TemporadaOnClickListener temporadaOnClickListener;
@@ -75,7 +76,8 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
 
     @Override
     public void onBindViewHolder(HoldeTemporada holder, final int position) {
-        episode = tvSeason.getEpisodes().get(position);
+        try {
+            TvEpisode episode = tvSeason.getEpisodes().get(position);
 
         holder.numero.setText(context.getString(R.string.epsodio) + " " + episode.getEpisodeNumber());
 
@@ -131,6 +133,10 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
                 temporadaOnClickListener.onClickTemporada(view, position);
             }
         });
+        } catch (Exception e){
+            FirebaseCrash.report(e);
+            Toast.makeText(context, R.string.ops_seguir_novamente, Toast.LENGTH_SHORT).show();
+        }
 
     }
 

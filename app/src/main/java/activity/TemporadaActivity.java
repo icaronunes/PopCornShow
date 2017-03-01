@@ -42,6 +42,8 @@ import info.movito.themoviedbapi.model.tv.TvSeason;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static br.com.icaro.filme.R.string.idioma_padrao;
+
 /**
  * Created by icaro on 26/08/16.
  */
@@ -347,8 +349,13 @@ public class TemporadaActivity extends BaseActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(TemporadaActivity.this);
-            boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+            boolean idioma_padrao = false;
+            try {
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(TemporadaActivity.this);
+                idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+            } catch (Exception e){
+                FirebaseCrash.report(e);
+            }
             try {
                 if (idioma_padrao) {
                     tvSeason = FilmeService.getTmdbTvSeasons()

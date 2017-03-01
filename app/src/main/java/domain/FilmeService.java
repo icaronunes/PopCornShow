@@ -1,6 +1,8 @@
 package domain;
 
 
+import android.support.annotation.Keep;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.crash.FirebaseCrash;
 import com.google.gson.Gson;
@@ -39,7 +41,7 @@ import static info.movito.themoviedbapi.TmdbPeople.TMDB_METHOD_PERSON;
 /**
  * Created by icaro on 01/07/16.
  */
-
+@Keep
 public class FilmeService {
 
     private static final String TAG = FilmeService.class.getName();

@@ -6,7 +6,6 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -15,8 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.crash.FirebaseCrash;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.text.ParseException;
@@ -38,7 +36,7 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.UtilsFilme;
 
 
-public class MainActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends BaseActivity  {
 
     public static final String TAG = MainActivity.class.getName();
     ViewPager viewPager_main, viewpage_top_main;
@@ -73,7 +71,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
 
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (sharedPref.getBoolean("32", true)) {
+        if (sharedPref.getBoolean("33", true)) {
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_popcorn2)
                     .setTitle(R.string.novidades_title)
@@ -82,7 +80,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putBoolean("32", false);
+                            editor.putBoolean("33", false);
                             editor.remove("31");
                             editor.apply();
                         }
@@ -199,22 +197,22 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
         setupViewPagerTabs();
     }
 
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        // Log.d(TAG, connectionResult.toString());
-    }
-
-
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            boolean idioma_padrao = false;
             if (!UtilsFilme.isNetWorkAvailable(MainActivity.this)) {
                 return null;
             }
+            try {
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+            } catch (Exception e){
+                FirebaseCrash.report(e);
+            }
 
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-            boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+
             if (idioma_padrao) {
                 try {
                     tmdbTv = FilmeService.getTmdbTvShow()

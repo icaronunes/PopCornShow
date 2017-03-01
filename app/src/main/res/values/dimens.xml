@@ -38,4 +38,6 @@
 
     <dimen name="poster_produtora_width_padrao">120dp</dimen>
     <dimen name="poster_produtora_height_padrao">170dp</dimen>
+    <dimen name="poster_netflix_width_padrao">160dp</dimen>
+    <dimen name="poster_netflix_height_padrao">240dp</dimen>
 </resources>

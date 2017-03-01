@@ -1,5 +1,7 @@
 package domain;
 
+import android.support.annotation.Keep;
+
 import java.io.Serializable;
 
 import info.movito.themoviedbapi.model.ExternalIds;
@@ -7,7 +9,7 @@ import info.movito.themoviedbapi.model.ExternalIds;
 /**
  * Created by icaro on 20/11/16.
  */
-
+@Keep
 public class TvshowDB implements Serializable {
 
     private String poster;

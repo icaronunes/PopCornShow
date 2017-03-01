@@ -43,6 +43,7 @@ import info.movito.themoviedbapi.model.Multi;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static br.com.icaro.filme.R.string.idioma_padrao;
 import static domain.FilmeService.getTmdbCompany;
 
 /**
@@ -213,8 +214,13 @@ public class ProdutoraActivity extends BaseActivity {
         @Override
         protected MovieDb doInBackground(Void... voids) {
             //não é possivel buscar TVShow da company. Esperar API
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ProdutoraActivity.this);
-            boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+            boolean idioma_padrao = false;
+            try {
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ProdutoraActivity.this);
+                idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+            } catch ( Exception e){
+                FirebaseCrash.report(e);
+            }
             try {
                 company = getTmdbCompany().getCompanyInfo(id_produtora);
                 if (pagina == 1) {

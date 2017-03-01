@@ -1,12 +1,14 @@
 package domain;
 
+import android.support.annotation.Keep;
+
 import java.io.Serializable;
 
 /**
  * Created by icaro on 03/11/16.
  */
 
-
+@Keep
 public class UserEp implements Serializable{
 
     private int id;
