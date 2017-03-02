@@ -10,7 +10,6 @@ import java.io.Serializable;
 @Keep
 public class FilmeDB implements Serializable {
 
-
     private String poster;
     private String idImdb;
     private String title;

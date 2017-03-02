@@ -252,6 +252,10 @@
     public static final java.io.Serializable *;
 }
 
+-keep class * extends android.support.v7.widget.RecyclerView {
+    public static final android.support.v7.widget.RecyclerView *;
+}
+
 # Copyright (C) 2015 The Android Open Source Project
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");

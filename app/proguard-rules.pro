@@ -57,6 +57,9 @@
 -keep class * implements java.io.Serializable {
   public static final java.io.Serializable *;
 }
+-keep class * extends android.support.v7.widget.RecyclerView {
+  public static final android.support.v7.widget.RecyclerView *;
+}
 
 -dontwarn android.support.**
 -dontnote android.net.http.**
