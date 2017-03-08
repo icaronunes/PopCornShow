@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Keep;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -42,11 +43,10 @@ import info.movito.themoviedbapi.model.tv.TvSeason;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static br.com.icaro.filme.R.string.idioma_padrao;
-
 /**
  * Created by icaro on 26/08/16.
  */
+@Keep
 public class TemporadaActivity extends BaseActivity {
 
     public static final String TAG = TemporadaActivity.class.getName();

@@ -111,9 +111,9 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         if (seasons != null && seguindo ) {
             if (seasons.getUserEps().get(position).isAssistido()) {
              //   Log.d(TAG, "visto");
-                holder.bt_visto.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_visto));
+                holder.bt_visto.setImageDrawable(context.getDrawable(R.drawable.icon_visto));
             } else {
-                holder.bt_visto.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_movie_now));
+                holder.bt_visto.setImageDrawable(context.getDrawable(R.drawable.icon_movie_now));
             }
         }
 

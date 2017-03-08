@@ -3,6 +3,7 @@ package adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Keep;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import utils.UtilsFilme;
 /**
  * Created by icaro on 17/02/17.
  */
+@Keep
 public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.MovieViewHolder>{
     private Context context;
     private MovieResultsPage movieDbs ;
@@ -48,7 +50,7 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
 
         Picasso.with(context)
                 .load(UtilsFilme.getBaseUrlImagem( UtilsFilme.getTamanhoDaImagem(context, 2)) + movieDb.getPosterPath())
-                .error(R.drawable.poster_empty)
+                .placeholder(R.drawable.poster_empty)
                 .into(holder.img_poster_grid, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -91,7 +93,7 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
         }
         return 0;
     }
-
+    @Keep
     public class MovieViewHolder extends RecyclerView.ViewHolder {
 
         TextView title_main;

@@ -43,8 +43,7 @@ public class ProdutoraAdapter extends RecyclerView.Adapter<ProdutoraAdapter.Prod
     @Override
     public ProdutoraViewHolde onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.adapter_produtora, parent, false);
-        ProdutoraViewHolde holder = new ProdutoraViewHolde(view);
-        return holder;
+        return new ProdutoraViewHolde(view);
     }
 
     @Override

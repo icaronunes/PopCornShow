@@ -61,7 +61,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
 
                 Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TrailerActivity.class.getName());
-                bundle.putString("Endereço do youtube", youtube_key);
+                bundle.putString("URL", youtube_key);
                 FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             }
         });

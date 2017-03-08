@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -55,7 +56,7 @@ import utils.UtilsFilme;
 /**
  * Created by icaro on 24/06/16.
  */
-
+@Keep
 public class BaseActivity extends AppCompatActivity {
 
     private static String TAG = BaseActivity.class.getName();

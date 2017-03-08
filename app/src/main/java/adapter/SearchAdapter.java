@@ -32,8 +32,8 @@ import utils.UtilsFilme;
  */
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSearch> {
     Context context;
-    List<Multi> multis;
-    FirebaseAnalytics firebaseAnalytics;
+    private List<Multi> multis;
+    private FirebaseAnalytics firebaseAnalytics;
 
     public SearchAdapter(SearchMultiActivity searchMultiActivity, List<Multi> movieDbList) {
         context = searchMultiActivity;

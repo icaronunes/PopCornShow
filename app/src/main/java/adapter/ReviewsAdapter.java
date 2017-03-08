@@ -71,7 +71,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.FilmeVie
                 Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Param.ITEM_ID, reportagem.getUrl());
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Reviews");
-                bundle.putString("Critito de cinema", reportagem.getAttr() );
+                bundle.putString("Critico", reportagem.getAttr() );
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
             }

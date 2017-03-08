@@ -54,7 +54,7 @@ public class CrewAdapter extends RecyclerView.Adapter<CrewAdapter.CrewViewHolder
             holder.textCrewNome.setText(crew.getName());
             Picasso.with(context)
                     .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + crew.getProfilePath())
-                    .placeholder(context.getDrawable(R.drawable.person))
+                    .placeholder(R.drawable.person)
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.imgPagerCrews, new Callback() {

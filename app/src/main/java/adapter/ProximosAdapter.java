@@ -42,7 +42,7 @@ import utils.UtilsFilme;
 public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.CalendarViewHolder> {
     private static final String TAG = ProximosAdapter.class.getName();
     FragmentActivity context;
-    final List<UserTvshow> userTvshows;
+    private final List<UserTvshow> userTvshows;
     int color;
 
     public ProximosAdapter(FragmentActivity activity, List<UserTvshow> userTvshows) {

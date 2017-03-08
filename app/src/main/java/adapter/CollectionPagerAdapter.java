@@ -71,7 +71,7 @@ public class CollectionPagerAdapter extends PagerAdapter {
         linearLayout = (LinearLayout) view.findViewById(R.id.collection_linear);
         imageView = (ImageView) view.findViewById(R.id.img_collection);
         Picasso.with(context)
-                .load(UtilsFilme.getBaseUrlImagem(5) + info.getParts().get(position).getPosterPath())
+                .load(UtilsFilme.getTamanhoDaImagem(context, 5) + info.getParts().get(position).getPosterPath())
                 .error(R.drawable.poster_empty)
                 .into(imageView, new Callback() {
                     @Override

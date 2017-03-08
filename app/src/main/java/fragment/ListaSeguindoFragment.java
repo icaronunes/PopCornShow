@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adapter.ProximosAdapter;
-import adapter.SeguindodAdapter;
+import adapter.SeguindoRecycleAdapter;
 import br.com.icaro.filme.R;
 import domain.UserEp;
 import domain.UserSeasons;
@@ -103,7 +103,7 @@ public class ListaSeguindoFragment extends Fragment {
                         recyclerViewMissing = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
                         recyclerViewSeguindo = (RecyclerView) getView().getRootView().findViewById(R.id.seguindo_recycle);
                         recyclerViewMissing.setAdapter(new ProximosAdapter(getActivity(), setSeriesMissing(userTvshows)));
-                        recyclerViewSeguindo.setAdapter(new SeguindodAdapter(getActivity(), userTvshows));
+                        recyclerViewSeguindo.setAdapter(new SeguindoRecycleAdapter(getActivity(), userTvshows));
                     }
                 }
             }
@@ -162,7 +162,7 @@ public class ListaSeguindoFragment extends Fragment {
         recyclerViewSeguindo.setItemAnimator(new DefaultItemAnimator());
         recyclerViewSeguindo.setLayoutManager(new GridLayoutManager(getContext(),4));
         if (userTvshows.size() > 0) {
-            recyclerViewSeguindo.setAdapter(new SeguindodAdapter(getActivity(), userTvshows));
+            recyclerViewSeguindo.setAdapter(new SeguindoRecycleAdapter(getActivity(), userTvshows));
         } else {
             view.findViewById(R.id.text_search_empty).setVisibility(View.VISIBLE);
             ((TextView) view.findViewById(R.id.text_search_empty)).setText(R.string.empty);

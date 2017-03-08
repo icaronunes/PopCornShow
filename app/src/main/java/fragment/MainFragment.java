@@ -330,9 +330,12 @@ public class MainFragment extends Fragment {
             }
 
             boolean idioma_padrao = false;
-            if (!isDetached()) {
+            try {
+
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+            } catch (Exception e){
+                FirebaseCrash.report(e);
             }
             if (idioma_padrao) {
                 try {

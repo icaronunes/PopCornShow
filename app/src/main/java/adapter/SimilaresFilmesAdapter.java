@@ -61,7 +61,7 @@ public class SimilaresFilmesAdapter extends RecyclerView.Adapter<SimilaresFilmes
             }
             Picasso.with(context)
                     .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + movie.getPosterPath())
-                    .placeholder(context.getDrawable(R.drawable.poster_empty))
+                    .placeholder(R.drawable.poster_empty)
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.imgPagerSimilares, new Callback() {

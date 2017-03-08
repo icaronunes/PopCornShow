@@ -27,9 +27,9 @@ import utils.UtilsFilme;
  */
 public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.FavoriteViewHolder> {
 
-    List<FilmeDB> filmes;
+    private List<FilmeDB> filmes;
     Context context;
-    ListaOnClickListener onClickListener;
+    private ListaOnClickListener onClickListener;
     boolean status = false;
 
     public ListaFilmeAdapter(FragmentActivity favotireActivity, List<FilmeDB> favoritos,

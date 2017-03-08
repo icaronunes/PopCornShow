@@ -27,24 +27,24 @@ import utils.UtilsFilme;
 /**
  * Created by icaro on 02/12/16.
  */
-public class SeguindodAdapter extends RecyclerView.Adapter<SeguindodAdapter.SeguindoViewHolder> {
+public class SeguindoRecycleAdapter extends RecyclerView.Adapter<SeguindoRecycleAdapter.SeguindoViewHolder> {
 
     private FragmentActivity context;
     private List<UserTvshow> userTvshows;
 
-    public SeguindodAdapter(FragmentActivity activity, List<UserTvshow> userTvshows) {
+    public SeguindoRecycleAdapter(FragmentActivity activity, List<UserTvshow> userTvshows) {
         this.context = activity;
         this.userTvshows = userTvshows;
     }
 
     @Override
-    public SeguindodAdapter.SeguindoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SeguindoRecycleAdapter.SeguindoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.seguindo_tvshow, parent, false);
         return new SeguindoViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final SeguindodAdapter.SeguindoViewHolder holder, int position) {
+    public void onBindViewHolder(final SeguindoRecycleAdapter.SeguindoViewHolder holder, int position) {
         final UserTvshow userTvshow = userTvshows.get(position);
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context,2)) + userTvshow.getPoster())
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)

@@ -130,9 +130,9 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
             holder.bt_seguindo.setVisibility(View.GONE);
         } else {
             if (isVisto(position)) {
-                holder.bt_seguindo.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_visto));
+                holder.bt_seguindo.setImageDrawable(context.getDrawable(R.drawable.icon_visto));
             } else {
-                holder.bt_seguindo.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_movie_now));
+                holder.bt_seguindo.setImageDrawable(context.getDrawable(R.drawable.icon_movie_now));
             }
         }
 

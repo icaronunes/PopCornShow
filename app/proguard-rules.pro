@@ -42,6 +42,8 @@
 -keep class android.support.v7.widget.SearchView { *; }
 -keep class com.fasterxml.jackson.** {*;}
 -keep class com.squareup.** {*;}
+-keep class java.lang.** {*;}
+-keep class android.content.** {*;}
 
 -keep class info.movito.** {*;}
 -keep class com.facebook.** {*;}

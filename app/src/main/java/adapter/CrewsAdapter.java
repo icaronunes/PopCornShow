@@ -43,8 +43,7 @@ public class CrewsAdapter extends RecyclerView.Adapter<CrewsAdapter.CrewsViewHol
     @Override
     public CrewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.crews_list_adapter, parent, false);
-        CrewsViewHolder viewHolder = new CrewsViewHolder(view);
-        return viewHolder;
+         return new CrewsViewHolder(view);
     }
 
 
@@ -54,11 +53,12 @@ public class CrewsAdapter extends RecyclerView.Adapter<CrewsAdapter.CrewsViewHol
         holder.crew_character.setText(personCrew.getDepartment() + " " + personCrew.getJob());
 
         holder.crew_nome.setText(personCrew.getName());
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + personCrew.getProfilePath())
+        Picasso.with(context).load(UtilsFilme.getTamanhoDaImagem(context, 2) + personCrew.getProfilePath())
                 .placeholder(R.drawable.person)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.img_crew);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,7 +71,6 @@ public class CrewsAdapter extends RecyclerView.Adapter<CrewsAdapter.CrewsViewHol
                 bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(personCrew.getId()));
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, personCrew.getName());
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
             }
         });
 

@@ -41,8 +41,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
     @Override
     public TvShowsAdapter.TvShowViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.adapter_filmes_list, parent, false);
-        TvShowsAdapter.TvShowViewHolder holder = new TvShowsAdapter.TvShowViewHolder(view);
-        return holder;
+        return new TvShowViewHolder(view);
     }
 
     @Override
