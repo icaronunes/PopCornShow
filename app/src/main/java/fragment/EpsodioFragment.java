@@ -549,6 +549,7 @@ public class EpsodioFragment extends Fragment {
                 return null;
             } catch (Exception e){
                 FirebaseCrash.report(e);
+                if (getActivity() != null)
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
