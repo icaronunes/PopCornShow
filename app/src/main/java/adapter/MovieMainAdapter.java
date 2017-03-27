@@ -50,7 +50,7 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
 
         Picasso.with(context)
                 .load(UtilsFilme.getBaseUrlImagem( UtilsFilme.getTamanhoDaImagem(context, 2)) + movieDb.getPosterPath())
-                .placeholder(R.drawable.poster_empty)
+                //.placeholder(R.drawable.poster_empty)
                 .into(holder.img_poster_grid, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -62,6 +62,7 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
                         holder.progress_poster_grid.setVisibility(View.GONE);
                         holder.title_main.setText(movieDb.getTitle());
                         holder.title_main.setVisibility(View.VISIBLE);
+                        holder.img_poster_grid.setImageResource(R.drawable.poster_empty);
                     }
                 });
 
@@ -93,14 +94,15 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
         }
         return 0;
     }
+
     @Keep
-    public class MovieViewHolder extends RecyclerView.ViewHolder {
+    class MovieViewHolder extends RecyclerView.ViewHolder {
 
-        TextView title_main;
-        ProgressBar progress_poster_grid;
-        ImageView img_poster_grid;
+        private TextView title_main;
+        private ProgressBar progress_poster_grid;
+        private ImageView img_poster_grid;
 
-        public MovieViewHolder(View itemView) {
+        MovieViewHolder(View itemView) {
             super(itemView);
             title_main = (TextView) itemView.findViewById(R.id.title_main);
             progress_poster_grid = (ProgressBar) itemView.findViewById(R.id.progress_poster_grid);

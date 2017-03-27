@@ -30,16 +30,14 @@ import utils.UtilsFilme;
 
 public class WatchListActivity extends BaseActivity {
 
-    private static final String TAG = WatchListActivity.class.getName();
-    ViewPager viewPager;
-    TabLayout tabLayout;
-    LinearLayout linearLayout;
-    ProgressBar progressBar;
-    List<FilmeDB> movieDbs = new ArrayList<>();
-    List<TvshowDB> tvSeries = new ArrayList<>();
+    private final String TAG = WatchListActivity.class.getName();
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
+    private LinearLayout linearLayout;
+    private ProgressBar progressBar;
+    private List<FilmeDB> movieDbs = new ArrayList<>();
+    private List<TvshowDB> tvSeries = new ArrayList<>();
     private DatabaseReference favoriteMovie, favoriteTv;
-    private ValueEventListener valueEventFavoriteMovie;
-    private ValueEventListener valueEventFavoriteTv;
 
 
     @Override
@@ -108,14 +106,14 @@ public class WatchListActivity extends BaseActivity {
     }
 
     private void setEventListenerFavorite() {
-        valueEventFavoriteMovie = new ValueEventListener() {
+        ValueEventListener valueEventFavoriteMovie = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         movieDbs.add(snapshot.getValue(FilmeDB.class));
-                       // Log.d(TAG, snapshot.getValue(FilmeDB.class).getTitle());
+                        // Log.d(TAG, snapshot.getValue(FilmeDB.class).getTitle());
                     }
                 }
                 setEventListenerFavoriteTv();
@@ -146,14 +144,14 @@ public class WatchListActivity extends BaseActivity {
     }
 
     private void setEventListenerFavoriteTv() {
-        valueEventFavoriteTv = new ValueEventListener() {
+        ValueEventListener valueEventFavoriteTv = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         tvSeries.add(snapshot.getValue(TvshowDB.class));
-                       // Log.d(TAG, snapshot.getValue(TvshowDB.class).getTitle());
+                        // Log.d(TAG, snapshot.getValue(TvshowDB.class).getTitle());
                     }
                 }
 

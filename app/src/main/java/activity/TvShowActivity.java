@@ -20,7 +20,6 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -79,18 +78,17 @@ import static utils.UtilsFilme.setUserTvShow;
 
 public class TvShowActivity extends BaseActivity {
 
-    private static final String TAG = TvShowActivity.class.getName();
+    private final String TAG = TvShowActivity.class.getName();
 
-    int id_tvshow;
-    String nome;
-    int color_top;
-    ViewPager viewPager;
-    ImageView imageView;
-    TvSeries series = null;
-    CollapsingToolbarLayout layout;
-    FloatingActionButton menu_item_favorite, menu_item_watchlist, menu_item_rated;
-    FloatingActionMenu fab;
-    FirebaseAnalytics firebaseAnalytics;
+    private int id_tvshow;
+    private int color_top;
+    private ViewPager viewPager;
+    private ImageView imageView;
+    private TvSeries series = null;
+    private CollapsingToolbarLayout layout;
+    private FloatingActionButton menu_item_favorite, menu_item_watchlist, menu_item_rated;
+    private FloatingActionMenu fab;
+    private FirebaseAnalytics firebaseAnalytics;
     private boolean addFavorite = true;
     private boolean addWatch = true;
     private boolean addRated = true;
@@ -257,16 +255,13 @@ public class TvShowActivity extends BaseActivity {
     }
 
     private void getExtras() {
+
         if (getIntent().getAction() == null) {
-            nome = getIntent().getStringExtra(Constantes.NOME_TVSHOW);// usado????????
-            //nome = "BBT";
             color_top = getIntent().getIntExtra(Constantes.COLOR_TOP, R.color.colorFAB);
             //color_top = -13565;
             id_tvshow = getIntent().getIntExtra(Constantes.TVSHOW_ID, 0);
             //id_tvshow = 1418;
         } else {
-            nome = getIntent().getStringExtra(Constantes.NOME_TVSHOW);// usado????????
-            //nome = "BBT";
             color_top = Integer.parseInt(getIntent().getStringExtra(Constantes.COLOR_TOP));
             //color_top = -13565;
             id_tvshow = Integer.parseInt(getIntent().getStringExtra(Constantes.TVSHOW_ID));
@@ -436,7 +431,7 @@ public class TvShowActivity extends BaseActivity {
                 animator.start();
 
                 Date date = null;
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 try {
                     date = sdf.parse(series.getFirstAirDate());
                 } catch (ParseException e) {
@@ -502,7 +497,7 @@ public class TvShowActivity extends BaseActivity {
             public void onClick(View view) {
 
                 Date date = null;
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 try {
                     date = sdf.parse(series.getFirstAirDate());
                 } catch (ParseException e) {
@@ -666,7 +661,7 @@ public class TvShowActivity extends BaseActivity {
                     }
 
                     for (int i = 0; i < userTvshowOld.getSeasons().size(); i++) {
-                        Log.d(TAG, "Numero de eps - "+ userTvshow.getSeasons().get(i).getUserEps().size());
+                      //  Log.d(TAG, "Numero de eps - "+ userTvshow.getSeasons().get(i).getUserEps().size());
                         if (userTvshow.getSeasons().get(i).getUserEps().size() > userTvshowOld.getSeasons().get(i).getUserEps().size()) {
                             userTvshow.getSeasons().get(i).setVisto(false);
                             // Se huver novos ep. coloca temporada com não 'vista'
@@ -674,7 +669,7 @@ public class TvShowActivity extends BaseActivity {
                             for (int i1 = 0; i1 < userTvshowOld.getSeasons().get(i).getUserEps().size(); i1++) {
                                 if (i1 < userTvshow.getSeasons().get(i).getUserEps().size())
                                 userTvshow.getSeasons().get(i).getUserEps().set(i1, userTvshowOld.getSeasons().get(i).getUserEps().get(i1));
-                                Log.d(TAG, "run: EPS "+ i1);
+                              //  Log.d(TAG, "run: EPS "+ i1);
                                 //coloca as informações antigas na nova versão dos dados.
                             }
                     }

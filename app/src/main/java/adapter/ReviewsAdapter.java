@@ -30,7 +30,7 @@ import utils.Constantes;
  */
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.FilmeViewHolder> {
     private final String TAG = ReviewsActivity.class.getName();
-    Context context;
+    private Context context;
     private ReviewsUflixit reviews;
 
     public ReviewsAdapter(Context baseContext, ReviewsUflixit reviews) {
@@ -120,11 +120,11 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.FilmeVie
         return reviews.getMessage().size() > 0 ? reviews.getMessage().size() : 0;
     }
 
-    public class FilmeViewHolder extends RecyclerView.ViewHolder {
-        TextView author, reviews_content;
-        CardView cardView;
+    class FilmeViewHolder extends RecyclerView.ViewHolder {
+        private TextView author, reviews_content;
+        private CardView cardView;
 
-        public FilmeViewHolder(View itemView) {
+        FilmeViewHolder(View itemView) {
             super(itemView);
             author = (TextView) itemView.findViewById(R.id.author);
             reviews_content = (TextView) itemView.findViewById(R.id.content_reviews);

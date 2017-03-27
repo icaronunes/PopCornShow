@@ -18,11 +18,11 @@ import utils.UtilsFilme;
 
 public class PersonActivity extends BaseActivity {
 
-    int id_person;
-    String nome;
-    ViewPager viewPager;
-    FirebaseAnalytics firebaseAnalytics;
-    final String TAG = this.getClass().getName();
+    private int id_person;
+    private String nome;
+    private ViewPager viewPager;
+    private FirebaseAnalytics firebaseAnalytics;
+    private final String TAG = this.getClass().getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -16,7 +16,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,31 +38,26 @@ import domain.FilmeService;
 import info.movito.themoviedbapi.TmdbCompany;
 import info.movito.themoviedbapi.model.Company;
 import info.movito.themoviedbapi.model.MovieDb;
-import info.movito.themoviedbapi.model.Multi;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static br.com.icaro.filme.R.string.idioma_padrao;
 import static domain.FilmeService.getTmdbCompany;
 
 /**
  * Created by icaro on 10/08/16.
  */
 public class ProdutoraActivity extends BaseActivity {
-    Company company;
-    int pagina = 1;
-    TmdbCompany.CollectionResultsPage resultsPage;
-    RecyclerView recyclerView;
-    Multi.MediaType mediaType;
-    LinearLayout info_layout;
-    int id_produtora;
-    TextView home_produtora, headquarters;
-    ImageView top_img_produtora;
-    CollapsingToolbarLayout collapsingToolbarLayout;
-    ProgressBar progressBar;
-    SwipeRefreshLayout refreshLayout;
-    TmdbCompany.CollectionResultsPage temp;
-    CoordinatorLayout layout;
+    private Company company;
+    private int pagina = 1;
+    private TmdbCompany.CollectionResultsPage resultsPage;
+    private RecyclerView recyclerView;
+
+    private LinearLayout info_layout;
+    private int id_produtora;
+    private TextView home_produtora, headquarters;
+    private ImageView top_img_produtora;
+    private ProgressBar progressBar;
+    private SwipeRefreshLayout refreshLayout;
     private String TAG = this.getClass().getName();
 
 
@@ -78,7 +72,7 @@ public class ProdutoraActivity extends BaseActivity {
         headquarters = (TextView) findViewById(R.id.headquarters);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh_produtora);
         info_layout = (LinearLayout) findViewById(R.id.info_layout);
-        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         top_img_produtora = (ImageView) findViewById(R.id.top_img_produtora);
         getExtras();
@@ -103,7 +97,7 @@ public class ProdutoraActivity extends BaseActivity {
                 new TMDVAsync().execute();
             }
         });
-        layout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+        CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
 
 
         if (!layout.hasFocus()) {
@@ -115,7 +109,7 @@ public class ProdutoraActivity extends BaseActivity {
     }
 
     private void getExtras() {
-        if (getIntent().getAction() == null){
+        if (getIntent().getAction() == null) {
             id_produtora = getIntent().getIntExtra(Constantes.PRODUTORA_ID, 0);
         } else {
             id_produtora = getIntent().getIntExtra(Constantes.PRODUTORA_ID, 0);
@@ -218,33 +212,33 @@ public class ProdutoraActivity extends BaseActivity {
             try {
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ProdutoraActivity.this);
                 idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-            } catch ( Exception e){
+            } catch (Exception e) {
                 FirebaseCrash.report(e);
             }
             try {
                 company = getTmdbCompany().getCompanyInfo(id_produtora);
                 if (pagina == 1) {
-                if (idioma_padrao) {
-                    resultsPage = FilmeService.getTmdbCompany()
-                            .getCompanyMovies(id_produtora, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry() + ",en,null", pagina);
+                    if (idioma_padrao) {
+                        resultsPage = FilmeService.getTmdbCompany()
+                                .getCompanyMovies(id_produtora, Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry() + ",en,null", pagina);
+                    } else {
+                        resultsPage = FilmeService.getTmdbCompany()
+                                .getCompanyMovies(id_produtora, "en,null", pagina);
+                    }
                 } else {
-                    resultsPage = FilmeService.getTmdbCompany()
-                            .getCompanyMovies(id_produtora, "en,null", pagina);
+                    if (idioma_padrao) {
+                        TmdbCompany.CollectionResultsPage temp = resultsPage;
+                        resultsPage = FilmeService.getTmdbCompany()
+                                .getCompanyMovies(id_produtora, Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry() + ",en,null", pagina);
+                        resultsPage.getResults().addAll(temp.getResults());
+                    } else {
+                        resultsPage = FilmeService.getTmdbCompany()
+                                .getCompanyMovies(id_produtora, "en,null", pagina);
+                    }
                 }
-            } else {
-                if (idioma_padrao) {
-                    temp = resultsPage;
-                    resultsPage = FilmeService.getTmdbCompany()
-                            .getCompanyMovies(id_produtora, Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry() + ",en,null", pagina);
-                    resultsPage.getResults().addAll(temp.getResults());
-                } else {
-                    resultsPage = FilmeService.getTmdbCompany()
-                            .getCompanyMovies(id_produtora, "en,null", pagina);
-                }
-            }
-            } catch ( Exception e) {
+            } catch (Exception e) {
                 FirebaseCrash.report(e);
-                Log.d(TAG, e.getMessage());
+              //  Log.d(TAG, e.getMessage());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -258,7 +252,7 @@ public class ProdutoraActivity extends BaseActivity {
         @Override
         protected void onPostExecute(MovieDb movieDb) {
             super.onPostExecute(movieDb);
-          //  Log.d("PRODUTORA", "post : " + resultsPage.getTotalPages());
+            //  Log.d("PRODUTORA", "post : " + resultsPage.getTotalPages());
             refreshLayout.setRefreshing(false);
             if (pagina == 1) {
                 setImageTop();
@@ -273,7 +267,7 @@ public class ProdutoraActivity extends BaseActivity {
                 getSupportActionBar().setTitle(company.getName().isEmpty() ? "" : company.getName());
             }
             recyclerView.setAdapter(new ProdutoraAdapter(ProdutoraActivity.this,
-                   resultsPage != null ? resultsPage.getResults() : null ));
+                    resultsPage != null ? resultsPage.getResults() : null));
         }
     }
 }

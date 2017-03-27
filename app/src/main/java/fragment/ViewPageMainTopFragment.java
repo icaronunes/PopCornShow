@@ -10,7 +10,7 @@ import domain.TopMain;
 
 public class ViewPageMainTopFragment extends FragmentPagerAdapter {
 
-    List<TopMain> multis;
+    private List<TopMain> multis;
 
     public ViewPageMainTopFragment(FragmentManager supportFragmentManager, List<TopMain> objects) {
         super(supportFragmentManager);

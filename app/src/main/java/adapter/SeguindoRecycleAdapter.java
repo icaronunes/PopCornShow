@@ -93,12 +93,12 @@ public class SeguindoRecycleAdapter extends RecyclerView.Adapter<SeguindoRecycle
          return 0;
     }
 
-    public class SeguindoViewHolder extends RecyclerView.ViewHolder {
+    class SeguindoViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView poster;
-        TextView title;
+        private ImageView poster;
+        private TextView title;
 
-        public SeguindoViewHolder(View itemView) {
+        SeguindoViewHolder(View itemView) {
             super(itemView);
             poster = (ImageView) itemView.findViewById(R.id.seguindo_imageView);
             title = (TextView) itemView.findViewById(R.id.seguindo_title);

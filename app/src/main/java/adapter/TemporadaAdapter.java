@@ -2,7 +2,6 @@ package adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +63,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
     @Subscribe
     public void onBusAtualizarListaCarros(UserSeasons seasons) {
         //seasons.getUserEps().get(position).setAssistido(!seasons.getUserEps().get(position).isAssistido());
-        Log.d(TAG, "onBusAtualizarListaCarros: "+ seasons.toString());
+      //  Log.d(TAG, "onBusAtualizarListaCarros: "+ seasons.toString());
         this.seasons = seasons;
     }
 
@@ -111,9 +110,9 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         if (seasons != null && seguindo ) {
             if (seasons.getUserEps().get(position).isAssistido()) {
              //   Log.d(TAG, "visto");
-                holder.bt_visto.setImageDrawable(context.getDrawable(R.drawable.icon_visto));
+                holder.bt_visto.setImageResource(R.drawable.icon_visto);
             } else {
-                holder.bt_visto.setImageDrawable(context.getDrawable(R.drawable.icon_movie_now));
+                holder.bt_visto.setImageResource(R.drawable.icon_movie_now);
             }
         }
 
@@ -156,8 +155,8 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
 
     public class HoldeTemporada extends RecyclerView.ViewHolder {
 
-        TextView nome, numero, nota, data;
-        ImageView poster, bt_visto;
+       private TextView nome, numero, nota, data;
+        private ImageView poster, bt_visto;
 
         public HoldeTemporada(View itemView) {
             super(itemView);

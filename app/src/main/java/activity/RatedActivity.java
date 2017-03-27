@@ -30,14 +30,14 @@ import utils.UtilsFilme;
 
 public class RatedActivity extends BaseActivity {
 
-    private static final String TAG = RatedActivity.class.getName();
+    private final String TAG = RatedActivity.class.getName();
 
-    ViewPager viewPager;
-    TabLayout tabLayout;
-    List<FilmeDB> movieDbs = new ArrayList<>();
-    List<TvshowDB> tvSeries = new ArrayList<>();
-    LinearLayout linearLayout;
-    ProgressBar progressBar;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
+    private List<FilmeDB> movieDbs = new ArrayList<>();
+    private List<TvshowDB> tvSeries = new ArrayList<>();
+    private LinearLayout linearLayout;
+    private ProgressBar progressBar;
 
     private DatabaseReference ratedMovie, ratedTv;
     private ValueEventListener valueEventFavoriteMovie;

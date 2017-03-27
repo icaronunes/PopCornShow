@@ -16,10 +16,10 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
  */
 public class TvShowAdapter extends FragmentPagerAdapter {
 
-    public static final String TAG = TvShowAdapter.class.getName();
-    Context context;
+    private final String TAG = TvShowAdapter.class.getName();
+    private Context context;
     private TvSeries series;
-    int color;
+    private int color;
     private boolean seguindo;
     private Netflix netflix;
     private Imdb imdb;

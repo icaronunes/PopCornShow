@@ -3,9 +3,9 @@ package onsignal;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.onesignal.OSNotificationAction;
@@ -345,7 +345,7 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                                         //.toLanguageTag() não funciona na API 14
                                         + ",en,null"
                                 , credits, releases, videos, similar, alternative_titles, images);
-                        Log.d(TAG, "run: "+movieDb.getTitle());
+                       // Log.d(TAG, "run: "+movieDb.getTitle());
 
                         FilmeDB filmeDB = new FilmeDB();
                         filmeDB.setIdImdb(movieDb.getImdbID());
@@ -359,7 +359,7 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
 
                         myWatch.child(String.valueOf(id)).setValue(filmeDB);
 
-                        Log.d(TAG, "run: "+movieDb.getTitle());
+                      //  Log.d(TAG, "run: "+movieDb.getTitle());
                     }
                 }.run();
 
@@ -378,8 +378,9 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
 //            }
 
         }catch (Exception e){
-            Log.d(TAG, "isButton: "+e.getMessage());
-            Log.d(TAG, "isButton: "+e.toString());
+           // Log.d(TAG, "isButton: "+e.getMessage());
+           // Log.d(TAG, "isButton: "+e.toString());
+            FirebaseCrash.report(e);
         }
     }
 }

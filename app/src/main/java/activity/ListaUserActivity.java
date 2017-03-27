@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -18,7 +17,6 @@ import adapter.ListUserAdapter;
 import br.com.icaro.filme.R;
 import domain.FilmeService;
 import domain.Lista;
-import info.movito.themoviedbapi.model.MovieList;
 import utils.Constantes;
 
 /**
@@ -26,11 +24,9 @@ import utils.Constantes;
  */
 public class ListaUserActivity extends BaseActivity {
 
-    RecyclerView recyclerView;
-    MovieList lists;
-    ProgressBar progressBar;
-    String list_id;
-    Lista lista;
+    private RecyclerView recyclerView;
+    private ProgressBar progressBar;
+    private Lista lista;
     private String TAG = this.getClass().getName();
 
     @Override
@@ -41,7 +37,6 @@ public class ListaUserActivity extends BaseActivity {
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getIntent().getStringExtra(Constantes.LISTA_NOME));
-        list_id = getIntent().getStringExtra(Constantes.LISTA_ID);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_favorite);
         recyclerView.setLayoutManager(new GridLayoutManager(ListaUserActivity.this, 2));
@@ -69,7 +64,7 @@ public class ListaUserActivity extends BaseActivity {
                 //Metodos criados. Tudo gambiara. Precisa arrumar
             } catch (Exception e) {
                 FirebaseCrash.report(e);
-                Log.d(TAG, e.getMessage());
+               // Log.d(TAG, e.getMessage());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

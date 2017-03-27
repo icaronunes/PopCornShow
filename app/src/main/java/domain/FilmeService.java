@@ -44,7 +44,7 @@ import static info.movito.themoviedbapi.TmdbPeople.TMDB_METHOD_PERSON;
 @Keep
 public class FilmeService {
 
-    private static final String TAG = FilmeService.class.getName();
+    private final String TAG = FilmeService.class.getName();
 
     private static final Collection<Integer> SUCCESS_STATUS_CODES = Arrays.asList(
             1, // Success

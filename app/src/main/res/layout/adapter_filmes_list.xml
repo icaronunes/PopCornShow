@@ -42,7 +42,8 @@
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:typeface="serif"
-                android:layout_gravity="bottom" />
+                android:layout_gravity="bottom"
+                card_view:targetApi="jelly_bean" />
 
         </FrameLayout>
     </LinearLayout>

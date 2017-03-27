@@ -58,6 +58,13 @@ public class PersonPopularActivity extends BaseActivity {
                 .build();
         adView.loadAd(adRequest);
 
+
+        if (UtilsFilme.isNetWorkAvailable(this)) {
+            new PersonPopularAsync().execute();
+        } else {
+            snack();
+        }
+
     }
 
     protected void snack() {
@@ -88,17 +95,6 @@ public class PersonPopularActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (UtilsFilme.isNetWorkAvailable(this)) {
-            new PersonPopularAsync().execute();
-        } else {
-            snack();
-        }
-
     }
 
     private class PersonPopularAsync extends AsyncTask<Void,Void, Void>{

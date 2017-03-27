@@ -17,9 +17,9 @@ import fragment.ListaFavoriteFragment;
  */
 public class FavoriteAdapater extends FragmentPagerAdapter {
 
-    Context context;
-    List<FilmeDB> movies;
-    List<TvshowDB> series;
+    private Context context;
+    private List<FilmeDB> movies;
+    private List<TvshowDB> series;
 
 
     public FavoriteAdapater(Context context, FragmentManager supportFragmentManager,

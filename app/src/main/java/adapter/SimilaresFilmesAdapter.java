@@ -96,12 +96,6 @@ public class SimilaresFilmesAdapter extends RecyclerView.Adapter<SimilaresFilmes
             });
 
         }
-//        else {
-//            textSimilares.setVisibility(View.GONE);
-//            progressBarSimilares.setVisibility(View.GONE);
-//            imgPagerSimilares.setVisibility(View.GONE);
-//        }
-
     }
 
     @Override
@@ -110,11 +104,13 @@ public class SimilaresFilmesAdapter extends RecyclerView.Adapter<SimilaresFilmes
     }
 
 
-    public class SimilaresViewHolder extends RecyclerView.ViewHolder {
-        ProgressBar progressBarSimilares;
-        TextView textSimilares;
-        ImageView imgPagerSimilares;
-        public SimilaresViewHolder(View itemView) {
+    class SimilaresViewHolder extends RecyclerView.ViewHolder {
+
+        private ProgressBar progressBarSimilares;
+        private TextView textSimilares;
+        private ImageView imgPagerSimilares;
+
+        SimilaresViewHolder(View itemView) {
             super(itemView);
             progressBarSimilares = (ProgressBar) itemView.findViewById(R.id.progressBarSimilares);
             textSimilares = (TextView) itemView.findViewById(R.id.textSimilaresNome);

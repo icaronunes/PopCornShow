@@ -29,8 +29,9 @@ import utils.UtilsFilme;
  */
 public class CrewsAdapter extends RecyclerView.Adapter<CrewsAdapter.CrewsViewHolder> {
     private final FirebaseAnalytics mFirebaseAnalytics;
-    Context context;
-    List<PersonCrew> crews;
+    private String TAG = this.getClass().getName();
+    private Context context;
+    private List<PersonCrew> crews;
 
     public CrewsAdapter(CrewsActivity crewsActivity, List<PersonCrew> crew) {
 
@@ -53,7 +54,9 @@ public class CrewsAdapter extends RecyclerView.Adapter<CrewsAdapter.CrewsViewHol
         holder.crew_character.setText(personCrew.getDepartment() + " " + personCrew.getJob());
 
         holder.crew_nome.setText(personCrew.getName());
-        Picasso.with(context).load(UtilsFilme.getTamanhoDaImagem(context, 2) + personCrew.getProfilePath())
+        //Log.d(TAG, "onBindViewHolder: " + personCrew.getProfilePath());
+        Picasso.with(context)
+                .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + personCrew.getProfilePath())
                 .placeholder(R.drawable.person)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
@@ -85,12 +88,12 @@ public class CrewsAdapter extends RecyclerView.Adapter<CrewsAdapter.CrewsViewHol
        }
     }
 
-    public class CrewsViewHolder extends RecyclerView.ViewHolder {
+    class CrewsViewHolder extends RecyclerView.ViewHolder {
 
-        TextView crew_nome, crew_character;
-        ImageView img_crew;
+        private TextView crew_nome, crew_character;
+        private ImageView img_crew;
 
-        public CrewsViewHolder(View itemView) {
+        CrewsViewHolder(View itemView) {
             super(itemView);
             crew_nome = (TextView) itemView.findViewById(R.id.crew_nome);
             crew_character = (TextView) itemView.findViewById(R.id.crew_character);

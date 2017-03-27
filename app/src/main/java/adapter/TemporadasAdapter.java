@@ -30,9 +30,9 @@ import utils.UtilsFilme;
 
 public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.HoldeTemporada> {
 
-    public static final String TAG = TemporadasAdapter.class.getName();
+    private final String TAG = TemporadasAdapter.class.getName();
 
-    Context context;
+    private Context context;
     private TvSeries series;
     private int color;
     private TemporadasOnClickListener onClickListener;
@@ -156,14 +156,14 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
         return 0;
     }
 
-    public class HoldeTemporada extends RecyclerView.ViewHolder {
+    class HoldeTemporada extends RecyclerView.ViewHolder {
 
-        TextView temporada, data, numero_ep;
-        ImageView image_temporada;
-        ImageButton popup;
-        ImageView bt_seguindo;
+        private TextView temporada, data, numero_ep;
+        private ImageView image_temporada;
+        private ImageButton popup;
+        private ImageView bt_seguindo;
 
-        public HoldeTemporada(View itemView) {
+        HoldeTemporada(View itemView) {
             super(itemView);
             image_temporada = (ImageView) itemView.findViewById(R.id.image_temporada);
             numero_ep = (TextView) itemView.findViewById(R.id.numero_epsodios_temporada);

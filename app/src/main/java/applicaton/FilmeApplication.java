@@ -3,10 +3,10 @@ package applicaton;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
-import android.util.Log;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.onesignal.OneSignal;
+import com.squareup.leakcanary.LeakCanary;
 import com.squareup.otto.Bus;
 
 import onsignal.CustomNotificationOpenedHandler;
@@ -42,12 +42,19 @@ public class FilmeApplication extends Application {
         if (br.com.icaro.filme.BuildConfig.REPORT_CRASH) {
             FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
             mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
-            Log.d(TAG, "REPORT_CRASH - TRUE");
+          //  Log.d(TAG, "REPORT_CRASH - TRUE");
         } else {
             FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
             mFirebaseAnalytics.setAnalyticsCollectionEnabled(false);
-            Log.d(TAG, "REPORT_CRASH - FALSE");
+         //   Log.d(TAG, "REPORT_CRASH - FALSE");
         }
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
 
     }
 

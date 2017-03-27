@@ -32,13 +32,14 @@ import utils.UtilsFilme;
  * Created by icaro on 12/08/16.
  */
 public class SimilaresActivity extends BaseActivity{
-    RecyclerView recyclerView;
-    TextView text_similares_no_internet;
-    LinearLayout linear_similares_layout;
-    int id_filme;
-    ProgressBar progressBar;
-    MovieResultsPage similares;
-    String title;
+
+    private RecyclerView recyclerView;
+    private TextView text_similares_no_internet;
+    private LinearLayout linear_similares_layout;
+    private int id_filme;
+    private ProgressBar progressBar;
+    private MovieResultsPage similares;
+    private String title;
     private String TAG = this.getClass().getName();
 
     @Override

@@ -25,12 +25,12 @@ import domain.ReviewsUflixit;
 import utils.Constantes;
 
 public class ReviewsActivity extends BaseActivity {
-    String id_filme;
-    RecyclerView recyclerView;
+    private String id_filme;
+    private RecyclerView recyclerView;
     private String TAG = this.getClass().getName();
     private ReviewsUflixit reviewsUflixit;
-    String type = null;
-    TextView textview_reviews_empty;
+    private String type = null;
+    private TextView textview_reviews_empty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

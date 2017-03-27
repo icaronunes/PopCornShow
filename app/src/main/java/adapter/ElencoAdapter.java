@@ -29,8 +29,8 @@ import utils.UtilsFilme;
 public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoViewHolder> {
 
     private final FirebaseAnalytics mFirebaseAnalytics;
-    Context context;
-    List<PersonCast> casts;
+    private Context context;
+    private List<PersonCast> casts;
 
 
     public ElencoAdapter(Context elencoActivity, List<PersonCast> casts) {
@@ -46,8 +46,7 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
     @Override
     public ElencoAdapter.ElencoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.elenco_list_adapter, parent, false);
-        ElencoViewHolder viewHolder = new ElencoViewHolder(view);
-        return viewHolder;
+        return new ElencoViewHolder(view);
     }
 
     @Override
@@ -91,12 +90,12 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
         }
     }
 
-    public class ElencoViewHolder extends RecyclerView.ViewHolder {
+    class ElencoViewHolder extends RecyclerView.ViewHolder {
 
-        TextView elenco_nome, elenco_character;
-        ImageView img_elenco;
+        private TextView elenco_nome, elenco_character;
+        private ImageView img_elenco;
 
-        public ElencoViewHolder(View itemView) {
+        ElencoViewHolder(View itemView) {
             super(itemView);
             elenco_nome = (TextView) itemView.findViewById(R.id.elenco_nome);
             elenco_character = (TextView) itemView.findViewById(R.id.elenco_character);

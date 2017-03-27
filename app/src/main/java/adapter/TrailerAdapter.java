@@ -3,7 +3,6 @@ package adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,12 +27,12 @@ import utils.Constantes;
  * Created by icaro on 22/02/17.
  */
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerViewHolder> {
-    Context context;
+    private Context context;
     private List<Video> videos;
     private String sinopse;
 
-    public TrailerAdapter(FragmentActivity activity, List<Video> videos, String overview) {
-        context = activity;
+    public TrailerAdapter(Context activity, List<Video> videos, String overview) {
+        this.context = activity;
         this.videos = videos;
         this.sinopse = overview;
     }
@@ -92,11 +91,11 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     }
 
 
-    public class TrailerViewHolder extends RecyclerView.ViewHolder {
-        FrameLayout play_view;
-        YouTubeThumbnailView thumbnailView;
+    class TrailerViewHolder extends RecyclerView.ViewHolder {
+        private  FrameLayout play_view;
+        private YouTubeThumbnailView thumbnailView;
 
-        public TrailerViewHolder(View itemView) {
+        TrailerViewHolder(View itemView) {
             super(itemView);
             play_view = (FrameLayout) itemView.findViewById(R.id.frame_youtube_view_thumbnail);
             thumbnailView = (YouTubeThumbnailView) itemView.findViewById(R.id.youtube_view_thumbnail);

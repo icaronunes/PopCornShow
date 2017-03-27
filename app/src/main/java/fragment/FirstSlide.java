@@ -25,7 +25,7 @@ public class FirstSlide extends Fragment {
         subtitle.setText(getResources().getText(R.string.subtitle_intro_1));
 
         ImageView imageView = (ImageView) v.findViewById(R.id.intro_img);
-        imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_popcorn2));
+        imageView.setImageResource(R.drawable.ic_popcorn2);
     return v;
 
     }

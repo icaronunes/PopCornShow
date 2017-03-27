@@ -13,7 +13,7 @@ import fragment.PersonFragment;
  */
 public class PersonAdapter extends FragmentPagerAdapter {
     private final int id_person;
-    Context context;
+    private Context context;
 
     public PersonAdapter(Context context, FragmentManager supportFragmentManager, int id_person) {
         super(supportFragmentManager);
@@ -34,7 +34,7 @@ public class PersonAdapter extends FragmentPagerAdapter {
         if (position == 2) {
             return PersonFragment.newInstance(R.string.person, id_person);
         }
-        if (position == 3){
+        if (position == 3) {
             return PersonFragment.newInstance(R.string.imagem_person, id_person);
         }
         if (position == 4) {

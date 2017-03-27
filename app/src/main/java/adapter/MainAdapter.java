@@ -14,7 +14,7 @@ import fragment.MainFragment;
  */
 public class MainAdapter extends FragmentPagerAdapter {
 
-    Context context;
+    private Context context;
 
 
     public MainAdapter(MainActivity context, FragmentManager supportFragmentManager) {

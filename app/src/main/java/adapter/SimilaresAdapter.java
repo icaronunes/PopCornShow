@@ -30,7 +30,7 @@ import utils.UtilsFilme;
 
 public class SimilaresAdapter extends RecyclerView.Adapter<SimilaresAdapter.SimilareViewHolde> {
 
-    Context context;
+   private Context context;
     private List<MovieDb> similares;
 
     public SimilaresAdapter(SimilaresActivity similaresActivity, List<MovieDb> similarMovies) {
@@ -87,16 +87,16 @@ public class SimilaresAdapter extends RecyclerView.Adapter<SimilaresAdapter.Simi
         return 0;
     }
 
-    public class SimilareViewHolde extends RecyclerView.ViewHolder {
+    class SimilareViewHolde extends RecyclerView.ViewHolder {
 
-        ImageView imageView;
-        TextView similares_nome;
-        TextView similares_data_lancamento;
-        TextView similares_voto_media;
-        TextView similares_title_original;
+         private   ImageView imageView;
+        private TextView similares_nome;
+        private TextView similares_data_lancamento;
+        private TextView similares_voto_media;
+        private TextView similares_title_original;
 
 
-        public SimilareViewHolde(View itemView) {
+        SimilareViewHolde(View itemView) {
             super(itemView);
 
             imageView = (ImageView) itemView.findViewById(R.id.img_similares);

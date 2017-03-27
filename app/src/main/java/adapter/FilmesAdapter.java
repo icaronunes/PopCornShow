@@ -1,7 +1,6 @@
 package adapter;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,12 +26,8 @@ import utils.UtilsFilme;
 public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewHolder> {
 
     private final Context context;
-    protected List<MovieDb> tmdbMovies;
+    private List<MovieDb> tmdbMovies;
     private FilmeOnClickListener filmeOnClickListener;
-
-    public interface FilmeOnClickListener {
-        void onClickFilme(View view, int position);
-    }
 
     public FilmesAdapter(Context context, List<MovieDb> tmdbMovies,
                          FilmeOnClickListener filmeOnClickListener) {
@@ -45,8 +40,7 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
     @Override
     public FilmeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.adapter_filmes_list, parent, false);
-        FilmeViewHolder holder = new FilmeViewHolder(view);
-        return holder;
+        return new FilmeViewHolder(view);
     }
 
     @Override
@@ -65,14 +59,14 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
                         @Override
                         public void onSuccess() {
                             String date = movie.getReleaseDate();
-                            holder.title.setText(date);
+                            holder.title.setText(date.length() >= 4 ? date.substring(0, 4) : "");
                             holder.progressBar.setVisibility(View.INVISIBLE);
                         }
 
                         @Override
                         public void onError() {
                             String title = movie.getTitle();
-                            String release  = movie.getReleaseDate();
+                            String release = movie.getReleaseDate();
                             holder.title.setText(title + " - " + release);
                             holder.progressBar.setVisibility(View.INVISIBLE);
                         }
@@ -89,31 +83,30 @@ public class FilmesAdapter extends RecyclerView.Adapter<FilmesAdapter.FilmeViewH
             }
         }
 
-
     }
 
     @Override
     public int getItemCount() {
-        if (tmdbMovies != null){
+        if (tmdbMovies != null) {
             return tmdbMovies.size();
         }
         return 0;
     }
 
+    public interface FilmeOnClickListener {
+        void onClickFilme(View view, int position);
+    }
 
+    class FilmeViewHolder extends RecyclerView.ViewHolder {
 
-    public static class FilmeViewHolder extends RecyclerView.ViewHolder {
+        private TextView title;
+        private ImageView imagem_filme;
+        private ProgressBar progressBar;
 
-        TextView title;
-        ImageView imagem_filme;
-        CardView cardView;
-        ProgressBar progressBar;
-
-        public FilmeViewHolder(View itemView) {
+        FilmeViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.titleTextView);
             imagem_filme = (ImageView) itemView.findViewById(R.id.imgFilme);
-            cardView = (CardView) itemView.findViewById(R.id.card_view);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
         }
     }

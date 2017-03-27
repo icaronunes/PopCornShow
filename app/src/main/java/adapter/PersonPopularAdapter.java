@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
@@ -27,8 +28,8 @@ import utils.UtilsFilme;
  */
 public class PersonPopularAdapter extends RecyclerView.Adapter<PersonPopularAdapter.HolderPersonPopular> {
 
-    Context context;
-    TmdbPeople.PersonResultsPage personResultsPage;
+    private Context context;
+    private TmdbPeople.PersonResultsPage personResultsPage;
 
     public PersonPopularAdapter(PersonPopularActivity personPopular, TmdbPeople.PersonResultsPage personResultsPage) {
         context = personPopular;
@@ -38,19 +39,16 @@ public class PersonPopularAdapter extends RecyclerView.Adapter<PersonPopularAdap
     @Override
     public HolderPersonPopular onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.adapter_person_popular, parent, false);
-        HolderPersonPopular holderPersonPopular = new HolderPersonPopular(view);
-        return holderPersonPopular;
+        return new HolderPersonPopular(view);
     }
 
     @Override
     public void onBindViewHolder(final HolderPersonPopular holder, final int position) {
-        if (personResultsPage != null){
+        if (personResultsPage != null) {
 
-            final Person person =  personResultsPage.getResults().get(position);
-          //  Log.d("PersonPopularActivity", person.getName());
+            final Person person = personResultsPage.getResults().get(position);
             Picasso.with(context)
                     .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + person.getProfilePath())
-                    .error(R.drawable.person)
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.img_person, new Callback() {
@@ -61,7 +59,10 @@ public class PersonPopularAdapter extends RecyclerView.Adapter<PersonPopularAdap
 
                         @Override
                         public void onError() {
-                            holder.progressBar.setVisibility(View.VISIBLE);
+                            holder.progressBar.setVisibility(View.GONE);
+                            holder.text_person_name.setText(person.getName());
+                            holder.text_person_name.setVisibility(View.VISIBLE);
+                            holder.img_person.setImageResource(R.drawable.person);
                         }
                     });
 
@@ -74,27 +75,25 @@ public class PersonPopularAdapter extends RecyclerView.Adapter<PersonPopularAdap
                     context.startActivity(intent);
                 }
             });
-
-
         }
-
     }
 
     @Override
     public int getItemCount() {
 
-       // Log.d("PersonPopularActivity", "tamanho "+personResultsPage.getResults().size());
         return personResultsPage.getResults().size();
     }
 
-    public class HolderPersonPopular extends RecyclerView.ViewHolder {
+    class HolderPersonPopular extends RecyclerView.ViewHolder {
 
-        ProgressBar progressBar;
-        ImageView img_person;
+        private ProgressBar progressBar;
+        private ImageView img_person;
+        private TextView text_person_name;
 
-        public HolderPersonPopular(View itemView) {
+        HolderPersonPopular(View itemView) {
             super(itemView);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
+            text_person_name = (TextView) itemView.findViewById(R.id.text_person_name);
             img_person = (ImageView) itemView.findViewById(R.id.img_popular_person);
         }
     }

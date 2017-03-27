@@ -54,7 +54,7 @@ public class ImagemTopFilmeScrollFragment extends Fragment {
 
         AnimatorSet animatorSet = new AnimatorSet();
         ObjectAnimator alphaStar = ObjectAnimator.ofFloat(imageView, "y", -100, 0)
-                .setDuration(1000);
+                .setDuration(8000);
         animatorSet.playTogether(alphaStar);
         // animatorSet.start();
         // Log.d("PosterScrollFragment", "onCreateView: -> " + UtilsFilme.getBaseUrlImagem(4) + endereco);

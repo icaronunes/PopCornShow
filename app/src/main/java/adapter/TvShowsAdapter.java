@@ -1,7 +1,6 @@
 package adapter;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +25,9 @@ import utils.UtilsFilme;
  */
 public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowViewHolder> {
 
-    private final Context context;
-    protected List<TvSeries> tvSeries;
-    private  TvShowsAdapter.TvshowOnClickListener tvshowOnClickListener;
+    private Context context;
+    private List<TvSeries> tvSeries;
+    private TvShowsAdapter.TvshowOnClickListener tvshowOnClickListener;
 
     public TvShowsAdapter(Context context, List<TvSeries> tvSeries,
                           TvShowsAdapter.TvshowOnClickListener filmeOnClickListener) {
@@ -61,7 +60,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
                         @Override
                         public void onSuccess() {
                             String fist = series.getFirstAirDate();
-                            holder.title.setText(fist.length() >= 4 ? fist.substring(0,4) : "");
+                            holder.title.setText(fist.length() >= 4 ? fist.substring(0, 4) : "");
                             holder.progressBar.setVisibility(View.INVISIBLE);
                         }
 
@@ -100,18 +99,17 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
         void onClickTvshow(View view, int position);
     }
 
-    public static class TvShowViewHolder extends RecyclerView.ViewHolder {
+    static class TvShowViewHolder extends RecyclerView.ViewHolder {
 
-        TextView title;
-        ImageView imagem_filme;
-        CardView cardView;
-        ProgressBar progressBar;
+        private TextView title;
+        private ImageView imagem_filme;
 
-        public TvShowViewHolder(View itemView) {
+        private ProgressBar progressBar;
+
+        TvShowViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.titleTextView);
             imagem_filme = (ImageView) itemView.findViewById(R.id.imgFilme);
-            cardView = (CardView) itemView.findViewById(R.id.card_view);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
         }
     }

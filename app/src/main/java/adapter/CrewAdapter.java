@@ -97,12 +97,12 @@ public class CrewAdapter extends RecyclerView.Adapter<CrewAdapter.CrewViewHolder
         return crews.size();
     }
 
-    public class CrewViewHolder extends RecyclerView.ViewHolder {
-        TextView textCrewJob, textCrewNome;
-        ImageView imgPagerCrews;
-        ProgressBar progressBarCrew;
+    class CrewViewHolder extends RecyclerView.ViewHolder {
+        private TextView textCrewJob, textCrewNome;
+        private ImageView imgPagerCrews;
+        private ProgressBar progressBarCrew;
 
-        public CrewViewHolder(View itemView) {
+        CrewViewHolder(View itemView) {
             super(itemView);
 
              textCrewJob = (TextView) itemView.findViewById(R.id.textCrewJob);

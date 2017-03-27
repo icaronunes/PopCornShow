@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.google.android.gms.appinvite.AppInvite;
 import com.google.android.gms.appinvite.AppInviteInvitationResult;
@@ -50,7 +49,7 @@ public class DynamicLink extends AppCompatActivity implements GoogleApiClient.On
                                     // Extract deep link from Intent
                                     Intent intent = result.getInvitationIntent();
                                     String deepLink = AppInviteReferral.getDeepLink(intent);
-                                    Log.d(TAG, deepLink);
+                                   // Log.d(TAG, deepLink);
 
                                     // Handle the deep link. For example, open the linked
                                     // content, or apply promotional credit to the user's
@@ -58,7 +57,7 @@ public class DynamicLink extends AppCompatActivity implements GoogleApiClient.On
                                     chamarIntent(deepLink);
                                     // ...
                                 } else {
-                                    Log.d(TAG, "getInvitation: no deep link found.");
+                                  //  Log.d(TAG, "getInvitation: no deep link found.");
                                     startActivity(new Intent(DynamicLink.this, MainActivity.class));
                                 }
                             }

@@ -27,7 +27,7 @@ import utils.UtilsFilme;
  */
 public class ImagemTopScrollFragment extends Fragment {
 
-    TopMain topMains;
+    private TopMain topMains;
 
     public static Fragment newInstance(TopMain topMainList) {
         ImagemTopScrollFragment topScrollFragment = new ImagemTopScrollFragment();

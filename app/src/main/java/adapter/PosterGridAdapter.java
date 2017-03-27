@@ -33,9 +33,9 @@ import utils.UtilsFilme;
  */
 public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.PosterViewHolder> {
 
-    List<Artwork> artworks;
-    Context context;
-    String nome;
+    private List<Artwork> artworks;
+    private Context context;
+    private String nome;
 
 
     public PosterGridAdapter(Context context, List<Artwork> artworks, String nome) {
@@ -47,9 +47,8 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
     @Override
     public PosterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.poster_grid_image, parent, false);
-        PosterViewHolder posterViewHolder = new PosterViewHolder(view);
-       // Log.d("PosterGridActivity", "onCreateViewHolder ");
-        return posterViewHolder;
+        // Log.d("PosterGridActivity", "onCreateViewHolder ");
+        return new PosterViewHolder(view);
     }
 
     @Override
@@ -96,11 +95,11 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
         return artworks.size() > 0 ? artworks.size() : 0;
     }
 
-    public class PosterViewHolder extends RecyclerView.ViewHolder {
-        ImageView img;
-        ProgressBar progressBar;
+    class PosterViewHolder extends RecyclerView.ViewHolder {
+        private ImageView img;
+        private ProgressBar progressBar;
 
-        public PosterViewHolder(View itemView) {
+        PosterViewHolder(View itemView) {
             super(itemView);
             img = (ImageView) itemView.findViewById(R.id.img_poster_grid);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress_poster_grid);

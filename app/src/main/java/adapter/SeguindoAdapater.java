@@ -18,9 +18,9 @@ import fragment.ListaSeguindoFragment;
 
 public class SeguindoAdapater extends FragmentPagerAdapter {
 
-    private static final String TAG = SeguindoAdapater.class.getName();
-    Context context;
-    List<UserTvshow> userTvshows;
+    private final String TAG = SeguindoAdapater.class.getName();
+    private Context context;
+    private List<UserTvshow> userTvshows;
 
 
     public SeguindoAdapater(SeguindoActivity seguindoActivity,

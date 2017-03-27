@@ -33,8 +33,8 @@ import utils.UtilsFilme;
  * Created by icaro on 18/08/16.
  */
 public class PersontvAdapter extends RecyclerView.Adapter<PersontvAdapter.PersonTvViewHolder> {
-    Context context;
-    PersonCredits personCredits;
+    private Context context;
+    private PersonCredits personCredits;
 
     public PersontvAdapter(Context context, PersonCredits personCredits) {
 
@@ -46,8 +46,7 @@ public class PersontvAdapter extends RecyclerView.Adapter<PersontvAdapter.Person
     @Override
     public PersonTvViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.person_movie_filmes_layout, parent, false);
-        PersonTvViewHolder holder = new PersonTvViewHolder(view);
-        return holder;
+        return new PersonTvViewHolder(view);
     }
 
 
@@ -114,13 +113,13 @@ public class PersontvAdapter extends RecyclerView.Adapter<PersontvAdapter.Person
         return 0;
     }
 
-    public class PersonTvViewHolder extends RecyclerView.ViewHolder {
+    class PersonTvViewHolder extends RecyclerView.ViewHolder {
 
-        ProgressBar progressBar;
-        ImageView poster;
-        TextView title;
+        private ProgressBar progressBar;
+        private ImageView poster;
+        private TextView title;
 
-        public PersonTvViewHolder(View itemView) {
+        PersonTvViewHolder(View itemView) {
             super(itemView);
             poster = (ImageView) itemView.findViewById(R.id.img_poster_grid);
             title = (TextView) itemView.findViewById(R.id.text_title_crew);

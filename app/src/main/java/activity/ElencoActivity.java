@@ -34,16 +34,16 @@ import utils.UtilsFilme;
  * Created by icaro on 24/07/16.
  */
 public class ElencoActivity extends BaseActivity {
-    RecyclerView recyclerView;
-    TextView text_elenco_no_internet;
-    LinearLayout linear_search_layout;
-    int id;
-    int season = -100;
-    ProgressBar progressBar;
-    Credits creditsTvShow;
-    MovieDb movies;
-    Multi.MediaType mediaType;
-    String title;
+    private RecyclerView recyclerView;
+    private TextView text_elenco_no_internet;
+    private LinearLayout linear_search_layout;
+    private int id;
+    private int season = -100;
+    private ProgressBar progressBar;
+    private Credits creditsTvShow;
+    private MovieDb movies;
+    private Multi.MediaType mediaType;
+    private String title;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

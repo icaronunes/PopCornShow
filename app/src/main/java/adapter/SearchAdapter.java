@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -31,7 +33,8 @@ import utils.UtilsFilme;
  * Created by icaro on 18/09/16.
  */
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSearch> {
-    Context context;
+
+    private Context context;
     private List<Multi> multis;
     private FirebaseAnalytics firebaseAnalytics;
 
@@ -54,7 +57,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
         if (multis.get(position).getMediaType().equals(Multi.MediaType.MOVIE)) {
             final MovieDb movieDb = ((MovieDb) multis.get(position));
 
-            Picasso.with(context).load(UtilsFilme.getTamanhoDaImagem(context, 2) + movieDb.getPosterPath())
+            Picasso.with(context)
+                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + movieDb.getPosterPath())
+                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .error(R.drawable.poster_empty)
                     .into(holder.poster);
 
@@ -63,10 +69,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
                 public void onClick(View view) {
                     ImageView imageView = (ImageView) view.findViewById(R.id.img_search);
                     Intent intent = new Intent(context, FilmeActivity.class);
-                    int color = UtilsFilme.loadPalette(imageView);
-                    intent.putExtra(Constantes.COLOR_TOP, color);
+                    intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(imageView));
                     intent.putExtra(Constantes.FILME_ID, movieDb.getId());
-                  //  Log.d("setOnItemClickListener", movieDb.getOriginalTitle());
+                    //Log.d("setOnItemClickListener", movieDb.getOriginalTitle());
                     intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
                     context.startActivity(intent);
 
@@ -89,8 +94,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
 
         if (multis.get(position).getMediaType().equals(Multi.MediaType.TV_SERIES)) {
             final TvSeries series = (TvSeries) multis.get(position);
-            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + series.getPosterPath())
+            Picasso.with(context)
+                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + series.getPosterPath())
                     .error(R.drawable.poster_empty)
+                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.poster);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -124,8 +132,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
 
         if (multis.get(position).getMediaType().equals(Multi.MediaType.PERSON)) {
             final Person person = (Person) multis.get(position);
-            Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + person.getProfilePath())
+            Picasso.with(context)
+                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + person.getProfilePath())
                     .error(R.drawable.poster_empty)
+                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.poster);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -166,11 +177,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
         return multis.size();
     }
 
-    public class HolderSearch extends RecyclerView.ViewHolder {
-        ImageView poster, estrela;
-        TextView search_nome, search_data_lancamento, search_voto_media, search_title_original;
+    class HolderSearch extends RecyclerView.ViewHolder {
 
-        public HolderSearch(View itemView) {
+        private ImageView poster, estrela;
+        private TextView search_nome, search_data_lancamento, search_voto_media, search_title_original;
+
+        HolderSearch(View itemView) {
             super(itemView);
             poster = (ImageView) itemView.findViewById(R.id.img_search);
             search_nome = (TextView) itemView.findViewById(R.id.search_nome);

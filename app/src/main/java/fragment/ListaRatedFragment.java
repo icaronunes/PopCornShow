@@ -48,11 +48,11 @@ import static android.R.attr.id;
 public class ListaRatedFragment extends Fragment {
 
     final String TAG = TvShowFragment.class.getName();
-    int tipo;
-    List<FilmeDB> movies;
-    List<TvshowDB> tvSeries;
-    RecyclerView recyclerViewFilme;
-    RecyclerView recyclerViewTvShow;
+    private int tipo;
+    private List<FilmeDB> movies;
+    private List<TvshowDB> tvSeries;
+    private RecyclerView recyclerViewFilme;
+    private RecyclerView recyclerViewTvShow;
     private FirebaseAnalytics firebaseAnalytics;
 
     public static Fragment newInstanceMovie(int tipo, List<FilmeDB> filmeDBs) {
@@ -203,7 +203,7 @@ public class ListaRatedFragment extends Fragment {
                                             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movies.get(position).getTitle());
                                             bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tv");
                                             bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
-                                            bundle.putString("AlertDialog-WatchList", "Excluiu TvShow");
+                                            bundle.putString("Rated", "Excluiu TvShow");
                                             firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                                         }
                                     });
@@ -315,7 +315,7 @@ public class ListaRatedFragment extends Fragment {
                                             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getTitle());
                                             bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tv");
                                             bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
-                                            bundle.putString("AlertDialog-WatchList", "Excluiu TvShow");
+                                            bundle.putString("Rated", "Excluiu TvShow");
                                             firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                                         }

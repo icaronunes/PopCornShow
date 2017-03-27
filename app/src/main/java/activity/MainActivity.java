@@ -10,7 +10,6 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -38,13 +37,12 @@ import utils.UtilsFilme;
 
 public class MainActivity extends BaseActivity  {
 
-    public static final String TAG = MainActivity.class.getName();
-    ViewPager viewPager_main, viewpage_top_main;
-    TvResultsPage tmdbTv;
-    MovieResultsPage tmdbMovies;
-    TabLayout tabLayout;
-    List<TopMain> multi = new ArrayList<>();
-    CirclePageIndicator circlePageIndicator;
+    private static final String TAG = MainActivity.class.getName();
+    private ViewPager viewPager_main, viewpage_top_main;
+    private TvResultsPage tmdbTv;
+    private MovieResultsPage tmdbMovies;
+    private TabLayout tabLayout;
+    private List<TopMain> multi = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +69,7 @@ public class MainActivity extends BaseActivity  {
 
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (sharedPref.getBoolean("33", true)) {
+        if (sharedPref.getBoolean("37", true)) {
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_popcorn2)
                     .setTitle(R.string.novidades_title)
@@ -80,8 +78,9 @@ public class MainActivity extends BaseActivity  {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putBoolean("33", false);
-                            editor.remove("31");
+                            editor.putBoolean("37", false);
+                            editor.remove("33");
+                            editor.remove("34");
                             editor.apply();
                         }
                     }).create();
@@ -113,7 +112,7 @@ public class MainActivity extends BaseActivity  {
         viewPager_main.setCurrentItem(0);
         viewPager_main.setAdapter(new MainAdapter(this, getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager_main);
-        circlePageIndicator = (CirclePageIndicator) findViewById(R.id.indication_main);
+        CirclePageIndicator circlePageIndicator = (CirclePageIndicator) findViewById(R.id.indication_main);
         viewpage_top_main.setAdapter(new ViewPageMainTopFragment(getSupportFragmentManager(), multi));
         circlePageIndicator.setViewPager(viewpage_top_main);
 
@@ -221,7 +220,8 @@ public class MainActivity extends BaseActivity  {
                     tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies(getLocale()
                             , 1);
                 } catch (Exception e) {
-                     Log.d(TAG, e.getMessage());
+                   //  Log.d(TAG, e.getMessage());
+                    FirebaseCrash.report(e);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -236,7 +236,8 @@ public class MainActivity extends BaseActivity  {
                     tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("en", 1, UtilsFilme.getTimezone());
                     tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies("en", 1);
                 } catch (Exception e) {
-                       Log.d(TAG, e.toString());
+                      // Log.d(TAG, e.toString());
+                    FirebaseCrash.report(e);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

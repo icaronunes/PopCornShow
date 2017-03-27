@@ -17,9 +17,9 @@ import fragment.ListaWatchlistFragment;
  */
 public class WatchListAdapter extends FragmentPagerAdapter {
 
-    Context context;
-    List<TvshowDB> series;
-    List<FilmeDB> movies;
+    private Context context;
+    private List<TvshowDB> series;
+    private List<FilmeDB> movies;
 
 
     public WatchListAdapter(Context context, FragmentManager supportFragmentManager,

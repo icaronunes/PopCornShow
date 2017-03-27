@@ -98,12 +98,12 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
         return casts.size();
     }
 
-    public class CastViewHolder extends RecyclerView.ViewHolder {
-        ProgressBar progressBar;
-        ImageView imageView;
-        TextView textCastPersonagem, textCastNome;
+    class CastViewHolder extends RecyclerView.ViewHolder {
+       private ProgressBar progressBar;
+        private ImageView imageView;
+        private TextView textCastPersonagem, textCastNome;
 
-        public CastViewHolder(View itemView) {
+        CastViewHolder(View itemView) {
             super(itemView);
             textCastNome = (TextView) itemView.findViewById(R.id.textCastNomes);
             textCastPersonagem = (TextView) itemView.findViewById(R.id.textCastPersonagem);

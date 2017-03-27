@@ -49,10 +49,10 @@ import static utils.UtilsFilme.getTimezone;
 public class MainFragment extends Fragment {
 
     final static String TAG = MainFragment.class.getName();
-    static List<String> buttonFilme, buttonTvshow;
-    int tipo;
-    TvResultsPage popularTvshow = null, toDay = null;
-    MovieResultsPage popularMovie = null, cinema = null;
+    private List<String> buttonFilme, buttonTvshow;
+    private int tipo;
+    private TvResultsPage popularTvshow = null, toDay = null;
+    private MovieResultsPage popularMovie = null, cinema = null;
 
 
     private FirebaseAnalytics mFirebaseAnalytics;

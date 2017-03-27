@@ -59,13 +59,13 @@ import utils.UtilsFilme;
 @Keep
 public class BaseActivity extends AppCompatActivity {
 
-    private static String TAG = BaseActivity.class.getName();
+    private String TAG = BaseActivity.class.getName();
     protected DrawerLayout drawerLayout;
     protected NavigationView navigationView;
-    ImageView imgUserPhoto;
-    TextView tUserName;
-    TextView tLogin;
-    TextView textLogin;
+    private ImageView imgUserPhoto;
+    private TextView tUserName;
+    private TextView tLogin;
+    private TextView textLogin;
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private FirebaseUser user;
@@ -93,7 +93,6 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     static public String getLocale() {
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return Locale.getDefault().toLanguageTag();
         } else {
@@ -437,7 +436,7 @@ public class BaseActivity extends AppCompatActivity {
             public void onSuccess() {
                 //Log.d(TAG, "salvaImagemMemoriaCache.onSucess");
                 File file = context.getExternalCacheDir();
-
+                if (file != null)
                 if (!file.exists()) {
                     file.mkdir();
                     //Log.e("salvarArqNaMemoriaIn", "Directory created");

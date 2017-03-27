@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,15 +33,15 @@ import utils.UtilsFilme;
 
 public class CrewsActivity extends BaseActivity {
 
-    RecyclerView recyclerView;
-    LinearLayout linear_crews_layout;
-    int id;
-    Multi.MediaType mediaType;
-    ProgressBar progressBar;
+    private RecyclerView recyclerView;
+    private LinearLayout linear_crews_layout;
+    private int id;
+    private Multi.MediaType mediaType;
+    private ProgressBar progressBar;
     //Credits creditsTvShow;
-    MovieDb movies;
-    int season = -100;
-    String title;
+    private MovieDb movies;
+    private int season = -100;
+    private String title;
     private String TAG = this.getClass().getName();
 
 
@@ -131,7 +130,7 @@ public class CrewsActivity extends BaseActivity {
 
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
-        Credits creditsTvShow;
+        private Credits creditsTvShow;
         @Override
         protected Void doInBackground(Void... voids) {
             try {
@@ -153,7 +152,6 @@ public class CrewsActivity extends BaseActivity {
                 }
                 return null;
             } catch (Exception e){
-                Log.d(TAG, e.getMessage());
                 FirebaseCrash.report(e);
                 runOnUiThread(new Runnable() {
                     @Override

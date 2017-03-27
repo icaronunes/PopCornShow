@@ -20,7 +20,7 @@ import utils.Constantes;
  */
 public class EpsodioActivity extends BaseActivity {
 
-    int tvshow_id, posicao, color, temporada_position;
+    private int tvshow_id, posicao, color, temporada_position;
     private String nome_temporada;
     private TvSeason tvSeason;
     private UserSeasons seasons;

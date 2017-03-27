@@ -44,7 +44,8 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
 
 public class UtilsFilme {
 
-    private static final String TAG = UtilsFilme.class.getName();
+
+    private static String TAG = UtilsFilme.class.getName();
 
     public static UserTvshow setUserTvShow(TvSeries serie) {
         UserTvshow userTvshow = new UserTvshow();
@@ -159,7 +160,6 @@ public class UtilsFilme {
             stream.close();
         } catch (IOException e) {
             // Log.e(TAG, e.getMessage(), e);
-            FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
             FirebaseCrash.report(e);
         }
 
@@ -187,12 +187,12 @@ public class UtilsFilme {
         try {
             if (!file.exists()) {
                 file.createNewFile();
-                Log.e("salvarArqNaMemoriaIn", "Arquivo Criado");
+              //  Log.e("salvarArqNaMemoriaIn", "Arquivo Criado");
             }
             FileOutputStream out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();
-            Log.e("salvarArqNaMemoriaIn", "fechado");
+          //  Log.e("salvarArqNaMemoriaIn", "fechado");
         } catch (IOException e) {
             FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
             FirebaseCrash.report(e);

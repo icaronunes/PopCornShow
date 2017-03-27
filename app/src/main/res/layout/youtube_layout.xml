@@ -12,23 +12,24 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/treiler_sinopse"
+        android:id="@+id/trailer_sinopse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:adSize="SMART_BANNER"
-        android:layout_alignParentBottom="true"
-        app:adUnitId="@string/admob"
-        android:layout_marginTop="25dp" />
+        android:gravity="bottom">
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="25dp"
+            app:adSize="SMART_BANNER"
+            app:adUnitId="@string/admob" />
 
     </RelativeLayout>
 

@@ -29,7 +29,7 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
     private List<TvshowDB> tvshows;
     private Context context;
     private ListaOnClickListener onClickListener;
-    boolean status = false;
+    private boolean status = false;
 
     // Colocar em apenas um lugar
     public interface ListaOnClickListener {
@@ -50,8 +50,7 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
     @Override
     public FavoriteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.usuario_list_adapter, parent, false);
-        FavoriteViewHolder holder = new FavoriteViewHolder(view);
-        return holder;
+        return new FavoriteViewHolder(view);
     }
 
     @Override
@@ -120,12 +119,12 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
         return 0;
     }
 
-    public static class FavoriteViewHolder extends RecyclerView.ViewHolder {
-        ImageView img_favorite;
-        ProgressBar progressBar;
-        TextView text_rated_favoritos;
+    class FavoriteViewHolder extends RecyclerView.ViewHolder {
+        private   ImageView img_favorite;
+        private ProgressBar progressBar;
+        private TextView text_rated_favoritos;
 
-        public FavoriteViewHolder(View itemView) {
+        FavoriteViewHolder(View itemView) {
             super(itemView);
             img_favorite = (ImageView) itemView.findViewById(R.id.img_filme_usuario);
             text_rated_favoritos = (TextView) itemView.findViewById(R.id.text_rated_favoritos);

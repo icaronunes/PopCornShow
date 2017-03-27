@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,9 +49,6 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
     private static final int RC_SIGN_IN = 1;
     private final String TAG = VincularLoginActivity.class.getName();
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener stateListener;
-    private EditText email, pass;
-    private SignInButton signInButton;
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mAuthProgressDialog;
     private CallbackManager mCallbackManager;
@@ -69,8 +64,6 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
         FirebaseApp.initializeApp(getBaseContext());
         FacebookSdk.sdkInitialize(getBaseContext());
         setContentView(R.layout.activity_login);
-        email = (EditText) findViewById(R.id.login);
-        pass = (EditText) findViewById(R.id.pass);
         mAuth = FirebaseAuth.getInstance();
 
         //stateListener = getAuthStateListener();
@@ -160,7 +153,7 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
         // may be displayed when only basic profile is requested. Try adding the
         // Scopes.PLUS_LOGIN scope to the GoogleSignInOptions to see the
         // difference.
-        signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setColorScheme(SignInButton.SIZE_STANDARD);
         signInButton.setScopes(gso.getScopeArray());
@@ -328,7 +321,7 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "getMessage : " + e.getMessage());
+              //  Log.d(TAG, "getMessage : " + e.getMessage());
                 Toast.makeText(VincularLoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
             }

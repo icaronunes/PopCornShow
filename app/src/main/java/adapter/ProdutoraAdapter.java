@@ -27,12 +27,11 @@ import utils.Constantes;
 import utils.UtilsFilme;
 
 
-
 /**
  * Created by icaro on 10/08/16.
  */
 public class ProdutoraAdapter extends RecyclerView.Adapter<ProdutoraAdapter.ProdutoraViewHolde> {
-    Context context;
+    private Context context;
     private List<Collection> movies;
 
     public ProdutoraAdapter(ProdutoraActivity produtoraActivity, List<Collection> results) {
@@ -57,7 +56,7 @@ public class ProdutoraAdapter extends RecyclerView.Adapter<ProdutoraAdapter.Prod
             String title = movie.getName();
             if (title != null) {
                 holder.title.setText(title);
-             //   Log.d("onBindViewHolder", title);
+                //   Log.d("onBindViewHolder", title);
             }
 
             Picasso.with(context)
@@ -91,10 +90,10 @@ public class ProdutoraAdapter extends RecyclerView.Adapter<ProdutoraAdapter.Prod
 
                     FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
                     Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, ProdutoraAdapter.class.getName() );
-                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, FilmeActivity.class.getName() );
-                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movie.getId() );
-                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, movie.getTitle() );
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, ProdutoraAdapter.class.getName());
+                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, FilmeActivity.class.getName());
+                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movie.getId());
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, movie.getTitle());
                     firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
 
                 }
@@ -111,13 +110,13 @@ public class ProdutoraAdapter extends RecyclerView.Adapter<ProdutoraAdapter.Prod
         return 0;
     }
 
-    public class ProdutoraViewHolde extends RecyclerView.ViewHolder {
+    class ProdutoraViewHolde extends RecyclerView.ViewHolder {
 
-        ProgressBar progressBar;
-        ImageView imageView;
-        TextView title;
+        private ProgressBar progressBar;
+        private ImageView imageView;
+        private TextView title;
 
-        public ProdutoraViewHolde(View itemView) {
+        ProdutoraViewHolde(View itemView) {
             super(itemView);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
             imageView = (ImageView) itemView.findViewById(R.id.imgFilme_produtora);

@@ -46,7 +46,6 @@ import java.util.Map;
 import activity.PersonActivity;
 import br.com.icaro.filme.R;
 import domain.FilmeService;
-import domain.Imdb;
 import domain.UserEp;
 import domain.UserSeasons;
 import info.movito.themoviedbapi.model.Credits;
@@ -65,29 +64,27 @@ public class EpsodioFragment extends Fragment {
 
     final String TAG = this.getClass().getName();
 
-    int tvshow_id, color, position, temporada_position;
-    Credits credits;
-    TvEpisode episode;
+    private int tvshow_id, color, position, temporada_position;
+    private Credits credits;
+    private TvEpisode episode;
 
-    String nome_serie;
-    LinearLayout linear_director, linear_air_date, linear_write, linear_vote;
-    FrameLayout frame_meio_ep_cima, frame_meio_ep_baixo;
-    TextView ep_title, ep_tvshow, ep_director, air_date, ep_write, ep_votos, ep_sinopse;
-    ImageView ep_image;
-    Button ep_rating_button;
-    UserEp userEp;
-    boolean seguindo;
+   private String nome_serie;
+    private LinearLayout linear_director, linear_air_date, linear_write, linear_vote;
+    private FrameLayout frame_meio_ep_cima, frame_meio_ep_baixo;
+    private TextView ep_title, ep_tvshow, ep_director, air_date, ep_write, ep_votos, ep_sinopse;
+    private ImageView ep_image;
+    private Button ep_rating_button;
+    private UserEp userEp;
+    private boolean seguindo;
 
-    FirebaseAuth mAuth;
-    DatabaseReference myRef;
-    DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
+    private DatabaseReference myRef;
+    private DatabaseReference databaseReference;
     private ValueEventListener userListener;
     private ValueEventListener epsListener;
     private float numero_rated;
     private LinearLayout relativeLayout;
     private UserSeasons seasons;
-    private Imdb imdbDd;
-
 
     public static Fragment newInstance(TvEpisode tvEpisode, String nome_serie, int tvshow_id,
                                        int color, boolean seguindo, int position, UserSeasons seasons, int temporada_position) {
@@ -241,6 +238,7 @@ public class EpsodioFragment extends Fragment {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             ep_rating_button.setBackground(getContext().getResources().getDrawable(R.drawable.button_visto, getActivity().getTheme()));
                             ep_rating_button.setText(getResources().getText(R.string.classificar_visto));
+                            // TODO: Deveria usar getContext().getDrawable() ?
                         } else {
                             ep_rating_button.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.button_visto));
                             ep_rating_button.setText(getResources().getText(R.string.classificar_visto));

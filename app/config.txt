@@ -1,32 +1,23 @@
 -injars /home/icaro/Documentos/workspace/Filme/app/libs/YouTubeAndroidPlayerApi.jar(**.class)
+-injars /home/icaro/.android/build-cache/90efdea8981abcd56a7485cbf65410ffe9f6139b/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/8fdaf71510e6e18fc4f3d211f5557d8ba045e390/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/d193ddd64bd265e34e58ef9b300582f0e1395588/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/56acda75ed7f29ca2da0051374fdce2c45383fc6/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/093242d29d57531ab013707af0c4934f7c8fd7a2/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/8ffe16bf1f43a506fef5ae3ff2e011b9266300e8/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar(**.class)
+-injars /opt/android-sdk-linux/extras/android/m2repository/com/android/support/support-annotations/25.3.0/support-annotations-25.3.0.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.4.4/e2ff13c3de2f5a2ab2449a3dace2b0d1c37bd8ee/jackson-databind-2.4.4.jar(**.class)
--injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-applinks/1.4.0/8ad21bf21784dacce5f2043afb97218cc377e835/bolts-applinks-1.4.0.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/javax.annotation/javax.annotation-api/1.2/479c1e06db31c432330183f5cae684163f186146/javax.annotation-api-1.2.jar(**.class)
--injars /home/icaro/.android/build-cache/06773bffcd8e0caa0c87444ec6ed3c45b9ba552b/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/7a4fe829120adf35e0f406aede21d753daaa332f/output/jars/classes.jar(**.class)
+-injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-applinks/1.4.0/8ad21bf21784dacce5f2043afb97218cc377e835/bolts-applinks-1.4.0.jar(**.class)
+-injars /home/icaro/.android/build-cache/da55826f6a3bce0a7718d275ed9ffe6c2fae43d6/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/0da0be640c319ad7f21b94455931ba6f3e998115/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/7cc9205e0c2bf07eedb6064eda48bdf2e04ce491/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/f24004bf4b53bf44f2103f19290a2b0ff7bf501d/output/jars/libs/internal_impl-25.0.1.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.21/139535a69a4239db087de9bab0bee568bf8e0b70/slf4j-api-1.7.21.jar(**.class)
--injars /home/icaro/.android/build-cache/d1fa714e725f8a02523874b2292792684b108f69/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/eae8ecc140e44d150e8f7c4c987e4e770c754526/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/b272e6fc2b3da4304f843eea5b2feea4ffe33e3b/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/7a4fe829120adf35e0f406aede21d753daaa332f/output/jars/libs/internal_impl-25.0.1.jar(**.class)
--injars /home/icaro/.android/build-cache/b323bc4b43f892b7d8b76b17414371f48e800abc/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/0700d5860fdd14e1c580d5451cef597cf2ffa7ee/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/4c8277271c10df874ae60d14ef3818d1fd60fc6a/output/jars/libs/internal_impl-25.0.1.jar(**.class)
--injars /home/icaro/.android/build-cache/593e61eb1ae13e994b5655dba4dcec11712917a7/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/abce35e5c60c8b15d4bce1c5f2ae435a4d39e391/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/5eea736ddc9e4d45713a9aac922155abf3765013/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.6.0/69edde9fc4b01c9fd51d25b83428837478c27254/okhttp-3.6.0.jar(**.class)
--injars /opt/android-sdk-linux/extras/android/m2repository/com/android/support/support-annotations/25.2.0/support-annotations-25.2.0.jar(**.class)
--injars /home/icaro/.android/build-cache/4ed32d9bd25b366c6185c0a722cf19809b7cd0bb/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/5d5eb90d3fccc7b025e4a67e7e27e6b4d824e383/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/c143bc46cfec894ce66997ce84a8f28a9f138281/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/18b1879f171debb7e95bd713f7d51890f11d39f0/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/ad308ef31a37d49e9a2700e06835c0350227a219/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/e6aae52a181451c4c63d5df826635a7f56707047/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/c9fefb6e6906a194114d0b17d867be1e8bd60e40/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/f1f12361978a910f10cc2eee05fa0bf1f0e75d7a/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/org.slf4j/jcl-over-slf4j/1.7.7/56003dcd0a31deea6391b9e2ef2f2dc90b205a92/jcl-over-slf4j-1.7.7.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-android/1.7.21/f4f6a07c00f3996d8db58c85a3d73377b40611eb/slf4j-android-1.7.21.jar(**.class)
 -injars /home/icaro/.android/build-cache/4dd176423b62a6c67ce1f3b74b253c38b0bbe135/output/jars/classes.jar(**.class)
@@ -34,50 +25,57 @@
 -injars /opt/android-sdk-linux/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.0-alpha4/constraint-layout-solver-1.0.0-alpha4.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-annotations/2.4.4/d3dad1a494f94579fca4b6a1142fb15fb68f0b2f/jackson-annotations-2.4.4.jar(**.class)
 -injars /home/icaro/.android/build-cache/2bee4aa93ab227a3fa2f4833ab88b1060e29df8c/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/7fbe49874d6ceb6e5d2bd4ebc2d15f5984c1b80e/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/60b4636d5095fbef9cb2a42e75a5a566be5e5055/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/cd2b79cf1dc982d68ed94f67a18477b8d7329bb9/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/80d7bfa99e43786c96d4061d20ec16f00f13d6f9/output/jars/classes.jar(**.class)
 -injars /home/icaro/.local/share/umake/android/android-studio/gradle/m2repository/commons-codec/commons-codec/1.10/commons-codec-1.10.jar(**.class)
 -injars /home/icaro/.android/build-cache/33d9e98ef4b7307c5799e8bc47d22aee304f0566/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/0e6a482b8c28a4006a63ed796bfd1b7e4145b6bf/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.squareup/otto/1.3.8/cf615176cd1177edf71d3c9605f8dc148fede6be/otto-1.3.8.jar(**.class)
--injars /home/icaro/.android/build-cache/50da35f50c213d2c22ef261e1699396029985e23/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/e681314197490312098fe896fbd0bf7d1363a5b3/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/bc0cb07f45de55e95ac068ff6b17430df61f1707/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/27dc19f361e5517b379b4341ed0bd8fc04be7f69/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/8aa220c5274087ec69b9c3659def684f3d677170/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/9490edc60d0876034c714b80b4d1fd6a3f92f500/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/14dc4713a2b5143b46227eb6c338a3b9cfa0858b/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.0/c4ba5371a29ac9b2ad6129b1d39ea38750043eff/gson-2.8.0.jar(**.class)
--injars /home/icaro/.android/build-cache/4c8277271c10df874ae60d14ef3818d1fd60fc6a/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/12fe6bc8098acf57a86bad394f938a1236c50e16/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/c3eeede4aa748619ce89da6c0b32be52fa666b22/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/679a220a18b53e74c51e04da28bf538bc6fbeef2/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/cf353669bd8becff9b9fa96a71f7b86b47d05e53/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/3827bee230c4296660196821d48b235ff76ac308/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/d2f6ab19b96f7c4137f467809ee326c635ab38b4/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/b99cfee63a181c390e344d51810eb579c64a0c55/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/651b45e92f77afb55048a4e22fe9e526119aa38c/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/da09846546df1a9a916629f70e3b3c348da424e3/output/jars/classes.jar(**.class)
 -injars /home/icaro/.local/share/umake/android/android-studio/gradle/m2repository/com/google/guava/guava/18.0/guava-18.0.jar(**.class)
 -injars /home/icaro/.android/build-cache/ad31c48dba0e4ab326f918cd94fbb739ae67e516/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/5b678fd324db9db5557307def661c5d88cdfba6c/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/58ea8ea124296a593e1562a32d56f975023df678/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.11.0/840897fcd7223a8143f1d9b6f69714e7be34fd50/okio-1.11.0.jar(**.class)
--injars /home/icaro/.android/build-cache/278a2f60bad1ab236b2a15f33d845d734246dd88/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/070ce96d54046f9833796874e449ab28152cc843/output/jars/classes.jar(**.class)
+-injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.google.gms/google-services/3.0.0/ee538ce9cf4148485e43017c5542202b8c78ff8e/google-services-3.0.0.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.3.2/90a3822c38ec8c996e84c16a3477ef632cbc87a3/commons-lang3-3.3.2.jar(**.class)
--injars /home/icaro/.android/build-cache/3b7603ccbd2e7ef17548741e146f36a7abb99333/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/f24004bf4b53bf44f2103f19290a2b0ff7bf501d/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/84d9ed6e7f38ef56962555b6315ad6be0d41c6d3/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/9a05303516757fc4b8abdd697f12722edf3d4235/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/335e091b7fca9dca21b10937de916ce465c608d4/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/4a1f786770eca18297ac7901ec2fd1f9b7f5b907/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/11fe44564c194aa9e0cf0a9401d275e9a59894bd/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/b25cf957b907ac8291aaee4b2b74a05993d2dbe5/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/9e4172fc78ea8357874341458098ae5c07fe784e/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/9981c50c1884eab0493fbe05c259fb997f730c49/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/d5635ea72e40f62ecb248c324fee729b9ee2aeb2/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/dd6d0ea894199700d07a00193b990fb27df229e4/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/info.movito/themoviedbapi/1.4/c5b381f7e001aa76b5d79479755b1face70cf02b/themoviedbapi-1.4.jar(**.class)
--injars /home/icaro/.android/build-cache/9d47b8ce2e17463bf09e747993b13f341f3adae7/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/642c56cc1e7164eef6dadda53870724125cde5e3/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/733d2d39567f2085865b4d367cc9f12259959f50/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/733d2d39567f2085865b4d367cc9f12259959f50/output/jars/libs/internal_impl-25.0.1.jar(**.class)
--injars /home/icaro/.android/build-cache/dfcc1216dbe4b98f695b0109229ac412490b9867/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/3ce33ea043cabb72cd7bec4597cd15993b9b7278/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/c996263d9be3305d830e4c92fca04d50917570b3/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/7ee8e13eb660c5e03d3a5ad9d38c6a6c03c835fa/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/5826365208910c670d80e62995f7b9f8ba92d3b5/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/ea02a350e3202341c926e17c8df79ec8ced0848a/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/5e2eeeefa696004455e58b242a9b4aa0c0f3bf65/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/d728fdc983541b710138b8b2f41f8cf3875844c2/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/87be3710103cf2727398124f423dad605cc1f9de/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/8b58d1143c646057aac06906c6b1bd288c853e15/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/23600e3e8e3fe74286dcd9a1a282a67d13ea6664/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/9921b745965ef6fefed780ee15c76b62778d2ffc/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/8f29e6da9e905df6cd5237163ef9a390ee632b31/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/3daac4eb42f9a3abdd183c58f2410edea5f1aea8/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/132a91bdadbebb4386ccc3f852f738c3ca977513/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/1115245e6d921398854f86edeee98db6d6a3868e/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/4e5832f84fc26d0ab524e4ca9e51e75706e39614/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/e3fec4b2408f447ed37c0c0d7c9cf8ef914031a4/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.4.4/c5cd3347c0a86d0dcfbf3da593d8431d5a789d54/jackson-core-2.4.4.jar(**.class)
+-injars /home/icaro/.android/build-cache/2bce76b484c897532081bfa6135fc817c2ebcbb2/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/87a71e173f484867c6d1434ab59572b6327652e3/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/1c607ab9c1a2438c94ba94c0e0631a2adf2e8fb8/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar(**.class)
 -injars /home/icaro/.android/build-cache/30c261e3c632a74b21c42b513a86fdd32f384ce0/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/1629c324feecd80c43fa4fa52ab29089a145139a/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/1629c324feecd80c43fa4fa52ab29089a145139a/output/jars/libs/internal_impl-25.0.1.jar(**.class)
+-injars /home/icaro/.android/build-cache/09837f4f037b03947b9107f65c9a6a2e484ce1df/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/7543f6637a73418b3a345b1d027c36e53ae48ebe/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/48cd688c81f2304907b4aff60803b160e8f3f551/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/e3a7dd7ebc6329088359d27040dd765b8379b5f3/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/ea196e392cb0bfe4417623e63b5dc39c938b98db/output/jars/classes.jar(**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/mergeJavaRes/flavor21/release/jars/2/1f/main.jar(!**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/mergeJavaRes/flavor21/release/folders/2/1f/main(!**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/classes/flavor21/release(**.class)
@@ -96,7 +94,7 @@
 -dontpreverify
 -verbose
 -dontnote com.android.vending.licensing.ILicensingService,com.google.vending.licensing.ILicensingService,com.google.android.vending.licensing.ILicensingService,android.support.**,android.net.http.**,org.apache.commons.codec.**,org.apache.http.**,org.apache.commons.logging.**,com.fasterxml.jackson.**,com.google.**,org.apache.**,com.squareup.okhttp.**
--dontwarn android.support.**,android.support.**,org.apache.commons.**,org.w3c.dom.**,com.fasterxml.jackson.**,com.google.**,com.squareup.**,info.movito.**,okio.**,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,com.onesignal.**,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context
+-dontwarn android.support.**,android.support.**,org.apache.commons.**,org.w3c.dom.**,com.fasterxml.jackson.**,com.google.**,com.squareup.**,info.movito.**,okio.**,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,com.onesignal.**,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context,android.security.NetworkSecurityPolicy,android.app.Notification,android.content.Context
 -printconfiguration /home/icaro/Documentos/workspace/Filme/app/config.txt
 -dump /home/icaro/Documentos/workspace/Filme/app/build/outputs/mapping/flavor21/release/dump.txt
 -printseeds /home/icaro/Documentos/workspace/Filme/app/build/outputs/mapping/flavor21/release/seeds.txt
@@ -266,6 +264,1077 @@
     public static final android.support.v7.widget.RecyclerView *;
 }
 
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
+# Proguard flags for consumers of the Google Play services SDK
+# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
+# found via reflection.
+-keep,allowshrinking class * extends android.os.Parcelable
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final *** CREATOR;
+}
+
+# Keep the classes/members we need for client functionality.
+-keep @interface  android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class *
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keep @interface  com.google.android.gms.common.annotation.KeepName
+
+-keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
+
+-keepclassmembers,allowshrinking class * {
+    @com.google.android.gms.common.annotation.KeepName
+    <fields>;
+    @com.google.android.gms.common.annotation.KeepName
+    <methods>;
+}
+
+# Keep Dynamite API entry points
+-keep @interface  com.google.android.gms.common.util.DynamiteApi
+
+-keep @com.google.android.gms.common.util.DynamiteApi public class * {
+    public <fields>;
+    public <methods>;
+}
+
 # Copyright (C) 2015 The Android Open Source Project
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -302,567 +1371,6 @@
 # LayoutManagers' constructors using reflection.
 -keep public class * extends android.support.v7.widget.RecyclerView$LayoutManager {
     public <init>(...);
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
 }
 
 -keep class com.google.android.gms.common.api.GoogleApiClient {
@@ -913,108 +1421,6 @@
 
 -keep class com.onesignal.shortcutbadger.impl.XiaomiHomeBadger {
     <init>(...);
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
 }
 
 # To enable ProGuard in your project, edit project.properties
@@ -1368,581 +1774,178 @@
     public <methods>;
 }
 
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# Proguard flags for consumers of the Google Play services SDK
-# https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
-# Needed for Parcelable/SafeParcelable classes & their creators to not get renamed, as they are
-# found via reflection.
--keep,allowshrinking class * extends android.os.Parcelable
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final *** CREATOR;
-}
-
-# Keep the classes/members we need for client functionality.
--keep @interface  android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class *
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
-# Keep the names of classes/members we need for client functionality.
--keep @interface  com.google.android.gms.common.annotation.KeepName
-
--keep,allowshrinking @com.google.android.gms.common.annotation.KeepName class *
-
--keepclassmembers,allowshrinking class * {
-    @com.google.android.gms.common.annotation.KeepName
-    <fields>;
-    @com.google.android.gms.common.annotation.KeepName
-    <methods>;
-}
-
-# Keep Dynamite API entry points
--keep @interface  com.google.android.gms.common.util.DynamiteApi
-
--keep @com.google.android.gms.common.util.DynamiteApi public class * {
-    public <fields>;
-    public <methods>;
-}
-
-# view AndroidManifest.xml #generated:316
+# view AndroidManifest.xml #generated:320
 -keep class activity.ActivityPersonNetflix {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:188
+# view AndroidManifest.xml #generated:192
 -keep class activity.CrewsActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:315
+# view AndroidManifest.xml #generated:319
 -keep class activity.Desenvolvimento {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:300
+# view AndroidManifest.xml #generated:304
 -keep class activity.DynamicLink {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:181
+# view AndroidManifest.xml #generated:185
 -keep class activity.ElencoActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:166
+# view AndroidManifest.xml #generated:170
 -keep class activity.EpsodioActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:106
+# view AndroidManifest.xml #generated:110
 -keep class activity.FavoriteActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:130
+# view AndroidManifest.xml #generated:134
 -keep class activity.FilmeActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:93
+# view AndroidManifest.xml #generated:97
 -keep class activity.FilmesActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:258
+# view AndroidManifest.xml #generated:262
 -keep class activity.FotoPersonActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:72
+# view AndroidManifest.xml #generated:76
 -keep class activity.IntroActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:144
+# view AndroidManifest.xml #generated:148
 -keep class activity.ListaGenericaActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:237
+# view AndroidManifest.xml #generated:241
 -keep class activity.ListaUserActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:70
+# view AndroidManifest.xml #generated:74
 -keep class activity.LoginActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:60
+# view AndroidManifest.xml #generated:64
 -keep class activity.MainActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:151
+# view AndroidManifest.xml #generated:155
 -keep class activity.OscarActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:238
+# view AndroidManifest.xml #generated:242
 -keep class activity.PersonActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:122
+# view AndroidManifest.xml #generated:126
 -keep class activity.PersonPopularActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:174
+# view AndroidManifest.xml #generated:178
 -keep class activity.PosterActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:195
+# view AndroidManifest.xml #generated:199
 -keep class activity.PosterGridActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:221
+# view AndroidManifest.xml #generated:225
 -keep class activity.ProdutoraActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:114
+# view AndroidManifest.xml #generated:118
 -keep class activity.RatedActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:251
+# view AndroidManifest.xml #generated:255
 -keep class activity.ReviewsActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:202
+# view AndroidManifest.xml #generated:206
 -keep class activity.SearchMultiActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:286
+# view AndroidManifest.xml #generated:290
 -keep class activity.SeguindoActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:265
+# view AndroidManifest.xml #generated:269
 -keep class activity.SettingsActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:229
+# view AndroidManifest.xml #generated:233
 -keep class activity.SimilaresActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:279
+# view AndroidManifest.xml #generated:283
 -keep class activity.Site {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:159
+# view AndroidManifest.xml #generated:163
 -keep class activity.TemporadaActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:167
+# view AndroidManifest.xml #generated:171
 -keep class activity.TrailerActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:79
+# view AndroidManifest.xml #generated:83
 -keep class activity.TvShowActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:266
+# view AndroidManifest.xml #generated:270
 -keep class activity.TvShowsActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:299
+# view AndroidManifest.xml #generated:303
 -keep class activity.VincularLoginActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:213
+# view AndroidManifest.xml #generated:217
 -keep class activity.WatchListActivity {
+    <init>(...);
+}
+
+# view res/layout/design_bottom_navigation_item.xml #generated:26
+-keep class android.support.design.internal.BaselineLayout {
     <init>(...);
 }
 
@@ -1953,6 +1956,11 @@
 
 # view res/layout/design_navigation_menu.xml #generated:17
 -keep class android.support.design.internal.NavigationMenuView {
+    <init>(...);
+}
+
+# view res/layout/design_layout_snackbar_include.xml #generated:18
+-keep class android.support.design.internal.SnackbarContentLayout {
     <init>(...);
 }
 
@@ -2088,7 +2096,7 @@
     <init>(...);
 }
 
-# view res/layout/abc_alert_dialog_material.xml #generated:75
+# view res/layout/abc_alert_dialog_material.xml #generated:41
 # view res/layout/activity_filme.xml #generated:17
 # view res/layout/tvshow_info.xml #generated:8
 # view v21/res/layout-v21/activity_filme.xml #generated:18
@@ -2097,7 +2105,10 @@
     <init>(...);
 }
 
-# view res/layout/abc_alert_dialog_button_bar_material.xml #generated:39
+# view res/layout/abc_alert_dialog_button_bar_material.xml #generated:43
+# view res/layout/abc_alert_dialog_material.xml #generated:52
+# view res/layout/abc_alert_dialog_material.xml #generated:66
+# view res/layout/abc_alert_dialog_title_material.xml #generated:56
 -keep class android.support.v4.widget.Space {
     <init>(...);
 }
@@ -2108,6 +2119,11 @@
 # view res/layout/produtora_layout.xml #generated:11
 # view res/layout/search_layout.xml #generated:37
 -keep class android.support.v4.widget.SwipeRefreshLayout {
+    <init>(...);
+}
+
+# view res/layout/abc_select_dialog_material.xml #generated:23
+-keep class android.support.v7.app.AlertController$RecycleListView {
     <init>(...);
 }
 
@@ -2153,6 +2169,11 @@
     <init>(...);
 }
 
+# view res/layout/abc_alert_dialog_material.xml #generated:18
+-keep class android.support.v7.widget.AlertDialogLayout {
+    <init>(...);
+}
+
 # view res/layout/com_facebook_device_auth_dialog_fragment.xml #generated:45
 -keep class android.support.v7.widget.AppCompatImageView {
     <init>(...);
@@ -2163,7 +2184,7 @@
     <init>(...);
 }
 
-# view res/layout/abc_alert_dialog_button_bar_material.xml #generated:18
+# view res/layout/abc_alert_dialog_button_bar_material.xml #generated:26
 -keep class android.support.v7.widget.ButtonBarLayout {
     <init>(...);
 }
@@ -2192,7 +2213,7 @@
     <init>(...);
 }
 
-# view res/layout/abc_alert_dialog_material.xml #generated:48
+# view res/layout/abc_alert_dialog_title_material.xml #generated:45
 -keep class android.support.v7.widget.DialogTitle {
     <init>(...);
 }
@@ -2275,22 +2296,22 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:43
+# view AndroidManifest.xml #generated:47
 -keep class applicaton.FilmeApplication {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:421
+# view AndroidManifest.xml #generated:437
 -keep class com.facebook.CustomTabActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:425
+# view AndroidManifest.xml #generated:441
 -keep class com.facebook.CustomTabMainActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:417
+# view AndroidManifest.xml #generated:433
 -keep class com.facebook.FacebookActivity {
     <init>(...);
 }
@@ -2307,7 +2328,7 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:349
+# view AndroidManifest.xml #generated:364
 -keep class com.google.android.gms.ads.AdActivity {
     <init>(...);
 }
@@ -2331,27 +2352,27 @@
 # view res/layout/produtora_layout.xml #generated:30
 # view res/layout/search_layout.xml #generated:67
 # view res/layout/temporada_layout.xml #generated:18
-# view res/layout/youtube_layout.xml #generated:24
+# view res/layout/youtube_layout.xml #generated:25
 -keep class com.google.android.gms.ads.AdView {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:353
+# view AndroidManifest.xml #generated:368
 -keep class com.google.android.gms.ads.purchase.InAppPurchaseActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:426
+# view AndroidManifest.xml #generated:379
 -keep class com.google.android.gms.appinvite.PreviewActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:412
+# view AndroidManifest.xml #generated:360
 -keep class com.google.android.gms.auth.api.signin.RevocationBoundService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:403
+# view AndroidManifest.xml #generated:351
 -keep class com.google.android.gms.auth.api.signin.internal.SignInHubActivity {
     <init>(...);
 }
@@ -2361,22 +2382,22 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:436
+# view AndroidManifest.xml #generated:389
 -keep class com.google.android.gms.common.api.GoogleApiActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:446
+# view AndroidManifest.xml #generated:448
 -keep class com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:441
+# view AndroidManifest.xml #generated:443
 -keep class com.google.android.gms.measurement.AppMeasurementReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:455
+# view AndroidManifest.xml #generated:457
 -keep class com.google.android.gms.measurement.AppMeasurementService {
     <init>(...);
 }
@@ -2391,72 +2412,72 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:357
+# view AndroidManifest.xml #generated:372
 -keep class com.google.firebase.crash.internal.service.FirebaseCrashReceiverService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:360
+# view AndroidManifest.xml #generated:375
 -keep class com.google.firebase.crash.internal.service.FirebaseCrashSenderService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:475
+# view AndroidManifest.xml #generated:477
 -keep class com.google.firebase.iid.FirebaseInstanceIdInternalReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:460
+# view AndroidManifest.xml #generated:462
 -keep class com.google.firebase.iid.FirebaseInstanceIdReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:482
+# view AndroidManifest.xml #generated:484
 -keep class com.google.firebase.iid.FirebaseInstanceIdService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:490
+# view AndroidManifest.xml #generated:492
 -keep class com.google.firebase.provider.FirebaseInitProvider {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:391
+# view AndroidManifest.xml #generated:421
 -keep class com.onesignal.BootUpReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:371
+# view AndroidManifest.xml #generated:401
 -keep class com.onesignal.GcmBroadcastReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:382
+# view AndroidManifest.xml #generated:412
 -keep class com.onesignal.GcmIntentService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:380
+# view AndroidManifest.xml #generated:410
 -keep class com.onesignal.NotificationOpenedReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:389
+# view AndroidManifest.xml #generated:419
 -keep class com.onesignal.NotificationRestoreService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:385
+# view AndroidManifest.xml #generated:415
 -keep class com.onesignal.PermissionsActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:383
+# view AndroidManifest.xml #generated:413
 -keep class com.onesignal.SyncService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:397
+# view AndroidManifest.xml #generated:427
 -keep class com.onesignal.UpgradeReceiver {
     <init>(...);
 }
@@ -2478,17 +2499,17 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:318
+# view AndroidManifest.xml #generated:322
 -keep class onsignal.CustomNotificationExtenderService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:329
+# view AndroidManifest.xml #generated:333
 -keep class provider.SuggestionProvider {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:326
+# view AndroidManifest.xml #generated:330
 -keep class provider.SuggestionRecentProvider {
     <init>(...);
 }

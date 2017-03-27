@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,11 +32,11 @@ import utils.UtilsFilme;
  */
 public class OscarActivity  extends BaseActivity{
 
-    RecyclerView recyclerView;
-    ProgressBar progressBar;
-    String list_id;
-    Lista lista;
-    LinearLayout linearLayout;
+    private RecyclerView recyclerView;
+    private ProgressBar progressBar;
+    private String list_id;
+    private Lista lista;
+    private LinearLayout linearLayout;
     private String TAG = this.getClass().getName();
 
     @Override
@@ -113,7 +112,7 @@ public class OscarActivity  extends BaseActivity{
                     }
                 } catch (Exception e){
                     FirebaseCrash.report(e);
-                    Log.d(TAG, e.getMessage());
+                   // Log.d(TAG, e.getMessage());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

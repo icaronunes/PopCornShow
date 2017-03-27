@@ -49,4 +49,6 @@ public class Netflix implements Serializable {
     public int mediatype;
     @SerializedName("runtime")
     public String runtime;
+
+    // TODO: Colocar os Get e Set
 }

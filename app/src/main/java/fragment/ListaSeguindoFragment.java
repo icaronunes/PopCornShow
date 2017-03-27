@@ -36,7 +36,7 @@ import utils.Constantes;
  */
 public class ListaSeguindoFragment extends Fragment {
 
-    final String TAG = ListaSeguindoFragment.class.getName();
+    private final String TAG = ListaSeguindoFragment.class.getName();
     private List<UserTvshow> userTvshows;
     private int tipo;
     private RecyclerView recyclerViewMissing;

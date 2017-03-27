@@ -38,14 +38,14 @@ import utils.UtilsFilme;
 public class TvShowsFragment extends Fragment {
 
 
-    private static final String TAG = TvShowsFragment.class.getName();
-    List<TvSeries> tvSeries = null;
-    RecyclerView recyclerView;
-    SwipeRefreshLayout swipeRefreshLayout;
-    TextView textView;
-    FrameLayout frameLayout;
-    ProgressBar process;
-    String abaEscolhida;
+    private final String TAG = TvShowsFragment.class.getName();
+    private List<TvSeries> tvSeries = null;
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView textView;
+    private FrameLayout frameLayout;
+    private ProgressBar process;
+    private String abaEscolhida;
     int pagina = 1;
 
 

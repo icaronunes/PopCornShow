@@ -17,9 +17,9 @@ import fragment.ListaRatedFragment;
  */
 public class RatedAdapater extends FragmentPagerAdapter {
 
-    Context context;
-    List<TvshowDB> series;
-    List<FilmeDB> movies;
+    private Context context;
+    private List<TvshowDB> series;
+    private List<FilmeDB> movies;
 
 
     public RatedAdapater(Context context, FragmentManager supportFragmentManager,

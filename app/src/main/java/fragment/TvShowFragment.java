@@ -901,10 +901,12 @@ public class TvShowFragment extends Fragment {
 
     private void setPoster() {
         if (series.getPosterPath() != null) {
-            Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2) ) + series.getPosterPath())
+            Picasso.with(getContext())
+                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2) ) + series.getPosterPath())
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(img_poster);
+
             img_poster.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

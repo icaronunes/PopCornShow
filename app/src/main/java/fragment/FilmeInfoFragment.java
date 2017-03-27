@@ -23,7 +23,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,7 +54,6 @@ import br.com.icaro.filme.R;
 import domain.FilmeService;
 import domain.Imdb;
 import domain.Netflix;
-import info.movito.themoviedbapi.model.ArtworkType;
 import info.movito.themoviedbapi.model.CollectionInfo;
 import info.movito.themoviedbapi.model.Genre;
 import info.movito.themoviedbapi.model.Language;
@@ -77,15 +75,14 @@ import static br.com.icaro.filme.R.string.mil;
 public class FilmeInfoFragment extends Fragment {
 
     private static final String TAG = FilmeInfoFragment.class.getName();
-    TextView titulo, categoria, time_filme, descricao, voto_media, produtora,
+    private  TextView titulo, categoria, time_filme, descricao, voto_media, produtora,
             original_title, spoken_languages, production_countries,
             popularity, lancamento, textview_crews, textview_elenco, textview_similares;
-    MovieDb movieDb;
-    ImageView icon_reviews, img_budget, icon_site, icon_collection, img_poster, img_star;
-    LinearLayout linear_container;
-    CollectionInfo info;
-    MovieResultsPage similarMovies;
-    Bundle bundle;
+    private  MovieDb movieDb;
+    private  ImageView icon_reviews, img_budget, icon_site, icon_collection, img_poster, img_star;
+    private  CollectionInfo info;
+    private  MovieResultsPage similarMovies;
+    private  Bundle bundle;
     private Button imdb, tmdb, netflix_button;
     private Netflix netflix;
 
@@ -96,7 +93,7 @@ public class FilmeInfoFragment extends Fragment {
     private RecyclerView recycle_filme_producao;
 
 
-    //************* Alguns metodos senco chamados 2 vezes
+    //************* Alguns metodos sendo chamados 2 vezes
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -137,7 +134,7 @@ public class FilmeInfoFragment extends Fragment {
         img_budget = (ImageView) view.findViewById(R.id.img_budget);
         icon_collection = (ImageView) view.findViewById(R.id.icon_collection);
         icon_site = (ImageView) view.findViewById(R.id.icon_site);
-        linear_container = (LinearLayout) view.findViewById(R.id.linear_container);
+       // LinearLayout linear_container = (LinearLayout) view.findViewById(R.id.linear_container);
         lancamento = (TextView) view.findViewById(R.id.lancamento);
         textview_crews = (TextView) view.findViewById(R.id.textview_crews);
         textview_elenco = (TextView) view.findViewById(R.id.textview_elenco);
@@ -670,13 +667,15 @@ public class FilmeInfoFragment extends Fragment {
     }
 
     private void setPoster() {
-        if (movieDb.getPosterPath() != null && movieDb.getImages(ArtworkType.POSTER).size() > 0) {
+
+        if (movieDb.getPosterPath() != null ){
             Picasso.with(getContext())
-                    .load(UtilsFilme
-                    .getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2)) + movieDb.getPosterPath())
+                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2)) + movieDb.getPosterPath())
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(img_poster);
+
+
             img_poster.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -718,9 +717,9 @@ public class FilmeInfoFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), ProdutoraActivity.class);
-                    intent.putExtra(Constantes.PRODUTORA, finalPrimeiraProdutora);// não usado
+                    intent.putExtra(Constantes.PRODUTORA, finalPrimeiraProdutora); // não usado
                     intent.putExtra(Constantes.PRODUTORA_ID, movieDb.getProductionCompanies().get(0).getId());
-                    intent.putExtra(Constantes.MEDIATYPE, Multi.MediaType.MOVIE);// Não usado
+                    intent.putExtra(Constantes.MEDIATYPE, Multi.MediaType.MOVIE); // Não usado
                     startActivity(intent);
 
                     bundle = new Bundle();

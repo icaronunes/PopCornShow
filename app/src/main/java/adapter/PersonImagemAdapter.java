@@ -28,11 +28,11 @@ import utils.UtilsFilme;
  * Created by icaro on 18/08/16.
  */
 public class PersonImagemAdapter extends RecyclerView.Adapter<PersonImagemAdapter.PersonImageViewHolder> {
-    Context context;
-    List<Artwork> artworks;
-    int id_person;
-    String nome;
-    FirebaseAnalytics firebaseAnalytics;
+    private Context context;
+    private List<Artwork> artworks;
+    private int id_person;
+    private String nome;
+    private FirebaseAnalytics firebaseAnalytics;
 
     public PersonImagemAdapter(Context context, List<Artwork> artworks, int id_person, String nome) {
         this.context = context;
@@ -44,9 +44,8 @@ public class PersonImagemAdapter extends RecyclerView.Adapter<PersonImagemAdapte
     @Override
     public PersonImagemAdapter.PersonImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.poster_grid_image, parent, false);
-        PersonImageViewHolder holder = new PersonImageViewHolder(view);
 
-        return holder;
+        return new PersonImageViewHolder(view);
     }
 
     @Override
@@ -100,11 +99,11 @@ public class PersonImagemAdapter extends RecyclerView.Adapter<PersonImagemAdapte
     }
 
 
-    public class PersonImageViewHolder extends RecyclerView.ViewHolder {
-        ProgressBar progressBar;
-        ImageButton imageButton;
+    class PersonImageViewHolder extends RecyclerView.ViewHolder {
+       private ProgressBar progressBar;
+        private ImageButton imageButton;
 
-        public PersonImageViewHolder(View itemView) {
+        PersonImageViewHolder(View itemView) {
             super(itemView);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress_poster_grid);
             imageButton = (ImageButton) itemView.findViewById(R.id.img_poster_grid);

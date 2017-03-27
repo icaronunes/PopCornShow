@@ -14,8 +14,8 @@ import br.com.icaro.filme.R;
  */
 public class DesenvolvimentoAdapater extends RecyclerView.Adapter<DesenvolvimentoAdapater.HolderDesenvolvimento> {
 
-    Context desenvolvimento;
-    String[] planets;
+    private Context desenvolvimento;
+    private String[] planets;
 
     public DesenvolvimentoAdapater(Context desenvolvimento, String[] planets) {
         this.desenvolvimento = desenvolvimento;
@@ -43,11 +43,11 @@ public class DesenvolvimentoAdapater extends RecyclerView.Adapter<Desenvolviment
         return planets.length;
     }
 
-    public class HolderDesenvolvimento extends RecyclerView.ViewHolder {
+    class HolderDesenvolvimento extends RecyclerView.ViewHolder {
 
-        TextView textView;
+        private TextView textView;
 
-        public HolderDesenvolvimento(View itemView) {
+        HolderDesenvolvimento(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.textview_desenvolvimento);
         }

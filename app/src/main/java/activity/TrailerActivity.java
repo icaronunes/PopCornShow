@@ -23,16 +23,14 @@ import utils.Constantes;
 
 public class TrailerActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
 
-    YouTubePlayerView youTubeView;
-    String youtube_key;
-    TextView sinopse;
+    private String youtube_key;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.youtube_layout);
-        youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
-        sinopse = (TextView) findViewById(R.id.treiler_sinopse);
+        YouTubePlayerView youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
+        TextView sinopse = (TextView) findViewById(R.id.trailer_sinopse);
         youTubeView.initialize(Config.YOUTUBE_API_KEY, this);
         youtube_key = getIntent().getStringExtra(Constantes.YOU_TUBE_KEY);
         sinopse.setText(getIntent().getStringExtra(Constantes.SINOPSE));
@@ -50,7 +48,7 @@ public class TrailerActivity extends YouTubeBaseActivity implements YouTubePlaye
         try {
             if (!wasRestored) {
                 player.cueVideo(youtube_key);
-                player.setFullscreen(true);
+               // player.setFullscreen(true);
                 player.addFullscreenControlFlag(1);
                 player.play();
 
@@ -68,6 +66,6 @@ public class TrailerActivity extends YouTubeBaseActivity implements YouTubePlaye
 
     @Override
     public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-
+        FirebaseCrash.report(new Exception("Erro em \"onInitializationFailure\" dentro de " + this.getClass()));
     }
 }

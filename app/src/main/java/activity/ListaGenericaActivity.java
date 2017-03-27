@@ -34,13 +34,13 @@ import utils.UtilsFilme;
  */
 public class ListaGenericaActivity  extends BaseActivity{
 
-    RecyclerView recyclerView;
-    ProgressBar progressBar;
-    String list_id;
-    String old = "";
-    Map<String, String> map = new HashMap<String, String>();
-    Lista lista = null;
-    SwipeRefreshLayout swipeRefreshLayout;
+    private RecyclerView recyclerView;
+    private ProgressBar progressBar;
+    private String list_id;
+    private String old = "";
+    private Map<String, String> map = new HashMap<>();
+    private Lista lista = null;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private String TAG = this.getClass().getName();
 
     @Override

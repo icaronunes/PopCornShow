@@ -11,10 +11,10 @@ import java.io.Serializable;
 @Keep
 public class TopMain implements Serializable {
 
-    int id;
-    String nome;
-    String imagem;
-    String mediaType;
+    private int id;
+    private String nome;
+    private String imagem;
+    private String mediaType;
 
     public String getImagem() {
         return imagem;

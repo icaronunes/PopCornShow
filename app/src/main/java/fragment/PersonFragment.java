@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +21,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -50,17 +50,16 @@ import static domain.FilmeService.getTmdbPerson;
 public class PersonFragment extends Fragment {
 
 
-    TextView nome_person, birthday, dead, homepage, biografia, aka, conhecido, place_of_birth, sem_filmes, sem_fotos, sem_crews, sem_serie;
-    ImageView imageView, imageButtonWiki;
-    RecyclerView recyclerViewMovie, recyclerViewImagem, recyclerViewCrews, recyclerViewTvshow;
-    LinearLayout linear_person;
-    int tipo, id_person;
-    ProgressBar progressBar;
-    PersonPeople personPeople;
-    PersonCredits personCredits, personCreditsTvshow;
-    List<Artwork> artworks;
-    String TAG = this.getClass().getName();
-    FirebaseAnalytics firebaseAnalytics;
+    private TextView nome_person, birthday, dead, homepage, biografia, aka, conhecido, place_of_birth, sem_filmes, sem_fotos, sem_crews, sem_serie;
+    private ImageView imageView, imageButtonWiki;
+    private RecyclerView recyclerViewMovie, recyclerViewImagem, recyclerViewCrews, recyclerViewTvshow;
+    private int tipo, id_person;
+    private ProgressBar progressBar;
+    private PersonPeople personPeople;
+    private PersonCredits personCredits, personCreditsTvshow;
+    private List<Artwork> artworks;
+    private String TAG = this.getClass().getName();
+    private FirebaseAnalytics firebaseAnalytics;
     private Button bt_netflix;
 
     public static PersonFragment newInstance(int aba, int id_person) {
@@ -174,7 +173,6 @@ public class PersonFragment extends Fragment {
         // Log.d(TAG, "getViewPerson");
         View view = inflater.inflate(R.layout.activity_person_perfil, container, false);
         nome_person = (TextView) view.findViewById(R.id.nome_person);
-        linear_person = (LinearLayout) view.findViewById(R.id.linear_person);
         birthday = (TextView) view.findViewById(R.id.birthday);
         dead = (TextView) view.findViewById(R.id.dead);
         homepage = (TextView) view.findViewById(R.id.person_homepage);
@@ -302,9 +300,20 @@ public class PersonFragment extends Fragment {
                 .placeholder(R.drawable.person)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-                .into(imageView);
-        imageView.setVisibility(View.VISIBLE);
-        progressBar.setVisibility(View.INVISIBLE);
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        imageView.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
+                });
+
+
 
 
         bt_netflix.setVisibility(View.VISIBLE);

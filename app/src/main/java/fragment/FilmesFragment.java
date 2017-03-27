@@ -40,14 +40,14 @@ import utils.UtilsFilme;
  */
 public class FilmesFragment extends Fragment {
 
-    List<MovieDb> movies = null;
-    RecyclerView recyclerView;
-    SwipeRefreshLayout swipeRefreshLayout;
-    TextView textView;
-    FrameLayout frameLayout;
-    ProgressBar process;
-    int abaEscolhida;
-    int pagina = 1;
+    private List<MovieDb> movies = null;
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView textView;
+    private FrameLayout frameLayout;
+    private ProgressBar process;
+    private int abaEscolhida;
+    private int pagina = 1;
     private FirebaseAnalytics mFirebaseAnalytics;
 
     public FilmesFragment() {

@@ -21,7 +21,7 @@ import utils.Constantes;
  */
 public class Site extends AppCompatActivity {
 
-    protected SwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private WebView webView;
     private ProgressBar progressBar;
 

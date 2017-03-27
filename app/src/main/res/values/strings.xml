@@ -187,7 +187,7 @@
     <string name="ajuda_desenvolvimento">Development</string>
     <string name="twitter_text" translatable="false">Twitter</string>
     <string name="novidades_title">News</string>
-    <string name="novidades_text">** Small Improvements **\n\n** Problems with notes resolved. **\n\n** Improved home screen performance **\n\n** Improve performance of the Seasons / Episodes / Series / Movie screens **</string>
+    <string name="novidades_text">** Small improvements in performance **\n** Small screen improvements **\n\n** If possible evaluate your app **</string>
     <string name="star_avaliados">Evaluation</string>
     <string name="budget">Budget</string>
     <string name="homepage" translatable="false">Homepager</string>

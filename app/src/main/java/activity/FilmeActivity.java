@@ -50,6 +50,7 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import br.com.icaro.filme.R;
 import domain.FilmeDB;
@@ -77,10 +78,10 @@ public class FilmeActivity extends BaseActivity {
 
     private static final String TAG = FilmeActivity.class.getName();
 
-    ViewPager viewPager;
+    private ViewPager viewPager;
     int color_fundo;
-    FloatingActionButton menu_item_favorite, menu_item_watchlist, menu_item_rated;
-    FloatingActionMenu fab;
+    private FloatingActionButton menu_item_favorite, menu_item_watchlist, menu_item_rated;
+    private FloatingActionMenu fab;
     private int id_filme;
     private ProgressBar progressBar;
     private MovieDb movieDb = null;
@@ -91,7 +92,6 @@ public class FilmeActivity extends BaseActivity {
     private FirebaseAnalytics mFirebaseAnalytics;
     private Bundle bundle;
     private FirebaseAuth mAuth;
-    private FirebaseDatabase database;
 
     private DatabaseReference myWatch;
     private DatabaseReference myFavorite;
@@ -251,7 +251,7 @@ public class FilmeActivity extends BaseActivity {
     private void iniciarFirebases() {
 
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         if (mAuth.getCurrentUser() != null) {
 
@@ -333,7 +333,6 @@ public class FilmeActivity extends BaseActivity {
                         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                         //   Log.d(TAG, "TRUE");
 
-                        return;
                     }
 
                     @Override
@@ -394,7 +393,7 @@ public class FilmeActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Date date = null;
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 try {
                     date = sdf.parse(movieDb.getReleaseDate());
                 } catch (ParseException e) {
@@ -520,7 +519,7 @@ public class FilmeActivity extends BaseActivity {
 
 
                 Date date = null;
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 try {
                     date = sdf.parse(movieDb.getReleaseDate());
                 } catch (ParseException e) {
@@ -650,7 +649,7 @@ public class FilmeActivity extends BaseActivity {
         bundle.putSerializable(Constantes.IMDB, imdbdb);
         filmeFrag.setArguments(bundle);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            if (!isDestroyed() && !isFinishing() && !tmdvAsync.isCancelled()) { //Isdestroyed valido apenas acima desta api
+            if (!isDestroyed() && !isFinishing() && tmdvAsync != null) { //Isdestroyed valido apenas acima desta api
                 getSupportFragmentManager()
                         .beginTransaction()
                         .add(R.id.filme_container, filmeFrag, null)
@@ -658,7 +657,7 @@ public class FilmeActivity extends BaseActivity {
                         .commitAllowingStateLoss();
             }
         } else {
-            if (!isFinishing() && !tmdvAsync.isCancelled()) {
+            if (!isFinishing() && tmdvAsync != null) {
                 getSupportFragmentManager()
                         .beginTransaction()
                         .add(R.id.filme_container, filmeFrag, null)
@@ -740,15 +739,13 @@ public class FilmeActivity extends BaseActivity {
                     TmdbMovies movies = FilmeService.getTmdbMovies();
 
                     if (idioma_padrao) {
-                        movieDb = movies.getMovie(id_filme, getLocale()
-                                        + ",en,null"
+                        movieDb = movies.getMovie(id_filme, getLocale() + ",en,null"
                                 , credits, releases, videos, similar, alternative_titles, images);
                         movieDb.getVideos().addAll(movies.getMovie(id_filme, "en", videos).getVideos());
                     } else {
-                        movieDb = movies.getMovie(id_filme, "en,null"
+                        movieDb = movies.getMovie(id_filme, "en"
                                 , credits, releases, videos, similar, alternative_titles, images);
                     }
-
                     similarMovies = movies.getSimilarMovies(movieDb.getId(), null, 1);
 
 

@@ -30,11 +30,11 @@ import static br.com.icaro.filme.R.id.pager;
 
 
 public class FotoPersonActivity extends BaseActivity {
-    int id_foto, position = 0;
-    ViewPager viewPager;
-    List<Artwork> artworks;
-    LinePageIndicator titlePageIndicator;
-    String nome;
+    private int id_foto, position = 0;
+    private ViewPager viewPager;
+    private List<Artwork> artworks;
+    private LinePageIndicator titlePageIndicator;
+    private String nome;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,10 +72,10 @@ public class FotoPersonActivity extends BaseActivity {
     }
 
 
-    public class PosterFragment extends FragmentPagerAdapter {
+    private class PosterFragment extends FragmentPagerAdapter {
 
 
-        public PosterFragment(FragmentManager fm) {
+        PosterFragment(FragmentManager fm) {
             super(fm);
         }
 

@@ -143,7 +143,7 @@
     <string name="subtitle_intro_1">Bem-vindo ao PopCorn Show.\n\nConfira as ultimas novidades</string>
     <string name="title_intro_2">Mudanças</string>
     <string name="subtitle_intro_2">Diversos links para sites do mundo todo falando sobre o filme ou tvshow</string>
-    <string name="subtitle_intro_3">Nosso sistema agora pode rastrear se o filme,tvshow ou artista esta no catalogo do Netflix</string>
+    <string name="subtitle_intro_3">Nosso sistema agora pode rastrear se o filme, tvshow ou artista está no catalogo da Netflix</string>
     <string name="title_intro_3">Seguindo</string>
     <string name="seguir">Seguir</string>
     <string name="seguindo">Seguindo</string>
@@ -157,7 +157,7 @@
     <string name="reset_senha_ok">Senha alterada.</string>
     <string name="falha_reset_senha">Falha ao alterar a senha. Tente logar novamente antes de tentar.</string>
     <string name="logar_como_anonimo">Logar como Anônimo</string>
-    <string name="anonimo_alerta">Este tipo de login não é seguro. Você pode perder tudo se o aplicativo falhar. Recomendamos criar um login.</string>
+    <string name="anonimo_alerta">Este tipo de login não é seguro. Você pode perder seu progresso se o aplicativo falhar. Recomendamos criar um login.</string>
     <string name="vincular_login_popcorn">Vincular com outra conta</string>
     <string name="email_invalido">E-mail invalido</string>
     <string name="email_recuperacao_enviado">Enviado e-mail de redefinição de senha</string>
@@ -179,7 +179,7 @@
     <string name="notificacao_summary">Receber Notificação</string>
     <string name="ajuda_desenvolvimento">Desenvolvimento</string>
     <string name="novidades_title">Novidades</string>
-    <string name="novidades_text">** Pequenas melhorias **\n\n** Problemas com notas resolvido.  **\n\n** Melhorado desempenho da tela inicial **\n\n** Melhorada performasse das telas Temporadas/Episódios/Série/Filme **</string>
+    <string name="novidades_text">** Pequenas melhorias na performance **\n** Pequena melhorias na tela **\n\n** Se possivel faça sua avaliação do Aplicativo **</string>
     <string name="star_avaliados">Avaliação</string>
     <string name="budget">Orçamento</string>
     <string name="person">Perfil</string>

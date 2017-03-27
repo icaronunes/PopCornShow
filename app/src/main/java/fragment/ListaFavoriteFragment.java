@@ -46,11 +46,11 @@ public class ListaFavoriteFragment extends Fragment {
 
     final String TAG = TvShowFragment.class.getName();
 
-    int tipo;
-    List<TvshowDB> tvSeries;
-    List<FilmeDB> movieDbs;
-    RecyclerView recyclerViewFilme;
-    RecyclerView recyclerViewTvShow;
+    private int tipo;
+    private List<TvshowDB> tvSeries;
+    private List<FilmeDB> movieDbs;
+    private RecyclerView recyclerViewFilme;
+    private RecyclerView recyclerViewTvShow;
     private FirebaseAnalytics firebaseAnalytics;
 
     public static Fragment newInstanceMovie(int tipo, List<FilmeDB> movie) {
@@ -171,6 +171,7 @@ public class ListaFavoriteFragment extends Fragment {
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaWatchlistFragment:ListaTvShowAdapter.ListaOnClickListener:onclick");
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getTitle());
                 bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, tvSeries.get(position).getNota());
+
                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
             }
@@ -210,11 +211,11 @@ public class ListaFavoriteFragment extends Fragment {
                                 });
 
                                 Bundle bundle = new Bundle();
-                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaWatchlistFragment:ListaTvShowAdapter.ListaOnClickListener:onClickLong");
+                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaFavoriteFragment:ListaTvShowAdapter.ListaOnClickListener:onClickLong");
                                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getTitle());
                                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tv");
                                 bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
-                                bundle.putString("AlertDialog-WatchList", "Excluiu TvShow");
+                                bundle.putString("Favorite", "Excluiu TvShow");
                                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                             }

@@ -31,12 +31,9 @@ import utils.UtilsFilme;
  */
 public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListViewHolder> {
 
-
     private final FirebaseAnalytics mFirebaseAnalytics;
     private List<ItemsLista> lista;
-    Context context;
-
-
+    private Context context;
 
     public ListUserAdapter(Context listaUserActivity, List<ItemsLista> movieLists) {
         this.context = listaUserActivity;
@@ -124,13 +121,13 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListVi
         return 0;
     }
 
-    public class ListViewHolder extends RecyclerView.ViewHolder {
+    class ListViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView img_rated;
-        ProgressBar progressBar;
-        TextView release;
+        private ImageView img_rated;
+        private ProgressBar progressBar;
+        private TextView release;
 
-        public ListViewHolder(View itemView) {
+        ListViewHolder(View itemView) {
             super(itemView);
             img_rated = (ImageView) itemView.findViewById(R.id.img_lista);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);

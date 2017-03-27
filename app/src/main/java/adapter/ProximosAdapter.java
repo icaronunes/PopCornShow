@@ -40,10 +40,10 @@ import utils.UtilsFilme;
  * Created by icaro on 25/11/16.
  */
 public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.CalendarViewHolder> {
-    private static final String TAG = ProximosAdapter.class.getName();
-    FragmentActivity context;
+    private final String TAG = ProximosAdapter.class.getName();
+    private FragmentActivity context;
     private final List<UserTvshow> userTvshows;
-    int color;
+    private int color;
 
     public ProximosAdapter(FragmentActivity activity, List<UserTvshow> userTvshows) {
         this.context = activity;
@@ -215,13 +215,13 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
         }
     }
 
-    public class CalendarViewHolder extends RecyclerView.ViewHolder {
+    class CalendarViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView poster;
-        TextView proximo, title, faltando, ep_title, date, eps_faltantes, new_seguindo;
-        ProgressBar progressBar;
+        private ImageView poster;
+        private TextView proximo, title, faltando, ep_title, date, eps_faltantes, new_seguindo;
+        private ProgressBar progressBar;
 
-        public CalendarViewHolder(View itemView) {
+        CalendarViewHolder(View itemView) {
             super(itemView);
 
             poster = (ImageView) itemView.findViewById(R.id.calendar_poster);

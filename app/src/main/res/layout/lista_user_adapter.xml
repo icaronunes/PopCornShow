@@ -16,7 +16,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="3dp">
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp">
 
         <TextView
             android:id="@+id/textview_user_name"

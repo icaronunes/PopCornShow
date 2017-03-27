@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -33,12 +36,10 @@ import utils.UtilsFilme;
 
 public class PosterScrollFragment extends Fragment {
 
-    String endereco, nome;
-    ImageView imageView;
-    LinearLayout linear_poster_grid;
-    ImageView compartilhar;
-    ImageView salvar;
-    FirebaseAnalytics firebaseAnalytics;
+    private String endereco, nome;
+    private ImageView imageView;
+    private LinearLayout linear_poster_grid;
+    private FirebaseAnalytics firebaseAnalytics;
 
 
     public static PosterScrollFragment newInstance(String endereco, String nome) {
@@ -48,7 +49,7 @@ public class PosterScrollFragment extends Fragment {
         args.putString(Constantes.ENDERECO, endereco);
         args.putString(Constantes.NOME_FILME, nome);
         posterScrollFragment.setArguments(args);
-      //  Log.d("PosterScrollFragment", "newInstance: -> " + endereco);
+        //  Log.d("PosterScrollFragment", "newInstance: -> " + endereco);
         return posterScrollFragment;
     }
 
@@ -57,7 +58,7 @@ public class PosterScrollFragment extends Fragment {
         super.onCreate(savedInstanceState);
         endereco = getArguments().getString(Constantes.ENDERECO); // não usado!?!?!!
         nome = getArguments().getString(Constantes.NOME_FILME);
-       // Log.d("PosterScrollFragment", "onCreate: -> " + endereco);
+        // Log.d("PosterScrollFragment", "onCreate: -> " + endereco);
         firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
 
@@ -67,9 +68,12 @@ public class PosterScrollFragment extends Fragment {
         View view = inflater.inflate(R.layout.page_scroll_image, container, false);
         imageView = (ImageView) view.findViewById(R.id.img_poster_scroll);
         Picasso.with(getContext())
-        .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 5)) + endereco).into(imageView);
+                .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 5)) + endereco)
+                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
+                .into(imageView);
 
-       // Log.d("PosterScrollFragment", "onCreateView: -> " + endereco);
+        // Log.d("PosterScrollFragment", "onCreateView: -> " + endereco);
 
         return view;
     }
@@ -78,10 +82,10 @@ public class PosterScrollFragment extends Fragment {
     public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         linear_poster_grid = (LinearLayout) view.findViewById(R.id.linear_poster_grid);
-        compartilhar = (ImageView) view.findViewById(R.id.compartilhar);
-        salvar = (ImageView) view.findViewById(R.id.salvar);
+        ImageView compartilhar = (ImageView) view.findViewById(R.id.compartilhar);
+        ImageView salvar = (ImageView) view.findViewById(R.id.salvar);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -92,9 +96,7 @@ public class PosterScrollFragment extends Fragment {
                     }
                 }
             });
-
             compartilhar.setOnClickListener(compartilharOnClick());
-
             salvar.setOnClickListener(salvarImagem());
         }
 
@@ -111,10 +113,10 @@ public class PosterScrollFragment extends Fragment {
                 if (UtilsFilme.isExternalStorageWritable()) {
                     salvarArquivoNaMemoriaInterna(getContext(), imageView);
                 } else {
-                  //  Log.e("salvarArqNaMemoriaIn", "Directory not created");
+                    //  Log.e("salvarArqNaMemoriaIn", "Directory not created");
+                    Toast.makeText(getContext(), R.string.ops, Toast.LENGTH_LONG).show();
                 }
             }
-
         };
     }
 
@@ -139,7 +141,7 @@ public class PosterScrollFragment extends Fragment {
                 } else {
                     Toast.makeText(getContext(), getResources().getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show();
                 }
-        //Avaliar se  é melhor usar, o campartilhamento usado em Tvshowactivity e FilmeActivity
+                //Avaliar se  é melhor usar, o campartilhamento usado em Tvshowactivity e FilmeActivity
             }
 
         };
@@ -148,21 +150,20 @@ public class PosterScrollFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        File file = getContext().getExternalCacheDir();
-        if (file != null && file.exists()) {
-            getContext().deleteDatabase(getContext().getExternalCacheDir().getPath()); //Funciona??????
+        File file = new File(getContext().getExternalCacheDir(), getContext().getPackageName());
+        if (file.exists()) {
+            getContext().deleteDatabase(file.toString()); //Funciona??????
+           // Log.d("PosterScrollFragment", "onDestroy: "+ file.toString());
         }
     }
 
     private File salvaImagemMemoriaCache(Context context, ImageView imageView) {
         //USar metodo do BaseActivity
-        File file = context.getExternalCacheDir();
+        File file = new File(context.getExternalCacheDir(), context.getPackageName());
 
-        if (file != null) {
-            if (!file.exists()) {
-                file.mkdir();
-                //  Log.e("salvarArqNaMemoriaIn", "Directory created");
-            }
+        if (!file.exists()) {
+            file.mkdir();
+            //  Log.e("salvarArqNaMemoriaIn", "Directory created");
         }
         File dir = new File(file, endereco);
 
@@ -171,20 +172,19 @@ public class PosterScrollFragment extends Fragment {
             Bitmap bitmap = drawable.getBitmap();
             UtilsFilme.writeBitmap(dir, bitmap);
         }
+        File file2 = new File(getContext().getExternalCacheDir(), getContext().getPackageName());
+        Log.d("PosterScrollFragment", "onDestroy: "+ file2.toString());
         return dir;
     }
 
     private File salvarArquivoNaMemoriaInterna(Context context, ImageView imageView) {
         File file = new File(Environment
-                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() );
-                //"/Filme");
+                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath(), getResources().getString(R.string.app_name));
 
-        if (file != null) {
             if (!file.exists()) {
                 file.mkdir();
-                //  Log.e("salvarArqNaMemoriaIn", "Directory created");
             }
-        }
+
         File dir = new File(file, endereco);
 
         BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();

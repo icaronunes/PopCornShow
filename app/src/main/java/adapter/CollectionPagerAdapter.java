@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import activity.FilmeActivity;
@@ -38,9 +40,8 @@ public class CollectionPagerAdapter extends PagerAdapter {
     private TextView nome;
     private FirebaseAnalytics firebaseAnalytics;
 
-
-
     public CollectionPagerAdapter(CollectionInfo info, Context context) {
+
         this.info = info;
         this.context = context;
     }
@@ -71,7 +72,9 @@ public class CollectionPagerAdapter extends PagerAdapter {
         linearLayout = (LinearLayout) view.findViewById(R.id.collection_linear);
         imageView = (ImageView) view.findViewById(R.id.img_collection);
         Picasso.with(context)
-                .load(UtilsFilme.getTamanhoDaImagem(context, 5) + info.getParts().get(position).getPosterPath())
+                .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 5)) + info.getParts().get(position).getPosterPath())
+                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .error(R.drawable.poster_empty)
                 .into(imageView, new Callback() {
                     @Override

@@ -94,13 +94,13 @@ public class ActorNetflixAdapter extends RecyclerView.Adapter<ActorNetflixAdapte
         }
     }
 
-    public class ActorNetflixViewHolder extends RecyclerView.ViewHolder {
+    class ActorNetflixViewHolder extends RecyclerView.ViewHolder {
 
        private  ImageView img;
         private ProgressBar progressBar;
         private TextView title;
 
-        public ActorNetflixViewHolder(View itemView) {
+        ActorNetflixViewHolder(View itemView) {
             super(itemView);
 
             img = (ImageView) itemView.findViewById(R.id.img_actor_netflix);

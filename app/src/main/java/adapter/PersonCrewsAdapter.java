@@ -28,9 +28,9 @@ import utils.UtilsFilme;
  * Created by icaro on 18/08/16.
  */
 public class PersonCrewsAdapter extends RecyclerView.Adapter<PersonCrewsAdapter.PersonCrewsViewHolder> {
-    Context context;
-    PersonCredits personCredits;
-    FirebaseAnalytics firebaseAnalytics;
+    private Context context;
+    private PersonCredits personCredits;
+    private FirebaseAnalytics firebaseAnalytics;
 
     public PersonCrewsAdapter(Context context, PersonCredits personCredits) {
 
@@ -41,8 +41,7 @@ public class PersonCrewsAdapter extends RecyclerView.Adapter<PersonCrewsAdapter.
     @Override
     public PersonCrewsAdapter.PersonCrewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.crews_filmes_layout, parent, false);
-        PersonCrewsViewHolder holder = new PersonCrewsViewHolder(view);
-        return holder;
+        return new PersonCrewsViewHolder(view);
     }
 
     @Override
@@ -98,13 +97,13 @@ public class PersonCrewsAdapter extends RecyclerView.Adapter<PersonCrewsAdapter.
     }
 
 
-    public class PersonCrewsViewHolder extends RecyclerView.ViewHolder {
+    class PersonCrewsViewHolder extends RecyclerView.ViewHolder {
 
-        ProgressBar progressBar;
-        ImageView poster;
-        TextView title;
+        private ProgressBar progressBar;
+        private ImageView poster;
+        private TextView title;
 
-        public PersonCrewsViewHolder(View itemView) {
+        PersonCrewsViewHolder(View itemView) {
             super(itemView);
             poster = (ImageView) itemView.findViewById(R.id.img_poster_grid);
             title = (TextView) itemView.findViewById(R.id.text_title_crew);

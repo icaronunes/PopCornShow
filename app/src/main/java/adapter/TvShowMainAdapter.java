@@ -52,7 +52,7 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
 
         Picasso.with(context)
                 .load(UtilsFilme.getBaseUrlImagem( UtilsFilme.getTamanhoDaImagem(context, 2)) + series.getPosterPath())
-                .placeholder(R.drawable.poster_empty)
+                //.placeholder(R.drawable.poster_empty)
                 .into(holder.img_poster_grid, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -64,6 +64,7 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
                         holder.progress_poster_grid.setVisibility(View.GONE);
                         holder.title_main.setText(series.getName());
                         holder.title_main.setVisibility(View.VISIBLE);
+                        holder.img_poster_grid.setImageResource(R.drawable.poster_empty);
                     }
                 });
 
@@ -97,13 +98,13 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
     }
 
     @Keep
-    public class TvShowPopularesViewHolder extends RecyclerView.ViewHolder {
+    class TvShowPopularesViewHolder extends RecyclerView.ViewHolder {
 
-        TextView title_main;
-        ProgressBar progress_poster_grid;
-        ImageView img_poster_grid;
+       private TextView title_main;
+        private ProgressBar progress_poster_grid;
+        private ImageView img_poster_grid;
 
-        public TvShowPopularesViewHolder(View itemView) {
+        TvShowPopularesViewHolder(View itemView) {
             super(itemView);
 
             title_main = (TextView) itemView.findViewById(R.id.title_main);

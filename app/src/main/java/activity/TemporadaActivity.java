@@ -49,11 +49,11 @@ import utils.UtilsFilme;
 @Keep
 public class TemporadaActivity extends BaseActivity {
 
-    public static final String TAG = TemporadaActivity.class.getName();
+    private final String TAG = TemporadaActivity.class.getName();
 
-    int temporada_id, temporada_position, positionep;
+    private int temporada_id, temporada_position, positionep;
     private String nome_temporada;
-    int serie_id, color;
+    private int serie_id, color;
     private TvSeason tvSeason;
     private RecyclerView recyclerView;
     private boolean seguindo;

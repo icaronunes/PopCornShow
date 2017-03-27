@@ -44,12 +44,12 @@ public class ListaWatchlistFragment extends Fragment {
 
     final String TAG = TvShowFragment.class.getName();
 
-    int tipo;
-    List<FilmeDB> movies;
-    List<TvshowDB> tvSeries;
-    RecyclerView recyclerViewFilme;
-    RecyclerView recyclerViewTvShow;
-    FirebaseAnalytics firebaseAnalytics;
+    private   int tipo;
+    private List<FilmeDB> movies;
+    private List<TvshowDB> tvSeries;
+    private RecyclerView recyclerViewFilme;
+    private RecyclerView recyclerViewTvShow;
+    private FirebaseAnalytics firebaseAnalytics;
 
     public static Fragment newInstanceMovie(int tipo, List<FilmeDB> filme) {
         ListaWatchlistFragment fragment = new ListaWatchlistFragment();
@@ -138,7 +138,7 @@ public class ListaWatchlistFragment extends Fragment {
                                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movies.get(position).getTitle());
                                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Movie");
                                 bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
-                                bundle.putString("AlertDialog-WatchList", "Não excluiu");
+                                bundle.putString("WatchList", "Não excluiu");
                                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             }
                         })
@@ -166,7 +166,7 @@ public class ListaWatchlistFragment extends Fragment {
                                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movies.get(position).getTitle());
                                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Movie");
                                 bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
-                                bundle.putString("AlertDialog-WatchList", "Excluiu Filme");
+                                bundle.putString("WatchList", "Excluiu Filme");
                                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             }
                         }).show();
@@ -212,7 +212,7 @@ public class ListaWatchlistFragment extends Fragment {
                                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getTitle());
                                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tvshow");
                                 bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
-                                bundle.putString("AlertDialog-WatchList", "Não excluiu");
+                                bundle.putString("WatchList", "Não excluiu");
                                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             }
                         })
@@ -240,7 +240,7 @@ public class ListaWatchlistFragment extends Fragment {
                                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getTitle());
                                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tvshow");
                                 bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
-                                bundle.putString("AlertDialog_WatchList", "Excluiu Tvshow");
+                                bundle.putString("WatchList", "Excluiu Tvshow");
                                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             }
                         }).show();

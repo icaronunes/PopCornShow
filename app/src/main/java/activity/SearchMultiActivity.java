@@ -14,7 +14,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -44,12 +43,12 @@ import utils.UtilsFilme;
 public class SearchMultiActivity extends BaseActivity {
 
 
-    RecyclerView recyclerView;
-    String query = "";
-    List<Multi> movieDbList = null;
-    TextView text_search_empty;
-    SwipeRefreshLayout swipeRefreshLayout;
-    ProgressBar progressBar;
+    private RecyclerView recyclerView;
+    private String query = "";
+    private List<Multi> movieDbList = null;
+    private TextView text_search_empty;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private ProgressBar progressBar;
     private int pagina = 1;
     private Intent intent;
     private String TAG = this.getClass().getName();
@@ -213,7 +212,8 @@ public class SearchMultiActivity extends BaseActivity {
                     if (idioma_padrao) {
                         TmdbSearch tmdbSearch = FilmeService.getTmdbSearch();
                         TmdbSearch.MultiListResultsPage movieResultsPage = tmdbSearch.searchMulti(query,
-                                getLocale() + ",en,null", pagina);
+                                getLocale() + "en,null", pagina);
+
                         return movieResultsPage.getResults();
                     } else {
                         TmdbSearch tmdbSearch = FilmeService.getTmdbSearch();
@@ -223,7 +223,7 @@ public class SearchMultiActivity extends BaseActivity {
                     }
                 } catch (Exception e ){
                     FirebaseCrash.report(e);
-                    Log.d(TAG, e.getMessage());
+                   // Log.d(TAG, e.getMessage());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

@@ -24,7 +24,7 @@ public class FiveSlide extends Fragment {
         subtitle.setText(getResources().getText(R.string.subtitle_intro_5));
 
         ImageView imageView = (ImageView) v.findViewById(R.id.intro_img);
-        imageView.setImageDrawable(getResources().getDrawable(R.drawable.intro_icon));
+        imageView.setImageResource(R.drawable.intro_icon);
         //imageView.setBackground(getResources().getDrawable(R.drawable.icon_movie_now));
         return v;
 
