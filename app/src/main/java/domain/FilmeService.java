@@ -148,7 +148,7 @@ public class FilmeService {
 
     }
 
-    public static Netflix parseJSONNetflix(Response response) {
+    private static Netflix parseJSONNetflix(Response response) {
         Gson gson = new GsonBuilder().create();
         Netflix netflix = null;
         netflix = gson.fromJson(response.body().charStream(), Netflix.class);
@@ -227,14 +227,14 @@ public class FilmeService {
 
     private static Imdb parseJSONImdb(Response response) {
         Gson gson = new GsonBuilder().create();
-        Imdb netflix = null;
+        Imdb imdb = null;
         try {
-            netflix = gson.fromJson(response.body().string(), Imdb.class);
+            imdb = gson.fromJson(response.body().string(), Imdb.class);
 
         } catch (Exception e){
             FirebaseCrash.report(e);
         }
-        return netflix;
+        return imdb;
     }
 
     public static ReviewsUflixit getReviews(String id, String type) {

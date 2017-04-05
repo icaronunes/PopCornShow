@@ -48,7 +48,7 @@ public class TrailerActivity extends YouTubeBaseActivity implements YouTubePlaye
         try {
             if (!wasRestored) {
                 player.cueVideo(youtube_key);
-               // player.setFullscreen(true);
+                player.setFullscreen(true);
                 player.addFullscreenControlFlag(1);
                 player.play();
 

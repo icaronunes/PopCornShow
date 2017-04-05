@@ -1,22 +1,22 @@
 -injars /home/icaro/Documentos/workspace/Filme/app/libs/YouTubeAndroidPlayerApi.jar(**.class)
 -injars /home/icaro/.android/build-cache/90efdea8981abcd56a7485cbf65410ffe9f6139b/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/8fdaf71510e6e18fc4f3d211f5557d8ba045e390/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/82c9a795a84f05f45988f6cbcbd7df89ca14996b/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/d193ddd64bd265e34e58ef9b300582f0e1395588/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/8ffe16bf1f43a506fef5ae3ff2e011b9266300e8/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar(**.class)
 -injars /opt/android-sdk-linux/extras/android/m2repository/com/android/support/support-annotations/25.3.0/support-annotations-25.3.0.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.4.4/e2ff13c3de2f5a2ab2449a3dace2b0d1c37bd8ee/jackson-databind-2.4.4.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/javax.annotation/javax.annotation-api/1.2/479c1e06db31c432330183f5cae684163f186146/javax.annotation-api-1.2.jar(**.class)
+-injars /home/icaro/.android/build-cache/683ed92a77ca459a8f2fd4379cb7085634583a49/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-applinks/1.4.0/8ad21bf21784dacce5f2043afb97218cc377e835/bolts-applinks-1.4.0.jar(**.class)
 -injars /home/icaro/.android/build-cache/da55826f6a3bce0a7718d275ed9ffe6c2fae43d6/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/0da0be640c319ad7f21b94455931ba6f3e998115/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/7cc9205e0c2bf07eedb6064eda48bdf2e04ce491/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.21/139535a69a4239db087de9bab0bee568bf8e0b70/slf4j-api-1.7.21.jar(**.class)
 -injars /home/icaro/.android/build-cache/eae8ecc140e44d150e8f7c4c987e4e770c754526/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/b272e6fc2b3da4304f843eea5b2feea4ffe33e3b/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/abce35e5c60c8b15d4bce1c5f2ae435a4d39e391/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/dc3b187acd81d634f12490c3ec39fc2b5608a1b9/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/5eea736ddc9e4d45713a9aac922155abf3765013/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.6.0/69edde9fc4b01c9fd51d25b83428837478c27254/okhttp-3.6.0.jar(**.class)
+-injars /home/icaro/.android/build-cache/59df648e1cd7d5beb08bac2ba1eeb275af5e8d75/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/f1f12361978a910f10cc2eee05fa0bf1f0e75d7a/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/org.slf4j/jcl-over-slf4j/1.7.7/56003dcd0a31deea6391b9e2ef2f2dc90b205a92/jcl-over-slf4j-1.7.7.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-android/1.7.21/f4f6a07c00f3996d8db58c85a3d73377b40611eb/slf4j-android-1.7.21.jar(**.class)
@@ -27,11 +27,13 @@
 -injars /home/icaro/.android/build-cache/2bee4aa93ab227a3fa2f4833ab88b1060e29df8c/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/cd2b79cf1dc982d68ed94f67a18477b8d7329bb9/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/80d7bfa99e43786c96d4061d20ec16f00f13d6f9/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/992ca6569dc19df1544133abb5e04ec886d70362/output/jars/classes.jar(**.class)
 -injars /home/icaro/.local/share/umake/android/android-studio/gradle/m2repository/commons-codec/commons-codec/1.10/commons-codec-1.10.jar(**.class)
 -injars /home/icaro/.android/build-cache/33d9e98ef4b7307c5799e8bc47d22aee304f0566/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/0e6a482b8c28a4006a63ed796bfd1b7e4145b6bf/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.squareup/otto/1.3.8/cf615176cd1177edf71d3c9605f8dc148fede6be/otto-1.3.8.jar(**.class)
 -injars /home/icaro/.android/build-cache/9490edc60d0876034c714b80b4d1fd6a3f92f500/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/7c291d5dec22842dd45f1f63723e4d8c3ca144ec/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/14dc4713a2b5143b46227eb6c338a3b9cfa0858b/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.0/c4ba5371a29ac9b2ad6129b1d39ea38750043eff/gson-2.8.0.jar(**.class)
 -injars /home/icaro/.android/build-cache/c3eeede4aa748619ce89da6c0b32be52fa666b22/output/jars/classes.jar(**.class)
@@ -41,33 +43,29 @@
 -injars /home/icaro/.android/build-cache/d2f6ab19b96f7c4137f467809ee326c635ab38b4/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/b99cfee63a181c390e344d51810eb579c64a0c55/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/651b45e92f77afb55048a4e22fe9e526119aa38c/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/da09846546df1a9a916629f70e3b3c348da424e3/output/jars/classes.jar(**.class)
 -injars /home/icaro/.local/share/umake/android/android-studio/gradle/m2repository/com/google/guava/guava/18.0/guava-18.0.jar(**.class)
+-injars /home/icaro/.android/build-cache/15d76bbc91d77e0fd90aa4edf7332c7cb027067f/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/ad31c48dba0e4ab326f918cd94fbb739ae67e516/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/58ea8ea124296a593e1562a32d56f975023df678/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/0d1c3d4d7f765a1da158f1c30b890c8fc2aec064/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.11.0/840897fcd7223a8143f1d9b6f69714e7be34fd50/okio-1.11.0.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.google.gms/google-services/3.0.0/ee538ce9cf4148485e43017c5542202b8c78ff8e/google-services-3.0.0.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.3.2/90a3822c38ec8c996e84c16a3477ef632cbc87a3/commons-lang3-3.3.2.jar(**.class)
--injars /home/icaro/.android/build-cache/b25cf957b907ac8291aaee4b2b74a05993d2dbe5/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/9e4172fc78ea8357874341458098ae5c07fe784e/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/9981c50c1884eab0493fbe05c259fb997f730c49/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/d5635ea72e40f62ecb248c324fee729b9ee2aeb2/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/dd6d0ea894199700d07a00193b990fb27df229e4/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/dd7de2d25e543574e9cb9572899e360942bb5ce3/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/02daac274bebbf743b76420d367d3ec3c01271d4/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/549b0dab4583e70190590fb9de2ee5c5be508139/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/info.movito/themoviedbapi/1.4/c5b381f7e001aa76b5d79479755b1face70cf02b/themoviedbapi-1.4.jar(**.class)
--injars /home/icaro/.android/build-cache/d728fdc983541b710138b8b2f41f8cf3875844c2/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/87be3710103cf2727398124f423dad605cc1f9de/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/33298919a128ff59b07033cc610c5305fcdc4674/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/8b58d1143c646057aac06906c6b1bd288c853e15/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/23600e3e8e3fe74286dcd9a1a282a67d13ea6664/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/9921b745965ef6fefed780ee15c76b62778d2ffc/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/8f29e6da9e905df6cd5237163ef9a390ee632b31/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/25e27b00d02fdea6b3136ba9bfd6d57a00487d93/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/67d1dc9a28d73373cf026c6193e0248936da88b7/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/3daac4eb42f9a3abdd183c58f2410edea5f1aea8/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/132a91bdadbebb4386ccc3f852f738c3ca977513/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/1115245e6d921398854f86edeee98db6d6a3868e/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/089aae09b38f5aa047a730edd4d6d8013929a32c/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/4e5832f84fc26d0ab524e4ca9e51e75706e39614/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/e3fec4b2408f447ed37c0c0d7c9cf8ef914031a4/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.4.4/c5cd3347c0a86d0dcfbf3da593d8431d5a789d54/jackson-core-2.4.4.jar(**.class)
--injars /home/icaro/.android/build-cache/2bce76b484c897532081bfa6135fc817c2ebcbb2/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/87a71e173f484867c6d1434ab59572b6327652e3/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/1c607ab9c1a2438c94ba94c0e0631a2adf2e8fb8/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar(**.class)
 -injars /home/icaro/.android/build-cache/30c261e3c632a74b21c42b513a86fdd32f384ce0/output/jars/classes.jar(**.class)
@@ -76,6 +74,7 @@
 -injars /home/icaro/.android/build-cache/48cd688c81f2304907b4aff60803b160e8f3f551/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/e3a7dd7ebc6329088359d27040dd765b8379b5f3/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/ea196e392cb0bfe4417623e63b5dc39c938b98db/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/4f7e54bbc885a01aedfdfd5ac1070654ffb38828/output/jars/classes.jar(**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/mergeJavaRes/flavor21/release/jars/2/1f/main.jar(!**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/mergeJavaRes/flavor21/release/folders/2/1f/main(!**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/classes/flavor21/release(**.class)
@@ -1774,172 +1773,172 @@
     public <methods>;
 }
 
-# view AndroidManifest.xml #generated:320
+# view AndroidManifest.xml #generated:319
 -keep class activity.ActivityPersonNetflix {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:192
+# view AndroidManifest.xml #generated:191
 -keep class activity.CrewsActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:319
+# view AndroidManifest.xml #generated:318
 -keep class activity.Desenvolvimento {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:304
+# view AndroidManifest.xml #generated:303
 -keep class activity.DynamicLink {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:185
+# view AndroidManifest.xml #generated:184
 -keep class activity.ElencoActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:170
+# view AndroidManifest.xml #generated:169
 -keep class activity.EpsodioActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:110
+# view AndroidManifest.xml #generated:109
 -keep class activity.FavoriteActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:134
+# view AndroidManifest.xml #generated:133
 -keep class activity.FilmeActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:97
+# view AndroidManifest.xml #generated:96
 -keep class activity.FilmesActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:262
+# view AndroidManifest.xml #generated:261
 -keep class activity.FotoPersonActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:76
+# view AndroidManifest.xml #generated:75
 -keep class activity.IntroActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:148
+# view AndroidManifest.xml #generated:147
 -keep class activity.ListaGenericaActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:241
+# view AndroidManifest.xml #generated:240
 -keep class activity.ListaUserActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:74
+# view AndroidManifest.xml #generated:73
 -keep class activity.LoginActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:64
+# view AndroidManifest.xml #generated:63
 -keep class activity.MainActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:155
+# view AndroidManifest.xml #generated:154
 -keep class activity.OscarActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:242
+# view AndroidManifest.xml #generated:241
 -keep class activity.PersonActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:126
+# view AndroidManifest.xml #generated:125
 -keep class activity.PersonPopularActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:178
+# view AndroidManifest.xml #generated:177
 -keep class activity.PosterActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:199
+# view AndroidManifest.xml #generated:198
 -keep class activity.PosterGridActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:225
+# view AndroidManifest.xml #generated:224
 -keep class activity.ProdutoraActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:118
+# view AndroidManifest.xml #generated:117
 -keep class activity.RatedActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:255
+# view AndroidManifest.xml #generated:254
 -keep class activity.ReviewsActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:206
+# view AndroidManifest.xml #generated:205
 -keep class activity.SearchMultiActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:290
+# view AndroidManifest.xml #generated:289
 -keep class activity.SeguindoActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:269
+# view AndroidManifest.xml #generated:268
 -keep class activity.SettingsActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:233
+# view AndroidManifest.xml #generated:232
 -keep class activity.SimilaresActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:283
+# view AndroidManifest.xml #generated:282
 -keep class activity.Site {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:163
+# view AndroidManifest.xml #generated:162
 -keep class activity.TemporadaActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:171
+# view AndroidManifest.xml #generated:170
 -keep class activity.TrailerActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:83
+# view AndroidManifest.xml #generated:82
 -keep class activity.TvShowActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:270
+# view AndroidManifest.xml #generated:269
 -keep class activity.TvShowsActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:303
+# view AndroidManifest.xml #generated:302
 -keep class activity.VincularLoginActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:217
+# view AndroidManifest.xml #generated:216
 -keep class activity.WatchListActivity {
     <init>(...);
 }
@@ -2296,22 +2295,22 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:47
+# view AndroidManifest.xml #generated:46
 -keep class applicaton.FilmeApplication {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:437
+# view AndroidManifest.xml #generated:436
 -keep class com.facebook.CustomTabActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:441
+# view AndroidManifest.xml #generated:440
 -keep class com.facebook.CustomTabMainActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:433
+# view AndroidManifest.xml #generated:432
 -keep class com.facebook.FacebookActivity {
     <init>(...);
 }
@@ -2328,7 +2327,7 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:364
+# view AndroidManifest.xml #generated:363
 -keep class com.google.android.gms.ads.AdActivity {
     <init>(...);
 }
@@ -2357,22 +2356,22 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:368
+# view AndroidManifest.xml #generated:367
 -keep class com.google.android.gms.ads.purchase.InAppPurchaseActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:379
+# view AndroidManifest.xml #generated:378
 -keep class com.google.android.gms.appinvite.PreviewActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:360
+# view AndroidManifest.xml #generated:359
 -keep class com.google.android.gms.auth.api.signin.RevocationBoundService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:351
+# view AndroidManifest.xml #generated:350
 -keep class com.google.android.gms.auth.api.signin.internal.SignInHubActivity {
     <init>(...);
 }
@@ -2382,22 +2381,22 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:389
+# view AndroidManifest.xml #generated:388
 -keep class com.google.android.gms.common.api.GoogleApiActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:448
+# view AndroidManifest.xml #generated:447
 -keep class com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:443
+# view AndroidManifest.xml #generated:442
 -keep class com.google.android.gms.measurement.AppMeasurementReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:457
+# view AndroidManifest.xml #generated:456
 -keep class com.google.android.gms.measurement.AppMeasurementService {
     <init>(...);
 }
@@ -2412,72 +2411,72 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:372
+# view AndroidManifest.xml #generated:371
 -keep class com.google.firebase.crash.internal.service.FirebaseCrashReceiverService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:375
+# view AndroidManifest.xml #generated:374
 -keep class com.google.firebase.crash.internal.service.FirebaseCrashSenderService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:477
+# view AndroidManifest.xml #generated:476
 -keep class com.google.firebase.iid.FirebaseInstanceIdInternalReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:462
+# view AndroidManifest.xml #generated:461
 -keep class com.google.firebase.iid.FirebaseInstanceIdReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:484
+# view AndroidManifest.xml #generated:483
 -keep class com.google.firebase.iid.FirebaseInstanceIdService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:492
+# view AndroidManifest.xml #generated:491
 -keep class com.google.firebase.provider.FirebaseInitProvider {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:421
+# view AndroidManifest.xml #generated:420
 -keep class com.onesignal.BootUpReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:401
+# view AndroidManifest.xml #generated:400
 -keep class com.onesignal.GcmBroadcastReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:412
+# view AndroidManifest.xml #generated:411
 -keep class com.onesignal.GcmIntentService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:410
+# view AndroidManifest.xml #generated:409
 -keep class com.onesignal.NotificationOpenedReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:419
+# view AndroidManifest.xml #generated:418
 -keep class com.onesignal.NotificationRestoreService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:415
+# view AndroidManifest.xml #generated:414
 -keep class com.onesignal.PermissionsActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:413
+# view AndroidManifest.xml #generated:412
 -keep class com.onesignal.SyncService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:427
+# view AndroidManifest.xml #generated:426
 -keep class com.onesignal.UpgradeReceiver {
     <init>(...);
 }
@@ -2499,17 +2498,17 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:322
+# view AndroidManifest.xml #generated:321
 -keep class onsignal.CustomNotificationExtenderService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:333
+# view AndroidManifest.xml #generated:332
 -keep class provider.SuggestionProvider {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:330
+# view AndroidManifest.xml #generated:329
 -keep class provider.SuggestionRecentProvider {
     <init>(...);
 }

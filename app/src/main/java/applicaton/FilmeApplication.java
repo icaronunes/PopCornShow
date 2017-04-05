@@ -6,7 +6,6 @@ import android.support.multidex.MultiDex;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.onesignal.OneSignal;
-import com.squareup.leakcanary.LeakCanary;
 import com.squareup.otto.Bus;
 
 import onsignal.CustomNotificationOpenedHandler;
@@ -49,12 +48,12 @@ public class FilmeApplication extends Application {
          //   Log.d(TAG, "REPORT_CRASH - FALSE");
         }
 
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-        LeakCanary.install(this);
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            // This process is dedicated to LeakCanary for heap analysis.
+//            // You should not init your app in this process.
+//            return;
+//        }
+//        LeakCanary.install(this);
 
     }
 
