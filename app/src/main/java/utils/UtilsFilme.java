@@ -63,7 +63,6 @@ public class UtilsFilme {
         List<UserSeasons> list = new ArrayList<>();
         for (TvSeason tvSeason : serie.getSeasons()) {
             UserSeasons userSeasons = new UserSeasons();
-
             userSeasons.setId(tvSeason.getId());
             userSeasons.setSeasonNumber(tvSeason.getSeasonNumber());
 
@@ -83,6 +82,8 @@ public class UtilsFilme {
         }
         return eps;
     }
+
+
 
     /* Checks if external storage is available for read and write */
     public static boolean isExternalStorageWritable() {

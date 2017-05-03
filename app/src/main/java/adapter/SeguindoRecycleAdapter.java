@@ -49,16 +49,15 @@ public class SeguindoRecycleAdapter extends RecyclerView.Adapter<SeguindoRecycle
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context,2)) + userTvshow.getPoster())
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-                .error(R.drawable.poster_empty)
                 .into(holder.poster, new Callback() {
                     @Override
                     public void onSuccess() {
-
                     }
 
                     @Override
                     public void onError() {
                         holder.title.setText(userTvshow.getNome());
+                        holder.poster.setImageResource(R.drawable.poster_empty);
                         holder.title.setVisibility(View.VISIBLE);
                     }
                 });

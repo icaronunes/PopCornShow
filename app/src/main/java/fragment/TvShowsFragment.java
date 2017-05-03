@@ -93,7 +93,7 @@ public class TvShowsFragment extends Fragment {
         if (!UtilsFilme.isNetWorkAvailable(getContext())) {
             //  Log.d("onActivityCreated", "Sem internet");
             textView.setVisibility(View.VISIBLE);
-            textView.setText("SEM INTERNET");
+            textView.setText(R.string.no_internet);
             swipeRefreshLayout.setEnabled(false);
             snack();
 

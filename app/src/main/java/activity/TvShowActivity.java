@@ -736,7 +736,7 @@ public class TvShowActivity extends BaseActivity {
                 } catch (Exception e) {
                     // Log.d(TAG, e.getMessage());
                     FirebaseCrash.report(e);
-                    if (!isDestroyed())
+                    if (!isFinishing())
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -751,7 +751,7 @@ public class TvShowActivity extends BaseActivity {
                             .getSeries(id_tvshow, null, images, credits, videos, external_ids);
                 } catch (Exception e) {
                     FirebaseCrash.report(e);
-                    if (!isDestroyed())
+                    if (!isFinishing())
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -806,6 +806,7 @@ public class TvShowActivity extends BaseActivity {
                                                 setTitle();
                                                 setImageTop();
                                             } else {
+                                                if (userTvshowOld.getNumberOfEpisodes() < series.getNumberOfEpisodes())
                                                 atualizarRealDate();
                                             }
                                         } else {
