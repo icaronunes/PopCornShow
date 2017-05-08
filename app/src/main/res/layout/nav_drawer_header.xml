@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/imgUserBackground"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/userBackground_layout_height"
+        android:layout_height="@dimen/trade_size_dp_164"
         android:src="@drawable/nav_drawer_header"
         android:scaleType="centerCrop" />
 
@@ -18,7 +18,7 @@
     <LinearLayout
         android:id="@+id/userData"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/imgUserPhoto"
@@ -30,9 +30,10 @@
             fontPath="fonts/Roboto-Medium.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="@dimen/trade_size_dp_16"
+            android:layout_marginStart="@dimen/trade_size_dp_16"
             android:textColor="#FFFFFF"
-            android:textSize="14sp"
+            android:textSize="@dimen/trade_txt_size_sp_16"
             android:textStyle="normal|bold"
             tools:text="Nome" />
 
@@ -44,10 +45,11 @@
                 fontPath="fonts/Roboto-Regular.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="@dimen/trade_size_dp_16"
+                android:layout_marginStart="@dimen/trade_size_dp_16"
                 android:text="@string/login"
                 android:textColor="#FFFFFF"
-                android:textSize="13sp"
+                android:textSize="@dimen/trade_size_dp_16"
                 android:id="@+id/textLogin"
                 android:visibility="invisible" />
 
@@ -56,9 +58,10 @@
                 fontPath="fonts/Roboto-Regular.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="@dimen/trade_size_dp_3"
+                android:layout_marginStart="@dimen/trade_size_dp_3"
                 android:textColor="#FFFFFF"
-                android:textSize="13sp"
+                android:textSize="@dimen/trade_size_dp_16"
                 tools:text="Email@email.com" />
 
         </LinearLayout>
@@ -66,11 +69,11 @@
 
     <ImageView
         android:id="@+id/imgUserPhoto"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginLeft="17dp"
-        android:layout_marginStart="17dp"
+        android:layout_width                                                                                    ="@dimen/trade_size_dp_64"
+        android:layout_height="@dimen/trade_size_dp_64"
+        android:layout_marginTop="@dimen/trade_size_dp_35"
+        android:layout_marginLeft="@dimen/trade_size_dp_17"
+        android:layout_marginStart="@dimen/trade_size_dp_17"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

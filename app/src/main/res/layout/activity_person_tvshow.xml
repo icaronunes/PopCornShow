@@ -11,8 +11,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycleView_person_tvshow"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="50dp" />
+            android:layout_height="match_parent" />
 
         <include layout="@layout/include_progress" />
 
@@ -23,7 +22,7 @@
             android:layout_gravity="top"
             android:gravity="center"
             android:text="@string/sem_tvshow"
-            android:textSize="24sp"
+            android:textSize="@dimen/trade_txt_size_sp_24"
             android:textStyle="normal|italic"
             android:visibility="invisible" />
 
@@ -32,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:visibility="gone"
             app:adSize="SMART_BANNER"
             app:adUnitId="@string/admob" />
 

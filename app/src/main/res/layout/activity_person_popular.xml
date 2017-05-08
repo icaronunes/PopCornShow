@@ -2,22 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linear_person_popular"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/include_toolbar"/>
+    <include layout="@layout/include_toolbar" />
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:id="@+id/recycleView_person_popular" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleView_person_popular"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-        <include layout="@layout/include_progress"/>
+        <include layout="@layout/include_progress" />
 
     </FrameLayout>
 
@@ -28,6 +29,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="bottom"
+        android:visibility="gone"
         app:adSize="SMART_BANNER"
         app:adUnitId="@string/admob" />
 

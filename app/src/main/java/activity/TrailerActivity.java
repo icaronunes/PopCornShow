@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -35,10 +33,10 @@ public class TrailerActivity extends YouTubeBaseActivity implements YouTubePlaye
         youtube_key = getIntent().getStringExtra(Constantes.YOU_TUBE_KEY);
         sinopse.setText(getIntent().getStringExtra(Constantes.SINOPSE));
 
-        AdView adview = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .build();
-        adview.loadAd(adRequest);
+//        AdView adview = (AdView) findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder()
+//                .build();
+//        adview.loadAd(adRequest);
 
     }
 

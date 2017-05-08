@@ -505,7 +505,7 @@ public class FilmeInfoFragment extends Fragment {
                     }.start();
 
                     bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_star");
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_collection");
                     bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "SnarBar_sem_informaçao");
                     FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 } else {

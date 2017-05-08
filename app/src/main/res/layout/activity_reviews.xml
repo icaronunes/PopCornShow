@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:adSize="SMART_BANNER"
+        android:visibility="gone"
         app:adUnitId="@string/admob"
         android:layout_gravity="bottom" />
 
@@ -26,8 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top|center"
             android:visibility="gone"
-            android:id="@+id/textview_reviews_empty"
-            android:layout_marginTop="50dp" />
+            android:id="@+id/textview_reviews_empty" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycleView_reviews"
@@ -36,10 +36,6 @@
             android:orientation="vertical">
         </android.support.v7.widget.RecyclerView>
 
-
-
     </FrameLayout>
-
-
 
 </LinearLayout>

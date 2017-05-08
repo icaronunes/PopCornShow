@@ -9,8 +9,8 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="match_parent"
             android:id="@+id/linear_person"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
@@ -29,9 +29,9 @@
                         android:id="@+id/nome_person"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginStart="2dp"
-                        android:textSize="30sp"
+                        android:layout_marginLeft="@dimen/trade_size_dp_2"
+                        android:layout_marginStart="@dimen/trade_size_dp_2"
+                        android:textSize="@dimen/trade_txt_size_sp_20"
                         android:textStyle="normal|bold" />
 
                     <LinearLayout
@@ -44,8 +44,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="top"
-                            android:layout_marginLeft="2dp"
-                            android:layout_marginStart="2dp"
+                            android:layout_marginLeft="@dimen/trade_size_dp_2"
+                            android:layout_marginStart="@dimen/trade_size_dp_2"
                             android:text="@string/apelido"
                             android:visibility="gone" />
 
@@ -55,8 +55,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="top"
-                            android:layout_marginLeft="2dp"
-                            android:layout_marginStart="2dp"
+                            android:layout_marginLeft="@dimen/trade_size_dp_2"
+                            android:layout_marginStart="@dimen/trade_size_dp_2"
                             android:visibility="gone" />
 
                     </LinearLayout>
@@ -71,8 +71,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="top"
-                            android:layout_marginLeft="2dp"
-                            android:layout_marginStart="2dp"
+                            android:layout_marginLeft="@dimen/trade_size_dp_2"
+                            android:layout_marginStart="@dimen/trade_size_dp_2"
                             android:visibility="gone" />
 
                         <TextView
@@ -80,8 +80,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="top"
-                            android:layout_marginLeft="2dp"
-                            android:layout_marginStart="2dp"
+                            android:layout_marginLeft="@dimen/trade_size_dp_2"
+                            android:layout_marginStart="@dimen/trade_size_dp_2"
                             android:visibility="gone" />
 
                     </LinearLayout>
@@ -91,18 +91,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginStart="2dp"
+                        android:layout_marginLeft="@dimen/trade_size_dp_2"
+                        android:layout_marginStart="@dimen/trade_size_dp_2"
                         android:visibility="gone" />
 
                 </LinearLayout>
 
                 <ImageView
                     android:id="@+id/image_person"
-                    android:layout_width="85dp"
-                    android:layout_height="110dp"
+                    android:layout_width="@dimen/trade_size_dp_85"
+                    android:layout_height="@dimen/trade_size_dp_110"
                     android:layout_gravity="center_vertical|center_horizontal|center"
-                    android:layout_margin="2dp"
+                    android:layout_margin="@dimen/trade_size_dp_2"
                     android:src="@drawable/person"
                     android:visibility="invisible" />
 
@@ -112,11 +112,11 @@
                 android:id="@+id/person_biogragia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="3dp"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-                android:layout_marginStart="3dp"
-                android:layout_marginTop="5dp" />
+                android:layout_marginEnd="@dimen/trade_size_dp_3"
+                android:layout_marginLeft="@dimen/trade_size_dp_3"
+                android:layout_marginRight="@dimen/trade_size_dp_3"
+                android:layout_marginStart="@dimen/trade_size_dp_3"
+                android:layout_marginTop="@dimen/trade_size_dp_5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -135,8 +135,8 @@
 
                 <ImageView
                     android:id="@+id/person_wiki"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/trade_size_dp_40"
+                    android:layout_height="@dimen/trade_size_dp_40"
                     android:layout_gravity="end|center"
                     android:layout_weight="0.08"
                     android:adjustViewBounds="false"
@@ -145,13 +145,13 @@
 
                 <Button
                     android:id="@+id/netflix"
-                    android:text="@string/procurar_netflix"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/procurar_netflix"
                     android:textAlignment="center"
-                    android:visibility="invisible"
                     android:textColor="@color/netflix"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/trade_txt_size_sp_16"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 

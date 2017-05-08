@@ -2,35 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="10dp"
-    android:paddingEnd="10dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingStart="10dp"
-    android:paddingTop="10dp"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:padding="@dimen/trade_size_dp_10">
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_weight="1"
-        android:clickable="true"
-        android:background="?attr/selectableItemBackground"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/image_tmdb"
-            android:layout_width="@dimen/icon_activity_padrao"
-            android:layout_height="@dimen/icon_activity_padrao"
-            android:src="@drawable/tmdb"
-            android:layout_gravity="center" />
+            android:layout_width="@dimen/trade_size_dp_42"
+            android:layout_height="@dimen/trade_size_dp_42"
+            android:layout_gravity="center"
+            android:src="@drawable/tmdb" />
 
         <TextView
             android:id="@+id/nota_tmdb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="12sp" />
+            android:textSize="@dimen/trade_size_dp_12" />
 
 
     </LinearLayout>
@@ -38,99 +33,99 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:clickable="true"
+        android:layout_weight="1"
         android:background="?attr/selectableItemBackground"
+        android:clickable="true"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/image_imdb"
-            android:layout_width="@dimen/icon_activity_padrao"
-            android:layout_height="@dimen/icon_activity_padrao"
-            android:src="@drawable/imdb"
-            android:layout_gravity="center" />
+            android:layout_width="@dimen/trade_size_dp_42"
+            android:layout_height="@dimen/trade_size_dp_42"
+            android:layout_gravity="center"
+            android:src="@drawable/imdb" />
 
         <TextView
             android:id="@+id/nota_imdb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="12sp" />
+            android:textSize="@dimen/trade_size_dp_12" />
 
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:clickable="true"
+        android:layout_weight="1"
         android:background="?attr/selectableItemBackground"
+        android:clickable="true"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/image_tomatoes"
-            android:layout_width="@dimen/icon_activity_padrao"
-            android:layout_height="@dimen/icon_activity_padrao"
-            android:src="@drawable/tomatoes"
-            android:layout_gravity="center" />
+            android:layout_width="@dimen/trade_size_dp_42"
+            android:layout_height="@dimen/trade_size_dp_42"
+            android:layout_gravity="center"
+            android:src="@drawable/tomatoes" />
 
         <TextView
             android:id="@+id/nota_tomatoes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="12sp" />
+            android:textSize="@dimen/trade_size_dp_12" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:clickable="true"
+        android:layout_weight="1"
         android:background="?attr/selectableItemBackground"
+        android:clickable="true"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/image_metacritic"
-            android:layout_width="@dimen/icon_activity_padrao"
-            android:layout_height="@dimen/icon_activity_padrao"
-            android:src="@drawable/metacritic"
-            android:layout_gravity="center" />
+            android:layout_width="@dimen/trade_size_dp_42"
+            android:layout_height="@dimen/trade_size_dp_42"
+            android:layout_gravity="center"
+            android:src="@drawable/metacritic" />
 
         <TextView
             android:id="@+id/nota_metacritic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="12sp" />
+            android:textSize="@dimen/trade_size_dp_12" />
 
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_weight="1"
-        android:clickable="true"
-        android:background="?attr/selectableItemBackground"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/image_netflix"
-            android:layout_width="@dimen/icon_activity_padrao"
-            android:layout_height="@dimen/icon_activity_padrao"
-            android:src="@drawable/netflix"
-            android:layout_gravity="center" />
+            android:layout_width="@dimen/trade_size_dp_42"
+            android:layout_height="@dimen/trade_size_dp_42"
+            android:layout_gravity="center"
+            android:src="@drawable/netflix" />
 
         <TextView
             android:id="@+id/nota_netflix"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="12sp" />
+            android:textSize="@dimen/trade_size_dp_12" />
 
     </LinearLayout>
 

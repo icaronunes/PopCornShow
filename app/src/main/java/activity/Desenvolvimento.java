@@ -30,9 +30,9 @@ public class Desenvolvimento extends BaseActivity {
         recyclerView.setHasFixedSize(true);
 
         Resources res = getResources();
-        String[] planets = res.getStringArray(R.array.planets_array);
+        String[] bibliotecas = res.getStringArray(R.array.bibliotecas);
 
-        recyclerView.setAdapter(new DesenvolvimentoAdapater(this, planets));
+        recyclerView.setAdapter(new DesenvolvimentoAdapater(this, bibliotecas));
     }
 
 

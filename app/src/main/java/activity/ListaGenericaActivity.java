@@ -13,8 +13,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.Collections;
@@ -66,10 +64,10 @@ public class ListaGenericaActivity  extends BaseActivity{
         swipeRefreshLayout.setColorSchemeResources(R.color.primary, R.color.primary_dark, R.color.accent);
         swipeRefreshLayout.setOnRefreshListener(OnRefreshListener());
 
-        AdView adview = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .build();
-        adview.loadAd(adRequest);
+//        AdView adview = (AdView) findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder()
+//                .build();
+//        adview.loadAd(adRequest);
 
     }
 

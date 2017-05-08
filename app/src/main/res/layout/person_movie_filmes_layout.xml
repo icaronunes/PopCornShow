@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    app:cardElevation="@dimen/trade_size_dp_3">
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ProgressBar
@@ -13,31 +14,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:elevation="2dp" />
+            android:elevation="3dp" />
 
         <ImageButton
             android:id="@+id/img_poster_grid"
-            android:layout_height="271dp"
-
-            android:elevation="0dp"
-            android:scaleType="centerCrop"
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:cropToPadding="true"
+            android:elevation="1dp"
             android:padding="2dp"
-            android:layout_width="179dp" />
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/text_title_crew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:layout_margin="2dp"
+            android:layout_margin="@dimen/trade_size_dp_2"
             android:background="@android:drawable/screen_background_dark_transparent"
             android:elevation="3dp"
+            android:gravity="center"
             android:textColor="@color/white"
-            android:visibility="invisible"
-            android:gravity="center" />
+            android:visibility="invisible" />
 
     </FrameLayout>
 
-</LinearLayout>
+</android.support.v7.widget.CardView>

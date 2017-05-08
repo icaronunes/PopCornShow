@@ -118,23 +118,23 @@ public class ListaSeguindoFragment extends Fragment {
     }
 
     private List<UserTvshow> setSeriesMissing(List<UserTvshow> userTvshows) {
-        List<UserTvshow> x = new ArrayList<>();
+        List<UserTvshow> temp = new ArrayList<>();
 
         for (UserTvshow userTvshow : userTvshows) {
             boolean season = true;
             for (UserSeasons seasons : userTvshow.getSeasons()) {
                 if (seasons.getSeasonNumber() != 0  && seasons.getUserEps() != null && season)
                 for (UserEp userEp : seasons.getUserEps()) {
-                    if (!userEp.isAssistido()){
-                        x.add(userTvshow);
+                    if (!userEp.isAssistido() ){
+                        temp.add(userTvshow);
                         season = false;
                         break;
                     }
                 }
             }
-        }//parece gambiara. Arrumar!
+        }// gambiara. Arrumar!
 
-        return x;
+        return temp;
     }
 
     private View getViewMissing(LayoutInflater inflater, ViewGroup container) {

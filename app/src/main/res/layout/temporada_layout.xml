@@ -12,7 +12,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView_temporada"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1" />
 
     <com.google.android.gms.ads.AdView
@@ -22,6 +22,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="bottom"
+        android:visibility="gone"
         app:adSize="SMART_BANNER"
         app:adUnitId="@string/admob" />
 

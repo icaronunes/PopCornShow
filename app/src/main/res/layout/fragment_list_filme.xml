@@ -9,8 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center"
-        android:layout_marginTop="240dp"
-        android:elevation="0dp"
+        android:layout_marginTop="@dimen/trade_size_dp_240"
         android:visibility="invisible" />
 
     <android.support.v4.widget.SwipeRefreshLayout

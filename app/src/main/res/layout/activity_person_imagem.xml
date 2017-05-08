@@ -24,7 +24,7 @@
             android:layout_gravity="top"
             android:gravity="center"
             android:text="@string/sem_fotos"
-            android:textSize="24sp"
+            android:textSize="@dimen/trade_txt_size_sp_40"
             android:textStyle="normal|italic"
             android:visibility="invisible" />
 

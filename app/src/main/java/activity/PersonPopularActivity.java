@@ -14,8 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.firebase.crash.FirebaseCrash;
 
 import adapter.PersonPopularAdapter;
@@ -51,12 +49,12 @@ public class PersonPopularActivity extends BaseActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        AdView adView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-                .build();
-        adView.loadAd(adRequest);
+//        AdView adView = (AdView) findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder()
+//                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+//                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+//                .build();
+//        adView.loadAd(adRequest);
 
 
         if (UtilsFilme.isNetWorkAvailable(this)) {

@@ -84,7 +84,6 @@ public class UtilsFilme {
     }
 
 
-
     /* Checks if external storage is available for read and write */
     public static boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
@@ -123,11 +122,32 @@ public class UtilsFilme {
         Calendar hoje = Calendar.getInstance();
         hoje.setTime(Calendar.getInstance().getTime());
 
+
         if (calendar.after(hoje)) {
             return false;
         } else {
             if (calendar.get(Calendar.YEAR) == hoje.get(Calendar.YEAR)) {
                 if (calendar.get(Calendar.WEEK_OF_YEAR) == hoje.get(Calendar.WEEK_OF_YEAR)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    public static boolean verificaDataProximaLancamentoDistante(Date air_date) {
+        Calendar no_ar = Calendar.getInstance();
+        no_ar.setTime(air_date);
+        Calendar hoje = Calendar.getInstance();
+        hoje.setTime(Calendar.getInstance().getTime());
+
+        if (no_ar.after(hoje)) {
+            return false;
+        } else {
+            if (no_ar.get(Calendar.YEAR) == hoje.get(Calendar.YEAR)) {
+                if (no_ar.get(Calendar.DAY_OF_YEAR) < (hoje.get(Calendar.DAY_OF_YEAR) + 15)
+                        ) {
+                    
                     return true;
                 }
             }
@@ -188,12 +208,12 @@ public class UtilsFilme {
         try {
             if (!file.exists()) {
                 file.createNewFile();
-              //  Log.e("salvarArqNaMemoriaIn", "Arquivo Criado");
+                //  Log.e("salvarArqNaMemoriaIn", "Arquivo Criado");
             }
             FileOutputStream out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();
-          //  Log.e("salvarArqNaMemoriaIn", "fechado");
+            //  Log.e("salvarArqNaMemoriaIn", "fechado");
         } catch (IOException e) {
             FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
             FirebaseCrash.report(e);
@@ -307,16 +327,16 @@ public class UtilsFilme {
         return "?";
     }
 
-    public static int getTamanhoDaImagem(Context context, int padrao){
+    public static int getTamanhoDaImagem(Context context, int padrao) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         boolean ativo = sharedPref.getBoolean(SettingsActivity.PREF_SAVE_CONEXAO, true);
 
-        if (!ativo){
+        if (!ativo) {
             return padrao;
-        }else {
+        } else {
             String conexao = UtilsFilme.getNetworkClass(context);
 
-            if (conexao.equals("forte")){
+            if (conexao.equals("forte")) {
                 return padrao;
             } else {
                 if (padrao >= 2) {

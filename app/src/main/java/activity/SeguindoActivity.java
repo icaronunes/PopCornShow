@@ -7,15 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -70,12 +67,12 @@ public class SeguindoActivity extends BaseActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress);
         linearLayout = (LinearLayout) findViewById(R.id.linear_usuario_list);
 
-        AdView adview = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-                .build();
-        adview.loadAd(adRequest);
+//        AdView adview = (AdView) findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder()
+//                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+//                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+//                .build();
+//        adview.loadAd(adRequest);
 
         if (UtilsFilme.isNetWorkAvailable(this)) {
 
@@ -185,7 +182,7 @@ public class SeguindoActivity extends BaseActivity {
                         }
 
                         for (int i = 0; i < userTvshowOld.getSeasons().size(); i++) {
-                            Log.d(TAG, "Numero de eps - " + userTvshow.getSeasons().get(i).getUserEps().size());
+                            //Log.d(TAG, "Numero de eps - " + userTvshow.getSeasons().get(i).getUserEps().size());
                             if (userTvshow.getSeasons().get(i).getUserEps() != null && userTvshowOld.getSeasons().get(i).getUserEps() != null) {
                                 if (userTvshow.getSeasons().get(i).getUserEps().size() > userTvshowOld.getSeasons().get(i).getUserEps().size())
                                 userTvshow.getSeasons().get(i).setVisto(false);
@@ -195,7 +192,7 @@ public class SeguindoActivity extends BaseActivity {
                             for (int i1 = 0; i1 < userTvshowOld.getSeasons().get(i).getUserEps().size(); i1++) {
                                 if (i1 < userTvshowOld.getSeasons().get(i).getUserEps().size())
                                     userTvshow.getSeasons().get(i).getUserEps().set(i1, userTvshowOld.getSeasons().get(i).getUserEps().get(i1));
-                                Log.d(TAG, "run: EPS " + i1);
+                               // Log.d(TAG, "run: EPS " + i1);
                                 //coloca as informações antigas na nova versão dos dados.
                             }
                         }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array translatable="false" name="planets_array">
+    <string-array name="bibliotecas" translatable="false">
         <item>TheMovieDB API\n\n
 
             https://github.com/holgerbrandl/themoviedbapi
@@ -30,7 +30,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             AppIntro is an Android Library that helps you make a cool intro for your app, like the ones in Google apps.
             \n\n https://github.com/paolorotolo/AppIntro
         </item>
-        <item> OnSignal
+        <item> OneSignal
 \n\n
             https://onesignal.com
      \n\n

@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools" android:id="@+id/scroll_id"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/scroll_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
         <LinearLayout
+            android:id="@+id/epsodio_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/epsodio_ll"
             android:layout_marginBottom="50dp"
             android:orientation="vertical">
 
@@ -25,30 +25,34 @@
                 android:id="@+id/ep_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="3dp"
-                android:layout_marginEnd="3dp"
+                android:layout_marginEnd="@dimen/trade_size_dp_3"
+                android:layout_marginStart="@dimen/trade_size_dp_3"
+                android:layout_marginLeft="@dimen/trade_size_dp_3"
+                android:layout_marginRight="@dimen/trade_size_dp_3"
                 android:gravity="center"
-                android:textSize="24sp"
+                android:textSize="@dimen/trade_txt_size_sp_24"
                 android:textStyle="normal|italic" />
 
             <TextView
                 android:id="@+id/ep_tvshow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="3dp"
-                android:layout_marginEnd="3dp"
+                android:layout_marginEnd="@dimen/trade_size_dp_3"
+                android:layout_marginStart="@dimen/trade_size_dp_3"
+                android:layout_marginLeft="@dimen/trade_size_dp_3"
+                android:layout_marginRight="@dimen/trade_size_dp_3"
                 android:gravity="center"
-                android:textSize="12sp" />
+                android:textSize="@dimen/trade_txt_size_sp_12" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/trade_size_dp_1"
                 android:background="@color/black" />
 
             <LinearLayout
                 android:id="@+id/linear_director"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="@dimen/trade_size_dp_30"
                 android:background="@color/black_transparente"
                 android:orientation="horizontal">
 
@@ -56,8 +60,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="@dimen/trade_size_dp_10"
+                    android:layout_marginStart="@dimen/trade_size_dp_10"
                     android:layout_weight="1"
                     android:text="@string/director"
                     android:textStyle="normal|bold" />
@@ -67,8 +71,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="@dimen/trade_size_dp_10"
+                    android:layout_marginRight="@dimen/trade_size_dp_10"
                     android:layout_weight="1"
                     android:gravity="end"
                     android:textColor="@color/primary"
@@ -84,12 +88,12 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/trade_size_dp_1"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="@dimen/trade_size_dp_10"
+                    android:layout_marginLeft="@dimen/trade_size_dp_10"
+                    android:layout_marginRight="@dimen/trade_size_dp_10"
+                    android:layout_marginStart="@dimen/trade_size_dp_10"
                     android:background="@color/black"
                     android:orientation="horizontal" />
             </FrameLayout>
@@ -97,7 +101,7 @@
             <LinearLayout
                 android:id="@+id/linear_air_date"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="@dimen/trade_size_dp_30"
                 android:background="@color/black_transparente"
                 android:orientation="horizontal">
 
@@ -105,8 +109,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="@dimen/trade_size_dp_10"
+                    android:layout_marginStart="@dimen/trade_size_dp_10"
                     android:layout_weight="1"
                     android:text="@string/air_date"
                     android:textStyle="normal|bold" />
@@ -116,8 +120,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="@dimen/trade_size_dp_10"
+                    android:layout_marginRight="@dimen/trade_size_dp_10"
                     android:layout_weight="1"
                     android:gravity="end"
                     android:textStyle="normal|italic" />
@@ -126,7 +130,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/trade_size_dp_1"
                 android:layout_gravity="center"
                 android:background="@color/black" />
 
@@ -135,17 +139,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="4dp"
-                android:minHeight="157dp"
-                android:minWidth="250dp" />
+                android:layout_margin="@dimen/trade_size_dp_4"
+                android:minHeight="@dimen/trade_size_dp_157"
+                android:minWidth="@dimen/trade_size_dp_250" />
 
             <Button
                 android:id="@+id/ep_rating_button"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="@dimen/trade_size_dp_30"
                 android:layout_gravity="center"
                 android:background="@drawable/button_nao_visto"
-                android:padding="3dp"
+                android:padding="@dimen/trade_size_dp_3"
                 android:text="@string/classificar" />
 
             <android.support.v7.widget.AppCompatRatingBar
@@ -162,20 +166,20 @@
                 android:id="@+id/ep_sinopse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/trade_size_dp_4"
                 android:textAlignment="center"
                 android:textAllCaps="false" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/trade_size_dp_1"
                 android:layout_gravity="center"
                 android:background="@color/black" />
 
             <LinearLayout
                 android:id="@+id/linear_write"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="@dimen/trade_size_dp_30"
                 android:background="@color/black_transparente"
                 android:orientation="horizontal">
 
@@ -183,8 +187,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="@dimen/trade_size_dp_10"
+                    android:layout_marginStart="@dimen/trade_size_dp_10"
                     android:layout_weight="1"
                     android:text="@string/writer"
 
@@ -195,8 +199,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="@dimen/trade_size_dp_10"
+                    android:layout_marginRight="@dimen/trade_size_dp_10"
                     android:layout_weight="1"
                     android:gravity="right"
 
@@ -214,12 +218,12 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/trade_size_dp_1"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="@dimen/trade_size_dp_10"
+                    android:layout_marginLeft="@dimen/trade_size_dp_10"
+                    android:layout_marginRight="@dimen/trade_size_dp_10"
+                    android:layout_marginStart="@dimen/trade_size_dp_10"
                     android:background="@color/black"
                     android:orientation="horizontal" />
             </FrameLayout>
@@ -227,7 +231,7 @@
             <LinearLayout
                 android:id="@+id/linear_vote"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="@dimen/trade_size_dp_30"
                 android:background="@color/black_transparente"
                 android:orientation="horizontal">
 
@@ -235,8 +239,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="@dimen/trade_size_dp_10"
+                    android:layout_marginStart="@dimen/trade_size_dp_10"
                     android:layout_weight="1"
                     android:text="@string/vote_average"
                     android:textStyle="normal|bold" />
@@ -246,8 +250,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="@dimen/trade_size_dp_10"
+                    android:layout_marginRight="@dimen/trade_size_dp_10"
                     android:layout_weight="1"
                     android:gravity="end"
                     android:textStyle="normal|italic" />
@@ -256,10 +260,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/trade_size_dp_1"
                 android:layout_gravity="center"
-                android:background="@color/black"
-                android:layout_marginBottom="50dp" />
+                android:background="@color/black" />
 
         </LinearLayout>
 
@@ -273,6 +276,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="bottom"
+        android:visibility="gone"
         app:adSize="SMART_BANNER"
         app:adUnitId="@string/admob" />
 

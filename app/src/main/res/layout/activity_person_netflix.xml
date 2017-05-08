@@ -33,7 +33,6 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/person_netflix_recyckeview"
                 android:layout_width="match_parent"
-                android:layout_marginBottom="50dp"
                 android:layout_height="match_parent" />
 
             <include layout="@layout/include_progress" />
@@ -43,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="2dp"
+                android:layout_margin="@dimen/trade_txt_size_sp_15"
                 android:gravity="center"
                 android:text="@string/search_empty"
                 android:visibility="invisible" />
@@ -58,6 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:visibility="gone"
         app:adSize="SMART_BANNER"
         app:adUnitId="@string/admob"
         android:layout_gravity="bottom" />

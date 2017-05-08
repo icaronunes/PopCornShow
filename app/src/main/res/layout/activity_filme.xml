@@ -43,7 +43,7 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="260dp"
+            android:layout_height="@dimen/trade_size_dp_260"
             android:fitsSystemWindows="false"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 

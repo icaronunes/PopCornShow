@@ -1,45 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_scroll_image_top"
     android:layout_width="match_parent"
-    android:layout_height="202dp">
+    android:layout_height="@dimen/trade_size_dp_202">
 
     <ImageView
         android:id="@+id/img_top_scroll"
         android:layout_width="match_parent"
-        android:layout_height="202dp"
+        android:layout_height="@dimen/trade_size_dp_202"
         android:layout_gravity="center_horizontal"
         android:adjustViewBounds="true"
         android:contentDescription="@string/foto_principal"
-        android:elevation="0dp"
+        android:elevation="3dp"
         android:scaleType="centerCrop"
         app:layout_collapseMode="parallax"
         app:layout_collapseParallaxMultiplier="1.0" />
 
     <TextView
+        android:id="@+id/destaque"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/destaque"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="40dp"
-        android:textStyle="normal|bold|italic"
+        android:layout_marginBottom="@dimen/trade_size_dp_40"
+        android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="14sp"
+        android:textSize="@dimen/trade_txt_size_sp_16"
+        android:textStyle="normal|bold|italic"
         android:typeface="monospace"
-        android:visibility="invisible"
-        android:gravity="center" />
+        android:visibility="gone" />
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="20dp"
-        android:id="@+id/title"
-        android:textStyle="normal|bold"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="@dimen/trade_txt_size_sp_16"
+        android:textStyle="normal|bold"
         android:typeface="serif" />
 
 

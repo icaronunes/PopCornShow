@@ -14,8 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.firebase.crash.FirebaseCrash;
 
 import adapter.CrewsAdapter;
@@ -61,10 +59,10 @@ public class CrewsActivity extends BaseActivity {
         linear_crews_layout = (LinearLayout) findViewById(R.id.linear_crews_layout);
         progressBar = (ProgressBar) findViewById(R.id.progress);
 
-        AdView adview = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .build();
-        adview.loadAd(adRequest);
+//        AdView adview = (AdView) findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder()
+//                .build();
+//        adview.loadAd(adRequest);
 
 
         if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {

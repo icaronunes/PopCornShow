@@ -3,8 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_weight="1"
     android:weightSum="1"
-    android:layout_marginTop="6dp">
+    android:layout_marginTop="@dimen/trade_size_dp_6">
 
     <TextView
         android:layout_width="match_parent"
@@ -12,7 +13,7 @@
         android:id="@+id/rating_title"
         android:gravity="center"
         android:textStyle="normal|bold"
-        android:layout_marginBottom="3dp" />
+        android:layout_marginBottom="@dimen/trade_size_dp_3" />
 
     <RatingBar
         android:id="@+id/ratingBar_rated"
@@ -33,25 +34,19 @@
         android:id="@+id/cancel_rated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Não Visto"
+        android:text="@string/nao_visto"
         android:background="@drawable/button_nao_visto"
         android:layout_gravity="center"
-        android:layout_marginEnd="6dp"
-        android:layout_marginRight="6dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp" />
+        android:layout_margin="@dimen/trade_size_dp_6" />
 
         <Button
             android:id="@+id/ok_rated"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="OK"
-            android:background="@drawable/button_nao_visto"
+            android:text="@string/ok"
+            android:background="@drawable/button_visto"
             android:layout_gravity="center"
-            android:layout_marginEnd="6dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginStart="6dp" />
+            android:layout_margin="@dimen/trade_size_dp_6" />
 
     </LinearLayout>
 

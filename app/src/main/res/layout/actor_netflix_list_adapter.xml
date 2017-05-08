@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
     android:id="@+id/card_view"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
+    android:layout_margin="@dimen/trade_size_dp_3"
     android:clickable="true"
     app:cardBackgroundColor="@color/netflix"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="2dp"
+    app:cardCornerRadius="@dimen/trade_size_dp_4"
+    app:cardElevation="@dimen/trade_size_dp_2"
     card_view:cardElevation="0dp">
 
     <LinearLayout
-        android:layout_width="@dimen/poster_netflix_width_padrao"
-        android:layout_height="@dimen/poster_netflix_height_padrao"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <FrameLayout
@@ -38,7 +38,7 @@
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="bottom|center_horizontal"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="@dimen/trade_txt_size_sp_12"
                 android:typeface="serif" />
 
             <include layout="@layout/include_progress" />

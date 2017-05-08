@@ -12,8 +12,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycleView_person_movies"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="50dp" />
+            android:layout_height="match_parent" />
 
         <include layout="@layout/include_progress"/>
 
@@ -24,7 +23,7 @@
             android:layout_gravity="top"
             android:gravity="center"
             android:text="@string/sem_filmes"
-            android:textSize="24sp"
+            android:textSize="@dimen/trade_txt_size_sp_24"
             android:textStyle="normal|italic"
             android:visibility="invisible" />
 
@@ -33,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:adSize="SMART_BANNER"
+            android:visibility="gone"
             app:adUnitId="@string/admob"
             android:layout_gravity="bottom" />
 

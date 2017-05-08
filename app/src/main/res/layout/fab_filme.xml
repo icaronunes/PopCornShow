@@ -4,9 +4,9 @@
     android:id="@+id/fab_menu_filme"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="bottom|right"
-    android:layout_marginBottom="6dp"
-    android:layout_marginRight="6dp"
+    android:layout_gravity="bottom|end"
+    android:layout_marginBottom="@dimen/trade_size_dp_6"
+    android:layout_marginRight="@dimen/trade_size_dp_6"
     android:alpha="0"
     android:visibility="visible">
 

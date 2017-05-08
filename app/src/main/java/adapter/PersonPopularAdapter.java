@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import activity.PersonActivity;
@@ -50,7 +49,6 @@ public class PersonPopularAdapter extends RecyclerView.Adapter<PersonPopularAdap
             Picasso.with(context)
                     .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + person.getProfilePath())
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.img_person, new Callback() {
                         @Override
                         public void onSuccess() {

@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,7 +55,8 @@ public class ActivityPersonNetflix extends BaseActivity {
         getExtras();
 
         recyclerView = (RecyclerView) findViewById(R.id.person_netflix_recyckeview);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView
+                .setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         linear_person_netflix_layout = (LinearLayout) findViewById(R.id.linear_person_netflix_layout);

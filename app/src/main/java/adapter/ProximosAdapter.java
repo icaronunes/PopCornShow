@@ -13,8 +13,6 @@ import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -73,8 +71,6 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
         holder.progressBar.setProgress(vistos);
         getEpTitle(userTvshow, holder.ep_title, holder.proximo, holder.date, holder.itemView, holder.new_seguindo);
         Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + userTvshow.getPoster())
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .error(R.drawable.poster_empty)
                 .into(holder.poster, new Callback() {
                     @Override
@@ -148,7 +144,7 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
     }
 
     public void getEpTitle(final UserTvshow userTvshow, final TextView ep_title, final TextView proximo,
-                           final TextView date, final View itemView, final TextView new_seguindo) {
+                           final TextView dataTvshow, final View itemView, final TextView new_seguindo) {
         int posicao = 0; //Gambiara. Tentar arrumar
         for (final UserSeasons seasons : userTvshow.getSeasons()) {
             if (seasons.getSeasonNumber() != 0) {
@@ -161,15 +157,10 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
                             public void run() {
                                 final TvEpisode tvEpisode = FilmeService.getTmdbTvEpisodes()
                                         .getEpisode(userTvshow.getId(), userEp.getSeasonNumber(), userEp.getEpisodeNumber(),
-                                                BaseActivity.getLocale(), TmdbTvEpisodes.EpisodeMethod.images);
+                                                BaseActivity.getLocale(), TmdbTvEpisodes.EpisodeMethod.external_ids);
                                 context.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        ep_title
-                                                .setText(tvEpisode.getName() != null && !tvEpisode.getName().equals("") ? tvEpisode.getName() :
-                                                        context.getResources().getString(R.string.no_epsodio));
-                                        date.setText(" - " +tvEpisode.getAirDate());
-
                                         Date date = null;
                                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                                         try {
@@ -177,6 +168,17 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
                                         } catch (ParseException e) {
                                             e.printStackTrace();
                                         }
+
+//                                        if (verificaDataProximaLancamentoDistante(date)){
+//                                            itemView.setAlpha((float) 0.5);
+//                                            return;
+//                                        } TODO não mostrar episodio muito distante. Não funcionando
+
+                                        ep_title
+                                                .setText(tvEpisode.getName() != null && !tvEpisode.getName().equals("") ? tvEpisode.getName() :
+                                                        context.getResources().getString(R.string.no_epsodio));
+                                        dataTvshow.setText(" - " +tvEpisode.getAirDate());
+
 
                                         if (UtilsFilme.verificaDataProximaLancamento(date)){
                                             new_seguindo.setVisibility(View.VISIBLE);

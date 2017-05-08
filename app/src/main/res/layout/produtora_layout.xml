@@ -12,18 +12,16 @@
         android:id="@+id/swipeToRefresh_produtora"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_marginBottom="50dp">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/produtora_filmes_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:cacheColorHint="@android:color/transparent"
             android:listSelector="@android:color/transparent"
             android:scrollbarStyle="outsideOverlay"
-            android:scrollbars="vertical"
-            android:clipToPadding="true" />
+            android:scrollbars="vertical" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -33,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         app:adSize="SMART_BANNER"
+        android:visibility="gone"
         app:adUnitId="@string/admob"
         android:layout_gravity="bottom" />
 

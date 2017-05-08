@@ -21,8 +21,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.crash.FirebaseCrash;
@@ -172,12 +170,12 @@ public class EpsodioFragment extends Fragment {
         ep_rating_button = (Button) view.findViewById(R.id.ep_rating_button);
         ep_rating_button.setTextColor(color);
 
-        AdView adview = (AdView) view.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-                .build();
-        adview.loadAd(adRequest);
+//        AdView adview = (AdView) view.findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder()
+//                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+//                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+//                .build();
+//        adview.loadAd(adRequest);
 
         return view;
     }

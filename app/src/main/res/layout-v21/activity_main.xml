@@ -29,7 +29,7 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/appbarlayout_padrao_height"
+            android:layout_height="@dimen/trade_size_dp_250"
             android:elevation="1dp"
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -49,7 +49,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:elevation="1dp"
+                    android:elevation="@dimen/trade_size_dp_1"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
@@ -59,9 +59,9 @@
                     android:background="@color/accent2"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="@dimen/trade_size_dp_40"
 
-                    android:elevation="1dp" />
+                    android:elevation="@dimen/trade_size_dp_3" />
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewpage_top_main"
@@ -70,14 +70,14 @@
                     android:background="@color/transparent"
                     android:contentDescription="@string/foto_principal"
                     android:scaleType="centerCrop"
-                    android:layout_height="@dimen/viewpager_mainactivity_height" />
+                    android:layout_height="@dimen/trade_size_dp_202" />
 
                 <com.viewpagerindicator.CirclePageIndicator
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/indication_main"
                     android:layout_gravity="bottom|center_horizontal"
-                    android:layout_marginBottom="50dp" />
+                    android:layout_marginBottom="@dimen/trade_size_dp_50" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
 

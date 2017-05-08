@@ -2,17 +2,17 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
+    android:layout_margin="@dimen/trade_size_dp_4"
+    android:background="?attr/selectableItemBackground"
     android:clickable="true"
-    android:foreground="?attr/selectableItemBackground"
-    android:background="?attr/selectableItemBackground">
+    android:foreground="?attr/selectableItemBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="110dp"
+        android:minHeight="@dimen/trade_size_dp_110"
         android:orientation="horizontal"
-        android:padding="6dp">
+        android:padding="@dimen/trade_size_dp_6">
 
         <ImageView
             android:id="@+id/calendar_poster"
@@ -21,13 +21,14 @@
             android:src="@drawable/poster_empty" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/trade_size_dp_6"
+            android:layout_marginStart="@dimen/trade_size_dp_6"
+            android:layout_marginTop="@dimen/trade_size_dp_10"
             android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:layout_marginLeft="6dp"
-            android:layout_marginTop="10dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/calendar_title"
@@ -53,8 +54,8 @@
                     android:id="@+id/new_seguindo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="@dimen/trade_size_dp_10"
+                    android:layout_marginStart="@dimen/trade_size_dp_10"
                     android:fontFamily="sans-serif"
                     android:text="@string/new_segiundo"
                     android:textAppearance="@style/TextAppearance.AppCompat"
@@ -85,16 +86,15 @@
                     style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp" />
+                    android:layout_marginLeft="@dimen/trade_size_dp_10"
+                    android:layout_marginRight="@dimen/trade_size_dp_10" />
 
             </LinearLayout>
 
             <TextView
                 android:id="@+id/calendar_eps_faltantes"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:textStyle="normal|bold" />
 
         </LinearLayout>

@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -38,7 +37,7 @@ public class ActorNetflixAdapter extends RecyclerView.Adapter<ActorNetflixAdapte
 
     @Override
     public ActorNetflixViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.actornetflix_list_adapter, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.actor_netflix_list_adapter, parent, false);
         return new ActorNetflixViewHolder(view);
     }
 
@@ -48,7 +47,6 @@ public class ActorNetflixAdapter extends RecyclerView.Adapter<ActorNetflixAdapte
 
         Picasso.with(context).load(netflix.poster)
                 .error(R.drawable.poster_empty)
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.img, new Callback() {
             @Override

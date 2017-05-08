@@ -14,8 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.Collections;
@@ -55,10 +53,10 @@ public class OscarActivity  extends BaseActivity{
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
 
-        AdView adview = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .build();
-        adview.loadAd(adRequest);
+//        AdView adview = (AdView) findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder()
+//                .build();
+//        adview.loadAd(adRequest);
 
     }
 

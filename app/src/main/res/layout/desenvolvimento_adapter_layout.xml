@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="6dp"
-        android:layout_margin="6dp">
+        android:layout_margin="@dimen/trade_size_dp_6"
+        android:padding="@dimen/trade_size_dp_6">
 
 
         <TextView
-            android:layout_width="match_parent"
             android:id="@+id/textview_desenvolvimento"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:layout_margin="3dp" />
+            android:layout_margin="@dimen/trade_size_dp_3"
+            android:textAlignment="center" />
 
-
-        </android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

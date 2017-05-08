@@ -3,19 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
     android:id="@+id/card_view"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="3dp"
+    android:layout_margin="@dimen/trade_size_dp_3"
     android:foreground="?attr/selectableItemBackground"
-    app:cardCornerRadius="2dp"
-    app:cardElevation="3dp"
+    app:cardCornerRadius="@dimen/trade_size_dp_2"
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="false"
-    card_view:cardElevation="0dp">
+    card_view:cardElevation="@trade_size_dp_3">
 
     <FrameLayout
-        android:layout_width="@dimen/poster_activity_width"
-        android:layout_height="@dimen/poster_activity_height">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/img_popular_person"
@@ -32,13 +31,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:layout_margin="1dp"
+            android:layout_margin="@dimen/trade_size_dp_1"
             android:background="@color/black_transparente"
             android:gravity="top|center_horizontal"
             android:lines="1"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="@dimen/trade_txt_size_sp_16"
             android:typeface="serif"
             android:visibility="invisible" />
 

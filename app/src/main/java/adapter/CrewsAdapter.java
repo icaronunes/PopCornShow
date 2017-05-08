@@ -57,7 +57,7 @@ public class CrewsAdapter extends RecyclerView.Adapter<CrewsAdapter.CrewsViewHol
         //Log.d(TAG, "onBindViewHolder: " + personCrew.getProfilePath());
         Picasso.with(context)
                 .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + personCrew.getProfilePath())
-                .placeholder(R.drawable.person)
+                .error(R.drawable.person)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.img_crew);
