@@ -4,20 +4,20 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="2dp"
+    android:padding="@dimen/trade_size_dp_2"
     android:weightSum="1">
 
     <FrameLayout
-        android:layout_width="wrap_content"
         android:id="@+id/frame_youtube_view_thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:clickable="true"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
-        android:layout_height="wrap_content">
+        android:foreground="?attr/selectableItemBackgroundBorderless">
 
         <com.google.android.youtube.player.YouTubeThumbnailView
             android:id="@+id/youtube_view_thumbnail"
-            android:layout_width="@dimen/trailer_width"
-            android:layout_height="@dimen/trailer_height"
+            android:layout_width="@dimen/trade_size_dp_190"
+            android:layout_height="@dimen/trade_size_dp_140"
             android:layout_gravity="center_vertical|center_horizontal|center" />
 
         <ImageView
@@ -25,9 +25,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:src="@drawable/play"
             android:contentDescription="Play Trailer"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/play" />
     </FrameLayout>
 
 </LinearLayout>

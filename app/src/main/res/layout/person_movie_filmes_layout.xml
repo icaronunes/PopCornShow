@@ -9,21 +9,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageButton
+            android:id="@+id/img_poster_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cropToPadding="true"
+            android:elevation="1dp"
+            android:padding="2dp"
+            android:scaleType="centerCrop" />
+
         <ProgressBar
             android:id="@+id/progress_poster_grid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:elevation="3dp" />
-
-        <ImageButton
-            android:id="@+id/img_poster_grid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:cropToPadding="true"
-            android:elevation="1dp"
-            android:padding="2dp"
-            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/text_title_crew"

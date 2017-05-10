@@ -4,19 +4,21 @@
     android:id="@+id/scroll_similares_linear"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:clickable="true"
     android:foreground="?attr/selectableItemBackground"
-    android:weightSum="1"
-    android:padding="2dp">
+    android:orientation="vertical"
+    android:padding="@dimen/trade_size_dp_2"
+    android:weightSum="1">
 
     <FrameLayout
-        android:layout_width="@dimen/poster_filme_width_padrao"
-        android:layout_height="@dimen/poster_filme_height_padrao">
+        android:layout_width="@dimen/trade_size_dp_100"
+        android:layout_height="@dimen/trade_size_dp_140">
+
 
         <ImageView
             android:id="@+id/imgPagerSimilares"
             android:layout_width="match_parent"
+            android:adjustViewBounds="false"
             android:layout_height="match_parent"
             android:foregroundGravity="center_vertical"
             android:scaleType="centerCrop" />
@@ -26,18 +28,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:indeterminate="false"
-            tools:visibility="visible" />
+            android:indeterminate="false" />
 
     </FrameLayout>
 
     <TextView
         android:id="@+id/textSimilaresNome"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="top|center_horizontal"
-        android:maxLines="2"
-        android:maxLength="22"/>
+        android:maxLength="14"
+        android:maxLines="2" />
 
 </LinearLayout>

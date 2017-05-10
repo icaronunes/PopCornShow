@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="30dp">
+    android:padding="@dimen/trade_size_dp_30">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="6dp"
+        android:elevation="@dimen/trade_size_dp_3"
         android:orientation="horizontal">
 
         <ImageView
@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:elevation="6dp"
+            android:elevation="@dimen/trade_size_dp_3"
             android:src="@drawable/tmdb_sobre" />
 
         <ImageView
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:elevation="6dp"
+            android:elevation="@dimen/trade_size_dp_3"
             android:src="@mipmap/ic_launcher" />
 
 
@@ -33,69 +33,69 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/trade_size_dp_5"
         android:text="@string/infor_tmdb"
-        android:textAlignment="center"
-        android:layout_margin="5dp" />
+        android:textAlignment="center" />
 
     <LinearLayout
-        android:layout_width="match_parent"
         android:id="@+id/play_rated"
-        android:elevation="6dp"
-        android:background="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="3dp">
+        android:background="?attr/selectableItemBackground"
+        android:elevation="@dimen/trade_size_dp_3"
+        android:padding="@dimen/trade_size_dp_3">
 
-     <ImageView
-         android:layout_width="wrap_content"
-         android:src="@drawable/google_play"
-         android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/google_play" />
 
         <TextView
             android:layout_width="match_parent"
-            android:text="@string/rated_googleplay"
             android:layout_height="match_parent"
-            android:gravity="center_vertical|center" />
+            android:gravity="center_vertical|center"
+            android:text="@string/rated_googleplay" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
         android:id="@+id/twitter"
-        android:background="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="3dp">
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/trade_size_dp_3">
 
         <ImageView
             android:layout_width="wrap_content"
-            android:src="@drawable/twitter"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/twitter" />
 
         <TextView
             android:layout_width="match_parent"
-            android:text="@string/twitter_text"
             android:layout_height="match_parent"
-            android:gravity="center_vertical|center" />
+            android:gravity="center_vertical|center"
+            android:text="@string/twitter_text" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
         android:id="@+id/development"
-        android:elevation="6dp"
-        android:background="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="3dp">
+        android:background="?attr/selectableItemBackground"
+        android:elevation="@dimen/trade_size_dp_3"
+        android:padding="@dimen/trade_size_dp_3">
 
         <ImageView
             android:layout_width="wrap_content"
-            android:src="@drawable/android"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/android" />
 
         <TextView
             android:layout_width="match_parent"
-            android:text="@string/ajuda_desenvolvimento"
             android:layout_height="match_parent"
-            android:gravity="center_vertical|center" />
+            android:gravity="center_vertical|center"
+            android:text="@string/ajuda_desenvolvimento" />
 
     </LinearLayout>
 
@@ -103,7 +103,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/trade_size_dp_16"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -115,9 +115,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/trade_size_dp_3"
+            android:layout_marginStart="@dimen/trade_size_dp_3"
             android:autoLink="email"
-            android:text="@string/email"
-            android:layout_marginLeft="3dp" />
+            android:text="@string/email" />
 
 
     </LinearLayout>

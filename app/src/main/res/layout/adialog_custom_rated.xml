@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_weight="1"
-    android:weightSum="1"
+    android:weightSum="100"
     android:layout_marginTop="@dimen/trade_size_dp_6">
 
     <TextView
@@ -17,13 +17,14 @@
 
     <RatingBar
         android:id="@+id/ratingBar_rated"
-        android:layout_width="wrap_content"
+        style="@style/CustomRatingBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numStars="10"
         android:layout_gravity="center"
-        android:stepSize="1"
         android:isIndicator="false"
-        style="@style/CustomRatingBar" />
+        android:numStars="10"
+        android:stepSize="1"
+        android:weightSum="100" />
 
     <LinearLayout
         android:layout_width="match_parent"

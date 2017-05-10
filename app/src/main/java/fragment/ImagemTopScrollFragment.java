@@ -60,6 +60,7 @@ public class ImagemTopScrollFragment extends Fragment {
                     .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 5)) + topMains.getImagem())
                     .error(R.drawable.top_empty)
                     .into(imageView);
+
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

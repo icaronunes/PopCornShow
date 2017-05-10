@@ -205,7 +205,8 @@
     <string name="ops_seguir_novamente">Oops. Something went wrong. If it persists, try to follow the Tvshow again.</string>
     <string name="title_marcar_ep_anteriores">Mark previous episodes as seen?</string>
     <string name="msg_marcar_ep_anteriores">All previous episodes will be marked as seen.</string>
-    <string name="corn" translatable="true">Corn</string>
+    <string name="corn" translatable="false">Corn</string>
     <string name="pop" translatable="true">Pop</string>
     <string name="nao_visto">Não Visto</string>
+    <string name="numero_de_episodios">Number of episodes</string>
 </resources>

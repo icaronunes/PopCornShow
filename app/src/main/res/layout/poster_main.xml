@@ -6,26 +6,22 @@
     android:orientation="vertical">
 
     <FrameLayout
-        android:layout_width="@dimen/poster_filme_width_padrao"
-        android:minHeight="@dimen/poster_filme_height_padrao"
-        android:minWidth="@dimen/poster_filme_width_padrao"
-        android:layout_height="@dimen/poster_filme_height_padrao">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <ImageButton
             android:id="@+id/img_poster_grid"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/trade_size_dp_2"
             android:background="@color/white"
-            android:scaleType="centerCrop"
-            android:cropToPadding="false" />
+            android:scaleType="centerCrop" />
 
         <ProgressBar
             android:id="@+id/progress_poster_grid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            />
+            android:layout_gravity="center" />
 
         <TextView
             android:id="@+id/title_main"

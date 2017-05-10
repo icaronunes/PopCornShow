@@ -12,7 +12,6 @@
         android:layout_gravity="center_horizontal"
         android:adjustViewBounds="true"
         android:contentDescription="@string/foto_principal"
-        android:elevation="3dp"
         android:scaleType="centerCrop"
         app:layout_collapseMode="parallax"
         app:layout_collapseParallaxMultiplier="1.0" />
@@ -35,10 +34,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/trade_size_dp_20"
         android:textColor="@color/white"
         android:textSize="@dimen/trade_txt_size_sp_16"
         android:textStyle="normal|bold"
+        android:elevation="@dimen/trade_size_dp_3"
         android:typeface="serif" />
 
 

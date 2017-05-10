@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:weightSum="1"
-    android:padding="2dp">
+    android:padding="@dimen/trade_size_dp_2">
 
 
     <TextView
@@ -15,15 +15,16 @@
         android:layout_gravity="center_horizontal"
         android:gravity="bottom|center_horizontal"
         android:lines="2"
-        android:maxLength="18" />
+        android:maxLength="14" />
 
-    <FrameLayout android:layout_height="@dimen/poster_person_height_padrao"
-        android:layout_width="@dimen/poster_person_width_padrao">
+    <FrameLayout android:layout_height="@dimen/trade_size_dp_140"
+        android:layout_width="@dimen/trade_size_dp_100">
 
         <ImageView
             android:id="@+id/imgPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:adjustViewBounds="false"
             android:foregroundGravity="center_vertical"
             android:scaleType="centerCrop" />
 
@@ -38,11 +39,11 @@
 
     <TextView
         android:id="@+id/textCastPersonagem"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="top|center_horizontal"
         android:maxLines="2"
-        android:maxLength="18" />
+        android:maxLength="14" />
 
 </LinearLayout>

@@ -30,7 +30,7 @@
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/trade_size_dp_250"
-            android:elevation="1dp"
+            android:elevation="@dimen/trade_size_dp_1"
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:expanded="true">

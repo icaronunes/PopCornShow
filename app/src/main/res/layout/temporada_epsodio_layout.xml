@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
     android:clickable="true"
     android:foreground="?attr/selectableItemBackground"
-    app:cardElevation="0dp">
+    app:cardElevation="@dimen/trade_size_dp_1">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,25 +14,24 @@
 
         <ImageView
             android:id="@+id/image_temp_ep"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:padding="@dimen/trade_size_dp_2"
             android:adjustViewBounds="false"
             android:background="@drawable/empty_popcorn"
             android:cropToPadding="false"
-            android:maxHeight="80dp"
-            android:maxWidth="170dp"
-            android:minHeight="80dp"
-            android:minWidth="170dp"
-            android:scaleType="centerCrop"
-            android:layout_gravity="center" />
+            android:scaleType="centerCrop" />
 
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="6dp"
-            android:layout_marginStart="6dp"
+            android:layout_marginLeft="@dimen/trade_size_dp_6"
+            android:layout_marginStart="@dimen/trade_size_dp_6"
+            android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
@@ -83,11 +81,9 @@
 
                         <ImageView
                             android:id="@+id/bt_visto"
-                            android:src="@drawable/icon_reviews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingStart="30dp"
-                            android:paddingLeft="30dp" />
+                            android:padding="@dimen/trade_size_dp_3" />
 
 
                     </LinearLayout>

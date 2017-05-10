@@ -99,7 +99,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
                 .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context,2)) + episode.getStillPath())
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-                //.error(R.drawable.empty_popcorn)
+                .error(R.drawable.empty_popcorn)
                 .into(holder.poster);
 
         if (!seguindo){

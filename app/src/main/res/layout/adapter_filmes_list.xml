@@ -3,37 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
     android:id="@+id/card_view"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/trade_size_dp_3"
     android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="@dimen/trade_size_dp_4"
-    card_view:cardElevation="@dimen/trade_size_dp_3"
     app:cardElevation="@dimen/trade_size_dp_3"
-    android:layout_margin="@dimen/trade_size_dp_3">
+    card_view:cardElevation="@dimen/trade_size_dp_3">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imgFilme"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:contentDescription="@string/imagem_filme"
                 android:scaleType="centerCrop" />
 
-            <include layout="@layout/include_progress"  />
+            <include layout="@layout/include_progress" />
 
             <TextView
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:layout_marginLeft="@dimen/trade_size_dp_6"
                 android:layout_marginRight="@dimen/trade_size_dp_6"
                 android:background="@color/black_transparente"
@@ -41,8 +42,7 @@
                 android:gravity="top|center_horizontal"
                 android:textColor="@color/white"
                 android:textSize="@dimen/trade_txt_size_sp_16"
-                android:typeface="serif"
-                android:layout_gravity="bottom" />
+                android:typeface="serif" />
 
         </FrameLayout>
     </LinearLayout>

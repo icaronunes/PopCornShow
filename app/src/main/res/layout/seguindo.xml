@@ -4,14 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ProgressBar
-        android:id="@+id/progressBarTemporadas"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:indeterminate="false"
-        android:layout_marginTop="50dp" />
-
     <TextView
         android:id="@+id/text_search_empty"
         android:layout_width="match_parent"
@@ -25,5 +17,13 @@
         android:id="@+id/seguindo_recycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBarTemporadas"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:indeterminate="false" />
 
 </FrameLayout>

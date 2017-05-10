@@ -198,4 +198,5 @@
     <string name="ops_seguir_novamente">Oops. Algo deu errado. Se persistir, tente seguir a série novamente.</string>
     <string name="title_marcar_ep_anteriores">Marcar episódios anteriores como assistidos?</string>
     <string name="msg_marcar_ep_anteriores">Todos os episódios anteriores serão marcados como vistos.</string>
+    <string name="numero_de_episodios">Número de episodios</string>
 </resources>

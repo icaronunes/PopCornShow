@@ -182,4 +182,5 @@
     <string name="ops_seguir_novamente">Vaya. Algo salió mal. Si persiste, intente seguir la serie de nuevo.</string>
     <string name="title_marcar_ep_anteriores">Marcos episodios anteriores como se ve?</string>
     <string name="msg_marcar_ep_anteriores">Todos los episodios anteriores serán marcados como se ve.</string>
+    <string name="numero_de_episodios">Número de episodios</string>
 </resources>
