@@ -3,7 +3,7 @@
     <item android:state_pressed="true" >
         <shape android:shape="oval"  >
             <corners android:radius="6dip" />
-            <gradient android:gradientRadius="-60" android:startColor="@color/black"  />
+            <gradient android:gradientRadius="-60" android:startColor="@color/white"  />
         </shape>
     </item>
     <!--<item android:state_focused="true">-->
@@ -16,7 +16,7 @@
     <item >
         <shape android:shape="oval" >
             <corners android:radius="30dip" />
-            <solid  android:color="@color/black_transparente_produtora"
+            <solid  android:color="@color/black_button"
                 android:width="20dip"/>
         </shape>
     </item>

@@ -12,7 +12,7 @@
         <ImageButton
             android:id="@+id/img_poster_grid"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="@dimen/trade_size_dp_2"
             android:background="@color/white"
             android:scaleType="centerCrop" />
@@ -25,7 +25,7 @@
 
         <TextView
             android:id="@+id/title_main"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLength="10"
             android:visibility="invisible" />

@@ -1,7 +1,7 @@
 <resources>
     <!-- Cores do Tema Material -->
     <color name="primary">#111c54</color>
-    <color name="primary_dark">#02030e</color>
+    <color name="primary_dark">#020413</color>
     <color name="control_highlight">#B3E5FC</color>
     <color name="accent">#FF4081</color>
 
@@ -11,9 +11,9 @@
     <color name="transparent2">#37000000</color>
     <color name="black_transparente_produtora">#36000000</color>
     <color name="white">#ffffff</color>
-    <color name="blue">#020259</color>
+    <color name="blue">#137cbe</color>
 
-    <color name="red">#850101</color>
+    <color name="red">#c70202</color>
     <color name="green">#0f0</color>
     <color name="yellow">#fff000</color>
     <color name="gray">#cccccc</color>
@@ -26,6 +26,7 @@
     <!-- verde -->
     <color name="refresh_progress_3">#CC0000</color>
     <color name="black">#000000</color>
+    <color name="black_button">#fe6c6666</color>
     <color name="black_transparente">#32767676</color>
     <color name="play_video">#86767676</color>
     <color name="colorFAB">#2196F3</color>

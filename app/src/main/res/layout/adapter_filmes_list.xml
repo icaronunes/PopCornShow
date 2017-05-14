@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:contentDescription="@string/imagem_filme"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerInside" />
 
             <include layout="@layout/include_progress" />
 

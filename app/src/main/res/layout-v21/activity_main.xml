@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layoyt"
     android:layout_width="match_parent"
+    android:background="@color/accent2"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
@@ -10,7 +11,7 @@
         android:id="@+id/coordinator_layout_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/accent2"
         app:layout_scrollFlags="scroll"
         android:fillViewport="true"
         android:fitsSystemWindows="false">
