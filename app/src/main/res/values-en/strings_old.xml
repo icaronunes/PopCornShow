@@ -93,7 +93,7 @@
     <string name="status">Status:</string>
     <string name="suas_listas">Your Lists</string>
     <string name="tempo_nao_informado">Time N/A</string>
-    <string name="temporada">Season</string>
+    <string name="temporada">"Season: "</string>
     <string name="temporadas">Seasons</string>
     <string name="text_logoff_dialog">After logging out, it will not be possible to interact with the application.</string>
 

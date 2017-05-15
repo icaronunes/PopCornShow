@@ -14,8 +14,8 @@
             android:id="@+id/img_search"
             android:layout_width="@dimen/trade_size_dp_100"
             android:layout_height="@dimen/trade_size_dp_147"
-            android:minHeight="@dimen/poster_filme_height_padrao"
-            android:minWidth="@dimen/poster_filme_width_padrao"
+            android:minHeight="@dimen/trade_size_dp_147"
+            android:minWidth="@dimen/trade_size_dp_100"
             android:scaleType="centerCrop" />
 
         <LinearLayout
@@ -42,7 +42,6 @@
                     android:id="@+id/search_data_lancamento"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:textSize="@dimen/trade_txt_size_sp_24" />
 
                 <LinearLayout
@@ -55,8 +54,8 @@
 
                         <ImageView
                             android:id="@+id/estrela"
-                            android:layout_width="@dimen/icon_activity_padrao"
-                            android:layout_height="@dimen/icon_activity_padrao"
+                            android:layout_width="@dimen/trade_size_dp_42"
+                            android:layout_height="@dimen/trade_size_dp_42"
                             android:src="@android:drawable/star_big_on"
                             android:tint="@color/yellow"
                             android:visibility="visible" />

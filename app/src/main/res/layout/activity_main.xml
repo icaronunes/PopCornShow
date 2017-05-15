@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layoyt"
     android:layout_width="match_parent"
-    android:background="@color/accent2"
     android:layout_height="match_parent"
+    android:background="@color/accent2"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/accent2"
         android:fillViewport="true"
         android:fitsSystemWindows="false"
         app:layout_scrollFlags="scroll">
@@ -22,6 +22,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="top|start"
             android:background="@color/transparent"
+            android:nestedScrollingEnabled="false"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed" />
 
@@ -30,7 +31,8 @@
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/trade_size_dp_250"
-            android:fitsSystemWindows="false"
+            android:elevation="@dimen/trade_size_dp_1"
+            android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:expanded="true">
 
@@ -40,9 +42,16 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom"
                 android:background="@color/accent2"
-                android:fitsSystemWindows="false"
                 app:contentScrim="@android:drawable/screen_background_light_transparent"
-                app:title="">
+                app:title=" ">
+
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:elevation="@dimen/trade_size_dp_1"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
                 <android.support.design.widget.TabLayout
@@ -51,7 +60,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_marginTop="@dimen/trade_size_dp_40"
-                    android:background="@color/accent2" />
+                    android:background="@color/accent2"
+
+                    android:elevation="@dimen/trade_size_dp_3" />
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewpage_top_main"
@@ -61,13 +72,6 @@
                     android:background="@color/transparent"
                     android:contentDescription="@string/foto_principal"
                     android:scaleType="centerCrop" />
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
                 <com.viewpagerindicator.CirclePageIndicator
                     android:id="@+id/indication_main"

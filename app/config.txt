@@ -1,22 +1,24 @@
 -injars /home/icaro/Documentos/workspace/Filme/app/libs/YouTubeAndroidPlayerApi.jar(**.class)
+-injars /home/icaro/.android/build-cache/3b9f4588031c7eb0fc376a200ca93f76d77dfe23/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/90efdea8981abcd56a7485cbf65410ffe9f6139b/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/82c9a795a84f05f45988f6cbcbd7df89ca14996b/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/d193ddd64bd265e34e58ef9b300582f0e1395588/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar(**.class)
--injars /opt/android-sdk-linux/extras/android/m2repository/com/android/support/support-annotations/25.3.0/support-annotations-25.3.0.jar(**.class)
+-injars /home/icaro/.android/build-cache/42cc5d278035d5f9ee73bde364f4d4112ff67faa/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.4.4/e2ff13c3de2f5a2ab2449a3dace2b0d1c37bd8ee/jackson-databind-2.4.4.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/javax.annotation/javax.annotation-api/1.2/479c1e06db31c432330183f5cae684163f186146/javax.annotation-api-1.2.jar(**.class)
--injars /home/icaro/.android/build-cache/683ed92a77ca459a8f2fd4379cb7085634583a49/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-applinks/1.4.0/8ad21bf21784dacce5f2043afb97218cc377e835/bolts-applinks-1.4.0.jar(**.class)
 -injars /home/icaro/.android/build-cache/da55826f6a3bce0a7718d275ed9ffe6c2fae43d6/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/ba413094e8e25a0ed4b21d1a9dd6fa0034421f08/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/7cc9205e0c2bf07eedb6064eda48bdf2e04ce491/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.21/139535a69a4239db087de9bab0bee568bf8e0b70/slf4j-api-1.7.21.jar(**.class)
 -injars /home/icaro/.android/build-cache/eae8ecc140e44d150e8f7c4c987e4e770c754526/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/b272e6fc2b3da4304f843eea5b2feea4ffe33e3b/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/dc3b187acd81d634f12490c3ec39fc2b5608a1b9/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/cd9e0ac4a4704efeb6cc1bc124df5c4667afd533/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/5eea736ddc9e4d45713a9aac922155abf3765013/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/68626723179abd8dd1adc508f23dd81eff806596/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.6.0/69edde9fc4b01c9fd51d25b83428837478c27254/okhttp-3.6.0.jar(**.class)
--injars /home/icaro/.android/build-cache/59df648e1cd7d5beb08bac2ba1eeb275af5e8d75/output/jars/classes.jar(**.class)
+-injars /opt/android-sdk-linux/extras/android/m2repository/com/android/support/support-annotations/25.3.1/support-annotations-25.3.1.jar(**.class)
 -injars /home/icaro/.android/build-cache/f1f12361978a910f10cc2eee05fa0bf1f0e75d7a/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/org.slf4j/jcl-over-slf4j/1.7.7/56003dcd0a31deea6391b9e2ef2f2dc90b205a92/jcl-over-slf4j-1.7.7.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-android/1.7.21/f4f6a07c00f3996d8db58c85a3d73377b40611eb/slf4j-android-1.7.21.jar(**.class)
@@ -25,9 +27,9 @@
 -injars /opt/android-sdk-linux/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.0-alpha4/constraint-layout-solver-1.0.0-alpha4.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-annotations/2.4.4/d3dad1a494f94579fca4b6a1142fb15fb68f0b2f/jackson-annotations-2.4.4.jar(**.class)
 -injars /home/icaro/.android/build-cache/2bee4aa93ab227a3fa2f4833ab88b1060e29df8c/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/972854f4865e5275bb774eee63a8e727ef273f6d/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/cd2b79cf1dc982d68ed94f67a18477b8d7329bb9/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/80d7bfa99e43786c96d4061d20ec16f00f13d6f9/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/992ca6569dc19df1544133abb5e04ec886d70362/output/jars/classes.jar(**.class)
 -injars /home/icaro/.local/share/umake/android/android-studio/gradle/m2repository/commons-codec/commons-codec/1.10/commons-codec-1.10.jar(**.class)
 -injars /home/icaro/.android/build-cache/33d9e98ef4b7307c5799e8bc47d22aee304f0566/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/0e6a482b8c28a4006a63ed796bfd1b7e4145b6bf/output/jars/classes.jar(**.class)
@@ -37,6 +39,7 @@
 -injars /home/icaro/.android/build-cache/14dc4713a2b5143b46227eb6c338a3b9cfa0858b/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.0/c4ba5371a29ac9b2ad6129b1d39ea38750043eff/gson-2.8.0.jar(**.class)
 -injars /home/icaro/.android/build-cache/c3eeede4aa748619ce89da6c0b32be52fa666b22/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/cc8623df0fa2b1085c17610b0e25b6bc34345e60/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/679a220a18b53e74c51e04da28bf538bc6fbeef2/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/cf353669bd8becff9b9fa96a71f7b86b47d05e53/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/3827bee230c4296660196821d48b235ff76ac308/output/jars/classes.jar(**.class)
@@ -44,27 +47,25 @@
 -injars /home/icaro/.android/build-cache/b99cfee63a181c390e344d51810eb579c64a0c55/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/651b45e92f77afb55048a4e22fe9e526119aa38c/output/jars/classes.jar(**.class)
 -injars /home/icaro/.local/share/umake/android/android-studio/gradle/m2repository/com/google/guava/guava/18.0/guava-18.0.jar(**.class)
--injars /home/icaro/.android/build-cache/15d76bbc91d77e0fd90aa4edf7332c7cb027067f/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/ad31c48dba0e4ab326f918cd94fbb739ae67e516/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/0d1c3d4d7f765a1da158f1c30b890c8fc2aec064/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.11.0/840897fcd7223a8143f1d9b6f69714e7be34fd50/okio-1.11.0.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.google.gms/google-services/3.0.0/ee538ce9cf4148485e43017c5542202b8c78ff8e/google-services-3.0.0.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.3.2/90a3822c38ec8c996e84c16a3477ef632cbc87a3/commons-lang3-3.3.2.jar(**.class)
--injars /home/icaro/.android/build-cache/dd7de2d25e543574e9cb9572899e360942bb5ce3/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/02daac274bebbf743b76420d367d3ec3c01271d4/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/549b0dab4583e70190590fb9de2ee5c5be508139/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/cdc8e3f978daecab2afc95487ed19a957cc11c22/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/info.movito/themoviedbapi/1.4/c5b381f7e001aa76b5d79479755b1face70cf02b/themoviedbapi-1.4.jar(**.class)
--injars /home/icaro/.android/build-cache/33298919a128ff59b07033cc610c5305fcdc4674/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/8b58d1143c646057aac06906c6b1bd288c853e15/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/23600e3e8e3fe74286dcd9a1a282a67d13ea6664/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/9921b745965ef6fefed780ee15c76b62778d2ffc/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/25e27b00d02fdea6b3136ba9bfd6d57a00487d93/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/67d1dc9a28d73373cf026c6193e0248936da88b7/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/3daac4eb42f9a3abdd183c58f2410edea5f1aea8/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/c78b1264c5481d7419dee6d46864daf2cabb06d4/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/132a91bdadbebb4386ccc3f852f738c3ca977513/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/7008604e52fd18a8f3bb55a191a172adbe83ede5/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/1115245e6d921398854f86edeee98db6d6a3868e/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/089aae09b38f5aa047a730edd4d6d8013929a32c/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/15b2ef23fed795560c1a9c94a39fa16269c64854/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/e7ccd6efad7238ed49844e110825fb8b2083a902/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/76b7bcd8b071a6ce90caf09b8d744764efb7d797/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/4e5832f84fc26d0ab524e4ca9e51e75706e39614/output/jars/classes.jar(**.class)
+-injars /home/icaro/.android/build-cache/4524b32fc300261dba8f687ff390b5042cff5bd3/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.4.4/c5cd3347c0a86d0dcfbf3da593d8431d5a789d54/jackson-core-2.4.4.jar(**.class)
 -injars /home/icaro/.android/build-cache/1c607ab9c1a2438c94ba94c0e0631a2adf2e8fb8/output/jars/classes.jar(**.class)
 -injars /home/icaro/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar(**.class)
@@ -74,7 +75,6 @@
 -injars /home/icaro/.android/build-cache/48cd688c81f2304907b4aff60803b160e8f3f551/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/e3a7dd7ebc6329088359d27040dd765b8379b5f3/output/jars/classes.jar(**.class)
 -injars /home/icaro/.android/build-cache/ea196e392cb0bfe4417623e63b5dc39c938b98db/output/jars/classes.jar(**.class)
--injars /home/icaro/.android/build-cache/4f7e54bbc885a01aedfdfd5ac1070654ffb38828/output/jars/classes.jar(**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/mergeJavaRes/flavor21/release/jars/2/1f/main.jar(!**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/mergeJavaRes/flavor21/release/folders/2/1f/main(!**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/classes/flavor21/release(**.class)
@@ -1965,19 +1965,16 @@
 
 # view res/layout/activity_crews.xml #generated:10
 # view res/layout/activity_elenco.xml #generated:9
-# view res/layout/activity_filme.xml #generated:43
+# view res/layout/activity_filme.xml #generated:44
 # view res/layout/activity_list_main.xml #generated:15
 # view res/layout/activity_main.xml #generated:30
 # view res/layout/activity_person.xml #generated:8
 # view res/layout/activity_person_layout.xml #generated:9
 # view res/layout/activity_person_netflix.xml #generated:10
 # view res/layout/activity_similares.xml #generated:8
-# view res/layout/produtora_layout.xml #generated:43
+# view res/layout/produtora_layout.xml #generated:42
 # view res/layout/search_layout.xml #generated:15
-# view res/layout/tvserie_activity.xml #generated:30
-# view v21/res/layout-v21/activity_filme.xml #generated:45
-# view v21/res/layout-v21/activity_main.xml #generated:29
-# view v21/res/layout-v21/tvserie_activity.xml #generated:27
+# view res/layout/tvserie_activity.xml #generated:26
 -keep class android.support.design.widget.AppBarLayout {
     <init>(...);
 }
@@ -1987,13 +1984,10 @@
     <init>(...);
 }
 
-# view res/layout/activity_filme.xml #generated:50
-# view res/layout/activity_main.xml #generated:38
-# view res/layout/produtora_layout.xml #generated:52
-# view res/layout/tvserie_activity.xml #generated:37
-# view v21/res/layout-v21/activity_filme.xml #generated:53
-# view v21/res/layout-v21/activity_main.xml #generated:38
-# view v21/res/layout-v21/tvserie_activity.xml #generated:34
+# view res/layout/activity_filme.xml #generated:52
+# view res/layout/activity_main.xml #generated:39
+# view res/layout/produtora_layout.xml #generated:51
+# view res/layout/tvserie_activity.xml #generated:33
 -keep class android.support.design.widget.CollapsingToolbarLayout {
     <init>(...);
 }
@@ -2009,22 +2003,16 @@
 # view res/layout/design_bottom_sheet_dialog.xml #generated:17
 # view res/layout/produtora_layout.xml #generated:2
 # view res/layout/search_layout.xml #generated:10
-# view res/layout/tvserie_activity.xml #generated:10
-# view v21/res/layout-v21/activity_filme.xml #generated:10
-# view v21/res/layout-v21/activity_main.xml #generated:9
-# view v21/res/layout-v21/tvserie_activity.xml #generated:10
+# view res/layout/tvserie_activity.xml #generated:9
 -keep class android.support.design.widget.CoordinatorLayout {
     <init>(...);
 }
 
-# view res/layout/activity_filme.xml #generated:83
+# view res/layout/activity_filme.xml #generated:88
 # view res/layout/activity_list_main.xml #generated:50
-# view res/layout/activity_main.xml #generated:88
+# view res/layout/activity_main.xml #generated:89
 # view res/layout/search_layout.xml #generated:80
-# view res/layout/tvserie_activity.xml #generated:83
-# view v21/res/layout-v21/activity_filme.xml #generated:89
-# view v21/res/layout-v21/activity_main.xml #generated:88
-# view v21/res/layout-v21/tvserie_activity.xml #generated:81
+# view res/layout/tvserie_activity.xml #generated:80
 -keep class android.support.design.widget.NavigationView {
     <init>(...);
 }
@@ -2037,23 +2025,19 @@
 
 # view res/layout/activity_epsodios.xml #generated:8
 # view res/layout/activity_favorite.xml #generated:10
-# view res/layout/activity_main.xml #generated:50
+# view res/layout/activity_main.xml #generated:57
 # view res/layout/activity_person.xml #generated:15
 # view res/layout/activity_usuario_list.xml #generated:11
-# view res/layout/tvserie_activity.xml #generated:68
-# view v21/res/layout-v21/activity_main.xml #generated:56
-# view v21/res/layout-v21/tvserie_activity.xml #generated:66
+# view res/layout/tvserie_activity.xml #generated:65
 -keep class android.support.design.widget.TabLayout {
     <init>(...);
 }
 
-# view res/layout/activity_login.xml #generated:56
-# view res/layout/activity_login.xml #generated:74
-# view res/layout/adialog_custom_login.xml #generated:34
-# view res/layout/adialog_custom_login.xml #generated:45
-# view res/layout/criar_login.xml #generated:13
-# view res/layout/criar_login.xml #generated:33
-# view res/layout/criar_login.xml #generated:51
+# view res/layout/activity_login.xml #generated:59
+# view res/layout/activity_login.xml #generated:77
+# view res/layout/criar_login.xml #generated:14
+# view res/layout/criar_login.xml #generated:34
+# view res/layout/criar_login.xml #generated:52
 # view res/layout/recuperar_senha_layout.xml #generated:16
 # view res/layout/reset_senha.xml #generated:19
 # view res/layout/reset_senha.xml #generated:48
@@ -2063,22 +2047,18 @@
 
 # view res/layout/activity_epsodios.xml #generated:20
 # view res/layout/activity_favorite.xml #generated:20
-# view res/layout/activity_filme.xml #generated:60
+# view res/layout/activity_filme.xml #generated:63
 # view res/layout/activity_main.xml #generated:19
-# view res/layout/activity_main.xml #generated:59
+# view res/layout/activity_main.xml #generated:67
 # view res/layout/activity_person.xml #generated:24
-# view res/layout/activity_scroll_poster.xml #generated:18
+# view res/layout/activity_scroll_poster.xml #generated:15
 # view res/layout/activity_usuario_list.xml #generated:21
 # view res/layout/dialog_collection.xml #generated:8
 # view res/layout/intro_layout.xml #generated:5
 # view res/layout/intro_layout2.xml #generated:6
-# view res/layout/tvserie_activity.xml #generated:19
-# view v21/res/layout-v21/activity_filme.xml #generated:64
-# view v21/res/layout-v21/activity_main.xml #generated:18
-# view v21/res/layout-v21/activity_main.xml #generated:66
+# view res/layout/tvserie_activity.xml #generated:17
 # view v21/res/layout-v21/intro_layout.xml #generated:5
 # view v21/res/layout-v21/intro_layout2.xml #generated:6
-# view v21/res/layout-v21/tvserie_activity.xml #generated:18
 -keep class android.support.v4.view.ViewPager {
     <init>(...);
 }
@@ -2088,9 +2068,6 @@
 # view res/layout/activity_main.xml #generated:2
 # view res/layout/search_layout.xml #generated:2
 # view res/layout/tvserie_activity.xml #generated:2
-# view v21/res/layout-v21/activity_filme.xml #generated:2
-# view v21/res/layout-v21/activity_main.xml #generated:2
-# view v21/res/layout-v21/tvserie_activity.xml #generated:2
 -keep class android.support.v4.widget.DrawerLayout {
     <init>(...);
 }
@@ -2098,8 +2075,6 @@
 # view res/layout/abc_alert_dialog_material.xml #generated:41
 # view res/layout/activity_filme.xml #generated:17
 # view res/layout/tvshow_info.xml #generated:8
-# view v21/res/layout-v21/activity_filme.xml #generated:18
-# view v21/res/layout-v21/tvshow_info.xml #generated:8
 -keep class android.support.v4.widget.NestedScrollView {
     <init>(...);
 }
@@ -2114,9 +2089,9 @@
 
 # view res/layout/activity_lista.xml #generated:11
 # view res/layout/activity_site.xml #generated:5
-# view res/layout/fragment_list_filme.xml #generated:16
+# view res/layout/fragment_list_filme.xml #generated:15
 # view res/layout/produtora_layout.xml #generated:11
-# view res/layout/search_layout.xml #generated:37
+# view res/layout/search_layout.xml #generated:36
 -keep class android.support.v4.widget.SwipeRefreshLayout {
     <init>(...);
 }
@@ -2178,7 +2153,7 @@
     <init>(...);
 }
 
-# view res/layout/epsodio_fragment.xml #generated:151
+# view res/layout/epsodio_fragment.xml #generated:155
 -keep class android.support.v7.widget.AppCompatRatingBar {
     <init>(...);
 }
@@ -2188,15 +2163,19 @@
     <init>(...);
 }
 
-# view res/layout/actornetflix_list_adapter.xml #generated:2
+# view res/layout/actor_netflix_list_adapter.xml #generated:2
 # view res/layout/adapter_filmes_list.xml #generated:2
 # view res/layout/adapter_person_popular.xml #generated:2
 # view res/layout/adapter_produtora.xml #generated:2
 # view res/layout/adapter_similares.xml #generated:2
 # view res/layout/calendar_adapter.xml #generated:2
 # view res/layout/com_facebook_device_auth_dialog_fragment.xml #generated:22
+# view res/layout/crews_filmes_layout.xml #generated:2
+# view res/layout/crews_list_adapter.xml #generated:2
 # view res/layout/desenvolvimento_adapter_layout.xml #generated:7
+# view res/layout/elenco_list_adapter.xml #generated:2
 # view res/layout/lista.xml #generated:2
+# view res/layout/person_movie_filmes_layout.xml #generated:2
 # view res/layout/reviews.xml #generated:2
 # view res/layout/search_list_adapter.xml #generated:2
 # view res/layout/season_layout.xml #generated:2
@@ -2228,7 +2207,7 @@
     <init>(...);
 }
 
-# view res/layout/activity_crews.xml #generated:33
+# view res/layout/activity_crews.xml #generated:32
 # view res/layout/activity_elenco.xml #generated:38
 # view res/layout/activity_lista.xml #generated:21
 # view res/layout/activity_person_crews.xml #generated:12
@@ -2236,36 +2215,29 @@
 # view res/layout/activity_person_layout.xml #generated:31
 # view res/layout/activity_person_movies.xml #generated:12
 # view res/layout/activity_person_netflix.xml #generated:33
-# view res/layout/activity_person_popular.xml #generated:14
+# view res/layout/activity_person_popular.xml #generated:16
 # view res/layout/activity_person_tvshow.xml #generated:11
 # view res/layout/activity_reviews.xml #generated:32
 # view res/layout/activity_similares.xml #generated:37
 # view res/layout/desenvolvimento_layout.xml #generated:10
-# view res/layout/filmes_main.xml #generated:40
+# view res/layout/filmes_main.xml #generated:41
 # view res/layout/filmes_main.xml #generated:57
-# view res/layout/fragment_container_filme.xml #generated:268
-# view res/layout/fragment_container_filme.xml #generated:285
-# view res/layout/fragment_container_filme.xml #generated:302
-# view res/layout/fragment_container_filme.xml #generated:320
-# view res/layout/fragment_list_filme.xml #generated:21
-# view res/layout/poster_grid.xml #generated:18
-# view res/layout/produtora_layout.xml #generated:18
-# view res/layout/search_layout.xml #generated:43
-# view res/layout/seguindo.xml #generated:7
+# view res/layout/fragment_container_filme.xml #generated:284
+# view res/layout/fragment_container_filme.xml #generated:303
+# view res/layout/fragment_container_filme.xml #generated:321
+# view res/layout/fragment_container_filme.xml #generated:339
+# view res/layout/fragment_list_filme.xml #generated:20
+# view res/layout/poster_grid.xml #generated:19
+# view res/layout/produtora_layout.xml #generated:17
+# view res/layout/search_layout.xml #generated:42
+# view res/layout/seguindo.xml #generated:16
 # view res/layout/temporada_layout.xml #generated:12
 # view res/layout/temporadas.xml #generated:7
-# view res/layout/tvshow_info.xml #generated:277
-# view res/layout/tvshow_info.xml #generated:294
-# view res/layout/tvshow_info.xml #generated:311
-# view res/layout/tvshow_main.xml #generated:40
-# view res/layout/tvshow_main.xml #generated:55
-# view v21/res/layout-v21/fragment_container_filme.xml #generated:274
-# view v21/res/layout-v21/fragment_container_filme.xml #generated:293
-# view v21/res/layout-v21/fragment_container_filme.xml #generated:312
-# view v21/res/layout-v21/fragment_container_filme.xml #generated:330
-# view v21/res/layout-v21/tvshow_info.xml #generated:282
-# view v21/res/layout-v21/tvshow_info.xml #generated:300
-# view v21/res/layout-v21/tvshow_info.xml #generated:318
+# view res/layout/tvshow_info.xml #generated:279
+# view res/layout/tvshow_info.xml #generated:297
+# view res/layout/tvshow_info.xml #generated:315
+# view res/layout/tvshow_main.xml #generated:41
+# view res/layout/tvshow_main.xml #generated:56
 -keep class android.support.v7.widget.RecyclerView {
     <init>(...);
 }
@@ -2276,15 +2248,12 @@
 }
 
 # view res/layout/abc_screen_toolbar.xml #generated:36
-# view res/layout/activity_filme.xml #generated:67
+# view res/layout/activity_filme.xml #generated:72
 # view res/layout/activity_list_main.xml #generated:20
-# view res/layout/activity_main.xml #generated:68
+# view res/layout/activity_main.xml #generated:49
 # view res/layout/include_toolbar.xml #generated:1
-# view res/layout/produtora_layout.xml #generated:75
-# view res/layout/tvserie_activity.xml #generated:60
-# view v21/res/layout-v21/activity_filme.xml #generated:73
-# view v21/res/layout-v21/activity_main.xml #generated:48
-# view v21/res/layout-v21/tvserie_activity.xml #generated:58
+# view res/layout/produtora_layout.xml #generated:74
+# view res/layout/tvserie_activity.xml #generated:57
 -keep class android.support.v7.widget.Toolbar {
     <init>(...);
 }
@@ -2332,26 +2301,26 @@
     <init>(...);
 }
 
-# view res/layout/activity_crews.xml #generated:45
-# view res/layout/activity_elenco.xml #generated:51
-# view res/layout/activity_favorite.xml #generated:28
-# view res/layout/activity_list_main.xml #generated:38
-# view res/layout/activity_lista.xml #generated:33
-# view res/layout/activity_person_crews.xml #generated:31
-# view res/layout/activity_person_layout.xml #generated:43
-# view res/layout/activity_person_movies.xml #generated:31
-# view res/layout/activity_person_netflix.xml #generated:55
-# view res/layout/activity_person_popular.xml #generated:24
-# view res/layout/activity_person_tvshow.xml #generated:30
+# view res/layout/activity_crews.xml #generated:43
+# view res/layout/activity_elenco.xml #generated:50
+# view res/layout/activity_favorite.xml #generated:27
+# view res/layout/activity_list_main.xml #generated:37
+# view res/layout/activity_lista.xml #generated:32
+# view res/layout/activity_person_crews.xml #generated:30
+# view res/layout/activity_person_layout.xml #generated:42
+# view res/layout/activity_person_movies.xml #generated:30
+# view res/layout/activity_person_netflix.xml #generated:54
+# view res/layout/activity_person_popular.xml #generated:25
+# view res/layout/activity_person_tvshow.xml #generated:29
 # view res/layout/activity_reviews.xml #generated:10
-# view res/layout/activity_similares.xml #generated:49
-# view res/layout/activity_usuario_list.xml #generated:33
-# view res/layout/epsodio_fragment.xml #generated:269
+# view res/layout/activity_similares.xml #generated:47
+# view res/layout/activity_usuario_list.xml #generated:32
+# view res/layout/epsodio_fragment.xml #generated:272
 # view res/layout/poster_grid.xml #generated:9
-# view res/layout/produtora_layout.xml #generated:30
-# view res/layout/search_layout.xml #generated:67
+# view res/layout/produtora_layout.xml #generated:28
+# view res/layout/search_layout.xml #generated:66
 # view res/layout/temporada_layout.xml #generated:18
-# view res/layout/youtube_layout.xml #generated:25
+# view res/layout/youtube_layout.xml #generated:26
 -keep class com.google.android.gms.ads.AdView {
     <init>(...);
 }
@@ -2376,7 +2345,7 @@
     <init>(...);
 }
 
-# view res/layout/activity_login.xml #generated:134
+# view res/layout/activity_login.xml #generated:137
 -keep class com.google.android.gms.common.SignInButton {
     <init>(...);
 }
@@ -2481,19 +2450,18 @@
     <init>(...);
 }
 
-# view res/layout/activity_main.xml #generated:75
-# view v21/res/layout-v21/activity_main.xml #generated:75
+# view res/layout/activity_main.xml #generated:76
 -keep class com.viewpagerindicator.CirclePageIndicator {
     <init>(...);
 }
 
-# view res/layout/activity_scroll_poster.xml #generated:8
+# view res/layout/activity_scroll_poster.xml #generated:7
 -keep class com.viewpagerindicator.LinePageIndicator {
     <init>(...);
 }
 
-# view res/layout/activity_login.xml #generated:141
-# view res/layout/activity_login.xml #generated:161
+# view res/layout/activity_login.xml #generated:144
+# view res/layout/activity_login.xml #generated:164
 -keep class mehdi.sakout.fancybuttons.FancyButton {
     <init>(...);
 }
@@ -2523,10 +2491,10 @@
     <init>(...);
 }
 
-# onClick res/layout/activity_login.xml #generated:119
-# onClick res/layout/activity_login.xml #generated:141
-# onClick res/layout/activity_login.xml #generated:161
-# onClick res/layout/activity_login.xml #generated:92
+# onClick res/layout/activity_login.xml #generated:122
+# onClick res/layout/activity_login.xml #generated:144
+# onClick res/layout/activity_login.xml #generated:164
+# onClick res/layout/activity_login.xml #generated:95
 -keepclassmembers class * {
     *** onclick(...);
 }

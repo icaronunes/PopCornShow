@@ -74,7 +74,7 @@
     <string name="temporadas">Temporadas</string>
     <string name="informacoes">Informações</string>
     <string name="status">Status:</string>
-    <string name="temporada">Temporada</string>
+    <string name="temporada">"Temporada: "</string>
     <string name="nota">Nota:</string>
     <string name="epsodio">Epsódio</string>
     <string name="sem_data">Sem Data</string>
@@ -199,4 +199,5 @@
     <string name="title_marcar_ep_anteriores">Marcar episódios anteriores como assistidos?</string>
     <string name="msg_marcar_ep_anteriores">Todos os episódios anteriores serão marcados como vistos.</string>
     <string name="numero_de_episodios">Número de episodios</string>
+    <string name="nao_visto">Não Visto</string>
 </resources>

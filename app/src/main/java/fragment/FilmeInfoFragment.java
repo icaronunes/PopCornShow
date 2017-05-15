@@ -302,15 +302,13 @@ public class FilmeInfoFragment extends Fragment {
             public void onClick(View view) {
                 // Log.d("FilmeInfoFragment", "Home " + movieDb.getHomepage());
                 if (movieDb.getHomepage() != "" && movieDb.getHomepage() != null) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(movieDb.getHomepage()));
-                    // Log.d("FilmeInfoFragment", "Home " + movieDb.getHomepage());
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Intent intent = new Intent(getContext(), Site.class);
+                    intent.putExtra(Constantes.SITE,  movieDb.getHomepage());
                     startActivity(intent);
 
                     bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "icon_homepage");
-                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, "Navegador");
+                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, "Site.class");
                     FirebaseAnalytics.getInstance(getContext()).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 } else {
                     BaseActivity.SnackBar(getActivity().findViewById(R.id.fab_menu_filme),

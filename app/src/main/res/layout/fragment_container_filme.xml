@@ -7,6 +7,7 @@
     android:layout_weight="1"
     android:background="@color/white"
     android:orientation="vertical"
+    android:transitionName="poster"
     android:weightSum="1">
 
     <TextView
@@ -14,14 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:layout_marginLeft="@dimen/trade_size_dp_2"
-        android:layout_marginStart="@dimen/trade_size_dp_2"
+        android:layout_marginEnd="@dimen/trade_size_dp_2"
+        android:layout_marginRight="@dimen/trade_size_dp_2"
         android:background="@color/black_transparente"
         android:gravity="top|start"
         android:lines="2"
         android:maxLines="2"
         android:minLines="1"
-        android:textSize="20sp" />
+        android:textSize="@dimen/trade_txt_size_sp_20" />
 
 
     <LinearLayout
@@ -41,7 +42,7 @@
             android:id="@+id/time_filme"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/trade_size_dp_1"
+            android:layout_marginEnd="@dimen/trade_size_dp_1"
             android:layout_marginRight="@dimen/trade_size_dp_1"
             android:layout_weight="1"
             android:gravity="end" />
@@ -69,6 +70,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/trade_size_dp_2"
+            android:layout_marginStart="@dimen/trade_size_dp_2"
             android:maxLength="30"
             android:maxLines="1" />
 
@@ -77,6 +80,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/trade_size_dp_2"
+            android:layout_marginStart="@dimen/trade_size_dp_2"
             android:gravity="end"
             android:maxLines="2" />
 
@@ -94,79 +99,86 @@
             android:id="@+id/img_poster"
             android:layout_width="@dimen/trade_size_dp_126"
             android:layout_height="@dimen/trade_size_dp_162"
-            android:contentDescription="@string/poster_filme" />
-
+            android:contentDescription="@string/poster_filme"
+            android:transitionName="poster" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:scrollbars="horizontal">
 
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_margin="@dimen/trade_size_dp_1">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:layout_margin="@dimen/trade_size_dp_1">
+
+                        <ImageView
+                            android:id="@+id/img_star"
+                            android:layout_width="@dimen/trade_size_dp_42"
+                            android:layout_height="@dimen/trade_size_dp_42"
+                            tools:src="@drawable/icon_star" />
+
+                        <TextView
+                            android:id="@+id/voto_media"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textStyle="normal|bold" />
+                    </FrameLayout>
+
 
                     <ImageView
-                        android:id="@+id/img_star"
+                        android:id="@+id/img_budget"
                         android:layout_width="@dimen/trade_size_dp_42"
                         android:layout_height="@dimen/trade_size_dp_42"
-                        tools:src="@drawable/icon_star" />
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        tools:src="@drawable/orcamento" />
 
-                    <TextView
-                        android:id="@+id/voto_media"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:textStyle="normal|bold" />
-                </FrameLayout>
-
-
-                <ImageView
-                    android:id="@+id/img_budget"
-                    android:layout_width="@dimen/trade_size_dp_42"
-                    android:layout_height="@dimen/trade_size_dp_42"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    tools:src="@drawable/orcamento" />
-
-                <ImageView
-                    android:id="@+id/icon_site"
-                    android:layout_width="@dimen/trade_size_dp_42"
-                    android:layout_height="@dimen/trade_size_dp_42"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_margin="1dp"
-                    tools:src="@drawable/site_on" />
+                    <ImageView
+                        android:id="@+id/icon_site"
+                        android:layout_width="@dimen/trade_size_dp_42"
+                        android:layout_height="@dimen/trade_size_dp_42"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:layout_margin="@dimen/trade_size_dp_1"
+                        tools:src="@drawable/site_on" />
 
 
-                <ImageView
-                    android:id="@+id/icon_collection"
-                    android:layout_width="@dimen/trade_size_dp_42"
-                    android:layout_height="@dimen/trade_size_dp_42"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_margin="1dp"
-                    tools:src="@drawable/collection_on" />
+                    <ImageView
+                        android:id="@+id/icon_collection"
+                        android:layout_width="@dimen/trade_size_dp_42"
+                        android:layout_height="@dimen/trade_size_dp_42"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:layout_margin="@dimen/trade_size_dp_1"
+                        tools:src="@drawable/collection_on" />
 
-                <ImageView
-                    android:id="@+id/icon_reviews"
-                    android:layout_width="@dimen/trade_size_dp_42"
-                    android:layout_height="@dimen/trade_size_dp_42"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_margin="1dp"
-                    android:src="@drawable/icon_reviews"
-                    tools:src="@drawable/icon_reviews" />
+                    <ImageView
+                        android:id="@+id/icon_reviews"
+                        android:layout_width="@dimen/trade_size_dp_42"
+                        android:layout_height="@dimen/trade_size_dp_42"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:layout_margin="@dimen/trade_size_dp_1"
+                        android:src="@drawable/icon_reviews"
+                        android:visibility="visible" />
 
 
-            </LinearLayout>
+                </LinearLayout>
+
+            </ScrollView>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/trade_size_dp_3"
                 android:orientation="vertical"
@@ -175,12 +187,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
+                    android:layout_margin="@dimen/trade_size_dp_1"
                     android:orientation="horizontal"
                     android:weightSum="1">
 
                     <TextView
-                        android:layout_width="@dimen/trade_size_dp_120"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/original_title" />
 
@@ -188,7 +200,9 @@
                     <TextView
                         android:id="@+id/original_title"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/trade_size_dp_2"
+                        android:layout_marginStart="@dimen/trade_size_dp_2" />
 
                 </LinearLayout>
 
@@ -199,14 +213,16 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="@dimen/trade_size_dp_120"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/spoken_languages" />
 
                     <TextView
                         android:id="@+id/spoken_languages"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/trade_size_dp_2"
+                        android:layout_marginStart="@dimen/trade_size_dp_2" />
 
                 </LinearLayout>
 
@@ -217,14 +233,16 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="@dimen/trade_size_dp_120"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/popularity" />
 
                     <TextView
                         android:id="@+id/popularity"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/trade_size_dp_2"
+                        android:layout_marginStart="@dimen/trade_size_dp_2" />
 
                 </LinearLayout>
 
@@ -236,15 +254,16 @@
 
 
                     <TextView
-                        android:layout_width="@dimen/trade_size_dp_120"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/production_countries" />
-
 
                     <TextView
                         android:id="@+id/production_countries"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/trade_size_dp_2"
+                        android:layout_marginStart="@dimen/trade_size_dp_2" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -260,29 +279,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/trade_size_dp_3"
-        android:textSize="@dimen/trade_size_dp_14" />
+        android:textSize="@dimen/trade_txt_size_sp_12" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_filme_trailer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
 
     <TextView
         android:id="@+id/textview_elenco"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/black_transparente"
         android:gravity="center_horizontal"
         android:hint="@string/elenco"
         android:text="@string/elenco"
         android:textColor="@color/primary_dark"
-        android:textSize="@dimen/trade_size_dp_18"
+        android:textSize="@dimen/trade_txt_size_sp_18"
         android:textStyle="normal|bold"
         android:visibility="invisible" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_filme_elenco"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
 
     <TextView
         android:id="@+id/textview_crews"
@@ -292,14 +314,14 @@
         android:gravity="center_horizontal"
         android:text="@string/por_tras_camera_filme"
         android:textColor="@color/primary_dark"
-        android:textSize="@dimen/trade_size_dp_18"
+        android:textSize="@dimen/trade_txt_size_sp_18"
         android:textStyle="normal|bold"
         android:visibility="invisible" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_filme_procucao"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 
     <TextView
@@ -310,14 +332,14 @@
         android:gravity="center_horizontal"
         android:text="@string/similares"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/trade_size_dp_18"
+        android:textSize="@dimen/trade_txt_size_sp_18"
         android:textStyle="normal|bold"
         android:visibility="invisible" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_filme_similares"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/imdb_site"
@@ -326,7 +348,7 @@
         android:text="@string/ver_imdb"
         android:textAlignment="center"
         android:textColor="@color/imdb"
-        android:textSize="@dimen/trade_size_dp_16" />
+        android:textSize="@dimen/trade_txt_size_sp_16" />
 
     <Button
         android:id="@+id/tmdb_site"
@@ -345,6 +367,5 @@
         android:textAlignment="center"
         android:textColor="@color/netflix"
         android:textSize="@dimen/trade_txt_size_sp_16" />
-
 
 </LinearLayout>

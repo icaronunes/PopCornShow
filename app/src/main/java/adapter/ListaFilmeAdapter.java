@@ -33,11 +33,11 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
     private boolean status = false;
 
     public ListaFilmeAdapter(FragmentActivity favotireActivity, List<FilmeDB> favoritos,
-                             ListaOnClickListener onClickListener, boolean b) {
+                             ListaOnClickListener onClickListener, boolean status) {
         this.context = favotireActivity;
         this.filmes = favoritos;
         this.onClickListener = onClickListener;
-        status = b;
+        this.status = status;
     }
 
     @Override
@@ -59,10 +59,10 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
             if (valor.length() > 3) {
                 valor = valor.substring(0, 2);
                // Log.d("Rated 2", "" + valor);
-                holder.text_rated_favoritos.setText(valor);
+                holder.rated.setText(valor);
             }
-            holder.text_rated_favoritos.setText(valor);
-            holder.text_rated_favoritos.setVisibility(View.VISIBLE);
+            holder.rated.setText(valor);
+            holder.rated.setVisibility(View.VISIBLE);
         }
 
 
@@ -71,7 +71,7 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
                     .getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + movie.getPoster())
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-                    .into(holder.img_favorite, new Callback() {
+                    .into(holder.imageView, new Callback() {
                         @Override
                         public void onSuccess() {
                             holder.progressBar.setVisibility(View.GONE);
@@ -83,14 +83,14 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
                         }
                     });
 
-            holder.img_favorite.setOnClickListener(new View.OnClickListener() {
+            holder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     onClickListener.onClick(view, position);
                 }
             });
 
-            holder.img_favorite.setOnLongClickListener(new View.OnLongClickListener() {
+            holder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
                     onClickListener.onClickLong(view, position);
@@ -117,14 +117,14 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
     }
 
      class FavoriteViewHolder extends RecyclerView.ViewHolder {
-       private ImageView img_favorite;
+       private ImageView imageView;
         private ProgressBar progressBar;
-        private TextView text_rated_favoritos;
+        private TextView rated;
 
         FavoriteViewHolder(View itemView) {
             super(itemView);
-            img_favorite = (ImageView) itemView.findViewById(R.id.img_filme_usuario);
-            text_rated_favoritos = (TextView) itemView.findViewById(R.id.text_rated_favoritos);
+            imageView = (ImageView) itemView.findViewById(R.id.img_filme_usuario);
+            rated = (TextView) itemView.findViewById(R.id.text_rated_user);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
 
         }

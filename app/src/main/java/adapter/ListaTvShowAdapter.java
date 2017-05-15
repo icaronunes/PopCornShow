@@ -127,7 +127,7 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
         FavoriteViewHolder(View itemView) {
             super(itemView);
             img_favorite = (ImageView) itemView.findViewById(R.id.img_filme_usuario);
-            text_rated_favoritos = (TextView) itemView.findViewById(R.id.text_rated_favoritos);
+            text_rated_favoritos = (TextView) itemView.findViewById(R.id.text_rated_user);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
         }
     }

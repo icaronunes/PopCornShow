@@ -140,7 +140,7 @@
     <string name="subtitle_intro_3">Nuestro sistema ahora puede realizar un seguimiento de la tvshow película o artista en este catálogo de Netflix</string>
     <string name="subtitle_intro_5">Crea tu login y disfruta</string>
     <string name="tempo_nao_informado">Tiempo N / A</string>
-    <string name="temporada">Temporada</string>
+    <string name="temporada">"Temporada: "</string>
     <string name="temporadas">Temporadas</string>
     <string name="text_logoff_dialog">Después de cerrar la sesión, no será posible interactuar con la aplicación.</string>
     <string name="title_delete">Dejar de seguir el programa de televisión?</string>
@@ -183,4 +183,5 @@
     <string name="title_marcar_ep_anteriores">Marcos episodios anteriores como se ve?</string>
     <string name="msg_marcar_ep_anteriores">Todos los episodios anteriores serán marcados como se ve.</string>
     <string name="numero_de_episodios">Número de episodios</string>
+    <string name="nao_visto">No visto</string>
 </resources>

@@ -6,11 +6,11 @@
     android:layout_marginRight="4dp">
 
     <ImageView
-        android:layout_height="@dimen/user_image"
-        android:layout_width="@dimen/user_image"
+        android:layout_height="@dimen/trade_size_dp_70"
+        android:layout_width="@dimen/trade_size_dp_70"
         android:id="@+id/userImage"
         android:layout_gravity="center"
-        android:padding="8dp" />
+        android:padding="@dimen/trade_size_dp_8" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/text_user_login"
-            android:layout_marginLeft="3dp"
+            android:layout_marginLeft="@dimen/trade_size_dp_3"
+            android:layout_marginStart="@dimen/trade_size_dp_3"
             android:textStyle="normal|bold" />
 
     </LinearLayout>
@@ -47,8 +48,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/text_user_email"
-            android:paddingLeft="3dp"
-            android:textStyle="normal|bold" />
+            android:paddingLeft="@dimen/trade_size_dp_3"
+            android:layout_marginStart="@dimen/trade_size_dp_3"
+            android:textStyle="normal|bold"
+            android:layout_marginLeft="@dimen/trade_size_dp_3" />
 
     </LinearLayout>
 
@@ -67,7 +70,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/text_user_uid"
-            android:paddingLeft="3dp"
+            android:paddingLeft="@dimen/trade_size_dp_3"
+            android:paddingStart="@dimen/trade_size_dp_3"
+            android:paddingEnd="@dimen/trade_size_dp_3"
             android:textStyle="normal|bold" />
 
     </LinearLayout>
@@ -82,12 +87,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/bt_desativar"
-            android:textSize="10sp"
+            android:textSize="@dimen/trade_txt_size_sp_10"
             style="@style/Widget.AppCompat.Button" />
 
         <Button
             android:text="@string/bt_reset_password"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/bt_reset"
             android:layout_weight="1" />
@@ -98,7 +103,7 @@
     <Button
         android:text="@string/vincular_login_popcorn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:id="@+id/vincular_login"
         android:visibility="gone"
         android:layout_weight="1"

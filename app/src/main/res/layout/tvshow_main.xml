@@ -14,14 +14,14 @@
             android:id="@+id/horizontal_tvshow_button_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:minHeight="30dp"
-            android:layout_marginTop="6dp"
+            android:layout_margin="@dimen/trade_size_dp_6"
+            android:layout_marginTop="@dimen/trade_size_dp_6"
+            android:minHeight="@dimen/trade_size_dp_30"
             android:scrollbars="none">
 
             <LinearLayout
                 android:id="@+id/scroll_tvshow_button_main"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal" />
 
@@ -30,12 +30,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_marginStart="6dp"
+            android:layout_marginLeft="@dimen/trade_size_dp_6"
+            android:layout_marginStart="@dimen/trade_size_dp_6"
             android:text="@string/populares"
-            android:typeface="serif"
+            android:textColor="@color/blue"
             android:textStyle="normal|bold"
-            android:textColor="@color/blue" />
+            android:typeface="serif" />
 
 
         <android.support.v7.widget.RecyclerView
@@ -46,33 +46,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_marginStart="6dp"
+            android:layout_marginLeft="@dimen/trade_size_dp_6"
+            android:layout_marginStart="@dimen/trade_size_dp_6"
             android:text="@string/today"
-            android:typeface="monospace"
+            android:textColor="@color/red"
             android:textStyle="normal|bold"
-            android:textColor="@color/red" />
+            android:typeface="monospace" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycle_tvshowtoday_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-        <!--<HorizontalScrollView-->
-            <!--android:id="@+id/horizontal_tvshow_ontheair_main"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="1dp"-->
-            <!--android:minHeight="120dp"-->
-            <!--android:scrollbars="none">>-->
-
-            <!--<LinearLayout-->
-                <!--android:id="@+id/scroll_tvshow_ontheair_main"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:orientation="horizontal" />-->
-
-        <!--</HorizontalScrollView>-->
 
     </LinearLayout>
 </ScrollView>

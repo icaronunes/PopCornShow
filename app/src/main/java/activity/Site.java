@@ -50,8 +50,15 @@ public class Site extends AppCompatActivity {
 
         //Log.d("Site", url);
         setWebViewClient(webView);
+
         webView.loadUrl(url);
         configJavascript();
+
+        webView.setWebViewClient(new WebViewClient() {
+            public boolean shouldOverrideUrlLoading(WebView view,String url) {
+                return false;
+            }
+        });
 
         swipeRefreshLayout.setOnRefreshListener(OnRefreshListener());
         swipeRefreshLayout.setColorSchemeResources(R.color.primary, R.color.primary_dark, R.color.accent);
@@ -72,6 +79,7 @@ public class Site extends AppCompatActivity {
     private void configJavascript() {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
     }
 
     @Override

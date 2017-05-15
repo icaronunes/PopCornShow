@@ -104,7 +104,7 @@
     <string name="status">Status:</string>
     <string name="suas_listas">Your Lists</string>
     <string name="tempo_nao_informado">Time N/A</string>
-    <string name="temporada">Season</string>
+    <string name="temporada">Season: </string>
     <string name="temporadas">Seasons</string>
     <string name="text_logoff_dialog">After logging out, it will not be possible to interact with the application.</string>
     <string name="title_logoff_dialog">Log out of PopCorn Show?</string>
@@ -206,7 +206,7 @@
     <string name="title_marcar_ep_anteriores">Mark previous episodes as seen?</string>
     <string name="msg_marcar_ep_anteriores">All previous episodes will be marked as seen.</string>
     <string name="corn" translatable="false">Corn</string>
-    <string name="pop" translatable="true">Pop</string>
-    <string name="nao_visto">Não Visto</string>
+    <string name="pop" translatable="false">Pop</string>
+    <string name="nao_visto">Not seen</string>
     <string name="numero_de_episodios">Number of episodes</string>
 </resources>

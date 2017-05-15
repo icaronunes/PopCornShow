@@ -18,10 +18,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="2"
-            android:padding="@dimen/trade_size_dp_2"
             android:adjustViewBounds="false"
             android:background="@drawable/empty_popcorn"
             android:cropToPadding="false"
+            android:padding="@dimen/trade_size_dp_2"
             android:scaleType="centerCrop" />
 
 

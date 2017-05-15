@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
@@ -46,27 +47,30 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     @Override
     public void onBindViewHolder(TrailerAdapter.TrailerViewHolder holder, final int position) {
         final String youtube_key = videos.get(position).getKey();
+        try {
+            holder.play_view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-        holder.play_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                    Intent intent = new Intent(context, TrailerActivity.class);
+                    //  Log.d("OnClick", youtube_key);
+                    intent.putExtra(Constantes.YOU_TUBE_KEY, youtube_key);
+                    intent.putExtra(Constantes.SINOPSE, sinopse);
 
-                Intent intent = new Intent(context, TrailerActivity.class);
-                //  Log.d("OnClick", youtube_key);
-                intent.putExtra(Constantes.YOU_TUBE_KEY, youtube_key);
-                intent.putExtra(Constantes.SINOPSE, sinopse);
+                    context.startActivity(intent);
 
-                context.startActivity(intent);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TrailerActivity.class.getName());
+                    bundle.putString("URL", youtube_key);
+                    FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                }
+            });
 
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TrailerActivity.class.getName());
-                bundle.putString("URL", youtube_key);
-                FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-            }
-        });
-
-        holder.thumbnailView.initialize(Config.YOUTUBE_API_KEY, OnInitializedListener(youtube_key));
-
+            holder.thumbnailView.initialize(Config.YOUTUBE_API_KEY, OnInitializedListener(youtube_key));
+        } catch (Exception e){
+            FirebaseCrash.report(e);
+            Toast.makeText(context, R.string.ops, Toast.LENGTH_SHORT).show();
+        }
     }
 
 
