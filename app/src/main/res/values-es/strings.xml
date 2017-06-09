@@ -82,7 +82,7 @@
     <string name="notificacao">Notificación</string>
     <string name="notificacao_summary">Obtener la notificación</string>
     <string name="nova_senha">Nueva Contraseña</string>
-    <string name="novidades_text">** Las pequeñas mejoras en el rendimiento **\n** Las pequeñas mejoras en la pantalla **\n\n** Si es posible hacer su evaluación de la aplicación **</string>
+    <string name="novidades_text">** Arreglado errores de diseño en varias pantallas **\n\n** Retirar los paneles publicitarios. **</string>
     <string name="novidades_title">Noticias</string>
     <string name="now_playing">Jugando ahora</string>
     <string name="ops">Oops! algo mal</string>
@@ -169,7 +169,7 @@
     <string name="populares">Populares</string>
     <string name="minutos">mins</string>
     <string name="ver_netflix">Véase Netflix</string>
-    <string name="procurar_netflix">Buscar el Netflix</string>
+    <string name="procurar_netflix">Netflix</string>
     <string name="alerta_spoiler">Advertencia</string>
     <string name="msg_spoiler">Estos enlaces pueden contener SPOILERS</string>
     <string name="empty_favorites">Sin Favorita</string>

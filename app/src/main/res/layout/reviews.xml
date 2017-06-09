@@ -18,6 +18,7 @@
             android:id="@+id/content_reviews"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/trade_txt_size_sp_15"
             android:layout_margin="@dimen/trade_size_dp_1"
             android:textAllCaps="true" />
 
@@ -31,6 +32,7 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/trade_txt_size_sp_20"
                 android:layout_margin="@dimen/trade_size_dp_2"
                 android:text="@string/author" />
 
@@ -38,6 +40,7 @@
                 android:id="@+id/author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/trade_txt_size_sp_18"
                 android:layout_margin="@dimen/trade_size_dp_2"
                 android:textStyle="normal|bold|italic" />
 

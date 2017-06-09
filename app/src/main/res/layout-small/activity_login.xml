@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/trade_size_dp_16"
+        android:paddingLeft="@dimen/trade_size_dp_40"
+        android:paddingRight="@dimen/trade_size_dp_40"
+        android:paddingTop="@dimen/trade_size_dp_16"
+        android:visibility="visible"
+        tools:context="activity.MainActivity">
+
+        <ImageView
+            android:layout_width="@dimen/trade_size_dp_80"
+            android:layout_height="@dimen/trade_size_dp_80"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/trade_size_dp_10"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/trade_size_dp_5"
+            android:src="@drawable/icon_visto" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:gravity="center"
+                android:shadowColor="@color/black_transparente"
+                android:text="@string/pop"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/trade_txt_size_sp_50" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:gravity="center"
+                android:text="@string/corn"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="@color/red"
+                android:textSize="@dimen/trade_txt_size_sp_50" />
+
+
+        </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/trade_size_dp_5">
+
+            <EditText
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView"
+                android:layout_marginTop="@dimen/trade_size_dp_21"
+                android:ems="10"
+                android:hint="@string/email_tx"
+                android:inputType="textEmailAddress"
+                android:textSize="14sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/trade_size_dp_3">
+
+            <EditText
+                android:id="@+id/pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/login"
+                android:layout_marginTop="@dimen/trade_size_dp_17"
+                android:ems="10"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:textSize="14sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/logar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_visto"
+            android:onClick="onclick"
+            android:text="@string/bt_signin"
+            android:textCursorDrawable="@drawable/button_visto" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/trade_size_dp_20"
+            android:layout_marginTop="@dimen/trade_size_dp_20"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/recuperar_senha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="start"
+                android:text="@string/reset_password"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/vincular_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="right"
+                android:onClick="onclick"
+                android:text="@string/criar_login_popcorn"
+                android:textStyle="normal|bold|italic"
+                tools:ignore="RtlHardcoded" />
+
+
+        </LinearLayout>
+
+        <!--<com.google.android.gms.common.SignInButton-->
+        <!--android:id="@+id/sign_in_button"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="@dimen/trade_size_dp_12"-->
+        <!--android:visibility="gone" />-->
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/facebook"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/trade_size_dp_40"
+            android:layout_marginTop="@dimen/trade_size_dp_8"
+            android:onClick="onclick"
+            android:paddingLeft="@dimen/trade_size_dp_10"
+            android:paddingRight="@dimen/trade_size_dp_10"
+            android:showDividers="middle"
+            fancy:fb_defaultColor="#39579B"
+            fancy:fb_focusColor="#6183d2"
+            fancy:fb_fontIconResource="&#xf230;"
+            fancy:fb_fontIconSize="@dimen/trade_txt_size_sp_20"
+            fancy:fb_iconPaddingRight="@dimen/trade_size_dp_20"
+            fancy:fb_iconPosition="left"
+            fancy:fb_radius="@dimen/trade_size_dp_2"
+            fancy:fb_text="Facebook Connect"
+            fancy:fb_textColor="#ffffff"
+            fancy:fb_textSize="16sp" />
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/bt_anonimous"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/trade_size_dp_40"
+            android:layout_marginTop="@dimen/trade_size_dp_8"
+            android:onClick="onclick"
+            android:paddingBottom="@dimen/trade_size_dp_10"
+            android:paddingEnd="@dimen/trade_size_dp_20"
+            android:paddingLeft="@dimen/trade_size_dp_10"
+            android:paddingRight="@dimen/trade_size_dp_20"
+            android:paddingStart="@dimen/trade_size_dp_10"
+            android:paddingTop="@dimen/trade_size_dp_10"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="@dimen/trade_size_dp_1"
+            fancy:fb_defaultColor="#020259"
+            fancy:fb_focusColor="@color/red"
+            fancy:fb_fontIconResource="&#xf21b;"
+            fancy:fb_fontIconSize="@dimen/trade_txt_size_sp_20"
+            fancy:fb_iconPosition="left"
+            fancy:fb_text="@string/logar_como_anonimo"
+            fancy:fb_textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/anonimo_alerta"
+            android:textAlignment="center"
+            android:textSize="@dimen/trade_txt_size_sp_12" />
+
+    </LinearLayout>
+</ScrollView>

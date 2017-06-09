@@ -170,14 +170,14 @@
     <string name="notificacao_summary">Get notification</string>
     <string name="ajuda_desenvolvimento">Development</string>
     <string name="novidades_title">News</string>
-    <string name="novidades_text" >** Small improvements in performance **\n** Small screen improvements **\n\n** If possible evaluate your app **</string>
+    <string name="novidades_text" >** Fixed layout errors on multiple screens **\n\n** Remove banners with advertisements. **</string>
     <string name="star_avaliados">Evaluation</string>
     <string name="budget">Budget</string>
     <string name="bt_desativar">Deactivate Account</string>
     <string name="person">Profile</string>
     <string name="populares">Most Popular</string>
     <string name="ver_netflix">See Netflix</string>
-    <string name="procurar_netflix">Search on Netflix</string>
+    <string name="procurar_netflix">Netflix</string>
     <string name="alerta_spoiler">Warning</string>
     <string name="msg_spoiler">These links may contain SPOILERS</string>
     <string name="empty_favorites">No Favorites</string>

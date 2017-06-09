@@ -2033,6 +2033,8 @@
     <init>(...);
 }
 
+# view large-v4/res/layout-large-v4/activity_login.xml #generated:59
+# view large-v4/res/layout-large-v4/activity_login.xml #generated:77
 # view res/layout/activity_login.xml #generated:59
 # view res/layout/activity_login.xml #generated:77
 # view res/layout/criar_login.xml #generated:14
@@ -2041,10 +2043,15 @@
 # view res/layout/recuperar_senha_layout.xml #generated:16
 # view res/layout/reset_senha.xml #generated:19
 # view res/layout/reset_senha.xml #generated:48
+# view small-v4/res/layout-small-v4/activity_login.xml #generated:60
+# view small-v4/res/layout-small-v4/activity_login.xml #generated:79
+# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:59
+# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:78
 -keep class android.support.design.widget.TextInputLayout {
     <init>(...);
 }
 
+# view large-v4/res/layout-large-v4/dialog_collection.xml #generated:8
 # view res/layout/activity_epsodios.xml #generated:20
 # view res/layout/activity_favorite.xml #generated:20
 # view res/layout/activity_filme.xml #generated:63
@@ -2057,8 +2064,10 @@
 # view res/layout/intro_layout.xml #generated:5
 # view res/layout/intro_layout2.xml #generated:6
 # view res/layout/tvserie_activity.xml #generated:17
+# view small-v4/res/layout-small-v4/dialog_collection.xml #generated:8
 # view v21/res/layout-v21/intro_layout.xml #generated:5
 # view v21/res/layout-v21/intro_layout2.xml #generated:6
+# view xlarge-v4/res/layout-xlarge-v4/dialog_collection.xml #generated:8
 -keep class android.support.v4.view.ViewPager {
     <init>(...);
 }
@@ -2072,9 +2081,14 @@
     <init>(...);
 }
 
+# view 800x480/res/layout-800x480/tvshow_info.xml #generated:8
+# view 800x600/res/layout-800x600/tvshow_info.xml #generated:8
+# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:8
 # view res/layout/abc_alert_dialog_material.xml #generated:41
 # view res/layout/activity_filme.xml #generated:17
 # view res/layout/tvshow_info.xml #generated:8
+# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:8
+# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:8
 -keep class android.support.v4.widget.NestedScrollView {
     <init>(...);
 }
@@ -2163,6 +2177,12 @@
     <init>(...);
 }
 
+# view large-v4/res/layout-large-v4/actor_netflix_list_adapter.xml #generated:2
+# view large-v4/res/layout-large-v4/adapter_filmes_list.xml #generated:2
+# view large-v4/res/layout-large-v4/adapter_person_popular.xml #generated:2
+# view large-v4/res/layout-large-v4/adapter_produtora.xml #generated:2
+# view large-v4/res/layout-large-v4/crews_filmes_layout.xml #generated:2
+# view large-v4/res/layout-large-v4/person_movie_filmes_layout.xml #generated:2
 # view res/layout/actor_netflix_list_adapter.xml #generated:2
 # view res/layout/adapter_filmes_list.xml #generated:2
 # view res/layout/adapter_person_popular.xml #generated:2
@@ -2182,6 +2202,18 @@
 # view res/layout/seguindo_tvshow.xml #generated:2
 # view res/layout/temporada_epsodio_layout.xml #generated:2
 # view res/layout/usuario_list_adapter.xml #generated:2
+# view small-v4/res/layout-small-v4/actor_netflix_list_adapter.xml #generated:2
+# view small-v4/res/layout-small-v4/adapter_filmes_list.xml #generated:2
+# view small-v4/res/layout-small-v4/adapter_person_popular.xml #generated:2
+# view small-v4/res/layout-small-v4/adapter_produtora.xml #generated:2
+# view small-v4/res/layout-small-v4/crews_filmes_layout.xml #generated:2
+# view small-v4/res/layout-small-v4/person_movie_filmes_layout.xml #generated:2
+# view xlarge-v4/res/layout-xlarge-v4/actor_netflix_list_adapter.xml #generated:2
+# view xlarge-v4/res/layout-xlarge-v4/adapter_filmes_list.xml #generated:2
+# view xlarge-v4/res/layout-xlarge-v4/adapter_person_popular.xml #generated:2
+# view xlarge-v4/res/layout-xlarge-v4/adapter_produtora.xml #generated:2
+# view xlarge-v4/res/layout-xlarge-v4/crews_filmes_layout.xml #generated:2
+# view xlarge-v4/res/layout-xlarge-v4/person_movie_filmes_layout.xml #generated:2
 -keep class android.support.v7.widget.CardView {
     <init>(...);
 }
@@ -2207,6 +2239,23 @@
     <init>(...);
 }
 
+# view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:284
+# view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:303
+# view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:321
+# view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:339
+# view 800x480/res/layout-800x480/tvshow_info.xml #generated:279
+# view 800x480/res/layout-800x480/tvshow_info.xml #generated:297
+# view 800x480/res/layout-800x480/tvshow_info.xml #generated:315
+# view 800x600/res/layout-800x600/tvshow_info.xml #generated:279
+# view 800x600/res/layout-800x600/tvshow_info.xml #generated:297
+# view 800x600/res/layout-800x600/tvshow_info.xml #generated:315
+# view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:284
+# view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:303
+# view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:321
+# view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:339
+# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:279
+# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:297
+# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:315
 # view res/layout/activity_crews.xml #generated:32
 # view res/layout/activity_elenco.xml #generated:38
 # view res/layout/activity_lista.xml #generated:21
@@ -2238,6 +2287,20 @@
 # view res/layout/tvshow_info.xml #generated:315
 # view res/layout/tvshow_main.xml #generated:41
 # view res/layout/tvshow_main.xml #generated:56
+# view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:284
+# view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:303
+# view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:321
+# view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:339
+# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:279
+# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:297
+# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:315
+# view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:284
+# view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:303
+# view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:321
+# view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:339
+# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:280
+# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:298
+# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:316
 -keep class android.support.v7.widget.RecyclerView {
     <init>(...);
 }
@@ -2345,7 +2408,9 @@
     <init>(...);
 }
 
+# view large-v4/res/layout-large-v4/activity_login.xml #generated:140
 # view res/layout/activity_login.xml #generated:137
+# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:142
 -keep class com.google.android.gms.common.SignInButton {
     <init>(...);
 }
@@ -2460,8 +2525,14 @@
     <init>(...);
 }
 
+# view large-v4/res/layout-large-v4/activity_login.xml #generated:147
+# view large-v4/res/layout-large-v4/activity_login.xml #generated:167
 # view res/layout/activity_login.xml #generated:144
 # view res/layout/activity_login.xml #generated:164
+# view small-v4/res/layout-small-v4/activity_login.xml #generated:147
+# view small-v4/res/layout-small-v4/activity_login.xml #generated:167
+# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:149
+# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:169
 -keep class mehdi.sakout.fancybuttons.FancyButton {
     <init>(...);
 }
@@ -2491,10 +2562,22 @@
     <init>(...);
 }
 
+# onClick large-v4/res/layout-large-v4/activity_login.xml #generated:124
+# onClick large-v4/res/layout-large-v4/activity_login.xml #generated:147
+# onClick large-v4/res/layout-large-v4/activity_login.xml #generated:167
+# onClick large-v4/res/layout-large-v4/activity_login.xml #generated:95
 # onClick res/layout/activity_login.xml #generated:122
 # onClick res/layout/activity_login.xml #generated:144
 # onClick res/layout/activity_login.xml #generated:164
 # onClick res/layout/activity_login.xml #generated:95
+# onClick small-v4/res/layout-small-v4/activity_login.xml #generated:125
+# onClick small-v4/res/layout-small-v4/activity_login.xml #generated:147
+# onClick small-v4/res/layout-small-v4/activity_login.xml #generated:167
+# onClick small-v4/res/layout-small-v4/activity_login.xml #generated:98
+# onClick xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:126
+# onClick xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:149
+# onClick xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:169
+# onClick xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:97
 -keepclassmembers class * {
     *** onclick(...);
 }

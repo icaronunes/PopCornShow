@@ -8,7 +8,7 @@
     app:cardElevation="@dimen/trade_size_dp_3">
 
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
@@ -18,15 +18,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:adjustViewBounds="false"
+            android:contentDescription="@string/imagem_filme"
             android:cropToPadding="false"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/imagem_filme" />
+            android:scaleType="centerCrop" />
 
     </FrameLayout>
 
     <TextView
         android:id="@+id/seguindo_title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/transparent2"

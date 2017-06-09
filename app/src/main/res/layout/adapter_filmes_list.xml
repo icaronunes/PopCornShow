@@ -18,17 +18,19 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/trade_size_dp_100">
 
             <ImageView
                 android:id="@+id/imgFilme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
                 android:contentDescription="@string/imagem_filme"
-                android:scaleType="centerInside" />
+                android:scaleType="centerCrop" />
 
-            <include layout="@layout/include_progress" />
+            <include
+                style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Small"
+                layout="@layout/include_progress" />
 
             <TextView
                 android:id="@+id/titleTextView"
@@ -39,7 +41,7 @@
                 android:layout_marginRight="@dimen/trade_size_dp_6"
                 android:background="@color/black_transparente"
                 android:fontFamily="sans-serif-condensed"
-                android:gravity="top|center_horizontal"
+                android:gravity="top|center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/trade_txt_size_sp_16"
                 android:typeface="serif" />

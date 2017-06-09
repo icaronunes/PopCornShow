@@ -9,6 +9,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_gravity="center"
+        android:minHeight="@dimen/trade_size_dp_100"
         android:layout_height="wrap_content">
 
         <ImageView

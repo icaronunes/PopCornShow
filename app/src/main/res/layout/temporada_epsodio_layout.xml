@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/trade_size_dp_3"
     android:clickable="true"
     android:foreground="?attr/selectableItemBackground"
     app:cardElevation="@dimen/trade_size_dp_1">
@@ -14,12 +15,11 @@
 
         <ImageView
             android:id="@+id/image_temp_ep"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_weight="2"
+            android:layout_weight="1.8"
             android:adjustViewBounds="false"
-            android:background="@drawable/empty_popcorn"
             android:cropToPadding="false"
             android:padding="@dimen/trade_size_dp_2"
             android:scaleType="centerCrop" />
@@ -29,8 +29,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/trade_size_dp_6"
-            android:layout_marginStart="@dimen/trade_size_dp_6"
+            android:layout_marginLeft="@dimen/trade_size_dp_2"
+            android:layout_marginStart="@dimen/trade_size_dp_2"
             android:layout_weight="2"
             android:orientation="vertical">
 

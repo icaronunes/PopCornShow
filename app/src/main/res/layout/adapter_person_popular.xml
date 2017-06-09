@@ -14,13 +14,14 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:minHeight="@dimen/trade_size_dp_150"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/img_popular_person"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:contentDescription="@string/imagem_filme"
             android:cropToPadding="true"

@@ -20,7 +20,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true">
+            android:clickable="true"
+            android:minHeight="@dimen/trade_txt_size_sp_150">
 
             <ImageView
                 android:id="@+id/img_actor_netflix"

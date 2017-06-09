@@ -179,13 +179,13 @@
     <string name="notificacao_summary">Receber Notificação</string>
     <string name="ajuda_desenvolvimento">Desenvolvimento</string>
     <string name="novidades_title">Novidades</string>
-    <string name="novidades_text">** Pequenas melhorias na performance **\n** Pequena melhorias na tela **\n\n** Se possivel faça sua avaliação do Aplicativo **</string>
+    <string name="novidades_text">** Arrumado erros de layout em diversas telas **\n\n** Retirar os banner com propagandas.**</string>
     <string name="star_avaliados">Avaliação</string>
     <string name="budget">Orçamento</string>
     <string name="person">Perfil</string>
     <string name="populares">Populares</string>
     <string name="ver_netflix">Ver no Netflix</string>
-    <string name="procurar_netflix">Procurar no Netflix</string>
+    <string name="procurar_netflix">Netflix</string>
     <string name="alerta_spoiler">Atenção</string>
     <string name="msg_spoiler">Esses links podem conter SPOILERS</string>
     <string name="empty_favorites">Sem Favoritos</string>

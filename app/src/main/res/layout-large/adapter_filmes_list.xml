@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/trade_size_dp_3"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="@dimen/trade_size_dp_4"
+    app:cardElevation="@dimen/trade_size_dp_3"
+    card_view:cardElevation="@dimen/trade_size_dp_3">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:minHeight="@dimen/trade_size_dp_400"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgFilme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:contentDescription="@string/imagem_filme"
+                android:scaleType="centerInside" />
+
+            <include layout="@layout/include_progress" />
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="@dimen/trade_size_dp_6"
+                android:layout_marginRight="@dimen/trade_size_dp_6"
+                android:background="@color/black_transparente"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="top|center_horizontal"
+                android:textColor="@color/white"
+                android:textSize="@dimen/trade_txt_size_sp_16"
+                android:typeface="serif" />
+
+        </FrameLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

@@ -49,7 +49,7 @@ public class PersonCrewsAdapter extends RecyclerView.Adapter<PersonCrewsAdapter.
 
         final PersonCredit movie = personCredits.getCrew().get(position);
 
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 4)) + movie.getPosterPath())
+        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 3)) + movie.getPosterPath())
                 .placeholder(R.drawable.poster_empty)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)

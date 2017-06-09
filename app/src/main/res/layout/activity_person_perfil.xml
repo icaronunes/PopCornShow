@@ -139,7 +139,7 @@
                     android:layout_height="@dimen/trade_size_dp_40"
                     android:layout_gravity="end|center"
                     android:layout_weight="0.08"
-                    android:adjustViewBounds="false"
+                    android:adjustViewBounds="true"
                     android:src="@drawable/wikipedia"
                     android:visibility="invisible" />
 

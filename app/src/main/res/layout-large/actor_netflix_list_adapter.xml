@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/trade_size_dp_3"
+    android:clickable="true"
+    app:cardBackgroundColor="@color/netflix"
+    app:cardCornerRadius="@dimen/trade_size_dp_4"
+    app:cardElevation="@dimen/trade_size_dp_2"
+    card_view:cardElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/trade_txt_size_sp_500"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/img_actor_netflix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:contentDescription="@string/imagem_filme"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:id="@+id/title_actor_netflix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="bottom|center_horizontal"
+                android:textColor="@color/black"
+                android:textSize="@dimen/trade_txt_size_sp_12"
+                android:typeface="serif" />
+
+            <include layout="@layout/include_progress" />
+
+        </FrameLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:weightSum="100"
+    android:layout_marginTop="@dimen/trade_size_dp_6">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rating_title"
+        android:gravity="center"
+        android:textStyle="normal|bold"
+        android:layout_marginBottom="@dimen/trade_size_dp_3" />
+
+    <RatingBar
+        android:id="@+id/ratingBar_rated"
+        style="@style/Widget.AppCompat.RatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:isIndicator="false"
+        android:numStars="10"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:stepSize="2"
+        android:weightSum="100" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/cancel_rated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nao_visto"
+        android:background="@drawable/button_nao_visto"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/trade_size_dp_6" />
+
+        <Button
+            android:id="@+id/ok_rated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ok"
+            android:background="@drawable/button_visto"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/trade_size_dp_6" />
+
+    </LinearLayout>
+
+</LinearLayout>

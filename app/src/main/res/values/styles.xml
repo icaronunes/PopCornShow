@@ -42,6 +42,7 @@
         <item name="android:maxHeight">40dp</item>
     </style>
 
+
         <!-- Tema de PosterActivity -->
     <style name="Theme.AppCompat.Light.Dialog.MinWidth.NoActionBar" parent="@style/Theme.AppCompat.NoActionBar">
         <item name="android:windowActionBar">false</item>

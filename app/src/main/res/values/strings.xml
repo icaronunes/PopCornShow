@@ -187,12 +187,12 @@
     <string name="ajuda_desenvolvimento">Development</string>
     <string name="twitter_text" translatable="false">Twitter</string>
     <string name="novidades_title">News</string>
-    <string name="novidades_text">** Small improvements in performance **\n** Small screen improvements **\n\n** If possible evaluate your app **</string>
+    <string name="novidades_text">** Fixed layout errors on multiple screens **\n\n** Remove banners with advertisements. **</string>
     <string name="star_avaliados">Evaluation</string>
     <string name="budget">Budget</string>
     <string name="homepage" translatable="false">Homepager</string>
     <string name="ver_netflix">See Netflix</string>
-    <string name="procurar_netflix">Search on Netflix</string>
+    <string name="procurar_netflix">Netflix</string>
     <string name="alerta_spoiler">Warning</string>
     <string name="msg_spoiler">These links may contain SPOILERS</string>
     <string name="empty_favorites">No Favorites</string>
@@ -209,4 +209,5 @@
     <string name="pop" translatable="false">Pop</string>
     <string name="nao_visto">Not seen</string>
     <string name="numero_de_episodios">Number of episodes</string>
+    <string name="show" translatable="false">Show</string>
 </resources>
