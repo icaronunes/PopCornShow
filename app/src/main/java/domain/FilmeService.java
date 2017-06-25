@@ -2,6 +2,7 @@ package domain;
 
 
 import android.support.annotation.Keep;
+import android.util.Log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.crash.FirebaseCrash;
@@ -44,14 +45,12 @@ import static info.movito.themoviedbapi.TmdbPeople.TMDB_METHOD_PERSON;
 @Keep
 public class FilmeService {
 
-    private final String TAG = FilmeService.class.getName();
-
     private static final Collection<Integer> SUCCESS_STATUS_CODES = Arrays.asList(
             1, // Success
             12, // The item/record was updated successfully.
             13 // The item/record was updated successfully.
     );
-
+    private final String TAG = FilmeService.class.getName();
 
     public static TmdbLists getTmdbList() {
         return new TmdbApi(Config.TMDB_API_KEY).getLists();
@@ -103,15 +102,15 @@ public class FilmeService {
     public static Lista getLista(String stringExtra) {
         OkHttpClient client = new OkHttpClient();
         String url = "https://api.themoviedb.org/3/list/" + stringExtra +
-                "?api_key="+ Config.TMDB_API_KEY+"&language=en-US&sort_by=release.date.desc";
+                "?api_key=" + Config.TMDB_API_KEY + "&language=en-US&sort_by=release.date.desc";
         Request request = new Request.Builder()
                 .url(url)
                 .build();
         Lista items = null;
         try {
             Response response = client.newCall(request).execute();
-          //  Log.d("domian.Lista", String.valueOf(response.body().charStream()));
-            items =  parseJSONLista(response);
+            //  Log.d("domian.Lista", String.valueOf(response.body().charStream()));
+            items = parseJSONLista(response);
         } catch (IOException e) {
             FirebaseCrash.report(e);
             e.printStackTrace();
@@ -123,14 +122,14 @@ public class FilmeService {
         Gson gson = new GsonBuilder().create();
         Lista items = null;
         items = gson.fromJson(response.body().charStream(), Lista.class);
-            //    Log.d("domian.Lista", items.getName());
+        //    Log.d("domian.Lista", items.getName());
         return items;
     }
 
 
     public static Netflix getNetflix(String title, int year) {
         final String API_URL = "http://netflixroulette.net/api/api.php?";
-        final String url = API_URL+ "title=" + title + "&year=" + year;
+        final String url = API_URL + "title=" + title + "&year=" + year;
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)
@@ -139,7 +138,7 @@ public class FilmeService {
 
         try {
             Response response = client.newCall(request).execute();
-            netflix =  parseJSONNetflix(response);
+            netflix = parseJSONNetflix(response);
         } catch (IOException e) {
             FirebaseCrash.report(e);
             e.printStackTrace();
@@ -157,7 +156,7 @@ public class FilmeService {
 
     public static Netflix[] getNetflixDirector(String actor) {
         final String API_URL = "http://netflixroulette.net/api/api.php?";
-        final String url = API_URL+ "director=" + actor;
+        final String url = API_URL + "director=" + actor;
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)
@@ -167,7 +166,7 @@ public class FilmeService {
         try {
             Response response = client.newCall(request).execute();
             // Log.d("FilmeService", "parseJSONNetflixActor: " +response.body().string());
-            netflix =  parseJSONNetflixActor(response);
+            netflix = parseJSONNetflixActor(response);
         } catch (IOException e) {
             FirebaseCrash.report(e);
             e.printStackTrace();
@@ -178,7 +177,7 @@ public class FilmeService {
 
     public static Netflix[] getNetflixActor(String actor) {
         final String API_URL = "http://netflixroulette.net/api/api.php?";
-        final String url = API_URL+ "actor=" + actor;
+        final String url = API_URL + "actor=" + actor;
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)
@@ -187,8 +186,8 @@ public class FilmeService {
 
         try {
             Response response = client.newCall(request).execute();
-           // Log.d("FilmeService", "parseJSONNetflixActor: " +response.body().string());
-            netflix =  parseJSONNetflixActor(response);
+            // Log.d("FilmeService", "parseJSONNetflixActor: " +response.body().string());
+            netflix = parseJSONNetflixActor(response);
         } catch (IOException e) {
             FirebaseCrash.report(e);
             e.printStackTrace();
@@ -206,7 +205,7 @@ public class FilmeService {
 
     public static Imdb getImdb(String id) {
 
-        final String url = "http://www.omdbapi.com/?i="+ id +"&tomatoes=true&r=json";
+        final String url = "http://www.omdbapi.com/?i=" + id + "&tomatoes=true&r=json";
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)
@@ -231,7 +230,7 @@ public class FilmeService {
         try {
             imdb = gson.fromJson(response.body().string(), Imdb.class);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             FirebaseCrash.report(e);
         }
         return imdb;
@@ -239,17 +238,17 @@ public class FilmeService {
 
     public static ReviewsUflixit getReviews(String id, String type) {
         try {
-        final String url = "https://uflixit.p.mashape.com/"+type + "/reviews?imdb_id=" + id;
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url)
-                .addHeader("Accept", "application/json")
-                .addHeader("X-Mashape-Key", "2m7eCR43FVmshfyoDP78TZNfNtgsp1Z0lyAjsnRX3PMQElsJA9")
-                .build(); // Teste - BHZzlw5fvGmshgVcYJEYyRfFjEvcp1j3XVrjsndTOINYyd0z47
-        // These code snippets use an open-source library.
+            final String url = "https://uflixit.p.mashape.com/" + type + "/reviews?imdb_id=" + id;
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .addHeader("Accept", "application/json")
+                    .addHeader("X-Mashape-Key", "2m7eCR43FVmshfyoDP78TZNfNtgsp1Z0lyAjsnRX3PMQElsJA9")
+                    .build(); // Teste - BHZzlw5fvGmshgVcYJEYyRfFjEvcp1j3XVrjsndTOINYyd0z47
+            // These code snippets use an open-source library.
 
             Response response = client.newCall(request).execute();
-          //  Log.d(TAG, "getReviews: "+ response.body().toString());
+            //  Log.d(TAG, "getReviews: "+ response.body().toString());
             return parseJSONReviws(response);
 
         } catch (IOException e) {
@@ -266,29 +265,29 @@ public class FilmeService {
         try {
             reviewsUflixit = gson.fromJson(response.body().string(), ReviewsUflixit.class);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             FirebaseCrash.report(e);
         }
         return reviewsUflixit;
     }
-
-
-    //Copiado da FrameWork - La não ha este metodo de combinar "trabalhos" de filme e Serie
 
     public static PersonCredits getPersonCreditsCombinado(int personId) {
         ApiUrl apiUrl = new ApiUrl(TMDB_METHOD_PERSON, personId, "tv_credits");
         return mapJsonResult(apiUrl, PersonCredits.class);
     }
 
-    public static <T> T mapJsonResult(ApiUrl apiUrl, Class<T> someClass) {
+
+    //Copiado da FrameWork - La não ha este metodo de combinar "trabalhos" de filme e Serie
+
+    private static <T> T mapJsonResult(ApiUrl apiUrl, Class<T> someClass) {
         return mapJsonResult(apiUrl, someClass, null);
     }
 
-    public static <T> T mapJsonResult(ApiUrl apiUrl, Class<T> someClass, String jsonBody) {
+    private static <T> T mapJsonResult(ApiUrl apiUrl, Class<T> someClass, String jsonBody) {
         return mapJsonResult(apiUrl, someClass, jsonBody, RequestMethod.GET);
     }
 
-    public static <T> T mapJsonResult(ApiUrl apiUrl, Class<T> someClass, String
+    private static <T> T mapJsonResult(ApiUrl apiUrl, Class<T> someClass, String
             jsonBody, RequestMethod requestMethod) {
         TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
         final ObjectMapper jsonMapper = new ObjectMapper();
@@ -319,6 +318,30 @@ public class FilmeService {
             throw new MovieDbException("mapping failed:\n" + webpage);
         }
     }
+
+    private GuestSession getGuestSession() {
+
+        String URL = "https://api.themoviedb.org/3/authentication/guest_session/new?api_key=";
+        URL += Config.TMDB_API_KEY;
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(URL)
+                .build();
+
+        GuestSession guestSession;
+        try {
+            Gson gson = new GsonBuilder().create();
+            Response response = client.newCall(request).execute();
+            guestSession = gson.fromJson(response.body().string(), GuestSession.class);
+            return guestSession;
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d(TAG, "getGuestSession: "+e.getMessage());
+        }
+        return null;
+    }
+
+
 
     //Copia de TMDBAPI para pegar paginas do Favoritos ^^^^^^^^
 
