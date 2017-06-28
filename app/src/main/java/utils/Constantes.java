@@ -46,5 +46,8 @@ public class Constantes {
     public static final String NETFLIX = "netflix";
     public static final String IMDB = "imdb";
     public static final String TWITTER_URL = "@appopcorn";
+    public static final String PREF_ID_GUEST = "pref_guest";
+    public static final String GUEST = "guest";
+    public static final String GUEST_DATA = "guest_data";
 }
 

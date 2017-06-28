@@ -1,8 +1,10 @@
 package domain;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.Keep;
-import android.util.Log;
+import android.support.annotation.MainThread;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.crash.FirebaseCrash;
@@ -10,9 +12,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbCollections;
@@ -31,10 +38,13 @@ import info.movito.themoviedbapi.model.people.PersonCredits;
 import info.movito.themoviedbapi.tools.ApiUrl;
 import info.movito.themoviedbapi.tools.MovieDbException;
 import info.movito.themoviedbapi.tools.RequestMethod;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import utils.Config;
+import utils.Constantes;
 
 import static info.movito.themoviedbapi.TmdbPeople.TMDB_METHOD_PERSON;
 
@@ -319,7 +329,7 @@ public class FilmeService {
         }
     }
 
-    private GuestSession getGuestSession() {
+    private static GuestSession getGuestSession(Context context) {
 
         String URL = "https://api.themoviedb.org/3/authentication/guest_session/new?api_key=";
         URL += Config.TMDB_API_KEY;
@@ -327,22 +337,96 @@ public class FilmeService {
         Request request = new Request.Builder()
                 .url(URL)
                 .build();
-
-        GuestSession guestSession;
         try {
+            GuestSession guestSession;
             Gson gson = new GsonBuilder().create();
             Response response = client.newCall(request).execute();
             guestSession = gson.fromJson(response.body().string(), GuestSession.class);
+            SharedPreferences preferences = context.getSharedPreferences(Constantes.PREF_ID_GUEST, 0);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString(Constantes.GUEST_DATA, guestSession.getExpiresAt());
+            editor.putString(Constantes.GUEST, guestSession.getGuestSessionId());
+            editor.apply();
             return guestSession;
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d(TAG, "getGuestSession: "+e.getMessage());
         }
         return null;
     }
 
+    @MainThread
+    public static boolean ratedMovieGuest(int movioId, int nota, Context context) {
+        /// id 297762 - mulher maravilha
+        try {
 
+            String session = hasGuestSession(context);
+            if (session.equals("")) {
+                GuestSession guestSession = getGuestSession(context);
+                if (guestSession != null) {
 
-    //Copia de TMDBAPI para pegar paginas do Favoritos ^^^^^^^^
+                    String URL = "https://api.themoviedb.org/3/movie/" + movioId + "/rating?api_key="
+                            + Config.TMDB_API_KEY + "&guest_session_id=" + guestSession.getGuestSessionId();
+                    MediaType mediaType = MediaType.parse("application/json");
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody body = RequestBody.create(mediaType, "{\"value\":" + nota + "}");
+                    Request request = new Request.Builder()
+                            .url(URL)
+                            .post(body)
+                            .build();
+                    Response response = client.newCall(request).execute();
+                    return response.isSuccessful();
 
+                }
+            } else {
+                String URL = "https://api.themoviedb.org/3/movie/" + movioId + "/rating?api_key="
+                        + Config.TMDB_API_KEY + "&guest_session_id=" + session;
+                MediaType mediaType = MediaType.parse("application/json");
+                OkHttpClient client = new OkHttpClient();
+                RequestBody body = RequestBody.create(mediaType, "{\"value\":" + nota + "}");
+                Request request = new Request.Builder()
+                        .url(URL)
+                        .post(body)
+                        .build();
+                Response response = client.newCall(request).execute();
+                return response.isSuccessful();
+
+            }
+        } catch (Exception e) {
+            FirebaseCrash.report(e);
+        }
+        return false;
+    }
+
+    private static String hasGuestSession(Context context) {
+        try {
+            SharedPreferences preferences = context.getSharedPreferences(Constantes.PREF_ID_GUEST, 0);
+            String dataGuest = preferences.getString(Constantes.GUEST_DATA, "");
+            if (dataGuest.equals("")) return "";
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+
+            Date guestExpiresAt = format.parse(dataGuest);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(guestExpiresAt);
+            calendar.set(Calendar.HOUR_OF_DAY, 23);
+
+            Calendar agora = Calendar.getInstance();
+
+            if (calendar.get(Calendar.YEAR) == agora.get(Calendar.YEAR)) {
+                if (calendar.get(Calendar.MONTH) == agora.get(Calendar.MONTH)) {
+                    if (calendar.get(Calendar.DAY_OF_MONTH) == agora.get(Calendar.DAY_OF_MONTH)) {
+                        if (calendar.get(Calendar.HOUR_OF_DAY) == agora.get(Calendar.HOUR_OF_DAY)) {
+                            return preferences.getString(Constantes.GUEST, "");
+                        }
+                    }
+                }
+                return "";
+            }
+            return "";
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }

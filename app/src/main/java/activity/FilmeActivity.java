@@ -66,6 +66,7 @@ import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.Constantes;
 import utils.UtilsFilme;
 
+import static domain.FilmeService.ratedMovieGuest;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.alternative_titles;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.credits;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.images;
@@ -419,7 +420,7 @@ public class FilmeActivity extends BaseActivity {
                     int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
                     int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
 
-                    alertDialog.getWindow().setLayout(width, height);
+                    alertDialog.getWindow().setLayout(width, height);//??????????????
                     alertDialog.show();
 
                     if (addRated) {
@@ -486,6 +487,14 @@ public class FilmeActivity extends BaseActivity {
                                                 fab.close(true);
                                             }
                                         });
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        FilmeService.ratedMovieGuest(id_filme, (int) ratingBar.getRating(), FilmeActivity.this );
+                                    }
+                                }).start();
+
+
                             }
                             progressDialog.dismiss();
                             alertDialog.dismiss();
