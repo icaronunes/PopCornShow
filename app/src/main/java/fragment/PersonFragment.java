@@ -210,21 +210,21 @@ public class PersonFragment extends Fragment {
             return;
         }
         //  Log.d(TAG, "setPersonInformation");
-        if (!information.getName().isEmpty() && information.getName().length() > 1) {
+        if (information.getName() != null && information.getName().length() > 1) {
             nome_person.setText(information.getName());
             nome_person.setVisibility(View.VISIBLE);
         }
-        if (!information.getBirthday().isEmpty() && information.getBirthday().length() > 1) {
+        if (information.getBirthday() != null && information.getBirthday().length() > 1) {
             birthday.setText(information.getBirthday());
             birthday.setVisibility(View.VISIBLE);
         }
 
-        if (!information.getDeathday().isEmpty() && information.getDeathday().length() > 1) {
+        if (information.getDeathday() != null && information.getDeathday().length() > 1) {
             dead.setText(" - " + information.getDeathday());
             dead.setVisibility(View.VISIBLE);
         }
 
-        if (!information.getHomepage().isEmpty() && information.getHomepage().length() > 5) {
+        if (information.getHomepage() != null && information.getHomepage().length() > 5) {
             String site = information.getHomepage();
             site = site.replace("http://", "");
 
@@ -249,12 +249,12 @@ public class PersonFragment extends Fragment {
             homepage.setVisibility(View.GONE);
         }
 
-        if (!information.getBirthplace().isEmpty()) {
+        if (information.getBirthplace() != null) {
             place_of_birth.setText(information.getBirthplace());
             place_of_birth.setVisibility(View.VISIBLE);
         }
 
-        if (!information.getAka().isEmpty()) {
+        if (information.getAka() != null) {
 
             for (String nome : information.getAka()) {
                 if (nome.length() > 2) {
@@ -264,13 +264,13 @@ public class PersonFragment extends Fragment {
                 }
             }
         }
-        if (!information.getBiography().isEmpty()) {
+        if (information.getBiography() != null ) {
             biografia.setText(information.getBiography());
         } else {
             biografia.setText(R.string.sem_biografia);
         }
 
-        if (!information.getName().isEmpty()) {
+        if (information.getName() != null) {
             imageButtonWiki.setVisibility(View.VISIBLE);
 
             imageButtonWiki.setOnClickListener(new View.OnClickListener() {

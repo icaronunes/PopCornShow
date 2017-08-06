@@ -4,7 +4,6 @@ package domain;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.Keep;
-import android.support.annotation.MainThread;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.crash.FirebaseCrash;
@@ -20,6 +19,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbCollections;
@@ -110,7 +110,10 @@ public class FilmeService {
 
 
     public static Lista getLista(String stringExtra) {
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
         String url = "https://api.themoviedb.org/3/list/" + stringExtra +
                 "?api_key=" + Config.TMDB_API_KEY + "&language=en-US&sort_by=release.date.desc";
         Request request = new Request.Builder()
@@ -140,7 +143,10 @@ public class FilmeService {
     public static Netflix getNetflix(String title, int year) {
         final String API_URL = "http://netflixroulette.net/api/api.php?";
         final String url = API_URL + "title=" + title + "&year=" + year;
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -167,7 +173,10 @@ public class FilmeService {
     public static Netflix[] getNetflixDirector(String actor) {
         final String API_URL = "http://netflixroulette.net/api/api.php?";
         final String url = API_URL + "director=" + actor;
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client =new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -188,7 +197,10 @@ public class FilmeService {
     public static Netflix[] getNetflixActor(String actor) {
         final String API_URL = "http://netflixroulette.net/api/api.php?";
         final String url = API_URL + "actor=" + actor;
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client =new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -216,7 +228,10 @@ public class FilmeService {
     public static Imdb getImdb(String id) {
 
         final String url = "http://www.omdbapi.com/?i=" + id + "&tomatoes=true&r=json";
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("Accept", "application/json")
@@ -249,7 +264,10 @@ public class FilmeService {
     public static ReviewsUflixit getReviews(String id, String type) {
         try {
             final String url = "https://uflixit.p.mashape.com/" + type + "/reviews?imdb_id=" + id;
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(10, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .build();
             Request request = new Request.Builder()
                     .url(url)
                     .addHeader("Accept", "application/json")
@@ -329,11 +347,160 @@ public class FilmeService {
         }
     }
 
+
+
+    public static boolean ratedMovieGuest(int movioId, int nota, Context context) {
+        /// id 297762 - mulher maravilha
+        try {
+
+            String session = hasGuestSession(context);
+            if (session.equals("")) {
+                GuestSession guestSession = getGuestSession(context);
+                if (guestSession != null) {
+
+                    String URL = "https://api.themoviedb.org/3/movie/" + movioId + "/rating?api_key="
+                            + Config.TMDB_API_KEY + "&guest_session_id=" + guestSession.getGuestSessionId();
+                    MediaType mediaType = MediaType.parse("application/json");
+                    OkHttpClient client = new OkHttpClient.Builder()
+                            .connectTimeout(10, TimeUnit.SECONDS)
+                            .readTimeout(30, TimeUnit.SECONDS)
+                            .build();
+                    RequestBody body = RequestBody.create(mediaType, "{\"value\":" + nota + "}");
+                    Request request = new Request.Builder()
+                            .url(URL)
+                            .post(body)
+                            .build();
+                    Response response = client.newCall(request).execute();
+                    return response.isSuccessful();
+
+                }
+            } else {
+                String URL = "https://api.themoviedb.org/3/movie/" + movioId + "/rating?api_key="
+                        + Config.TMDB_API_KEY + "&guest_session_id=" + session;
+                MediaType mediaType = MediaType.parse("application/json");
+                OkHttpClient client = new OkHttpClient.Builder()
+                        .connectTimeout(10, TimeUnit.SECONDS)
+                        .readTimeout(30, TimeUnit.SECONDS)
+                        .build();
+                RequestBody body = RequestBody.create(mediaType, "{\"value\":" + nota + "}");
+                Request request = new Request.Builder()
+                        .url(URL)
+                        .post(body)
+                        .build();
+                Response response = client.newCall(request).execute();
+                return response.isSuccessful();
+
+            }
+        } catch (Exception e) {
+            FirebaseCrash.report(e);
+        }
+        return false;
+    }
+
+    public static boolean ratedTvshowGuest(int tvshowId, int nota, Context context) {
+
+        try {
+
+            String session = hasGuestSession(context);
+            if (session.equals("")) {
+                GuestSession guestSession = getGuestSession(context);
+                if (guestSession != null) {
+
+                    String URL = "https://api.themoviedb.org/3/tv/" + tvshowId + "/rating?api_key="
+                            + Config.TMDB_API_KEY + "&guest_session_id=" + guestSession.getGuestSessionId();
+                    MediaType mediaType = MediaType.parse("application/json");
+                    OkHttpClient client = new OkHttpClient.Builder()
+                            .readTimeout(10, TimeUnit.SECONDS)
+                            .build();
+                    RequestBody body = RequestBody.create(mediaType, "{\"value\":" + nota + "}");
+                    Request request = new Request.Builder()
+                            .url(URL)
+                            .post(body)
+                            .build();
+                    Response response = client.newCall(request).execute();
+                    return response.isSuccessful();
+
+                }
+            } else {
+                String URL = "https://api.themoviedb.org/3/tv/" + tvshowId + "/rating?api_key="
+                        + Config.TMDB_API_KEY + "&guest_session_id=" + session;
+                MediaType mediaType = MediaType.parse("application/json");
+                OkHttpClient client = new OkHttpClient.Builder()
+                        .readTimeout(10, TimeUnit.SECONDS)
+                        .build();
+                RequestBody body = RequestBody.create(mediaType, "{\"value\":" + nota + "}");
+                Request request = new Request.Builder()
+                        .url(URL)
+                        .post(body)
+                        .build();
+                Response response = client.newCall(request).execute();
+                return response.isSuccessful();
+
+            }
+        } catch (Exception e) {
+            FirebaseCrash.report(e);
+        }
+        return false;
+    }
+
+    public static boolean ratedTvshowEpsodioGuest(int tvshowId, int temporada, int ep, int nota, Context context) {
+        /// id 297762 - mulher maravilha
+        try {
+
+            String session = hasGuestSession(context);
+            if (session.equals("")) {
+                GuestSession guestSession = getGuestSession(context);
+                if (guestSession != null) {
+
+                    String URL = "https://api.themoviedb.org/3/tv/"
+                            + tvshowId + "/season/"+temporada +"/episode/"+ep+"/rating?api_key="
+                            + Config.TMDB_API_KEY + "&guest_session_id=" + guestSession.getGuestSessionId();
+                    MediaType mediaType = MediaType.parse("application/json");
+                    OkHttpClient client = new OkHttpClient.Builder()
+                            .connectTimeout(10, TimeUnit.SECONDS)
+                            .readTimeout(30, TimeUnit.SECONDS)
+                            .build();
+                    RequestBody body = RequestBody.create(mediaType, "{\"value\":" + nota + "}");
+                    Request request = new Request.Builder()
+                            .url(URL)
+                            .post(body)
+                            .build();
+                    Response response = client.newCall(request).execute();
+                    return response.isSuccessful();
+
+                }
+            } else {
+                String URL = "https://api.themoviedb.org/3/tv/"
+                        + tvshowId + "/season/"+temporada +"/episode/"+ep+"/rating?api_key="
+                        + Config.TMDB_API_KEY + "&guest_session_id=" + session;
+                MediaType mediaType = MediaType.parse("application/json");
+                OkHttpClient client = new OkHttpClient.Builder()
+                        .connectTimeout(10, TimeUnit.SECONDS)
+                        .readTimeout(30, TimeUnit.SECONDS)
+                        .build();
+                RequestBody body = RequestBody.create(mediaType, "{\"value\":" + nota + "}");
+                Request request = new Request.Builder()
+                        .url(URL)
+                        .post(body)
+                        .build();
+                Response response = client.newCall(request).execute();
+                return response.isSuccessful();
+
+            }
+        } catch (Exception e) {
+            FirebaseCrash.report(e);
+        }
+        return false;
+    }
+
     private static GuestSession getGuestSession(Context context) {
 
         String URL = "https://api.themoviedb.org/3/authentication/guest_session/new?api_key=";
         URL += Config.TMDB_API_KEY;
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client =new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
         Request request = new Request.Builder()
                 .url(URL)
                 .build();
@@ -354,75 +521,22 @@ public class FilmeService {
         return null;
     }
 
-    @MainThread
-    public static boolean ratedMovieGuest(int movioId, int nota, Context context) {
-        /// id 297762 - mulher maravilha
-        try {
-
-            String session = hasGuestSession(context);
-            if (session.equals("")) {
-                GuestSession guestSession = getGuestSession(context);
-                if (guestSession != null) {
-
-                    String URL = "https://api.themoviedb.org/3/movie/" + movioId + "/rating?api_key="
-                            + Config.TMDB_API_KEY + "&guest_session_id=" + guestSession.getGuestSessionId();
-                    MediaType mediaType = MediaType.parse("application/json");
-                    OkHttpClient client = new OkHttpClient();
-                    RequestBody body = RequestBody.create(mediaType, "{\"value\":" + nota + "}");
-                    Request request = new Request.Builder()
-                            .url(URL)
-                            .post(body)
-                            .build();
-                    Response response = client.newCall(request).execute();
-                    return response.isSuccessful();
-
-                }
-            } else {
-                String URL = "https://api.themoviedb.org/3/movie/" + movioId + "/rating?api_key="
-                        + Config.TMDB_API_KEY + "&guest_session_id=" + session;
-                MediaType mediaType = MediaType.parse("application/json");
-                OkHttpClient client = new OkHttpClient();
-                RequestBody body = RequestBody.create(mediaType, "{\"value\":" + nota + "}");
-                Request request = new Request.Builder()
-                        .url(URL)
-                        .post(body)
-                        .build();
-                Response response = client.newCall(request).execute();
-                return response.isSuccessful();
-
-            }
-        } catch (Exception e) {
-            FirebaseCrash.report(e);
-        }
-        return false;
-    }
 
     private static String hasGuestSession(Context context) {
         try {
             SharedPreferences preferences = context.getSharedPreferences(Constantes.PREF_ID_GUEST, 0);
             String dataGuest = preferences.getString(Constantes.GUEST_DATA, "");
             if (dataGuest.equals("")) return "";
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
             Date guestExpiresAt = format.parse(dataGuest);
 
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(guestExpiresAt);
-            calendar.set(Calendar.HOUR_OF_DAY, 23);
 
             Calendar agora = Calendar.getInstance();
 
-            if (calendar.get(Calendar.YEAR) == agora.get(Calendar.YEAR)) {
-                if (calendar.get(Calendar.MONTH) == agora.get(Calendar.MONTH)) {
-                    if (calendar.get(Calendar.DAY_OF_MONTH) == agora.get(Calendar.DAY_OF_MONTH)) {
-                        if (calendar.get(Calendar.HOUR_OF_DAY) == agora.get(Calendar.HOUR_OF_DAY)) {
-                            return preferences.getString(Constantes.GUEST, "");
-                        }
-                    }
-                }
-                return "";
-            }
-            return "";
+            return agora.before(calendar) ? dataGuest : "";
 
         } catch (ParseException e) {
             e.printStackTrace();

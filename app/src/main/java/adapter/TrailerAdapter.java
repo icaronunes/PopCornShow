@@ -48,6 +48,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     public void onBindViewHolder(TrailerAdapter.TrailerViewHolder holder, final int position) {
         final String youtube_key = videos.get(position).getKey();
         try {
+            holder.thumbnailView.initialize(Config.YOUTUBE_API_KEY, OnInitializedListener(youtube_key));
             holder.play_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -66,7 +67,6 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
                 }
             });
 
-            holder.thumbnailView.initialize(Config.YOUTUBE_API_KEY, OnInitializedListener(youtube_key));
         } catch (Exception e){
             FirebaseCrash.report(e);
             Toast.makeText(context, R.string.ops, Toast.LENGTH_SHORT).show();
@@ -96,13 +96,13 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
 
 
     class TrailerViewHolder extends RecyclerView.ViewHolder {
-        private  FrameLayout play_view;
+        private FrameLayout play_view;
         private YouTubeThumbnailView thumbnailView;
 
         TrailerViewHolder(View itemView) {
             super(itemView);
-            play_view = (FrameLayout) itemView.findViewById(R.id.frame_youtube_view_thumbnail);
-            thumbnailView = (YouTubeThumbnailView) itemView.findViewById(R.id.youtube_view_thumbnail);
+            play_view = itemView.findViewById(R.id.frame_youtube_view_thumbnail);
+            thumbnailView = itemView.findViewById(R.id.youtube_view_thumbnail);
 
         }
     }

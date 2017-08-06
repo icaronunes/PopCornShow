@@ -66,7 +66,6 @@ import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.Constantes;
 import utils.UtilsFilme;
 
-import static domain.FilmeService.ratedMovieGuest;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.alternative_titles;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.credits;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.images;
@@ -78,9 +77,8 @@ import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.videos;
 public class FilmeActivity extends BaseActivity {
 
     private static final String TAG = FilmeActivity.class.getName();
-
-    private ViewPager viewPager;
     int color_fundo;
+    private ViewPager viewPager;
     private FloatingActionButton menu_item_favorite, menu_item_watchlist, menu_item_rated;
     private FloatingActionMenu fab;
     private int id_filme;
@@ -306,7 +304,7 @@ public class FilmeActivity extends BaseActivity {
             searchView.setQueryHint(getResources().getString(R.string.procurar));
 
             searchView.setEnabled(false);
-        } catch (Exception e){
+        } catch (Exception e) {
             FirebaseCrash.report(e);
             Toast.makeText(this, R.string.ops, Toast.LENGTH_SHORT).show();
         }
@@ -490,7 +488,7 @@ public class FilmeActivity extends BaseActivity {
                                 new Thread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        FilmeService.ratedMovieGuest(id_filme, (int) ratingBar.getRating(), FilmeActivity.this );
+                                        FilmeService.ratedMovieGuest(id_filme, (int) ratingBar.getRating(), FilmeActivity.this);
                                     }
                                 }).start();
 
@@ -712,7 +710,6 @@ public class FilmeActivity extends BaseActivity {
             }
 
 
-
             return null;
         }
 
@@ -736,11 +733,11 @@ public class FilmeActivity extends BaseActivity {
         @Override
         protected MovieDb doInBackground(Void... voids) {//
             if (UtilsFilme.isNetWorkAvailable(FilmeActivity.this)) {
-                boolean idioma_padrao  = false;
-                try{
+                boolean idioma_padrao = false;
+                try {
                     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);
                     idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-                } catch (Exception e){
+                } catch (Exception e) {
                     FirebaseCrash.report(e);
                 }
 
@@ -761,19 +758,19 @@ public class FilmeActivity extends BaseActivity {
                 } catch (Exception e) {
                     FirebaseCrash.report(e);
                     if (!isDestroyed())
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(FilmeActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(FilmeActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                 }
 
-                try{
+                try {
                     if (movieDb.getImdbID() != null) {
                         imdbdb = FilmeService.getImdb(movieDb.getImdbID());
                     }
-                } catch (Exception e){
+                } catch (Exception e) {
                     FirebaseCrash.report(e);
                     if (!isDestroyed())
                         runOnUiThread(new Runnable() {

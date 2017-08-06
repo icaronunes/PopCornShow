@@ -173,7 +173,7 @@ public class SeguindoActivity extends BaseActivity {
                             // Atualiza os eps em userTvShow
                         }
                         if (userTvshowOld.getSeasons() != null && userTvshow.getSeasons() != null) {
-                        for (int i = 0; i < userTvshowOld.getSeasons().size(); i++) {
+                            for (int i = 0; i < userTvshowOld.getSeasons().size(); i++) {
                                 userTvshow.getSeasons().get(i).setId(userTvshowOld.getSeasons().get(i).getId());
                                 userTvshow.getSeasons().get(i).setSeasonNumber(userTvshowOld.getSeasons().get(i).getSeasonNumber());
                                 userTvshow.getSeasons().get(i).setVisto(userTvshowOld.getSeasons().get(i).isVisto());
@@ -181,20 +181,21 @@ public class SeguindoActivity extends BaseActivity {
                             }
                         }
 
-                        for (int i = 0; i < userTvshowOld.getSeasons().size(); i++) {
+                        for (int i = 0; i < userTvshowOld.getNumberOfSeasons(); i++) {
                             //Log.d(TAG, "Numero de eps - " + userTvshow.getSeasons().get(i).getUserEps().size());
                             if (userTvshow.getSeasons().get(i).getUserEps() != null && userTvshowOld.getSeasons().get(i).getUserEps() != null) {
                                 if (userTvshow.getSeasons().get(i).getUserEps().size() > userTvshowOld.getSeasons().get(i).getUserEps().size())
-                                userTvshow.getSeasons().get(i).setVisto(false);
+                                    userTvshow.getSeasons().get(i).setVisto(false);
                                 //  Se huver novos ep. coloca temporada com não 'vista'
                             }
                             if (userTvshowOld.getSeasons().get(i).getUserEps() != null)
-                            for (int i1 = 0; i1 < userTvshowOld.getSeasons().get(i).getUserEps().size(); i1++) {
-                                if (i1 < userTvshowOld.getSeasons().get(i).getUserEps().size())
-                                    userTvshow.getSeasons().get(i).getUserEps().set(i1, userTvshowOld.getSeasons().get(i).getUserEps().get(i1));
-                               // Log.d(TAG, "run: EPS " + i1);
-                                //coloca as informações antigas na nova versão dos dados.
-                            }
+                                for (int i1 = 0; i1 < userTvshowOld.getSeasons().get(i).getUserEps().size(); i1++) {
+                                    if (i1 < userTvshowOld.getSeasons().get(i).getUserEps().size())
+                                        if (userTvshow.getSeasons().get(i) != null)
+                                        userTvshow.getSeasons().get(i).getUserEps().set(i1, userTvshowOld.getSeasons().get(i).getUserEps().get(i1));
+
+                                    //coloca as informações antigas na nova versão dos dados.
+                                }
                         }
                         seguindoDataBase
                                 .child(String.valueOf(series.getId()))

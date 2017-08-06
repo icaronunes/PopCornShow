@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 
 import com.github.paolorotolo.appintro.AppIntro;
 
@@ -26,7 +28,8 @@ public class IntroActivity extends AppIntro {
 
     // Please DO NOT override onCreate. Use init
     @Override
-    public void init(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // Add your slide's fragments here
         // AppIntro will automatically generate the dots indicator and buttons.
@@ -37,10 +40,10 @@ public class IntroActivity extends AppIntro {
             finish();
         } else {
 
-            addSlide(new FirstSlide(), getApplicationContext());
-            addSlide(new SecondSlide(), getApplicationContext());
-            addSlide(new ThirdSlide(), getApplicationContext());
-            addSlide(new FiveSlide(), getApplicationContext());
+            addSlide(new FirstSlide());
+            addSlide(new SecondSlide());
+            addSlide(new ThirdSlide());
+            addSlide(new FiveSlide());
         }
 
         // OPTIONAL METHODS
@@ -58,8 +61,9 @@ public class IntroActivity extends AppIntro {
     }
 
     @Override
-    public void onSkipPressed() {
+    public void onSkipPressed(Fragment currentFragment) {
         // Do something when users tap on Skip button.
+        super.onSkipPressed(currentFragment);
         SharedPreferences pref = getSharedPreferences(INTRO, 0);
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(VISTO, true);
@@ -69,7 +73,8 @@ public class IntroActivity extends AppIntro {
     }
 
     @Override
-    public void onDonePressed() {
+    public void onDonePressed(Fragment currentFragment) {
+        super.onDonePressed(currentFragment);
         // Do something when users tap on Done button.
         SharedPreferences pref = getSharedPreferences(INTRO, 0);
         SharedPreferences.Editor editor = pref.edit();

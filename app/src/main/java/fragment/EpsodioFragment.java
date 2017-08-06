@@ -375,7 +375,15 @@ public class EpsodioFragment extends Fragment {
 
                             alertDialog.dismiss();
 
-
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    FilmeService
+                                            .ratedTvshowEpsodioGuest(tvshow_id, seasons
+                                                    .getSeasonNumber(), position , (int) ratingBar
+                                                    .getRating(), getContext());
+                                }
+                            }).start();
                         }
                     });
                 }

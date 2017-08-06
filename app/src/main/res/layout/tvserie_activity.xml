@@ -48,7 +48,6 @@
                     android:adjustViewBounds="false"
                     android:background="@color/transparent"
                     android:contentDescription="@string/foto_principal"
-                    android:elevation="@dimen/trade_size_dp_3"
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="1.0" />

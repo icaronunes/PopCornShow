@@ -590,6 +590,14 @@ public class TvShowActivity extends BaseActivity {
 
                                             }
                                         });
+
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        FilmeService.ratedTvshowGuest(id_tvshow, (int) ratingBar.getRating(), TvShowActivity.this);
+                                    }
+                                }).start();
+
                             }
                             progressDialog.dismiss();
                             alertDialog.dismiss();

@@ -179,7 +179,7 @@
     <string name="notificacao_summary">Receber Notificação</string>
     <string name="ajuda_desenvolvimento">Desenvolvimento</string>
     <string name="novidades_title">Novidades</string>
-    <string name="novidades_text">** Arrumado erros de layout em diversas telas **\n\n** Retirar os banner com propagandas.**</string>
+    <string name="novidades_text">** Arrumado erros de layout em diversas telas **\n\n** Retirar os banner com propagandas.**\n\n** Suas avaliações agora são enviadas ao TMDB. Deforma anomina.\n *Com grandes poderes vem grandes responsabilidades **</string>
     <string name="star_avaliados">Avaliação</string>
     <string name="budget">Orçamento</string>
     <string name="person">Perfil</string>

@@ -82,7 +82,7 @@
     <string name="notificacao">Notificación</string>
     <string name="notificacao_summary">Obtener la notificación</string>
     <string name="nova_senha">Nueva Contraseña</string>
-    <string name="novidades_text">** Arreglado errores de diseño en varias pantallas **\n\n** Retirar los paneles publicitarios. **</string>
+    <string name="novidades_text">** Arreglado errores de diseño en varias pantallas **\n\n** Retirar los paneles publicitarios. **\n\n** Sus comentarios ahora se envían al TMDB. \nDeforma anomina.\nEvaluar con responsabilidad. \n**</string>
     <string name="novidades_title">Noticias</string>
     <string name="now_playing">Jugando ahora</string>
     <string name="ops">Oops! algo mal</string>
