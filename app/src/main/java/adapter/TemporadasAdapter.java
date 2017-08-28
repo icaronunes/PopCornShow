@@ -69,20 +69,20 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
                     switch (item.getItemId()) {
                         case R.id.elenco_temporada: {
                             Intent intent = new Intent(context, ElencoActivity.class);
-                            intent.putExtra(Constantes.MEDIATYPE, series.getMediaType());
-                            intent.putExtra(Constantes.ID, series.getId());
-                            intent.putExtra(Constantes.TVSEASONS, seasonNumber);
-                            intent.putExtra(Constantes.NOME, series.getName());
+                            intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), series.getMediaType());
+                            intent.putExtra(Constantes.INSTANCE.getID(), series.getId());
+                            intent.putExtra(Constantes.INSTANCE.getTVSEASONS(), seasonNumber);
+                            intent.putExtra(Constantes.INSTANCE.getNOME(), series.getName());
                             context.startActivity(intent);
                             return true;
                         }
 
                         case R.id.producao_temporada: {
                             Intent intent = new Intent(context, CrewsActivity.class);
-                            intent.putExtra(Constantes.MEDIATYPE, series.getMediaType());
-                            intent.putExtra(Constantes.ID, series.getId());
-                            intent.putExtra(Constantes.TVSEASONS, seasonNumber);
-                            intent.putExtra(Constantes.NOME, series.getName());
+                            intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), series.getMediaType());
+                            intent.putExtra(Constantes.INSTANCE.getID(), series.getId());
+                            intent.putExtra(Constantes.INSTANCE.getTVSEASONS(), seasonNumber);
+                            intent.putExtra(Constantes.INSTANCE.getNOME(), series.getName());
                             context.startActivity(intent);
                             return true;
                         }

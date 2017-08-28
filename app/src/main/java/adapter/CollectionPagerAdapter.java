@@ -125,8 +125,8 @@ public class CollectionPagerAdapter extends PagerAdapter {
                 int id = info.getParts().get(position).getId();
                 String title = info.getParts().get(position).getTitle();
                 Intent intent = new Intent(getContext(), FilmeActivity.class);
-                intent.putExtra(Constantes.FILME_ID, id);
-                intent.putExtra(Constantes.NOME_FILME, title);
+                intent.putExtra(Constantes.INSTANCE.getFILME_ID(), id);
+                intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), title);
                 getContext().startActivity(intent);
 
                 Bundle bundle = new Bundle();

@@ -74,9 +74,9 @@ public class PersonCrewsAdapter extends RecyclerView.Adapter<PersonCrewsAdapter.
                 Intent intent = new Intent(context, FilmeActivity.class);
                 ImageView imageView = (ImageView) view;
                 int color = UtilsFilme.loadPalette(imageView);
-                intent.putExtra(Constantes.COLOR_TOP, color);
-                intent.putExtra(Constantes.FILME_ID, movie.getMovieId());
-                intent.putExtra(Constantes.NOME_FILME, movie.getMovieTitle());
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
+                intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movie.getMovieId());
+                intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movie.getMovieTitle());
                 context.startActivity(intent);
                 firebaseAnalytics = FirebaseAnalytics.getInstance(context);
                 Bundle bundle = new Bundle();

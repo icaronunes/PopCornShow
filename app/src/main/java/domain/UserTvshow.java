@@ -27,7 +27,6 @@ public class UserTvshow implements Serializable {
 
     private String poster;
 
-
     private List<UserSeasons> seasons;
 
     private ExternalIds externalIds;

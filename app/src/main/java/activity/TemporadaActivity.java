@@ -111,20 +111,20 @@ public class TemporadaActivity extends BaseActivity {
     public void getExtras() {
 
         if (getIntent().getAction() == null){
-            temporada_id = getIntent().getIntExtra(Constantes.TEMPORADA_ID, 0);
-            temporada_position = getIntent().getIntExtra(Constantes.TEMPORADA_POSITION, 0);
-            serie_id = getIntent().getIntExtra(Constantes.TVSHOW_ID, 0);
-            nome_temporada = getIntent().getStringExtra(Constantes.NOME);
-            color = getIntent().getIntExtra(Constantes.COLOR_TOP, getResources().getColor(R.color.red));
+            temporada_id = getIntent().getIntExtra(Constantes.INSTANCE.getTEMPORADA_ID(), 0);
+            temporada_position = getIntent().getIntExtra(Constantes.INSTANCE.getTEMPORADA_POSITION(), 0);
+            serie_id = getIntent().getIntExtra(Constantes.INSTANCE.getTVSHOW_ID(), 0);
+            nome_temporada = getIntent().getStringExtra(Constantes.INSTANCE.getNOME());
+            color = getIntent().getIntExtra(Constantes.INSTANCE.getCOLOR_TOP(), getResources().getColor(R.color.red));
 
 
         } else {
-            temporada_id = Integer.parseInt(getIntent().getStringExtra(Constantes.TEMPORADA_ID));
-            temporada_position = Integer.parseInt(getIntent().getStringExtra(Constantes.TEMPORADA_POSITION));
+            temporada_id = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getTEMPORADA_ID()));
+            temporada_position = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getTEMPORADA_POSITION()));
             //Criar campo no signal
-            serie_id = Integer.parseInt(getIntent().getStringExtra(Constantes.TVSHOW_ID));
-            nome_temporada = getIntent().getStringExtra(Constantes.NOME);
-            color = Integer.parseInt(getIntent().getStringExtra(Constantes.COLOR_TOP));
+            serie_id = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getTVSHOW_ID()));
+            nome_temporada = getIntent().getStringExtra(Constantes.INSTANCE.getNOME());
+            color = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getCOLOR_TOP()));
         }
 
     }
@@ -224,16 +224,16 @@ public class TemporadaActivity extends BaseActivity {
             @Override
             public void onClickTemporada(View view, int position) {
                 Intent intent = new Intent(TemporadaActivity.this, EpsodioActivity.class);
-                intent.putExtra(Constantes.TVSHOW_ID, serie_id);
-                intent.putExtra(Constantes.TVSEASON_ID, tvSeason.getId());
-                intent.putExtra(Constantes.EPSODIO_ID, tvSeason.getEpisodes().get(position).getId());
-                intent.putExtra(Constantes.POSICAO, position);
-                intent.putExtra(Constantes.TEMPORADA_POSITION, temporada_position);
-                intent.putExtra(Constantes.TVSEASONS, tvSeason);
-                intent.putExtra(Constantes.COLOR_TOP, color);
-                intent.putExtra(Constantes.NOME, nome_temporada);
-                intent.putExtra(Constantes.USER, seasons );
-                intent.putExtra(Constantes.SEGUINDO, seguindo);
+                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), serie_id);
+                intent.putExtra(Constantes.INSTANCE.getTVSEASON_ID(), tvSeason.getId());
+                intent.putExtra(Constantes.INSTANCE.getEPSODIO_ID(), tvSeason.getEpisodes().get(position).getId());
+                intent.putExtra(Constantes.INSTANCE.getPOSICAO(), position);
+                intent.putExtra(Constantes.INSTANCE.getTEMPORADA_POSITION(), temporada_position);
+                intent.putExtra(Constantes.INSTANCE.getTVSEASONS(), tvSeason);
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
+                intent.putExtra(Constantes.INSTANCE.getNOME(), nome_temporada);
+                intent.putExtra(Constantes.INSTANCE.getUSER(), seasons );
+                intent.putExtra(Constantes.INSTANCE.getSEGUINDO(), seguindo);
                 startActivity(intent);
 
                 FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(TemporadaActivity.this);

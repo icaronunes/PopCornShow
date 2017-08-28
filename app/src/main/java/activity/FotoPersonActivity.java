@@ -55,13 +55,13 @@ public class FotoPersonActivity extends BaseActivity {
 
     private void getExtras() {
         if (getIntent().getAction() == null){
-            id_foto = getIntent().getExtras().getInt(Constantes.PERSON_ID);
-            nome = getIntent().getExtras().getString(Constantes.NOME_PERSON);
-             position = getIntent().getExtras().getInt(Constantes.POSICAO);
+            id_foto = getIntent().getExtras().getInt(Constantes.INSTANCE.getPERSON_ID());
+            nome = getIntent().getExtras().getString(Constantes.INSTANCE.getNOME_PERSON());
+             position = getIntent().getExtras().getInt(Constantes.INSTANCE.getPOSICAO());
         } else {
-            id_foto = getIntent().getExtras().getInt(Constantes.PERSON_ID);
-            nome = getIntent().getExtras().getString(Constantes.NOME_PERSON);
-            position = getIntent().getExtras().getInt(Constantes.POSICAO);
+            id_foto = getIntent().getExtras().getInt(Constantes.INSTANCE.getPERSON_ID());
+            nome = getIntent().getExtras().getString(Constantes.INSTANCE.getNOME_PERSON());
+            position = getIntent().getExtras().getInt(Constantes.INSTANCE.getPOSICAO());
         }
     }
 

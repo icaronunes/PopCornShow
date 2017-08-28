@@ -42,14 +42,14 @@ public class PosterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scroll_poster);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // Log.d("PosterActivity", "onCreate");
-        artworks = (List<Artwork>) getIntent().getBundleExtra(Constantes.BUNDLE).getSerializable(Constantes.ARTWORKS);
-        nome = getIntent().getStringExtra(Constantes.NOME);
+        artworks = (List<Artwork>) getIntent().getBundleExtra(Constantes.INSTANCE.getBUNDLE()).getSerializable(Constantes.INSTANCE.getARTWORKS());
+        nome = getIntent().getStringExtra(Constantes.INSTANCE.getNOME());
        // Log.d("posterAcvitivy", String.valueOf(getWindow().getContext().getTheme()));
         ViewPager viewPager = (ViewPager) findViewById(pager);
         LinePageIndicator titlePageIndicator = (LinePageIndicator) findViewById(R.id.indicator);
         viewPager.setAdapter(new PosterFragment(getSupportFragmentManager()));
         titlePageIndicator.setViewPager(viewPager);
-        titlePageIndicator.setCurrentItem(getIntent().getExtras().getInt(Constantes.POSICAO));
+        titlePageIndicator.setCurrentItem(getIntent().getExtras().getInt(Constantes.INSTANCE.getPOSICAO()));
 
     }
 

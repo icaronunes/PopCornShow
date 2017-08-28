@@ -28,7 +28,7 @@ public class TvShowsActivity extends BaseActivity {
         setupNavDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getIntent()
-                .getStringExtra(Constantes.NAV_DRAW_ESCOLIDO));
+                .getStringExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO()));
 
 //        AdView adview = (AdView) findViewById(R.id.adView);
 //        AdRequest adRequest = new AdRequest.Builder()
@@ -40,7 +40,7 @@ public class TvShowsActivity extends BaseActivity {
         if (savedInstanceState == null) {
             TvShowsFragment tvShowsFragment = new TvShowsFragment();
             tvShowsFragment.setArguments(getIntent().getExtras());
-            setCheckable(getIntent().getIntExtra(Constantes.ABA, 0));
+            setCheckable(getIntent().getIntExtra(Constantes.INSTANCE.getABA(), 0));
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.container_list_main, tvShowsFragment)

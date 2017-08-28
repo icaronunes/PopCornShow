@@ -48,25 +48,25 @@ public class EpsodioActivity extends BaseActivity {
     private void setExtras() {
 
         if (getIntent().getAction() == null) {
-            tvshow_id = getIntent().getIntExtra(Constantes.TVSHOW_ID, 0);
-            posicao = getIntent().getIntExtra(Constantes.POSICAO, 0);
-            color = getIntent().getIntExtra(Constantes.COLOR_TOP, 0);
-            tvSeason = (TvSeason) getIntent().getSerializableExtra(Constantes.TVSEASONS);
-            nome_temporada = getIntent().getStringExtra(Constantes.NOME);
-            temporada_position = getIntent().getIntExtra(Constantes.TEMPORADA_POSITION, 0);
+            tvshow_id = getIntent().getIntExtra(Constantes.INSTANCE.getTVSHOW_ID(), 0);
+            posicao = getIntent().getIntExtra(Constantes.INSTANCE.getPOSICAO(), 0);
+            color = getIntent().getIntExtra(Constantes.INSTANCE.getCOLOR_TOP(), 0);
+            tvSeason = (TvSeason) getIntent().getSerializableExtra(Constantes.INSTANCE.getTVSEASONS());
+            nome_temporada = getIntent().getStringExtra(Constantes.INSTANCE.getNOME());
+            temporada_position = getIntent().getIntExtra(Constantes.INSTANCE.getTEMPORADA_POSITION(), 0);
             //colocar no Signal
-            seasons = (UserSeasons) getIntent().getSerializableExtra(Constantes.USER);
-            seguindo = getIntent().getBooleanExtra(Constantes.SEGUINDO, false);
+            seasons = (UserSeasons) getIntent().getSerializableExtra(Constantes.INSTANCE.getUSER());
+            seguindo = getIntent().getBooleanExtra(Constantes.INSTANCE.getSEGUINDO(), false);
             getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada );
 
         } else {
-            tvshow_id = Integer.parseInt(getIntent().getStringExtra(Constantes.TVSHOW_ID));
-            posicao = Integer.parseInt(getIntent().getStringExtra(Constantes.POSICAO));
-            color = Integer.parseInt(getIntent().getStringExtra(Constantes.COLOR_TOP));
-            tvSeason = (TvSeason) getIntent().getSerializableExtra(Constantes.TVSEASONS);
-            temporada_position = getIntent().getIntExtra(Constantes.TEMPORADA_POSITION, 0);
-            nome_temporada = getIntent().getStringExtra(Constantes.NOME);
-            seguindo = getIntent().getBooleanExtra(Constantes.SEGUINDO, false);
+            tvshow_id = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getTVSHOW_ID()));
+            posicao = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getPOSICAO()));
+            color = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getCOLOR_TOP()));
+            tvSeason = (TvSeason) getIntent().getSerializableExtra(Constantes.INSTANCE.getTVSEASONS());
+            temporada_position = getIntent().getIntExtra(Constantes.INSTANCE.getTEMPORADA_POSITION(), 0);
+            nome_temporada = getIntent().getStringExtra(Constantes.INSTANCE.getNOME());
+            seguindo = getIntent().getBooleanExtra(Constantes.INSTANCE.getSEGUINDO(), false);
             getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada );
         }
     }

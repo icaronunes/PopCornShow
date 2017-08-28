@@ -78,7 +78,7 @@ public class ActivityPersonNetflix extends BaseActivity {
     }
 
     private void getExtras() {
-        nome = getIntent().getStringExtra(Constantes.NOME_PERSON);
+        nome = getIntent().getStringExtra(Constantes.INSTANCE.getNOME_PERSON());
         getSupportActionBar().setTitle(nome);
     }
 

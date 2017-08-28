@@ -34,7 +34,7 @@ public class Site extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.webView);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
-        String url = getIntent().getStringExtra(Constantes.SITE);
+        String url = getIntent().getStringExtra(Constantes.INSTANCE.getSITE());
 
         if (url.contains("https://play.google.com/store/apps/details?id=")) {
           //  Log.d("Site", url);

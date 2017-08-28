@@ -96,7 +96,7 @@ public class SearchMultiActivity extends BaseActivity {
                         final int id = Integer.parseInt(getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY));
                      //   Log.d("SearchMultiActivity", id + " " + Multi.MediaType.MOVIE);
                         intent = new Intent(this, FilmeActivity.class);
-                        intent.putExtra(Constantes.FILME_ID, id);
+                        intent.putExtra(Constantes.INSTANCE.getFILME_ID(), id);
                         intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                         startActivity(intent);
                         finish();
@@ -109,7 +109,7 @@ public class SearchMultiActivity extends BaseActivity {
                         final int id = Integer.parseInt(getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY));
                       //  Log.d("SearchMultiActivity", "" + id);
                         intent = new Intent(this, TvShowActivity.class);
-                        intent.putExtra(Constantes.TVSHOW_ID, id);
+                        intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), id);
                         intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                         startActivity(intent);
                         finish();
@@ -125,8 +125,8 @@ public class SearchMultiActivity extends BaseActivity {
                       //  Log.d("SearchMultiActivity", id);
                       //  Log.d("SearchMultiActivity", string.substring(string.indexOf('/') + 1, string.length()));
                         intent = new Intent(this, PersonActivity.class);
-                        intent.putExtra(Constantes.PERSON_ID, Integer.valueOf(id));
-                        intent.putExtra(Constantes.NOME_PERSON, string.substring(string.indexOf('/') + 1, string.length()));
+                        intent.putExtra(Constantes.INSTANCE.getPERSON_ID(), Integer.valueOf(id));
+                        intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), string.substring(string.indexOf('/') + 1, string.length()));
                         intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                         startActivity(intent);
                         finish();

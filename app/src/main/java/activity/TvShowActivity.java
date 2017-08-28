@@ -257,14 +257,14 @@ public class TvShowActivity extends BaseActivity {
     private void getExtras() {
 
         if (getIntent().getAction() == null) {
-            color_top = getIntent().getIntExtra(Constantes.COLOR_TOP, R.color.colorFAB);
+            color_top = getIntent().getIntExtra(Constantes.INSTANCE.getCOLOR_TOP(), R.color.colorFAB);
             //color_top = -13565;
-            id_tvshow = getIntent().getIntExtra(Constantes.TVSHOW_ID, 0);
+            id_tvshow = getIntent().getIntExtra(Constantes.INSTANCE.getTVSHOW_ID(), 0);
             //id_tvshow = 1418;
         } else {
-            color_top = Integer.parseInt(getIntent().getStringExtra(Constantes.COLOR_TOP));
+            color_top = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getCOLOR_TOP()));
             //color_top = -13565;
-            id_tvshow = Integer.parseInt(getIntent().getStringExtra(Constantes.TVSHOW_ID));
+            id_tvshow = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getTVSHOW_ID()));
             //id_tvshow = 1418;
         }
     }
@@ -312,7 +312,7 @@ public class TvShowActivity extends BaseActivity {
                     public void retornaFile(File file) {
                         Intent intent = new Intent(Intent.ACTION_SEND);
                         intent.setType("message/rfc822");
-                        intent.putExtra(Intent.EXTRA_TEXT, series.getName() + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL);
+                        intent.putExtra(Intent.EXTRA_TEXT, series.getName() + " " + buildDeepLink() + " by: " + Constantes.INSTANCE.getTWITTER_URL());
                         intent.setType("image/*");
                         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                         startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));

@@ -47,15 +47,15 @@ public class PosterGridActivity extends AppCompatActivity {
 //        adview.loadAd(adRequest);
 
         if (getIntent().getExtras() != null) {
-            if (getIntent().getSerializableExtra(Constantes.SERIE) != null) {
-                TvSeries series = (TvSeries) getIntent().getSerializableExtra(Constantes.SERIE);
+            if (getIntent().getSerializableExtra(Constantes.INSTANCE.getSERIE()) != null) {
+                TvSeries series = (TvSeries) getIntent().getSerializableExtra(Constantes.INSTANCE.getSERIE());
               //  Log.d("PosterGridActivity", "SERIE " + series.getName());
                 List<Artwork> artworks = series.getImages().getPosters();
                 recyclerView.setAdapter(new PosterGridAdapter(PosterGridActivity.this, artworks, series.getName()));
                 return;
             }
-            if (getIntent().getSerializableExtra(Constantes.FILME) != null) {
-                MovieDb movieDb = (MovieDb) getIntent().getSerializableExtra(Constantes.FILME);
+            if (getIntent().getSerializableExtra(Constantes.INSTANCE.getFILME()) != null) {
+                MovieDb movieDb = (MovieDb) getIntent().getSerializableExtra(Constantes.INSTANCE.getFILME());
               //  Log.d("PosterGridActivity", "FILME" + movieDb.getTitle());
                 List<Artwork> artworks = movieDb.getImages(ArtworkType.POSTER);
                 recyclerView.setAdapter(new PosterGridAdapter(PosterGridActivity.this, artworks, movieDb.getTitle()));

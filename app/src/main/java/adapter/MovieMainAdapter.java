@@ -78,9 +78,9 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 Intent intent = new Intent(context, FilmeActivity.class);
-                intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
-                intent.putExtra(Constantes.FILME_ID, movieDb.getId());
-                intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(holder.img_poster_grid));
+                intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movieDb.getTitle());
+                intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movieDb.getId());
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(holder.img_poster_grid));
                 context.startActivity(intent);
             }
         });

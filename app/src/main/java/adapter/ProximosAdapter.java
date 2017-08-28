@@ -88,9 +88,9 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, TvShowActivity.class);
-                intent.putExtra(Constantes.NOME_TVSHOW, userTvshow.getNome());
-                intent.putExtra(Constantes.TVSHOW_ID, userTvshow.getId());
-                intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(holder.poster));
+                intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), userTvshow.getNome());
+                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), userTvshow.getId());
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(holder.poster));
                 context.startActivity(intent);
 
                 FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
@@ -190,11 +190,11 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
                                             @Override
                                             public void onClick(View view) {
                                                 Intent intent = new Intent(context, TemporadaActivity.class);
-                                                intent.putExtra(Constantes.TVSHOW_ID, userTvshow.getId());
-                                                intent.putExtra(Constantes.TEMPORADA_ID, userEp.getSeasonNumber() );
-                                                intent.putExtra(Constantes.TEMPORADA_POSITION, finalPosicao);
-                                                intent.putExtra(Constantes.NOME, userTvshow.getNome());
-                                                intent.putExtra(Constantes.COLOR_TOP, color);
+                                                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), userTvshow.getId());
+                                                intent.putExtra(Constantes.INSTANCE.getTEMPORADA_ID(), userEp.getSeasonNumber() );
+                                                intent.putExtra(Constantes.INSTANCE.getTEMPORADA_POSITION(), finalPosicao);
+                                                intent.putExtra(Constantes.INSTANCE.getNOME(), userTvshow.getNome());
+                                                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                                                 context.startActivity(intent);
 
                                                 FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);

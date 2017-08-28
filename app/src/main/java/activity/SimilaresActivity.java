@@ -76,11 +76,11 @@ public class SimilaresActivity extends BaseActivity{
 
     private void getExtras() {
         if (getIntent().getAction() == null){
-            id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
-            title = getIntent().getStringExtra(Constantes.NOME_FILME);
+            id_filme = getIntent().getIntExtra(Constantes.INSTANCE.getFILME_ID(), 0);
+            title = getIntent().getStringExtra(Constantes.INSTANCE.getNOME_FILME());
         } else {
-            id_filme = getIntent().getIntExtra(Constantes.FILME_ID,0);
-            title = getIntent().getStringExtra(Constantes.NOME_FILME);
+            id_filme = getIntent().getIntExtra(Constantes.INSTANCE.getFILME_ID(),0);
+            title = getIntent().getStringExtra(Constantes.INSTANCE.getNOME_FILME());
         }
     }
 

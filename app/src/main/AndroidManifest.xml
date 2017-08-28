@@ -97,7 +97,7 @@
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
         </activity>
-        <activity android:name="activity.PersonPopularActivity">
+        <activity android:name="pessoaspopulares.PersonPopularActivity">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -131,7 +131,7 @@
 
         </activity>
 
-        <activity android:name="activity.OscarActivity">
+        <activity android:name="oscar.OscarActivity">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />

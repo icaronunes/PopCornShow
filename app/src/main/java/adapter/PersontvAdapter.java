@@ -85,11 +85,11 @@ public class PersontvAdapter extends RecyclerView.Adapter<PersontvAdapter.Person
                     Intent intent = new Intent(context, TvShowActivity.class);
                     ImageView imageView = (ImageView) view;
                     int color = UtilsFilme.loadPalette(imageView);
-                    intent.putExtra(Constantes.COLOR_TOP, color);
+                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                    // Log.d("PersonMovieAdapter", "ID - " + credit.getMovieId());
                    // Log.d("PersonMovieAdapter", "ID - " + credit.getMovieTitle());
-                    intent.putExtra(Constantes.TVSHOW_ID, credit.getMovieId());
-                    intent.putExtra(Constantes.NOME_TVSHOW, credit.getMovieTitle());
+                    intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), credit.getMovieId());
+                    intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), credit.getMovieTitle());
                     context.startActivity(intent);
 
                     FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);

@@ -109,7 +109,7 @@ public class FilmeService {
     }
 
 
-    public static Lista getLista(String stringExtra) {
+    public static ListaJava getLista(String stringExtra) {
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
@@ -119,10 +119,10 @@ public class FilmeService {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-        Lista items = null;
+        ListaJava items = null;
         try {
             Response response = client.newCall(request).execute();
-            //  Log.d("domian.Lista", String.valueOf(response.body().charStream()));
+            //  Log.d("domian.ListaJava", String.valueOf(response.body().charStream()));
             items = parseJSONLista(response);
         } catch (IOException e) {
             FirebaseCrash.report(e);
@@ -131,11 +131,11 @@ public class FilmeService {
         return items;
     } //TODO: arrumar para api 4
 
-    private static Lista parseJSONLista(Response response) {
+    private static ListaJava parseJSONLista(Response response) {
         Gson gson = new GsonBuilder().create();
-        Lista items = null;
-        items = gson.fromJson(response.body().charStream(), Lista.class);
-        //    Log.d("domian.Lista", items.getName());
+        ListaJava items = null;
+        items = gson.fromJson(response.body().charStream(), ListaJava.class);
+        //    Log.d("domian.ListaJava", items.getName());
         return items;
     }
 
@@ -509,10 +509,10 @@ public class FilmeService {
             Gson gson = new GsonBuilder().create();
             Response response = client.newCall(request).execute();
             guestSession = gson.fromJson(response.body().string(), GuestSession.class);
-            SharedPreferences preferences = context.getSharedPreferences(Constantes.PREF_ID_GUEST, 0);
+            SharedPreferences preferences = context.getSharedPreferences(Constantes.INSTANCE.getPREF_ID_GUEST(), 0);
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString(Constantes.GUEST_DATA, guestSession.getExpiresAt());
-            editor.putString(Constantes.GUEST, guestSession.getGuestSessionId());
+            editor.putString(Constantes.INSTANCE.getGUEST_DATA(), guestSession.getExpiresAt());
+            editor.putString(Constantes.INSTANCE.getGUEST(), guestSession.getGuestSessionId());
             editor.apply();
             return guestSession;
         } catch (IOException e) {
@@ -524,8 +524,8 @@ public class FilmeService {
 
     private static String hasGuestSession(Context context) {
         try {
-            SharedPreferences preferences = context.getSharedPreferences(Constantes.PREF_ID_GUEST, 0);
-            String dataGuest = preferences.getString(Constantes.GUEST_DATA, "");
+            SharedPreferences preferences = context.getSharedPreferences(Constantes.INSTANCE.getPREF_ID_GUEST(), 0);
+            String dataGuest = preferences.getString(Constantes.INSTANCE.getGUEST_DATA(), "");
             if (dataGuest.equals("")) return "";
 
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);

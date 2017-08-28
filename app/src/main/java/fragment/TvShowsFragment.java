@@ -53,7 +53,7 @@ public class TvShowsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.abaEscolhida = getArguments().getString(Constantes.NAV_DRAW_ESCOLIDO);
+            this.abaEscolhida = getArguments().getString(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO());
         }
     }
 
@@ -135,9 +135,9 @@ public class TvShowsFragment extends Fragment {
             @Override
             public void onClickTvshow(View view, int position) {
                 Intent intent = new Intent(getActivity(), TvShowActivity.class);
-                intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(view));
-                intent.putExtra(Constantes.TVSHOW_ID, tvSeries.get(position).getId());
-                intent.putExtra(Constantes.NOME_TVSHOW, tvSeries.get(position).getName());
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(view));
+                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), tvSeries.get(position).getId());
+                intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), tvSeries.get(position).getName());
                 getContext().startActivity(intent);
 
                 FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());

@@ -68,10 +68,10 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
                                 public void onClick(View view) {
                                     Intent intent = new Intent(context, PosterActivity.class);
                                     Bundle bundle = new Bundle();
-                                    bundle.putSerializable(Constantes.ARTWORKS, (Serializable) artworks);
-                                    intent.putExtra(Constantes.BUNDLE, bundle);
-                                    intent.putExtra(Constantes.POSICAO, position);
-                                    intent.putExtra(Constantes.NOME, nome);
+                                    bundle.putSerializable(Constantes.INSTANCE.getARTWORKS(), (Serializable) artworks);
+                                    intent.putExtra(Constantes.INSTANCE.getBUNDLE(), bundle);
+                                    intent.putExtra(Constantes.INSTANCE.getPOSICAO(), position);
+                                    intent.putExtra(Constantes.INSTANCE.getNOME(), nome);
                                     ActivityOptionsCompat opts = ActivityOptionsCompat.makeCustomAnimation(context,
                                             android.R.anim.fade_in, android.R.anim.fade_out);
                                     ActivityCompat.startActivity((Activity) context, intent, opts.toBundle());

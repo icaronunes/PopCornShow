@@ -77,11 +77,11 @@ public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.
                 public void onClick(View view) {
                     Intent intent = new Intent(context, FilmeActivity.class);
                     ImageView imageView = (ImageView) view;
-                    intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(imageView));
+                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(imageView));
                   //  Log.d("PersonMovieAdapter", "ID - " + credit.getMovieId());
                   //  Log.d("PersonMovieAdapter", "ID - " + credit.getMovieTitle());
-                    intent.putExtra(Constantes.FILME_ID, credit.getMovieId());
-                    intent.putExtra(Constantes.NOME_FILME, credit.getMovieTitle());
+                    intent.putExtra(Constantes.INSTANCE.getFILME_ID(), credit.getMovieId());
+                    intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), credit.getMovieTitle());
                     context.startActivity(intent);
 
                     FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);

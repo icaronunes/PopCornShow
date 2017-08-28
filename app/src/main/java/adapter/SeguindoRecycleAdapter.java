@@ -68,9 +68,9 @@ public class SeguindoRecycleAdapter extends RecyclerView.Adapter<SeguindoRecycle
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, TvShowActivity.class);
-                intent.putExtra(Constantes.TVSHOW_ID,userTvshow.getId());
-                intent.putExtra(Constantes.NOME_TVSHOW, userTvshow.getNome());
-                intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(holder.poster));
+                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(),userTvshow.getId());
+                intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), userTvshow.getNome());
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(holder.poster));
                 context.startActivity(intent);
 
                 FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);

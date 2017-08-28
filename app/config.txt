@@ -559,7 +559,7 @@
 }
 
 # view AndroidManifest.xml #generated:151
--keep class activity.OscarActivity {
+-keep class oscar.OscarActivity {
     <init>(...);
 }
 
@@ -569,7 +569,7 @@
 }
 
 # view AndroidManifest.xml #generated:122
--keep class activity.PersonPopularActivity {
+-keep class pessoaspopulares.PersonPopularActivity {
     <init>(...);
 }
 

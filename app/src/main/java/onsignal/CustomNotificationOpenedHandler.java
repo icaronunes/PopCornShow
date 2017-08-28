@@ -88,10 +88,10 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     Intent intent = new Intent(context, FilmeActivity.class);
 
                     if (object.has("color"))
-                        intent.putExtra(Constantes.COLOR_TOP, object.getInt("color"));
+                        intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), object.getInt("color"));
 
                     if (object.has("id")) {
-                        intent.putExtra(Constantes.FILME_ID, object.getInt("id"));
+                        intent.putExtra(Constantes.INSTANCE.getFILME_ID(), object.getInt("id"));
                         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                         stackBuilder.addParentStack(FilmeActivity.class);
                         stackBuilder.addNextIntent(intent);
@@ -102,13 +102,13 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                 if (action.equals("TvshowActivity")) {
                     Intent intent = new Intent(context, TvShowActivity.class);
                     if (object.has("color"))
-                        intent.putExtra(Constantes.COLOR_TOP, object.getInt("color"));
+                        intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), object.getInt("color"));
 
                     if (object.has("nome"))
-                        intent.putExtra(Constantes.NOME_TVSHOW, object.getString("nome"));
+                        intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), object.getString("nome"));
 
                     if (object.has("id")) {
-                        intent.putExtra(Constantes.TVSHOW_ID, object.getInt("id"));
+                        intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), object.getInt("id"));
                         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                         stackBuilder.addParentStack(TvShowActivity.class);
                         stackBuilder.addNextIntent(intent);
@@ -120,10 +120,10 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     Intent intent = new Intent(context, PersonActivity.class);
 
                     if (object.has("nome"))
-                        intent.putExtra(Constantes.NOME_PERSON, object.getString("nome"));
+                        intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), object.getString("nome"));
 
                     if (object.has("id")) {
-                        intent.putExtra(Constantes.PERSON_ID, object.getInt("id"));
+                        intent.putExtra(Constantes.INSTANCE.getPERSON_ID(), object.getInt("id"));
                         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                         stackBuilder.addParentStack(PersonActivity.class);
                         stackBuilder.addNextIntent(intent);
@@ -146,10 +146,10 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     Intent intent = new Intent(context, ListaGenericaActivity.class);
                     // Log.d("ListaGenericaActivity", "ListaGenericaActivity");
                     if (object.has("nome"))
-                        intent.putExtra(Constantes.LISTA_GENERICA, object.getString("nome"));
+                        intent.putExtra(Constantes.INSTANCE.getLISTA_GENERICA(), object.getString("nome"));
 
                     if (object.has("id")) {
-                        intent.putExtra(Constantes.LISTA_ID, object.getString("id"));
+                        intent.putExtra(Constantes.INSTANCE.getLISTA_ID(), object.getString("id"));
                         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                         stackBuilder.addParentStack(ListaGenericaActivity.class);
                         stackBuilder.addNextIntent(intent);
@@ -161,10 +161,10 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     Intent intent = new Intent(context, TrailerActivity.class);
 
                     if (object.has("sinopse"))
-                        intent.putExtra(Constantes.SINOPSE, object.getString("sinopse"));
+                        intent.putExtra(Constantes.INSTANCE.getSINOPSE(), object.getString("sinopse"));
 
                     if (object.has("youtube_key")) {
-                        intent.putExtra(Constantes.YOU_TUBE_KEY, object.getString("youtube_key"));
+                        intent.putExtra(Constantes.INSTANCE.getYOU_TUBE_KEY(), object.getString("youtube_key"));
                         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                         stackBuilder.addParentStack(TrailerActivity.class);
                         stackBuilder.addNextIntent(intent);
@@ -176,10 +176,10 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     Intent intent = new Intent(context, ReviewsActivity.class);
 
                     if (object.has("nome"))
-                        intent.putExtra(Constantes.NOME_FILME, object.getString("nome"));
+                        intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), object.getString("nome"));
 
                     if (object.has("id")) {
-                        intent.putExtra(Constantes.FILME_ID, object.getInt("id"));
+                        intent.putExtra(Constantes.INSTANCE.getFILME_ID(), object.getInt("id"));
                         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                         stackBuilder.addParentStack(ReviewsActivity.class);
                         stackBuilder.addNextIntent(intent);
@@ -191,16 +191,16 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     Intent intent = new Intent(context, ElencoActivity.class);
 
                     if (object.has("nome"))
-                        intent.putExtra(Constantes.NOME, object.getString("nome"));
+                        intent.putExtra(Constantes.INSTANCE.getNOME(), object.getString("nome"));
 
                     if (object.has("mediatype"))
-                        intent.putExtra(Constantes.MEDIATYPE, object.getString("mediatype"));
+                        intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), object.getString("mediatype"));
 
                     if (object.has("tvseason"))
-                        intent.putExtra(Constantes.TVSEASONS, object.getString("tvseason"));
+                        intent.putExtra(Constantes.INSTANCE.getTVSEASONS(), object.getString("tvseason"));
 
                     if (object.has("id") && object.has("mediatype")) {
-                        intent.putExtra(Constantes.ID, object.getInt("id"));
+                        intent.putExtra(Constantes.INSTANCE.getID(), object.getInt("id"));
                         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                         intent.putExtra("notification", false);
                         stackBuilder.addParentStack(PersonActivity.class);
@@ -213,16 +213,16 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     Intent intent = new Intent(context, CrewsActivity.class);
 
                     if (object.has("nome"))
-                        intent.putExtra(Constantes.NOME, object.getString("nome"));
+                        intent.putExtra(Constantes.INSTANCE.getNOME(), object.getString("nome"));
 
                     if (object.has("mediatype"))
-                        intent.putExtra(Constantes.MEDIATYPE, object.getString("mediatype"));
+                        intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), object.getString("mediatype"));
 
                     if (object.has("tvseason"))
-                        intent.putExtra(Constantes.TVSEASONS, object.getString("tvseason"));
+                        intent.putExtra(Constantes.INSTANCE.getTVSEASONS(), object.getString("tvseason"));
 
                     if (object.has("id") && object.has("mediatype")) {
-                        intent.putExtra(Constantes.ID, object.getInt("id"));
+                        intent.putExtra(Constantes.INSTANCE.getID(), object.getInt("id"));
                         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                         intent.putExtra("notification", false);
                         stackBuilder.addParentStack(CrewsActivity.class);
@@ -235,7 +235,7 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     Intent intent = new Intent(context, Site.class);
 
                     if (object.has("url")) {
-                        intent.putExtra(Constantes.SITE, object.getString("url"));
+                        intent.putExtra(Constantes.INSTANCE.getSITE(), object.getString("url"));
                         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                         stackBuilder.addParentStack(Site.class);
                         stackBuilder.addNextIntent(intent);
@@ -247,7 +247,7 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     Intent intent = new Intent(context, ProdutoraActivity.class);
 
                     if (object.has("id")) {
-                        intent.putExtra(Constantes.PRODUTORA_ID, object.getInt("id"));
+                        intent.putExtra(Constantes.INSTANCE.getPRODUTORA_ID(), object.getInt("id"));
                         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                         stackBuilder.addParentStack(ProdutoraActivity.class);
                         stackBuilder.addNextIntent(intent);
@@ -258,10 +258,10 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                 if (action.equals("SimilaresActivity")) {
                     Intent intent = new Intent(context, SimilaresActivity.class);
                     if (object.has("nome"))
-                        intent.putExtra(Constantes.NOME_FILME, object.getString("nome"));
+                        intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), object.getString("nome"));
 
                     if (object.has("id")) {
-                        intent.putExtra(Constantes.FILME_ID, object.getInt("id"));
+                        intent.putExtra(Constantes.INSTANCE.getFILME_ID(), object.getInt("id"));
                         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                         stackBuilder.addParentStack(SimilaresActivity.class);
                         stackBuilder.addNextIntent(intent);
@@ -273,13 +273,13 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     Intent intent = new Intent(context, FotoPersonActivity.class);
 
                     if (object.has("nome"))
-                        intent.putExtra(Constantes.NOME_PERSON, object.getString("nome"));
+                        intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), object.getString("nome"));
 
                     if (object.has("position"))
-                        intent.putExtra(Constantes.POSICAO, object.getInt("position"));
+                        intent.putExtra(Constantes.INSTANCE.getPOSICAO(), object.getInt("position"));
 
                     if (object.has("id")) {
-                        intent.putExtra(Constantes.PERSON_ID, object.getInt("id"));
+                        intent.putExtra(Constantes.INSTANCE.getPERSON_ID(), object.getInt("id"));
                         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                         stackBuilder.addParentStack(FotoPersonActivity.class);
                         stackBuilder.addNextIntent(intent);
@@ -302,10 +302,10 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     Intent intent = new Intent(context, TemporadaActivity.class);
 
                     if (object.has("temporada_id") && object.has("tvshow_id")) {
-                        intent.putExtra(Constantes.TVSHOW_ID, object.getInt("tvshow_id"));
-                        intent.putExtra(Constantes.TEMPORADA_ID, object.getString("temporada_id"));
-                        intent.putExtra(Constantes.NOME, object.getString("nome"));
-                        intent.putExtra(Constantes.COLOR_TOP, object.getString("color"));
+                        intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), object.getInt("tvshow_id"));
+                        intent.putExtra(Constantes.INSTANCE.getTEMPORADA_ID(), object.getString("temporada_id"));
+                        intent.putExtra(Constantes.INSTANCE.getNOME(), object.getString("nome"));
+                        intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), object.getString("color"));
 
                         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                         stackBuilder.addParentStack(TemporadaActivity.class);

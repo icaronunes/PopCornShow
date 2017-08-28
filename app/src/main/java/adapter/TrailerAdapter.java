@@ -55,8 +55,8 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
 
                     Intent intent = new Intent(context, TrailerActivity.class);
                     //  Log.d("OnClick", youtube_key);
-                    intent.putExtra(Constantes.YOU_TUBE_KEY, youtube_key);
-                    intent.putExtra(Constantes.SINOPSE, sinopse);
+                    intent.putExtra(Constantes.INSTANCE.getYOU_TUBE_KEY(), youtube_key);
+                    intent.putExtra(Constantes.INSTANCE.getSINOPSE(), sinopse);
 
                     context.startActivity(intent);
 

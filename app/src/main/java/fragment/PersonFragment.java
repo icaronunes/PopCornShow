@@ -63,8 +63,8 @@ public class PersonFragment extends Fragment {
     public static PersonFragment newInstance(int aba, int id_person) {
         //  Log.d("PersonFragment", "newInstance");
         Bundle args = new Bundle();
-        args.putInt(Constantes.ABA, aba);
-        args.putInt(Constantes.PERSON_ID, id_person);
+        args.putInt(Constantes.INSTANCE.getABA(), aba);
+        args.putInt(Constantes.INSTANCE.getPERSON_ID(), id_person);
         PersonFragment f = new PersonFragment();
         f.setArguments(args);
         return f;
@@ -76,8 +76,8 @@ public class PersonFragment extends Fragment {
         //  Log.d(TAG, "onCreate");
         setRetainInstance(true);
         if (getArguments() != null) {
-            tipo = getArguments().getInt(Constantes.ABA);
-            id_person = getArguments().getInt(Constantes.PERSON_ID);
+            tipo = getArguments().getInt(Constantes.INSTANCE.getABA());
+            id_person = getArguments().getInt(Constantes.INSTANCE.getPERSON_ID());
         }
         firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
@@ -235,7 +235,7 @@ public class PersonFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), Site.class);
-                    intent.putExtra(Constantes.SITE, information.getHomepage());
+                    intent.putExtra(Constantes.INSTANCE.getSITE(), information.getHomepage());
                     startActivity(intent);
 
                     Bundle bundle = new Bundle();
@@ -282,7 +282,7 @@ public class PersonFragment extends Fragment {
                     String nome = information.getName();
                     site = BASEWIKI.concat(nome.replace(" ", "_"));
 
-                    intent.putExtra(Constantes.SITE, site);
+                    intent.putExtra(Constantes.INSTANCE.getSITE(), site);
                     startActivity(intent);
 
                     Bundle bundle = new Bundle();
@@ -320,7 +320,7 @@ public class PersonFragment extends Fragment {
             public void onClick(View view) {
 
                 Intent intent = new Intent(getActivity(), ActivityPersonNetflix.class);
-                intent.putExtra(Constantes.NOME_PERSON, personPeople.getName());
+                intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), personPeople.getName());
                 startActivity(intent);
             }
         });

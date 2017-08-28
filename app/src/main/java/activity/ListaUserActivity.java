@@ -1,22 +1,15 @@
 package activity;
 
 import android.content.pm.ActivityInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
-import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.google.firebase.crash.FirebaseCrash;
-
-import adapter.ListUserAdapter;
 import br.com.icaro.filme.R;
-import domain.FilmeService;
-import domain.Lista;
+import domain.ListaJava;
 import utils.Constantes;
 
 /**
@@ -26,7 +19,7 @@ public class ListaUserActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-    private Lista lista;
+    private ListaJava listaJava;
     private String TAG = this.getClass().getName();
 
     @Override
@@ -36,7 +29,7 @@ public class ListaUserActivity extends BaseActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getIntent().getStringExtra(Constantes.LISTA_NOME));
+        getSupportActionBar().setTitle(getIntent().getStringExtra(Constantes.INSTANCE.getLISTA_NOME()));
         progressBar = (ProgressBar) findViewById(R.id.progress);
         recyclerView = (RecyclerView) findViewById(R.id.recycleView_favorite);
         recyclerView.setLayoutManager(new GridLayoutManager(ListaUserActivity.this, 2));
@@ -47,7 +40,7 @@ public class ListaUserActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new TMDVAsync().execute();
+       // new TMDVAsync().execute();
     }
 
     @Override
@@ -55,32 +48,32 @@ public class ListaUserActivity extends BaseActivity {
         return true;
     }
 
-    private class TMDVAsync extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                lista = FilmeService.getLista(getIntent().getStringExtra(Constantes.LISTA_ID));
-                //Metodos criados. Tudo gambiara. Precisa arrumar
-            } catch (Exception e) {
-                FirebaseCrash.report(e);
-               // Log.d(TAG, e.getMessage());
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(ListaUserActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            progressBar.setVisibility(View.GONE);
-            recyclerView.setAdapter(new ListUserAdapter(ListaUserActivity.this,
-                    lista != null ? lista.items : null));
-        }
-    }
+//    private class TMDVAsync extends AsyncTask<Void, Void, Void> {
+//
+//        @Override
+//        protected Void doInBackground(Void... voids) {
+//            try {
+//                listaJava = FilmeService.getLista(getIntent().getStringExtra(Constantes.INSTANCE.getLISTA_ID()));
+//                //Metodos criados. Tudo gambiara. Precisa arrumar
+//            } catch (Exception e) {
+//                FirebaseCrash.report(e);
+//               // Log.d(TAG, e.getMessage());
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toast.makeText(ListaUserActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void aVoid) {
+//            super.onPostExecute(aVoid);
+//            progressBar.setVisibility(View.GONE);
+//            recyclerView.setAdapter(new ListUserAdapter(ListaUserActivity.this,
+//                    listaJava != null ? listaJava.items : null));
+//        }
+//    }
 }

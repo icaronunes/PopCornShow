@@ -80,9 +80,9 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 Intent intent = new Intent(context, TvShowActivity.class);
-                intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
-                intent.putExtra(Constantes.TVSHOW_ID, series.getId());
-                intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(holder.img_poster_grid));
+                intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), series.getName());
+                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), series.getId());
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(holder.img_poster_grid));
                 context.startActivity(intent);
             }
         });

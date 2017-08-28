@@ -80,8 +80,8 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, PersonActivity.class);
-                intent.putExtra(Constantes.PERSON_ID, personCast.getId());
-                intent.putExtra(Constantes.NOME_PERSON, personCast.getName());
+                intent.putExtra(Constantes.INSTANCE.getPERSON_ID(), personCast.getId());
+                intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), personCast.getName());
                 context.startActivity(intent);
 
                 Bundle bundle = new Bundle();

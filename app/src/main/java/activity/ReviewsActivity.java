@@ -37,9 +37,9 @@ public class ReviewsActivity extends BaseActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle(getIntent().getStringExtra(Constantes.NOME_FILME));
-        id_filme = getIntent().getStringExtra(Constantes.FILME_ID);
-        if (getIntent().getStringExtra(Constantes.MEDIATYPE).equals("TV_SERIES")){
+        setTitle(getIntent().getStringExtra(Constantes.INSTANCE.getNOME_FILME()));
+        id_filme = getIntent().getStringExtra(Constantes.INSTANCE.getFILME_ID());
+        if (getIntent().getStringExtra(Constantes.INSTANCE.getMEDIATYPE()).equals("TV_SERIES")){
             type = "tv-shows";
         } else {
             type = "movies";

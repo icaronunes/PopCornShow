@@ -270,11 +270,11 @@ public class FilmeActivity extends BaseActivity {
 
     private void getExtras() {
         if (getIntent().getAction() == null) {
-            id_filme = getIntent().getIntExtra(Constantes.FILME_ID, 0);
-            color_fundo = getIntent().getIntExtra(Constantes.COLOR_TOP, R.color.transparent);
+            id_filme = getIntent().getIntExtra(Constantes.INSTANCE.getFILME_ID(), 0);
+            color_fundo = getIntent().getIntExtra(Constantes.INSTANCE.getCOLOR_TOP(), R.color.transparent);
         } else {
-            id_filme = Integer.parseInt(getIntent().getStringExtra(Constantes.FILME_ID));
-            color_fundo = Integer.parseInt(getIntent().getStringExtra(Constantes.COLOR_TOP));
+            id_filme = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getFILME_ID()));
+            color_fundo = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getCOLOR_TOP()));
 
         }
     }
@@ -322,7 +322,7 @@ public class FilmeActivity extends BaseActivity {
                     public void retornaFile(File file) {
                         Intent intent = new Intent(Intent.ACTION_SEND);
                         intent.setType("message/rfc822");
-                        intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL);
+                        intent.putExtra(Intent.EXTRA_TEXT, movieDb.getTitle() + " " + buildDeepLink() + " by: " + Constantes.INSTANCE.getTWITTER_URL());
                         intent.setType("image/*");
                         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                         startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
@@ -650,10 +650,10 @@ public class FilmeActivity extends BaseActivity {
 
         FilmeInfoFragment filmeFrag = new FilmeInfoFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.FILME, movieDb);
-        bundle.putSerializable(Constantes.SIMILARES, similarMovies);
-        bundle.putSerializable(Constantes.NETFLIX, netflix);
-        bundle.putSerializable(Constantes.IMDB, imdbdb);
+        bundle.putSerializable(Constantes.INSTANCE.getFILME(), movieDb);
+        bundle.putSerializable(Constantes.INSTANCE.getSIMILARES(), similarMovies);
+        bundle.putSerializable(Constantes.INSTANCE.getNETFLIX(), netflix);
+        bundle.putSerializable(Constantes.INSTANCE.getIMDB(), imdbdb);
         filmeFrag.setArguments(bundle);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             if (!isDestroyed() && !isFinishing() && tmdvAsync != null) { //Isdestroyed valido apenas acima desta api

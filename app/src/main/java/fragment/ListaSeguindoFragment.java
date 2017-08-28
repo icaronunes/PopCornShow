@@ -47,8 +47,8 @@ public class ListaSeguindoFragment extends Fragment {
     public static Fragment newInstance(int tipo, List<UserTvshow> userTvshows) {
         ListaSeguindoFragment fragment = new ListaSeguindoFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.SEGUINDO, (Serializable) userTvshows);
-        bundle.putInt(Constantes.ABA, tipo);
+        bundle.putSerializable(Constantes.INSTANCE.getSEGUINDO(), (Serializable) userTvshows);
+        bundle.putInt(Constantes.INSTANCE.getABA(), tipo);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -58,8 +58,8 @@ public class ListaSeguindoFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            tipo = getArguments().getInt(Constantes.ABA);
-            userTvshows = (List<UserTvshow>) getArguments().getSerializable(Constantes.SEGUINDO);
+            tipo = getArguments().getInt(Constantes.INSTANCE.getABA());
+            userTvshows = (List<UserTvshow>) getArguments().getSerializable(Constantes.INSTANCE.getSEGUINDO());
         }
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -97,7 +97,7 @@ public class ListaSeguindoFragment extends Fragment {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         userTvshows.add(snapshot.getValue(UserTvshow.class));
-                      //  Log.d(TAG, snapshot.getValue(UserTvshow.class).getNome());
+                        //  Log.d(TAG, snapshot.getValue(UserTvshow.class).getNome());
                     }
                     if (getView().getRootView() != null) {
                         recyclerViewMissing = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
@@ -123,14 +123,14 @@ public class ListaSeguindoFragment extends Fragment {
         for (UserTvshow userTvshow : userTvshows) {
             boolean season = true;
             for (UserSeasons seasons : userTvshow.getSeasons()) {
-                if (seasons.getSeasonNumber() != 0  && seasons.getUserEps() != null && season)
-                for (UserEp userEp : seasons.getUserEps()) {
-                    if (!userEp.isAssistido() ){
-                        temp.add(userTvshow);
-                        season = false;
-                        break;
+                if (seasons.getSeasonNumber() != 0 && seasons.getUserEps() != null && season)
+                    for (UserEp userEp : seasons.getUserEps()) {
+                        if (!userEp.isAssistido()) {
+                            temp.add(userTvshow);
+                            season = false;
+                            break;
+                        }
                     }
-                }
             }
         }// gambiara. Arrumar!
 
@@ -160,7 +160,7 @@ public class ListaSeguindoFragment extends Fragment {
         recyclerViewSeguindo = (RecyclerView) view.findViewById(R.id.seguindo_recycle);
         recyclerViewSeguindo.setHasFixedSize(true);
         recyclerViewSeguindo.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewSeguindo.setLayoutManager(new GridLayoutManager(getContext(),4));
+        recyclerViewSeguindo.setLayoutManager(new GridLayoutManager(getContext(), 4));
         if (userTvshows.size() > 0) {
             recyclerViewSeguindo.setAdapter(new SeguindoRecycleAdapter(getActivity(), userTvshows));
         } else {

@@ -81,9 +81,9 @@ public class SimilaresFilmesAdapter extends RecyclerView.Adapter<SimilaresFilmes
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, FilmeActivity.class);
-                    intent.putExtra(Constantes.COLOR_TOP, color_top);
-                    intent.putExtra(Constantes.NOME_FILME, movie.getTitle());
-                    intent.putExtra(Constantes.FILME_ID, movie.getId());
+                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color_top);
+                    intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movie.getTitle());
+                    intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movie.getId());
                     context.startActivity(intent);
 
                     Bundle bundle = new Bundle();

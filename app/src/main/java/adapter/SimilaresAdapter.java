@@ -64,9 +64,9 @@ public class SimilaresAdapter extends RecyclerView.Adapter<SimilaresAdapter.Simi
             public void onClick(View view) {
                 Intent intent = new Intent(context, FilmeActivity.class);
                 int color = UtilsFilme.loadPalette(holder.imageView);
-                intent.putExtra(Constantes.COLOR_TOP, color);
-                intent.putExtra(Constantes.FILME_ID, similares.get(position).getId());
-                intent.putExtra(Constantes.NOME_FILME, similares.get(position).getTitle());
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
+                intent.putExtra(Constantes.INSTANCE.getFILME_ID(), similares.get(position).getId());
+                intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), similares.get(position).getTitle());
                 context.startActivity(intent);
 
                 FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);

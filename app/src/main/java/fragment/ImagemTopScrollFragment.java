@@ -32,7 +32,7 @@ public class ImagemTopScrollFragment extends Fragment {
     public static Fragment newInstance(TopMain topMainList) {
         ImagemTopScrollFragment topScrollFragment = new ImagemTopScrollFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.MAIN, topMainList);
+        bundle.putSerializable(Constantes.INSTANCE.getMAIN(), topMainList);
         topScrollFragment.setArguments(bundle);
 
         return topScrollFragment;
@@ -42,7 +42,7 @@ public class ImagemTopScrollFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        topMains = (TopMain) getArguments().getSerializable(Constantes.MAIN);
+        topMains = (TopMain) getArguments().getSerializable(Constantes.INSTANCE.getMAIN());
 
     }
 
@@ -65,9 +65,9 @@ public class ImagemTopScrollFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), FilmeActivity.class);
-                    intent.putExtra(Constantes.NOME_FILME, topMains.getNome());
-                    intent.putExtra(Constantes.FILME_ID, topMains.getId());
-                    intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(imageView));
+                    intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), topMains.getNome());
+                    intent.putExtra(Constantes.INSTANCE.getFILME_ID(), topMains.getId());
+                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(imageView));
                     startActivity(intent);
                 }
             });
@@ -81,9 +81,9 @@ public class ImagemTopScrollFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), TvShowActivity.class);
-                    intent.putExtra(Constantes.NOME_TVSHOW, topMains.getNome());
-                    intent.putExtra(Constantes.TVSHOW_ID, topMains.getId());
-                    intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(imageView));
+                    intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), topMains.getNome());
+                    intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), topMains.getId());
+                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(imageView));
                     startActivity(intent);
                 }
             });

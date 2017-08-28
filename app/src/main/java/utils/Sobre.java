@@ -52,7 +52,7 @@ public class Sobre extends DialogPreference {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), Site.class);
-                intent.putExtra(Constantes.SITE, "https://www.themoviedb.org/");
+                intent.putExtra(Constantes.INSTANCE.getSITE(), "https://www.themoviedb.org/");
                 getContext().startActivity(intent);
             }
         });
@@ -80,7 +80,7 @@ public class Sobre extends DialogPreference {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), Site.class);
-                intent.putExtra(Constantes.SITE, "https://twitter.com/appopcorn");
+                intent.putExtra(Constantes.INSTANCE.getSITE(), "https://twitter.com/appopcorn");
                 getContext().startActivity(intent);
             }
         });

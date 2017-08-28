@@ -102,8 +102,8 @@ public class DynamicLink extends AppCompatActivity implements GoogleApiClient.On
             if (action.equals("FA")) {
                 Intent intent = new Intent(DynamicLink.this, FilmeActivity.class);
 
-                intent.putExtra(Constantes.COLOR_TOP, color);
-                intent.putExtra(Constantes.FILME_ID, id);
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
+                intent.putExtra(Constantes.INSTANCE.getFILME_ID(), id);
                 TaskStackBuilder stackBuilder = TaskStackBuilder.create(DynamicLink.this);
                 stackBuilder.addParentStack(FilmeActivity.class);
                 stackBuilder.addNextIntent(intent);
@@ -114,9 +114,9 @@ public class DynamicLink extends AppCompatActivity implements GoogleApiClient.On
             if (action.equals("TA")) {
                 Intent intent = new Intent(DynamicLink.this, TvShowActivity.class);
 
-                intent.putExtra(Constantes.COLOR_TOP, color);
-                intent.putExtra(Constantes.NOME_TVSHOW, nome);
-                intent.putExtra(Constantes.TVSHOW_ID, id);
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
+                intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), nome);
+                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), id);
                 TaskStackBuilder stackBuilder = TaskStackBuilder.create(DynamicLink.this);
                 stackBuilder.addParentStack(TvShowActivity.class);
                 stackBuilder.addNextIntent(intent);

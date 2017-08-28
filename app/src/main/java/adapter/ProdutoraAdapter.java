@@ -82,9 +82,9 @@ public class ProdutoraAdapter extends RecyclerView.Adapter<ProdutoraAdapter.Prod
                 public void onClick(View view) {
                     Intent intent = new Intent(context, FilmeActivity.class);
                     int color = UtilsFilme.loadPalette(holder.imageView);
-                    intent.putExtra(Constantes.COLOR_TOP, color);
-                    intent.putExtra(Constantes.FILME_ID, movie.getId());
-                    intent.putExtra(Constantes.NOME_FILME, movie.getTitle());
+                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
+                    intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movie.getId());
+                    intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movie.getTitle());
                     context.startActivity(intent);
 
 

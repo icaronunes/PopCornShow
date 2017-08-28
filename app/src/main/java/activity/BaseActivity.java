@@ -49,6 +49,8 @@ import java.util.Random;
 import br.com.icaro.filme.BuildConfig;
 import br.com.icaro.filme.R;
 import domain.Netflix;
+import oscar.OscarActivity;
+import pessoaspopulares.PersonPopularActivity;
 import utils.Constantes;
 import utils.UtilsFilme;
 
@@ -262,7 +264,7 @@ public class BaseActivity extends AppCompatActivity {
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 intent = new Intent(this, MainActivity.class);
-                intent.putExtra(Constantes.ABA, R.id.menu_drav_home);
+                intent.putExtra(Constantes.INSTANCE.getABA(), R.id.menu_drav_home);
                 startActivity(intent);
                 break;
 
@@ -309,8 +311,8 @@ public class BaseActivity extends AppCompatActivity {
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_PersonPopular");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);//
                 intent = new Intent(this, OscarActivity.class);
-                intent.putExtra(Constantes.LISTA_ID, getResources().getString(R.string.id_oscar));
-                intent.putExtra(Constantes.LISTA_NOME, R.string.oscar);
+                intent.putExtra(Constantes.INSTANCE.getLISTA_ID(), getResources().getString(R.string.id_oscar));
+                intent.putExtra(Constantes.INSTANCE.getLISTA_NOME(), R.string.oscar);
                 startActivity(intent);
                 break;
 
@@ -322,8 +324,8 @@ public class BaseActivity extends AppCompatActivity {
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_Seguindo");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);//
                 intent = new Intent(this, SeguindoActivity.class);
-                intent.putExtra(Constantes.LISTA_ID, "28");
-                intent.putExtra(Constantes.LISTA_NOME, R.string.oscar);
+                intent.putExtra(Constantes.INSTANCE.getLISTA_ID(), "28");
+                intent.putExtra(Constantes.INSTANCE.getLISTA_NOME(), R.string.oscar);
                 startActivity(intent);
                 break;
 
@@ -368,9 +370,9 @@ public class BaseActivity extends AppCompatActivity {
                         String numero = String.valueOf(new Random().nextInt(10));
                         //Log.d(TAG, "numero : " + numero);
 
-                        intent.putExtra(Constantes.LISTA_ID, map.get("id" + numero));
-                        intent.putExtra(Constantes.LISTA_GENERICA, map.get("title" + numero));
-                        intent.putExtra(Constantes.BUNDLE, (Serializable) map);
+                        intent.putExtra(Constantes.INSTANCE.getLISTA_ID(), map.get("id" + numero));
+                        intent.putExtra(Constantes.INSTANCE.getLISTA_GENERICA(), map.get("title" + numero));
+                        intent.putExtra(Constantes.INSTANCE.getBUNDLE(), (Serializable) map);
 
                         Bundle bundle = new Bundle();
                         bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_Random:List:" + map.get("id" + numero) + ":" + "title" + numero);

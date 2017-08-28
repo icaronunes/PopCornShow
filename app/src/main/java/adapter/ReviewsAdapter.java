@@ -63,7 +63,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.FilmeVie
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, Site.class);
-                intent.putExtra(Constantes.SITE, reportagem.getUrl());
+                intent.putExtra(Constantes.INSTANCE.getSITE(), reportagem.getUrl());
                 context.startActivity(intent);
 
                 FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);

@@ -74,9 +74,9 @@ public class PersonImagemAdapter extends RecyclerView.Adapter<PersonImagemAdapte
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, FotoPersonActivity.class);
-                intent.putExtra(Constantes.PERSON_ID, id_person);
-                intent.putExtra(Constantes.NOME_PERSON, nome);
-                intent.putExtra(Constantes.POSICAO, position);
+                intent.putExtra(Constantes.INSTANCE.getPERSON_ID(), id_person);
+                intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), nome);
+                intent.putExtra(Constantes.INSTANCE.getPOSICAO(), position);
                 context.startActivity(intent);
 
                 firebaseAnalytics = FirebaseAnalytics.getInstance(context);

@@ -108,9 +108,9 @@ public class ProdutoraActivity extends BaseActivity {
 
     private void getExtras() {
         if (getIntent().getAction() == null) {
-            id_produtora = getIntent().getIntExtra(Constantes.PRODUTORA_ID, 0);
+            id_produtora = getIntent().getIntExtra(Constantes.INSTANCE.getPRODUTORA_ID(), 0);
         } else {
-            id_produtora = getIntent().getIntExtra(Constantes.PRODUTORA_ID, 0);
+            id_produtora = getIntent().getIntExtra(Constantes.INSTANCE.getPRODUTORA_ID(), 0);
         }
     }
 

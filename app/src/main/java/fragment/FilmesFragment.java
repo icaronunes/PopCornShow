@@ -58,9 +58,9 @@ public class FilmesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             if (getActivity().getIntent().getAction() == null) {
-                this.abaEscolhida = getArguments().getInt(Constantes.NAV_DRAW_ESCOLIDO);
+                this.abaEscolhida = getArguments().getInt(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO());
             } else {
-                this.abaEscolhida = Integer.parseInt(getArguments().getString(Constantes.NAV_DRAW_ESCOLIDO));
+                this.abaEscolhida = Integer.parseInt(getArguments().getString(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO()));
             }
         }
 
@@ -146,9 +146,9 @@ public class FilmesFragment extends Fragment {
               //  Log.d("onClickMovieListener", "" + position);
                // Log.d("onClickMovieListener", "" + movies.get(position).getTitle());
                 Intent intent = new Intent(getActivity(), FilmeActivity.class);
-                intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(view));
-                intent.putExtra(Constantes.FILME_ID, movies.get(position).getId());
-                intent.putExtra(Constantes.NOME_FILME, movies.get(position).getTitle());
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(view));
+                intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movies.get(position).getId());
+                intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movies.get(position).getTitle());
                 getContext().startActivity(intent);
 
                 Bundle bundle = new Bundle();

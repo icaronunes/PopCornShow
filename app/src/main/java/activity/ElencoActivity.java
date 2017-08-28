@@ -82,18 +82,18 @@ public class ElencoActivity extends BaseActivity {
 
     private void getExtras() {
         if (getIntent().getBooleanExtra("notification" , true)) {
-            id = getIntent().getIntExtra(Constantes.ID, 0);
-            mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.MEDIATYPE);
-            season = getIntent().getIntExtra(Constantes.TVSEASONS, -100);
-            title = getIntent().getStringExtra(Constantes.NOME);
+            id = getIntent().getIntExtra(Constantes.INSTANCE.getID(), 0);
+            mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.INSTANCE.getMEDIATYPE());
+            season = getIntent().getIntExtra(Constantes.INSTANCE.getTVSEASONS(), -100);
+            title = getIntent().getStringExtra(Constantes.INSTANCE.getNOME());
         } else {
-            id = getIntent().getIntExtra(Constantes.ID,0);
-            String media  = getIntent().getStringExtra(Constantes.MEDIATYPE);
+            id = getIntent().getIntExtra(Constantes.INSTANCE.getID(),0);
+            String media  = getIntent().getStringExtra(Constantes.INSTANCE.getMEDIATYPE());
             switch (media) {
 
                 case "tv": {
                     mediaType = (Multi.MediaType.TV_SERIES);
-                    season = Integer.parseInt(getIntent().getStringExtra(Constantes.TVSEASONS));
+                    season = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getTVSEASONS()));
                     break;
                 }
                 case "movie": {
@@ -101,7 +101,7 @@ public class ElencoActivity extends BaseActivity {
                     break;
                 }
             }
-            title = getIntent().getStringExtra(Constantes.NOME);
+            title = getIntent().getStringExtra(Constantes.INSTANCE.getNOME());
         }
     }
 

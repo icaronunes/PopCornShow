@@ -69,10 +69,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
                 public void onClick(View view) {
                     ImageView imageView = (ImageView) view.findViewById(R.id.img_search);
                     Intent intent = new Intent(context, FilmeActivity.class);
-                    intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(imageView));
-                    intent.putExtra(Constantes.FILME_ID, movieDb.getId());
+                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(imageView));
+                    intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movieDb.getId());
                     //Log.d("setOnItemClickListener", movieDb.getOriginalTitle());
-                    intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
+                    intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movieDb.getTitle());
                     context.startActivity(intent);
 
                     Bundle bundle = new Bundle();
@@ -107,10 +107,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
                     ImageView imageView = (ImageView) view.findViewById(R.id.img_search);
                     Intent intent = new Intent(context, TvShowActivity.class);
                     int color = UtilsFilme.loadPalette(imageView);
-                    intent.putExtra(Constantes.COLOR_TOP, color);
-                    intent.putExtra(Constantes.TVSHOW_ID, series.getId());
+                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
+                    intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), series.getId());
                   //  Log.d("setOnItemClickListener", series.getName());
-                    intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
+                    intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), series.getName());
                     context.startActivity(intent);
 
                     Bundle bundle = new Bundle();
@@ -145,10 +145,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
                     ImageView imageView = (ImageView) view.findViewById(R.id.img_search);
                     Intent intent = new Intent(context, PersonActivity.class);
                     int color = UtilsFilme.loadPalette(imageView);
-                    intent.putExtra(Constantes.COLOR_TOP, color);
-                    intent.putExtra(Constantes.PERSON_ID, person.getId());
+                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
+                    intent.putExtra(Constantes.INSTANCE.getPERSON_ID(), person.getId());
                   //  Log.d("setOnItemClickListener", person.getName());
-                    intent.putExtra(Constantes.NOME_PERSON, person.getName());
+                    intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), person.getName());
                     context.startActivity(intent);
 
                     Bundle bundle = new Bundle();

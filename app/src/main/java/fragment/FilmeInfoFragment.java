@@ -100,10 +100,10 @@ public class FilmeInfoFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             Bundle bundle = getArguments();
-            movieDb = (MovieDb) bundle.getSerializable(Constantes.FILME);
-            similarMovies = (MovieResultsPage) bundle.getSerializable(Constantes.SIMILARES);
-            netflix = (Netflix) bundle.getSerializable(Constantes.NETFLIX);
-            imdbDd = (Imdb) bundle.getSerializable(Constantes.IMDB);
+            movieDb = (MovieDb) bundle.getSerializable(Constantes.INSTANCE.getFILME());
+            similarMovies = (MovieResultsPage) bundle.getSerializable(Constantes.INSTANCE.getSIMILARES());
+            netflix = (Netflix) bundle.getSerializable(Constantes.INSTANCE.getNETFLIX());
+            imdbDd = (Imdb) bundle.getSerializable(Constantes.INSTANCE.getIMDB());
             // Log.d("FilmeInfoFragment", "onCreate");
         }
 
@@ -194,9 +194,9 @@ public class FilmeInfoFragment extends Fragment {
             public void onClick(View view) {
                 if (!movieDb.getImdbID().isEmpty() ) {
                     Intent intent = new Intent(getContext(), ReviewsActivity.class);
-                    intent.putExtra(Constantes.FILME_ID, movieDb.getImdbID());
-                    intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
-                    intent.putExtra(Constantes.MEDIATYPE, movieDb.getMediaType().name());
+                    intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movieDb.getImdbID());
+                    intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movieDb.getTitle());
+                    intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), movieDb.getMediaType().name());
 
                     startActivity(intent);
 
@@ -213,7 +213,7 @@ public class FilmeInfoFragment extends Fragment {
             public void onClick(View view) {
                 
                 Intent intent = new Intent(getActivity(), Site.class);
-                intent.putExtra(Constantes.SITE,
+                intent.putExtra(Constantes.INSTANCE.getSITE(),
                         "https:www.imdb.com/title/" + movieDb.getImdbID() + "/");
                 startActivity(intent);
 
@@ -229,7 +229,7 @@ public class FilmeInfoFragment extends Fragment {
             public void onClick(View view) {
 
                 Intent intent = new Intent(getActivity(), Site.class);
-                intent.putExtra(Constantes.SITE,
+                intent.putExtra(Constantes.INSTANCE.getSITE(),
                         "https://www.themoviedb.org/movie/" + movieDb.getId() + "/");
                 //Log.d("TMDB",  "https://www.themoviedb.org/movie/" + movieDb.getId() + "/" );
                 startActivity(intent);
@@ -303,7 +303,7 @@ public class FilmeInfoFragment extends Fragment {
                 // Log.d("FilmeInfoFragment", "Home " + movieDb.getHomepage());
                 if (movieDb.getHomepage() != "" && movieDb.getHomepage() != null) {
                     Intent intent = new Intent(getContext(), Site.class);
-                    intent.putExtra(Constantes.SITE,  movieDb.getHomepage());
+                    intent.putExtra(Constantes.INSTANCE.getSITE(),  movieDb.getHomepage());
                     startActivity(intent);
 
                     bundle = new Bundle();
@@ -388,7 +388,7 @@ public class FilmeInfoFragment extends Fragment {
                                         String url = "http://www.metacritic.com/movie/" + nome;
 
                                         Intent intent = new Intent(getActivity(), Site.class);
-                                        intent.putExtra(Constantes.SITE, url);
+                                        intent.putExtra(Constantes.INSTANCE.getSITE(), url);
                                         startActivity(intent);
                             }
                         }
@@ -407,7 +407,7 @@ public class FilmeInfoFragment extends Fragment {
                                         nome = UtilsFilme.removerAcentos(nome);
                                         String url = "https://www.rottentomatoes.com/m/" + nome;
                                         Intent intent = new Intent(getActivity(), Site.class);
-                                        intent.putExtra(Constantes.SITE, url);
+                                        intent.putExtra(Constantes.INSTANCE.getSITE(), url);
                                         startActivity(intent);
                             }
                         }
@@ -424,7 +424,7 @@ public class FilmeInfoFragment extends Fragment {
 
                                         String url = "http://www.imdb.com/title/" + imdbDd.getImdbID();
                                         Intent intent = new Intent(getActivity(), Site.class);
-                                        intent.putExtra(Constantes.SITE, url);
+                                        intent.putExtra(Constantes.INSTANCE.getSITE(), url);
                                         startActivity(intent);
                             }
                         }
@@ -439,7 +439,7 @@ public class FilmeInfoFragment extends Fragment {
 
                             String url = "https://www.themoviedb.org/movie/" + movieDb.getId();
                             Intent intent = new Intent(getActivity(), Site.class);
-                            intent.putExtra(Constantes.SITE, url);
+                            intent.putExtra(Constantes.INSTANCE.getSITE(), url);
                             startActivity(intent);
 
                         }
@@ -518,10 +518,10 @@ public class FilmeInfoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), ElencoActivity.class);
-                intent.putExtra(Constantes.ID, movieDb.getId());
-                intent.putExtra(Constantes.MEDIATYPE, movieDb.getMediaType());
+                intent.putExtra(Constantes.INSTANCE.getID(), movieDb.getId());
+                intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), movieDb.getMediaType());
                 // Log.d("setOnClickListener", "" + movieDb.getTitle());
-                intent.putExtra(Constantes.NOME, movieDb.getTitle());
+                intent.putExtra(Constantes.INSTANCE.getNOME(), movieDb.getTitle());
                 startActivity(intent);
 
                 bundle = new Bundle();
@@ -537,10 +537,10 @@ public class FilmeInfoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), CrewsActivity.class);
-                intent.putExtra(Constantes.ID, movieDb.getId());
+                intent.putExtra(Constantes.INSTANCE.getID(), movieDb.getId());
                 // Log.d("setOnClickListener", "" + movieDb.getTitle());
-                intent.putExtra(Constantes.MEDIATYPE, movieDb.getMediaType());
-                intent.putExtra(Constantes.NOME, movieDb.getTitle());
+                intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), movieDb.getMediaType());
+                intent.putExtra(Constantes.INSTANCE.getNOME(), movieDb.getTitle());
                 startActivity(intent);
 
 
@@ -557,8 +557,8 @@ public class FilmeInfoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), SimilaresActivity.class);
-                intent.putExtra(Constantes.FILME_ID, movieDb.getId());
-                intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
+                intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movieDb.getId());
+                intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movieDb.getTitle());
                 startActivity(intent);
 
                 bundle = new Bundle();
@@ -679,7 +679,7 @@ public class FilmeInfoFragment extends Fragment {
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), PosterGridActivity.class);
                     String transition = getString(R.string.poster_transition);
-                    intent.putExtra(Constantes.FILME, movieDb);
+                    intent.putExtra(Constantes.INSTANCE.getFILME(), movieDb);
                     ActivityOptionsCompat compat = ActivityOptionsCompat
                             .makeSceneTransitionAnimation(getActivity(), img_poster, transition);
                     ActivityCompat.startActivity(getActivity(), intent, compat.toBundle());
@@ -715,9 +715,9 @@ public class FilmeInfoFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), ProdutoraActivity.class);
-                    intent.putExtra(Constantes.PRODUTORA, finalPrimeiraProdutora); // não usado
-                    intent.putExtra(Constantes.PRODUTORA_ID, movieDb.getProductionCompanies().get(0).getId());
-                    intent.putExtra(Constantes.MEDIATYPE, Multi.MediaType.MOVIE); // Não usado
+                    intent.putExtra(Constantes.INSTANCE.getPRODUTORA(), finalPrimeiraProdutora); // não usado
+                    intent.putExtra(Constantes.INSTANCE.getPRODUTORA_ID(), movieDb.getProductionCompanies().get(0).getId());
+                    intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), Multi.MediaType.MOVIE); // Não usado
                     startActivity(intent);
 
                     bundle = new Bundle();

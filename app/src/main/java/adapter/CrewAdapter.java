@@ -79,8 +79,8 @@ public class CrewAdapter extends RecyclerView.Adapter<CrewAdapter.CrewViewHolder
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, PersonActivity.class);
-                intent.putExtra(Constantes.PERSON_ID, crew.getId());
-                intent.putExtra(Constantes.NOME_PERSON, crew.getName());
+                intent.putExtra(Constantes.INSTANCE.getPERSON_ID(), crew.getId());
+                intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), crew.getName());
                 context.startActivity(intent);
 
                 Bundle bundle = new Bundle();

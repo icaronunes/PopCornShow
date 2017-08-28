@@ -90,14 +90,14 @@ public class EpsodioFragment extends Fragment {
         EpsodioFragment fragment = new EpsodioFragment();
         Bundle bundle = new Bundle();
        // Log.d("TvShowFragment", "Series " + tvEpisode.getName());
-        bundle.putSerializable(Constantes.EPSODIO, tvEpisode);
-        bundle.putInt(Constantes.TVSHOW_ID, tvshow_id);
-        bundle.putInt(Constantes.COLOR_TOP, color);
-        bundle.putString(Constantes.NOME_TVSHOW, nome_serie);
-        bundle.putBoolean(Constantes.SEGUINDO, seguindo);
-        bundle.putInt(Constantes.POSICAO, position);
-        bundle.putSerializable(Constantes.USER, seasons);
-        bundle.putInt(Constantes.TEMPORADA_POSITION, temporada_position);
+        bundle.putSerializable(Constantes.INSTANCE.getEPSODIO(), tvEpisode);
+        bundle.putInt(Constantes.INSTANCE.getTVSHOW_ID(), tvshow_id);
+        bundle.putInt(Constantes.INSTANCE.getCOLOR_TOP(), color);
+        bundle.putString(Constantes.INSTANCE.getNOME_TVSHOW(), nome_serie);
+        bundle.putBoolean(Constantes.INSTANCE.getSEGUINDO(), seguindo);
+        bundle.putInt(Constantes.INSTANCE.getPOSICAO(), position);
+        bundle.putSerializable(Constantes.INSTANCE.getUSER(), seasons);
+        bundle.putInt(Constantes.INSTANCE.getTEMPORADA_POSITION(), temporada_position);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -107,14 +107,14 @@ public class EpsodioFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            episode = (TvEpisode) getArguments().getSerializable(Constantes.EPSODIO);
-            nome_serie = getArguments().getString(Constantes.NOME_TVSHOW);
-            tvshow_id = getArguments().getInt(Constantes.TVSHOW_ID);
-            color = getArguments().getInt(Constantes.COLOR_TOP);
-            seguindo = getArguments().getBoolean(Constantes.SEGUINDO);
-            position = getArguments().getInt(Constantes.POSICAO);
-            temporada_position = getArguments().getInt(Constantes.TEMPORADA_POSITION);
-            seasons = (UserSeasons) getArguments().getSerializable(Constantes.USER);
+            episode = (TvEpisode) getArguments().getSerializable(Constantes.INSTANCE.getEPSODIO());
+            nome_serie = getArguments().getString(Constantes.INSTANCE.getNOME_TVSHOW());
+            tvshow_id = getArguments().getInt(Constantes.INSTANCE.getTVSHOW_ID());
+            color = getArguments().getInt(Constantes.INSTANCE.getCOLOR_TOP());
+            seguindo = getArguments().getBoolean(Constantes.INSTANCE.getSEGUINDO());
+            position = getArguments().getInt(Constantes.INSTANCE.getPOSICAO());
+            temporada_position = getArguments().getInt(Constantes.INSTANCE.getTEMPORADA_POSITION());
+            seasons = (UserSeasons) getArguments().getSerializable(Constantes.INSTANCE.getUSER());
         }
 
         FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
@@ -486,8 +486,8 @@ public class EpsodioFragment extends Fragment {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(getContext(), PersonActivity.class);
-                            intent.putExtra(Constantes.PERSON_ID, crew.getId());
-                            intent.putExtra(Constantes.NOME_PERSON, crew.getName());
+                            intent.putExtra(Constantes.INSTANCE.getPERSON_ID(), crew.getId());
+                            intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), crew.getName());
                             getContext().startActivity(intent);
                         }
                     });
@@ -523,8 +523,8 @@ public class EpsodioFragment extends Fragment {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(getContext(), PersonActivity.class);
-                            intent.putExtra(Constantes.PERSON_ID, crew.getId());
-                            intent.putExtra(Constantes.NOME_PERSON, crew.getName());
+                            intent.putExtra(Constantes.INSTANCE.getPERSON_ID(), crew.getId());
+                            intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), crew.getName());
                             getContext().startActivity(intent);
                         }
                     });

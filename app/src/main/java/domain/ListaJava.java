@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by icaro on 03/10/16.
  */
-public class Lista  {
+public class ListaJava {
 
     @SerializedName("items")
     public List<ItemsLista> items;

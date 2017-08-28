@@ -41,8 +41,6 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
        // Log.d("ElencoAdapter", "Tamanho " + casts.size());
     }
 
-
-
     @Override
     public ElencoAdapter.ElencoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.elenco_list_adapter, parent, false);
@@ -73,8 +71,8 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 Intent intent = new Intent(context, PersonActivity.class);
-                intent.putExtra(Constantes.PERSON_ID, personCast.getId());
-                intent.putExtra(Constantes.NOME_PERSON, personCast.getName());
+                intent.putExtra(Constantes.INSTANCE.getPERSON_ID(), personCast.getId());
+                intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), personCast.getName());
                 context.startActivity(intent);
             }
         });

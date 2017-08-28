@@ -106,12 +106,12 @@ public class TvShowFragment extends Fragment {
     public static Fragment newInstance(int tipo, TvSeries series, int color, boolean seguindo, Netflix netflix, Imdb imdb) {
         TvShowFragment fragment = new TvShowFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.SERIE, series);
-        bundle.putInt(Constantes.COLOR_TOP, color);
-        bundle.putInt(Constantes.ABA, tipo);
-        bundle.putSerializable(Constantes.USER, seguindo);
-        bundle.putSerializable(Constantes.NETFLIX, netflix);
-        bundle.putSerializable(Constantes.IMDB, imdb);
+        bundle.putSerializable(Constantes.INSTANCE.getSERIE(), series);
+        bundle.putInt(Constantes.INSTANCE.getCOLOR_TOP(), color);
+        bundle.putInt(Constantes.INSTANCE.getABA(), tipo);
+        bundle.putSerializable(Constantes.INSTANCE.getUSER(), seguindo);
+        bundle.putSerializable(Constantes.INSTANCE.getNETFLIX(), netflix);
+        bundle.putSerializable(Constantes.INSTANCE.getIMDB(), imdb);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -121,12 +121,12 @@ public class TvShowFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            tipo = getArguments().getInt(Constantes.ABA);
-            series = (TvSeries) getArguments().getSerializable(Constantes.SERIE);
-            color = getArguments().getInt(Constantes.COLOR_TOP);
-            seguindo = getArguments().getBoolean(Constantes.USER);
-            netflix = (Netflix) getArguments().getSerializable(Constantes.NETFLIX);
-            imdbDd = (Imdb) getArguments().getSerializable(Constantes.IMDB);
+            tipo = getArguments().getInt(Constantes.INSTANCE.getABA());
+            series = (TvSeries) getArguments().getSerializable(Constantes.INSTANCE.getSERIE());
+            color = getArguments().getInt(Constantes.INSTANCE.getCOLOR_TOP());
+            seguindo = getArguments().getBoolean(Constantes.INSTANCE.getUSER());
+            netflix = (Netflix) getArguments().getSerializable(Constantes.INSTANCE.getNETFLIX());
+            imdbDd = (Imdb) getArguments().getSerializable(Constantes.INSTANCE.getIMDB());
         }
         //Validar se esta logado. Caso não, não precisa instanciar nada.
 
@@ -168,7 +168,7 @@ public class TvShowFragment extends Fragment {
                     // Log.d(TAG, "Home " + series.getHomepage());
                     if (series.getHomepage() != "" && series.getHomepage() != null) {
                         Intent intent = new Intent(getContext(), Site.class);
-                        intent.putExtra(Constantes.SITE,  series.getHomepage());
+                        intent.putExtra(Constantes.INSTANCE.getSITE(),  series.getHomepage());
                         startActivity(intent);
 
                         Bundle bundle = new Bundle();
@@ -192,7 +192,7 @@ public class TvShowFragment extends Fragment {
                 public void onClick(View view) {
                     if (series.getExternalIds().getImdbId() != null) {
                         Intent intent = new Intent(getActivity(), Site.class);
-                        intent.putExtra(Constantes.SITE,
+                        intent.putExtra(Constantes.INSTANCE.getSITE(),
                                 "https:www.imdb.com/title/" + series.getExternalIds().getImdbId() + "/");
 
                         startActivity(intent);
@@ -209,7 +209,7 @@ public class TvShowFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getActivity(), Site.class);
-                    intent.putExtra(Constantes.SITE,
+                    intent.putExtra(Constantes.INSTANCE.getSITE(),
                             "https://www.themoviedb.org/tv/" + series.getId() + "/");
                     startActivity(intent);
 
@@ -321,7 +321,7 @@ public class TvShowFragment extends Fragment {
                                     String url = "http://www.metacritic.com/tv/" + nome;
 
                                     Intent intent = new Intent(getActivity(), Site.class);
-                                    intent.putExtra(Constantes.SITE, url);
+                                    intent.putExtra(Constantes.INSTANCE.getSITE(), url);
                                     startActivity(intent);
 
                                     Bundle bundle = new Bundle();
@@ -346,7 +346,7 @@ public class TvShowFragment extends Fragment {
                                     nome = UtilsFilme.removerAcentos(nome);
                                     String url = "https://www.rottentomatoes.com/tv/" + nome;
                                     Intent intent = new Intent(getActivity(), Site.class);
-                                    intent.putExtra(Constantes.SITE, url);
+                                    intent.putExtra(Constantes.INSTANCE.getSITE(), url);
                                     startActivity(intent);
 
                                     Bundle bundle = new Bundle();
@@ -370,7 +370,7 @@ public class TvShowFragment extends Fragment {
 
                                     String url = "http://www.imdb.com/title/" + imdbDd.getImdbID();
                                     Intent intent = new Intent(getActivity(), Site.class);
-                                    intent.putExtra(Constantes.SITE, url);
+                                    intent.putExtra(Constantes.INSTANCE.getSITE(), url);
                                     startActivity(intent);
 
                                     Bundle bundle = new Bundle();
@@ -390,7 +390,7 @@ public class TvShowFragment extends Fragment {
                                 }
                                 String url = "https://www.themoviedb.org/tv/" + series.getId();
                                 Intent intent = new Intent(getActivity(), Site.class);
-                                intent.putExtra(Constantes.SITE, url);
+                                intent.putExtra(Constantes.INSTANCE.getSITE(), url);
                                 startActivity(intent);
 
                                 Bundle bundle = new Bundle();
@@ -429,9 +429,9 @@ public class TvShowFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), ElencoActivity.class);
-                    intent.putExtra(Constantes.ID, series.getId());
-                    intent.putExtra(Constantes.MEDIATYPE, series.getMediaType());
-                    intent.putExtra(Constantes.NOME, series.getName());
+                    intent.putExtra(Constantes.INSTANCE.getID(), series.getId());
+                    intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), series.getMediaType());
+                    intent.putExtra(Constantes.INSTANCE.getNOME(), series.getName());
                     startActivity(intent);
 
                     Bundle bundle = new Bundle();
@@ -447,9 +447,9 @@ public class TvShowFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), CrewsActivity.class);
-                    intent.putExtra(Constantes.ID, series.getId());
-                    intent.putExtra(Constantes.MEDIATYPE, series.getMediaType());
-                    intent.putExtra(Constantes.NOME, series.getName());
+                    intent.putExtra(Constantes.INSTANCE.getID(), series.getId());
+                    intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), series.getMediaType());
+                    intent.putExtra(Constantes.INSTANCE.getNOME(), series.getName());
                     startActivity(intent);
 
                     Bundle bundle = new Bundle();
@@ -467,9 +467,9 @@ public class TvShowFragment extends Fragment {
                 public void onClick(View view) {
                     if (series.getExternalIds().getImdbId() != null) {
                         Intent intent = new Intent(getContext(), ReviewsActivity.class);
-                        intent.putExtra(Constantes.FILME_ID, series.getExternalIds().getImdbId());
-                        intent.putExtra(Constantes.NOME_FILME, series.getName());
-                        intent.putExtra(Constantes.MEDIATYPE, series.getMediaType().name());
+                        intent.putExtra(Constantes.INSTANCE.getFILME_ID(), series.getExternalIds().getImdbId());
+                        intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), series.getName());
+                        intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), series.getMediaType().name());
                         startActivity(intent);
 
                         Bundle bundle = new Bundle();
@@ -663,11 +663,11 @@ public class TvShowFragment extends Fragment {
             public void onClickTemporada(View view, int position, int color) {
 
                 Intent intent = new Intent(getContext(), TemporadaActivity.class);
-                intent.putExtra(Constantes.NOME, getString(R.string.temporada) + " " + series.getSeasons().get(position).getSeasonNumber());
-                intent.putExtra(Constantes.TEMPORADA_ID, series.getSeasons().get(position).getSeasonNumber());
-                intent.putExtra(Constantes.TEMPORADA_POSITION, position);
-                intent.putExtra(Constantes.TVSHOW_ID, series.getId());
-                intent.putExtra(Constantes.COLOR_TOP, color);
+                intent.putExtra(Constantes.INSTANCE.getNOME(), getString(R.string.temporada) + " " + series.getSeasons().get(position).getSeasonNumber());
+                intent.putExtra(Constantes.INSTANCE.getTEMPORADA_ID(), series.getSeasons().get(position).getSeasonNumber());
+                intent.putExtra(Constantes.INSTANCE.getTEMPORADA_POSITION(), position);
+                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), series.getId());
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                 getContext().startActivity(intent);
 
                 Bundle bundle = new Bundle();
@@ -909,7 +909,7 @@ public class TvShowFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), PosterGridActivity.class);
-                    intent.putExtra(Constantes.SERIE, series);
+                    intent.putExtra(Constantes.INSTANCE.getSERIE(), series);
                     String transition = getString(R.string.poster_transition);
                     ActivityOptionsCompat compat = ActivityOptionsCompat
                             .makeSceneTransitionAnimation(getActivity(), img_poster, transition);

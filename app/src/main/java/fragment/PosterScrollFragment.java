@@ -46,8 +46,8 @@ public class PosterScrollFragment extends Fragment {
 
         PosterScrollFragment posterScrollFragment = new PosterScrollFragment();
         Bundle args = new Bundle();
-        args.putString(Constantes.ENDERECO, endereco);
-        args.putString(Constantes.NOME_FILME, nome);
+        args.putString(Constantes.INSTANCE.getENDERECO(), endereco);
+        args.putString(Constantes.INSTANCE.getNOME_FILME(), nome);
         posterScrollFragment.setArguments(args);
         //  Log.d("PosterScrollFragment", "newInstance: -> " + endereco);
         return posterScrollFragment;
@@ -56,8 +56,8 @@ public class PosterScrollFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        endereco = getArguments().getString(Constantes.ENDERECO); // não usado!?!?!!
-        nome = getArguments().getString(Constantes.NOME_FILME);
+        endereco = getArguments().getString(Constantes.INSTANCE.getENDERECO()); // não usado!?!?!!
+        nome = getArguments().getString(Constantes.INSTANCE.getNOME_FILME());
         // Log.d("PosterScrollFragment", "onCreate: -> " + endereco);
         firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
@@ -134,7 +134,7 @@ public class PosterScrollFragment extends Fragment {
                 if (file != null) {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     //final String appPackageName = getContext().getPackageName();
-                    intent.putExtra(Intent.EXTRA_TEXT, nome + "  -  " + "https://q2p5q.app.goo.gl/3hX6" + " by: " + Constantes.TWITTER_URL);
+                    intent.putExtra(Intent.EXTRA_TEXT, nome + "  -  " + "https://q2p5q.app.goo.gl/3hX6" + " by: " + Constantes.INSTANCE.getTWITTER_URL());
                     intent.setType("image/*"); // link dynamic - https://q2p5q.app.goo.gl/3hX6
                     intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                     startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));

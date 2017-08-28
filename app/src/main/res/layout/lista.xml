@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/trade_size_dp_3"
+    android:minHeight="@dimen/trade_size_dp_50"
     app:cardCornerRadius="@dimen/trade_size_dp_2"
     app:cardElevation="@dimen/trade_size_dp_3"
     app:cardPreventCornerOverlap="false"
@@ -15,8 +16,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
         android:layout_gravity="center"
+        android:background="?attr/selectableItemBackground"
         android:orientation="vertical">
 
         <FrameLayout

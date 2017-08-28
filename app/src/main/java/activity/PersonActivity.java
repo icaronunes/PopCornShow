@@ -52,11 +52,11 @@ public class PersonActivity extends BaseActivity {
 
     private void getExtras() {
         if (getIntent().getAction() == null){
-            nome = getIntent().getStringExtra(Constantes.NOME_PERSON);
-            id_person = getIntent().getIntExtra(Constantes.PERSON_ID, 0);
+            nome = getIntent().getStringExtra(Constantes.INSTANCE.getNOME_PERSON());
+            id_person = getIntent().getIntExtra(Constantes.INSTANCE.getPERSON_ID(), 0);
         } else {
-            nome = getIntent().getStringExtra(Constantes.NOME_PERSON);
-            id_person = Integer.parseInt(getIntent().getStringExtra(Constantes.PERSON_ID));
+            nome = getIntent().getStringExtra(Constantes.INSTANCE.getNOME_PERSON());
+            id_person = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getPERSON_ID()));
         }
     }
 

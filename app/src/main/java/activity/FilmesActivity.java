@@ -44,10 +44,10 @@ public class FilmesActivity extends BaseActivity {
     private void getExtras() {
         if (getIntent().getAction() == null) {
             getSupportActionBar().setTitle(getString(getIntent()
-                    .getIntExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing)));
+                    .getIntExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.now_playing)));
         } else {
             getSupportActionBar().setTitle(getString(Integer.parseInt(getIntent()
-                    .getStringExtra(Constantes.NAV_DRAW_ESCOLIDO))));
+                    .getStringExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO()))));
         }
     }
 

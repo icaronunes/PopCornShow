@@ -138,12 +138,10 @@ public class SeguindoActivity extends BaseActivity {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         UserTvshow userTvshow = snapshot.getValue(UserTvshow.class);
                         atualizarRealDate(userTvshow);
+                        userTvshows.add(userTvshow);
                     }
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        userTvshows.add(snapshot.getValue(UserTvshow.class));
-                    }
+                    setupViewPagerTabs();
                 }
-                setupViewPagerTabs();
                 progressBar.setVisibility(View.GONE);
             }
 
@@ -152,6 +150,7 @@ public class SeguindoActivity extends BaseActivity {
 
             }
         };
+
         seguindoDataBase.addListenerForSingleValueEvent(eventListener);
         //Chamando apenas uma vez, necessario? não poderia deixar o firebases atualizar?
     }
@@ -162,7 +161,8 @@ public class SeguindoActivity extends BaseActivity {
                 @Override
                 public void run() {
                     TmdbTvSeasons tvSeasons = new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
-                    TvSeries series = new TmdbApi(Config.TMDB_API_KEY).getTvSeries().getSeries(userTvshowOld.getId(), "en", TmdbTV.TvMethod.external_ids);
+                    TvSeries series = new TmdbApi(Config.TMDB_API_KEY).getTvSeries()
+                            .getSeries(userTvshowOld.getId(), "en", TmdbTV.TvMethod.external_ids);
                     if (userTvshowOld.getNumberOfEpisodes() < series.getNumberOfEpisodes()) {
                         UserTvshow userTvshow = setUserTvShow(series);
 
@@ -190,8 +190,9 @@ public class SeguindoActivity extends BaseActivity {
                             }
                             if (userTvshowOld.getSeasons().get(i).getUserEps() != null)
                                 for (int i1 = 0; i1 < userTvshowOld.getSeasons().get(i).getUserEps().size(); i1++) {
-                                    if (i1 < userTvshowOld.getSeasons().get(i).getUserEps().size())
-                                        if (userTvshow.getSeasons().get(i) != null)
+                                    if (i1 < userTvshowOld.getSeasons().get(i)
+                                            .getUserEps().size() && i1 < userTvshow.getSeasons().get(i).getUserEps().size() )
+                                        if (userTvshow.getSeasons().get(i) != null && userTvshowOld.getSeasons().get(i) != null)
                                         userTvshow.getSeasons().get(i).getUserEps().set(i1, userTvshowOld.getSeasons().get(i).getUserEps().get(i1));
 
                                     //coloca as informações antigas na nova versão dos dados.

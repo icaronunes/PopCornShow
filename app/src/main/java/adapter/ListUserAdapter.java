@@ -17,12 +17,14 @@ import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import activity.FilmeActivity;
 import activity.TvShowActivity;
 import br.com.icaro.filme.R;
-import domain.ItemsLista;
+import domain.Lista;
+import domain.ListaItem;
 import utils.Constantes;
 import utils.UtilsFilme;
 
@@ -31,14 +33,14 @@ import utils.UtilsFilme;
  */
 public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListViewHolder> {
 
-    private final FirebaseAnalytics mFirebaseAnalytics;
-    private List<ItemsLista> lista;
+    private FirebaseAnalytics mFirebaseAnalytics;
+    private List<ListaItem> lista;
     private Context context;
 
-    public ListUserAdapter(Context listaUserActivity, List<ItemsLista> movieLists) {
+    public ListUserAdapter(Context listaUserActivity) {
         this.context = listaUserActivity;
-        lista = movieLists;
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
+        lista = new ArrayList<>();
     }
 
     @Override
@@ -51,9 +53,7 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListVi
     @Override
     public void onBindViewHolder(final ListViewHolder holder, int position) {
 
-
-          //  Log.d("domian.Lista", lista.get(position).getMediaType());
-            final ItemsLista movie = lista.get(position);
+        final ListaItem movie = lista.get(position);
 
             if (movie.getReleaseDate() != null && movie.getReleaseDate().length() >= 4){
                 holder.release.setText(movie.getReleaseDate().substring(0,4));
@@ -85,9 +85,9 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListVi
                     //.getSeries() NÃO TRAS O TIPO DE MEDIA
                     if (movie.getMediaType().equalsIgnoreCase("tv")) {
                         Intent intent = new Intent(context, TvShowActivity.class);
-                        intent.putExtra(Constantes.TVSHOW_ID, movie.getId());
-                        intent.putExtra(Constantes.NOME_TVSHOW, movie.getTitle());
-                        intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(holder.img_rated));
+                        intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), movie.getId());
+                        intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), movie.getTitle());
+                        intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(holder.img_rated));
                         context.startActivity(intent);
 
                         Bundle bundle = new Bundle();
@@ -97,9 +97,9 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListVi
 
                     } else {
                         Intent intent = new Intent(context, FilmeActivity.class);
-                        intent.putExtra(Constantes.FILME_ID, movie.getId());
-                        intent.putExtra(Constantes.NOME_FILME, movie.getTitle());
-                        intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(holder.img_rated));
+                        intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movie.getId());
+                        intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movie.getTitle());
+                        intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(holder.img_rated));
                         context.startActivity(intent);
 
                         Bundle bundle = new Bundle();
@@ -110,6 +110,21 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ListVi
                     }
                 }
             });
+
+    }
+
+    public void addPersonPopular(Lista listaMedia) {
+
+       // int initPosition = lista.size() - 1;
+        //this.lista.remove(initPosition);
+      //  notifyItemRemoved(initPosition);
+
+        // insert news and the loading at the end of the list
+        this.lista.addAll(listaMedia.getResults());
+        //games?.add(loadingItem)
+        //notifyItemRangeChanged(initPosition, this.lista.size() + 1 /* plus loading item */)
+        //personResultsPage.add(loadingItem)
+        notifyDataSetChanged();
 
     }
 

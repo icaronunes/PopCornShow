@@ -22,11 +22,11 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/trade_size_dp_6"
             android:layout_marginStart="@dimen/trade_size_dp_6"
             android:layout_marginTop="@dimen/trade_size_dp_10"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
