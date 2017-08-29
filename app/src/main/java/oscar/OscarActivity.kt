@@ -8,7 +8,6 @@ import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
 import br.com.icaro.filme.R
 import domain.API
@@ -88,7 +87,7 @@ class OscarActivity : BaseActivity() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        (recycleView_favorite.adapter as ListUserAdapter).addPersonPopular(it)
+                        (recycleView_favorite.adapter as ListUserAdapter).addPersonPopular(it, it?.totalResults!!)
                         pagina = it?.page!!
                         totalPagina = it?.totalPages!!
                         ++pagina
@@ -106,36 +105,5 @@ class OscarActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        return true
-    }
 
-//    private inner class TMDVAsync : AsyncTask<Void, Void, Void>() {
-//
-//        override fun doInBackground(vararg voids: Void): Void? {
-//            if (listaJava == null) {
-//                try {
-//                    listaJava = FilmeService.getLista(list_id)
-//                    //Metodos criados. Tudo gambiara. Precisa arrumar
-//                    if (listaJava != null) {
-//                        Collections.sort<ItemsLista>(listaJava!!.getItems())
-//                    }
-//                } catch (e: Exception) {
-//                    FirebaseCrash.report(e)
-//                    // Log.d(TAG, e.getMessage());
-//                    runOnUiThread { Toast.makeText(this@OscarActivity, R.string.ops, Toast.LENGTH_SHORT).show() }
-//                }
-//
-//            }
-//
-//            return null
-//        }
-//
-//        override fun onPostExecute(aVoid: Void) {
-//            super.onPostExecute(aVoid)
-//            progressBar!!.visibility = View.GONE
-//            recyclerView!!.adapter = ListUserAdapter(this@OscarActivity,
-//                    if (listaJava != null) listaJava!!.items else null)
-//        }
-//    }
 }

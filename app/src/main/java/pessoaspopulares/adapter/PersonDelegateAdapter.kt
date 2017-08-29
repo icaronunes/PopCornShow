@@ -1,6 +1,7 @@
 package pessoaspopulares.adapter
 
 import activity.PersonActivity
+import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -17,15 +18,15 @@ import utils.Constantes
 import utils.UtilsFilme
 
 class PersonDelegateAdapter : ViewTypeDelegateAdapter {
+
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
             PersonViewHoder(parent)
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType, context: Context?) {
         holder as PersonViewHoder
         holder.bind(item as PersonItem)
 
     }
-
 
     inner class PersonViewHoder(parent: ViewGroup) :
             RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_person_popular, parent, false)) {

@@ -1,6 +1,7 @@
 package domain
 
 import com.google.gson.annotations.SerializedName
+import utils.Constantes
 import javax.annotation.Generated
 
 @Generated("com.robohorse.robopojogenerator")
@@ -62,7 +63,9 @@ data class Lista(
 
         @field:SerializedName("results")
         val results: List<ListaItem?>? = null
-)
+): ViewType {
+    override fun getViewType() = Constantes.BuscaConstants.NEWS
+}
 
 @Generated("com.robohorse.robopojogenerator")
 data class ListaItem(
@@ -111,7 +114,9 @@ data class ListaItem(
 
         @field:SerializedName("vote_count")
         val voteCount: Int? = null
-)
+): ViewType {
+    override fun getViewType() = Constantes.BuscaConstants.NEWS
+}
 
 @Generated("com.robohorse.robopojogenerator")
 data class CreatedBy(
@@ -127,4 +132,6 @@ data class CreatedBy(
 
         @field:SerializedName("username")
         val username: String? = null
-)
+): ViewType {
+    override fun getViewType() = Constantes.BuscaConstants.NEWS
+}

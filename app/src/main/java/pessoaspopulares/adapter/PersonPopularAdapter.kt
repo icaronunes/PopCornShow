@@ -12,7 +12,7 @@ import java.util.*
 /**
  * Created by icaro on 04/10/16.
  */
-class PersonPopularAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class PersonPopularAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
 
     private var personResultsPage = ArrayList<ViewType>()
@@ -47,7 +47,7 @@ class PersonPopularAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
             delegateAdapters.get(viewType).onCreateViewHolder(parent)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) =
-            delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder!!, personResultsPage[position])
+            delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder!!, personResultsPage[position], context = null)
 
     override fun getItemViewType(position: Int): Int = personResultsPage[position].getViewType()
 
