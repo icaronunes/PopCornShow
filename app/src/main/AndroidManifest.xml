@@ -338,7 +338,7 @@
 
         </activity>
 
-        <activity android:name="activity.Desenvolvimento" />
+        <activity android:name="desenvolvimento.Desenvolvimento" />
 
         <activity android:name="activity.ActivityPersonNetflix" />
 

@@ -494,7 +494,7 @@
 }
 
 # view AndroidManifest.xml #generated:315
--keep class activity.Desenvolvimento {
+-keep class desenvolvimento.Desenvolvimento {
     <init>(...);
 }
 

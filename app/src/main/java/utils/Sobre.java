@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import activity.Desenvolvimento;
+import desenvolvimento.Desenvolvimento;
 import activity.Site;
 import br.com.icaro.filme.R;
 

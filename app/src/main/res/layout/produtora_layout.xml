@@ -8,22 +8,14 @@
     android:background="@color/white"
     android:fitsSystemWindows="false">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeToRefresh_produtora"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/produtora_filmes_container"
+            android:id="@+id/produtora_filmes_recycler"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:cacheColorHint="@android:color/transparent"
             android:listSelector="@android:color/transparent"
             android:scrollbarStyle="outsideOverlay"
             android:scrollbars="vertical" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"

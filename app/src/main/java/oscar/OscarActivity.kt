@@ -12,10 +12,10 @@ import android.view.MenuItem
 import br.com.icaro.filme.R
 import domain.API
 import kotlinx.android.synthetic.main.activity_lista.*
-import pessoaspopulares.InfiniteScrollListener
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import utils.InfiniteScrollListener
 import utils.UtilsFilme
 
 /**
@@ -87,7 +87,7 @@ class OscarActivity : BaseActivity() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        (recycleView_favorite.adapter as ListUserAdapter).addPersonPopular(it, it?.totalResults!!)
+                        (recycleView_favorite.adapter as ListUserAdapter).addPersonPopular(it.results, it?.totalResults!!)
                         pagina = it?.page!!
                         totalPagina = it?.totalPages!!
                         ++pagina

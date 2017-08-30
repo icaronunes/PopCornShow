@@ -1,4 +1,4 @@
-package activity;
+package desenvolvimento;
 
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -8,8 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import adapter.DesenvolvimentoAdapater;
+import activity.BaseActivity;
 import br.com.icaro.filme.R;
+import desenvolvimento.adapter.DesenvolvimentoAdapater;
 
 /**
  * Created by icaro on 18/12/16.

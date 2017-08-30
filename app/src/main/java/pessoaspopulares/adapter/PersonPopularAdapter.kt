@@ -29,14 +29,16 @@ class PersonPopularAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         personResultsPage.add(loadingItem)
     }
 
-    fun addPersonPopular( personResults: ArrayList<PersonItem>) {
+    fun addPersonPopular(personResults: List<PersonItem?>?) {
 
         val initPosition = personResultsPage?.size!! - 1
         this.personResultsPage?.removeAt(initPosition)
         notifyItemRemoved(initPosition)
 
         // insert news and the loading at the end of the list
-        this.personResultsPage.addAll(personResults)
+        for (person in personResults!!) {
+            this.personResultsPage.add(person!!)
+        }
         //games?.add(loadingItem)
         notifyItemRangeChanged(initPosition, this.personResultsPage?.size!! + 1 /* plus loading item */)
         personResultsPage.add(loadingItem)

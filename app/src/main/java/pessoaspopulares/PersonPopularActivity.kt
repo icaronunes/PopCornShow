@@ -11,12 +11,12 @@ import android.view.MenuItem
 import android.view.View
 import br.com.icaro.filme.R
 import domain.API
-import domain.PersonItem
 import kotlinx.android.synthetic.main.activity_person_popular.*
 import pessoaspopulares.adapter.PersonPopularAdapter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import utils.InfiniteScrollListener
 import utils.UtilsFilme
 
 /**
@@ -69,7 +69,6 @@ class PersonPopularActivity : BaseActivity() {
 
     fun getPerson() {
         if (pagina <= totalPagina) {
-            val personPopularResult: ArrayList<PersonItem> = ArrayList()
             val inscricao = API().PersonPopular(pagina)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -77,9 +76,8 @@ class PersonPopularActivity : BaseActivity() {
                         it.results?.forEach { resultsItem ->
                             pagina = it?.page!!
                             totalPagina = it?.totalPages!!
-                            personPopularResult.add(resultsItem!!)
+                        (recycleView_person_popular.adapter as PersonPopularAdapter).addPersonPopular(it.results)
                         }
-                        (recycleView_person_popular.adapter as PersonPopularAdapter).addPersonPopular(personPopularResult)
                         ++this.pagina
                     }, { erro ->
                         Log.d(javaClass.simpleName, "Erro " + erro.message)
