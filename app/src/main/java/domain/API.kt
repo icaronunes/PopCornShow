@@ -98,4 +98,26 @@ class API {
 
     }
 
+    fun getCompanyFilmes(company_id: Int, pagina: Int = 1): Observable<CompanyFilmes>  {
+        return rx.Observable.create { subscriber ->
+            val client = OkHttpClient()
+            val gson = Gson()
+            val request = Request.Builder()
+                    .url("https://api.themoviedb.org/3/company/$company_id/movies?page=$pagina&api_key=${Config.TMDB_API_KEY}&language=en-US")
+                    .get()
+                    .build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful){
+                val json = response.body()?.string()
+                val companyFilmes = gson.fromJson(json, CompanyFilmes::class.java)
+                subscriber.onNext(companyFilmes)
+                subscriber.onCompleted()
+            } else {
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
+
+
+    }
+
 }

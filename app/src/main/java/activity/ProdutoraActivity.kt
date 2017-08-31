@@ -1,5 +1,6 @@
 package activity
 
+import adapter.ProdutoraAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
@@ -16,12 +17,12 @@ import br.com.icaro.filme.R
 import com.squareup.picasso.Picasso
 import domain.API
 import domain.Company
-import info.movito.themoviedbapi.TmdbCompany
 import kotlinx.android.synthetic.main.produtora_layout.*
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import utils.Constantes
+import utils.InfiniteScrollListener
 import utils.UtilsFilme
 
 /**
@@ -30,7 +31,6 @@ import utils.UtilsFilme
 class ProdutoraActivity : BaseActivity() {
     private var company: Company? = null
     private var pagina = 1
-    private var resultsPage: TmdbCompany.CollectionResultsPage? = null
     private var id_produtora: Int = 0
     private val TAG = this.javaClass.name
     private var totalPagina = 1
@@ -45,12 +45,16 @@ class ProdutoraActivity : BaseActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         id_produtora = intent.getIntExtra(Constantes.PRODUTORA_ID, 0)
         produtora_filmes_recycler.apply {
-            layoutManager = GridLayoutManager(this@ProdutoraActivity, 3)
+            val gridlayout = GridLayoutManager(this@ProdutoraActivity, 3)
+            layoutManager = gridlayout
             setHasFixedSize(true)
             itemAnimator = DefaultItemAnimator()
+            addOnScrollListener(InfiniteScrollListener({getCompanyFilmes()}, gridlayout))
+            adapter = ProdutoraAdapter(this@ProdutoraActivity)
         }
         InfoLayout()
-        getDados()
+        getDadosCompany()
+        getCompanyFilmes()
 
         /*        AdView adview = (AdView) findViewById(R.id.adView);
                 AdRequest adRequest = new AdRequest.Builder()
@@ -65,8 +69,7 @@ class ProdutoraActivity : BaseActivity() {
 
     }
 
-    fun getDados() {
-        if (totalPagina >= pagina) {
+    private fun getDadosCompany() {
             val inscricao = API().getCompany(id_produtora)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -79,7 +82,26 @@ class ProdutoraActivity : BaseActivity() {
                         Log.d(javaClass.simpleName, "Erro " + erro.message)
                     })
             subscriptions.add(inscricao)
+    }
+
+    private fun getCompanyFilmes() {
+
+        if (pagina <= totalPagina) {
+            val inscricao = API().getCompanyFilmes(id_produtora, pagina)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        pagina = it?.page!!
+                        totalPagina = it?.totalPages!!
+                        (produtora_filmes_recycler.adapter as ProdutoraAdapter).addMovies(it.results)
+                        ++pagina
+                    }, { e ->
+                        Log.d(javaClass.simpleName, "Erro " + e.message)
+                    })
+
+            subscriptions.add(inscricao)
         }
+
     }
 
     override fun onResume() {
@@ -94,10 +116,10 @@ class ProdutoraActivity : BaseActivity() {
 
     private fun setHeadquarters() {
         if (company!!.headquarters != null) {
-            headquarters!!.text = company!!.headquarters
-            headquarters!!.visibility = View.VISIBLE
+            headquarters.text = company!!.headquarters
+            headquarters.visibility = View.VISIBLE
         } else {
-            headquarters!!.visibility = View.GONE
+            headquarters.visibility = View.GONE
         }
     }
 
@@ -115,8 +137,8 @@ class ProdutoraActivity : BaseActivity() {
 
     private fun setHome() {
         if (company!!.homepage != null) {
-            home_produtora!!.text = company!!.homepage
-            home_produtora!!.setOnClickListener {
+            home_produtora.text = company!!.homepage
+            home_produtora.setOnClickListener {
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.data = Uri.parse(company!!.homepage)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -145,11 +167,11 @@ class ProdutoraActivity : BaseActivity() {
         animatorSet.start()
 
         top_img_produtora?.setOnClickListener {
-            if (info_layout!!.visibility == View.INVISIBLE) {
-                info_layout!!.visibility = View.VISIBLE
+            if (info_layout.visibility == View.INVISIBLE) {
+                info_layout.visibility = View.VISIBLE
             } else {
-                if (info_layout!!.visibility == View.VISIBLE) {
-                    info_layout!!.visibility = View.INVISIBLE
+                if (info_layout.visibility == View.VISIBLE) {
+                    info_layout.visibility = View.INVISIBLE
                 }
             }
         }
@@ -161,8 +183,8 @@ class ProdutoraActivity : BaseActivity() {
             if (info_layout.visibility == View.INVISIBLE) {
                 info_layout.visibility = View.VISIBLE
             } else {
-                if (info_layout!!.visibility == View.VISIBLE) {
-                    info_layout!!.visibility = View.INVISIBLE
+                if (info_layout.visibility == View.VISIBLE) {
+                    info_layout.visibility = View.INVISIBLE
                 }
             }
         }
@@ -185,8 +207,8 @@ class ProdutoraActivity : BaseActivity() {
 //                company = getTmdbCompany().getCompanyInfo(id_produtora)
 //                if (pagina == 1) {
 //                    if (idioma_padrao) {
-//                        resultsPage = FilmeService.getTmdbCompany()
-//                                .getCompanyMovies(id_produtora, Locale.getDefault().language + "-" + Locale.getDefault().country + ",en,null", pagina)
+                      //  resultsPage = FilmeService.getTmdbCompany()
+                          //      .getCompanyMovies(id_produtora, Locale.getDefault().language + "-" + Locale.getDefault().country + ",en,null", pagina)
 //                    } else {
 //                        resultsPage = FilmeService.getTmdbCompany()
 //                                .getCompanyMovies(id_produtora, "en,null", pagina)

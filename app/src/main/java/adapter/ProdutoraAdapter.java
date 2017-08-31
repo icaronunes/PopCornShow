@@ -17,12 +17,15 @@ import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import activity.FilmeActivity;
 import activity.ProdutoraActivity;
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.model.Collection;
+import domain.ResultsItem;
 import utils.Constantes;
 import utils.UtilsFilme;
 
@@ -32,11 +35,11 @@ import utils.UtilsFilme;
  */
 public class ProdutoraAdapter extends RecyclerView.Adapter<ProdutoraAdapter.ProdutoraViewHolde> {
     private Context context;
-    private List<Collection> movies;
+    private List<ResultsItem> movies = new ArrayList<>();
 
-    public ProdutoraAdapter(ProdutoraActivity produtoraActivity, List<Collection> results) {
+    public ProdutoraAdapter(ProdutoraActivity produtoraActivity) {
         this.context = produtoraActivity;
-        this.movies = results;
+        movies.add(new ResultsItem());
     }
 
     @Override
@@ -48,66 +51,71 @@ public class ProdutoraAdapter extends RecyclerView.Adapter<ProdutoraAdapter.Prod
     @Override
     public void onBindViewHolder(final ProdutoraViewHolde holder, final int position) {
 
-        final Collection movie = movies.get(position);
+        final ResultsItem movie = movies.get(position);
         holder.progressBar.setVisibility(View.VISIBLE);
 
-        if (movie != null) {
+        holder.title.setText(movie.getTitle());
 
-            String title = movie.getName();
-            if (title != null) {
-                holder.title.setText(title);
-                //   Log.d("onBindViewHolder", title);
+        Picasso.with(context)
+                .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + movie.getPosterPath())
+                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
+                .into(holder.imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        holder.progressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        holder.progressBar.setVisibility(View.GONE);
+                    }
+                });
+
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, FilmeActivity.class);
+                int color = UtilsFilme.loadPalette(holder.imageView);
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
+                intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movie.getId());
+                intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movie.getTitle());
+                context.startActivity(intent);
+
+
+                FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, ProdutoraAdapter.class.getName());
+                bundle.putString(FirebaseAnalytics.Param.DESTINATION, FilmeActivity.class.getName());
+                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movie.getId());
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, movie.getTitle());
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+
             }
+        });
 
-            Picasso.with(context)
-                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + movie.getPosterPath())
-                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-                    .error(R.drawable.poster_empty)
-                    .into(holder.imageView, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            holder.progressBar.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onError() {
-                            holder.progressBar.setVisibility(View.GONE);
-                        }
-                    });
-
-
-            holder.imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, FilmeActivity.class);
-                    int color = UtilsFilme.loadPalette(holder.imageView);
-                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
-                    intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movie.getId());
-                    intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movie.getTitle());
-                    context.startActivity(intent);
-
-
-                    FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
-                    Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, ProdutoraAdapter.class.getName());
-                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, FilmeActivity.class.getName());
-                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movie.getId());
-                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, movie.getTitle());
-                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
-
-                }
-            });
-        }
 
     }
 
     @Override
     public int getItemCount() {
-        if (movies != null) {
             return movies.size();
+    }
+
+    public void addMovies(@Nullable List<ResultsItem> results) {
+
+        int ultimaPosicao = movies.size() - 1;
+        movies.remove(ultimaPosicao);
+        notifyItemRemoved(ultimaPosicao);
+
+        if (results != null)
+        for (ResultsItem result : results) {
+            movies.add(result);
         }
-        return 0;
+        //games?.add(loadingItem)
+        notifyItemRangeChanged(ultimaPosicao, movies.size() +1 /* plus loading item */);
+        movies.add(new ResultsItem());
     }
 
     class ProdutoraViewHolde extends RecyclerView.ViewHolder {
