@@ -305,7 +305,7 @@ public class FilmeService {
     }
 
 
-    //Copiado da FrameWork - La não ha este metodo de combinar "trabalhos" de filme e Serie
+    //Copiado da FrameWork - La não ha este metodo de combinar "trabalhos" de filme e SERIE
 
     private static <T> T mapJsonResult(ApiUrl apiUrl, Class<T> someClass) {
         return mapJsonResult(apiUrl, someClass, null);

@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import br.com.icaro.filme.R
 import domain.API
 import kotlinx.android.synthetic.main.activity_lista.*
@@ -92,6 +93,7 @@ class OscarActivity : BaseActivity() {
                         totalPagina = it?.totalPages!!
                         ++pagina
                     }, { erro ->
+                        Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
                         Log.d(javaClass.simpleName, "Erro " + erro.message)
                     })
             subscriptions.add(inscricao)

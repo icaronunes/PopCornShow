@@ -12,7 +12,6 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
 
-
     <application
         android:name="applicaton.FilmeApplication"
         android:icon="@mipmap/ic_launcher"
@@ -37,6 +36,23 @@
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
         </activity>
+
+        <!--<activity-->
+            <!--android:name="main.activity.MainActivity2"-->
+            <!--android:theme="@style/AppTheme.NoActionBar.NavDrawer">-->
+
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+
+            <!--<meta-data-->
+                <!--android:name="android.app.searchable"-->
+                <!--android:resource="@xml/searchable" />-->
+            <!--<meta-data-->
+                <!--android:name="android.app.default_searchable"-->
+                <!--android:value="activity.SearchMultiActivity" />-->
+        <!--</activity>-->
 
         <activity android:name="activity.LoginActivity">
 
@@ -66,7 +82,7 @@
                 android:value="activity.MainActivity"/>
 
         </activity>
-        <activity android:name="activity.FilmesActivity"
+        <activity android:name="listafilmes.activity.FilmesActivity"
             android:parentActivityName="activity.MainActivity">
 
             <meta-data android:name="android.support.PARENT_ACTIVITY"
@@ -225,7 +241,7 @@
         </activity>
 
         <activity
-            android:name="activity.ProdutoraActivity"
+            android:name="produtora.activity.ProdutoraActivity"
             android:parentActivityName="activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
 

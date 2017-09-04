@@ -63,7 +63,7 @@ public class TvShowsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_list_filme, container, false);
         textView = (TextView) view.findViewById(R.id.textLayoutFilmes);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycleView);
+        recyclerView = (RecyclerView) view.findViewById(R.id.list_filme_recycleView);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
         frameLayout = (FrameLayout) view.findViewById(R.id.frame_list_filme);
         process = (ProgressBar) view.findViewById(R.id.progress);
@@ -207,26 +207,26 @@ public class TvShowsFragment extends Fragment {
             if (language != null) {
 
                 if (abaEscolhida.equals(getResources().getString(R.string.air_date))) {
-                //    Log.d(TAG, "getListaTipo: getOnTheAir");
+                //    Log.d(TAG, "getTipo: getOnTheAir");
                     return tmdbTV.getOnTheAir(language, pagina).getResults();
                 }
 
                 if (abaEscolhida.equals(getResources().getString(R.string.populares))) {
-                  //  Log.d(TAG, "getListaTipo: getPopular");
+                  //  Log.d(TAG, "getTipo: getPopular");
                     return tmdbTV.getPopular(language, pagina).getResults();
                 }
 
                 if (abaEscolhida.equals(getResources().getString(R.string.top_rated))) {
-                   // Log.d(TAG, "getListaTipo: getTopRated");
+                   // Log.d(TAG, "getTipo: getTopRated");
                     return tmdbTV.getTopRated(language, pagina).getResults();
                 }
 
                 Timezone timezone = UtilsFilme.getTimezone();
-               // Log.d(TAG, "getListaTipo: getAiringToday");
+               // Log.d(TAG, "getTipo: getAiringToday");
                 return tmdbTV.getAiringToday(language, pagina, timezone).getResults();
 
             }
-           // Log.d(TAG, "getListaTipo: getAiringToday default");
+           // Log.d(TAG, "getTipo: getAiringToday default");
             return tmdbTV.getOnTheAir("en", pagina).getResults();
         }
 

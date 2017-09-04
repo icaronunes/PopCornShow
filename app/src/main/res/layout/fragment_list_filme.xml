@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/frame_list_filme"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/white">
 
     <TextView
@@ -12,19 +12,11 @@
         android:layout_marginTop="@dimen/trade_size_dp_240"
         android:visibility="invisible" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeToRefresh"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_filme_recycleView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycleView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-    <include layout="@layout/include_progress" />
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
 
 </FrameLayout>

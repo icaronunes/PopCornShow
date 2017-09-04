@@ -39,7 +39,7 @@ class PersonPopularAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         for (person in personResults!!) {
             this.personResultsPage.add(person!!)
         }
-        //games?.add(loadingItem)
+
         notifyItemRangeChanged(initPosition, this.personResultsPage?.size!! + 1 /* plus loading item */)
         personResultsPage.add(loadingItem)
 

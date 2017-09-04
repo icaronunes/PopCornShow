@@ -275,7 +275,6 @@ public class UtilsFilme {
         return null;
     }
 
-
     public static int loadPalette(View view) {
 
         ImageView imageView = (ImageView) view;

@@ -1,4 +1,4 @@
-package activity;
+package listafilmes.activity;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -8,8 +8,9 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import activity.BaseActivity;
 import br.com.icaro.filme.R;
-import fragment.FilmesFragment;
+import listafilmes.fragment.FilmesFragment;
 import utils.Constantes;
 
 public class FilmesActivity extends BaseActivity {

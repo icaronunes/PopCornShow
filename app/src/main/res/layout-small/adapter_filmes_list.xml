@@ -22,7 +22,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/imgFilme"
+                android:id="@+id/imgFilmes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"
@@ -32,7 +32,7 @@
             <include layout="@layout/include_progress" />
 
             <TextView
-                android:id="@+id/titleTextView"
+                android:id="@+id/title_filmes_lista"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"

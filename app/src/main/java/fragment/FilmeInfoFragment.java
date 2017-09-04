@@ -40,7 +40,7 @@ import activity.BaseActivity;
 import activity.CrewsActivity;
 import activity.ElencoActivity;
 import activity.PosterGridActivity;
-import activity.ProdutoraActivity;
+import produtora.activity.ProdutoraActivity;
 import activity.ReviewsActivity;
 import activity.SettingsActivity;
 import activity.SimilaresActivity;

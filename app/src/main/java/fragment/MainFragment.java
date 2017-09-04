@@ -23,7 +23,7 @@ import com.google.firebase.crash.FirebaseCrash;
 import java.util.ArrayList;
 import java.util.List;
 
-import activity.FilmesActivity;
+import listafilmes.activity.FilmesActivity;
 import activity.SettingsActivity;
 import activity.TvShowsActivity;
 import adapter.MovieMainAdapter;
@@ -120,10 +120,6 @@ public class MainFragment extends Fragment {
 
                         case 0: {
 
-                            Bundle bundle = new Bundle();
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Button_Filme");
-                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
-                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                             Intent intent = new Intent(getActivity(), FilmesActivity.class);
                             intent.putExtra(Constantes.INSTANCE.getABA(), R.string.now_playing);
@@ -135,10 +131,6 @@ public class MainFragment extends Fragment {
 
                         case 1: {
 
-                            Bundle bundle = new Bundle();
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Button_Filme");
-                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
-                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                             Intent intent = new Intent(getActivity(), FilmesActivity.class);
                             intent.putExtra(Constantes.INSTANCE.getABA(), R.string.upcoming);

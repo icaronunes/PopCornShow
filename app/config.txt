@@ -524,7 +524,7 @@
 }
 
 # view AndroidManifest.xml #generated:93
--keep class activity.FilmesActivity {
+-keep class listafilmes.activity.FilmesActivity {
     <init>(...);
 }
 
@@ -584,7 +584,7 @@
 }
 
 # view AndroidManifest.xml #generated:221
--keep class activity.ProdutoraActivity {
+-keep class produtora.activity.ProdutoraActivity {
     <init>(...);
 }
 

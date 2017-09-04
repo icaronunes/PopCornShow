@@ -62,13 +62,13 @@ data class Lista(
         val page: Int? = null,
 
         @field:SerializedName("results")
-        val results: List<ListaItem?>? = null
+        val results: List<ListaItemFilme?>? = null
 ): ViewType {
     override fun getViewType() = Constantes.BuscaConstants.NEWS
 }
 
 @Generated("com.robohorse.robopojogenerator")
-data class ListaItem(
+data class ListaItemFilme(
 
         @field:SerializedName("overview")
         val overview: String? = null,

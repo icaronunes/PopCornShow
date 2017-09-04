@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import activity.MainActivity;
 import br.com.icaro.filme.R;
 import fragment.MainFragment;
 
@@ -17,7 +16,7 @@ public class MainAdapter extends FragmentPagerAdapter {
     private Context context;
 
 
-    public MainAdapter(MainActivity context, FragmentManager supportFragmentManager) {
+    public MainAdapter(Context context, FragmentManager supportFragmentManager) {
         super(supportFragmentManager);
         this.context = context;
 

@@ -15,7 +15,7 @@ data class Company(
     @JsonProperty("homepage")
     var homepage: String? = null,
     @JsonProperty("logo_path")
-    var logoPath: String? = null,
+    var logo_path: String? = null,
     @JsonProperty("id")
     var id: Int? = null,
     @JsonProperty("name")

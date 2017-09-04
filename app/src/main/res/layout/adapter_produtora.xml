@@ -33,7 +33,12 @@
                 android:cropToPadding="true"
                 android:scaleType="centerCrop" />
 
-            <include layout="@layout/include_progress" />
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
             <TextView
                 android:id="@+id/titleTextView_produtora"

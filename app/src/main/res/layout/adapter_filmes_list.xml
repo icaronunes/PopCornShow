@@ -5,7 +5,10 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_weight="1"
     android:layout_margin="@dimen/trade_size_dp_3"
+    android:minHeight="190dp"
+    android:minWidth="135dp"
     android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="@dimen/trade_size_dp_4"
     app:cardElevation="@dimen/trade_size_dp_3"
@@ -19,21 +22,29 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="@dimen/trade_size_dp_100">
+            android:minHeight="@dimen/trade_size_dp_150">
 
             <ImageView
-                android:id="@+id/imgFilme"
+                android:id="@+id/imgFilmes"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/imagem_filme"
+                android:cropToPadding="true"
                 android:scaleType="centerCrop" />
 
-            <include
-                style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Small"
-                layout="@layout/include_progress" />
+            <ProgressBar
+                android:id="@+id/progress_filmes_lista"
+                style="@android:style/Widget.DeviceDefault.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:elevation="3dp" />
+
 
             <TextView
-                android:id="@+id/titleTextView"
+                android:id="@+id/title_filmes_lista"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"

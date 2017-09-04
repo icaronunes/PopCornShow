@@ -108,8 +108,8 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
 
         TvShowViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.titleTextView);
-            imagem_filme = (ImageView) itemView.findViewById(R.id.imgFilme);
+            title = (TextView) itemView.findViewById(R.id.title_filmes_lista);
+            imagem_filme = (ImageView) itemView.findViewById(R.id.imgFilmes);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
         }
     }
