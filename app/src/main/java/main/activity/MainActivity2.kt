@@ -26,7 +26,7 @@ import info.movito.themoviedbapi.TvResultsPage
 import info.movito.themoviedbapi.model.core.MovieResultsPage
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import utils.UtilsFilme
+import utils.UtilsApp
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -58,7 +58,7 @@ class MainActivity2 : BaseActivity() {
         viewpage_top_main!!.offscreenPageLimit = 3
 
 
-        if (UtilsFilme.isNetWorkAvailable(this)) {
+        if (UtilsApp.isNetWorkAvailable(this)) {
             getDados()
             //TMDVAsync().execute()
         } else {
@@ -101,7 +101,7 @@ class MainActivity2 : BaseActivity() {
     protected fun snack() {
         Snackbar.make(viewpage_top_main!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
-                    if (UtilsFilme.isNetWorkAvailable(baseContext)) {
+                    if (UtilsApp.isNetWorkAvailable(baseContext)) {
                         TMDVAsync().execute()
                     } else {
                         snack()
@@ -169,7 +169,7 @@ class MainActivity2 : BaseActivity() {
 
                         try {
                             val date = sdf.parse(movieDb.releaseDate)
-                            if (movieDb.backdropPath != null && UtilsFilme.verificaLancamento(date)) {
+                            if (movieDb.backdropPath != null && UtilsApp.verificaLancamento(date)) {
                                 multi.add(topMain)
                             }
                         } catch (e: ParseException) {
@@ -202,7 +202,7 @@ class MainActivity2 : BaseActivity() {
 
         override fun doInBackground(vararg voids: Void?): Void? {
             var idioma_padrao = false
-            if (!UtilsFilme.isNetWorkAvailable(this@MainActivity2)) {
+            if (!UtilsApp.isNetWorkAvailable(this@MainActivity2)) {
                 return null
             }
             try {
@@ -216,7 +216,7 @@ class MainActivity2 : BaseActivity() {
             if (idioma_padrao) {
                 try {
                     tmdbTv = FilmeService.getTmdbTvShow()
-                            .getAiringToday(BaseActivity.getLocale(), 1, UtilsFilme.getTimezone())
+                            .getAiringToday(BaseActivity.getLocale(), 1, UtilsApp.getTimezone())
                     tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies(BaseActivity.getLocale(), 1)
                 } catch (e: Exception) {
                     //  Log.d(TAG, e.getMessage());
@@ -227,7 +227,7 @@ class MainActivity2 : BaseActivity() {
 
             } else {
                 try {
-                    tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("en", 1, UtilsFilme.getTimezone())
+                    tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("en", 1, UtilsApp.getTimezone())
                     tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies("en", 1)
                 } catch (e: Exception) {
                     // Log.d(TAG, e.toString());

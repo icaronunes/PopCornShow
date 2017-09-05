@@ -42,10 +42,10 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
  * Created by icaro on 24/06/16.
  */
 
-public class UtilsFilme {
+public class UtilsApp {
 
 
-    private static String TAG = UtilsFilme.class.getName();
+    private static String TAG = UtilsApp.class.getName();
 
     public static UserTvshow setUserTvShow(TvSeries serie) {
         UserTvshow userTvshow = new UserTvshow();
@@ -199,7 +199,7 @@ public class UtilsFilme {
         BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
         if (drawable != null) {
             Bitmap bitmap = drawable.getBitmap();
-            UtilsFilme.writeBitmap(dir, bitmap);
+            UtilsApp.writeBitmap(dir, bitmap);
         }
         return dir;
     }
@@ -268,7 +268,6 @@ public class UtilsFilme {
     public static Timezone getTimezone() {
         for (Timezone timezone : FilmeService.getTimeZone()) {
             if (timezone.getCountry().equals(Locale.getDefault().getCountry())) {
-
                 return timezone;
             }
         }
@@ -333,7 +332,7 @@ public class UtilsFilme {
         if (!ativo) {
             return padrao;
         } else {
-            String conexao = UtilsFilme.getNetworkClass(context);
+            String conexao = UtilsApp.getNetworkClass(context);
 
             if (conexao.equals("forte")) {
                 return padrao;

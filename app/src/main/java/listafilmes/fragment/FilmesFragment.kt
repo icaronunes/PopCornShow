@@ -21,7 +21,7 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import utils.Constantes
 import utils.InfiniteScrollListener
-import utils.UtilsFilme
+import utils.UtilsApp
 import utils.getIdiomaEscolhido
 
 
@@ -56,33 +56,33 @@ class FilmesFragment : FragmentBase() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        list_filme_recycleView.apply {
+        recycle_listas.apply {
             val gridLayout = GridLayoutManager(activity, 2)
             layoutManager = gridLayout
             itemAnimator = DefaultItemAnimator()
-            addOnScrollListener(InfiniteScrollListener({ getDados() }, gridLayout))
+            addOnScrollListener(InfiniteScrollListener({ getListaFilmes() }, gridLayout))
             setHasFixedSize(true)
             adapter = ListaFilmesAdapter(activity)
         }
 
-        if (!UtilsFilme.isNetWorkAvailable(context)) {
-            textLayoutFilmes?.visibility = View.VISIBLE
-            textLayoutFilmes?.text = "SEM INTERNET"
+        if (!UtilsApp.isNetWorkAvailable(context)) {
+            txt_listas?.visibility = View.VISIBLE
+            txt_listas?.text = "SEM INTERNET"
             snack()
 
         } else {
-            getDados()
+            getListaFilmes()
         }
     }
 
 
-    fun getDados() {
+    fun getListaFilmes() {
 
         val inscricao = API().BuscaDeFilmes(getTipo(), pagina = pagina, local = getIdiomaEscolhido(context))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    (list_filme_recycleView.adapter as ListaFilmesAdapter).addFilmes(it.results, it?.totalResults!!)
+                    (recycle_listas.adapter as ListaFilmesAdapter).addFilmes(it.results, it?.totalResults!!)
                     pagina = it?.page!!
                     totalPagina = it?.totalPages!!
                     ++pagina
@@ -98,8 +98,8 @@ class FilmesFragment : FragmentBase() {
     protected fun snack() {
         Snackbar.make(frame_list_filme!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
-                    if (UtilsFilme.isNetWorkAvailable(context)) {
-                        textLayoutFilmes!!.visibility = View.INVISIBLE
+                    if (UtilsApp.isNetWorkAvailable(context)) {
+                        txt_listas!!.visibility = View.INVISIBLE
                         //   val tmdvAsync = TMDVAsync()
                         //   tmdvAsync.execute()
                     } else {
@@ -113,7 +113,7 @@ class FilmesFragment : FragmentBase() {
 //            //  Log.d("onClickMovieListener", "" + position);
 //            // Log.d("onClickMovieListener", "" + movies.get(position).getTitle());
 //            val intent = Intent(activity, FilmeActivity::class.java)
-//            intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(view))
+//            intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(view))
 //            intent.putExtra(Constantes.FILME_ID, movies!![position].id)
 //            intent.putExtra(Constantes.NOME_FILME, movies!![position].title)
 //            context.startActivity(intent)
@@ -124,9 +124,7 @@ class FilmesFragment : FragmentBase() {
 
         when (abaEscolhida) {
 
-            R.string.now_playing -> {
-                return API.TIPOBUSCA.FILME.agora
-            }
+            R.string.now_playing -> return API.TIPOBUSCA.FILME.agora
 
             R.string.upcoming -> {
                 return API.TIPOBUSCA.FILME.chegando

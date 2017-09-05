@@ -25,7 +25,7 @@ import activity.PersonActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.MovieDb;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 22/02/17.
@@ -60,14 +60,14 @@ public class SimilaresFilmesAdapter extends RecyclerView.Adapter<SimilaresFilmes
                 holder.textSimilares.setText(movie.getTitle());
             }
             Picasso.with(context)
-                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + movie.getPosterPath())
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + movie.getPosterPath())
                     .placeholder(R.drawable.poster_empty)
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.imgPagerSimilares, new Callback() {
                         @Override
                         public void onSuccess() {
-                            color_top = UtilsFilme.loadPalette(holder.imgPagerSimilares);
+                            color_top = UtilsApp.loadPalette(holder.imgPagerSimilares);
                             holder.progressBarSimilares.setVisibility(View.GONE);
                         }
 

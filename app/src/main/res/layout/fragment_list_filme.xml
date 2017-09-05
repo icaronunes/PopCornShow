@@ -5,7 +5,7 @@
     android:background="@color/white">
 
     <TextView
-        android:id="@+id/textLayoutFilmes"
+        android:id="@+id/txt_listas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center"
@@ -14,7 +14,7 @@
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/list_filme_recycleView"
+        android:id="@+id/recycle_listas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />

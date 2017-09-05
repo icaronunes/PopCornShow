@@ -32,7 +32,7 @@ import domain.UserTvshow;
 import info.movito.themoviedbapi.TmdbTvEpisodes;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 25/11/16.
@@ -70,12 +70,12 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
         holder.progressBar.setMax(userTvshow.getNumberOfEpisodes());
         holder.progressBar.setProgress(vistos);
         getEpTitle(userTvshow, holder.ep_title, holder.proximo, holder.date, holder.itemView, holder.new_seguindo);
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + userTvshow.getPoster())
+        Picasso.with(context).load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + userTvshow.getPoster())
                 .error(R.drawable.poster_empty)
                 .into(holder.poster, new Callback() {
                     @Override
                     public void onSuccess() {
-                        color = UtilsFilme.loadPalette(holder.poster);
+                        color = UtilsApp.loadPalette(holder.poster);
                     }
 
                     @Override
@@ -90,7 +90,7 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
                 Intent intent = new Intent(context, TvShowActivity.class);
                 intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), userTvshow.getNome());
                 intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), userTvshow.getId());
-                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(holder.poster));
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(holder.poster));
                 context.startActivity(intent);
 
                 FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
@@ -180,7 +180,7 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
                                         dataTvshow.setText(" - " +tvEpisode.getAirDate());
 
 
-                                        if (UtilsFilme.verificaDataProximaLancamento(date)){
+                                        if (UtilsApp.verificaDataProximaLancamento(date)){
                                             new_seguindo.setVisibility(View.VISIBLE);
                                         } else {
                                             new_seguindo.setVisibility(View.GONE);

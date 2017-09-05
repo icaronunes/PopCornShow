@@ -25,7 +25,7 @@ import activity.FilmeActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.CollectionInfo;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 22/07/16.
@@ -72,7 +72,7 @@ public class CollectionPagerAdapter extends PagerAdapter {
         linearLayout = (LinearLayout) view.findViewById(R.id.collection_linear);
         imageView = (ImageView) view.findViewById(R.id.img_collection);
         Picasso.with(context)
-                .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 5)) + info.getParts().get(position).getPosterPath())
+                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 5)) + info.getParts().get(position).getPosterPath())
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .error(R.drawable.poster_empty)

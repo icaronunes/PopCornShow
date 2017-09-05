@@ -17,7 +17,7 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import utils.InfiniteScrollListener
-import utils.UtilsFilme
+import utils.UtilsApp
 
 /**
  * Created by icaro on 04/10/16.
@@ -59,7 +59,7 @@ class OscarActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         subscriptions = CompositeSubscription()
-        if (UtilsFilme.isNetWorkAvailable(baseContext)) {
+        if (UtilsApp.isNetWorkAvailable(baseContext)) {
             getOscar()
         } else {
             snack()
@@ -74,7 +74,7 @@ class OscarActivity : BaseActivity() {
     protected fun snack() {
         Snackbar.make(linear_lista, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
-                    if (UtilsFilme.isNetWorkAvailable(baseContext)) {
+                    if (UtilsApp.isNetWorkAvailable(baseContext)) {
                         getOscar()
                     } else {
                         snack()

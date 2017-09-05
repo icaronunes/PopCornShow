@@ -14,7 +14,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import adapter.PersonAdapter;
 import br.com.icaro.filme.R;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 public class PersonActivity extends BaseActivity {
 
@@ -41,7 +41,7 @@ public class PersonActivity extends BaseActivity {
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "TabLayout " + "Perfil");
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
 
-        if (UtilsFilme.isNetWorkAvailable(getContext())) {
+        if (UtilsApp.isNetWorkAvailable(getContext())) {
 
             setupViewPagerTabs();
         } else {
@@ -65,7 +65,7 @@ public class PersonActivity extends BaseActivity {
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (UtilsFilme.isNetWorkAvailable(getContext())) {
+                        if (UtilsApp.isNetWorkAvailable(getContext())) {
                             setupViewPagerTabs();
                         } else {
                             snack();

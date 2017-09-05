@@ -22,7 +22,7 @@ import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 17/02/17.
@@ -49,7 +49,7 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
         final MovieDb movieDb = movieDbs.getResults().get(position);
 
         Picasso.with(context)
-                .load(UtilsFilme.getBaseUrlImagem( UtilsFilme.getTamanhoDaImagem(context, 2)) + movieDb.getPosterPath())
+                .load(UtilsApp.getBaseUrlImagem( UtilsApp.getTamanhoDaImagem(context, 2)) + movieDb.getPosterPath())
                 //.placeholder(R.drawable.poster_empty)
                 .into(holder.img_poster_grid, new Callback() {
                     @Override
@@ -80,7 +80,7 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
                 Intent intent = new Intent(context, FilmeActivity.class);
                 intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movieDb.getTitle());
                 intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movieDb.getId());
-                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(holder.img_poster_grid));
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(holder.img_poster_grid));
                 context.startActivity(intent);
             }
         });

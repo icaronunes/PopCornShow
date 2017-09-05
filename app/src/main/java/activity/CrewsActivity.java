@@ -25,8 +25,7 @@ import info.movito.themoviedbapi.model.Credits;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
 import utils.Constantes;
-import utils.UtilsFilme;
-
+import utils.UtilsApp;
 
 
 public class CrewsActivity extends BaseActivity {
@@ -65,7 +64,7 @@ public class CrewsActivity extends BaseActivity {
 //        adview.loadAd(adRequest);
 
 
-        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
             new TMDVAsync().execute();
         } else {
             snack();
@@ -103,7 +102,7 @@ public class CrewsActivity extends BaseActivity {
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
                             new TMDVAsync().execute();
                         } else {
                             snack();

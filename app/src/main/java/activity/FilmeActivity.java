@@ -64,7 +64,7 @@ import info.movito.themoviedbapi.model.ArtworkType;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.alternative_titles;
 import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.credits;
@@ -154,7 +154,7 @@ public class FilmeActivity extends BaseActivity {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        if (UtilsFilme.isNetWorkAvailable(this)) {
+        if (UtilsApp.isNetWorkAvailable(this)) {
             tmdvAsync = new TMDVAsync();
             tmdvAsync.execute();
         } else {
@@ -284,7 +284,7 @@ public class FilmeActivity extends BaseActivity {
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
                             new TMDVAsync().execute();
                         } else {
                             snack();
@@ -399,7 +399,7 @@ public class FilmeActivity extends BaseActivity {
                     e.printStackTrace();
                 }
 
-                if (!UtilsFilme.verificaLancamento(date)) {
+                if (!UtilsApp.verificaLancamento(date)) {
                     bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Tentativa de Rated fora da data de lançamento");
                     mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
@@ -455,7 +455,7 @@ public class FilmeActivity extends BaseActivity {
                             progressDialog.setMessage(getResources().getString(R.string.salvando));
                             progressDialog.show();
 
-                            if (UtilsFilme.isNetWorkAvailable(FilmeActivity.this)) {
+                            if (UtilsApp.isNetWorkAvailable(FilmeActivity.this)) {
 
                                 if (ratingBar.getRating() == 0) {
                                     progressDialog.dismiss();
@@ -532,7 +532,7 @@ public class FilmeActivity extends BaseActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if (!UtilsFilme.verificaLancamento(date)) {
+                if (!UtilsApp.verificaLancamento(date)) {
                     Toast.makeText(FilmeActivity.this, R.string.filme_nao_lancado, Toast.LENGTH_SHORT).show();
                     bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Favorite - FILME ainda não foi lançado.");
@@ -732,7 +732,7 @@ public class FilmeActivity extends BaseActivity {
 
         @Override
         protected MovieDb doInBackground(Void... voids) {//
-            if (UtilsFilme.isNetWorkAvailable(FilmeActivity.this)) {
+            if (UtilsApp.isNetWorkAvailable(FilmeActivity.this)) {
                 boolean idioma_padrao = false;
                 try {
                     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(FilmeActivity.this);

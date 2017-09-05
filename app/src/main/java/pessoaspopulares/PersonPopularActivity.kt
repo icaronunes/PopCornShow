@@ -17,7 +17,7 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import utils.InfiniteScrollListener
-import utils.UtilsFilme
+import utils.UtilsApp
 
 /**
  * Created by icaro on 04/10/16.
@@ -37,7 +37,7 @@ class PersonPopularActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle(R.string.person_rated)
 
-        if (UtilsFilme.isNetWorkAvailable(baseContext)) {
+        if (UtilsApp.isNetWorkAvailable(baseContext)) {
             activity_person_popular_no_internet.visibility = View.GONE
         } else {
             activity_person_popular_no_internet.visibility = View.VISIBLE
@@ -59,7 +59,7 @@ class PersonPopularActivity : BaseActivity() {
                      .build();
              adView.loadAd(adRequest);*/
 
-        if (UtilsFilme.isNetWorkAvailable(this)) {
+        if (UtilsApp.isNetWorkAvailable(this)) {
             getPerson()
 
         } else {
@@ -100,7 +100,7 @@ class PersonPopularActivity : BaseActivity() {
     private fun snack() {
         Snackbar.make(linear_person_popular, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
-                    if (UtilsFilme.isNetWorkAvailable(baseContext)) {
+                    if (UtilsApp.isNetWorkAvailable(baseContext)) {
                         activity_person_popular_no_internet.visibility = View.GONE
                         getPerson()
                     } else {

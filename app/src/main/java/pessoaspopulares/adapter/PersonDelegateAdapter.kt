@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.adapter_person_popular.view.*
 import kotlinx.android.synthetic.main.include_progress.view.*
 import pessoaspopulares.ViewTypeDelegateAdapter
 import utils.Constantes
-import utils.UtilsFilme
+import utils.UtilsApp
 
 class PersonDelegateAdapter : ViewTypeDelegateAdapter {
 
@@ -34,7 +34,7 @@ class PersonDelegateAdapter : ViewTypeDelegateAdapter {
         fun bind(item: PersonItem) = with(itemView) {
 
             Picasso.with(context)
-                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + item.profilePath).into(img_popular_person)
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.profilePath).into(img_popular_person)
             text_person_name.text = item.name
             progress.visibility = View.GONE
             itemView.setOnClickListener({

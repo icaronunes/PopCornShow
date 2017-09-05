@@ -24,7 +24,7 @@ import activity.PersonActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.people.PersonCrew;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 22/02/17.
@@ -53,7 +53,7 @@ public class CrewAdapter extends RecyclerView.Adapter<CrewAdapter.CrewViewHolder
             holder.textCrewJob.setText(crew.getJob());
             holder.textCrewNome.setText(crew.getName());
             Picasso.with(context)
-                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + crew.getProfilePath())
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + crew.getProfilePath())
                     .placeholder(R.drawable.person)
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)

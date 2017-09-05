@@ -17,7 +17,7 @@ import java.util.Random;
 import br.com.icaro.filme.R;
 import domain.ListaJava;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 04/10/16.
@@ -77,7 +77,7 @@ public class ListaGenericaActivity  extends BaseActivity{
                     }
                 }
 
-                if(UtilsFilme.isNetWorkAvailable(ListaGenericaActivity.this)) {
+                if(UtilsApp.isNetWorkAvailable(ListaGenericaActivity.this)) {
                  //   new TMDVAsync().execute();
                 }
             }
@@ -87,7 +87,7 @@ public class ListaGenericaActivity  extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        if(UtilsFilme.isNetWorkAvailable(this)) {
+        if(UtilsApp.isNetWorkAvailable(this)) {
         //    new TMDVAsync().execute();
         }
     }

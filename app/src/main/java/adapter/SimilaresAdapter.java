@@ -22,7 +22,7 @@ import activity.SimilaresActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.MovieDb;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 12/08/16.
@@ -53,7 +53,7 @@ public class SimilaresAdapter extends RecyclerView.Adapter<SimilaresAdapter.Simi
                 .format(String.valueOf(similares.get(position).getVoteAverage())));
 
         Picasso.with(context)
-                .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + similares.get(position)
+                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + similares.get(position)
                 .getPosterPath())
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
@@ -63,7 +63,7 @@ public class SimilaresAdapter extends RecyclerView.Adapter<SimilaresAdapter.Simi
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, FilmeActivity.class);
-                int color = UtilsFilme.loadPalette(holder.imageView);
+                int color = UtilsApp.loadPalette(holder.imageView);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                 intent.putExtra(Constantes.INSTANCE.getFILME_ID(), similares.get(position).getId());
                 intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), similares.get(position).getTitle());

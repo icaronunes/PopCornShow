@@ -30,7 +30,7 @@ import activity.Site;
 import activity.TemporadaActivity;
 import activity.TrailerActivity;
 import activity.TvShowActivity;
-import activity.TvShowsActivity;
+import listaserie.activity.TvShowsActivity;
 import applicaton.FilmeApplication;
 import domain.FilmeDB;
 import domain.FilmeService;

@@ -22,7 +22,7 @@ import activity.FotoPersonActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.Artwork;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 18/08/16.
@@ -52,7 +52,7 @@ public class PersonImagemAdapter extends RecyclerView.Adapter<PersonImagemAdapte
     public void onBindViewHolder(final PersonImagemAdapter.PersonImageViewHolder holder, final int position) {
         final Artwork artwork = artworks.get(position);
        // Log.d("PersonImagemAdapter", artwork.getFilePath());
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 3)) + artwork.getFilePath())
+        Picasso.with(context).load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3)) + artwork.getFilePath())
                 .placeholder(R.drawable.person)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)

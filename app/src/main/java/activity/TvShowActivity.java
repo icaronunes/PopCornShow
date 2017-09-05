@@ -66,14 +66,14 @@ import info.movito.themoviedbapi.model.tv.TvSeason;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Config;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.credits;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.external_ids;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.images;
 import static info.movito.themoviedbapi.TmdbTV.TvMethod.videos;
-import static utils.UtilsFilme.setEp;
-import static utils.UtilsFilme.setUserTvShow;
+import static utils.UtilsApp.setEp;
+import static utils.UtilsApp.setUserTvShow;
 
 
 public class TvShowActivity extends BaseActivity {
@@ -132,7 +132,7 @@ public class TvShowActivity extends BaseActivity {
         iniciarFirebases();
 
 
-        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
             new TMDVAsync().execute();
         } else {
             snack();
@@ -274,7 +274,7 @@ public class TvShowActivity extends BaseActivity {
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
                             new TMDVAsync().execute();
                         } else {
                             snack();
@@ -437,7 +437,7 @@ public class TvShowActivity extends BaseActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if (!UtilsFilme.verificaLancamento(date)) {
+                if (!UtilsApp.verificaLancamento(date)) {
                     FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(TvShowActivity.this);
                     Toast.makeText(TvShowActivity.this, R.string.tvshow_nao_lancado, Toast.LENGTH_SHORT).show();
                     Bundle bundle = new Bundle();
@@ -503,7 +503,7 @@ public class TvShowActivity extends BaseActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if (!UtilsFilme.verificaLancamento(date)) {
+                if (!UtilsApp.verificaLancamento(date)) {
                     Bundle bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Tentativa de Rated fora da data de lançamento");
                     firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
@@ -562,7 +562,7 @@ public class TvShowActivity extends BaseActivity {
                             progressDialog.setMessage(getResources().getString(R.string.salvando));
                             progressDialog.show();
 
-                            if (UtilsFilme.isNetWorkAvailable(TvShowActivity.this)) {
+                            if (UtilsApp.isNetWorkAvailable(TvShowActivity.this)) {
 
                                 //  Log.d(TAG, "Gravou Rated");
 
@@ -624,7 +624,7 @@ public class TvShowActivity extends BaseActivity {
     private void setImageTop() {
 
         Picasso.with(TvShowActivity.this)
-                .load(UtilsFilme.getBaseUrlImagem(5) + series.getBackdropPath())
+                .load(UtilsApp.getBaseUrlImagem(5) + series.getBackdropPath())
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .error(R.drawable.top_empty)
@@ -851,7 +851,7 @@ public class TvShowActivity extends BaseActivity {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    if (UtilsFilme.verificaLancamento(date)) {
+                    if (UtilsApp.verificaLancamento(date)) {
                         menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
                         menu_item_rated.setOnClickListener(RatedFilme());
                     }

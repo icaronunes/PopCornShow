@@ -6,9 +6,12 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import rx.Observable
 import utils.Config
+import utils.UtilsApp
 import java.util.*
 
 class API {
+
+    private var timeZone: Timezone? = null
 
     object TIPOBUSCA {
 
@@ -165,10 +168,12 @@ class API {
         }
     }
 
-    fun BuscaDeSeries(tipoDeBusca: String = TIPOBUSCA.SERIE.popular, local: String = "US", pagina: Int = 1, timeZone: Timezone? = Timezone("US", "US")): Observable<ListaSeries> {
+    fun BuscaDeSeries(tipoDeBusca: String? = TIPOBUSCA.SERIE.popular, local: String = "US", pagina: Int = 1, timeZone: Timezone? = Timezone("US", "US")): Observable<ListaSeries> {
         // tipos de buscas - "now_playing", "upcoming", "top_rated", "popular" - Mude o tipo, para mudar busca
         return rx.Observable.create { subscriber ->
             val client = OkHttpClient()
+            if (timeZone != null)
+            this.timeZone = UtilsApp.getTimezone()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=${timeZone?.country}")
@@ -178,6 +183,7 @@ class API {
             if (response.isSuccessful) {
                 val json = response.body()?.string()
                 val lista = gson.fromJson(json, ListaSeries::class.java)
+                lista.results
                 subscriber.onNext(lista)
                 subscriber.onCompleted()
             } else {

@@ -18,7 +18,7 @@ import java.util.List;
 
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.tv.TvSeries;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 14/09/16.
@@ -52,7 +52,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
 
 
             Picasso.with(context)
-                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 4)) + series.getPosterPath())
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 4)) + series.getPosterPath())
                     .error(R.drawable.poster_empty)
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)

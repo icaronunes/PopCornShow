@@ -21,7 +21,7 @@ import br.com.icaro.filme.R;
 import domain.UserSeasons;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
 import info.movito.themoviedbapi.model.tv.TvSeason;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 26/08/16.
@@ -96,7 +96,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
 
         //Log.d("Temporada", "Rating " + episode.getUserRating());
         Picasso.with(context)
-                .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context,2)) + episode.getStillPath())
+                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context,2)) + episode.getStillPath())
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .error(R.drawable.empty_popcorn)

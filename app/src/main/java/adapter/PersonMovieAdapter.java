@@ -22,7 +22,7 @@ import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.people.PersonCredit;
 import info.movito.themoviedbapi.model.people.PersonCredits;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 18/08/16.
@@ -52,7 +52,7 @@ public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.
 
            // Log.d("PersonMovieAdapter", "True - " + personCredits.getCast().get(position).getMovieTitle() + " " + credit.getPosterPath());
             Picasso.with(context)
-                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context , 2)) + credit.getPosterPath())
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context , 2)) + credit.getPosterPath())
                     .error(R.drawable.poster_empty)
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
@@ -77,7 +77,7 @@ public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.
                 public void onClick(View view) {
                     Intent intent = new Intent(context, FilmeActivity.class);
                     ImageView imageView = (ImageView) view;
-                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(imageView));
+                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(imageView));
                   //  Log.d("PersonMovieAdapter", "ID - " + credit.getMovieId());
                   //  Log.d("PersonMovieAdapter", "ID - " + credit.getMovieTitle());
                     intent.putExtra(Constantes.INSTANCE.getFILME_ID(), credit.getMovieId());

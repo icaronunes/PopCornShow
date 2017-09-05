@@ -22,7 +22,7 @@ import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.people.PersonCredit;
 import info.movito.themoviedbapi.model.people.PersonCredits;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 18/08/16.
@@ -49,7 +49,7 @@ public class PersonCrewsAdapter extends RecyclerView.Adapter<PersonCrewsAdapter.
 
         final PersonCredit movie = personCredits.getCrew().get(position);
 
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 3)) + movie.getPosterPath())
+        Picasso.with(context).load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3)) + movie.getPosterPath())
                 .placeholder(R.drawable.poster_empty)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
@@ -73,7 +73,7 @@ public class PersonCrewsAdapter extends RecyclerView.Adapter<PersonCrewsAdapter.
             public void onClick(View view) {
                 Intent intent = new Intent(context, FilmeActivity.class);
                 ImageView imageView = (ImageView) view;
-                int color = UtilsFilme.loadPalette(imageView);
+                int color = UtilsApp.loadPalette(imageView);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                 intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movie.getMovieId());
                 intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movie.getMovieTitle());

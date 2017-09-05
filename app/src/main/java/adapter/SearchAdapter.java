@@ -27,7 +27,7 @@ import info.movito.themoviedbapi.model.Multi;
 import info.movito.themoviedbapi.model.people.Person;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 18/09/16.
@@ -58,7 +58,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
             final MovieDb movieDb = ((MovieDb) multis.get(position));
 
             Picasso.with(context)
-                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + movieDb.getPosterPath())
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + movieDb.getPosterPath())
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .error(R.drawable.poster_empty)
@@ -69,7 +69,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
                 public void onClick(View view) {
                     ImageView imageView = (ImageView) view.findViewById(R.id.img_search);
                     Intent intent = new Intent(context, FilmeActivity.class);
-                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(imageView));
+                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(imageView));
                     intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movieDb.getId());
                     //Log.d("setOnItemClickListener", movieDb.getOriginalTitle());
                     intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movieDb.getTitle());
@@ -95,7 +95,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
         if (multis.get(position).getMediaType().equals(Multi.MediaType.TV_SERIES)) {
             final TvSeries series = (TvSeries) multis.get(position);
             Picasso.with(context)
-                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + series.getPosterPath())
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + series.getPosterPath())
                     .error(R.drawable.poster_empty)
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
@@ -106,7 +106,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
                 public void onClick(View view) {
                     ImageView imageView = (ImageView) view.findViewById(R.id.img_search);
                     Intent intent = new Intent(context, TvShowActivity.class);
-                    int color = UtilsFilme.loadPalette(imageView);
+                    int color = UtilsApp.loadPalette(imageView);
                     intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                     intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), series.getId());
                   //  Log.d("setOnItemClickListener", series.getName());
@@ -133,7 +133,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
         if (multis.get(position).getMediaType().equals(Multi.MediaType.PERSON)) {
             final Person person = (Person) multis.get(position);
             Picasso.with(context)
-                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + person.getProfilePath())
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + person.getProfilePath())
                     .error(R.drawable.poster_empty)
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
@@ -144,7 +144,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
                 public void onClick(View view) {
                     ImageView imageView = (ImageView) view.findViewById(R.id.img_search);
                     Intent intent = new Intent(context, PersonActivity.class);
-                    int color = UtilsFilme.loadPalette(imageView);
+                    int color = UtilsApp.loadPalette(imageView);
                     intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                     intent.putExtra(Constantes.INSTANCE.getPERSON_ID(), person.getId());
                   //  Log.d("setOnItemClickListener", person.getName());

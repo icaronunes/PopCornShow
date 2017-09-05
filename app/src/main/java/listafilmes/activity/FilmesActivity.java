@@ -74,7 +74,6 @@ public class FilmesActivity extends BaseActivity {
                 finish();
                 break;
             }
-
         }
         return super.onOptionsItemSelected(item);
     }

@@ -25,7 +25,7 @@ import java.util.List;
 
 import listafilmes.activity.FilmesActivity;
 import activity.SettingsActivity;
-import activity.TvShowsActivity;
+import listaserie.activity.TvShowsActivity;
 import adapter.MovieMainAdapter;
 import adapter.TvShowMainAdapter;
 import br.com.icaro.filme.R;
@@ -35,12 +35,12 @@ import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 import static br.com.icaro.filme.R.string.filmes_main;
 import static java.util.Arrays.asList;
-import static utils.UtilsFilme.getLocale;
-import static utils.UtilsFilme.getTimezone;
+import static utils.UtilsApp.getLocale;
+import static utils.UtilsApp.getTimezone;
 
 
 /**
@@ -88,7 +88,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (UtilsFilme.isNetWorkAvailable(getContext())) {
+        if (UtilsApp.isNetWorkAvailable(getContext())) {
             new MainAsync().execute();
         } else {
             Toast.makeText(getContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
@@ -120,7 +120,6 @@ public class MainFragment extends Fragment {
 
                         case 0: {
 
-
                             Intent intent = new Intent(getActivity(), FilmesActivity.class);
                             intent.putExtra(Constantes.INSTANCE.getABA(), R.string.now_playing);
                             intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.now_playing);
@@ -130,7 +129,6 @@ public class MainFragment extends Fragment {
                         }
 
                         case 1: {
-
 
                             Intent intent = new Intent(getActivity(), FilmesActivity.class);
                             intent.putExtra(Constantes.INSTANCE.getABA(), R.string.upcoming);
@@ -200,7 +198,7 @@ public class MainFragment extends Fragment {
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
-                            intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), getResources().getString(R.string.air_date));
+                            intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.air_date);
                             startActivity(intent);
                             break;
                         }
@@ -210,7 +208,7 @@ public class MainFragment extends Fragment {
                             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
-                            intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(),  getResources().getString(R.string.today));
+                            intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(),  R.string.today);
                             startActivity(intent);
                             break;
                         }
@@ -220,7 +218,7 @@ public class MainFragment extends Fragment {
                             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
-                            intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(),  getResources().getString(R.string.populares));
+                            intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(),  R.string.populares);
                             startActivity(intent);
                             break;
                         }
@@ -233,7 +231,7 @@ public class MainFragment extends Fragment {
                             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
-                            intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(),  getResources().getString(R.string.top_rated));
+                            intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.top_rated);
                             startActivity(intent);
                             break;
                         }
@@ -331,7 +329,7 @@ public class MainFragment extends Fragment {
             }
             if (idioma_padrao) {
                 try {
-                    if (UtilsFilme.isNetWorkAvailable(getActivity())) {
+                    if (UtilsApp.isNetWorkAvailable(getActivity())) {
                         TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
                         TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
                         popularTvshow = tmdbTv.getPopular(getLocale(), 1);
@@ -352,7 +350,7 @@ public class MainFragment extends Fragment {
                 }
             } else {
                 try { // É preciso? o tmdb não retorna 'en' se não houver o idioma?
-                     if (UtilsFilme.isNetWorkAvailable(getActivity())) {
+                     if (UtilsApp.isNetWorkAvailable(getActivity())) {
                         TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
                         TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
                         popularTvshow = tmdbTv.getPopular("en", 1);
@@ -379,7 +377,7 @@ public class MainFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             try {
-                if (UtilsFilme.isNetWorkAvailable(getActivity()) && isAdded()) {
+                if (UtilsApp.isNetWorkAvailable(getActivity()) && isAdded()) {
                     if (tipo == R.string.tvshow_main) {
                         setScrollTvShowPopulares();
                         setScrollTvShowToDay();

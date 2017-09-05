@@ -52,7 +52,7 @@ import domain.Netflix;
 import oscar.OscarActivity;
 import pessoaspopulares.PersonPopularActivity;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 
 /**
@@ -433,7 +433,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void salvaImagemMemoriaCache(final Context context, final String endereco, final SalvarImageShare callback) {
 
         final ImageView imageView = new ImageView(context);
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(4) + endereco).into(imageView, new Callback() {
+        Picasso.with(context).load(UtilsApp.getBaseUrlImagem(4) + endereco).into(imageView, new Callback() {
             @Override
             public void onSuccess() {
                 //Log.d(TAG, "salvaImagemMemoriaCache.onSucess");
@@ -448,7 +448,7 @@ public class BaseActivity extends AppCompatActivity {
                 if (drawable != null) {
                     // Log.d(TAG, "salvaImagemMemoriaCache.drawble");
                     Bitmap bitmap = drawable.getBitmap();
-                    UtilsFilme.writeBitmap(dir, bitmap);
+                    UtilsApp.writeBitmap(dir, bitmap);
                 }
                 callback.retornaFile(dir);
             }

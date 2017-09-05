@@ -19,7 +19,7 @@ import java.util.List;
 
 import br.com.icaro.filme.R;
 import domain.FilmeDB;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 
 /**
@@ -67,8 +67,8 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
 
 
             Picasso.with(context)
-                    .load(UtilsFilme
-                    .getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + movie.getPoster())
+                    .load(UtilsApp
+                    .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + movie.getPoster())
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.imageView, new Callback() {

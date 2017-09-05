@@ -23,7 +23,7 @@ import domain.FilmeService;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 
 /**
@@ -66,7 +66,7 @@ public class SimilaresActivity extends BaseActivity{
 //                .build();
 //        adview.loadAd(adRequest);
 
-        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
             new TMDVAsync().execute();
         } else {
             text_similares_no_internet.setVisibility(View.VISIBLE);
@@ -89,7 +89,7 @@ public class SimilaresActivity extends BaseActivity{
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
                             text_similares_no_internet.setVisibility(View.GONE);
                             new TMDVAsync().execute();
                         } else {

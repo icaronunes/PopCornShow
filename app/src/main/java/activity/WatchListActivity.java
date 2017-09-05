@@ -24,7 +24,7 @@ import adapter.WatchListAdapter;
 import br.com.icaro.filme.R;
 import domain.FilmeDB;
 import domain.TvshowDB;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 public class WatchListActivity extends BaseActivity {
 
@@ -59,7 +59,7 @@ public class WatchListActivity extends BaseActivity {
 //        adview.loadAd(adRequest);
 //        iniciarFirebases();
 
-        if (UtilsFilme.isNetWorkAvailable(this)){
+        if (UtilsApp.isNetWorkAvailable(this)){
 
             iniciarFirebases();
             setEventListenerFavorite();
@@ -131,7 +131,7 @@ public class WatchListActivity extends BaseActivity {
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
                             //text_elenco_no_internet.setVisibility(View.GONE);
                             setEventListenerFavorite();
                         } else {

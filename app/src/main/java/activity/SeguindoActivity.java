@@ -35,10 +35,10 @@ import info.movito.themoviedbapi.TmdbTvSeasons;
 import info.movito.themoviedbapi.model.tv.TvSeason;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Config;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
-import static utils.UtilsFilme.setEp;
-import static utils.UtilsFilme.setUserTvShow;
+import static utils.UtilsApp.setEp;
+import static utils.UtilsApp.setUserTvShow;
 
 /**
  * Created by icaro on 25/11/16.
@@ -74,7 +74,7 @@ public class SeguindoActivity extends BaseActivity {
 //                .build();
 //        adview.loadAd(adRequest);
 
-        if (UtilsFilme.isNetWorkAvailable(this)) {
+        if (UtilsApp.isNetWorkAvailable(this)) {
 
             iniciarFirebases();
             setEventListenerSeguindo();
@@ -97,7 +97,7 @@ public class SeguindoActivity extends BaseActivity {
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
                             //text_elenco_no_internet.setVisibility(View.GONE);
                             iniciarFirebases();
                             setEventListenerSeguindo();

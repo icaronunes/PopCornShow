@@ -39,7 +39,7 @@ import domain.UserEp;
 import domain.UserSeasons;
 import info.movito.themoviedbapi.model.tv.TvSeason;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 26/08/16.
@@ -86,7 +86,7 @@ public class TemporadaActivity extends BaseActivity {
         myRef =  FirebaseDatabase.getInstance().getReference("users");
 
 
-        if (UtilsFilme.isNetWorkAvailable(this)) {
+        if (UtilsApp.isNetWorkAvailable(this)) {
             new TMDVAsync().execute();
         } else {
             snack();
@@ -99,7 +99,7 @@ public class TemporadaActivity extends BaseActivity {
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
                             new TMDVAsync().execute();
                         } else {
                             snack();

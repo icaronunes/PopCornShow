@@ -21,7 +21,7 @@ import activity.PersonActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.people.PersonCast;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 24/07/16.
@@ -53,8 +53,8 @@ public class ElencoAdapter extends RecyclerView.Adapter<ElencoAdapter.ElencoView
         holder.elenco_character.setText(personCast.getCharacter());
 
         holder.elenco_nome.setText(personCast.getName());
-        Picasso.with(context).load(UtilsFilme
-                .getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + personCast.getProfilePath())
+        Picasso.with(context).load(UtilsApp
+                .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + personCast.getProfilePath())
                 .placeholder(R.drawable.person)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)

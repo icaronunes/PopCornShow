@@ -31,7 +31,7 @@ import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.model.Multi;
 import provider.SuggestionRecentProvider;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 
 /**
@@ -137,7 +137,7 @@ public class SearchMultiActivity extends BaseActivity {
             }
         }
 
-        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
             new TMDVAsync().execute();
 
         } else {
@@ -156,7 +156,7 @@ public class SearchMultiActivity extends BaseActivity {
             @Override
             public void onRefresh() {
                 progressBar.setVisibility(View.INVISIBLE);
-                if (UtilsFilme.isNetWorkAvailable(SearchMultiActivity.this)) {
+                if (UtilsApp.isNetWorkAvailable(SearchMultiActivity.this)) {
                     TMDVAsync tmdvAsync = new TMDVAsync();
                     tmdvAsync.execute();
                     text_search_empty.setVisibility(View.GONE);

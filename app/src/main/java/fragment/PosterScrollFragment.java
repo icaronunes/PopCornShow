@@ -27,7 +27,7 @@ import java.io.File;
 
 import br.com.icaro.filme.R;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 
 /**
@@ -68,7 +68,7 @@ public class PosterScrollFragment extends Fragment {
         View view = inflater.inflate(R.layout.page_scroll_image, container, false);
         imageView = (ImageView) view.findViewById(R.id.img_poster_scroll);
         Picasso.with(getContext())
-                .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 5)) + endereco)
+                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(getContext(), 5)) + endereco)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(imageView);
@@ -110,7 +110,7 @@ public class PosterScrollFragment extends Fragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (UtilsFilme.isExternalStorageWritable()) {
+                if (UtilsApp.isExternalStorageWritable()) {
                     salvarArquivoNaMemoriaInterna(getContext(), imageView);
                 } else {
                     //  Log.e("salvarArqNaMemoriaIn", "Directory not created");
@@ -170,7 +170,7 @@ public class PosterScrollFragment extends Fragment {
         BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
         if (drawable != null) {
             Bitmap bitmap = drawable.getBitmap();
-            UtilsFilme.writeBitmap(dir, bitmap);
+            UtilsApp.writeBitmap(dir, bitmap);
         }
         File file2 = new File(getContext().getExternalCacheDir(), getContext().getPackageName());
         Log.d("PosterScrollFragment", "onDestroy: "+ file2.toString());
@@ -190,7 +190,7 @@ public class PosterScrollFragment extends Fragment {
         BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
         if (drawable != null) {
             Bitmap bitmap = drawable.getBitmap();
-            UtilsFilme.writeBitmap(dir, bitmap);
+            UtilsApp.writeBitmap(dir, bitmap);
             Toast.makeText(context, R.string.toast_salvar_imagem, Toast.LENGTH_LONG).show();
         }
         return dir;

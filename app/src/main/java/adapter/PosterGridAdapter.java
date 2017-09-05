@@ -26,7 +26,7 @@ import activity.PosterActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.Artwork;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 28/07/16.
@@ -55,8 +55,8 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
     public void onBindViewHolder(final PosterViewHolder holder, final int position) {
         if (artworks.size() > 0) {
           //  Log.d("PosterGridActivity", "onBindViewHolder ");
-            Picasso.with(context).load(UtilsFilme
-                    .getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 4)) + artworks.get(position).getFilePath())
+            Picasso.with(context).load(UtilsApp
+                    .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 4)) + artworks.get(position).getFilePath())
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.img, new Callback() {

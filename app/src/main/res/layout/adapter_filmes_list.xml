@@ -5,30 +5,32 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_weight="1"
     android:layout_margin="@dimen/trade_size_dp_3"
+    android:layout_weight="1"
+    android:foreground="?attr/selectableItemBackground"
     android:minHeight="190dp"
     android:minWidth="135dp"
-    android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="@dimen/trade_size_dp_4"
     app:cardElevation="@dimen/trade_size_dp_3"
     card_view:cardElevation="@dimen/trade_size_dp_3">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:minHeight="@dimen/trade_size_dp_150">
 
             <ImageView
                 android:id="@+id/imgFilmes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical|center_horizontal"
+
+                android:layout_gravity="center"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/imagem_filme"
                 android:cropToPadding="true"
@@ -47,12 +49,11 @@
                 android:id="@+id/title_filmes_lista"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
+                android:layout_gravity="bottom|center"
                 android:layout_marginLeft="@dimen/trade_size_dp_6"
                 android:layout_marginRight="@dimen/trade_size_dp_6"
                 android:background="@color/black_transparente"
                 android:fontFamily="sans-serif-condensed"
-                android:gravity="top|center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/trade_txt_size_sp_16"
                 android:typeface="serif" />

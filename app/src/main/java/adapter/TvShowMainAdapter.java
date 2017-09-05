@@ -23,7 +23,7 @@ import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 
 /**
@@ -51,7 +51,7 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
         final TvSeries series = popularTvshow.getResults().get(position);
 
         Picasso.with(context)
-                .load(UtilsFilme.getBaseUrlImagem( UtilsFilme.getTamanhoDaImagem(context, 2)) + series.getPosterPath())
+                .load(UtilsApp.getBaseUrlImagem( UtilsApp.getTamanhoDaImagem(context, 2)) + series.getPosterPath())
                 //.placeholder(R.drawable.poster_empty)
                 .into(holder.img_poster_grid, new Callback() {
                     @Override
@@ -82,7 +82,7 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
                 Intent intent = new Intent(context, TvShowActivity.class);
                 intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), series.getName());
                 intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), series.getId());
-                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(holder.img_poster_grid));
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(holder.img_poster_grid));
                 context.startActivity(intent);
             }
         });

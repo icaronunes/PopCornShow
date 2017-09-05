@@ -21,7 +21,7 @@ import br.com.icaro.filme.R;
 import domain.UserTvshow;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 26/08/16.
@@ -100,7 +100,7 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
     public void onBindViewHolder(final TemporadasAdapter.HoldeTemporada holder, final int position) {
 
         holder.temporada.setText(context.getString(R.string.temporada) + " " + series.getSeasons().get(position).getSeasonNumber());
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(2) + series.getSeasons().get(position).getPosterPath())
+        Picasso.with(context).load(UtilsApp.getBaseUrlImagem(2) + series.getSeasons().get(position).getPosterPath())
                 .error(R.drawable.poster_empty)
                 .into(holder.image_temporada);
         holder.data.setText(series.getSeasons().get(position).getAirDate() != null ? series.getSeasons().get(position).getAirDate() : "");

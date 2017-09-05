@@ -14,7 +14,7 @@ import domain.ViewType
 import kotlinx.android.synthetic.main.lista.view.*
 import pessoaspopulares.ViewTypeDelegateAdapter
 import utils.Constantes
-import utils.UtilsFilme
+import utils.UtilsApp
 
 /**
  * Created by icaro on 28/08/17.
@@ -35,15 +35,15 @@ class ListasDelegateAdapter : ViewTypeDelegateAdapter {
 
         fun bind(item: ListaItemFilme) = with(itemView) {
 
-            Picasso.with(context).load(UtilsFilme
-                    .getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + item.posterPath)
+            Picasso.with(context).load(UtilsApp
+                    .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.posterPath)
                     .into(img_lista)
             date_oscar.text = item.releaseDate?.subSequence(0,4)
             progress.visibility = View.GONE
             itemView.setOnClickListener({
                 val intent = Intent(context, FilmeActivity::class.java)
                 intent.putExtra(Constantes.FILME_ID, item.id)
-                intent.putExtra(Constantes.COLOR_TOP, UtilsFilme.loadPalette(img_lista))
+                intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(img_lista))
                 context.startActivity(intent)
             })
         }

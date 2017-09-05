@@ -34,7 +34,7 @@ import br.com.icaro.filme.R;
 import domain.FilmeDB;
 import domain.TvshowDB;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 import static android.R.attr.id;
 
@@ -108,7 +108,7 @@ public class ListaFavoriteFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), FilmeActivity.class);
               //  Log.d("ListaFilmeAdapter", "ListaFilmeAdapter");
                 ImageView imageView = (ImageView) view;
-                int color = UtilsFilme.loadPalette(imageView);
+                int color = UtilsApp.loadPalette(imageView);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                 intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movieDbs.get(position).getId());
                 intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movieDbs.get(position).getTitle());
@@ -161,7 +161,7 @@ public class ListaFavoriteFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), TvShowActivity.class);
               //  Log.d("OnClick", "Onclick");
                 ImageView imageView = (ImageView) view;
-                int color = UtilsFilme.loadPalette(imageView);
+                int color = UtilsApp.loadPalette(imageView);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                 intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), tvSeries.get(position).getExternalIds().getId());
                 intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), tvSeries.get(position).getTitle());

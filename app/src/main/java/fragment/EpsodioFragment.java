@@ -50,7 +50,7 @@ import info.movito.themoviedbapi.model.Credits;
 import info.movito.themoviedbapi.model.people.PersonCrew;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 import static java.lang.String.valueOf;
 
@@ -183,7 +183,7 @@ public class EpsodioFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (UtilsFilme.isNetWorkAvailable(getActivity())) {
+        if (UtilsApp.isNetWorkAvailable(getActivity())) {
             new TvEpisodeAsync().execute();
         } else {
             snack();
@@ -196,7 +196,7 @@ public class EpsodioFragment extends Fragment {
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (UtilsFilme.isNetWorkAvailable(getActivity())) {
+                        if (UtilsApp.isNetWorkAvailable(getActivity())) {
                             new TvEpisodeAsync().execute();
                         } else {
                             snack();
@@ -312,7 +312,7 @@ public class EpsodioFragment extends Fragment {
             e.printStackTrace();
         }
 
-        if (UtilsFilme.verificaLancamento(date) && mAuth.getCurrentUser() != null && seguindo) {
+        if (UtilsApp.verificaLancamento(date) && mAuth.getCurrentUser() != null && seguindo) {
 
             ep_rating_button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -427,8 +427,8 @@ public class EpsodioFragment extends Fragment {
 
 
         Picasso.with(getContext())
-                .load(UtilsFilme
-                .getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 4)) + episode.getStillPath())
+                .load(UtilsApp
+                .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(getContext(), 4)) + episode.getStillPath())
                 .error(R.drawable.top_empty)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)

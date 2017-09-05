@@ -302,7 +302,7 @@
 
         <activity android:name="activity.SettingsActivity" />
 
-        <activity android:name="activity.TvShowsActivity"
+        <activity android:name="listaserie.activity.TvShowsActivity"
             android:parentActivityName="activity.MainActivity">
 
             <meta-data android:name="android.support.PARENT_ACTIVITY"

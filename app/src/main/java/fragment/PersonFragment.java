@@ -38,7 +38,7 @@ import info.movito.themoviedbapi.model.Artwork;
 import info.movito.themoviedbapi.model.people.PersonCredits;
 import info.movito.themoviedbapi.model.people.PersonPeople;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 import static domain.FilmeService.getTmdbPerson;
 
@@ -294,7 +294,7 @@ public class PersonFragment extends Fragment {
         }
 
 
-        Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(2) + information.getProfilePath())
+        Picasso.with(getContext()).load(UtilsApp.getBaseUrlImagem(2) + information.getProfilePath())
                 .placeholder(R.drawable.person)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)

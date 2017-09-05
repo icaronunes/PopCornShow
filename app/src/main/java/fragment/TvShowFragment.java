@@ -70,12 +70,12 @@ import info.movito.themoviedbapi.model.tv.TvSeason;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Config;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 import static br.com.icaro.filme.R.string.in_production;
 import static br.com.icaro.filme.R.string.mil;
-import static utils.UtilsFilme.setEp;
-import static utils.UtilsFilme.setUserTvShow;
+import static utils.UtilsApp.setEp;
+import static utils.UtilsApp.setUserTvShow;
 
 
 /**
@@ -317,7 +317,7 @@ public class TvShowFragment extends Fragment {
                                 if (imdbDd.getType() != null) {
 
                                     String nome = imdbDd.getTitle().replace(" ", "-").toLowerCase();
-                                    nome = UtilsFilme.removerAcentos(nome);
+                                    nome = UtilsApp.removerAcentos(nome);
                                     String url = "http://www.metacritic.com/tv/" + nome;
 
                                     Intent intent = new Intent(getActivity(), Site.class);
@@ -343,7 +343,7 @@ public class TvShowFragment extends Fragment {
                                 if (imdbDd.getType() != null) {
 
                                     String nome = imdbDd.getTitle().replace(" ", "_").toLowerCase();
-                                    nome = UtilsFilme.removerAcentos(nome);
+                                    nome = UtilsApp.removerAcentos(nome);
                                     String url = "https://www.rottentomatoes.com/tv/" + nome;
                                     Intent intent = new Intent(getActivity(), Site.class);
                                     intent.putExtra(Constantes.INSTANCE.getSITE(), url);
@@ -789,7 +789,7 @@ public class TvShowFragment extends Fragment {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            if (UtilsFilme.isNetWorkAvailable(getActivity())) {
+                            if (UtilsApp.isNetWorkAvailable(getActivity())) {
                                 TmdbTvSeasons tvSeasons = new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
 
                                 userTvshow = setUserTvShow(series);
@@ -900,7 +900,7 @@ public class TvShowFragment extends Fragment {
     private void setPoster() {
         if (series.getPosterPath() != null) {
             Picasso.with(getContext())
-                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 2) ) + series.getPosterPath())
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(getContext(), 2) ) + series.getPosterPath())
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(img_poster);

@@ -20,7 +20,7 @@ import br.com.icaro.filme.R;
 import domain.TopMain;
 import info.movito.themoviedbapi.model.Multi;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 26/07/16.
@@ -57,7 +57,7 @@ public class ImagemTopScrollFragment extends Fragment {
         if (topMains.getMediaType().equalsIgnoreCase(Multi.MediaType.MOVIE.name())) {
            // Log.d("ImagemTopScrollFragment", "Movie " + topMains.getNome());
             Picasso.with(getContext())
-                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 5)) + topMains.getImagem())
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(getContext(), 5)) + topMains.getImagem())
                     .error(R.drawable.top_empty)
                     .into(imageView);
 
@@ -67,14 +67,14 @@ public class ImagemTopScrollFragment extends Fragment {
                     Intent intent = new Intent(getContext(), FilmeActivity.class);
                     intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), topMains.getNome());
                     intent.putExtra(Constantes.INSTANCE.getFILME_ID(), topMains.getId());
-                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(imageView));
+                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(imageView));
                     startActivity(intent);
                 }
             });
             title.setText(topMains.getNome());
         } else {
            // Log.d("ImagemTopScrollFragment", "TVshow " + topMains.getNome());
-            Picasso.with(getContext()).load(UtilsFilme.getBaseUrlImagem(5) + topMains.getImagem())
+            Picasso.with(getContext()).load(UtilsApp.getBaseUrlImagem(5) + topMains.getImagem())
                     .error(R.drawable.top_empty)
                     .into(imageView);
             imageView.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +83,7 @@ public class ImagemTopScrollFragment extends Fragment {
                     Intent intent = new Intent(getContext(), TvShowActivity.class);
                     intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), topMains.getNome());
                     intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), topMains.getId());
-                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(imageView));
+                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(imageView));
                     startActivity(intent);
                 }
             });

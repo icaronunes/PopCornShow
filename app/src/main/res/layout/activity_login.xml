@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/textLayoutFilmes"
+                android:layout_below="@+id/txt_listas"
                 android:layout_marginTop="@dimen/trade_size_dp_21"
                 android:ems="10"
                 android:hint="@string/email_tx"

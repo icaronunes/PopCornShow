@@ -22,7 +22,7 @@ import activity.TvShowActivity;
 import br.com.icaro.filme.R;
 import domain.UserTvshow;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 02/12/16.
@@ -46,7 +46,7 @@ public class SeguindoRecycleAdapter extends RecyclerView.Adapter<SeguindoRecycle
     @Override
     public void onBindViewHolder(final SeguindoRecycleAdapter.SeguindoViewHolder holder, int position) {
         final UserTvshow userTvshow = userTvshows.get(position);
-        Picasso.with(context).load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context,2)) + userTvshow.getPoster())
+        Picasso.with(context).load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context,2)) + userTvshow.getPoster())
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.poster, new Callback() {
@@ -70,7 +70,7 @@ public class SeguindoRecycleAdapter extends RecyclerView.Adapter<SeguindoRecycle
                 Intent intent = new Intent(context, TvShowActivity.class);
                 intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(),userTvshow.getId());
                 intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), userTvshow.getNome());
-                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsFilme.loadPalette(holder.poster));
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(holder.poster));
                 context.startActivity(intent);
 
                 FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);

@@ -32,7 +32,7 @@ import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import info.movito.themoviedbapi.model.tv.TvSeries;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 
 public class MainActivity extends BaseActivity  {
@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity  {
 
 
 
-        if (UtilsFilme.isNetWorkAvailable(this)) {
+        if (UtilsApp.isNetWorkAvailable(this)) {
             new TMDVAsync().execute();
         } else {
             snack();
@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity  {
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
                             new TMDVAsync().execute();
                         } else {
                             snack();
@@ -169,7 +169,7 @@ public class MainActivity extends BaseActivity  {
 
                         try {
                             Date date = sdf.parse(movieDb.getReleaseDate());
-                            if (movieDb.getBackdropPath() != null && UtilsFilme.verificaLancamento(date)) {
+                            if (movieDb.getBackdropPath() != null && UtilsApp.verificaLancamento(date)) {
                                 multi.add(topMain);
                             }
                         } catch (ParseException e) {
@@ -201,7 +201,7 @@ public class MainActivity extends BaseActivity  {
         @Override
         protected Void doInBackground(Void... voids) {
             boolean idioma_padrao = false;
-            if (!UtilsFilme.isNetWorkAvailable(MainActivity.this)) {
+            if (!UtilsApp.isNetWorkAvailable(MainActivity.this)) {
                 return null;
             }
             try {
@@ -216,7 +216,7 @@ public class MainActivity extends BaseActivity  {
                 try {
                     tmdbTv = FilmeService.getTmdbTvShow()
                             .getAiringToday(getLocale()
-                                    , 1, UtilsFilme.getTimezone());
+                                    , 1, UtilsApp.getTimezone());
                     tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies(getLocale()
                             , 1);
                 } catch (Exception e) {
@@ -233,7 +233,7 @@ public class MainActivity extends BaseActivity  {
 
             } else {
                 try {
-                    tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("en", 1, UtilsFilme.getTimezone());
+                    tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("en", 1, UtilsApp.getTimezone());
                     tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies("en", 1);
                 } catch (Exception e) {
                       // Log.d(TAG, e.toString());

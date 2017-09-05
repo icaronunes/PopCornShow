@@ -639,7 +639,7 @@
 }
 
 # view AndroidManifest.xml #generated:266
--keep class activity.TvShowsActivity {
+-keep class listaserie.activity.TvShowsActivity {
     <init>(...);
 }
 

@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import br.com.icaro.filme.R;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 26/09/16.
@@ -46,7 +46,7 @@ public class ImagemTopFilmeScrollFragment extends Fragment {
         View view = inflater.inflate(R.layout.page_scroll_viewpage_top, container, false);
         ImageView imageView = (ImageView) view.findViewById(R.id.img_top_scroll);
         Picasso.with(getContext())
-                .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(getContext(), 5)) + endereco)
+                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(getContext(), 5)) + endereco)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .error(R.drawable.top_empty)
@@ -57,7 +57,7 @@ public class ImagemTopFilmeScrollFragment extends Fragment {
                 .setDuration(8000);
         animatorSet.playTogether(alphaStar);
         // animatorSet.start();
-        // Log.d("PosterScrollFragment", "onCreateView: -> " + UtilsFilme.getBaseUrlImagem(4) + endereco);
+        // Log.d("PosterScrollFragment", "onCreateView: -> " + UtilsApp.getBaseUrlImagem(4) + endereco);
         return view;
     }
 

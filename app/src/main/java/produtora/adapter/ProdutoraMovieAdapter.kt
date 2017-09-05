@@ -17,7 +17,7 @@ import domain.ViewType
 import kotlinx.android.synthetic.main.adapter_produtora.view.*
 import pessoaspopulares.ViewTypeDelegateAdapter
 import utils.Constantes
-import utils.UtilsFilme
+import utils.UtilsApp
 
 
 /**
@@ -41,7 +41,7 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
             progress_bar.visibility = View.VISIBLE
             titleTextView_produtora.text = item.title
             Picasso.with(context)
-                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(context, 2)) + item.posterPath)
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.posterPath)
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(imgFilme_produtora, object : Callback {
@@ -57,7 +57,7 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, FilmeActivity::class.java)
-                val color = UtilsFilme.loadPalette(imgFilme_produtora)
+                val color = UtilsApp.loadPalette(imgFilme_produtora)
                 intent.putExtra(Constantes.COLOR_TOP, color)
                 intent.putExtra(Constantes.FILME_ID, item.id)
                 intent.putExtra(Constantes.NOME_FILME, item.title)

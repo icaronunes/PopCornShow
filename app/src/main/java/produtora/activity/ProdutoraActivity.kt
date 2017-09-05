@@ -22,7 +22,7 @@ import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import utils.Constantes
 import utils.InfiniteScrollListener
-import utils.UtilsFilme
+import utils.UtilsApp
 
 
 /**
@@ -121,7 +121,7 @@ class ProdutoraActivity : BaseActivity() {
     private fun setImageTop() {
         if (company?.logo_path != null) {
             Picasso.with(this)
-                    .load(UtilsFilme.getBaseUrlImagem(UtilsFilme.getTamanhoDaImagem(this, 4))!! + company?.logo_path)
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(this, 4))!! + company?.logo_path)
                     .into(top_img_produtora)
             top_img_produtora.setColorFilter(resources.getColor(R.color.black_transparente_produtora), PorterDuff.Mode.DARKEN)
         } else {

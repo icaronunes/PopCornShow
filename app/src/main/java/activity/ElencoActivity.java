@@ -26,7 +26,7 @@ import info.movito.themoviedbapi.model.Credits;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
 import utils.Constantes;
-import utils.UtilsFilme;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 24/07/16.
@@ -70,7 +70,7 @@ public class ElencoActivity extends BaseActivity {
 //        adview.loadAd(adRequest);
 
 
-        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
             TMDVAsync tmdvAsync = new TMDVAsync();
             tmdvAsync.execute();
         } else {
@@ -123,7 +123,7 @@ public class ElencoActivity extends BaseActivity {
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (UtilsFilme.isNetWorkAvailable(getBaseContext())) {
+                        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
                             text_elenco_no_internet.setVisibility(View.GONE);
                             TMDVAsync tmdvAsync = new TMDVAsync();
                             tmdvAsync.execute();
