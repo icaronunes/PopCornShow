@@ -369,7 +369,7 @@ public class BaseActivity extends AppCompatActivity {
 
                         String numero = String.valueOf(new Random().nextInt(10));
                         //Log.d(TAG, "numero : " + numero);
-
+//TODO mandar somente o Map e fazer a troca na outra activity
                         intent.putExtra(Constantes.INSTANCE.getLISTA_ID(), map.get("id" + numero));
                         intent.putExtra(Constantes.INSTANCE.getLISTA_GENERICA(), map.get("title" + numero));
                         intent.putExtra(Constantes.INSTANCE.getBUNDLE(), (Serializable) map);

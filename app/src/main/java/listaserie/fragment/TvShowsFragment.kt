@@ -81,7 +81,7 @@ class TvShowsFragment : FragmentBase() {
 
     fun getListaSereies() {
 
-        val inscricao = API()
+        val inscricao = API(context)
                 .BuscaDeSeries(getListaTipo(), pagina = pagina, local = getIdiomaEscolhido(context))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

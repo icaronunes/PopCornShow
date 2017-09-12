@@ -1,6 +1,7 @@
 package oscar.adapter
 
 import activity.FilmeActivity
+import activity.TvShowActivity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
@@ -38,13 +39,27 @@ class ListasDelegateAdapter : ViewTypeDelegateAdapter {
             Picasso.with(context).load(UtilsApp
                     .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.posterPath)
                     .into(img_lista)
-            date_oscar.text = item.releaseDate?.subSequence(0,4)
+            when(item.mediaType) {
+                "tv" -> date_oscar.text = item.first_air_date?.subSequence(0,4)
+                "movie" -> date_oscar.text = item.releaseDate?.subSequence(0,4)
+            }
+
             progress.visibility = View.GONE
             itemView.setOnClickListener({
-                val intent = Intent(context, FilmeActivity::class.java)
-                intent.putExtra(Constantes.FILME_ID, item.id)
-                intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(img_lista))
-                context.startActivity(intent)
+                when(item.mediaType) {
+                    "tv" -> {
+                        val intent = Intent(context, TvShowActivity::class.java)
+                        intent.putExtra(Constantes.TVSHOW_ID, item.id)
+                        intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(img_lista))
+                        context.startActivity(intent)
+                    }
+                    "movie" ->{
+                        val intent = Intent(context, FilmeActivity::class.java)
+                        intent.putExtra(Constantes.FILME_ID, item.id)
+                        intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(img_lista))
+                        context.startActivity(intent)
+                    }
+                }
             })
         }
     }

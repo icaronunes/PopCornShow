@@ -65,7 +65,7 @@ class ProdutoraActivity : BaseActivity() {
     }
 
     private fun getDadosCompany() {
-            val inscricao = API().getCompany(id_produtora)
+            val inscricao = API(this).getCompany(id_produtora)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
@@ -82,7 +82,7 @@ class ProdutoraActivity : BaseActivity() {
     private fun getCompanyFilmes() {
 
         if (pagina <= totalPagina) {
-            val inscricao = API().getCompanyFilmes(id_produtora, pagina)
+            val inscricao = API(this).getCompanyFilmes(id_produtora, pagina)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

@@ -12,10 +12,11 @@ fun getIdiomaEscolhido(context: Context ) : String {
 
     val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
     val idioma_padrao = sharedPref.getBoolean("pref_idioma_padrao", true)
-    if (idioma_padrao) {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    return if (idioma_padrao) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Locale.getDefault().toLanguageTag()
-        } else return Locale.getDefault().language + "-" + Locale.getDefault().country
+        } else Locale.getDefault().language + "-" + Locale.getDefault().country
+    } else {
+        "US"
     }
-    return "US"
 }

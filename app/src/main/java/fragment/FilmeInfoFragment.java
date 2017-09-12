@@ -33,35 +33,26 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.List;
 import java.util.Locale;
 
 import activity.BaseActivity;
 import activity.CrewsActivity;
 import activity.ElencoActivity;
 import activity.PosterGridActivity;
-import produtora.activity.ProdutoraActivity;
 import activity.ReviewsActivity;
 import activity.SettingsActivity;
 import activity.SimilaresActivity;
 import activity.Site;
-import adapter.CastAdapter;
 import adapter.CollectionPagerAdapter;
-import adapter.CrewAdapter;
-import adapter.SimilaresFilmesAdapter;
-import adapter.TrailerAdapter;
 import br.com.icaro.filme.R;
 import domain.FilmeService;
 import domain.Imdb;
+import domain.Movie;
 import domain.Netflix;
 import info.movito.themoviedbapi.model.CollectionInfo;
-import info.movito.themoviedbapi.model.Genre;
-import info.movito.themoviedbapi.model.Language;
-import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
-import info.movito.themoviedbapi.model.ProductionCountry;
-import info.movito.themoviedbapi.model.Video;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
+import produtora.activity.ProdutoraActivity;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -75,14 +66,14 @@ import static br.com.icaro.filme.R.string.mil;
 public class FilmeInfoFragment extends Fragment {
 
     private static final String TAG = FilmeInfoFragment.class.getName();
-    private  TextView titulo, categoria, time_filme, descricao, voto_media, produtora,
+    private TextView titulo, categoria, time_filme, descricao, voto_media, produtora,
             original_title, spoken_languages, production_countries,
             popularity, lancamento, textview_crews, textview_elenco, textview_similares;
-    private  MovieDb movieDb;
-    private  ImageView icon_reviews, img_budget, icon_site, icon_collection, img_poster, img_star;
-    private  CollectionInfo info;
-    private  MovieResultsPage similarMovies;
-    private  Bundle bundle;
+    private Movie movieDb;
+    private ImageView icon_reviews, img_budget, icon_site, icon_collection, img_poster, img_star;
+    private CollectionInfo info;
+    private MovieResultsPage similarMovies;
+    private Bundle bundle;
     private Button imdb, tmdb, netflix_button;
     private Netflix netflix;
 
@@ -100,7 +91,7 @@ public class FilmeInfoFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             Bundle bundle = getArguments();
-            movieDb = (MovieDb) bundle.getSerializable(Constantes.INSTANCE.getFILME());
+            movieDb = (Movie) bundle.getSerializable(Constantes.INSTANCE.getFILME());
             similarMovies = (MovieResultsPage) bundle.getSerializable(Constantes.INSTANCE.getSIMILARES());
             netflix = (Netflix) bundle.getSerializable(Constantes.INSTANCE.getNETFLIX());
             imdbDd = (Imdb) bundle.getSerializable(Constantes.INSTANCE.getIMDB());
@@ -134,7 +125,7 @@ public class FilmeInfoFragment extends Fragment {
         img_budget = (ImageView) view.findViewById(R.id.img_budget);
         icon_collection = (ImageView) view.findViewById(R.id.icon_collection);
         icon_site = (ImageView) view.findViewById(R.id.icon_site);
-       // LinearLayout linear_container = (LinearLayout) view.findViewById(R.id.linear_container);
+        // LinearLayout linear_container = (LinearLayout) view.findViewById(R.id.linear_container);
         lancamento = (TextView) view.findViewById(R.id.lancamento);
         textview_crews = (TextView) view.findViewById(R.id.textview_crews);
         textview_elenco = (TextView) view.findViewById(R.id.textview_elenco);
@@ -192,11 +183,11 @@ public class FilmeInfoFragment extends Fragment {
         icon_reviews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!movieDb.getImdbID().isEmpty() ) {
+                if (!movieDb.getImdbId().isEmpty()) {
                     Intent intent = new Intent(getContext(), ReviewsActivity.class);
-                    intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movieDb.getImdbID());
+                    intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movieDb.getImdbId());
                     intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movieDb.getTitle());
-                    intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), movieDb.getMediaType().name());
+                    //intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), movieDb.getMediaType().name());
 
                     startActivity(intent);
 
@@ -211,10 +202,10 @@ public class FilmeInfoFragment extends Fragment {
         imdb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+
                 Intent intent = new Intent(getActivity(), Site.class);
                 intent.putExtra(Constantes.INSTANCE.getSITE(),
-                        "https:www.imdb.com/title/" + movieDb.getImdbID() + "/");
+                        "https:www.imdb.com/title/" + movieDb.getImdbId() + "/");
                 startActivity(intent);
 
                 bundle = new Bundle();
@@ -244,7 +235,7 @@ public class FilmeInfoFragment extends Fragment {
         netflix_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (netflix == null){
+                if (netflix == null) {
                     return;
                 }
 
@@ -303,7 +294,7 @@ public class FilmeInfoFragment extends Fragment {
                 // Log.d("FilmeInfoFragment", "Home " + movieDb.getHomepage());
                 if (movieDb.getHomepage() != "" && movieDb.getHomepage() != null) {
                     Intent intent = new Intent(getContext(), Site.class);
-                    intent.putExtra(Constantes.INSTANCE.getSITE(),  movieDb.getHomepage());
+                    intent.putExtra(Constantes.INSTANCE.getSITE(), movieDb.getHomepage());
                     startActivity(intent);
 
                     bundle = new Bundle();
@@ -383,13 +374,13 @@ public class FilmeInfoFragment extends Fragment {
 
                             if (imdbDd.getType() != null) {
 
-                                        String nome = imdbDd.getTitle().replace(" ", "-").toLowerCase();
-                                        nome = UtilsApp.removerAcentos(nome);
-                                        String url = "http://www.metacritic.com/movie/" + nome;
+                                String nome = imdbDd.getTitle().replace(" ", "-").toLowerCase();
+                                nome = UtilsApp.removerAcentos(nome);
+                                String url = "http://www.metacritic.com/movie/" + nome;
 
-                                        Intent intent = new Intent(getActivity(), Site.class);
-                                        intent.putExtra(Constantes.INSTANCE.getSITE(), url);
-                                        startActivity(intent);
+                                Intent intent = new Intent(getActivity(), Site.class);
+                                intent.putExtra(Constantes.INSTANCE.getSITE(), url);
+                                startActivity(intent);
                             }
                         }
                     });
@@ -403,12 +394,12 @@ public class FilmeInfoFragment extends Fragment {
 
                             if (imdbDd.getType() != null) {
 
-                                        String nome = imdbDd.getTitle().replace(" ", "_").toLowerCase();
-                                        nome = UtilsApp.removerAcentos(nome);
-                                        String url = "https://www.rottentomatoes.com/m/" + nome;
-                                        Intent intent = new Intent(getActivity(), Site.class);
-                                        intent.putExtra(Constantes.INSTANCE.getSITE(), url);
-                                        startActivity(intent);
+                                String nome = imdbDd.getTitle().replace(" ", "_").toLowerCase();
+                                nome = UtilsApp.removerAcentos(nome);
+                                String url = "https://www.rottentomatoes.com/m/" + nome;
+                                Intent intent = new Intent(getActivity(), Site.class);
+                                intent.putExtra(Constantes.INSTANCE.getSITE(), url);
+                                startActivity(intent);
                             }
                         }
                     });
@@ -422,10 +413,10 @@ public class FilmeInfoFragment extends Fragment {
 
                             if (imdbDd.getType() != null) {
 
-                                        String url = "http://www.imdb.com/title/" + imdbDd.getImdbID();
-                                        Intent intent = new Intent(getActivity(), Site.class);
-                                        intent.putExtra(Constantes.INSTANCE.getSITE(), url);
-                                        startActivity(intent);
+                                String url = "http://www.imdb.com/title/" + imdbDd.getImdbID();
+                                Intent intent = new Intent(getActivity(), Site.class);
+                                intent.putExtra(Constantes.INSTANCE.getSITE(), url);
+                                startActivity(intent);
                             }
                         }
                     });
@@ -519,7 +510,7 @@ public class FilmeInfoFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), ElencoActivity.class);
                 intent.putExtra(Constantes.INSTANCE.getID(), movieDb.getId());
-                intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), movieDb.getMediaType());
+                //intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), movieDb.getMediaType());
                 // Log.d("setOnClickListener", "" + movieDb.getTitle());
                 intent.putExtra(Constantes.INSTANCE.getNOME(), movieDb.getTitle());
                 startActivity(intent);
@@ -539,7 +530,7 @@ public class FilmeInfoFragment extends Fragment {
                 Intent intent = new Intent(getContext(), CrewsActivity.class);
                 intent.putExtra(Constantes.INSTANCE.getID(), movieDb.getId());
                 // Log.d("setOnClickListener", "" + movieDb.getTitle());
-                intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), movieDb.getMediaType());
+                //intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), movieDb.getMediaType());
                 intent.putExtra(Constantes.INSTANCE.getNOME(), movieDb.getTitle());
                 startActivity(intent);
 
@@ -612,18 +603,18 @@ public class FilmeInfoFragment extends Fragment {
         }
     }
 
-    public String getLocale(){
+    public String getLocale() {
 
-        if  ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return Locale.getDefault().toLanguageTag();
         } else {
-            return Locale.getDefault().getLanguage()+"-"+Locale.getDefault().getCountry();
+            return Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry();
         }
     }
 
-    public void setNetflix(){
+    public void setNetflix() {
 
-        if (netflix != null){
+        if (netflix != null) {
             if (netflix.showId != 0) {
                 netflix_button.setText(R.string.ver_netflix);
             } else {
@@ -666,7 +657,7 @@ public class FilmeInfoFragment extends Fragment {
 
     private void setPoster() {
 
-        if (movieDb.getPosterPath() != null ){
+        if (movieDb.getPosterPath() != null) {
             Picasso.with(getContext())
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(getContext(), 2)) + movieDb.getPosterPath())
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
@@ -749,14 +740,14 @@ public class FilmeInfoFragment extends Fragment {
 
     private void setCategoria() {
 
-        List<Genre> genres = movieDb.getGenres();
-        StringBuilder stringBuilder = new StringBuilder("");
-        if (!genres.isEmpty()) {
-            for (Genre genre : genres) {
-                stringBuilder.append(" | " + genre.getName());
-            }
-        }
-        categoria.setText(stringBuilder.toString());
+//        List<Genre> genres = movieDb.getGenres();
+//        StringBuilder stringBuilder = new StringBuilder("");
+//        if (!genres.isEmpty()) {
+//            for (Genre genre : genres) {
+//                stringBuilder.append(" | " + genre.getName());
+//            }
+//        }
+//        categoria.setText(stringBuilder.toString());
     }
 
     private void setTitulo() {
@@ -796,32 +787,32 @@ public class FilmeInfoFragment extends Fragment {
     }
 
     private void setSpokenLanguages() {
-        if (!movieDb.getSpokenLanguages().isEmpty()) {
-            List<Language> languages = movieDb.getSpokenLanguages();
-            if (languages.size() > 0) {
-                spoken_languages.setText(languages.get(0).getName()); //????????????
-            }
-        } else {
-            spoken_languages.setText(getString(R.string.não_informado));
-        }
+//        if (!movieDb.getSpokenLanguages().isEmpty()) {
+//            List<Language> languages = movieDb.getSpokenLanguages();
+//            if (languages.size() > 0) {
+//                spoken_languages.setText(languages.get(0).getName()); //????????????
+//            }
+//        } else {
+//            spoken_languages.setText(getString(R.string.não_informado));
+//        }
     }
 
     private void setProductionCountries() {
 
-        if (!movieDb.getProductionCountries().isEmpty()) {
-            List<ProductionCountry> productionCountries = movieDb.getProductionCountries();
-            production_countries.setText(productionCountries.get(0).getName());
-        } else {
-
-            production_countries.setText(getString(R.string.não_informado));
-            // Log.d("Produtores Paises", "" + movieDb.getProductionCountries());
-        }
+//        if (!movieDb.getProductionCountries().isEmpty()) {
+//            List<ProductionCountry> productionCountries = movieDb.getProductionCountries();
+//            production_countries.setText(productionCountries.get(0).getName());
+//        } else {
+//
+//            production_countries.setText(getString(R.string.não_informado));
+//            // Log.d("Produtores Paises", "" + movieDb.getProductionCountries());
+//        }
 
     }
 
     private void setPopularity() {
 
-        ValueAnimator animatorCompat = ValueAnimator.ofFloat(1, movieDb.getPopularity());
+        ValueAnimator animatorCompat = ValueAnimator.ofFloat(1, movieDb.getPopularity().floatValue());
         if (movieDb.getPopularity() > 0) {
             // Log.d("POPULARIDADE", " " + movieDb.getPopularity());
 
@@ -863,8 +854,8 @@ public class FilmeInfoFragment extends Fragment {
     private void setCast() {
         if (movieDb.getCredits().getCast().size() > 0 && isAdded()) {
             textview_elenco.setVisibility(View.VISIBLE);
-            recycle_filme_elenco.setAdapter(new CastAdapter(getActivity(), movieDb.getCredits().getCast()));
-        } else{
+           // recycle_filme_elenco.setAdapter(new CastAdapter(getActivity(), movieDb.getCredits().getCast()));
+        } else {
             recycle_filme_elenco.setVisibility(View.GONE);
         }
     }
@@ -872,48 +863,48 @@ public class FilmeInfoFragment extends Fragment {
     private void setCrews() {
         if (movieDb.getCredits().getCrew().size() > 0 && isAdded()) {
             textview_crews.setVisibility(View.VISIBLE);
-            recycle_filme_producao.setAdapter(new CrewAdapter(getActivity(), movieDb.getCredits().getCrew()));
-        } else{
+           // recycle_filme_producao.setAdapter(new CrewAdapter(getActivity(), movieDb.getCredits().getCrew()));
+        } else {
             recycle_filme_producao.setVisibility(View.GONE);
         }
     }
 
-    private void setSimilares(){
-        if (similarMovies.getResults() != null)
-            if (similarMovies.getResults().size() > 0 ) {
-                getView().findViewById(R.id.textview_similares).setVisibility(View.VISIBLE);
-                recycle_filme_similares.setAdapter(new SimilaresFilmesAdapter(getActivity(), similarMovies.getResults()));
-            } else {
-                getView().findViewById(R.id.textview_similares).setVisibility(View.GONE);
-                recycle_filme_similares.setVisibility(View.GONE);
-            }
+    private void setSimilares() {
+//        if (similarMovies.getResults() != null)
+//            if (similarMovies.getResults().size() > 0) {
+//                getView().findViewById(R.id.textview_similares).setVisibility(View.VISIBLE);
+//                recycle_filme_similares.setAdapter(new SimilaresFilmesAdapter(getActivity(), similarMovies.getResults()));
+//            } else {
+//                getView().findViewById(R.id.textview_similares).setVisibility(View.GONE);
+//                recycle_filme_similares.setVisibility(View.GONE);
+//            }
 
     }
 
     private void setLancamento() {
-        if (movieDb.getReleaseDate() != null && movieDb.getReleases().size() > 0) {
-            for (int i = 0; i < movieDb.getReleases().size(); i++) {
-                if (Locale.getDefault().getCountry().equalsIgnoreCase(movieDb.getReleases().get(i).getCountry())) {
-                    lancamento.setText(movieDb.getReleases().get(i).getReleaseDate());
-                    // Adicionar Botão de comprar depois
-                    break;
-                } else {
-                    // Log.d("lancamento", movieDb.getReleases().get(i).getCountry());
-                    if (movieDb.getReleases().get(i).getCountry().equalsIgnoreCase("US")) {
-                        lancamento.setText("US " + movieDb.getReleases().get(0).getReleaseDate());
-                    }
-                }
-            }
-        }
+//        if (movieDb.getReleaseDate() != null && movieDb.getReleases().size() > 0) {
+//            for (int i = 0; i < movieDb.getReleases().size(); i++) {
+//                if (Locale.getDefault().getCountry().equalsIgnoreCase(movieDb.getReleases().get(i).getCountry())) {
+//                    lancamento.setText(movieDb.getReleases().get(i).getReleaseDate());
+//                    // Adicionar Botão de comprar depois
+//                    break;
+//                } else {
+//                    // Log.d("lancamento", movieDb.getReleases().get(i).getCountry());
+//                    if (movieDb.getReleases().get(i).getCountry().equalsIgnoreCase("US")) {
+//                        lancamento.setText("US " + movieDb.getReleases().get(0).getReleaseDate());
+//                    }
+//                }
+//            }
+//        }
     }
 
-    private void setTrailer(){
-        if (movieDb.getVideos().size() > 0) {
-            List<Video> videos = movieDb.getVideos();
-            recycle_filme_trailer.setAdapter(new TrailerAdapter(getActivity(), videos, movieDb.getOverview() != null ? movieDb.getOverview() : ""));
-        } else{
-            recycle_filme_trailer.setVisibility(View.GONE);
-        }
+    private void setTrailer() {
+//        if (movieDb.getVideos().size() > 0) {
+//            List<Video> videos = movieDb.getVideos();
+//            recycle_filme_trailer.setAdapter(new TrailerAdapter(getActivity(), videos, movieDb.getOverview() != null ? movieDb.getOverview() : ""));
+//        } else {
+//            recycle_filme_trailer.setVisibility(View.GONE);
+//        }
     }
 
     private void setHome() {
@@ -945,25 +936,25 @@ public class FilmeInfoFragment extends Fragment {
         int tamanho = 0;
 
         if (movieDb != null)
-        if (movieDb.getVoteAverage() > 0) {
-            try {
-                tmdb = movieDb.getVoteAverage();
-                //Log.d(TAG, " tmdb "+ tmdb);
-                tamanho++;
-            } catch (Exception e){
-               // Log.d(TAG, e.getMessage());
+            if (movieDb.getVoteAverage() > 0) {
+                try {
+                    tmdb = movieDb.getVoteAverage();
+                    //Log.d(TAG, " tmdb "+ tmdb);
+                    tamanho++;
+                } catch (Exception e) {
+                    // Log.d(TAG, e.getMessage());
+                }
             }
-        }
 
         if (imdbDd != null) {
             if (imdbDd.getImdbRating() != null) {
                 if (!imdbDd.getImdbRating().isEmpty()) {
                     try {
                         imdb = Float.parseFloat(imdbDd.getImdbRating());
-                      //  Log.d(TAG, " imdb " + imdb);
+                        //  Log.d(TAG, " imdb " + imdb);
                         tamanho++;
                     } catch (Exception e) {
-                      //  Log.d(TAG, e.getMessage());
+                        //  Log.d(TAG, e.getMessage());
                     }
                 }
             }
@@ -974,10 +965,10 @@ public class FilmeInfoFragment extends Fragment {
                         float meta = Float.parseFloat(imdbDd.getMetascore());
                         float nota = meta / 10;
                         metascore = nota;
-                      //  Log.d(TAG, " MetaScore " + metascore);
+                        //  Log.d(TAG, " MetaScore " + metascore);
                         tamanho++;
                     } catch (Exception e) {
-                       // Log.d(TAG, e.getMessage());
+                        // Log.d(TAG, e.getMessage());
                     }
                 }
             }
@@ -986,10 +977,10 @@ public class FilmeInfoFragment extends Fragment {
                 if (!imdbDd.getTomatoRating().isEmpty()) {
                     try {
                         tomato = Float.parseFloat(imdbDd.getTomatoRating());
-                       // Log.d(TAG, " tomato " + tomato);
+                        // Log.d(TAG, " tomato " + tomato);
                         tamanho++;
                     } catch (Exception e) {
-                       // Log.d(TAG, e.getMessage());
+                        // Log.d(TAG, e.getMessage());
                     }
                 }
             }

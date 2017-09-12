@@ -1,7 +1,7 @@
 package domain
 
-import javax.annotation.Generated
 import com.google.gson.annotations.SerializedName
+import javax.annotation.Generated
 
 @Generated("com.robohorse.robopojogenerator")
 data class CompanyFilmes(
@@ -16,7 +16,7 @@ data class CompanyFilmes(
 	val totalPages: Int? = null,
 
         @field:SerializedName("results")
-	val results: List<ListaItemSerie?>? = null,
+	val results: List<ListaItemFilme?>? = null,
 
         @field:SerializedName("total_results")
 	val totalResults: Int? = null

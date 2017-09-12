@@ -1,13 +1,12 @@
-package oscar
+package activity
 
-import activity.BaseActivity
 import adapter.ListUserAdapter
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import br.com.icaro.filme.R
@@ -16,18 +15,23 @@ import kotlinx.android.synthetic.main.activity_lista.*
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import utils.Constantes
 import utils.InfiniteScrollListener
 import utils.UtilsApp
+import java.util.*
 
 /**
  * Created by icaro on 04/10/16.
  */
-class OscarActivity : BaseActivity() {
+class ListaGenericaActivity : BaseActivity() {
 
-    private val list_id = "28" // Id da lista com Ganhadores do Oscar 28
+
+    private lateinit var list_id: String
+    private var totalPagina: Int = 1
     private var pagina = 1
-    private var totalPagina = 1
+    private lateinit var map: Map<String, String>
     private val TAG = this.javaClass.name
+
 
     private var subscriptions = CompositeSubscription()
 
@@ -37,15 +41,19 @@ class OscarActivity : BaseActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setTitle(R.string.oscar)
-
+        supportActionBar?.title = intent.getStringExtra(Constantes.LISTA_GENERICA)
+        list_id = intent.getStringExtra(Constantes.LISTA_ID)
+        if (intent.hasExtra(Constantes.BUNDLE)) {
+            map =  HashMap()
+            map = intent.getSerializableExtra(Constantes.BUNDLE) as Map<String, String>
+        }
         recycleView_favorite.apply {
-            val gridLayout = GridLayoutManager(this@OscarActivity, 3)
-            layoutManager = gridLayout
+            val gridlayout = GridLayoutManager(this@ListaGenericaActivity, 3);
+            layoutManager = gridlayout
             itemAnimator = DefaultItemAnimator()
-            addOnScrollListener(InfiniteScrollListener({ getOscar() }, gridLayout))
             setHasFixedSize(true)
-            recycleView_favorite.adapter = ListUserAdapter(this@OscarActivity)
+            addOnScrollListener(InfiniteScrollListener({ getLista() }, gridlayout))
+            adapter = ListUserAdapter(this@ListaGenericaActivity)
         }
 
         //        AdView adview = (AdView) findViewById(R.id.adView);
@@ -55,14 +63,11 @@ class OscarActivity : BaseActivity() {
 
     }
 
-
     override fun onResume() {
         super.onResume()
         subscriptions = CompositeSubscription()
-        if (UtilsApp.isNetWorkAvailable(baseContext)) {
-            getOscar()
-        } else {
-            snack()
+        if (UtilsApp.isNetWorkAvailable(this)) {
+            getLista()
         }
     }
 
@@ -71,30 +76,8 @@ class OscarActivity : BaseActivity() {
         subscriptions.clear()
     }
 
-    protected fun snack() {
-        Snackbar.make(linear_lista, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry) {
-                    if (UtilsApp.isNetWorkAvailable(baseContext)) {
-                        getOscar()
-                    } else {
-                        snack()
-                    }
-                }.show()
-    }
 
-    fun getOscar() {
-
-        val teste = API(context = this).loadMovieComVideo(18)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                   it.id
-
-                }, { erro ->
-                    Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                    Log.d(javaClass.simpleName, "Erro " + erro.message)
-                })
-
+    fun getLista() {
         if (totalPagina >= pagina) {
             val inscricao = API(context = this).getLista(id = list_id, pagina = pagina)
                     .subscribeOn(Schedulers.io())
@@ -109,17 +92,31 @@ class OscarActivity : BaseActivity() {
                         Log.d(javaClass.simpleName, "Erro " + erro.message)
                     })
             subscriptions.add(inscricao)
-            subscriptions.add(teste)
         }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
+
+        when (item.itemId) {
+            android.R.id.home -> finish()
+            R.id.nova_lista -> {
+                val numero = Random().nextInt(10).toString()
+                supportActionBar?.title = map?.get("title$numero")
+                list_id = map?.get("id$numero").toString()
+                recycleView_favorite.adapter = ListUserAdapter(this)
+                pagina = 1
+                totalPagina = 1
+                getLista()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        if (intent.hasExtra(Constantes.BUNDLE) )
+        menuInflater.inflate(R.menu.menu_random_lista, menu)
+
+        return true
+    }
 
 }

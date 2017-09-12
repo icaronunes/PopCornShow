@@ -3,7 +3,7 @@ package produtora.adapter
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import domain.ListaItemSerie
+import domain.ListaItemFilme
 import domain.ViewType
 import pessoaspopulares.ViewTypeDelegateAdapter
 import pessoaspopulares.adapter.LoadingDelegateAdapter
@@ -31,7 +31,7 @@ class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
        return delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder!!, ProdutoraResultsPage[position], context = null)
     }
 
-    fun addprodutoraMovie(personResults: List<ListaItemSerie?>?) {
+    fun addprodutoraMovie(personResults: List<ListaItemFilme?>?) {
 
         val initPosition = ProdutoraResultsPage?.size!! - 1
         this.ProdutoraResultsPage?.removeAt(initPosition)

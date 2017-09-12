@@ -78,7 +78,7 @@ class FilmesFragment : FragmentBase() {
 
     fun getListaFilmes() {
 
-        val inscricao = API().BuscaDeFilmes(getTipo(), pagina = pagina, local = getIdiomaEscolhido(context))
+        val inscricao = API(context).BuscaDeFilmes(getTipo(), pagina = pagina, local = getIdiomaEscolhido(context))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

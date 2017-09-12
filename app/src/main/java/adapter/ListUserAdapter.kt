@@ -37,8 +37,7 @@ class ListUserAdapter(private val context: Context) : RecyclerView.Adapter<Recyc
         return listaResult[position].getViewType()
     }
 
-
-    fun addPersonPopular(listaMedia: List<ListaItemFilme?>?, totalPagina: Int) {
+    fun addItens(listaMedia: List<ListaItemFilme?>?, totalResults: Int) {
 
         val initPosition = listaResult.size - 1
         this.listaResult.removeAt(initPosition)
@@ -47,14 +46,17 @@ class ListUserAdapter(private val context: Context) : RecyclerView.Adapter<Recyc
             this.listaResult.add(result!!)
         }
         notifyItemRangeChanged(initPosition, this.listaResult.size + 1 /* plus loading item */)
-        if (listaResult.size < totalPagina)
+        if (listaResult.size < totalResults)
             this.listaResult.add(loading)
 
     }
 
-    override fun getItemCount(): Int {
-        return listaResult.size
+    fun apagarLista(){
+        listaResult.clear()
+
     }
+
+    override fun getItemCount(): Int = listaResult.size
 
     companion object {
 

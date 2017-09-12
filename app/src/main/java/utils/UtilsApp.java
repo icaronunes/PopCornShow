@@ -271,7 +271,7 @@ public class UtilsApp {
                 return timezone;
             }
         }
-        return null;
+        return new Timezone("US", "US");
     }
 
     public static int loadPalette(View view) {

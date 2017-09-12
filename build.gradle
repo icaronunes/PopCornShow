@@ -8,10 +8,11 @@ buildscript {
 //        maven { url 'https://maven.fabric.io/public' }
         maven { url 'https://jitpack.io' }
        // google()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
-        classpath 'com.google.firebase:firebase-plugins:1.1.0'
+        classpath 'com.android.tools.build:gradle:2.4.0-alpha7'
+        classpath 'com.google.firebase:firebase-plugins:1.1.1'
         classpath 'com.google.gms:google-services:3.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 //        classpath 'io.fabric.tools:gradle:1.22.1'
@@ -26,6 +27,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        google()
     }
 }
 

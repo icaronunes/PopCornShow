@@ -184,4 +184,5 @@
     <string name="msg_marcar_ep_anteriores">Todos los episodios anteriores serán marcados como se ve.</string>
     <string name="numero_de_episodios">Número de episodios</string>
     <string name="nao_visto">No visto</string>
+    <string name="atualizar" >Nuevo</string>
 </resources>

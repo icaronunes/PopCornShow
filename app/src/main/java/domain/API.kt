@@ -1,17 +1,17 @@
 package domain
 
+import android.content.Context
 import com.google.gson.Gson
-import info.movito.themoviedbapi.model.config.Timezone
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import rx.Observable
 import utils.Config
-import utils.UtilsApp
+import utils.getIdiomaEscolhido
 import java.util.*
 
-class API {
+class API(context: Context) {
 
-    private var timeZone: Timezone? = null
+    private var timeZone: String = "US"
 
     object TIPOBUSCA {
 
@@ -29,6 +29,10 @@ class API {
             val melhores: String = "top_rated"
 
         }
+    }
+
+    init {
+        timeZone = getIdiomaEscolhido(context)
     }
 
     val baseUrl3 = "https://api.themoviedb.org/3/"
@@ -54,12 +58,12 @@ class API {
         }
     }
 
-    fun OscarLista(id: Int, pagina: Int = 1): Observable<Lista> {
+    fun getLista(id: String, pagina: Int = 1): Observable<Lista> {
         return rx.Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
-                    .url("https://api.themoviedb.org/4/list/" + id + "?page=" + pagina + "&api_key=" + Config.TMDB_API_KEY)
+                    .url("${baseUrl4}list/" + id + "?page=" + pagina + "&api_key=" + Config.TMDB_API_KEY)
                     .get()
                     .build()
             val response = client.newCall(request).execute()
@@ -67,6 +71,26 @@ class API {
                 val json = response.body()?.string()
                 val lista = gson.fromJson(json, Lista::class.java)
                 subscriber.onNext(lista)
+                subscriber.onCompleted()
+            } else {
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
+    }
+
+    fun getOmdbpi(id: Int): Observable<Imdb> {
+        return rx.Observable.create { subscriber ->
+            val client = OkHttpClient()
+            val gson = Gson()
+            val request = Request.Builder()
+                    .url("http://www.omdbapi.com/?i=$id&tomatoes=true&r=json&apikey=${Config.ADMOB}") //API de alguem)
+                    .get()
+                    .build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                val json = response.body()?.string()
+                val imdb = gson.fromJson(json, Imdb::class.java)
+                subscriber.onNext(imdb)
                 subscriber.onCompleted()
             } else {
                 subscriber.onError(Throwable(response.message()))
@@ -120,8 +144,6 @@ class API {
                 subscriber.onError(Throwable(response.message()))
             }
         }
-
-
     }
 
     fun getCompanyFilmes(company_id: Int, pagina: Int = 1): Observable<CompanyFilmes> {
@@ -147,13 +169,14 @@ class API {
     }
 
 
-    fun BuscaDeFilmes(tipoDeBusca: String? = TIPOBUSCA.FILME.agora, local: String? = "US", pagina: Int = 1, timeZone: Timezone? = Timezone("US", "US")): Observable<ListaFilmes> {
+    fun BuscaDeFilmes(tipoDeBusca: String? = TIPOBUSCA.FILME.agora, pagina: Int = 1, local: String = "US"): Observable<ListaFilmes> {
         // tipos de buscas - "now_playing", "upcoming", "top_rated", "popular" - Mude o tipo, para mudar busca
         return rx.Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
+
             val request = Request.Builder()
-                    .url("${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=${timeZone?.country}")
+                    .url("${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=$timeZone")
                     .get()
                     .build()
             val response = client.newCall(request).execute()
@@ -168,15 +191,13 @@ class API {
         }
     }
 
-    fun BuscaDeSeries(tipoDeBusca: String? = TIPOBUSCA.SERIE.popular, local: String = "US", pagina: Int = 1, timeZone: Timezone? = Timezone("US", "US")): Observable<ListaSeries> {
+    fun BuscaDeSeries(tipoDeBusca: String? = TIPOBUSCA.SERIE.popular, pagina: Int = 1, local: String = "US"): Observable<ListaSeries> {
         // tipos de buscas - "now_playing", "upcoming", "top_rated", "popular" - Mude o tipo, para mudar busca
         return rx.Observable.create { subscriber ->
             val client = OkHttpClient()
-            if (timeZone != null)
-            this.timeZone = UtilsApp.getTimezone()
             val gson = Gson()
             val request = Request.Builder()
-                    .url("${baseUrl3}tv/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=${timeZone?.country}")
+                    .url("${baseUrl3}tv/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=$timeZone")
                     .get()
                     .build()
             val response = client.newCall(request).execute()
@@ -190,6 +211,77 @@ class API {
                 subscriber.onError(Throwable(response.message()))
             }
         }
+    }
+
+    fun getMovie(id: Int): Observable<Movie> {
+        return rx.Observable.create { subscriber ->
+            val client = OkHttpClient()
+            val gson = Gson()
+            val request = Request.Builder()
+                    .url("${baseUrl3}movie/$id?api_key=${Config.TMDB_API_KEY}" +
+                            "&append_to_response=credits,videos,images,release_dates,similar&include_image_language=$timeZone" +
+                            "&language=$timeZone")
+                    .get()
+                    .build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                val json = response.body()?.string()
+                val lista = gson.fromJson(json, Movie::class.java)
+                lista
+                subscriber.onNext(lista)
+                subscriber.onCompleted()
+            } else {
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
+    }
+
+    fun getMovieVideos(id: Int): Observable<Videos> {
+        return rx.Observable.create { subscriber ->
+            val client = OkHttpClient()
+            val gson = Gson()
+            val request = Request.Builder()
+                    .url("${baseUrl3}movie/$id/videos?api_key=${Config.TMDB_API_KEY}&language=en-US")
+                    .get()
+                    .build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                val json = response.body()?.string()
+                val lista = gson.fromJson(json, Videos::class.java)
+                lista
+                subscriber.onNext(lista)
+                subscriber.onCompleted()
+            } else {
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
+    }
+
+    fun loadMovieComVideo(id: Int): Observable<Movie> {
+        return getMovie(id)
+                .flatMap { it ->
+                    Observable.just(it)
+                            .flatMap { video -> Observable.just(video.videos) }
+                            .flatMap { videos ->
+                                if (videos?.results?.size == 0) {
+                                    Observable.zip(
+                                            Observable.just(it),
+                                            getMovieVideos(20)
+                                                    .flatMap { video -> Observable.from(video.results) }
+                                                    .doOnNext { videos ->
+                                                        it.videos?.results?.add(videos)
+                                                    }, { t1, t2 ->
+
+                                        t1
+                                    })
+
+                                } else {
+                                    Observable.just(it)
+                                }
+                            }
+                }
+
+
     }
 
 }

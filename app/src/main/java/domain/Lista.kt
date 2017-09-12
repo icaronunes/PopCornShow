@@ -79,6 +79,9 @@ data class ListaItemFilme(
         @field:SerializedName("original_title")
         val originalTitle: String? = null,
 
+        @field:SerializedName("original_name")
+        val original_name: String? = null,
+
         @field:SerializedName("video")
         val video: Boolean? = null,
 
@@ -113,7 +116,15 @@ data class ListaItemFilme(
         val adult: Boolean? = null,
 
         @field:SerializedName("vote_count")
-        val voteCount: Int? = null
+        val voteCount: Int? = null,
+
+        @field:SerializedName("first_air_date")
+        val first_air_date: String? = null,
+
+        @field:SerializedName("name")
+        val name: String? = null
+
+
 ): ViewType {
     override fun getViewType() = Constantes.BuscaConstants.NEWS
 }

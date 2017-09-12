@@ -210,4 +210,5 @@
     <string name="nao_visto">Not seen</string>
     <string name="numero_de_episodios">Number of episodes</string>
     <string name="show" translatable="false">Show</string>
+    <string name="atualizar">New</string>
 </resources>
