@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/trade_size_dp_3"
     android:clickable="true"
-    app:cardBackgroundColor="@color/netflix"
+    app:cardBackgroundColor="@color/netflixColor"
     app:cardCornerRadius="@dimen/trade_size_dp_4"
     app:cardElevation="@dimen/trade_size_dp_2"
     card_view:cardElevation="0dp">

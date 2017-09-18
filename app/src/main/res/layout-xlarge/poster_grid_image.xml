@@ -15,9 +15,10 @@
             android:id="@+id/img_poster_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:background="@color/white"
-            android:cropToPadding="false"
+            android:cropToPadding="true"
             android:scaleType="centerCrop" />
 
         <ProgressBar

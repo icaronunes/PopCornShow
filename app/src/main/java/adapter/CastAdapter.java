@@ -22,7 +22,7 @@ import java.util.List;
 
 import activity.PersonActivity;
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.model.people.PersonCast;
+import domain.CastItem;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -31,12 +31,13 @@ import utils.UtilsApp;
  */
 public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder> {
     private Context context;
-    private List<PersonCast> casts;
+    private List<CastItem> casts;
 
-    public CastAdapter(FragmentActivity activity, List<PersonCast> cast) {
+    public CastAdapter(FragmentActivity activity, List<CastItem> cast) {
         context = activity;
         this.casts = cast;
     }
+
 
     @Override
     public CastViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,7 +48,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
     @Override
     public void onBindViewHolder(final CastViewHolder holder, final int position) {
         holder.progressBar.setVisibility(View.VISIBLE);
-        final PersonCast personCast = casts.get(position);
+        final CastItem personCast = casts.get(position);
         if (personCast.getName() != null || personCast.getCharacter() != null) {
             holder.textCastPersonagem.setText(personCast.getCharacter());
             holder.textCastNome.setText(personCast.getName());

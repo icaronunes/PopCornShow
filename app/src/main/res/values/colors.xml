@@ -31,9 +31,9 @@
     <color name="play_video">#86767676</color>
     <color name="colorFAB">#2196F3</color>
     <color name="yellow_transparente">#a9ffea00</color>
-    <color name="tmdb">#34a34e</color>
+    <color name="tmdb_site">#34a34e</color>
     <color name="imdb">#d9ac09</color>
-    <color name="netflix">#b90a0c</color>
+    <color name="netflixColor">#b90a0c</color>
     <color name="blue_main">#ef0f0ffc</color>
 
 

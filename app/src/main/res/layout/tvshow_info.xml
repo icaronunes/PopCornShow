@@ -332,7 +332,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/ver_tmdb"
                 android:textAlignment="center"
-                android:textColor="@color/tmdb"
+                android:textColor="@color/tmdb_site"
                 android:textSize="@dimen/trade_txt_size_sp_16" />
 
 
@@ -341,7 +341,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:textColor="@color/netflix"
+                android:textColor="@color/netflixColor"
                 android:textSize="@dimen/trade_txt_size_sp_16"
                 tools:text="@string/ver_netflix" />
 

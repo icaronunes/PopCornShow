@@ -149,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/procurar_netflix"
                     android:textAlignment="center"
-                    android:textColor="@color/netflix"
+                    android:textColor="@color/netflixColor"
                     android:textSize="@dimen/trade_txt_size_sp_16"
                     android:visibility="invisible" />
 

@@ -1,7 +1,8 @@
 package domain
 
-import javax.annotation.Generated
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
+import javax.annotation.Generated
 
 @Generated("com.robohorse.robopojogenerator")
 data class ProductionCountriesItem(
@@ -11,4 +12,4 @@ data class ProductionCountriesItem(
 
 	@field:SerializedName("name")
 	val name: String? = null
-)
+): Serializable

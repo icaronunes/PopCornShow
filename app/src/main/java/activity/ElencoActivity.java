@@ -137,8 +137,6 @@ public class ElencoActivity extends BaseActivity {
 
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
-
-
         @Override
         protected Void doInBackground(Void... voids) {
           //  Log.d("ElencoActivity", "ID " + id);

@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/trade_size_dp_1"
             android:layout_marginRight="@dimen/trade_size_dp_1"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:gravity="end" />
     </LinearLayout>
 
@@ -319,15 +319,54 @@
         android:visibility="invisible" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_filme_procucao"
+        android:id="@+id/recycle_filme_producao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/imdb_site"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ver_imdb"
+            android:textAlignment="center"
+            android:textColor="@color/imdb"
+            android:textSize="@dimen/trade_txt_size_sp_16" />
+
+        <Button
+            android:id="@+id/tmdb_site"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/ver_tmdb"
+            android:textAlignment="center"
+            android:textColor="@color/tmdb_site"
+            android:textSize="@dimen/trade_size_dp_16" />
+
+
+        <Button
+            android:id="@+id/netflix"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:text="@string/ver_netflix"
+            android:textAlignment="center"
+            android:textColor="@color/netflixColor"
+            android:textSize="@dimen/trade_txt_size_sp_16" />
+    </LinearLayout>
 
 
     <TextView
         android:id="@+id/textview_similares"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/trade_size_dp_3"
         android:background="@color/black_transparente"
         android:gravity="center_horizontal"
         android:text="@string/similares"
@@ -339,33 +378,10 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_filme_similares"
         android:layout_width="wrap_content"
+        android:layout_marginBottom="@dimen/trade_size_dp_3"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/imdb_site"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/ver_imdb"
-        android:textAlignment="center"
-        android:textColor="@color/imdb"
-        android:textSize="@dimen/trade_txt_size_sp_16" />
-
-    <Button
-        android:id="@+id/tmdb_site"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/ver_tmdb"
-        android:textAlignment="center"
-        android:textColor="@color/tmdb"
-        android:textSize="@dimen/trade_size_dp_16" />
 
 
-    <Button
-        android:id="@+id/netflix"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textColor="@color/netflix"
-        android:textSize="@dimen/trade_txt_size_sp_16" />
 
 </LinearLayout>

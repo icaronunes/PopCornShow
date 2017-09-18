@@ -1,6 +1,7 @@
 package domain
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import javax.annotation.Generated
 
 @Generated("com.robohorse.robopojogenerator")
@@ -19,11 +20,11 @@ data class BackdropsItem(
 	val width: Int? = null,
 
 	@field:SerializedName("iso_639_1")
-	val iso6391: Any? = null,
+	val iso6391: String? = null,
 
 	@field:SerializedName("vote_count")
 	val voteCount: Int? = null,
 
 	@field:SerializedName("height")
 	val height: Int? = null
-)
+): Serializable

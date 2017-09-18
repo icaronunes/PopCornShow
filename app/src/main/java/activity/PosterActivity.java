@@ -15,8 +15,8 @@ import com.viewpagerindicator.LinePageIndicator;
 import java.util.List;
 
 import br.com.icaro.filme.R;
+import domain.PostersItem;
 import fragment.PosterScrollFragment;
-import info.movito.themoviedbapi.model.Artwork;
 import utils.Constantes;
 
 import static br.com.icaro.filme.R.id.pager;
@@ -27,7 +27,7 @@ import static br.com.icaro.filme.R.id.pager;
 
 public class PosterActivity extends AppCompatActivity {
 
-    private List<Artwork> artworks;
+    private List<PostersItem> artworks;
     private String nome;
 
     @Override
@@ -42,7 +42,7 @@ public class PosterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scroll_poster);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // Log.d("PosterActivity", "onCreate");
-        artworks = (List<Artwork>) getIntent().getBundleExtra(Constantes.INSTANCE.getBUNDLE()).getSerializable(Constantes.INSTANCE.getARTWORKS());
+        artworks = (List<PostersItem>) getIntent().getBundleExtra(Constantes.INSTANCE.getBUNDLE()).getSerializable(Constantes.INSTANCE.getARTWORKS());
         nome = getIntent().getStringExtra(Constantes.INSTANCE.getNOME());
        // Log.d("posterAcvitivy", String.valueOf(getWindow().getContext().getTheme()));
         ViewPager viewPager = (ViewPager) findViewById(pager);

@@ -7,7 +7,7 @@
             \n\n
             Notes &amp; Acknowledgements
 \n
-The library was developed for Movito to interact with tmdb services. This library has been inspired
+The library was developed for Movito to interact with tmdb_site services. This library has been inspired
             by api-themoviedb but has been rewritten to provide a more open license, a more clean
             API and to expose more features of the TMDB json api.
         </item>

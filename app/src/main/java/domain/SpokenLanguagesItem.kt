@@ -1,7 +1,8 @@
 package domain
 
-import javax.annotation.Generated
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
+import javax.annotation.Generated
 
 @Generated("com.robohorse.robopojogenerator")
 data class SpokenLanguagesItem(
@@ -11,4 +12,4 @@ data class SpokenLanguagesItem(
 
 	@field:SerializedName("iso_639_1")
 	val iso6391: String? = null
-)
+): Serializable

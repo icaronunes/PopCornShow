@@ -25,7 +25,6 @@ import utils.Constantes;
 public class ReviewsActivity extends BaseActivity {
     private String id_filme;
     private RecyclerView recyclerView;
-    private String TAG = this.getClass().getName();
     private ReviewsUflixit reviewsUflixit;
     private String type = null;
     private TextView textview_reviews_empty;

@@ -41,6 +41,7 @@ import utils.Constantes;
 import utils.UtilsApp;
 
 import static domain.FilmeService.getTmdbPerson;
+import static java.security.AccessController.getContext;
 
 /**
  * Created by icaro on 18/08/16.

@@ -1,6 +1,7 @@
 package domain
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import javax.annotation.Generated
 
 @Generated("com.robohorse.robopojogenerator")
@@ -20,4 +21,4 @@ data class ReleaseDatesItem(
 
 	@field:SerializedName("certification")
 	val certification: String? = null
-)
+): Serializable

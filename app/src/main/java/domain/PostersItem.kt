@@ -2,6 +2,7 @@ package domain
 
 import javax.annotation.Generated
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Generated("com.robohorse.robopojogenerator")
 data class PostersItem(
@@ -26,4 +27,4 @@ data class PostersItem(
 
 	@field:SerializedName("height")
 	val height: Int? = null
-)
+):Serializable

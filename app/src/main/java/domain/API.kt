@@ -2,6 +2,7 @@ package domain
 
 import android.content.Context
 import com.google.gson.Gson
+import domain.colecao.Colecao
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import rx.Observable
@@ -78,12 +79,12 @@ class API(context: Context) {
         }
     }
 
-    fun getOmdbpi(id: Int): Observable<Imdb> {
+    fun getOmdbpi(id: String?): Observable<Imdb> {
         return rx.Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
-                    .url("http://www.omdbapi.com/?i=$id&tomatoes=true&r=json&apikey=${Config.ADMOB}") //API de alguem)
+                    .url("http://www.omdbapi.com/?i=$id&tomatoes=true&r=json&apikey=${Config.OMDBAPI_API_KEY}") //API de alguem)
                     .get()
                     .build()
             val response = client.newCall(request).execute()
@@ -213,14 +214,13 @@ class API(context: Context) {
         }
     }
 
-    fun getMovie(id: Int): Observable<Movie> {
+    private fun getMovie(id: Int): Observable<Movie> {
         return rx.Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
-                    .url("${baseUrl3}movie/$id?api_key=${Config.TMDB_API_KEY}" +
-                            "&append_to_response=credits,videos,images,release_dates,similar&include_image_language=$timeZone" +
-                            "&language=$timeZone")
+                    .url("${baseUrl3}movie/$id?api_key=${Config.TMDB_API_KEY}" + "&language=$timeZone" +
+                            "&append_to_response=credits,videos,images,release_dates,similar&include_image_language=en,null")
                     .get()
                     .build()
             val response = client.newCall(request).execute()
@@ -248,8 +248,29 @@ class API(context: Context) {
             if (response.isSuccessful) {
                 val json = response.body()?.string()
                 val lista = gson.fromJson(json, Videos::class.java)
-                lista
+
                 subscriber.onNext(lista)
+                subscriber.onCompleted()
+            } else {
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
+    }
+
+    fun getColecao(id: Int): Observable<Colecao> {
+        return rx.Observable.create { subscriber ->
+            val client = OkHttpClient()
+            val gson = Gson()
+            val request = Request.Builder()
+                    .url("${baseUrl3}collection/$id?api_key=${Config.TMDB_API_KEY}&language=$timeZone,en")
+                    .get()
+                    .build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                val json = response.body()?.string()
+                val colecao = gson.fromJson(json, Colecao::class.java)
+
+                subscriber.onNext(colecao)
                 subscriber.onCompleted()
             } else {
                 subscriber.onError(Throwable(response.message()))
@@ -263,25 +284,25 @@ class API(context: Context) {
                     Observable.just(it)
                             .flatMap { video -> Observable.just(video.videos) }
                             .flatMap { videos ->
-                                if (videos?.results?.size == 0) {
+                                if (videos?.results == null) {
                                     Observable.zip(
                                             Observable.just(it),
-                                            getMovieVideos(20)
-                                                    .flatMap { video -> Observable.from(video.results) }
-                                                    .doOnNext { videos ->
-                                                        it.videos?.results?.add(videos)
-                                                    }, { t1, t2 ->
-
-                                        t1
+                                            getMovieVideos(id)
+                                                    .flatMap { video ->
+                                                        if(video.results != null) {
+                                                            Observable.from(video.results)
+                                                                    .doOnNext({trailer ->
+                                                                        if (trailer?.key != null)
+                                                                            it.videos?.results?.add(trailer)})
+                                                        } else {Observable.empty() }}
+                                                    , { movie, _ ->
+                                        movie
                                     })
-
                                 } else {
                                     Observable.just(it)
                                 }
                             }
                 }
-
-
     }
 
 }

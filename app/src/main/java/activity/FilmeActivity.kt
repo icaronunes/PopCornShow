@@ -9,38 +9,33 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
 import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
-import android.widget.*
+import android.widget.Button
+import android.widget.RatingBar
+import android.widget.TextView
+import android.widget.Toast
 import br.com.icaro.filme.R
-import com.github.clans.fab.FloatingActionButton
-import com.github.clans.fab.FloatingActionMenu
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.crash.FirebaseCrash
 import com.google.firebase.database.*
 import domain.*
 import fragment.FilmeInfoFragment
 import fragment.ImagemTopFilmeScrollFragment
-import info.movito.themoviedbapi.TmdbMovies.MovieMethod.*
-import info.movito.themoviedbapi.model.ArtworkType
-import info.movito.themoviedbapi.model.MovieDb
-import info.movito.themoviedbapi.model.core.MovieResultsPage
+import kotlinx.android.synthetic.main.activity_filme.*
+import kotlinx.android.synthetic.main.fab_filme.*
+import kotlinx.android.synthetic.main.include_progress.*
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -54,21 +49,13 @@ import java.util.Date
 
 
 class FilmeActivity : BaseActivity() {
-    internal var color_fundo: Int = 0
-    private var viewPager: ViewPager? = null
-    private var menu_item_favorite: FloatingActionButton? = null
-    private var menu_item_watchlist: FloatingActionButton? = null
-    private var menu_item_rated: FloatingActionButton? = null
-    private var fab: FloatingActionMenu? = null
+    private var color_fundo: Int = 0
     private var id_filme: Int = 0
-    private var progressBar: ProgressBar? = null
     private lateinit var movieDb: Movie
     private var addFavorite = true
     private var addWatch = true
     private var addRated = true
-    private var similarMovies: MovieResultsPage? = null
-    private var mFirebaseAnalytics: FirebaseAnalytics? = null
-    private var bundle: Bundle? = null
+
     private var mAuth: FirebaseAuth? = null
 
     private var myWatch: DatabaseReference? = null
@@ -80,7 +67,6 @@ class FilmeActivity : BaseActivity() {
     private var valueEventFavorite: ValueEventListener? = null
 
     private var numero_rated: Float = 0.toFloat()
-    //private var tmdvAsync: TMDVAsync? = null
     private var netflix: Netflix? = null
     private var imdbdb: Imdb? = null
 
@@ -89,7 +75,6 @@ class FilmeActivity : BaseActivity() {
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private val client: GoogleApiClient? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,79 +85,41 @@ class FilmeActivity : BaseActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setTitle(" ")
         getExtras()
-        //  Log.d("color", "Cor do fab " + color_fundo);
-        menu_item_favorite = findViewById<View>(R.id.menu_item_favorite) as FloatingActionButton
-        menu_item_watchlist = findViewById<View>(R.id.menu_item_watchlist) as FloatingActionButton
-        menu_item_rated = findViewById<View>(R.id.menu_item_rated) as FloatingActionButton
-        fab = findViewById<View>(R.id.fab_menu_filme) as FloatingActionMenu
-        progressBar = findViewById<View>(R.id.progress) as ProgressBar
-        viewPager = findViewById<View>(R.id.top_img_viewpager) as ViewPager
-        viewPager!!.setBackgroundColor(color_fundo)
-        viewPager!!.offscreenPageLimit = 3
+
+        top_img_viewpager.apply {
+            setBackgroundColor(color_fundo)
+            offscreenPageLimit = 3
+        }
 
         iniciarFirebases()
         subscriptions = CompositeSubscription()
 
-        viewPager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-            }
-
-            override fun onPageSelected(position: Int) {
-                bundle = Bundle()
-                bundle!!.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ViewPager")
-                bundle!!.putInt(FirebaseAnalytics.Param.TRANSACTION_ID, viewPager!!.currentItem)
-                FirebaseAnalytics.getInstance(this@FilmeActivity).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
-        })
-
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
-
         if (UtilsApp.isNetWorkAvailable(this)) {
-            //tmdvAsync = TMDVAsync()
-            //tmdvAsync!!.execute()
-
-            val inscricaoMovie = API(context = this).loadMovieComVideo(18)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                       movieDb =  it
-                        setTitle(movieDb.title)
-                viewPager!!.adapter = ImagemTopFragment(supportFragmentManager)
-                progressBar!!.visibility = View.INVISIBLE
-
-                setFragmentInfo()
-
-                if (mAuth!!.currentUser != null) { // Arrumar
-
-                    setEventListenerFavorite()
-                    setEventListenerRated()
-                    setEventListenerWatch()
-
-                    //  Log.d("FAB", "FAB " + color_fundo);
-                    fab!!.alpha = 1f
-                    setColorFab(color_fundo)
-                    menu_item_favorite!!.setOnClickListener(addOrRemoveFavorite())
-                    menu_item_rated!!.setOnClickListener(RatedFilme())
-                    menu_item_watchlist!!.setOnClickListener(addOrRemoveWatch())
-                } else {
-                    fab!!.alpha = 0f
-                }
-
-                    }, { erro ->
-                        Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                        Log.d(javaClass.simpleName, "Erro " + erro.message)
-                    })
-            subscriptions.add(inscricaoMovie)
-
+            getDados()
         } else {
             snack()
         }
 
+    }
+
+    private fun getDados() {
+
+        val inscricaoMovie = API(context = this).loadMovieComVideo(id_filme)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    movieDb = it
+                    title = movieDb.title
+                    top_img_viewpager?.adapter = ImagemTopFragment(supportFragmentManager)
+                    progress?.visibility = View.INVISIBLE
+                    setFAB()
+                    setFragmentInfo()
+                }, { erro ->
+                    Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
+                    Log.d(javaClass.simpleName, "Erro " + erro.message)
+                })
+
+        subscriptions.add(inscricaoMovie)
     }
 
     private fun setEventListenerWatch() {
@@ -285,11 +232,28 @@ class FilmeActivity : BaseActivity() {
         }
     }
 
-    protected fun snack() {
-        Snackbar.make(viewPager!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+    private fun setFAB() {
+        if (mAuth?.currentUser != null) {
+
+            setEventListenerFavorite()
+            setEventListenerRated()
+            setEventListenerWatch()
+
+            fab_menu_filme?.alpha = 1.0f
+            setColorFab(color_fundo)
+            menu_item_favorite!!.setOnClickListener(addOrRemoveFavorite())
+            menu_item_rated!!.setOnClickListener(RatedFilme())
+            menu_item_watchlist!!.setOnClickListener(addOrRemoveWatch())
+        } else {
+            fab_menu_filme?.alpha = 0.0f
+        }
+    }
+
+    private fun snack() {
+        Snackbar.make(top_img_viewpager!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
                     if (UtilsApp.isNetWorkAvailable(baseContext)) {
-                        //TMDVAsync().execute()
+                        getDados()
                     } else {
                         snack()
                     }
@@ -316,31 +280,25 @@ class FilmeActivity : BaseActivity() {
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (movieDb != null) {
-            if (item.itemId == R.id.share) {
 
-                salvaImagemMemoriaCache(this@FilmeActivity, movieDb!!.posterPath, object : BaseActivity.SalvarImageShare {
-                    override fun retornaFile(file: File) {
-                        val intent = Intent(Intent.ACTION_SEND)
-                        intent.type = "message/rfc822"
-                        intent.putExtra(Intent.EXTRA_TEXT, movieDb!!.title + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL)
-                        intent.type = "image/*"
-                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file))
-                        startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar_filme)))
+        if (item.itemId == R.id.share) {
 
-                        bundle = Bundle()
-                        bundle!!.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_MainActivity:menu_drav_home")
-                        mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
-                        //   Log.d(TAG, "TRUE");
+            salvaImagemMemoriaCache(this@FilmeActivity, movieDb!!.posterPath, object : BaseActivity.SalvarImageShare {
+                override fun retornaFile(file: File) {
+                    val intent = Intent(Intent.ACTION_SEND)
+                    intent.type = "message/rfc822"
+                    intent.putExtra(Intent.EXTRA_TEXT, movieDb!!.title + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL)
+                    intent.type = "image/*"
+                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file))
+                    startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar_filme)))
 
-                    }
+                }
 
-                    override fun RetornoFalha() {
-                        Toast.makeText(this@FilmeActivity, resources.getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show()
-                    }
-                })
+                override fun RetornoFalha() {
+                    Toast.makeText(this@FilmeActivity, resources.getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show()
+                }
+            })
 
-            }
         } else {
             //  Log.d(TAG, "ELSE");
             Toast.makeText(this@FilmeActivity, resources.getString(R.string.erro_ainda_sem_imagem), Toast.LENGTH_SHORT).show()
@@ -398,9 +356,6 @@ class FilmeActivity : BaseActivity() {
             }
 
             if (!UtilsApp.verificaLancamento(date)) {
-                bundle = Bundle()
-                bundle!!.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Tentativa de Rated fora da data de lançamento")
-                mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
                 Toast.makeText(this@FilmeActivity, getString(R.string.filme_nao_lancado), Toast.LENGTH_SHORT).show()
             } else {
                 val alertDialog = Dialog(this@FilmeActivity)
@@ -433,7 +388,7 @@ class FilmeActivity : BaseActivity() {
                                         resources.getText(R.string.remover_rated), Toast.LENGTH_SHORT).show()
                             }
                     alertDialog.dismiss()
-                    fab!!.close(true)
+                    fab_menu_filme?.close(true)
                 }
 
                 ok.setOnClickListener(View.OnClickListener {
@@ -464,13 +419,8 @@ class FilmeActivity : BaseActivity() {
                                 .addOnCompleteListener {
                                     Toast.makeText(this@FilmeActivity, resources.getString(R.string.filme_rated), Toast.LENGTH_SHORT)
                                             .show()
-                                    bundle = Bundle()
-                                    bundle!!.putString(FirebaseAnalytics.Event.SELECT_CONTENT, resources
-                                            .getString(R.string.filme_rated))
-                                    bundle!!.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb!!.title)
-                                    bundle!!.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.id!!)
-                                    mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
-                                    fab!!.close(true)
+
+                                    fab_menu_filme?.close(true)
                                 }
                         Thread(Runnable { FilmeService.ratedMovieGuest(id_filme, ratingBar.rating.toInt(), this@FilmeActivity) }).start()
 
@@ -485,7 +435,7 @@ class FilmeActivity : BaseActivity() {
     }
 
     private fun setColorFab(color: Int) {
-        fab!!.menuButtonColorNormal = color
+        fab_menu_filme?.menuButtonColorNormal = color
         menu_item_favorite!!.colorNormal = color
         menu_item_watchlist!!.colorNormal = color
         menu_item_rated!!.colorNormal = color
@@ -493,10 +443,10 @@ class FilmeActivity : BaseActivity() {
 
     private fun addOrRemoveFavorite(): View.OnClickListener {
         return View.OnClickListener {
-            val anim1 = PropertyValuesHolder.ofFloat("scaleX", 1f, 0.2f)
-            val anim2 = PropertyValuesHolder.ofFloat("scaley", 1f, 0.2f)
-            val anim3 = PropertyValuesHolder.ofFloat("scaleX", 0f, 1f)
-            val anim4 = PropertyValuesHolder.ofFloat("scaley", 0f, 1f)
+            val anim1 = PropertyValuesHolder.ofFloat("scaleX", 1.0f, 0.2f)
+            val anim2 = PropertyValuesHolder.ofFloat("scaley", 1.0f, 0.2f)
+            val anim3 = PropertyValuesHolder.ofFloat("scaleX", 0.0f, 1.0f)
+            val anim4 = PropertyValuesHolder.ofFloat("scaley", 0.0f, 1.0f)
             val animator = ObjectAnimator
                     .ofPropertyValuesHolder(menu_item_favorite, anim1, anim2, anim3, anim4)
             animator.duration = 1600
@@ -513,9 +463,7 @@ class FilmeActivity : BaseActivity() {
 
             if (!UtilsApp.verificaLancamento(date)) {
                 Toast.makeText(this@FilmeActivity, R.string.filme_nao_lancado, Toast.LENGTH_SHORT).show()
-                bundle = Bundle()
-                bundle!!.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Favorite - FILME ainda não foi lançado.")
-                mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+
             } else {
 
                 if (addFavorite) {
@@ -523,12 +471,8 @@ class FilmeActivity : BaseActivity() {
                     myFavorite!!.child(id_filme.toString()).setValue(null)
                             .addOnCompleteListener {
                                 Toast.makeText(this@FilmeActivity, getString(R.string.filme_remove_favorite), Toast.LENGTH_SHORT).show()
-                                bundle = Bundle()
-                                bundle!!.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_add_favorite))
-                                bundle!!.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb!!.title)
-                                bundle!!.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.id!!)
-                                mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
-                                fab!!.close(true)
+
+                                fab_menu_filme?.close(true)
                             }
                 } else {
 
@@ -542,12 +486,8 @@ class FilmeActivity : BaseActivity() {
                             .addOnCompleteListener {
                                 Toast.makeText(this@FilmeActivity, getString(R.string.filme_add_favorite), Toast.LENGTH_SHORT)
                                         .show()
-                                bundle = Bundle()
-                                bundle!!.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_remove_favorite))
-                                bundle!!.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb!!.title)
-                                bundle!!.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.id!!)
-                                mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
-                                fab!!.close(true)
+
+                                fab_menu_filme?.close(true)
                             }
                 }
             }
@@ -556,10 +496,10 @@ class FilmeActivity : BaseActivity() {
 
     private fun addOrRemoveWatch(): View.OnClickListener {
         return View.OnClickListener {
-            val anim1 = PropertyValuesHolder.ofFloat("scaleX", 1f, 0f)
-            val anim2 = PropertyValuesHolder.ofFloat("scaley", 1f, 0f)
-            val anim3 = PropertyValuesHolder.ofFloat("scaleX", 0.5f, 1f)
-            val anim4 = PropertyValuesHolder.ofFloat("scaley", 0.5f, 1f)
+            val anim1 = PropertyValuesHolder.ofFloat("scaleX", 1f, 0.0f)
+            val anim2 = PropertyValuesHolder.ofFloat("scaley", 1f, 0.0f)
+            val anim3 = PropertyValuesHolder.ofFloat("scaleX", 0.5f, 1.0f)
+            val anim4 = PropertyValuesHolder.ofFloat("scaley", 0.5f, 1.0f)
             val animator = ObjectAnimator
                     .ofPropertyValuesHolder(menu_item_watchlist, anim1, anim2, anim3, anim4)
             animator.duration = 1650
@@ -570,12 +510,8 @@ class FilmeActivity : BaseActivity() {
                 myWatch!!.child(id_filme.toString()).setValue(null)
                         .addOnCompleteListener {
                             Toast.makeText(this@FilmeActivity, getString(R.string.filme_remove), Toast.LENGTH_SHORT).show()
-                            bundle = Bundle()
-                            bundle!!.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_remove))
-                            bundle!!.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb!!.title)
-                            bundle!!.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.id!!)
-                            mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
-                            fab!!.close(true)
+
+                            fab_menu_filme?.close(true)
                         }
 
 
@@ -591,12 +527,8 @@ class FilmeActivity : BaseActivity() {
                         .addOnCompleteListener {
                             Toast.makeText(this@FilmeActivity, getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
                                     .show()
-                            bundle = Bundle()
-                            bundle!!.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_add_watchlist))
-                            bundle!!.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb!!.title)
-                            bundle!!.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.id!!)
-                            mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
-                            fab!!.close(true)
+
+                            fab_menu_filme?.close(true)
                         }
 
             }
@@ -613,10 +545,9 @@ class FilmeActivity : BaseActivity() {
         val filmeFrag = FilmeInfoFragment()
         val bundle = Bundle()
         bundle.putSerializable(Constantes.FILME, movieDb)
-        bundle.putSerializable(Constantes.SIMILARES, similarMovies)
         bundle.putSerializable(Constantes.NETFLIX, netflix)
-        bundle.putSerializable(Constantes.IMDB, imdbdb)
         filmeFrag.arguments = bundle
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             if (!isDestroyed && !isFinishing /*&& tmdvAsync != null*/) { //Isdestroyed valido apenas acima desta api
                 supportFragmentManager
@@ -639,10 +570,6 @@ class FilmeActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
-//        if (tmdvAsync != null) {
-//            tmdvAsync!!.cancel(true)
-//        }
-
         if (valueEventWatch != null) {
             myWatch!!.removeEventListener(valueEventWatch!!)
         }
@@ -663,111 +590,17 @@ class FilmeActivity : BaseActivity() {
                 if (position == 0) {
                     ImagemTopFilmeScrollFragment.newInstance(movieDb.backdropPath)
                 } else ImagemTopFilmeScrollFragment.newInstance(movieDb.images?.backdrops!![position]?.filePath)
-                // Log.d("FilmeActivity", "getItem: ->  " + movieDb.getImages(ArtworkType.BACKDROP).get(position).getFilePath());
             } else null
-
-
         }
-
 
         override fun getCount(): Int {
             if (movieDb.images?.backdrops != null) {
 
                 val tamanho = movieDb.images?.backdrops?.size
-                // Log.d("FilmeActivity", "getCount: ->  " + tamanho);
                 return if (tamanho!! > 0) tamanho else 1 // ???????????????? tamahao vai ser nulo?
             }
-
             return 0
         }
     }
 
-
-//    private inner class TMDVAsync : AsyncTask<Void, Void, MovieDb>() {
-//
-//        override fun doInBackground(vararg voids: Void): MovieDb? {//
-//            if (UtilsApp.isNetWorkAvailable(this@FilmeActivity)) {
-//                var idioma_padrao = false
-//                try {
-//                    val sharedPref = PreferenceManager.getDefaultSharedPreferences(this@FilmeActivity)
-//                    idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true)
-//                } catch (e: Exception) {
-//                    FirebaseCrash.report(e)
-//                }
-//
-//                try {
-//                    val movies = FilmeService.getTmdbMovies()
-//
-//                    if (idioma_padrao) {
-//                        movieDb = movies.getMovie(id_filme, BaseActivity.getLocale() + ",en,null", credits, releases, videos, similar, alternative_titles, images)
-//                        movieDb!!.videos.addAll(movies.getMovie(id_filme, "en", videos).videos)
-//                    } else {
-//                        movieDb = movies.getMovie(id_filme, "en", credits, releases, videos, similar, alternative_titles, images)
-//                    }
-//                    similarMovies = movies.getSimilarMovies(movieDb!!.id, null, 1)
-//
-//
-//                } catch (e: Exception) {
-//                    FirebaseCrash.report(e)
-//                    //if (isDestroyed)
-//                        runOnUiThread { Toast.makeText(this@FilmeActivity, R.string.ops, Toast.LENGTH_SHORT).show() }
-//                }
-//
-//                try {
-//                    if (movieDb!!.imdbID != null) {
-//                        imdbdb = FilmeService.getImdb(movieDb!!.imdbID)
-//                    }
-//                } catch (e: Exception) {
-//                    FirebaseCrash.report(e)
-//                    //if (!isDestroyed)
-//                        runOnUiThread { Toast.makeText(this@FilmeActivity, R.string.ops, Toast.LENGTH_SHORT).show() }
-//                }
-//
-//                try {
-//                    if (movieDb != null) {
-//
-//                        if (movieDb!!.releaseDate != null) {
-//                            if (movieDb!!.releaseDate.length >= 4) {
-//                                val date = movieDb!!.releaseDate.substring(0, 4)
-//                                netflix = FilmeService.getNetflix(movieDb!!.title, Integer.parseInt(date))
-//                            }
-//                        }
-//                    }
-//                } catch (e: Exception) {
-//                    FirebaseCrash.report(e)
-//                    if (!isFinishing)
-//                        runOnUiThread { Toast.makeText(this@FilmeActivity, R.string.ops, Toast.LENGTH_SHORT).show() }
-//                }
-//
-//            }
-//            return movieDb
-//        }
-//
-//        override fun onPostExecute(movieDb: MovieDb?) {
-//            super.onPostExecute(movieDb)
-//            if (movieDb != null) {
-//                setTitle(movieDb.title)
-//                viewPager!!.adapter = ImagemTopFragment(supportFragmentManager)
-//                progressBar!!.visibility = View.INVISIBLE
-//
-//                setFragmentInfo()
-//
-//                if (mAuth!!.currentUser != null) { // Arrumar
-//
-//                    setEventListenerFavorite()
-//                    setEventListenerRated()
-//                    setEventListenerWatch()
-//
-//                    //  Log.d("FAB", "FAB " + color_fundo);
-//                    fab!!.alpha = 1f
-//                    setColorFab(color_fundo)
-//                    menu_item_favorite!!.setOnClickListener(addOrRemoveFavorite())
-//                    menu_item_rated!!.setOnClickListener(RatedFilme())
-//                    menu_item_watchlist!!.setOnClickListener(addOrRemoveWatch())
-//                } else {
-//                    fab!!.alpha = 0f
-//                }
-//            }
-//        }
-//    }
 }

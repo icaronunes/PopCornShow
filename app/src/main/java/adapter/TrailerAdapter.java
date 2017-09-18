@@ -20,7 +20,7 @@ import java.util.List;
 
 import activity.TrailerActivity;
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.model.Video;
+import domain.ResultsVideosItem;
 import utils.Config;
 import utils.Constantes;
 
@@ -29,10 +29,10 @@ import utils.Constantes;
  */
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerViewHolder> {
     private Context context;
-    private List<Video> videos;
+    private List<ResultsVideosItem> videos;
     private String sinopse;
 
-    public TrailerAdapter(Context activity, List<Video> videos, String overview) {
+    public TrailerAdapter(Context activity, List<ResultsVideosItem> videos, String overview) {
         this.context = activity;
         this.videos = videos;
         this.sinopse = overview;

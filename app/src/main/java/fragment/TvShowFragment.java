@@ -55,10 +55,7 @@ import activity.ReviewsActivity;
 import activity.SettingsActivity;
 import activity.Site;
 import activity.TemporadaActivity;
-import adapter.CastAdapter;
-import adapter.CrewAdapter;
 import adapter.TemporadasAdapter;
-import adapter.TrailerAdapter;
 import br.com.icaro.filme.R;
 import domain.Imdb;
 import domain.Netflix;
@@ -1105,8 +1102,8 @@ public class TvShowFragment extends Fragment {
             recycle_tvshow_elenco.setHasFixedSize(true);
             recycle_tvshow_elenco.setItemAnimator(new DefaultItemAnimator());
             recycle_tvshow_elenco.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-            recycle_tvshow_elenco
-                    .setAdapter(new CastAdapter(getActivity(), series.getCredits().getCast()));
+           // recycle_tvshow_elenco
+              //      .setAdapter(new CastAdapter(getActivity(), series.getCredits().getCast()));
         }
     }
 
@@ -1116,8 +1113,8 @@ public class TvShowFragment extends Fragment {
             recycle_tvshow_producao.setHasFixedSize(true);
             recycle_tvshow_producao.setItemAnimator(new DefaultItemAnimator());
             recycle_tvshow_producao.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-            recycle_tvshow_producao
-                    .setAdapter(new CrewAdapter(getActivity(), series.getCredits().getCrew()));
+          //  recycle_tvshow_producao
+                //    .setAdapter(new CrewAdapter(getActivity(), series.getCredits().getCrew()));
         }
     }
 
@@ -1139,8 +1136,8 @@ public class TvShowFragment extends Fragment {
             recycle_tvshow_trailer.setHasFixedSize(true);
             recycle_tvshow_trailer.setItemAnimator(new DefaultItemAnimator());
             recycle_tvshow_trailer.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-            recycle_tvshow_trailer
-                    .setAdapter(new TrailerAdapter(getActivity(), series.getVideos(), series.getOverview() != null ? series.getOverview() : ""));
+            //recycle_tvshow_trailer
+            //        .setAdapter(new TrailerAdapter(getActivity(), series.getVideos(), series.getOverview() != null ? series.getOverview() : ""));
         }
 
     }

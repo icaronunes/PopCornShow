@@ -2,6 +2,7 @@ package domain
 
 import javax.annotation.Generated
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Generated("com.robohorse.robopojogenerator")
 data class ResultsVideosItem(
@@ -29,4 +30,4 @@ data class ResultsVideosItem(
 
 	@field:SerializedName("key")
 	val key: String? = null
-)
+): Serializable

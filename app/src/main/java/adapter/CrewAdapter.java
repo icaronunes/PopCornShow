@@ -22,7 +22,7 @@ import java.util.List;
 
 import activity.PersonActivity;
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.model.people.PersonCrew;
+import domain.CrewItem;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -31,12 +31,13 @@ import utils.UtilsApp;
  */
 public class CrewAdapter extends RecyclerView.Adapter<CrewAdapter.CrewViewHolder> {
     private Context context;
-    private List<PersonCrew> crews;
+    private List<CrewItem> crews;
 
-    public CrewAdapter(FragmentActivity activity, List<PersonCrew> crews) {
+    public CrewAdapter(FragmentActivity activity, List<CrewItem> crews) {
         context = activity;
         this.crews = crews;
     }
+
 
     @Override
     public CrewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,7 +48,7 @@ public class CrewAdapter extends RecyclerView.Adapter<CrewAdapter.CrewViewHolder
     @Override
     public void onBindViewHolder(final CrewViewHolder holder, final int position) {
         holder.progressBarCrew.setVisibility(View.VISIBLE);
-        final PersonCrew crew = crews.get(position);
+        final CrewItem crew = crews.get(position);
 
         if (crew.getName() != null && crew.getJob() != null) {
             holder.textCrewJob.setText(crew.getJob());

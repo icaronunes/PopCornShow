@@ -24,7 +24,7 @@ import java.util.List;
 
 import activity.PosterActivity;
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.model.Artwork;
+import domain.PostersItem;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -33,12 +33,12 @@ import utils.UtilsApp;
  */
 public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.PosterViewHolder> {
 
-    private List<Artwork> artworks;
+    private List<PostersItem> artworks;
     private Context context;
     private String nome;
 
 
-    public PosterGridAdapter(Context context, List<Artwork> artworks, String nome) {
+    public PosterGridAdapter(Context context, List<PostersItem> artworks, String nome) {
         this.context = context;
         this.artworks = artworks;
         this.nome = nome;

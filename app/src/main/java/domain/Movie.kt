@@ -96,4 +96,4 @@ data class Movie(
 
         @field:SerializedName("status")
         val status: String? = null
-) : Serializable
+): Serializable

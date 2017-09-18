@@ -2,7 +2,6 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -21,9 +19,8 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import activity.FilmeActivity;
-import activity.PersonActivity;
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.model.MovieDb;
+import domain.ResultsSimilarItem;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -32,11 +29,11 @@ import utils.UtilsApp;
  */
 public class SimilaresFilmesAdapter extends RecyclerView.Adapter<SimilaresFilmesAdapter.SimilaresViewHolder> {
     private Context context;
-    private List<MovieDb> movieDbs;
+    private List<ResultsSimilarItem> similarItems;
     private int color_top;
 
-    public SimilaresFilmesAdapter(FragmentActivity activity, List<MovieDb> movieDbs) {
-        this.movieDbs = movieDbs;
+    public SimilaresFilmesAdapter(FragmentActivity activity, List<ResultsSimilarItem> movieDbs) {
+        this.similarItems = movieDbs;
         context = activity;
     }
 
@@ -48,7 +45,7 @@ public class SimilaresFilmesAdapter extends RecyclerView.Adapter<SimilaresFilmes
 
     @Override
     public void onBindViewHolder(final SimilaresViewHolder holder, int position) {
-        final MovieDb movie = movieDbs.get(position);
+        final ResultsSimilarItem movie = similarItems.get(position);
         holder.progressBarSimilares.setVisibility(View.VISIBLE);
         if (movie.getTitle() != null && movie.getPosterPath() != null) {
             if (movie.getTitle().length() > 21) {
@@ -77,22 +74,13 @@ public class SimilaresFilmesAdapter extends RecyclerView.Adapter<SimilaresFilmes
                         }
                     });
 
-            holder.imgPagerSimilares.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, FilmeActivity.class);
-                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color_top);
-                    intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movie.getTitle());
-                    intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movie.getId());
-                    context.startActivity(intent);
+            holder.imgPagerSimilares.setOnClickListener(view -> {
+                Intent intent = new Intent(context, FilmeActivity.class);
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color_top);
+                intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movie.getTitle());
+                intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movie.getId());
+                context.startActivity(intent);
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PersonActivity.class.getName());
-                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movie.getId());
-                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movie.getTitle());
-                    FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                }
             });
 
         }
@@ -100,7 +88,7 @@ public class SimilaresFilmesAdapter extends RecyclerView.Adapter<SimilaresFilmes
 
     @Override
     public int getItemCount() {
-        return movieDbs.size();
+        return similarItems.size();
     }
 
 

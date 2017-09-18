@@ -1,6 +1,7 @@
 package domain
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import javax.annotation.Generated
 
 @Generated("com.robohorse.robopojogenerator")
@@ -17,4 +18,4 @@ data class Similar(
 
 	@field:SerializedName("total_results")
 	val totalResults: Int? = null
-)
+): Serializable

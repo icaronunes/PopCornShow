@@ -1,7 +1,8 @@
 package domain
 
-import javax.annotation.Generated
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
+import javax.annotation.Generated
 
 @Generated("com.robohorse.robopojogenerator")
 data class CastItem(
@@ -29,4 +30,4 @@ data class CastItem(
 
 	@field:SerializedName("order")
 	val order: Int? = null
-)
+): Serializable

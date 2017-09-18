@@ -48,7 +48,6 @@ import java.util.Random;
 
 import br.com.icaro.filme.BuildConfig;
 import br.com.icaro.filme.R;
-import domain.Netflix;
 import oscar.OscarActivity;
 import pessoaspopulares.PersonPopularActivity;
 import utils.Constantes;
@@ -329,12 +328,12 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
 
-            case R.id.netflix:
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_Netflix");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);//
-                intent = new Intent(this, Netflix.class);
-                startActivity(intent);
-                break;
+//            case R.id.menu_drav_netflix:
+//                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_Netflix");
+//                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);//
+//                intent = new Intent(this, Netflix.class);
+//                startActivity(intent);
+//                break;
 
 
         }
