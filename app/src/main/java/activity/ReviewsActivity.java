@@ -90,7 +90,6 @@ public class ReviewsActivity extends BaseActivity {
 
             } catch (Exception e) {
                 FirebaseCrash.report(e);
-                //Log.d(TAG, e.getMessage());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

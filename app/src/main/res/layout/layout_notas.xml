@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackgroundBorderless"
     android:baselineAligned="false"
     android:padding="@dimen/trade_size_dp_10">
 
@@ -9,8 +10,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="?attr/selectableItemBackground"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
+        android:focusable="true"
         android:orientation="vertical">
 
         <ImageView
@@ -35,8 +37,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="?attr/selectableItemBackground"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
+        android:focusable="true"
         android:orientation="vertical">
 
         <ImageView
@@ -60,8 +63,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="?attr/selectableItemBackground"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
+        android:focusable="true"
         android:orientation="vertical">
 
         <ImageView
@@ -84,8 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:orientation="vertical">
 
         <ImageView
@@ -109,9 +112,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:orientation="vertical">
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/image_netflix"

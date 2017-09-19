@@ -72,7 +72,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/trade_size_dp_2"
             android:layout_marginStart="@dimen/trade_size_dp_2"
-            android:maxLength="30"
+            android:maxLength="15"
             android:maxLines="1" />
 
         <TextView

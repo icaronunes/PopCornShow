@@ -3,7 +3,6 @@ package activity
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.app.Dialog
-import android.app.ProgressDialog
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
@@ -129,11 +128,9 @@ class FilmeActivity : BaseActivity() {
 
                 if (dataSnapshot.child(id_filme.toString()).exists()) {
                     addWatch = true
-                    //  Log.d(TAG, "False");
                     menu_item_watchlist!!.labelText = resources.getString(R.string.remover_watch)
                 } else {
                     addWatch = false
-                    // Log.d(TAG, "True");
                     menu_item_watchlist!!.labelText = resources.getString(R.string.adicionar_watch)
                 }
             }
@@ -142,7 +139,7 @@ class FilmeActivity : BaseActivity() {
 
             }
         }
-        myWatch!!.addValueEventListener(valueEventWatch)
+        myWatch?.addValueEventListener(valueEventWatch)
 
     }
 
@@ -166,7 +163,6 @@ class FilmeActivity : BaseActivity() {
                     addRated = false
                     numero_rated = 0f
                     menu_item_rated!!.labelText = resources.getString(R.string.adicionar_rated)
-                    //  Log.d(TAG, "True");
                 }
             }
 
@@ -174,7 +170,7 @@ class FilmeActivity : BaseActivity() {
 
             }
         }
-        myRated!!.addValueEventListener(valueEventRated)
+        myRated?.addValueEventListener(valueEventRated)
 
     }
 
@@ -183,11 +179,9 @@ class FilmeActivity : BaseActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.child(id_filme.toString()).exists()) {
                     addFavorite = true
-                    //  Log.d(TAG, "True");
                     menu_item_favorite!!.labelText = resources.getString(R.string.remover_favorite)
                 } else {
                     addFavorite = false
-                    // Log.d(TAG, "False");
                     menu_item_favorite!!.labelText = resources.getString(R.string.adicionar_favorite)
 
                 }
@@ -197,7 +191,7 @@ class FilmeActivity : BaseActivity() {
 
             }
         }
-        myFavorite!!.addValueEventListener(valueEventFavorite)
+        myFavorite?.addValueEventListener(valueEventFavorite)
     }
 
     private fun iniciarFirebases() {
@@ -205,17 +199,17 @@ class FilmeActivity : BaseActivity() {
         mAuth = FirebaseAuth.getInstance()
         val database = FirebaseDatabase.getInstance()
 
-        if (mAuth!!.currentUser != null) {
+        if (mAuth?.currentUser != null) {
 
-            myWatch = database.getReference("users").child(mAuth!!.currentUser!!
+            myWatch = database.getReference("users").child(mAuth?.currentUser!!
                     .uid).child("watch")
                     .child("movie")
 
-            myFavorite = database.getReference("users").child(mAuth!!.currentUser!!
+            myFavorite = database.getReference("users").child(mAuth?.currentUser!!
                     .uid).child("favorites")
                     .child("movie")
 
-            myRated = database.getReference("users").child(mAuth!!.currentUser!!
+            myRated = database.getReference("users").child(mAuth?.currentUser!!
                     .uid).child("rated")
                     .child("movie")
         }
@@ -250,7 +244,7 @@ class FilmeActivity : BaseActivity() {
     }
 
     private fun snack() {
-        Snackbar.make(top_img_viewpager!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(top_img_viewpager, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
                     if (UtilsApp.isNetWorkAvailable(baseContext)) {
                         getDados()
@@ -283,11 +277,11 @@ class FilmeActivity : BaseActivity() {
 
         if (item.itemId == R.id.share) {
 
-            salvaImagemMemoriaCache(this@FilmeActivity, movieDb!!.posterPath, object : BaseActivity.SalvarImageShare {
+            salvaImagemMemoriaCache(this@FilmeActivity, movieDb?.posterPath, object : BaseActivity.SalvarImageShare {
                 override fun retornaFile(file: File) {
                     val intent = Intent(Intent.ACTION_SEND)
                     intent.type = "message/rfc822"
-                    intent.putExtra(Intent.EXTRA_TEXT, movieDb!!.title + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL)
+                    intent.putExtra(Intent.EXTRA_TEXT, movieDb?.title + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL)
                     intent.type = "image/*"
                     intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file))
                     startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar_filme)))
@@ -300,7 +294,6 @@ class FilmeActivity : BaseActivity() {
             })
 
         } else {
-            //  Log.d(TAG, "ELSE");
             Toast.makeText(this@FilmeActivity, resources.getString(R.string.erro_ainda_sem_imagem), Toast.LENGTH_SHORT).show()
         }
         return super.onOptionsItemSelected(item)
@@ -350,7 +343,7 @@ class FilmeActivity : BaseActivity() {
             var date: Date? = null
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             try {
-                date = sdf.parse(movieDb!!.releaseDate)
+                date = sdf.parse(movieDb?.releaseDate)
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
@@ -365,7 +358,7 @@ class FilmeActivity : BaseActivity() {
                 val ok = alertDialog.findViewById<View>(R.id.ok_rated) as Button
                 val no = alertDialog.findViewById<View>(R.id.cancel_rated) as Button
                 val title = alertDialog.findViewById<View>(R.id.rating_title) as TextView
-                title.text = movieDb!!.title
+                title.text = movieDb?.title
                 val ratingBar = alertDialog.findViewById<View>(R.id.ratingBar_rated) as RatingBar
                 ratingBar.rating = numero_rated
                 val width = resources.getDimensionPixelSize(R.dimen.popup_width) //Criar os Dimen do layout do login - 300dp - 300dp ??
@@ -381,7 +374,7 @@ class FilmeActivity : BaseActivity() {
                 }
 
                 no.setOnClickListener {
-                    // Log.d(TAG, "Apagou Rated");
+
                     myRated!!.child(id_filme.toString()).setValue(null)
                             .addOnCompleteListener {
                                 Toast.makeText(this@FilmeActivity,
@@ -392,18 +385,11 @@ class FilmeActivity : BaseActivity() {
                 }
 
                 ok.setOnClickListener(View.OnClickListener {
-                    //  Log.d(TAG, "Adialog Rated");
 
-                    val progressDialog = ProgressDialog(this@FilmeActivity,
-                            android.R.style.Theme_Material_Dialog)
-                    progressDialog.isIndeterminate = true
-                    progressDialog.setMessage(resources.getString(R.string.salvando))
-                    progressDialog.show()
 
                     if (UtilsApp.isNetWorkAvailable(this@FilmeActivity)) {
 
-                        if (ratingBar.rating == 0f) {
-                            progressDialog.dismiss()
+                        if (ratingBar.rating == 0.0f) {
                             alertDialog.dismiss()
                             return@OnClickListener
                         }
@@ -423,10 +409,7 @@ class FilmeActivity : BaseActivity() {
                                     fab_menu_filme?.close(true)
                                 }
                         Thread(Runnable { FilmeService.ratedMovieGuest(id_filme, ratingBar.rating.toInt(), this@FilmeActivity) }).start()
-
-
                     }
-                    progressDialog.dismiss()
                     alertDialog.dismiss()
                 })
 
@@ -436,9 +419,9 @@ class FilmeActivity : BaseActivity() {
 
     private fun setColorFab(color: Int) {
         fab_menu_filme?.menuButtonColorNormal = color
-        menu_item_favorite!!.colorNormal = color
-        menu_item_watchlist!!.colorNormal = color
-        menu_item_rated!!.colorNormal = color
+        menu_item_favorite.colorNormal = color
+        menu_item_watchlist.colorNormal = color
+        menu_item_rated.colorNormal = color
     }
 
     private fun addOrRemoveFavorite(): View.OnClickListener {
@@ -456,7 +439,7 @@ class FilmeActivity : BaseActivity() {
             var date: Date? = null
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             try {
-                date = sdf.parse(movieDb!!.releaseDate)
+                date = sdf.parse(movieDb.releaseDate)
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
@@ -479,8 +462,8 @@ class FilmeActivity : BaseActivity() {
                     val filmeDB = FilmeDB()
                     filmeDB.id = movieDb.id!!
                     filmeDB.idImdb = movieDb.imdbId
-                    filmeDB.title = movieDb!!.title
-                    filmeDB.poster = movieDb!!.posterPath
+                    filmeDB.title = movieDb?.title
+                    filmeDB.poster = movieDb?.posterPath
 
                     myFavorite!!.child(id_filme.toString()).setValue(filmeDB)
                             .addOnCompleteListener {
@@ -507,8 +490,8 @@ class FilmeActivity : BaseActivity() {
 
             if (addWatch) {
 
-                myWatch!!.child(id_filme.toString()).setValue(null)
-                        .addOnCompleteListener {
+                myWatch?.child(id_filme.toString())?.setValue(null)
+                        ?.addOnCompleteListener {
                             Toast.makeText(this@FilmeActivity, getString(R.string.filme_remove), Toast.LENGTH_SHORT).show()
 
                             fab_menu_filme?.close(true)
@@ -557,7 +540,7 @@ class FilmeActivity : BaseActivity() {
                         .commitAllowingStateLoss()
             }
         } else {
-            if (!isFinishing /*&& tmdvAsync != null*/) {
+            if (!isFinishing) {
                 supportFragmentManager
                         .beginTransaction()
                         .add(R.id.filme_container, filmeFrag, null)

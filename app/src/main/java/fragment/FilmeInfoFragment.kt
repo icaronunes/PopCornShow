@@ -13,6 +13,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -52,7 +53,6 @@ import java.util.*
 class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
     private var movieDb: Movie? = null
-    private var bundle: Bundle? = null
     private var netflixDados: Netflix? = null
     private var imdbDd: Imdb? = null
     private lateinit var subscriptions: CompositeSubscription
@@ -64,9 +64,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
         if (arguments != null) {
             val bundle = arguments
             movieDb = bundle.getSerializable(Constantes.FILME) as Movie
-            // similarMovies = bundle.getSerializable(Constantes.SIMILARES) as MovieResultsPage
             // netflixDados = bundle.getSerializable(Constantes.NETFLIX) as Netflix
-            // Log.d("FilmeInfoFragment", "onCreate");
         }
         subscriptions = CompositeSubscription()
     }
@@ -188,129 +186,8 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
         }
 
 
-        img_star.setOnClickListener(View.OnClickListener {
-            if (mediaNotas > 0) {
-                val builder = AlertDialog.Builder(activity)
-                val inflater = activity.layoutInflater
-                val layout = inflater.inflate(R.layout.layout_notas, null)
+        img_star.setOnClickListener(onClickImageStar())
 
-                if (imdbDd != null) {
-                    (layout
-                            .findViewById<View>(R.id.nota_imdb) as TextView).text = if (imdbDd?.imdbRating != null)
-                        imdbDd!!.imdbRating + "/10"
-                    else
-                        "- -"
-                    (layout
-                            .findViewById<View>(R.id.nota_metacritic) as TextView).text = if (imdbDd?.metascore != null)
-                        imdbDd?.metascore + "/100"
-                    else
-                        "- -"
-                    (layout
-                            .findViewById<View>(R.id.nota_tomatoes) as TextView).text = if (imdbDd!!.tomatoRating != null)
-                        imdbDd!!.tomatoRating + "/10"
-                    else
-                        "- -"
-                }
-
-                (layout
-                        .findViewById<View>(R.id.nota_tmdb) as TextView).text = if (movieDb?.voteAverage?.equals(0.0)!!)
-                    movieDb!!.voteAverage!!.toString() + "/10"
-                else
-                    "- -"
-
-                if (netflixDados != null) {
-                    (layout
-                            .findViewById<View>(R.id.nota_netflix) as TextView).text = (if (netflixDados?.rating != null)
-                        netflixDados?.rating + "/5"
-                    else
-                        "- -").toString()
-                }
-
-                (layout.findViewById<View>(R.id.image_netflix) as ImageView).setOnClickListener(View.OnClickListener {
-                    if (netflixDados == null) {
-                        return@OnClickListener
-                    }
-
-                    if (netflixDados!!.showId != 0) {
-                        val url = "https://www.netflixDados.com/title/" + netflixDados?.showId
-                        val webpage = Uri.parse(url)
-                        val intent = Intent(Intent.ACTION_VIEW, webpage)
-                        startActivity(intent)
-                        if (intent.resolveActivity(activity.packageManager) != null) {
-                            startActivity(intent)
-                        }
-                    }
-                })
-
-                (layout.findViewById<View>(R.id.image_metacritic) as ImageView).setOnClickListener(View.OnClickListener {
-                    if (imdbDd == null) {
-                        return@OnClickListener
-                    }
-
-                    if (imdbDd!!.type != null) {
-
-                        var nome = imdbDd!!.title.replace(" ", "-").toLowerCase()
-                        nome = UtilsApp.removerAcentos(nome)
-                        val url = "http://www.metacritic.com/movie/" + nome
-
-                        val intent = Intent(activity, Site::class.java)
-                        intent.putExtra(Constantes.SITE, url)
-                        startActivity(intent)
-                    }
-                })
-
-                (layout.findViewById<View>(R.id.image_tomatoes) as ImageView).setOnClickListener(View.OnClickListener {
-                    if (imdbDd == null) {
-                        return@OnClickListener
-                    }
-
-                    if (imdbDd!!.type != null) {
-
-                        var nome = imdbDd!!.title.replace(" ", "_").toLowerCase()
-                        nome = UtilsApp.removerAcentos(nome)
-                        val url = "https://www.rottentomatoes.com/m/" + nome
-                        val intent = Intent(activity, Site::class.java)
-                        intent.putExtra(Constantes.SITE, url)
-                        startActivity(intent)
-                    }
-                })
-
-                (layout.findViewById<View>(R.id.image_imdb) as ImageView).setOnClickListener(View.OnClickListener {
-                    if (imdbDd == null) {
-                        return@OnClickListener
-                    }
-
-                    if (imdbDd!!.type != null) {
-
-                        val url = "http://www.imdb.com/title/" + imdbDd!!.imdbID
-                        val intent = Intent(activity, Site::class.java)
-                        intent.putExtra(Constantes.SITE, url)
-                        startActivity(intent)
-                    }
-                })
-
-                (layout.findViewById<View>(R.id.image_tmdb) as ImageView).setOnClickListener(View.OnClickListener {
-                    if (movieDb == null) {
-                        return@OnClickListener
-                    }
-
-                    val url = "https://www.themoviedb.org/movie/" + movieDb!!.id!!
-                    val intent = Intent(activity, Site::class.java)
-                    intent.putExtra(Constantes.SITE, url)
-                    startActivity(intent)
-                })
-
-                //REFAZER METODOS - MUITO GRANDE.
-
-                builder.setView(layout)
-                builder.show()
-
-            } else {
-                BaseActivity.SnackBar(activity.findViewById(R.id.fab_menu_filme),
-                        getString(R.string.no_vote))
-
-            }
-        })
 
         icon_collection.setOnClickListener({
             if (movieDb?.belongsToCollection != null) {
@@ -324,34 +201,170 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                         })
 
                 subscriptions.add(inscricaoMovie)
+            } else {
+                BaseActivity.SnackBar(activity.findViewById(R.id.fab_menu_filme),
+                        getString(R.string.sem_informacao_colletion))
             }
         })
 
         textview_elenco.setOnClickListener {
             val intent = Intent(context, ElencoActivity::class.java)
-            intent.putExtra(Constantes.ID, movieDb!!.id)
+            intent.putExtra(Constantes.ID, movieDb?.id)
             intent.putExtra(Constantes.MEDIATYPE, Multi.MediaType.MOVIE)
-            intent.putExtra(Constantes.NOME, movieDb!!.title)
+            intent.putExtra(Constantes.NOME, movieDb?.title)
             startActivity(intent)
 
         }
 
         textview_crews.setOnClickListener {
             val intent = Intent(context, CrewsActivity::class.java)
-            intent.putExtra(Constantes.ID, movieDb!!.id)
+            intent.putExtra(Constantes.ID, movieDb?.id)
             intent.putExtra(Constantes.MEDIATYPE, Multi.MediaType.MOVIE)
-            intent.putExtra(Constantes.NOME, movieDb!!.title)
+            intent.putExtra(Constantes.NOME, movieDb?.title)
             startActivity(intent)
 
         }
 
         textview_similares.setOnClickListener {
             val intent = Intent(context, SimilaresActivity::class.java)
-            intent.putExtra(Constantes.FILME_ID, movieDb!!.id)
-            intent.putExtra(Constantes.NOME_FILME, movieDb!!.title)
+            intent.putExtra(Constantes.FILME_ID, movieDb?.id)
+            intent.putExtra(Constantes.NOME_FILME, movieDb?.title)
             startActivity(intent)
 
         }
+    }
+
+    private fun onClickImageStar(): View.OnClickListener? {
+        return object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                if (mediaNotas > 0) {
+                    val builder = AlertDialog.Builder(activity)
+                    val inflater = activity.layoutInflater
+                    val layout = inflater.inflate(R.layout.layout_notas, null)
+
+                    if (imdbDd != null) {
+                        layout.findViewById<TextView>(R.id.nota_imdb)
+                                .text = if (imdbDd?.imdbRating != null)
+                            imdbDd?.imdbRating + "/10"
+                        else
+                            "- -"
+
+                        layout.findViewById<TextView>(R.id.nota_metacritic)
+                                .text = if (imdbDd?.metascore != null)
+                            imdbDd?.metascore + "/100"
+                        else
+                            "- -"
+
+                        layout.findViewById<TextView>(R.id.nota_tomatoes)
+                                .text = if (imdbDd?.tomatoRating != null)
+                            imdbDd?.tomatoRating + "/10"
+                        else
+                            "- -"
+                    }
+
+                    layout.findViewById<TextView>(R.id.nota_tmdb)
+                            .text = if (!movieDb?.voteAverage!!.equals(0.0))
+                        movieDb?.voteAverage!!.toString() + "/10"
+                    else
+                        "- -"
+
+                    layout.findViewById<TextView>(R.id.nota_netflix)
+                            .text = (if (netflixDados?.rating != null)
+                        netflixDados?.rating + "/5"
+                    else
+                        "- -").toString() //TODO Netflix gone. Aguardando api netflix
+
+                    layout.findViewById<ImageView>(R.id.image_netflix)
+                            .setOnClickListener(View.OnClickListener {
+                                if (netflixDados == null) {
+                                    return@OnClickListener
+                                }
+
+                                if (netflixDados!!.showId != 0) {
+                                    val url = "https://www.netflixDados.com/title/" + netflixDados?.showId
+                                    val webpage = Uri.parse(url)
+                                    val intent = Intent(Intent.ACTION_VIEW, webpage)
+                                    startActivity(intent)
+                                    if (intent.resolveActivity(activity.packageManager) != null) {
+                                        startActivity(intent)
+                                    }
+                                }
+                            })
+
+                    layout.findViewById<ImageView>(R.id.image_metacritic)
+                            .setOnClickListener(View.OnClickListener {
+                                if (imdbDd == null) {
+                                    return@OnClickListener
+                                }
+
+                                if (imdbDd!!.type != null) {
+
+                                    var nome = imdbDd!!.title.replace(" ", "-").toLowerCase()
+                                    nome = UtilsApp.removerAcentos(nome)
+                                    val url = "http://www.metacritic.com/movie/" + nome
+
+                                    val intent = Intent(activity, Site::class.java)
+                                    intent.putExtra(Constantes.SITE, url)
+                                    startActivity(intent)
+                                }
+                            })
+
+                    layout.findViewById<ImageView>(R.id.image_tomatoes)
+                            .setOnClickListener(View.OnClickListener {
+                                if (imdbDd == null) {
+                                    return@OnClickListener
+                                }
+
+                                if (imdbDd?.type != null) {
+
+                                    var nome = imdbDd!!.title.replace(" ", "_").toLowerCase()
+                                    nome = UtilsApp.removerAcentos(nome)
+                                    val url = "https://www.rottentomatoes.com/m/" + nome
+                                    val intent = Intent(activity, Site::class.java)
+                                    intent.putExtra(Constantes.SITE, url)
+                                    startActivity(intent)
+                                }
+                            })
+
+                    layout.findViewById<ImageView>(R.id.image_imdb)
+                            .setOnClickListener(OnClickListener@ {
+                                if (imdbDd == null) {
+                                    return@OnClickListener
+                                }
+
+                                if (imdbDd!!.type != null) {
+
+                                    val url = "http://www.imdb.com/title/" + imdbDd!!.imdbID
+                                    val intent = Intent(activity, Site::class.java)
+                                    intent.putExtra(Constantes.SITE, url)
+                                    startActivity(intent)
+                                }
+                            })
+
+                    layout.findViewById<ImageView>(R.id.image_tmdb)
+                            .setOnClickListener(View.OnClickListener {
+                                if (movieDb == null) {
+                                    return@OnClickListener
+                                }
+                                val url = "https://www.themoviedb.org/movie/" + movieDb!!.id!!
+                                val intent = Intent(activity, Site::class.java)
+                                intent.putExtra(Constantes.SITE, url)
+                                startActivity(intent)
+                            })
+
+                    //REFAZER METODOS - MUITO GRANDE.
+
+                    builder.setView(layout)
+                    builder.show()
+
+                } else {
+                    BaseActivity.SnackBar(activity.findViewById(R.id.fab_menu_filme),
+                            getString(R.string.no_vote))
+
+                }
+            }
+        }
+
     }
 
     private fun getCollection(colecao: Colecao?) {
@@ -372,11 +385,11 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
     fun setSinopse() {
 
-        if (movieDb!!.overview != null) {
+        if (movieDb?.overview != null) {
 
-            descricao!!.text = movieDb!!.overview
+            descricao.text = movieDb?.overview
         } else {
-            descricao!!.text = getString(R.string.sem_sinopse)
+            descricao.text = getString(R.string.sem_sinopse)
         }
     }
 
@@ -390,9 +403,9 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
     fun setBuget() {
 
         if (movieDb?.budget!! > 0) {
-            img_budget!!.setImageResource(R.drawable.orcamento)
+            img_budget.setImageResource(R.drawable.orcamento)
         } else {
-            img_budget!!.setImageResource(R.drawable.orcamento2)
+            img_budget.setImageResource(R.drawable.sem_orcamento)
 
         }
 
@@ -440,26 +453,18 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
     }
 
     private fun setProdutora() {
-        var primeiraProdutora: String?
-        if (!movieDb!!.productionCompanies!!.isEmpty()) {
-            primeiraProdutora = movieDb!!.productionCompanies!![0]!!.name
-            if (primeiraProdutora!!.length >= 27) {
-                primeiraProdutora = primeiraProdutora.subSequence(0, 27) as String
-                primeiraProdutora = primeiraProdutora + "..."
-            }
-            produtora!!.text = primeiraProdutora
-            produtora!!.setTextColor(resources.getColor(R.color.primary))
+        if (!movieDb?.productionCompanies?.isEmpty()!!) {
 
-            produtora!!.setOnClickListener {
+            produtora.text = movieDb?.productionCompanies?.get(0)?.name
+            produtora.setTextColor(ContextCompat.getColor(context, R.color.primary))
+            produtora.setOnClickListener {
                 val intent = Intent(context, ProdutoraActivity::class.java)
-                intent.putExtra(Constantes.PRODUTORA, primeiraProdutora) // não usado
                 intent.putExtra(Constantes.PRODUTORA_ID, movieDb!!.productionCompanies!![0]?.id)
-                intent.putExtra(Constantes.MEDIATYPE, Multi.MediaType.MOVIE) // Não usado
+                //intent.putExtra(Constantes.MEDIATYPE, Multi.MediaType.MOVIE) // Não usado
                 startActivity(intent)
-
             }
         } else {
-            view!!.findViewById<View>(R.id.label_produtora).visibility = View.GONE
+            label_produtora.visibility = View.GONE
         }
     }
 
@@ -482,14 +487,14 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
     private fun setVotoMedia() {
         val nota = mediaNotas
         if (nota > 0) {
-            img_star!!.setImageResource(R.drawable.icon_star)
+            img_star?.setImageResource(R.drawable.icon_star)
             val formatter = DecimalFormat("0.0")
-            voto_media!!.text = formatter.format(nota.toDouble())
+            voto_media?.text = formatter.format(nota.toDouble())
 
         } else {
-            img_star!!.setImageResource(R.drawable.icon_star_off)
-            voto_media!!.setText(R.string.valor_zero)
-            voto_media!!.setTextColor(resources.getColor(R.color.blue))
+            img_star?.setImageResource(R.drawable.icon_star_off)
+            voto_media?.setText(R.string.valor_zero)
+            voto_media?.setTextColor(ContextCompat.getColor(context, R.color.blue))
         }
     }
 
@@ -689,7 +694,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
         }
         if (movieDb?.videos?.results?.isNotEmpty()!!) {
             val videos = movieDb?.videos?.results
-            recycle_filme_trailer.adapter = TrailerAdapter (activity, videos,  movieDb?.overview ?: "")
+            recycle_filme_trailer.adapter = TrailerAdapter(activity, videos, movieDb?.overview ?: "")
         } else {
             recycle_filme_trailer.setVisibility(View.GONE);
         }
@@ -711,10 +716,10 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
     private fun setCollectoin() {
         if (movieDb?.belongsToCollection != null) {
 
-            icon_collection!!.setImageResource(R.drawable.collection_on)
+            icon_collection?.setImageResource(R.drawable.collection_on)
         } else {
 
-            icon_collection!!.setImageResource(R.drawable.collection_off)
+            icon_collection?.setImageResource(R.drawable.collection_off)
         }
     }
 
