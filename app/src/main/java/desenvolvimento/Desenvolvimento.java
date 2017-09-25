@@ -1,5 +1,6 @@
 package desenvolvimento;
 
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,7 +21,7 @@ public class Desenvolvimento extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.desenvolvimento_layout);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.ajuda_desenvolvimento);

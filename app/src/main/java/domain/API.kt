@@ -3,6 +3,7 @@ package domain
 import android.content.Context
 import com.google.gson.Gson
 import domain.colecao.Colecao
+import domain.tvshow.Tvshow
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import rx.Observable
@@ -241,21 +242,65 @@ class API(context: Context) {
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
-                    .url("${baseUrl3}movie/$id/videos?api_key=${Config.TMDB_API_KEY}&language=en-US")
+                    .url("${baseUrl3}movie/$id/videos?api_key=${Config.TMDB_API_KEY}&language=en-US,null")
                     .get()
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
                 val json = response.body()?.string()
-                val lista = gson.fromJson(json, Videos::class.java)
+                val videos = gson.fromJson(json, Videos::class.java)
 
-                subscriber.onNext(lista)
+                subscriber.onNext(videos)
                 subscriber.onCompleted()
             } else {
                 subscriber.onError(Throwable(response.message()))
             }
         }
     }
+
+    fun getTvshowVideos(id: Int): Observable<Videos> {
+        return rx.Observable.create { subscriber ->
+            val client = OkHttpClient()
+            val gson = Gson()
+            val request = Request.Builder()
+                    .url("${baseUrl3}tv/$id/videos?api_key=${Config.TMDB_API_KEY}&language=en-US,null")
+                    .get()
+                    .build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                val json = response.body()?.string()
+                val videos = gson.fromJson(json, Videos::class.java)
+
+                subscriber.onNext(videos)
+                subscriber.onCompleted()
+            } else {
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
+    }
+
+    fun getTvShow(id: Int): Observable<Tvshow> {
+        return rx.Observable.create { subscriber ->
+            val client = OkHttpClient()
+            val gson = Gson()
+            val request = Request.Builder()
+                    .url("${baseUrl3}tv/$id?api_key=${Config.TMDB_API_KEY}" + "&language=$timeZone" +
+                            "&append_to_response=credits,videos,images,release_dates,similar,external_ids&include_image_language=en,null")
+                    .get()
+                    .build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                val json = response.body()?.string()
+                val tvshow = gson.fromJson(json, Tvshow::class.java)
+                tvshow
+                subscriber.onNext(tvshow)
+                subscriber.onCompleted()
+            } else {
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
+    }
+
 
     fun getColecao(id: Int): Observable<Colecao> {
         return rx.Observable.create { subscriber ->
@@ -284,18 +329,47 @@ class API(context: Context) {
                     Observable.just(it)
                             .flatMap { video -> Observable.just(video.videos) }
                             .flatMap { videos ->
-                                if (videos?.results == null) {
+                                if (videos?.results?.isEmpty()!!) {
                                     Observable.zip(
                                             Observable.just(it),
                                             getMovieVideos(id)
                                                     .flatMap { video ->
-                                                        if(video.results != null) {
+                                                        if (video.results?.isNotEmpty()!!) {
+                                                           it.videos?.results?.addAll(video.results)
                                                             Observable.from(video.results)
-                                                                    .doOnNext({trailer ->
-                                                                        if (trailer?.key != null)
-                                                                            it.videos?.results?.add(trailer)})
-                                                        } else {Observable.empty() }}
-                                                    , { movie, _ ->
+                                                        } else {
+                                                            Observable.just(it)
+                                                        }
+                                                    }
+                                            , { movie, _ ->
+                                        movie
+                                    })
+                                } else {
+                                    Observable.just(it)
+                                }
+                            }
+                }
+    }
+
+    fun loadTvshowComVideo(id: Int): Observable<Tvshow> {
+        return getTvShow(id)
+                .flatMap { it ->
+                    Observable.just(it)
+                            .flatMap { video -> Observable.just(video.videos) }
+                            .flatMap { videos ->
+                                if (videos?.results?.isEmpty()!!) {
+                                    Observable.zip(
+                                            Observable.just(it),
+                                            getTvshowVideos(id)
+                                                    .flatMap { video ->
+                                                        if (video.results?.isNotEmpty()!!) {
+                                                            it.videos?.results?.addAll(video.results)
+                                                            Observable.from(video.results)
+                                                        } else {
+                                                            Observable.just(it)
+                                                        }
+                                                    }
+                                            , { movie, _ ->
                                         movie
                                     })
                                 } else {

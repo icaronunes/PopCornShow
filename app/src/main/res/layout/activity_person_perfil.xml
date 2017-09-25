@@ -158,7 +158,7 @@
 
         </LinearLayout>
 
-        <include layout="@layout/include_progress" />
+        <include layout="@layout/include_toolbar" />
     </FrameLayout>
 
 </ScrollView>

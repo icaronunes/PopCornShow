@@ -21,7 +21,7 @@
             </android.support.v7.widget.RecyclerView>
 
 
-            <!--<include layout="@layout/include_progress" -->
+            <!--<inclcollapsing_toolbaryoucollapsing_toolbaryout/include_progress" -->
 
             <!--<com.google.android.gms.ads.AdView-->
                 <!--android:id="@+id/adView"-->

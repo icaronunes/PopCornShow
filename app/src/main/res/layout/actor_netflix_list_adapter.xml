@@ -42,7 +42,7 @@
                 android:textSize="@dimen/trade_txt_size_sp_12"
                 android:typeface="serif" />
 
-            <include layout="@layout/include_progress" />
+            <include layout="@layout/include_toolbar" />
 
         </FrameLayout>
     </LinearLayout>

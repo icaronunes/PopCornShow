@@ -2,6 +2,7 @@ package activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -64,6 +65,7 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
         FirebaseApp.initializeApp(getBaseContext());
         FacebookSdk.sdkInitialize(getBaseContext());
         setContentView(R.layout.activity_login);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mAuth = FirebaseAuth.getInstance();
 
         //stateListener = getAuthStateListener();

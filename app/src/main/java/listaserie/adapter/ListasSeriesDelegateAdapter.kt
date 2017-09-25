@@ -1,6 +1,6 @@
 package listaserie.adapter
 
-import activity.TvShowActivity
+import tvshow.activity.TvShowActivity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView

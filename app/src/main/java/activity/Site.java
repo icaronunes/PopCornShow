@@ -63,6 +63,7 @@ public class Site extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(OnRefreshListener());
         swipeRefreshLayout.setColorSchemeResources(R.color.primary, R.color.primary_dark, R.color.accent);
 
+
     }
 
     private SwipeRefreshLayout.OnRefreshListener OnRefreshListener() {

@@ -1,14 +1,16 @@
-package fragment
+package filme.fragment
 
 
 import activity.*
-import adapter.*
+import adapter.CastAdapter
+import adapter.CollectionPagerAdapter
+import adapter.CrewAdapter
+import adapter.TrailerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.app.AlertDialog
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -32,10 +34,10 @@ import com.squareup.picasso.Picasso
 import domain.API
 import domain.Imdb
 import domain.Movie
-import domain.Netflix
 import domain.colecao.Colecao
+import filme.adapter.SimilaresFilmesAdapter
 import info.movito.themoviedbapi.model.Multi
-import kotlinx.android.synthetic.main.fab_filme.*
+import kotlinx.android.synthetic.main.fab_float.*
 import kotlinx.android.synthetic.main.fragment_container_filme.*
 import produtora.activity.ProdutoraActivity
 import rx.android.schedulers.AndroidSchedulers
@@ -53,7 +55,6 @@ import java.util.*
 class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
     private var movieDb: Movie? = null
-    private var netflixDados: Netflix? = null
     private var imdbDd: Imdb? = null
     private lateinit var subscriptions: CompositeSubscription
 
@@ -64,7 +65,6 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
         if (arguments != null) {
             val bundle = arguments
             movieDb = bundle.getSerializable(Constantes.FILME) as Movie
-            // netflixDados = bundle.getSerializable(Constantes.NETFLIX) as Netflix
         }
         subscriptions = CompositeSubscription()
     }
@@ -129,28 +129,28 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
         }
 
-        netflix.setOnClickListener(View.OnClickListener {
-            if (netflixDados == null) {
-                return@OnClickListener
-            }
-
-            if (netflixDados!!.showId != 0) {
-                val url = "https://www.netflixDados.com/title/" + netflixDados?.showId
-                val webpage = Uri.parse(url)
-                val intent = Intent(Intent.ACTION_VIEW, webpage)
-                if (intent.resolveActivity(activity.packageManager) != null) {
-                    startActivity(intent)
-                }
-            } else {
-                val url = "https://www.netflixDados.com/search?q=" + movieDb?.title!!
-
-                val webpage = Uri.parse(url)
-                val intent = Intent(Intent.ACTION_VIEW, webpage)
-                if (intent.resolveActivity(activity.packageManager) != null) {
-                    startActivity(intent)
-                }
-            }
-        })
+//        netflix.setOnClickListener(View.OnClickListener {
+//            if (netflixDados == null) {
+//                return@OnClickListener
+//            }
+//
+//            if (netflixDados!!.showId != 0) {
+//                val url = "https://www.netflixDados.com/title/" + netflixDados?.showId
+//                val webpage = Uri.parse(url)
+//                val intent = Intent(Intent.ACTION_VIEW, webpage)
+//                if (intent.resolveActivity(activity.packageManager) != null) {
+//                    startActivity(intent)
+//                }
+//            } else {
+//                val url = "https://www.netflixDados.com/search?q=" + movieDb?.title!!
+//
+//                val webpage = Uri.parse(url)
+//                val intent = Intent(Intent.ACTION_VIEW, webpage)
+//                if (intent.resolveActivity(activity.packageManager) != null) {
+//                    startActivity(intent)
+//                }
+//            }
+//        })
 
         img_budget.setOnClickListener {
 
@@ -268,28 +268,28 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                     else
                         "- -"
 
-                    layout.findViewById<TextView>(R.id.nota_netflix)
-                            .text = (if (netflixDados?.rating != null)
-                        netflixDados?.rating + "/5"
-                    else
-                        "- -").toString() //TODO Netflix gone. Aguardando api netflix
+//                    layout.findViewById<TextView>(R.id.nota_netflix)
+//                            .text = (if (netflixDados?.rating != null)
+//                        netflixDados?.rating + "/5"
+//                    else
+//                        "- -").toString() //TODO Netflix gone. Aguardando api netflix
 
-                    layout.findViewById<ImageView>(R.id.image_netflix)
-                            .setOnClickListener(View.OnClickListener {
-                                if (netflixDados == null) {
-                                    return@OnClickListener
-                                }
-
-                                if (netflixDados!!.showId != 0) {
-                                    val url = "https://www.netflixDados.com/title/" + netflixDados?.showId
-                                    val webpage = Uri.parse(url)
-                                    val intent = Intent(Intent.ACTION_VIEW, webpage)
-                                    startActivity(intent)
-                                    if (intent.resolveActivity(activity.packageManager) != null) {
-                                        startActivity(intent)
-                                    }
-                                }
-                            })
+//                    layout.findViewById<ImageView>(R.id.image_netflix)
+//                            .setOnClickListener(View.OnClickListener {
+//                                if (netflixDados == null) {
+//                                    return@OnClickListener
+//                                }
+//
+//                                if (netflixDados!!.showId != 0) {
+//                                    val url = "https://www.netflixDados.com/title/" + netflixDados?.showId
+//                                    val webpage = Uri.parse(url)
+//                                    val intent = Intent(Intent.ACTION_VIEW, webpage)
+//                                    startActivity(intent)
+//                                    if (intent.resolveActivity(activity.packageManager) != null) {
+//                                        startActivity(intent)
+//                                    }
+//                                }
+//                            })
 
                     layout.findViewById<ImageView>(R.id.image_metacritic)
                             .setOnClickListener(View.OnClickListener {
@@ -459,7 +459,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
             produtora.setTextColor(ContextCompat.getColor(context, R.color.primary))
             produtora.setOnClickListener {
                 val intent = Intent(context, ProdutoraActivity::class.java)
-                intent.putExtra(Constantes.PRODUTORA_ID, movieDb!!.productionCompanies!![0]?.id)
+                intent.putExtra(Constantes.PRODUTORA_ID, movieDb?.productionCompanies!![0]?.id)
                 //intent.putExtra(Constantes.MEDIATYPE, Multi.MediaType.MOVIE) // Não usado
                 startActivity(intent)
             }

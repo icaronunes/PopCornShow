@@ -19,6 +19,7 @@ import activity.CrewsActivity;
 import activity.ElencoActivity;
 import br.com.icaro.filme.R;
 import domain.UserTvshow;
+import domain.tvshow.Tvshow;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.Constantes;
 import utils.UtilsApp;
@@ -33,7 +34,7 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
     private final String TAG = TemporadasAdapter.class.getName();
 
     private Context context;
-    private TvSeries series;
+    private Tvshow series;
     private int color;
     private TemporadasOnClickListener onClickListener;
     private UserTvshow userTvshow;
@@ -43,7 +44,7 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
         void onClickCheckTemporada(View view, int position);
     }
 
-    public TemporadasAdapter(FragmentActivity activity, TvSeries series,
+    public TemporadasAdapter(FragmentActivity activity, Tvshow series,
                              TemporadasOnClickListener temporadaOnClickListener, int color, UserTvshow userTvshow) {
         this.context = activity;
         this.series = series;
@@ -69,7 +70,7 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
                     switch (item.getItemId()) {
                         case R.id.elenco_temporada: {
                             Intent intent = new Intent(context, ElencoActivity.class);
-                            intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), series.getMediaType());
+                            intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), );
                             intent.putExtra(Constantes.INSTANCE.getID(), series.getId());
                             intent.putExtra(Constantes.INSTANCE.getTVSEASONS(), seasonNumber);
                             intent.putExtra(Constantes.INSTANCE.getNOME(), series.getName());
@@ -79,7 +80,7 @@ public class TemporadasAdapter extends RecyclerView.Adapter<TemporadasAdapter.Ho
 
                         case R.id.producao_temporada: {
                             Intent intent = new Intent(context, CrewsActivity.class);
-                            intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), series.getMediaType());
+                           // intent.putExtra(Constantes.INSTANCE.getMEDIATYPE(), series.getMediaType());
                             intent.putExtra(Constantes.INSTANCE.getID(), series.getId());
                             intent.putExtra(Constantes.INSTANCE.getTVSEASONS(), seasonNumber);
                             intent.putExtra(Constantes.INSTANCE.getNOME(), series.getName());

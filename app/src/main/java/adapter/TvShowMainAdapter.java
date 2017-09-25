@@ -18,7 +18,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 
-import activity.TvShowActivity;
+import tvshow.activity.TvShowActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.tv.TvSeries;

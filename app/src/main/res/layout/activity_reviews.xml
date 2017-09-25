@@ -7,14 +7,14 @@
 
     <include layout="@layout/include_toolbar" />
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:adSize="SMART_BANNER"
-        android:visibility="gone"
-        app:adUnitId="@string/admob"
-        android:layout_gravity="bottom" />
+    <!--<com.google.android.gms.ads.AdView-->
+        <!--android:id="@+id/adView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:adSize="SMART_BANNER"-->
+        <!--android:visibility="gone"-->
+        <!--app:adUnitId="@string/admob"-->
+        <!--android:layout_gravity="bottom" />-->
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -22,12 +22,12 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/textview_reviews_empty"
             android:layout_width="wrap_content"
-            android:text="@string/empty"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|center"
-            android:visibility="gone"
-            android:id="@+id/textview_reviews_empty" />
+            android:layout_gravity="center|center_horizontal"
+            android:text="@string/empty"
+            android:visibility="gone" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycleView_reviews"

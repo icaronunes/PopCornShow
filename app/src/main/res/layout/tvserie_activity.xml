@@ -72,7 +72,8 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/fab_filme" />
+        <include layout="@layout/fab_float"
+            android:visibility="visible"/>
 
     </android.support.design.widget.CoordinatorLayout>
 

@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import activity.TvShowActivity;
+import tvshow.activity.TvShowActivity;
 import br.com.icaro.filme.R;
 import domain.UserTvshow;
 import utils.Constantes;

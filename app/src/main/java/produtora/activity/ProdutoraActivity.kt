@@ -41,8 +41,8 @@ class ProdutoraActivity : BaseActivity() {
         setContentView(R.layout.produtora_layout)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpToolBar()
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        collapsing_toolbar.title = " dada"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        collapsing_toolbar.title = " "
         id_produtora = intent.getIntExtra(Constantes.PRODUTORA_ID, 0)
         produtora_filmes_recycler.apply {
             val gridlayout = GridLayoutManager(this@ProdutoraActivity, 3)

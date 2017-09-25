@@ -4,8 +4,6 @@ import android.support.annotation.Keep;
 
 import java.io.Serializable;
 
-import info.movito.themoviedbapi.model.ExternalIds;
-
 /**
  * Created by icaro on 20/11/16.
  */
@@ -18,7 +16,7 @@ public class TvshowDB implements Serializable {
 
     private int nota;
 
-    private ExternalIds externalIds;
+    private domain.tvshow.ExternalIds externalIds;
 
     private int id;
 
@@ -47,11 +45,11 @@ public class TvshowDB implements Serializable {
         this.poster = poster;
     }
 
-    public ExternalIds getExternalIds() {
+    public domain.tvshow.ExternalIds getExternalIds() {
         return externalIds;
     }
 
-    public void setExternalIds(ExternalIds externalIds) {
+    public void setExternalIds(domain.tvshow.ExternalIds externalIds) {
         this.externalIds = externalIds;
     }
 

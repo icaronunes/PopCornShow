@@ -17,7 +17,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import activity.FilmeActivity;
+import filme.activity.FilmeActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;

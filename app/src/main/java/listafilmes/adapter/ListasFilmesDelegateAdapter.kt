@@ -1,6 +1,6 @@
 package listafilmes.adapter
 
-import activity.FilmeActivity
+import filme.activity.FilmeActivity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView

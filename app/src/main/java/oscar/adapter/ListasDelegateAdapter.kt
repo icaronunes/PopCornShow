@@ -1,7 +1,7 @@
 package oscar.adapter
 
-import activity.FilmeActivity
-import activity.TvShowActivity
+import filme.activity.FilmeActivity
+import tvshow.activity.TvShowActivity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView

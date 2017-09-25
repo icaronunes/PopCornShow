@@ -38,7 +38,7 @@ public class ReviewsActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(getIntent().getStringExtra(Constantes.INSTANCE.getNOME_FILME()));
         id_filme = getIntent().getStringExtra(Constantes.INSTANCE.getFILME_ID());
-        if (getIntent().getStringExtra(Constantes.INSTANCE.getMEDIATYPE()).equals("TV_SERIES")){
+        if (getIntent().getStringExtra(Constantes.INSTANCE.getMEDIATYPE()).equals("tv-shows")){
             type = "tv-shows";
         } else {
             type = "movies";

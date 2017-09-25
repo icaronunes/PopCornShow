@@ -79,7 +79,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/fab_filme"
+        <include layout="@layout/fab_float"
             android:visibility="visible" />
 
     </android.support.design.widget.CoordinatorLayout>
@@ -93,3 +93,4 @@
         app:headerLayout="@layout/nav_drawer_header"
         app:menu="@menu/nav_drawe_menu" />
 </android.support.v4.widget.DrawerLayout>
+

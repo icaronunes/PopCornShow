@@ -23,7 +23,7 @@ import java.util.Locale;
 
 import activity.BaseActivity;
 import activity.TemporadaActivity;
-import activity.TvShowActivity;
+import tvshow.activity.TvShowActivity;
 import br.com.icaro.filme.R;
 import domain.FilmeService;
 import domain.UserEp;

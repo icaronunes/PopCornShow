@@ -42,7 +42,7 @@ class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             this.ProdutoraResultsPage.add(person!!)
         }
         //games?.add(loadingItem)
-        notifyItemRangeChanged(initPosition, this.ProdutoraResultsPage?.size!! + 1 /* plus loading item */)
+        notifyItemRangeChanged(initPosition, this.ProdutoraResultsPage?.size + 1 /* plus loading item */)
         ProdutoraResultsPage.add(loadingItem)
 
     }

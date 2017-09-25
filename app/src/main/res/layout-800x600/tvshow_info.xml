@@ -248,7 +248,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/temporada"
+                                android:text="@string/temporadas"
                                 android:textSize="@dimen/trade_txt_size_sp_14" />
 
                             <TextView
@@ -350,7 +350,7 @@
     </android.support.v4.widget.NestedScrollView>
 
     <include
-        layout="@layout/include_progress"
+    layout="@layout/include_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible" />

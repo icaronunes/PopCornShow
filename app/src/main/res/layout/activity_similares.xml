@@ -38,7 +38,7 @@
                 android:id="@+id/similares_recyckeview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-            <include layout="@layout/include_progress" />
+            <include layout="@layout/include_toolbar" />
 
         </FrameLayout>
 

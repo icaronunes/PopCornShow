@@ -17,10 +17,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import activity.FilmeActivity;
+import filme.activity.FilmeActivity;
 import activity.PersonActivity;
 import activity.SearchMultiActivity;
-import activity.TvShowActivity;
+import tvshow.activity.TvShowActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;

@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:theme="@style/Theme.AppCompat.Light">
 
-            <include layout="@layout/include_toolbar" />
+            <include layout="@layout/include_toolbar"/>
 
         </android.support.design.widget.AppBarLayout>
 
@@ -34,7 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
-                <include layout="@layout/include_progress" />
+                <include layout="@layout/include_toolbar" />
 
             </FrameLayout>
 

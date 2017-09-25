@@ -144,7 +144,7 @@ public class ElencoActivity extends BaseActivity {
                 if (Multi.MediaType.TV_SERIES.equals(mediaType) && season != -100) {
                     //      Log.d("ElencoActivity", "" + season);
                     creditsTvShow = FilmeService.getTmdbTvSeasons().getSeason(id, season, "en", TmdbTvSeasons.SeasonMethod.credits).getCredits();
-                }
+                }//TODO usado para serie sessao. verificar
 
                 if (Multi.MediaType.TV_SERIES.equals(mediaType) && season == -100) {
                     creditsTvShow = FilmeService.getTmdbTvShow().getCredits(id, "en");

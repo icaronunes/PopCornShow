@@ -17,6 +17,6 @@ fun getIdiomaEscolhido(context: Context ) : String {
             Locale.getDefault().toLanguageTag()
         } else Locale.getDefault().language + "-" + Locale.getDefault().country
     } else {
-        "US"
+        "en"
     }
 }

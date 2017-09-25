@@ -1,6 +1,5 @@
 package produtora.adapter
 
-import activity.FilmeActivity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
@@ -14,6 +13,7 @@ import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import domain.ListaItemFilme
 import domain.ViewType
+import filme.activity.FilmeActivity
 import kotlinx.android.synthetic.main.adapter_produtora.view.*
 import pessoaspopulares.ViewTypeDelegateAdapter
 import utils.Constantes
@@ -38,7 +38,7 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
             RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.adapter_produtora, viewGroup, false)) {
 
         fun bind(item: ListaItemFilme) = with(itemView){
-            progress_bar.visibility = View.VISIBLE
+            progress_bar?.visibility = View.VISIBLE
             titleTextView_produtora.text = item.title
             Picasso.with(context)
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.posterPath)
@@ -46,12 +46,12 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(imgFilme_produtora, object : Callback {
                         override fun onSuccess() {
-                            progress_bar.visibility = View.GONE
+                            progress_bar?.visibility = View.GONE
 
                         }
 
                         override fun onError() {
-                            progress_bar.visibility = View.GONE
+                            progress_bar?.visibility = View.GONE
                         }
                     })
 

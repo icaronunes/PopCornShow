@@ -17,7 +17,7 @@ import org.json.JSONObject;
 
 import activity.CrewsActivity;
 import activity.ElencoActivity;
-import activity.FilmeActivity;
+import filme.activity.FilmeActivity;
 import listafilmes.activity.FilmesActivity;
 import activity.FotoPersonActivity;
 import activity.ListaGenericaActivity;
@@ -29,7 +29,7 @@ import activity.SimilaresActivity;
 import activity.Site;
 import activity.TemporadaActivity;
 import activity.TrailerActivity;
-import activity.TvShowActivity;
+import tvshow.activity.TvShowActivity;
 import listaserie.activity.TvShowsActivity;
 import applicaton.FilmeApplication;
 import domain.FilmeDB;

@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import activity.FilmeActivity;
-import activity.TvShowActivity;
+import filme.activity.FilmeActivity;
+import tvshow.activity.TvShowActivity;
 import br.com.icaro.filme.R;
 import domain.TopMain;
 import info.movito.themoviedbapi.model.Multi;

@@ -9,7 +9,7 @@
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/4778253c97464086ab95e825b7a0127e-google-services-3.0.0(**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/d7078422c6b4e5a7cad21ba89e1cc6d2-classes(**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/923b217266f81a5061acc8abb4736c73-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/5b8f7d732be24deec5e210d0756a5f7e-constraint-layout-solver-1.0.0-alpha4(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/5b8f7d732be24deec5e210d0756a5f7e-constraint-collapsing_toolbar-solver-1.0.0-alpha4(**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/f69ba5ab27528b37997159387a32e76b-classes(**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/407f80ca5203ef79e74a1d4ce75e48a6-classes(**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/53e178f62eeb94d2d0a4131a86bfb42e-javax.annotation-api-1.2(**.class)
@@ -269,7 +269,7 @@
     public void handleIntent(android.content.Intent);
 }
 
-# Keep implemtations of the AdMob mediation adapter interfaces. Adapters for
+# Keep implemtations of the AdMob mediation temporadasAdapter interfaces. Adapters for
 # third party ad networks implement these interfaces and are invoked by the
 # AdMob SDK via reflection.
 -keep class * extends com.google.android.gms.ads.mediation.MediationAdapter {
@@ -519,7 +519,7 @@
 }
 
 # view AndroidManifest.xml #generated:130
--keep class activity.FilmeActivity {
+-keep class filme.activity.FilmeActivity {
     <init>(...);
 }
 
@@ -634,7 +634,7 @@
 }
 
 # view AndroidManifest.xml #generated:79
--keep class activity.TvShowActivity {
+-keep class tvshow.activity.TvShowActivity {
     <init>(...);
 }
 
@@ -653,382 +653,382 @@
     <init>(...);
 }
 
-# view res/layout/design_bottom_navigation_item.xml #generated:26
+# view res/collapsing_toolbar/design_bottom_navigation_item.xml #generated:26
 -keep class android.support.design.internal.BaselineLayout {
     <init>(...);
 }
 
-# view res/layout/design_navigation_item.xml #generated:17
+# view res/collapsing_toolbar/design_navigation_item.xml #generated:17
 -keep class android.support.design.internal.NavigationMenuItemView {
     <init>(...);
 }
 
-# view res/layout/design_navigation_menu.xml #generated:17
+# view res/collapsing_toolbar/design_navigation_menu.xml #generated:17
 -keep class android.support.design.internal.NavigationMenuView {
     <init>(...);
 }
 
-# view res/layout/design_layout_snackbar_include.xml #generated:18
+# view res/collapsing_toolbar/design_layout_snackbar_include.xml #generated:18
 -keep class android.support.design.internal.SnackbarContentLayout {
     <init>(...);
 }
 
-# view res/layout/activity_crews.xml #generated:10
-# view res/layout/activity_elenco.xml #generated:9
-# view res/layout/activity_filme.xml #generated:44
-# view res/layout/activity_list_main.xml #generated:15
-# view res/layout/activity_main.xml #generated:30
-# view res/layout/activity_person.xml #generated:8
-# view res/layout/activity_person_layout.xml #generated:9
-# view res/layout/activity_person_netflix.xml #generated:10
-# view res/layout/activity_similares.xml #generated:8
-# view res/layout/produtora_layout.xml #generated:42
-# view res/layout/search_layout.xml #generated:15
-# view res/layout/tvserie_activity.xml #generated:26
+# view res/collapsing_toolbar/activity_crews.xml #generated:10
+# view res/collapsing_toolbar/activity_elenco.xml #generated:9
+# view res/collapsing_toolbar/activity_filme.xml #generated:44
+# view res/collapsing_toolbar/activity_list_main.xml #generated:15
+# view res/collapsing_toolbar/activity_main.xml #generated:30
+# view res/collapsing_toolbar/activity_person.xml #generated:8
+# view res/collapsing_toolbar/activity_person_layout.xml #generated:9
+# view res/collapsing_toolbar/activity_person_netflix.xml #generated:10
+# view res/collapsing_toolbar/activity_similares.xml #generated:8
+# view res/collapsing_toolbar/produtora_layout.xml #generated:42
+# view res/collapsing_toolbar/search_layout.xml #generated:15
+# view res/collapsing_toolbar/tvserie_activity.xml #generated:26
 -keep class android.support.design.widget.AppBarLayout {
     <init>(...);
 }
 
-# view res/layout/design_text_input_password_icon.xml #generated:18
+# view res/collapsing_toolbar/design_text_input_password_icon.xml #generated:18
 -keep class android.support.design.widget.CheckableImageButton {
     <init>(...);
 }
 
-# view res/layout/activity_filme.xml #generated:52
-# view res/layout/activity_main.xml #generated:39
-# view res/layout/produtora_layout.xml #generated:51
-# view res/layout/tvserie_activity.xml #generated:33
+# view res/collapsing_toolbar/activity_filme.xml #generated:52
+# view res/collapsing_toolbar/activity_main.xml #generated:39
+# view res/collapsing_toolbar/produtora_layout.xml #generated:51
+# view res/collapsing_toolbar/tvserie_activity.xml #generated:33
 -keep class android.support.design.widget.CollapsingToolbarLayout {
     <init>(...);
 }
 
-# view res/layout/activity_crews.xml #generated:2
-# view res/layout/activity_elenco.xml #generated:2
-# view res/layout/activity_filme.xml #generated:9
-# view res/layout/activity_list_main.xml #generated:10
-# view res/layout/activity_main.xml #generated:10
-# view res/layout/activity_person_layout.xml #generated:2
-# view res/layout/activity_person_netflix.xml #generated:2
-# view res/layout/activity_similares.xml #generated:2
-# view res/layout/design_bottom_sheet_dialog.xml #generated:17
-# view res/layout/produtora_layout.xml #generated:2
-# view res/layout/search_layout.xml #generated:10
-# view res/layout/tvserie_activity.xml #generated:9
+# view res/collapsing_toolbar/activity_crews.xml #generated:2
+# view res/collapsing_toolbar/activity_elenco.xml #generated:2
+# view res/collapsing_toolbar/activity_filme.xml #generated:9
+# view res/collapsing_toolbar/activity_list_main.xml #generated:10
+# view res/collapsing_toolbar/activity_main.xml #generated:10
+# view res/collapsing_toolbar/activity_person_layout.xml #generated:2
+# view res/collapsing_toolbar/activity_person_netflix.xml #generated:2
+# view res/collapsing_toolbar/activity_similares.xml #generated:2
+# view res/collapsing_toolbar/design_bottom_sheet_dialog.xml #generated:17
+# view res/collapsing_toolbar/produtora_layout.xml #generated:2
+# view res/collapsing_toolbar/search_layout.xml #generated:10
+# view res/collapsing_toolbar/tvserie_activity.xml #generated:9
 -keep class android.support.design.widget.CoordinatorLayout {
     <init>(...);
 }
 
-# view res/layout/activity_filme.xml #generated:88
-# view res/layout/activity_list_main.xml #generated:50
-# view res/layout/activity_main.xml #generated:89
-# view res/layout/search_layout.xml #generated:80
-# view res/layout/tvserie_activity.xml #generated:79
+# view res/collapsing_toolbar/activity_filme.xml #generated:88
+# view res/collapsing_toolbar/activity_list_main.xml #generated:50
+# view res/collapsing_toolbar/activity_main.xml #generated:89
+# view res/collapsing_toolbar/search_layout.xml #generated:80
+# view res/collapsing_toolbar/tvserie_activity.xml #generated:79
 -keep class android.support.design.widget.NavigationView {
     <init>(...);
 }
 
-# view res/layout/design_layout_snackbar.xml #generated:18
-# view sw600dp-v13/res/layout-sw600dp-v13/design_layout_snackbar.xml #generated:18
+# view res/collapsing_toolbar/design_layout_snackbar.xml #generated:18
+# view sw600dp-v13/res/collapsing_toolbar-sw600dp-v13/design_layout_snackbar.xml #generated:18
 -keep class android.support.design.widget.Snackbar$SnackbarLayout {
     <init>(...);
 }
 
-# view res/layout/activity_epsodios.xml #generated:8
-# view res/layout/activity_favorite.xml #generated:10
-# view res/layout/activity_main.xml #generated:57
-# view res/layout/activity_person.xml #generated:15
-# view res/layout/activity_usuario_list.xml #generated:11
-# view res/layout/tvserie_activity.xml #generated:64
+# view res/collapsing_toolbar/activity_epsodios.xml #generated:8
+# view res/collapsing_toolbar/activity_favorite.xml #generated:10
+# view res/collapsing_toolbar/activity_main.xml #generated:57
+# view res/collapsing_toolbar/activity_person.xml #generated:15
+# view res/collapsing_toolbar/activity_usuario_list.xml #generated:11
+# view res/collapsing_toolbar/tvserie_activity.xml #generated:64
 -keep class android.support.design.widget.TabLayout {
     <init>(...);
 }
 
-# view large-v4/res/layout-large-v4/activity_login.xml #generated:59
-# view large-v4/res/layout-large-v4/activity_login.xml #generated:77
-# view res/layout/activity_login.xml #generated:59
-# view res/layout/activity_login.xml #generated:77
-# view res/layout/criar_login.xml #generated:14
-# view res/layout/criar_login.xml #generated:34
-# view res/layout/criar_login.xml #generated:52
-# view res/layout/recuperar_senha_layout.xml #generated:16
-# view res/layout/reset_senha.xml #generated:19
-# view res/layout/reset_senha.xml #generated:48
-# view small-v4/res/layout-small-v4/activity_login.xml #generated:60
-# view small-v4/res/layout-small-v4/activity_login.xml #generated:79
-# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:59
-# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:78
+# view large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:59
+# view large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:77
+# view res/collapsing_toolbar/activity_login.xml #generated:59
+# view res/collapsing_toolbar/activity_login.xml #generated:77
+# view res/collapsing_toolbar/criar_login.xml #generated:14
+# view res/collapsing_toolbar/criar_login.xml #generated:34
+# view res/collapsing_toolbar/criar_login.xml #generated:52
+# view res/collapsing_toolbar/recuperar_senha_layout.xml #generated:16
+# view res/collapsing_toolbar/reset_senha.xml #generated:19
+# view res/collapsing_toolbar/reset_senha.xml #generated:48
+# view small-v4/res/collapsing_toolbar-small-v4/activity_login.xml #generated:60
+# view small-v4/res/collapsing_toolbar-small-v4/activity_login.xml #generated:79
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:59
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:78
 -keep class android.support.design.widget.TextInputLayout {
     <init>(...);
 }
 
-# view large-v4/res/layout-large-v4/dialog_collection.xml #generated:8
-# view res/layout/activity_epsodios.xml #generated:20
-# view res/layout/activity_favorite.xml #generated:20
-# view res/layout/activity_filme.xml #generated:63
-# view res/layout/activity_main.xml #generated:19
-# view res/layout/activity_main.xml #generated:67
-# view res/layout/activity_person.xml #generated:24
-# view res/layout/activity_scroll_poster.xml #generated:15
-# view res/layout/activity_usuario_list.xml #generated:21
-# view res/layout/dialog_collection.xml #generated:8
-# view res/layout/tvserie_activity.xml #generated:17
-# view small-v4/res/layout-small-v4/dialog_collection.xml #generated:8
-# view xlarge-v4/res/layout-xlarge-v4/dialog_collection.xml #generated:8
+# view large-v4/res/collapsing_toolbar-large-v4/dialog_collection.xml #generated:8
+# view res/collapsing_toolbar/activity_epsodios.xml #generated:20
+# view res/collapsing_toolbar/activity_favorite.xml #generated:20
+# view res/collapsing_toolbar/activity_filme.xml #generated:63
+# view res/collapsing_toolbar/activity_main.xml #generated:19
+# view res/collapsing_toolbar/activity_main.xml #generated:67
+# view res/collapsing_toolbar/activity_person.xml #generated:24
+# view res/collapsing_toolbar/activity_scroll_poster.xml #generated:15
+# view res/collapsing_toolbar/activity_usuario_list.xml #generated:21
+# view res/collapsing_toolbar/dialog_collection.xml #generated:8
+# view res/collapsing_toolbar/tvserie_activity.xml #generated:17
+# view small-v4/res/collapsing_toolbar-small-v4/dialog_collection.xml #generated:8
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/dialog_collection.xml #generated:8
 -keep class android.support.v4.view.ViewPager {
     <init>(...);
 }
 
-# view res/layout/activity_filme.xml #generated:2
-# view res/layout/activity_list_main.xml #generated:2
-# view res/layout/activity_main.xml #generated:2
-# view res/layout/search_layout.xml #generated:2
-# view res/layout/tvserie_activity.xml #generated:2
+# view res/collapsing_toolbar/activity_filme.xml #generated:2
+# view res/collapsing_toolbar/activity_list_main.xml #generated:2
+# view res/collapsing_toolbar/activity_main.xml #generated:2
+# view res/collapsing_toolbar/search_layout.xml #generated:2
+# view res/collapsing_toolbar/tvserie_activity.xml #generated:2
 -keep class android.support.v4.widget.DrawerLayout {
     <init>(...);
 }
 
-# view 800x480/res/layout-800x480/tvshow_info.xml #generated:8
-# view 800x600/res/layout-800x600/tvshow_info.xml #generated:8
-# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:8
-# view res/layout/abc_alert_dialog_material.xml #generated:41
-# view res/layout/activity_filme.xml #generated:17
-# view res/layout/tvshow_info.xml #generated:8
-# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:8
-# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:8
+# view 800x480/res/collapsing_toolbar-800x480/tvshow_info.xml #generated:8
+# view 800x600/res/collapsing_toolbar-800x600/tvshow_info.xml #generated:8
+# view large-v4/res/collapsing_toolbar-large-v4/tvshow_info.xml #generated:8
+# view res/collapsing_toolbar/abc_alert_dialog_material.xml #generated:41
+# view res/collapsing_toolbar/activity_filme.xml #generated:17
+# view res/collapsing_toolbar/tvshow_info.xml #generated:8
+# view small-v4/res/collapsing_toolbar-small-v4/tvshow_info.xml #generated:8
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/tvshow_info.xml #generated:8
 -keep class android.support.v4.widget.NestedScrollView {
     <init>(...);
 }
 
-# view res/layout/abc_alert_dialog_button_bar_material.xml #generated:43
-# view res/layout/abc_alert_dialog_material.xml #generated:52
-# view res/layout/abc_alert_dialog_material.xml #generated:66
-# view res/layout/abc_alert_dialog_title_material.xml #generated:56
+# view res/collapsing_toolbar/abc_alert_dialog_button_bar_material.xml #generated:43
+# view res/collapsing_toolbar/abc_alert_dialog_material.xml #generated:52
+# view res/collapsing_toolbar/abc_alert_dialog_material.xml #generated:66
+# view res/collapsing_toolbar/abc_alert_dialog_title_material.xml #generated:56
 -keep class android.support.v4.widget.Space {
     <init>(...);
 }
 
-# view res/layout/activity_lista.xml #generated:11
-# view res/layout/activity_site.xml #generated:5
-# view res/layout/fragment_list_filme.xml #generated:15
-# view res/layout/produtora_layout.xml #generated:11
-# view res/layout/search_layout.xml #generated:36
+# view res/collapsing_toolbar/activity_lista.xml #generated:11
+# view res/collapsing_toolbar/activity_site.xml #generated:5
+# view res/collapsing_toolbar/fragment_list_filme.xml #generated:15
+# view res/collapsing_toolbar/produtora_layout.xml #generated:11
+# view res/collapsing_toolbar/search_layout.xml #generated:36
 -keep class android.support.v4.widget.SwipeRefreshLayout {
     <init>(...);
 }
 
-# view res/layout/abc_select_dialog_material.xml #generated:23
+# view res/collapsing_toolbar/abc_select_dialog_material.xml #generated:23
 -keep class android.support.v7.app.AlertController$RecycleListView {
     <init>(...);
 }
 
-# view res/layout/abc_action_menu_item_layout.xml #generated:17
+# view res/collapsing_toolbar/abc_action_menu_item_layout.xml #generated:17
 -keep class android.support.v7.view.menu.ActionMenuItemView {
     <init>(...);
 }
 
-# view res/layout/abc_expanded_menu_layout.xml #generated:17
+# view res/collapsing_toolbar/abc_expanded_menu_layout.xml #generated:17
 -keep class android.support.v7.view.menu.ExpandedMenuView {
     <init>(...);
 }
 
-# view res/layout/abc_list_menu_item_layout.xml #generated:17
-# view res/layout/abc_popup_menu_item_layout.xml #generated:17
+# view res/collapsing_toolbar/abc_list_menu_item_layout.xml #generated:17
+# view res/collapsing_toolbar/abc_popup_menu_item_layout.xml #generated:17
 -keep class android.support.v7.view.menu.ListMenuItemView {
     <init>(...);
 }
 
-# view res/layout/abc_screen_toolbar.xml #generated:27
+# view res/collapsing_toolbar/abc_screen_toolbar.xml #generated:27
 -keep class android.support.v7.widget.ActionBarContainer {
     <init>(...);
 }
 
-# view res/layout/abc_action_mode_bar.xml #generated:19
-# view res/layout/abc_screen_toolbar.xml #generated:43
+# view res/collapsing_toolbar/abc_action_mode_bar.xml #generated:19
+# view res/collapsing_toolbar/abc_screen_toolbar.xml #generated:43
 -keep class android.support.v7.widget.ActionBarContextView {
     <init>(...);
 }
 
-# view res/layout/abc_screen_toolbar.xml #generated:17
+# view res/collapsing_toolbar/abc_screen_toolbar.xml #generated:17
 -keep class android.support.v7.widget.ActionBarOverlayLayout {
     <init>(...);
 }
 
-# view res/layout/abc_action_menu_layout.xml #generated:17
+# view res/collapsing_toolbar/abc_action_menu_layout.xml #generated:17
 -keep class android.support.v7.widget.ActionMenuView {
     <init>(...);
 }
 
-# view res/layout/abc_activity_chooser_view.xml #generated:19
+# view res/collapsing_toolbar/abc_activity_chooser_view.xml #generated:19
 -keep class android.support.v7.widget.ActivityChooserView$InnerLayout {
     <init>(...);
 }
 
-# view res/layout/abc_alert_dialog_material.xml #generated:18
+# view res/collapsing_toolbar/abc_alert_dialog_material.xml #generated:18
 -keep class android.support.v7.widget.AlertDialogLayout {
     <init>(...);
 }
 
-# view res/layout/com_facebook_device_auth_dialog_fragment.xml #generated:45
+# view res/collapsing_toolbar/com_facebook_device_auth_dialog_fragment.xml #generated:45
 -keep class android.support.v7.widget.AppCompatImageView {
     <init>(...);
 }
 
-# view res/layout/epsodio_fragment.xml #generated:155
+# view res/collapsing_toolbar/epsodio_fragment.xml #generated:155
 -keep class android.support.v7.widget.AppCompatRatingBar {
     <init>(...);
 }
 
-# view res/layout/abc_alert_dialog_button_bar_material.xml #generated:26
+# view res/collapsing_toolbar/abc_alert_dialog_button_bar_material.xml #generated:26
 -keep class android.support.v7.widget.ButtonBarLayout {
     <init>(...);
 }
 
-# view large-v4/res/layout-large-v4/actor_netflix_list_adapter.xml #generated:2
-# view large-v4/res/layout-large-v4/adapter_filmes_list.xml #generated:2
-# view large-v4/res/layout-large-v4/adapter_person_popular.xml #generated:2
-# view large-v4/res/layout-large-v4/adapter_produtora.xml #generated:2
-# view large-v4/res/layout-large-v4/crews_filmes_layout.xml #generated:2
-# view large-v4/res/layout-large-v4/person_movie_filmes_layout.xml #generated:2
-# view res/layout/actor_netflix_list_adapter.xml #generated:2
-# view res/layout/adapter_filmes_list.xml #generated:2
-# view res/layout/adapter_person_popular.xml #generated:2
-# view res/layout/adapter_produtora.xml #generated:2
-# view res/layout/adapter_similares.xml #generated:2
-# view res/layout/calendar_adapter.xml #generated:2
-# view res/layout/com_facebook_device_auth_dialog_fragment.xml #generated:22
-# view res/layout/crews_filmes_layout.xml #generated:2
-# view res/layout/crews_list_adapter.xml #generated:2
-# view res/layout/desenvolvimento_adapter_layout.xml #generated:7
-# view res/layout/elenco_list_adapter.xml #generated:2
-# view res/layout/lista.xml #generated:2
-# view res/layout/person_movie_filmes_layout.xml #generated:2
-# view res/layout/reviews.xml #generated:2
-# view res/layout/search_list_adapter.xml #generated:2
-# view res/layout/season_layout.xml #generated:2
-# view res/layout/seguindo_tvshow.xml #generated:2
-# view res/layout/temporada_epsodio_layout.xml #generated:2
-# view res/layout/usuario_list_adapter.xml #generated:2
-# view small-v4/res/layout-small-v4/actor_netflix_list_adapter.xml #generated:2
-# view small-v4/res/layout-small-v4/adapter_filmes_list.xml #generated:2
-# view small-v4/res/layout-small-v4/adapter_person_popular.xml #generated:2
-# view small-v4/res/layout-small-v4/adapter_produtora.xml #generated:2
-# view small-v4/res/layout-small-v4/crews_filmes_layout.xml #generated:2
-# view small-v4/res/layout-small-v4/person_movie_filmes_layout.xml #generated:2
-# view xlarge-v4/res/layout-xlarge-v4/actor_netflix_list_adapter.xml #generated:2
-# view xlarge-v4/res/layout-xlarge-v4/adapter_filmes_list.xml #generated:2
-# view xlarge-v4/res/layout-xlarge-v4/adapter_person_popular.xml #generated:2
-# view xlarge-v4/res/layout-xlarge-v4/adapter_produtora.xml #generated:2
-# view xlarge-v4/res/layout-xlarge-v4/crews_filmes_layout.xml #generated:2
-# view xlarge-v4/res/layout-xlarge-v4/person_movie_filmes_layout.xml #generated:2
+# view large-v4/res/collapsing_toolbar-large-v4/actor_netflix_list_adapter.xml #generated:2
+# view large-v4/res/collapsing_toolbar-large-v4/adapter_filmes_list.xml #generated:2
+# view large-v4/res/collapsing_toolbar-large-v4/adapter_person_popular.xml #generated:2
+# view large-v4/res/collapsing_toolbar-large-v4/adapter_produtora.xml #generated:2
+# view large-v4/res/collapsing_toolbar-large-v4/crews_filmes_layout.xml #generated:2
+# view large-v4/res/collapsing_toolbar-large-v4/person_movie_filmes_layout.xml #generated:2
+# view res/collapsing_toolbar/actor_netflix_list_adapter.xml #generated:2
+# view res/collapsing_toolbar/adapter_filmes_list.xml #generated:2
+# view res/collapsing_toolbar/adapter_person_popular.xml #generated:2
+# view res/collapsing_toolbar/adapter_produtora.xml #generated:2
+# view res/collapsing_toolbar/adapter_similares.xml #generated:2
+# view res/collapsing_toolbar/calendar_adapter.xml #generated:2
+# view res/collapsing_toolbar/com_facebook_device_auth_dialog_fragment.xml #generated:22
+# view res/collapsing_toolbar/crews_filmes_layout.xml #generated:2
+# view res/collapsing_toolbar/crews_list_adapter.xml #generated:2
+# view res/collapsing_toolbar/desenvolvimento_adapter_layout.xml #generated:7
+# view res/collapsing_toolbar/elenco_list_adapter.xml #generated:2
+# view res/collapsing_toolbar/lista.xml #generated:2
+# view res/collapsing_toolbar/person_movie_filmes_layout.xml #generated:2
+# view res/collapsing_toolbar/reviews.xml #generated:2
+# view res/collapsing_toolbar/search_list_adapter.xml #generated:2
+# view res/collapsing_toolbar/season_layout.xml #generated:2
+# view res/collapsing_toolbar/seguindo_tvshow.xml #generated:2
+# view res/collapsing_toolbar/temporada_epsodio_layout.xml #generated:2
+# view res/collapsing_toolbar/usuario_list_adapter.xml #generated:2
+# view small-v4/res/collapsing_toolbar-small-v4/actor_netflix_list_adapter.xml #generated:2
+# view small-v4/res/collapsing_toolbar-small-v4/adapter_filmes_list.xml #generated:2
+# view small-v4/res/collapsing_toolbar-small-v4/adapter_person_popular.xml #generated:2
+# view small-v4/res/collapsing_toolbar-small-v4/adapter_produtora.xml #generated:2
+# view small-v4/res/collapsing_toolbar-small-v4/crews_filmes_layout.xml #generated:2
+# view small-v4/res/collapsing_toolbar-small-v4/person_movie_filmes_layout.xml #generated:2
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/actor_netflix_list_adapter.xml #generated:2
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/adapter_filmes_list.xml #generated:2
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/adapter_person_popular.xml #generated:2
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/adapter_produtora.xml #generated:2
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/crews_filmes_layout.xml #generated:2
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/person_movie_filmes_layout.xml #generated:2
 -keep class android.support.v7.widget.CardView {
     <init>(...);
 }
 
-# view res/layout/abc_screen_content_include.xml #generated:19
+# view res/collapsing_toolbar/abc_screen_content_include.xml #generated:19
 -keep class android.support.v7.widget.ContentFrameLayout {
     <init>(...);
 }
 
-# view res/layout/abc_alert_dialog_title_material.xml #generated:45
+# view res/collapsing_toolbar/abc_alert_dialog_title_material.xml #generated:45
 -keep class android.support.v7.widget.DialogTitle {
     <init>(...);
 }
 
-# view res/layout/abc_screen_simple_overlay_action_mode.xml #generated:23
+# view res/collapsing_toolbar/abc_screen_simple_overlay_action_mode.xml #generated:23
 -keep class android.support.v7.widget.FitWindowsFrameLayout {
     <init>(...);
 }
 
-# view res/layout/abc_dialog_title_material.xml #generated:22
-# view res/layout/abc_screen_simple.xml #generated:17
+# view res/collapsing_toolbar/abc_dialog_title_material.xml #generated:22
+# view res/collapsing_toolbar/abc_screen_simple.xml #generated:17
 -keep class android.support.v7.widget.FitWindowsLinearLayout {
     <init>(...);
 }
 
-# view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:284
-# view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:303
-# view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:321
-# view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:339
-# view 800x480/res/layout-800x480/tvshow_info.xml #generated:279
-# view 800x480/res/layout-800x480/tvshow_info.xml #generated:297
-# view 800x480/res/layout-800x480/tvshow_info.xml #generated:315
-# view 800x600/res/layout-800x600/tvshow_info.xml #generated:279
-# view 800x600/res/layout-800x600/tvshow_info.xml #generated:297
-# view 800x600/res/layout-800x600/tvshow_info.xml #generated:315
-# view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:284
-# view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:303
-# view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:321
-# view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:339
-# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:279
-# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:297
-# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:315
-# view res/layout/activity_crews.xml #generated:32
-# view res/layout/activity_elenco.xml #generated:38
-# view res/layout/activity_lista.xml #generated:21
-# view res/layout/activity_person_crews.xml #generated:12
-# view res/layout/activity_person_imagem.xml #generated:12
-# view res/layout/activity_person_layout.xml #generated:31
-# view res/layout/activity_person_movies.xml #generated:12
-# view res/layout/activity_person_netflix.xml #generated:33
-# view res/layout/activity_person_popular.xml #generated:16
-# view res/layout/activity_person_tvshow.xml #generated:11
-# view res/layout/activity_reviews.xml #generated:32
-# view res/layout/activity_similares.xml #generated:37
-# view res/layout/desenvolvimento_layout.xml #generated:10
-# view res/layout/filmes_main.xml #generated:41
-# view res/layout/filmes_main.xml #generated:57
-# view res/layout/fragment_container_filme.xml #generated:284
-# view res/layout/fragment_container_filme.xml #generated:303
-# view res/layout/fragment_container_filme.xml #generated:321
-# view res/layout/fragment_container_filme.xml #generated:339
-# view res/layout/fragment_list_filme.xml #generated:20
-# view res/layout/poster_grid.xml #generated:19
-# view res/layout/produtora_layout.xml #generated:17
-# view res/layout/search_layout.xml #generated:42
-# view res/layout/seguindo.xml #generated:16
-# view res/layout/temporada_layout.xml #generated:12
-# view res/layout/temporadas.xml #generated:7
-# view res/layout/tvshow_info.xml #generated:279
-# view res/layout/tvshow_info.xml #generated:297
-# view res/layout/tvshow_info.xml #generated:315
-# view res/layout/tvshow_main.xml #generated:41
-# view res/layout/tvshow_main.xml #generated:56
-# view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:284
-# view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:303
-# view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:321
-# view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:339
-# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:279
-# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:297
-# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:315
-# view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:284
-# view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:303
-# view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:321
-# view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:339
-# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:280
-# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:298
-# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:316
+# view 800x480/res/collapsing_toolbar-800x480/fragment_container_filme.xml #generated:284
+# view 800x480/res/collapsing_toolbar-800x480/fragment_container_filme.xml #generated:303
+# view 800x480/res/collapsing_toolbar-800x480/fragment_container_filme.xml #generated:321
+# view 800x480/res/collapsing_toolbar-800x480/fragment_container_filme.xml #generated:339
+# view 800x480/res/collapsing_toolbar-800x480/tvshow_info.xml #generated:279
+# view 800x480/res/collapsing_toolbar-800x480/tvshow_info.xml #generated:297
+# view 800x480/res/collapsing_toolbar-800x480/tvshow_info.xml #generated:315
+# view 800x600/res/collapsing_toolbar-800x600/tvshow_info.xml #generated:279
+# view 800x600/res/collapsing_toolbar-800x600/tvshow_info.xml #generated:297
+# view 800x600/res/collapsing_toolbar-800x600/tvshow_info.xml #generated:315
+# view large-v4/res/collapsing_toolbar-large-v4/fragment_container_filme.xml #generated:284
+# view large-v4/res/collapsing_toolbar-large-v4/fragment_container_filme.xml #generated:303
+# view large-v4/res/collapsing_toolbar-large-v4/fragment_container_filme.xml #generated:321
+# view large-v4/res/collapsing_toolbar-large-v4/fragment_container_filme.xml #generated:339
+# view large-v4/res/collapsing_toolbar-large-v4/tvshow_info.xml #generated:279
+# view large-v4/res/collapsing_toolbar-large-v4/tvshow_info.xml #generated:297
+# view large-v4/res/collapsing_toolbar-large-v4/tvshow_info.xml #generated:315
+# view res/collapsing_toolbar/activity_crews.xml #generated:32
+# view res/collapsing_toolbar/activity_elenco.xml #generated:38
+# view res/collapsing_toolbar/activity_lista.xml #generated:21
+# view res/collapsing_toolbar/activity_person_crews.xml #generated:12
+# view res/collapsing_toolbar/activity_person_imagem.xml #generated:12
+# view res/collapsing_toolbar/activity_person_layout.xml #generated:31
+# view res/collapsing_toolbar/activity_person_movies.xml #generated:12
+# view res/collapsing_toolbar/activity_person_netflix.xml #generated:33
+# view res/collapsing_toolbar/activity_person_popular.xml #generated:16
+# view res/collapsing_toolbar/activity_person_tvshow.xml #generated:11
+# view res/collapsing_toolbar/activity_reviews.xml #generated:32
+# view res/collapsing_toolbar/activity_similares.xml #generated:37
+# view res/collapsing_toolbar/desenvolvimento_layout.xml #generated:10
+# view res/collapsing_toolbar/filmes_main.xml #generated:41
+# view res/collapsing_toolbar/filmes_main.xml #generated:57
+# view res/collapsing_toolbar/fragment_container_filme.xml #generated:284
+# view res/collapsing_toolbar/fragment_container_filme.xml #generated:303
+# view res/collapsing_toolbar/fragment_container_filme.xml #generated:321
+# view res/collapsing_toolbar/fragment_container_filme.xml #generated:339
+# view res/collapsing_toolbar/fragment_list_filme.xml #generated:20
+# view res/collapsing_toolbar/poster_grid.xml #generated:19
+# view res/collapsing_toolbar/produtora_layout.xml #generated:17
+# view res/collapsing_toolbar/search_layout.xml #generated:42
+# view res/collapsing_toolbar/seguindo.xml #generated:16
+# view res/collapsing_toolbar/temporada_layout.xml #generated:12
+# view res/collapsing_toolbar/temporadas.xml #generated:7
+# view res/collapsing_toolbar/tvshow_info.xml #generated:279
+# view res/collapsing_toolbar/tvshow_info.xml #generated:297
+# view res/collapsing_toolbar/tvshow_info.xml #generated:315
+# view res/collapsing_toolbar/tvshow_main.xml #generated:41
+# view res/collapsing_toolbar/tvshow_main.xml #generated:56
+# view small-v4/res/collapsing_toolbar-small-v4/fragment_container_filme.xml #generated:284
+# view small-v4/res/collapsing_toolbar-small-v4/fragment_container_filme.xml #generated:303
+# view small-v4/res/collapsing_toolbar-small-v4/fragment_container_filme.xml #generated:321
+# view small-v4/res/collapsing_toolbar-small-v4/fragment_container_filme.xml #generated:339
+# view small-v4/res/collapsing_toolbar-small-v4/tvshow_info.xml #generated:279
+# view small-v4/res/collapsing_toolbar-small-v4/tvshow_info.xml #generated:297
+# view small-v4/res/collapsing_toolbar-small-v4/tvshow_info.xml #generated:315
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/fragment_container_filme.xml #generated:284
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/fragment_container_filme.xml #generated:303
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/fragment_container_filme.xml #generated:321
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/fragment_container_filme.xml #generated:339
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/tvshow_info.xml #generated:280
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/tvshow_info.xml #generated:298
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/tvshow_info.xml #generated:316
 -keep class android.support.v7.widget.RecyclerView {
     <init>(...);
 }
 
-# view res/layout/abc_search_view.xml #generated:75
+# view res/collapsing_toolbar/abc_search_view.xml #generated:75
 -keep class android.support.v7.widget.SearchView$SearchAutoComplete {
     <init>(...);
 }
 
-# view res/layout/abc_screen_toolbar.xml #generated:36
-# view res/layout/activity_filme.xml #generated:72
-# view res/layout/activity_list_main.xml #generated:20
-# view res/layout/activity_main.xml #generated:49
-# view res/layout/include_toolbar.xml #generated:1
-# view res/layout/produtora_layout.xml #generated:74
-# view res/layout/tvserie_activity.xml #generated:56
+# view res/collapsing_toolbar/abc_screen_toolbar.xml #generated:36
+# view res/collapsing_toolbar/activity_filme.xml #generated:72
+# view res/collapsing_toolbar/activity_list_main.xml #generated:20
+# view res/collapsing_toolbar/activity_main.xml #generated:49
+# view res/collapsing_toolbar/include_toolbar.xml #generated:1
+# view res/collapsing_toolbar/produtora_layout.xml #generated:74
+# view res/collapsing_toolbar/tvserie_activity.xml #generated:56
 -keep class android.support.v7.widget.Toolbar {
     <init>(...);
 }
 
-# view res/layout/abc_screen_simple.xml #generated:25
-# view res/layout/abc_screen_simple_overlay_action_mode.xml #generated:32
+# view res/collapsing_toolbar/abc_screen_simple.xml #generated:25
+# view res/collapsing_toolbar/abc_screen_simple_overlay_action_mode.xml #generated:32
 -keep class android.support.v7.widget.ViewStubCompat {
     <init>(...);
 }
@@ -1053,20 +1053,20 @@
     <init>(...);
 }
 
-# view res/layout/fab_filme.xml #generated:14
-# view res/layout/fab_filme.xml #generated:22
-# view res/layout/fab_filme.xml #generated:30
--keep class com.github.clans.fab.FloatingActionButton {
+# view res/collapsing_toolbar/fab_filme.xml #generated:14
+# view res/collapsing_toolbar/fab_filme.xml #generated:22
+# view res/collapsing_toolbar/fab_filme.xml #generated:30
+-keep class com.github.clans.fab_menu.FloatingActionButton {
     <init>(...);
 }
 
-# view res/layout/fab_filme.xml #generated:2
--keep class com.github.clans.fab.FloatingActionMenu {
+# view res/collapsing_toolbar/fab_filme.xml #generated:2
+-keep class com.github.clans.fab_menu.FloatingActionMenu {
     <init>(...);
 }
 
-# view res/layout/intro_layout.xml #generated:9
-# view res/layout/intro_layout2.xml #generated:14
+# view res/collapsing_toolbar/intro_layout.xml #generated:9
+# view res/collapsing_toolbar/intro_layout2.xml #generated:14
 -keep class com.github.paolorotolo.appintro.AppIntroViewPager {
     <init>(...);
 }
@@ -1076,25 +1076,25 @@
     <init>(...);
 }
 
-# view res/layout/activity_crews.xml #generated:43
-# view res/layout/activity_elenco.xml #generated:50
-# view res/layout/activity_favorite.xml #generated:27
-# view res/layout/activity_list_main.xml #generated:37
-# view res/layout/activity_lista.xml #generated:32
-# view res/layout/activity_person_crews.xml #generated:30
-# view res/layout/activity_person_layout.xml #generated:42
-# view res/layout/activity_person_movies.xml #generated:30
-# view res/layout/activity_person_netflix.xml #generated:54
-# view res/layout/activity_person_popular.xml #generated:25
-# view res/layout/activity_person_tvshow.xml #generated:29
-# view res/layout/activity_reviews.xml #generated:10
-# view res/layout/activity_similares.xml #generated:47
-# view res/layout/activity_usuario_list.xml #generated:32
-# view res/layout/epsodio_fragment.xml #generated:272
-# view res/layout/poster_grid.xml #generated:9
-# view res/layout/produtora_layout.xml #generated:28
-# view res/layout/search_layout.xml #generated:66
-# view res/layout/temporada_layout.xml #generated:18
+# view res/collapsing_toolbar/activity_crews.xml #generated:43
+# view res/collapsing_toolbar/activity_elenco.xml #generated:50
+# view res/collapsing_toolbar/activity_favorite.xml #generated:27
+# view res/collapsing_toolbar/activity_list_main.xml #generated:37
+# view res/collapsing_toolbar/activity_lista.xml #generated:32
+# view res/collapsing_toolbar/activity_person_crews.xml #generated:30
+# view res/collapsing_toolbar/activity_person_layout.xml #generated:42
+# view res/collapsing_toolbar/activity_person_movies.xml #generated:30
+# view res/collapsing_toolbar/activity_person_netflix.xml #generated:54
+# view res/collapsing_toolbar/activity_person_popular.xml #generated:25
+# view res/collapsing_toolbar/activity_person_tvshow.xml #generated:29
+# view res/collapsing_toolbar/activity_reviews.xml #generated:10
+# view res/collapsing_toolbar/activity_similares.xml #generated:47
+# view res/collapsing_toolbar/activity_usuario_list.xml #generated:32
+# view res/collapsing_toolbar/epsodio_fragment.xml #generated:272
+# view res/collapsing_toolbar/poster_grid.xml #generated:9
+# view res/collapsing_toolbar/produtora_layout.xml #generated:28
+# view res/collapsing_toolbar/search_layout.xml #generated:66
+# view res/collapsing_toolbar/temporada_layout.xml #generated:18
 -keep class com.google.android.gms.ads.AdView {
     <init>(...);
 }
@@ -1114,9 +1114,9 @@
     <init>(...);
 }
 
-# view large-v4/res/layout-large-v4/activity_login.xml #generated:140
-# view res/layout/activity_login.xml #generated:137
-# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:142
+# view large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:140
+# view res/collapsing_toolbar/activity_login.xml #generated:137
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:142
 -keep class com.google.android.gms.common.SignInButton {
     <init>(...);
 }
@@ -1146,12 +1146,12 @@
     <init>(...);
 }
 
-# view res/layout/youtube_layout.xml #generated:9
+# view res/collapsing_toolbar/youtube_layout.xml #generated:9
 -keep class com.google.android.youtube.player.YouTubePlayerView {
     <init>(...);
 }
 
-# view res/layout/scroll_trailer.xml #generated:17
+# view res/collapsing_toolbar/scroll_trailer.xml #generated:17
 -keep class com.google.android.youtube.player.YouTubeThumbnailView {
     <init>(...);
 }
@@ -1221,24 +1221,24 @@
     <init>(...);
 }
 
-# view res/layout/activity_main.xml #generated:76
+# view res/collapsing_toolbar/activity_main.xml #generated:76
 -keep class com.viewpagerindicator.CirclePageIndicator {
     <init>(...);
 }
 
-# view res/layout/activity_scroll_poster.xml #generated:7
+# view res/collapsing_toolbar/activity_scroll_poster.xml #generated:7
 -keep class com.viewpagerindicator.LinePageIndicator {
     <init>(...);
 }
 
-# view large-v4/res/layout-large-v4/activity_login.xml #generated:147
-# view large-v4/res/layout-large-v4/activity_login.xml #generated:167
-# view res/layout/activity_login.xml #generated:144
-# view res/layout/activity_login.xml #generated:164
-# view small-v4/res/layout-small-v4/activity_login.xml #generated:147
-# view small-v4/res/layout-small-v4/activity_login.xml #generated:167
-# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:149
-# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:169
+# view large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:147
+# view large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:167
+# view res/collapsing_toolbar/activity_login.xml #generated:144
+# view res/collapsing_toolbar/activity_login.xml #generated:164
+# view small-v4/res/collapsing_toolbar-small-v4/activity_login.xml #generated:147
+# view small-v4/res/collapsing_toolbar-small-v4/activity_login.xml #generated:167
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:149
+# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:169
 -keep class mehdi.sakout.fancybuttons.FancyButton {
     <init>(...);
 }
@@ -1268,22 +1268,22 @@
     <init>(...);
 }
 
-# onClick large-v4/res/layout-large-v4/activity_login.xml #generated:124
-# onClick large-v4/res/layout-large-v4/activity_login.xml #generated:147
-# onClick large-v4/res/layout-large-v4/activity_login.xml #generated:167
-# onClick large-v4/res/layout-large-v4/activity_login.xml #generated:95
-# onClick res/layout/activity_login.xml #generated:122
-# onClick res/layout/activity_login.xml #generated:144
-# onClick res/layout/activity_login.xml #generated:164
-# onClick res/layout/activity_login.xml #generated:95
-# onClick small-v4/res/layout-small-v4/activity_login.xml #generated:125
-# onClick small-v4/res/layout-small-v4/activity_login.xml #generated:147
-# onClick small-v4/res/layout-small-v4/activity_login.xml #generated:167
-# onClick small-v4/res/layout-small-v4/activity_login.xml #generated:98
-# onClick xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:126
-# onClick xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:149
-# onClick xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:169
-# onClick xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:97
+# onClick large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:124
+# onClick large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:147
+# onClick large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:167
+# onClick large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:95
+# onClick res/collapsing_toolbar/activity_login.xml #generated:122
+# onClick res/collapsing_toolbar/activity_login.xml #generated:144
+# onClick res/collapsing_toolbar/activity_login.xml #generated:164
+# onClick res/collapsing_toolbar/activity_login.xml #generated:95
+# onClick small-v4/res/collapsing_toolbar-small-v4/activity_login.xml #generated:125
+# onClick small-v4/res/collapsing_toolbar-small-v4/activity_login.xml #generated:147
+# onClick small-v4/res/collapsing_toolbar-small-v4/activity_login.xml #generated:167
+# onClick small-v4/res/collapsing_toolbar-small-v4/activity_login.xml #generated:98
+# onClick xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:126
+# onClick xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:149
+# onClick xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:169
+# onClick xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:97
 -keepclassmembers class * {
     *** onclick(...);
 }

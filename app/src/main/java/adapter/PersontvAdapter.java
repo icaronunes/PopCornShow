@@ -17,8 +17,8 @@ import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import activity.FilmeActivity;
-import activity.TvShowActivity;
+import filme.activity.FilmeActivity;
+import tvshow.activity.TvShowActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.people.PersonCredit;
 import info.movito.themoviedbapi.model.people.PersonCredits;

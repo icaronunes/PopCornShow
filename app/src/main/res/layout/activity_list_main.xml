@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:layout="@layout/fragment_list_filme" />
+                tools:collapsing_toolbar="@collapsing_toolbar/fragment_list_filme" />
 
         <!--<com.google.android.gms.ads.AdView-->
             <!--android:id="@+id/adView"-->

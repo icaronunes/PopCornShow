@@ -1,6 +1,6 @@
 package adapter
 
-import activity.FilmeActivity
+import filme.activity.FilmeActivity
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable

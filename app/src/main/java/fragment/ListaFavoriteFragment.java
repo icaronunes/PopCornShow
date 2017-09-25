@@ -26,13 +26,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.Serializable;
 import java.util.List;
 
-import activity.FilmeActivity;
-import activity.TvShowActivity;
+import filme.activity.FilmeActivity;
+import tvshow.activity.TvShowActivity;
 import adapter.ListaFilmeAdapter;
 import adapter.ListaTvShowAdapter;
 import br.com.icaro.filme.R;
 import domain.FilmeDB;
 import domain.TvshowDB;
+import tvshow.fragment.TvShowFragment;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -163,7 +164,7 @@ public class ListaFavoriteFragment extends Fragment {
                 ImageView imageView = (ImageView) view;
                 int color = UtilsApp.loadPalette(imageView);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
-                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), tvSeries.get(position).getExternalIds().getId());
+                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), 1 ); // tvSeries.get(position).getExternalIds().getId());
                 intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), tvSeries.get(position).getTitle());
                 startActivity(intent);
 
@@ -199,7 +200,7 @@ public class ListaFavoriteFragment extends Fragment {
 
                                 DatabaseReference favoriteTv = database.getReference("users").child(mAuth.getCurrentUser()
                                         .getUid()).child("favorites")
-                                        .child("tvshow").child(String.valueOf(tvshowDB.getExternalIds().getId()));
+                                        .child("tvshow").child(String.valueOf( 1 )); //tvshowDB.getExternalIds().getId()));
 
                                 favoriteTv.setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override

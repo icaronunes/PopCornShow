@@ -435,17 +435,15 @@ public class BaseActivity extends AppCompatActivity {
         Picasso.with(context).load(UtilsApp.getBaseUrlImagem(4) + endereco).into(imageView, new Callback() {
             @Override
             public void onSuccess() {
-                //Log.d(TAG, "salvaImagemMemoriaCache.onSucess");
                 File file = context.getExternalCacheDir();
                 if (file != null)
                 if (!file.exists()) {
                     file.mkdir();
-                    //Log.e("salvarArqNaMemoriaIn", "Directory created");
+
                 }
                 File dir = new File(file, endereco);
                 BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                 if (drawable != null) {
-                    // Log.d(TAG, "salvaImagemMemoriaCache.drawble");
                     Bitmap bitmap = drawable.getBitmap();
                     UtilsApp.writeBitmap(dir, bitmap);
                 }

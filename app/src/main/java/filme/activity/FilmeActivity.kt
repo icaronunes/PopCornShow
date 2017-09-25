@@ -1,5 +1,6 @@
-package activity
+package filme.activity
 
+import activity.BaseActivity
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.app.Dialog
@@ -16,7 +17,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.widget.SearchView
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -30,10 +30,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.crash.FirebaseCrash
 import com.google.firebase.database.*
 import domain.*
-import fragment.FilmeInfoFragment
+import filme.fragment.FilmeInfoFragment
 import fragment.ImagemTopFilmeScrollFragment
 import kotlinx.android.synthetic.main.activity_filme.*
-import kotlinx.android.synthetic.main.fab_filme.*
+import kotlinx.android.synthetic.main.fab_float.*
 import kotlinx.android.synthetic.main.include_progress.*
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -65,9 +65,8 @@ class FilmeActivity : BaseActivity() {
     private var valueEventRated: ValueEventListener? = null
     private var valueEventFavorite: ValueEventListener? = null
 
-    private var numero_rated: Float = 0.toFloat()
+    private var numero_rated: Float = 0.0f
     private var netflix: Netflix? = null
-    private var imdbdb: Imdb? = null
 
     private var subscriptions = CompositeSubscription()
     /**
@@ -85,10 +84,12 @@ class FilmeActivity : BaseActivity() {
         setTitle(" ")
         getExtras()
 
+
         top_img_viewpager.apply {
             setBackgroundColor(color_fundo)
             offscreenPageLimit = 3
         }
+
 
         iniciarFirebases()
         subscriptions = CompositeSubscription()
@@ -110,15 +111,15 @@ class FilmeActivity : BaseActivity() {
                     movieDb = it
                     title = movieDb.title
                     top_img_viewpager?.adapter = ImagemTopFragment(supportFragmentManager)
-                    progress?.visibility = View.INVISIBLE
+                    progress?.visibility = View.GONE
                     setFAB()
                     setFragmentInfo()
                 }, { erro ->
                     Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                    Log.d(javaClass.simpleName, "Erro " + erro.message)
                 })
 
         subscriptions.add(inscricaoMovie)
+
     }
 
     private fun setEventListenerWatch() {
@@ -153,16 +154,16 @@ class FilmeActivity : BaseActivity() {
                     if (dataSnapshot.child(id_filme.toString()).child("nota").exists()) {
                         val nota = dataSnapshot.child(id_filme.toString()).child("nota").value.toString()
                         numero_rated = java.lang.Float.parseFloat(nota)
-                        menu_item_rated!!.labelText = resources.getString(R.string.remover_rated)
+                        menu_item_rated?.labelText = resources.getString(R.string.remover_rated)
                         if (numero_rated == 0f) {
-                            menu_item_rated!!.labelText = resources.getString(R.string.adicionar_rated)
+                            menu_item_rated?.labelText = resources.getString(R.string.adicionar_rated)
                         }
                     }
 
                 } else {
                     addRated = false
                     numero_rated = 0f
-                    menu_item_rated!!.labelText = resources.getString(R.string.adicionar_rated)
+                    menu_item_rated?.labelText = resources.getString(R.string.adicionar_rated)
                 }
             }
 
@@ -222,7 +223,6 @@ class FilmeActivity : BaseActivity() {
         } else {
             id_filme = Integer.parseInt(intent.getStringExtra(Constantes.FILME_ID))
             color_fundo = Integer.parseInt(intent.getStringExtra(Constantes.COLOR_TOP))
-
         }
     }
 
@@ -235,9 +235,10 @@ class FilmeActivity : BaseActivity() {
 
             fab_menu_filme?.alpha = 1.0f
             setColorFab(color_fundo)
-            menu_item_favorite!!.setOnClickListener(addOrRemoveFavorite())
-            menu_item_rated!!.setOnClickListener(RatedFilme())
-            menu_item_watchlist!!.setOnClickListener(addOrRemoveWatch())
+            menu_item_favorite?.setOnClickListener(addOrRemoveFavorite())
+            menu_item_rated?.setOnClickListener(RatedFilme())
+            menu_item_watchlist?.setOnClickListener(addOrRemoveWatch())
+
         } else {
             fab_menu_filme?.alpha = 0.0f
         }
@@ -277,7 +278,7 @@ class FilmeActivity : BaseActivity() {
 
         if (item.itemId == R.id.share) {
 
-            salvaImagemMemoriaCache(this@FilmeActivity, movieDb?.posterPath, object : BaseActivity.SalvarImageShare {
+            salvaImagemMemoriaCache(this@FilmeActivity, movieDb?.posterPath, object : SalvarImageShare {
                 override fun retornaFile(file: File) {
                     val intent = Intent(Intent.ACTION_SEND)
                     intent.type = "message/rfc822"
@@ -285,7 +286,6 @@ class FilmeActivity : BaseActivity() {
                     intent.type = "image/*"
                     intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file))
                     startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar_filme)))
-
                 }
 
                 override fun RetornoFalha() {
@@ -293,8 +293,6 @@ class FilmeActivity : BaseActivity() {
                 }
             })
 
-        } else {
-            Toast.makeText(this@FilmeActivity, resources.getString(R.string.erro_ainda_sem_imagem), Toast.LENGTH_SHORT).show()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -364,7 +362,7 @@ class FilmeActivity : BaseActivity() {
                 val width = resources.getDimensionPixelSize(R.dimen.popup_width) //Criar os Dimen do layout do login - 300dp - 300dp ??
                 val height = resources.getDimensionPixelSize(R.dimen.popup_height_rated)
 
-                alertDialog.window!!.setLayout(width, height)//??????????????
+                alertDialog.window?.setLayout(width, height) //??????????????
                 alertDialog.show()
 
                 if (addRated) {
@@ -381,7 +379,7 @@ class FilmeActivity : BaseActivity() {
                                         resources.getText(R.string.remover_rated), Toast.LENGTH_SHORT).show()
                             }
                     alertDialog.dismiss()
-                    fab_menu_filme?.close(true)
+                    fab_menu_filme.close(true)
                 }
 
                 ok.setOnClickListener(View.OnClickListener {
@@ -419,9 +417,9 @@ class FilmeActivity : BaseActivity() {
 
     private fun setColorFab(color: Int) {
         fab_menu_filme?.menuButtonColorNormal = color
-        menu_item_favorite.colorNormal = color
-        menu_item_watchlist.colorNormal = color
-        menu_item_rated.colorNormal = color
+        menu_item_favorite?.colorNormal = color
+        menu_item_watchlist?.colorNormal = color
+        menu_item_rated?.colorNormal = color
     }
 
     private fun addOrRemoveFavorite(): View.OnClickListener {
@@ -479,8 +477,8 @@ class FilmeActivity : BaseActivity() {
 
     private fun addOrRemoveWatch(): View.OnClickListener {
         return View.OnClickListener {
-            val anim1 = PropertyValuesHolder.ofFloat("scaleX", 1f, 0.0f)
-            val anim2 = PropertyValuesHolder.ofFloat("scaley", 1f, 0.0f)
+            val anim1 = PropertyValuesHolder.ofFloat("scaleX", 1.0f, 0.0f)
+            val anim2 = PropertyValuesHolder.ofFloat("scaley", 1.0f, 0.0f)
             val anim3 = PropertyValuesHolder.ofFloat("scaleX", 0.5f, 1.0f)
             val anim4 = PropertyValuesHolder.ofFloat("scaley", 0.5f, 1.0f)
             val animator = ObjectAnimator
@@ -528,7 +526,6 @@ class FilmeActivity : BaseActivity() {
         val filmeFrag = FilmeInfoFragment()
         val bundle = Bundle()
         bundle.putSerializable(Constantes.FILME, movieDb)
-        bundle.putSerializable(Constantes.NETFLIX, netflix)
         filmeFrag.arguments = bundle
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
