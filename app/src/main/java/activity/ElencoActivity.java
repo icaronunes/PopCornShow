@@ -83,6 +83,7 @@ public class ElencoActivity extends BaseActivity {
     private void getExtras() {
         if (getIntent().getBooleanExtra("notification" , true)) {
             id = getIntent().getIntExtra(Constantes.INSTANCE.getID(), 0);
+            getIntent().hasExtra("tv");
             mediaType = (Multi.MediaType) getIntent().getSerializableExtra(Constantes.INSTANCE.getMEDIATYPE());
             season = getIntent().getIntExtra(Constantes.INSTANCE.getTVSEASONS(), -100);
             title = getIntent().getStringExtra(Constantes.INSTANCE.getNOME());
@@ -153,7 +154,7 @@ public class ElencoActivity extends BaseActivity {
                 if (Multi.MediaType.MOVIE.equals(mediaType)) {
                     TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
                     movies = tmdbMovies.getMovie(id, "en", TmdbMovies.MovieMethod.credits);
-                    //    Log.d("ElencoActivity", "" + movies.getCredits().getCast().size());
+
                 }
                 return null;
             } catch (Exception e){

@@ -317,33 +317,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <Button
-                android:id="@+id/imdb_site"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/ver_imdb"
-                android:textAlignment="center"
-                android:textColor="@color/imdb"
-                android:textSize="@dimen/trade_txt_size_sp_16" />
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/tmdb_site"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/ver_tmdb"
-                android:textAlignment="center"
-                android:textColor="@color/tmdb_site"
-                android:textSize="@dimen/trade_txt_size_sp_16" />
+                <Button
+                    android:id="@+id/imdb_site"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/ver_imdb"
+                    android:textAlignment="center"
+                    android:textColor="@color/imdb"
+                    android:textSize="@dimen/trade_txt_size_sp_16" />
+
+                <Button
+                    android:id="@+id/tmdb_site"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ver_tmdb"
+                    android:textAlignment="center"
+                    android:textColor="@color/tmdb_site"
+                    android:textSize="@dimen/trade_size_dp_16" />
 
 
-            <Button
-                android:id="@+id/netflix"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textColor="@color/netflixColor"
-                android:textSize="@dimen/trade_txt_size_sp_16"
-                tools:text="@string/ver_netflix" />
+                <Button
+                    android:id="@+id/netflix"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ver_netflix"
+                    android:textAlignment="center"
+                    android:textColor="@color/netflixColor"
+                    android:textSize="@dimen/trade_txt_size_sp_16" />
+            </LinearLayout>
 
         </LinearLayout>
 
