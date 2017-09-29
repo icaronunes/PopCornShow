@@ -49,11 +49,14 @@ object Constantes {
     val PREF_ID_GUEST = "pref_guest"
     val GUEST = "guest"
     val GUEST_DATA = "guest_data"
+    val PRODUCAO = "producao"
 
 
+    val ELENCO = "elenco"
     object BuscaConstants {
         val NEWS = 1
         val LOADING =2
+
     }
 
 }

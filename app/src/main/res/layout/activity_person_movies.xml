@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <include layout="@layout/include_toolbar" />
+        <include layout="@layout/include_progress" />
 
         <TextView
             android:id="@+id/sem_filmes"
@@ -27,14 +27,6 @@
             android:textStyle="normal|italic"
             android:visibility="invisible" />
 
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:adSize="SMART_BANNER"
-            android:visibility="gone"
-            app:adUnitId="@string/admob"
-            android:layout_gravity="bottom" />
 
     </FrameLayout>
 

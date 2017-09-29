@@ -17,7 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
@@ -41,7 +40,6 @@ import utils.Constantes;
 import utils.UtilsApp;
 
 import static domain.FilmeService.getTmdbPerson;
-import static java.security.AccessController.getContext;
 
 /**
  * Created by icaro on 18/08/16.
@@ -58,7 +56,6 @@ public class PersonFragment extends Fragment {
     private PersonCredits personCredits, personCreditsTvshow;
     private List<Artwork> artworks;
     private String TAG = this.getClass().getName();
-    private FirebaseAnalytics firebaseAnalytics;
     private Button bt_netflix;
 
     public static PersonFragment newInstance(int aba, int id_person) {
@@ -80,7 +77,6 @@ public class PersonFragment extends Fragment {
             tipo = getArguments().getInt(Constantes.INSTANCE.getABA());
             id_person = getArguments().getInt(Constantes.INSTANCE.getPERSON_ID());
         }
-        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
 
     @Override
@@ -232,18 +228,11 @@ public class PersonFragment extends Fragment {
             homepage.setText(site);
             homepage.setVisibility(View.VISIBLE);
 
-            homepage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getContext(), Site.class);
-                    intent.putExtra(Constantes.INSTANCE.getSITE(), information.getHomepage());
-                    startActivity(intent);
+            homepage.setOnClickListener(view -> {
+                Intent intent = new Intent(getContext(), Site.class);
+                intent.putExtra(Constantes.INSTANCE.getSITE(), information.getHomepage());
+                startActivity(intent);
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString("Site", "Site_Person " + information.getHomepage());
-                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, Site.class.getName());
-                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
-                }
             });
 
         } else {
@@ -274,23 +263,16 @@ public class PersonFragment extends Fragment {
         if (information.getName() != null) {
             imageButtonWiki.setVisibility(View.VISIBLE);
 
-            imageButtonWiki.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final String BASEWIKI = "https://pt.wikipedia.org/wiki/";
-                    String site;
-                    Intent intent = new Intent(getContext(), Site.class);
-                    String nome = information.getName();
-                    site = BASEWIKI.concat(nome.replace(" ", "_"));
+            imageButtonWiki.setOnClickListener(view -> {
+                final String BASEWIKI = "https://pt.wikipedia.org/wiki/";
+                String site;
+                Intent intent = new Intent(getContext(), Site.class);
+                String nome = information.getName();
+                site = BASEWIKI.concat(nome.replace(" ", "_"));
 
-                    intent.putExtra(Constantes.INSTANCE.getSITE(), site);
-                    startActivity(intent);
+                intent.putExtra(Constantes.INSTANCE.getSITE(), site);
+                startActivity(intent);
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString("Site", "Wiki_Person " + site);
-                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, Site.class.getName());
-                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
-                }
             });
         }
 
@@ -316,14 +298,11 @@ public class PersonFragment extends Fragment {
 
 
         bt_netflix.setVisibility(View.VISIBLE);
-        bt_netflix.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        bt_netflix.setOnClickListener(view -> {
 
-                Intent intent = new Intent(getActivity(), ActivityPersonNetflix.class);
-                intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), personPeople.getName());
-                startActivity(intent);
-            }
+            Intent intent = new Intent(getActivity(), ActivityPersonNetflix.class);
+            intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), personPeople.getName());
+            startActivity(intent);
         });
     }
 
@@ -390,7 +369,7 @@ public class PersonFragment extends Fragment {
         }
     }
 
-    /*Refazer metodo. Deve haver jeito melhor*/
+    /* TODO Refazer metodo. Deve haver jeito melhor*/
     private PersonCredits removerDuplicados(PersonCredits credits) {
 
         PersonCredits temp = credits;

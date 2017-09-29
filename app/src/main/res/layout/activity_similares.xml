@@ -14,44 +14,47 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
-        android:id="@+id/linear_similares_layout"
+    <!--<LinearLayout-->
+        <!--android:id="@+id/linear_similares_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/similares_recyckeview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <include layout="@layout/include_progress_horizontal" />
 
         <TextView
             android:id="@+id/text_similares_no_internet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:text="@string/no_internet"
             android:visibility="gone" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent">
+    </FrameLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/similares_recyckeview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-            <include layout="@layout/include_toolbar" />
+    <!--</LinearLayout>-->
 
-        </FrameLayout>
-
-    </LinearLayout>
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"
-        app:adSize="SMART_BANNER"
-        app:adUnitId="@string/admob"
-        android:layout_gravity="bottom" />
+    <!--<com.google.android.gms.ads.AdView-->
+        <!--android:id="@+id/adView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:visibility="gone"-->
+        <!--app:adSize="SMART_BANNER"-->
+        <!--app:adUnitId="@string/admob"-->
+        <!--android:layout_gravity="bottom" />-->
 
 </android.support.design.widget.CoordinatorLayout>

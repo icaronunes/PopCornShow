@@ -29,12 +29,15 @@ import br.com.icaro.filme.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.crash.FirebaseCrash
 import com.google.firebase.database.*
-import domain.*
+import domain.API
+import domain.FilmeDB
+import domain.FilmeService
+import domain.Movie
 import filme.fragment.FilmeInfoFragment
 import fragment.ImagemTopFilmeScrollFragment
 import kotlinx.android.synthetic.main.activity_filme.*
 import kotlinx.android.synthetic.main.fab_float.*
-import kotlinx.android.synthetic.main.include_progress.*
+import kotlinx.android.synthetic.main.include_progress_horizontal.*
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -44,7 +47,6 @@ import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.Date
 
 
 class FilmeActivity : BaseActivity() {
@@ -66,7 +68,6 @@ class FilmeActivity : BaseActivity() {
     private var valueEventFavorite: ValueEventListener? = null
 
     private var numero_rated: Float = 0.0f
-    private var netflix: Netflix? = null
 
     private var subscriptions = CompositeSubscription()
     /**
@@ -111,7 +112,7 @@ class FilmeActivity : BaseActivity() {
                     movieDb = it
                     title = movieDb.title
                     top_img_viewpager?.adapter = ImagemTopFragment(supportFragmentManager)
-                    progress?.visibility = View.GONE
+                    progress_horizontal?.visibility = View.GONE
                     setFAB()
                     setFragmentInfo()
                 }, { erro ->
@@ -155,14 +156,14 @@ class FilmeActivity : BaseActivity() {
                         val nota = dataSnapshot.child(id_filme.toString()).child("nota").value.toString()
                         numero_rated = java.lang.Float.parseFloat(nota)
                         menu_item_rated?.labelText = resources.getString(R.string.remover_rated)
-                        if (numero_rated == 0f) {
+                        if (numero_rated == 0.0f) {
                             menu_item_rated?.labelText = resources.getString(R.string.adicionar_rated)
                         }
                     }
 
                 } else {
                     addRated = false
-                    numero_rated = 0f
+                    numero_rated = 0.0f
                     menu_item_rated?.labelText = resources.getString(R.string.adicionar_rated)
                 }
             }

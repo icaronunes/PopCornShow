@@ -11,5 +11,5 @@ data class Credits(
 	val cast: List<CastItem?>? = null,
 
 	@field:SerializedName("crew")
-	val crew: List<domain.CrewItem?>? = null
+	val crew: List<CrewItem?>? = null
 ): Serializable

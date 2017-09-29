@@ -15,13 +15,12 @@
 
 
         <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
             android:id="@+id/nested"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:layout_anchorGravity="top|bottom"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            >
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -30,10 +29,10 @@
                 <FrameLayout
                     android:id="@+id/filme_container"
                     android:layout_width="match_parent"
-                    android:background="@color/white"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@color/white" />
 
-                <include layout="@layout/include_progress" />
+                <include layout="@layout/include_progress_horizontal" />
 
             </FrameLayout>
 
@@ -54,10 +53,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom"
+                android:background="?attr/colorPrimary"
                 android:fitsSystemWindows="false"
                 app:contentScrim="@android:drawable/screen_background_light_transparent"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                android:background="?attr/colorPrimary">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
                 <android.support.v4.view.ViewPager
@@ -65,8 +64,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="bottom|start"
-                    app:layout_collapseMode="parallax"
-                    android:background="@android:drawable/screen_background_light_transparent" />
+                    android:background="@android:drawable/screen_background_light_transparent"
+                    app:layout_collapseMode="parallax" />
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -79,7 +78,8 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/fab_float"
+        <include
+            layout="@layout/fab_float"
             android:visibility="visible" />
 
     </android.support.design.widget.CoordinatorLayout>

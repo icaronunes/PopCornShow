@@ -36,7 +36,6 @@ import domain.Imdb
 import domain.Movie
 import domain.colecao.Colecao
 import filme.adapter.SimilaresFilmesAdapter
-import info.movito.themoviedbapi.model.Multi
 import kotlinx.android.synthetic.main.fab_float.*
 import kotlinx.android.synthetic.main.fragment_container_filme.*
 import produtora.activity.ProdutoraActivity
@@ -45,6 +44,7 @@ import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import utils.Constantes
 import utils.UtilsApp
+import java.io.Serializable
 import java.text.DecimalFormat
 import java.util.*
 
@@ -121,7 +121,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
         }
 
-        tmdb_site!!.setOnClickListener {
+        tmdb_site?.setOnClickListener {
             val intent = Intent(activity, Site::class.java)
             intent.putExtra(Constantes.SITE,
                     "https://www.themoviedb.org/movie/" + movieDb?.id + "/")
@@ -129,30 +129,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
         }
 
-//        netflix.setOnClickListener(View.OnClickListener {
-//            if (netflixDados == null) {
-//                return@OnClickListener
-//            }
-//
-//            if (netflixDados!!.showId != 0) {
-//                val url = "https://www.netflixDados.com/title/" + netflixDados?.showId
-//                val webpage = Uri.parse(url)
-//                val intent = Intent(Intent.ACTION_VIEW, webpage)
-//                if (intent.resolveActivity(activity.packageManager) != null) {
-//                    startActivity(intent)
-//                }
-//            } else {
-//                val url = "https://www.netflixDados.com/search?q=" + movieDb?.title!!
-//
-//                val webpage = Uri.parse(url)
-//                val intent = Intent(Intent.ACTION_VIEW, webpage)
-//                if (intent.resolveActivity(activity.packageManager) != null) {
-//                    startActivity(intent)
-//                }
-//            }
-//        })
-
-        img_budget.setOnClickListener {
+        img_budget?.setOnClickListener {
 
             if (movieDb?.budget != null) {
                 if (movieDb?.budget!! > 0) {
@@ -172,7 +149,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
             }
         }
 
-        icon_site.setOnClickListener {
+        icon_site?.setOnClickListener {
 
             if (movieDb?.homepage !== "" && movieDb?.homepage != null) {
                 val intent = Intent(context, Site::class.java)
@@ -209,8 +186,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
         textview_elenco.setOnClickListener {
             val intent = Intent(context, ElencoActivity::class.java)
-            intent.putExtra(Constantes.ID, movieDb?.id)
-            intent.putExtra(Constantes.MEDIATYPE, Multi.MediaType.MOVIE)
+            intent.putExtra(Constantes.ELENCO, movieDb?.credits?.cast as  Serializable )
             intent.putExtra(Constantes.NOME, movieDb?.title)
             startActivity(intent)
 
@@ -218,8 +194,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
         textview_crews.setOnClickListener {
             val intent = Intent(context, CrewsActivity::class.java)
-            intent.putExtra(Constantes.ID, movieDb?.id)
-            intent.putExtra(Constantes.MEDIATYPE, Multi.MediaType.MOVIE)
+            intent.putExtra(Constantes.PRODUCAO, movieDb?.credits?.crew  as Serializable)
             intent.putExtra(Constantes.NOME, movieDb?.title)
             startActivity(intent)
 
@@ -227,7 +202,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
         textview_similares.setOnClickListener {
             val intent = Intent(context, SimilaresActivity::class.java)
-            intent.putExtra(Constantes.FILME_ID, movieDb?.id)
+            intent.putExtra(Constantes.SIMILARES, movieDb?.similar?.resultsSimilar as Serializable)
             intent.putExtra(Constantes.NOME_FILME, movieDb?.title)
             startActivity(intent)
 
@@ -268,28 +243,6 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                     else
                         "- -"
 
-//                    layout.findViewById<TextView>(R.id.nota_netflix)
-//                            .text = (if (netflixDados?.rating != null)
-//                        netflixDados?.rating + "/5"
-//                    else
-//                        "- -").toString() //TODO Netflix gone. Aguardando api netflix
-
-//                    layout.findViewById<ImageView>(R.id.image_netflix)
-//                            .setOnClickListener(View.OnClickListener {
-//                                if (netflixDados == null) {
-//                                    return@OnClickListener
-//                                }
-//
-//                                if (netflixDados!!.showId != 0) {
-//                                    val url = "https://www.netflixDados.com/title/" + netflixDados?.showId
-//                                    val webpage = Uri.parse(url)
-//                                    val intent = Intent(Intent.ACTION_VIEW, webpage)
-//                                    startActivity(intent)
-//                                    if (intent.resolveActivity(activity.packageManager) != null) {
-//                                        startActivity(intent)
-//                                    }
-//                                }
-//                            })
 
                     layout.findViewById<ImageView>(R.id.image_metacritic)
                             .setOnClickListener(View.OnClickListener {
@@ -460,7 +413,6 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
             produtora.setOnClickListener {
                 val intent = Intent(context, ProdutoraActivity::class.java)
                 intent.putExtra(Constantes.PRODUTORA_ID, movieDb?.productionCompanies!![0]?.id)
-                //intent.putExtra(Constantes.MEDIATYPE, Multi.MediaType.MOVIE) // Não usado
                 startActivity(intent)
             }
         } else {
@@ -527,18 +479,18 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                 tempo = tempo - 60
             }
             minutos = tempo
-            time_filme!!.text = (horas.toString() + " " + getString(if (horas > 1) R.string.horas else R.string.hora)
+            time_filme?.text = (horas.toString() + " " + getString(if (horas > 1) R.string.horas else R.string.hora)
                     + " " + minutos + " " + getString(R.string.minutos)).toString()//
         } else {
-            time_filme!!.text = getString(R.string.tempo_nao_informado)
+            time_filme?.text = getString(R.string.tempo_nao_informado)
         }
     }
 
     private fun setOriginalTitle() {
-        if (movieDb!!.originalTitle != null) {
-            original_title!!.text = movieDb!!.originalTitle
+        if (movieDb?.originalTitle != null) {
+            original_title?.text = movieDb!!.originalTitle
         } else {
-            original_title!!.text = getString(R.string.original_title)
+            original_title?.text = getString(R.string.original_title)
         }
 
     }
