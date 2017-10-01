@@ -9,8 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.view.Window
 import br.com.icaro.filme.R
-import domain.Movie
-import info.movito.themoviedbapi.model.tv.TvSeries
+import domain.PostersItem
 import kotlinx.android.synthetic.main.poster_grid.*
 import utils.Constantes
 
@@ -39,19 +38,12 @@ class PosterGridActivity : AppCompatActivity() {
         //                .build();
         //        adview.loadAd(adRequest);
 
-        if (intent.extras != null) {
-            if (intent.getSerializableExtra(Constantes.SERIE) != null) {
-                val series = intent.getSerializableExtra(Constantes.SERIE) as TvSeries
 
-                //List<BackdropsItem> artworks = series.getImages().getPosters();
-                //recyclerView.setAdapter(new PosterGridAdapter(PosterGridActivity.this, artworks, series.getName()));
-                return
-            }
-            if (intent.getSerializableExtra(Constantes.FILME) != null) {
-                val movie = intent.getSerializableExtra(Constantes.FILME) as Movie
-
-                recycleView_poster_grid.adapter = PosterGridAdapter(this@PosterGridActivity, movie.images?.posters, movie.title)
-            }
+        if (intent.hasExtra(Constantes.POSTER)) {
+            val posters = intent.getSerializableExtra(Constantes.POSTER) as List<PostersItem>
+            val titulo = intent.getStringExtra(Constantes.NOME)
+            recycleView_poster_grid.adapter = PosterGridAdapter(this@PosterGridActivity, posters, titulo )
         }
+
     }
 }

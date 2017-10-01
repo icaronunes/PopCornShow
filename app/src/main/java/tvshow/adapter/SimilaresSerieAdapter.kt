@@ -1,6 +1,5 @@
-package filme.adapter
+package tvshow.adapter
 
-import android.content.Context
 import android.content.Intent
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
@@ -15,35 +14,22 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
-import domain.ResultsSimilarItem
-import filme.activity.FilmeActivity
+import domain.tvshow.ResultsItem
+import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
 
-/**
- * Created by icaro on 22/02/17.
- */
-class SimilaresFilmesAdapter(activity: FragmentActivity, val similarItems: List<ResultsSimilarItem?>?) : RecyclerView.Adapter<SimilaresFilmesAdapter.SimilaresViewHolder>() {
+class SimilaresSerieAdapter(val activity: FragmentActivity?, val similarItems: List<ResultsItem?>?) : RecyclerView.Adapter<SimilaresSerieAdapter.SimilaresSerieHolde>() {
 
-    private val context: Context
     private var color_top: Int = 0
 
-    init {
-        context = activity
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimilaresViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.scroll_similares, parent, false)
-        return SimilaresViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: SimilaresViewHolder, position: Int) {
-        val it = similarItems?.get(position)!!
+    override fun onBindViewHolder(holder: SimilaresSerieHolde, position: Int) {
+        val tvshow = similarItems?.get(position)
         holder.progressBarSimilares.visibility = View.VISIBLE
-        if (it.title != null && it.posterPath != null) {
+        if (tvshow?.posterPath != null) {
             holder.textSimilares.visibility = View.GONE
-            Picasso.with(context)
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + it.posterPath)
+            Picasso.with(activity)
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(activity, 2)) + tvshow.posterPath)
                     .placeholder(R.drawable.poster_empty)
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
@@ -59,15 +45,20 @@ class SimilaresFilmesAdapter(activity: FragmentActivity, val similarItems: List<
                     })
 
             holder.imgPagerSimilares.setOnClickListener { view ->
-                val intent = Intent(context, FilmeActivity::class.java)
+                val intent = Intent(activity, TvShowActivity::class.java)
                 intent.putExtra(Constantes.COLOR_TOP, color_top)
-                intent.putExtra(Constantes.NOME_FILME, it.title)
-                intent.putExtra(Constantes.FILME_ID, it.id)
-                context.startActivity(intent)
+                intent.putExtra(Constantes.NOME_TVSHOW, tvshow.name)
+                intent.putExtra(Constantes.TVSHOW_ID, tvshow.id)
+                activity?.startActivity(intent)
 
             }
 
         }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SimilaresSerieHolde {
+        val view = LayoutInflater.from(activity).inflate(R.layout.scroll_similares, parent, false)
+        return SimilaresSerieHolde(view)
     }
 
     override fun getItemCount(): Int {
@@ -75,7 +66,7 @@ class SimilaresFilmesAdapter(activity: FragmentActivity, val similarItems: List<
     }
 
 
-    inner class SimilaresViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class SimilaresSerieHolde(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         internal val progressBarSimilares: ProgressBar
         internal val textSimilares: TextView
@@ -87,4 +78,5 @@ class SimilaresFilmesAdapter(activity: FragmentActivity, val similarItems: List<
             imgPagerSimilares = itemView.findViewById<View>(R.id.imgPagerSimilares) as ImageView
         }
     }
+
 }

@@ -185,4 +185,5 @@
     <string name="numero_de_episodios">Número de episodios</string>
     <string name="nao_visto">No visto</string>
     <string name="atualizar" >Nuevo</string>
+    <string name="sem_informacao_company">No hay información de la Compañía</string>
 </resources>

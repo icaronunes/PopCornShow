@@ -32,6 +32,7 @@ import domain.FilmeService;
 import domain.UserEp;
 import domain.UserSeasons;
 import domain.UserTvshow;
+import domain.tvshow.Tvshow;
 import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
 import info.movito.themoviedbapi.model.tv.TvSeason;
@@ -47,12 +48,12 @@ public class UtilsApp {
 
     private static String TAG = UtilsApp.class.getName();
 
-    public static UserTvshow setUserTvShow(TvSeries serie) {
+    public static UserTvshow setUserTvShow(Tvshow serie) {
         UserTvshow userTvshow = new UserTvshow();
         userTvshow.setPoster(serie.getPosterPath());
         userTvshow.setId(serie.getId());
         userTvshow.setNome(serie.getOriginalName());
-        userTvshow.setExternalIds(serie.getExternalIds());
+        userTvshow.setExternalIds(serie.getExternal_ids());
         userTvshow.setNumberOfEpisodes(serie.getNumberOfEpisodes());
         userTvshow.setNumberOfSeasons(serie.getNumberOfSeasons());
         userTvshow.setSeasons(setUserSeasson(serie));

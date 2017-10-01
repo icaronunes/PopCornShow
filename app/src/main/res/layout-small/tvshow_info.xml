@@ -342,19 +342,26 @@
                     android:textColor="@color/tmdb_site"
                     android:textSize="@dimen/trade_size_dp_16" />
 
-
-                <Button
-                    android:id="@+id/netflix"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ver_netflix"
-                    android:textAlignment="center"
-                    android:textColor="@color/netflixColor"
-                    android:textSize="@dimen/trade_txt_size_sp_16" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/text_similares"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/trade_size_dp_3"
+                android:background="@color/black_transparente"
+                android:gravity="center_horizontal"
+                android:text="@string/similares"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/trade_txt_size_sp_18"
+                android:textStyle="normal|bold"
+                android:visibility="invisible" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_tvshow_similares"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="@dimen/trade_size_dp_3"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>

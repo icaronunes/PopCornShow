@@ -30,10 +30,10 @@ class ElencoActivity : BaseActivity() {
         setContentView(R.layout.activity_elenco)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpToolBar()
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         getExtras()
 
-        supportActionBar!!.title = title
+        supportActionBar?.title = title
 
         elenco_recycleview.apply {
             layoutManager = LinearLayoutManager(context)

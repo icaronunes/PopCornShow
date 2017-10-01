@@ -27,7 +27,8 @@ object Constantes {
     val NOME_TVSHOW = "tvshow_nome"
     val SERIE = "serie"
     val FILME = "filme"
-    val SIMILARES = "similares"
+    val SIMILARES_FILME = "similares_filme"
+    val SIMILARES_TVSHOW = "similares_tv"
     val TVSEASONS = "tvseason"
     val TEMPORADA_ID = "temporada_id"
     val ARTWORKS = "artworks"
@@ -50,11 +51,13 @@ object Constantes {
     val GUEST = "guest"
     val GUEST_DATA = "guest_data"
     val PRODUCAO = "producao"
-
+    val POSTER = "poster"
 
     val ELENCO = "elenco"
     object BuscaConstants {
+
         val NEWS = 1
+
         val LOADING =2
 
     }

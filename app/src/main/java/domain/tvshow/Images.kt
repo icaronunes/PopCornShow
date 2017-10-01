@@ -8,8 +8,8 @@ import javax.annotation.Generated
 data class Images(
 
 	@field:SerializedName("backdrops")
-	val backdrops: List<BackdropsItem?>? = null,
+	val backdrops: List<domain.BackdropsItem?>? = null,
 
 	@field:SerializedName("posters")
-	val posters: List<PostersItem?>? = null
+	val posters: List<domain.PostersItem?>? = null
 ): Serializable

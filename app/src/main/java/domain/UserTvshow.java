@@ -5,8 +5,6 @@ import android.support.annotation.Keep;
 import java.io.Serializable;
 import java.util.List;
 
-import info.movito.themoviedbapi.model.ExternalIds;
-
 /**
  * Created by icaro on 02/11/16.
  */
@@ -29,7 +27,11 @@ public class UserTvshow implements Serializable {
 
     private List<UserSeasons> seasons;
 
-    private ExternalIds externalIds;
+    public void setExternalIds(domain.tvshow.ExternalIds externalIds) {
+        this.externalIds = externalIds;
+    }
+
+    private  domain.tvshow.ExternalIds externalIds;
 
 
     public int getNumberOfEpisodes() {
@@ -48,14 +50,6 @@ public class UserTvshow implements Serializable {
         this.numberOfSeasons = numberOfSeasons;
     }
 
-
-    public ExternalIds getExternalIds() {
-        return externalIds;
-    }
-
-    public void setExternalIds(ExternalIds externalIds) {
-        this.externalIds = externalIds;
-    }
 
     public int getId() {
         return id;

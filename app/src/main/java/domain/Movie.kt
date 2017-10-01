@@ -26,7 +26,7 @@ data class Movie(
         val backdropPath: String? = null,
 
         @field:SerializedName("revenue")
-        val revenue: Int? = null,
+        val revenue: Double? = null,
 
         @field:SerializedName("credits")
         val credits: Credits? = null,

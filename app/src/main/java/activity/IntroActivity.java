@@ -14,7 +14,6 @@ import com.github.paolorotolo.appintro.AppIntro;
 import fragment.FirstSlide;
 import fragment.FiveSlide;
 import fragment.SecondSlide;
-import fragment.ThirdSlide;
 
 /**
  * Created by icaro on 21/11/16.
@@ -42,7 +41,7 @@ public class IntroActivity extends AppIntro {
 
             addSlide(new FirstSlide());
             addSlide(new SecondSlide());
-            addSlide(new ThirdSlide());
+           // addSlide(new ThirdSlide()); netflix
             addSlide(new FiveSlide());
         }
 

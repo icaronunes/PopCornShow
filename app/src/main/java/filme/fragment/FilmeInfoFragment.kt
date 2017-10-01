@@ -202,8 +202,8 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
         textview_similares.setOnClickListener {
             val intent = Intent(context, SimilaresActivity::class.java)
-            intent.putExtra(Constantes.SIMILARES, movieDb?.similar?.resultsSimilar as Serializable)
-            intent.putExtra(Constantes.NOME_FILME, movieDb?.title)
+            intent.putExtra(Constantes.SIMILARES_FILME, movieDb?.similar?.resultsSimilar as Serializable)
+            intent.putExtra(Constantes.NOME, movieDb?.title)
             startActivity(intent)
 
         }
@@ -270,7 +270,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
                                 if (imdbDd?.type != null) {
 
-                                    var nome = imdbDd!!.title.replace(" ", "_").toLowerCase()
+                                    var nome = imdbDd?.title?.replace(" ", "_")?.toLowerCase()
                                     nome = UtilsApp.removerAcentos(nome)
                                     val url = "https://www.rottentomatoes.com/m/" + nome
                                     val intent = Intent(activity, Site::class.java)
@@ -285,9 +285,9 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                                     return@OnClickListener
                                 }
 
-                                if (imdbDd!!.type != null) {
+                                if (imdbDd?.imdbID != null) {
 
-                                    val url = "http://www.imdb.com/title/" + imdbDd!!.imdbID
+                                    val url = "http://www.imdb.com/title/" + imdbDd?.imdbID
                                     val intent = Intent(activity, Site::class.java)
                                     intent.putExtra(Constantes.SITE, url)
                                     startActivity(intent)
@@ -299,7 +299,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                                 if (movieDb == null) {
                                     return@OnClickListener
                                 }
-                                val url = "https://www.themoviedb.org/movie/" + movieDb!!.id!!
+                                val url = "https://www.themoviedb.org/movie/" + movieDb?.id!!
                                 val intent = Intent(activity, Site::class.java)
                                 intent.putExtra(Constantes.SITE, url)
                                 startActivity(intent)
@@ -394,7 +394,8 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
             img_poster.setOnClickListener {
                 val intent = Intent(context, PosterGridActivity::class.java)
                 val transition = getString(R.string.poster_transition)
-                intent.putExtra(Constantes.FILME, movieDb)
+                intent.putExtra(Constantes.POSTER, movieDb?.images?.posters as Serializable)
+                intent.putExtra(Constantes.NOME, movieDb?.title)
                 val compat = ActivityOptionsCompat
                         .makeSceneTransitionAnimation(activity, img_poster, transition)
                 ActivityCompat.startActivity(activity, intent, compat.toBundle())
@@ -621,7 +622,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
         if (movieDb?.releaseDates?.resultsReleaseDates?.isNotEmpty()!!) {
 
             val releases = movieDb?.releaseDates?.resultsReleaseDates
-            lancamento.text = if (movieDb?.releaseDate?.length!! > 9) "movieDb?.releaseDate?.subSequence(0,10) ${Locale.getDefault().country}" else "N/A"
+            lancamento.text = if (movieDb?.releaseDate?.length!! > 9) "${movieDb?.releaseDate?.subSequence(0,10)} ${Locale.getDefault().country}" else "N/A"
             releases?.forEach { date ->
                 if (date?.iso31661 == Locale.getDefault().country) {
                     date?.releaseDates?.forEach({ it ->

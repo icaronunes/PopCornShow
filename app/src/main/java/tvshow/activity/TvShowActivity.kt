@@ -58,7 +58,6 @@ class TvShowActivity : BaseActivity() {
     private var id_tvshow: Int = 0
     private var color_top: Int = 0
     private lateinit var series: Tvshow
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
     private var addFavorite = true
     private var addWatch = true
     private var addRated = true
@@ -211,7 +210,6 @@ class TvShowActivity : BaseActivity() {
     }
 
     private fun iniciarFirebases() {
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         mAuth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
 
@@ -282,9 +280,6 @@ class TvShowActivity : BaseActivity() {
                         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file))
                         startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar_filme)))
 
-                        val bundle = Bundle()
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_MainActivity:menu_drav_home")
-                        firebaseAnalytics?.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
                     }
 
                     override fun RetornoFalha() {
@@ -331,16 +326,12 @@ class TvShowActivity : BaseActivity() {
             animator.start()
 
             if (addWatch) {
-                // Log.d(TAG, "Apagou Watch");
-                myWatch?.child(series.id.toString())?.setValue(null)
+
+                myWatch?.child(series?.id.toString())?.setValue(null)
                         ?.addOnCompleteListener {
                             Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_watch_remove), Toast.LENGTH_SHORT)
                                     .show()
-                            val bundle = Bundle()
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_remove))
-                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series?.name)
-                            bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.id!!)
-                            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+
                         }
 
             } else {
@@ -357,11 +348,7 @@ class TvShowActivity : BaseActivity() {
                         .addOnCompleteListener {
                             Toast.makeText(this@TvShowActivity, getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
                                     .show()
-                            val bundle = Bundle()
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.filme_add_watchlist))
-                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series!!.name)
-                            bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series!!.id!!)
-                            firebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+
                         }
             }
             fab_menu_filme!!.close(true)
@@ -396,34 +383,27 @@ class TvShowActivity : BaseActivity() {
             } else {
 
                 if (addFavorite) {
-                    myFavorite!!.child(id_tvshow.toString()).setValue(null)
-                            .addOnCompleteListener {
+                    myFavorite?.child(id_tvshow.toString())?.setValue(null)
+                            ?.addOnCompleteListener {
                                 Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_remove_favorite), Toast.LENGTH_SHORT).show()
                                 val bundle = Bundle()
-                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.tvshow_remove_favorite))
-                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series!!.name)
-                                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series!!.id!!)
-                                firebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+
                             }
 
                 } else {
 
                     val tvshowDB = TvshowDB()
-                    tvshowDB.externalIds = series!!.external_ids
-                    tvshowDB.title = series!!.name
-                    tvshowDB.id = series!!.id!!
-                    tvshowDB.poster = series!!.posterPath
+                    tvshowDB.externalIds = series?.external_ids
+                    tvshowDB.title = series?.name
+                    tvshowDB.id = series?.id!!
+                    tvshowDB.poster = series?.posterPath
                     // tvshowDB.getExternalIds().setId(series.getId());
 
-                    myFavorite!!.child(id_tvshow.toString()).setValue(tvshowDB)
-                            .addOnCompleteListener {
+                    myFavorite?.child(id_tvshow.toString())?.setValue(tvshowDB)
+                            ?.addOnCompleteListener {
                                 Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_add_favorite), Toast.LENGTH_SHORT)
                                         .show()
-                                val bundle = Bundle()
-                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, getString(R.string.tvshow_add_favorite))
-                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series!!.name)
-                                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series!!.id!!)
-                                firebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+
                             }
                 }
 
@@ -443,11 +423,7 @@ class TvShowActivity : BaseActivity() {
             }
 
             if (!UtilsApp.verificaLancamento(date)) {
-                val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Tentativa de Rated fora da data de lançamento")
-                firebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
                 Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_nao_lancado), Toast.LENGTH_SHORT).show()
-
             } else {
 
                 val alertDialog = Dialog(this@TvShowActivity)
@@ -474,9 +450,8 @@ class TvShowActivity : BaseActivity() {
                 }
 
                 no.setOnClickListener {
-                    //    Log.d(TAG, "Apagou Rated");
-                    myRated!!.child(id_tvshow.toString()).setValue(null)
-                            .addOnCompleteListener {
+                    myRated?.child(id_tvshow.toString())?.setValue(null)
+                            ?.addOnCompleteListener {
                                 Toast.makeText(this@TvShowActivity,
                                         resources.getText(R.string.tvshow_remove_rated), Toast.LENGTH_SHORT).show()
                             }
@@ -510,12 +485,7 @@ class TvShowActivity : BaseActivity() {
                                     Toast.makeText(this@TvShowActivity,
                                             getString(R.string.tvshow_rated), Toast.LENGTH_SHORT)
                                             .show()
-                                    val bundle = Bundle()
-                                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT,
-                                            getString(R.string.tvshow_rated))
-                                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, series!!.name)
-                                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series!!.id!!)
-                                    firebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+
                                 }
 
                         Thread(Runnable { FilmeService.ratedTvshowGuest(id_tvshow, ratingBar.rating.toInt(), this@TvShowActivity) }).start()

@@ -1,7 +1,6 @@
-package adapter
+package filme.adapter
 
 import activity.SimilaresActivity
-import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -22,50 +21,43 @@ import utils.UtilsApp
  * Created by icaro on 12/08/16.
  */
 
-class SimilaresAdapter(similaresActivity: SimilaresActivity, lista: List<ResultsSimilarItem?>?) :
-        RecyclerView.Adapter<SimilaresAdapter.SimilareViewHolde>() {
-
-    private var context: Context? = null
-    private var similares: List<ResultsSimilarItem?>? = null
-
-    init {
-        this.context = similaresActivity
-        this.similares = lista
-    }
+class SimilaresListaFilmeAdapter(private val similaresActivity: SimilaresActivity, private val lista: List<ResultsSimilarItem?>?) :
+        RecyclerView.Adapter<SimilaresListaFilmeAdapter.SimilareViewHolde>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimilareViewHolde {
-        val view = LayoutInflater.from(context).inflate(R.layout.adapter_similares, parent, false)
+        val view = LayoutInflater.from(similaresActivity).inflate(R.layout.adapter_similares, parent, false)
 
         return SimilareViewHolde(view)
 
     }
 
     override fun onBindViewHolder(holder: SimilareViewHolde, position: Int) {
-        holder.similares_nome.text = similares?.get(position)?.title
-        holder.similares_data_lancamento.text = similares?.get(position)?.releaseDate
-        holder.similares_title_original.text = similares?.get(position)?.originalTitle
-        holder.similares_voto_media.text = similares?.get(position)?.voteAverage.toString()
+        val item = lista!![position]
+        holder.similares_nome.text = item?.title
+        holder.similares_data_lancamento.text = item?.releaseDate
+        holder.similares_title_original.text = item?.originalTitle
+        holder.similares_voto_media.text = item?.voteAverage.toString()
 
-        Picasso.with(context)
-                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + similares?.get(position)?.posterPath)
+        Picasso.with(similaresActivity)
+                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(similaresActivity, 2)) + item?.posterPath)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.imageView)
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, FilmeActivity::class.java)
+            val intent = Intent(similaresActivity, FilmeActivity::class.java)
             val color = UtilsApp.loadPalette(holder.imageView)
             intent.putExtra(Constantes.COLOR_TOP, color)
-            intent.putExtra(Constantes.FILME_ID, similares?.get(position)?.id)
-            intent.putExtra(Constantes.NOME_FILME, similares?.get(position)?.title)
-            context?.startActivity(intent)
+            intent.putExtra(Constantes.FILME_ID, item?.id)
+            intent.putExtra(Constantes.NOME_FILME, item?.title)
+            similaresActivity.startActivity(intent)
 
         }
     }
 
     override fun getItemCount(): Int {
-        return similares?.size ?: 0
+        return lista?.size ?: 0
     }
 
     inner class SimilareViewHolde(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -78,4 +70,5 @@ class SimilaresAdapter(similaresActivity: SimilaresActivity, lista: List<Results
 
 
     }
+
 }
