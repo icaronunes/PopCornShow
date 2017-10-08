@@ -84,8 +84,8 @@ class ListaGenericaActivity : BaseActivity() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         (recycleView_favorite.adapter as ListUserAdapter).addItens(it.results, it?.totalResults!!)
-                        pagina = it?.page!!
-                        totalPagina = it?.totalPages!!
+                        pagina = it.page!!
+                        totalPagina = it.totalPages!!
                         ++pagina
                     }, { erro ->
                         Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()

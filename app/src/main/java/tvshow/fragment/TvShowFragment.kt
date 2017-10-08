@@ -21,11 +21,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.string.in_production
 import br.com.icaro.filme.R.string.mil
@@ -40,6 +38,8 @@ import domain.UserTvshow
 import domain.tvshow.SeasonsItem
 import domain.tvshow.Tvshow
 import info.movito.themoviedbapi.TmdbApi
+import info.movito.themoviedbapi.TmdbTvSeasons
+import info.movito.themoviedbapi.model.tv.TvSeason
 import kotlinx.android.synthetic.main.fab_float.*
 import kotlinx.android.synthetic.main.include_progress.*
 import kotlinx.android.synthetic.main.tvshow_info.*
@@ -52,6 +52,7 @@ import tvshow.adapter.SimilaresSerieAdapter
 import utils.Config
 import utils.Constantes
 import utils.UtilsApp
+import utils.UtilsApp.setEp
 import utils.UtilsApp.setUserTvShow
 import java.io.Serializable
 import java.text.DecimalFormat
@@ -188,6 +189,7 @@ class TvShowFragment : Fragment() {
             setProgressBar()
             getImdb()
             setMediaNota()
+
         }
 
     }
@@ -256,7 +258,7 @@ class TvShowFragment : Fragment() {
                     else
                         "- -").toString()
 
-                (layout.findViewById<View>(R.id.image_metacritic) as ImageView).setOnClickListener(View.OnClickListener {
+                (layout.findViewById<View>(R.id.image_metacritic) as ImageView).setOnClickListener(OnClickListener {
                     if (imdbDd == null) {
                         return@OnClickListener
                     }
@@ -274,7 +276,7 @@ class TvShowFragment : Fragment() {
                     }
                 })
 
-                (layout.findViewById<View>(R.id.image_tomatoes) as ImageView).setOnClickListener(View.OnClickListener {
+                (layout.findViewById<View>(R.id.image_tomatoes) as ImageView).setOnClickListener(OnClickListener {
                     if (imdbDd == null) {
                         return@OnClickListener
                     }
@@ -291,7 +293,7 @@ class TvShowFragment : Fragment() {
                     }
                 })
 
-                (layout.findViewById<View>(R.id.image_imdb) as ImageView).setOnClickListener(View.OnClickListener {
+                (layout.findViewById<View>(R.id.image_imdb) as ImageView).setOnClickListener(OnClickListener {
                     if (imdbDd == null) {
                         return@OnClickListener
                     }
@@ -305,7 +307,7 @@ class TvShowFragment : Fragment() {
                     }
                 })
 
-                (layout.findViewById<View>(R.id.image_tmdb) as ImageView).setOnClickListener(View.OnClickListener {
+                (layout.findViewById<View>(R.id.image_tmdb) as ImageView).setOnClickListener(OnClickListener {
                     if (series == null) {
                         return@OnClickListener
                     }
@@ -370,6 +372,7 @@ class TvShowFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (mAuth?.currentUser != null) {
+
             postListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
 
@@ -377,26 +380,19 @@ class TvShowFragment : Fragment() {
                         userTvshow = dataSnapshot.getValue(UserTvshow::class.java)
 
                         if (getView() != null) {
-                            userTvshow = dataSnapshot.getValue(UserTvshow::class.java)
-                            // Log.w(TAG, "Passou");
-                            recyclerViewTemporada = getView()!!.rootView.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
-                            // temporadasAdapter = new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow);
-                            recyclerViewTemporada?.adapter = temporadasAdapter
+                            recyclerViewTemporada = getView()?.rootView?.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
+                            recyclerViewTemporada.adapter = TemporadasAdapter(activity, series, onClickListener(), color, userTvshow)
                             if (progressBarTemporada != null) {
-                                //  Log.w(TAG, "Mudou - GONE");
-                                progressBarTemporada!!.visibility = View.INVISIBLE
+
+                                progressBarTemporada?.visibility = View.INVISIBLE
                             }
                         }
 
                     } else {
-
                         if (getView() != null) {
-                            //  Log.w(TAG, "Passou");
-                            userTvshow = null // ??????????
-                            recyclerViewTemporada = getView()!!.rootView.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
-                            // recyclerViewTemporada.setAdapter(new TemporadasAdapter(getActivity(), series, onClickListener(), color, userTvshow));
+                            recyclerViewTemporada = getView()?.rootView?.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
+                            recyclerViewTemporada.adapter = TemporadasAdapter(activity, series, onClickListener(), color, null)
                             if (progressBarTemporada != null) {
-                                //Log.w(TAG, "Mudou - GONE");
                                 progressBarTemporada?.visibility = View.INVISIBLE
                             }
                         }
@@ -404,7 +400,6 @@ class TvShowFragment : Fragment() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-
 
                 }
             }
@@ -447,7 +442,7 @@ class TvShowFragment : Fragment() {
             seguir?.text = resources.getText(R.string.sem_login)
 
         } else {
-            seguir?.text = series!!.status
+            seguir?.text = series?.status
         }
 
     }
@@ -473,12 +468,12 @@ class TvShowFragment : Fragment() {
         recyclerViewTemporada.setHasFixedSize(true)
         recyclerViewTemporada.itemAnimator = DefaultItemAnimator()
         recyclerViewTemporada.layoutManager = LinearLayoutManager(context)
-         if (mAuth?.currentUser == null) {
-        val temporadasAdapter = TemporadasAdapter(activity, series, onClickListener(), color, userTvshow);
-        recyclerViewTemporada?.adapter = temporadasAdapter
-        if (progressBarTemporada != null) {
-            progressBarTemporada?.visibility = View.INVISIBLE
-        }
+        if (mAuth?.currentUser != null) {
+
+            recyclerViewTemporada.adapter = TemporadasAdapter(activity, series, onClickListener(), color, userTvshow)
+            if (progressBarTemporada != null) {
+                progressBarTemporada?.visibility = View.INVISIBLE
+            }
         }
 
         return view
@@ -508,16 +503,15 @@ class TvShowFragment : Fragment() {
 
                 if (isVisto(position)) {
                     Toast.makeText(context, R.string.marcado_nao_assistido_temporada, Toast.LENGTH_SHORT).show()
-                    val user = if (mAuth!!.currentUser != null) mAuth!!.currentUser!!.uid else ""
-                    val id_serie = series!!.id.toString()
+                    val user = if (mAuth?.currentUser != null) mAuth?.currentUser!!.uid else ""
+                    val id_serie = series?.id.toString()
                     val childUpdates = HashMap<String, Any>()
 
                     childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/visto", false)
                     setStatusEps(position, false)
-                    childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/userEps", userTvshow!!.seasons[position].userEps)
+                    childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/userEps", userTvshow?.seasons?.get(position)?.userEps!!)
 
-                    myRef!!.updateChildren(childUpdates)
-                    // Log.d(TAG, "desvisto");
+                    myRef?.updateChildren(childUpdates)
 
                 } else {
                     Toast.makeText(context, R.string.marcado_assistido_temporada, Toast.LENGTH_SHORT).show()
@@ -528,12 +522,10 @@ class TvShowFragment : Fragment() {
                     val childUpdates = HashMap<String, Any>()
                     childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/visto", true)
                     setStatusEps(position, true)
-                    //Fazer metodo para verificar, se 'quer' marcas temporadas anteriores.
                     childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/userEps", userTvshow!!.seasons[position].userEps)
 
                     myRef?.updateChildren(childUpdates)
 
-                    // Log.d(TAG, "visto");
                 }
             }
         }
@@ -548,30 +540,28 @@ class TvShowFragment : Fragment() {
                 false
             }
         } else {
-            false //segurança
+            false
         }
     }
 
     private fun setStatusEps(position: Int, status: Boolean) {
         if (userTvshow != null) {
-            if (userTvshow!!.seasons[position].userEps != null)
-                for (i in 0 until userTvshow!!.seasons[position].userEps.size) {
+            if (userTvshow?.seasons!![position].userEps != null)
+                for (i in 0 until userTvshow?.seasons!![position]?.userEps?.size!!) {
                     userTvshow!!.seasons[position].userEps[i].isAssistido = status
                 }
         }
     }
 
-    private fun getViewInformacoes(inflater: LayoutInflater?, container: ViewGroup?): View {
-        val view = inflater!!.inflate(R.layout.tvshow_info, container, false)
-
-        seguir?.setOnClickListener(ListenerSeguir())
-
+    private fun getViewInformacoes(inflater: LayoutInflater?, container: ViewGroup?): View? {
+        val view = inflater?.inflate(R.layout.tvshow_info, container, false)
+        view?.findViewById<Button>(R.id.seguir)?.setOnClickListener(onClickSeguir())
 
         return view
     }
 
-    private fun ListenerSeguir(): View.OnClickListener {
-        return View.OnClickListener { view ->
+    private fun onClickSeguir(): OnClickListener {
+        return OnClickListener { view ->
             if (view != null) {
                 progressBarTemporada = view?.rootView?.findViewById<View>(R.id.progressBarTemporadas) as ProgressBar
                 progressBarTemporada?.visibility = View.VISIBLE
@@ -584,21 +574,22 @@ class TvShowFragment : Fragment() {
                     if (UtilsApp.isNetWorkAvailable(activity)) {
                         val tvSeasons = TmdbApi(Config.TMDB_API_KEY).tvSeasons
 
-                            userTvshow = setUserTvShow(series)
+                        userTvshow = setUserTvShow(series)
 
                         for (i in 0 until series?.seasons?.size!!) {
-                                val tvS: SeasonsItem? = series?.seasons?.get(i)
-                              //  val tvSeason: SeasonsItem = tvSeasons.getSeason(series.getId(), tvS.getSeasonNumber(), "en", TmdbTvSeasons.SeasonMethod.images); //?
-                            // userTvshow.getSeasons().get(i).setUserEps(setEp(tvSeason));
+                            val tvS: SeasonsItem? = series?.seasons?.get(i)
+                            val tvSeason: TvSeason = tvSeasons.getSeason(series?.id!!, tvS?.seasonNumber!!, "en", TmdbTvSeasons.SeasonMethod.images)
+                            userTvshow?.seasons?.get(i)?.userEps = setEp(tvSeason)
                         }
 
-                        myRef!!.child(if (mAuth!!.currentUser != null) mAuth!!.currentUser!!.uid else "")
-                                .child("seguindo")
-                                .child(series?.id.toString())
-                                .setValue(userTvshow)
-                                .addOnCompleteListener { task ->
-                                    if (!task.isSuccessful) {
+                        myRef?.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid else "")
+                                ?.child("seguindo")
+                                ?.child(series?.id.toString())
+                                ?.setValue(userTvshow)
+                                ?.addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
                                         seguir?.setText(R.string.seguir)
+                                    } else {
                                         Toast.makeText(activity, R.string.erro_seguir, Toast.LENGTH_SHORT).show()
                                     }
                                 }
@@ -608,7 +599,6 @@ class TvShowFragment : Fragment() {
 
             } else {
 
-
                 val dialog = AlertDialog.Builder(context)
                         .setTitle(R.string.title_delete)
                         .setMessage(R.string.msg_parar_seguir)
@@ -617,11 +607,11 @@ class TvShowFragment : Fragment() {
                         .setPositiveButton(R.string.ok) { dialogInterface, i ->
                             myRef!!.child(if (mAuth!!.currentUser != null) mAuth!!.currentUser!!.uid else "")
                                     .child("seguindo")
-                                    .child(series!!.id.toString())
+                                    .child(series?.id.toString())
                                     .removeValue()
                             seguindo = !seguindo
                             isSeguindo()
-                            progressBarTemporada!!.visibility = View.GONE
+                            progressBarTemporada?.visibility = View.GONE
                         }.create()
 
                 dialog.show()
@@ -631,14 +621,13 @@ class TvShowFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (myRef != null && mAuth!!.currentUser != null) {
-            myRef!!.removeEventListener(postListener!!)
+        if (myRef != null && mAuth?.currentUser != null) {
+            myRef?.removeEventListener(postListener)
         }
-        subscriptions!!.unsubscribe()
+        subscriptions?.unsubscribe()
     }
 
     private fun setSinopse() {
-        // Log.d("SetSinopse", "OverView" + series.getOverview());
         if (series!!.overview == null || series!!.overview == "") {
             descricao!!.text = getString(R.string.sem_sinopse)
         } else {

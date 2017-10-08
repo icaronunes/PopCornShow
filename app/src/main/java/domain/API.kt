@@ -45,7 +45,7 @@ class API(context: Context) {
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
-                    .url("https://api.themoviedb.org/3/person/popular?page=" + pagina + "&language=en-US&api_key=" + Config.TMDB_API_KEY)
+                    .url("${baseUrl3}person/popular?page=" + pagina + "&language=en-US&api_key=" + Config.TMDB_API_KEY)
                     .get()
                     .build()
             val response = client.newCall(request).execute()
@@ -133,7 +133,7 @@ class API(context: Context) {
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
-                    .url("https://api.themoviedb.org/3/company/$id_produtora?api_key=" + Config.TMDB_API_KEY)
+                    .url("${baseUrl3}company/$id_produtora?api_key=" + Config.TMDB_API_KEY)
                     .get()
                     .build()
             val response = client.newCall(request).execute()
@@ -153,7 +153,7 @@ class API(context: Context) {
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
-                    .url("https://api.themoviedb.org/3/company/$company_id/movies?page=$pagina&api_key=${Config.TMDB_API_KEY}&language=en-US")
+                    .url("${baseUrl3}company/$company_id/movies?page=$pagina&api_key=${Config.TMDB_API_KEY}&language=en-US")
                     .get()
                     .build()
             val response = client.newCall(request).execute()
@@ -377,6 +377,46 @@ class API(context: Context) {
                                 }
                             }
                 }
+    }
+
+    fun getTvSeasons(id: Int,id_season: Int, pagina: Int = 1): Observable<TvSeasons> {
+        return rx.Observable.create { subscriber ->
+            val client = OkHttpClient()
+            val gson = Gson()
+            val request = Request.Builder()
+                    .url("${baseUrl3}/tv/$id/season/$id_season?api_key=${Config.TMDB_API_KEY}&language=$timeZone,en")
+                    .get()
+                    .build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                val json = response.body()?.string()
+                val lista = gson.fromJson(json, TvSeasons::class.java)
+                subscriber.onNext(lista)
+                subscriber.onCompleted()
+            } else {
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
+    }
+
+    fun getTvCreditosTemporada(id: Int, id_season: Int): Observable<Credits> {
+        return rx.Observable.create { subscriber ->
+            val client = OkHttpClient()
+            val gson = Gson()
+            val request = Request.Builder()
+                    .url("${baseUrl3}tv/$id/season/$id_season/credits?api_key=${Config.TMDB_API_KEY}&language=en-US")
+                    .get()
+                    .build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                val json = response.body()?.string()
+                val lista = gson.fromJson(json, Credits::class.java)
+                subscriber.onNext(lista)
+                subscriber.onCompleted()
+            } else {
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
     }
 
 }

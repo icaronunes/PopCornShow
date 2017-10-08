@@ -10,8 +10,8 @@ data class Lista(
         //@field:SerializedName("object_ids")
         //val objectIds: ObjectIds? = null,
 
-        //	@field:SerializedName("comments")
-        //	val comments: Comments? = null,
+       // 	@field:SerializedName("comments")
+       // 	val comments: Comments? = null,
 
         @field:SerializedName("iso_3166_1")
         val iso31661: String? = null,

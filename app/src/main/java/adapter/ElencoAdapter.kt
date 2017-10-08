@@ -33,7 +33,7 @@ class ElencoAdapter(private val context: Context, private val casts: List<CastIt
 
         holder.elenco_nome.text = name
         Picasso.with(context).load(UtilsApp
-                .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + profilePath!!)
+                .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + profilePath)
                 .placeholder(R.drawable.person)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)

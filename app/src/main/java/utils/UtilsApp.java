@@ -32,11 +32,11 @@ import domain.FilmeService;
 import domain.UserEp;
 import domain.UserSeasons;
 import domain.UserTvshow;
+import domain.tvshow.SeasonsItem;
 import domain.tvshow.Tvshow;
 import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
 import info.movito.themoviedbapi.model.tv.TvSeason;
-import info.movito.themoviedbapi.model.tv.TvSeries;
 
 
 /**
@@ -60,9 +60,9 @@ public class UtilsApp {
         return userTvshow;
     }
 
-    public static List<UserSeasons> setUserSeasson(TvSeries serie) {
+    public static List<UserSeasons> setUserSeasson(Tvshow serie) {
         List<UserSeasons> list = new ArrayList<>();
-        for (TvSeason tvSeason : serie.getSeasons()) {
+        for (SeasonsItem tvSeason : serie.getSeasons()) {
             UserSeasons userSeasons = new UserSeasons();
             userSeasons.setId(tvSeason.getId());
             userSeasons.setSeasonNumber(tvSeason.getSeasonNumber());
