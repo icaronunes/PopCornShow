@@ -32,10 +32,7 @@ import com.google.firebase.database.*
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
-import domain.API
-import domain.FilmeService
-import domain.TvshowDB
-import domain.UserTvshow
+import domain.*
 import domain.tvshow.Tvshow
 import kotlinx.android.synthetic.main.fab_float.*
 import kotlinx.android.synthetic.main.tvserie_activity.*
@@ -45,15 +42,15 @@ import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import utils.Constantes
 import utils.UtilsApp
+import utils.UtilsApp.setEp2
 import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.Date
 
 
 class TvShowActivity : BaseActivity() {
-
-    private val TAG = TvShowActivity::class.java.name
 
     private var id_tvshow: Int = 0
     private var color_top: Int = 0
@@ -62,9 +59,9 @@ class TvShowActivity : BaseActivity() {
     private var addWatch = true
     private var addRated = true
     private var seguindo: Boolean = false
-    private lateinit var valueEventWatch: ValueEventListener
-    private lateinit var valueEventRated: ValueEventListener
-    private lateinit var valueEventFavorite: ValueEventListener
+    private var valueEventWatch: ValueEventListener? = null
+    private var valueEventRated: ValueEventListener? = null
+    private var valueEventFavorite: ValueEventListener? = null
 
     private var mAuth: FirebaseAuth? = null
     private var myFavorite: DatabaseReference? = null
@@ -72,7 +69,7 @@ class TvShowActivity : BaseActivity() {
     private var myRated: DatabaseReference? = null
     private var numero_rated: Float = 0.0f
     private var database: FirebaseDatabase? = null
-    private val userTvshow: UserTvshow? = null
+    private var userTvshow: UserTvshow? = null
     private var userTvshowOld: UserTvshow? = null
     private var compositeSubscription: CompositeSubscription? = null
 
@@ -168,6 +165,7 @@ class TvShowActivity : BaseActivity() {
                     menu_item_rated?.labelText = resources.getString(R.string.adicionar_rated)
                 }
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
 
             }
@@ -335,7 +333,6 @@ class TvShowActivity : BaseActivity() {
                         }
 
             } else {
-                // Log.d(TAG, "Gravou Watch");
 
                 val tvshowDB = TvshowDB()
                 tvshowDB.externalIds = series?.external_ids
@@ -534,227 +531,62 @@ class TvShowActivity : BaseActivity() {
     }
 
 
-    //    private void atualizarRealDate() {
-    //        try {
-    //            new Thread(new Runnable() {
-    //                @Override
-    //                public void run() {
-    //                    TmdbTvSeasons tvSeasons = new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
-    //
-    //                    userTvshow = setUserTvShow(series);
-    //
-    //                    for (int i = 0; i < series.getSeasons().size(); i++) {
-    //                        TvSeason tvS = series.getSeasons().get(i);
-    //                        TvSeason tvSeason = tvSeasons.getSeason(series.getId(), tvS.getSeasonNumber(), "en", TmdbTvSeasons.SeasonMethod.external_ids); //?
-    //                        userTvshow.getSeasons().get(i).setUserEps(setEp(tvSeason));
-    //                        // Atualiza os eps em userTvShow
-    //                    }
-    //
-    //                    for (int i = 0; i < userTvshowOld.getSeasons().size(); i++) {
-    //                        userTvshow.getSeasons().get(i).setId(userTvshowOld.getSeasons().get(i).getId());
-    //                        userTvshow.getSeasons().get(i).setSeasonNumber(userTvshowOld.getSeasons().get(i).getSeasonNumber());
-    //                        userTvshow.getSeasons().get(i).setVisto(userTvshowOld.getSeasons().get(i).isVisto());
-    //                        //Atualiza somente os campos do temporada em userTvShow
-    //                    }
-    //
-    //                    for (int i = 0; i < userTvshowOld.getSeasons().size(); i++) {
-    //                      //  Log.d(TAG, "Numero de eps - "+ userTvshow.getSeasons().get(i).getUserEps().size());
-    //                        if (userTvshow.getSeasons().get(i).getUserEps().size() > userTvshowOld.getSeasons().get(i).getUserEps().size()) {
-    //                            userTvshow.getSeasons().get(i).setVisto(false);
-    //                            // Se huver novos ep. coloca temporada com não 'vista'
-    //                        }
-    //                            for (int i1 = 0; i1 < userTvshowOld.getSeasons().get(i).getUserEps().size(); i1++) {
-    //                                if (i1 < userTvshow.getSeasons().get(i).getUserEps().size())
-    //                                userTvshow.getSeasons().get(i).getUserEps().set(i1, userTvshowOld.getSeasons().get(i).getUserEps().get(i1));
-    //                              //  Log.d(TAG, "run: EPS "+ i1);
-    //                                //coloca as informações antigas na nova versão dos dados.
-    //                            }
-    //                    }
-    //
-    //                    final DatabaseReference myRef = database.getReference("users");
-    //                    myRef.child(mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "")
-    //                            .child("seguindo")
-    //                            .child(String.valueOf(series.getId()))
-    //                            .setValue(userTvshow)
-    //                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-    //                                @Override
-    //                                public void onComplete(@NonNull Task<Void> task) {
-    //                                    if (task.isSuccessful()) {
-    //                                        seguindo = true;
-    //                                        setupViewPagerTabs();
-    //                                        setTitle();
-    //                                        setImageTop();
-    //                                        runOnUiThread(new Runnable() {
-    //                                            @Override
-    //                                            public void run() {
-    //                                                Toast.makeText(TvShowActivity.this, R.string.season_updated, Toast.LENGTH_SHORT).show();
-    //                                            }
-    //                                        });
-    ////
-    //                                    }
-    //                                }
-    //                            });
-    //                }
-    //            }).start();
-    //        } catch (Exception e){
-    //            FirebaseCrash.report(e);
-    //            runOnUiThread(new Runnable() {
-    //                @Override
-    //                public void run() {
-    //                    Toast.makeText(TvShowActivity.this, R.string.ops_seguir_novamente, Toast.LENGTH_SHORT).show();
-    //                }
-    //            });
-    //        }
-    //    }
+    fun atualizarRealDate() {
 
-    //    private class TMDVAsync extends AsyncTask<Void, Void, Void> {
-    //
-    //        @Override
-    //        protected Void doInBackground(Void... voids) {
-    //            boolean idioma_padrao = false;
-    //            try {
-    //                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(TvShowActivity.this);
-    //                idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-    //            } catch (Exception e){
-    //                FirebaseCrash.report(e);
-    //            }
-    //
-    //
-    //            if (idioma_padrao) {
-    //                try {
-    //                    TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
-    //                    series = tmdbTv
-    //                            .getSeries(id_tvshow, getLocale()
-    //                                    ,images, credits, videos, external_ids);
-    //                    series.getVideos().addAll(tmdbTv.getSeries(id_tvshow, null, videos).getVideos());
-    //                    series.getImages().setPosters(tmdbTv.getSeries(id_tvshow, null, images).getImages().getPosters());
-    //                    // Log.d(TAG, String.valueOf(series.getNumberOfEpisodes()));
-    //
-    //                } catch (Exception e) {
-    //                    // Log.d(TAG, e.getMessage());
-    //                    FirebaseCrash.report(e);
-    //                    if (!isFinishing())
-    //                    runOnUiThread(new Runnable() {
-    //                        @Override
-    //                        public void run() {
-    //                            Toast.makeText(TvShowActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
-    //                        }
-    //                    });
-    //                }
-    //
-    //            } else {
-    //                try {
-    //                    series = FilmeService.getTmdbTvShow()
-    //                            .getSeries(id_tvshow, null, images, credits, videos, external_ids);
-    //                } catch (Exception e) {
-    //                    FirebaseCrash.report(e);
-    //                    if (!isFinishing())
-    //                    runOnUiThread(new Runnable() {
-    //                        @Override
-    //                        public void run() {
-    //                            Toast.makeText(TvShowActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
-    //                        }
-    //                    });
-    //                }
-    //            }
-    //
-    //            try {
-    //                if (series.getFirstAirDate() != null) {
-    //                    String date = series.getFirstAirDate().substring(0, 4);
-    //                    netflix = FilmeService.getNetflix(series.getOriginalName(), Integer.parseInt(date));
-    //                }
-    //            } catch (Exception e) {
-    //                FirebaseCrash.report(e);
-    //            }
-    //
-    //
-    //            try {
-    //                if (series.getExternalIds().getImdbId() != null) {
-    //                    imdbdb = FilmeService.getImdb(series.getExternalIds().getImdbId());
-    //                }
-    //            } catch (Exception e) {
-    //                FirebaseCrash.report(e);
-    //            }
-    //
-    //            return null;
-    //        }
-    //
-    //        @Override
-    //        protected void onPostExecute(Void aVoid) {
-    //            super.onPostExecute(aVoid);
-    //            if (series == null) {
-    //                return;
-    //            }
-    //
-    //            if (mAuth.getCurrentUser() != null && series != null) {
-    //                DatabaseReference myRef = database.getReference("users");
-    //                myRef.child(mAuth.getCurrentUser().getUid()).child("seguindo").child(String.valueOf(series.getId()))
-    //                        .addListenerForSingleValueEvent(
-    //                                new ValueEventListener() {
-    //                                    @Override
-    //                                    public void onDataChange(DataSnapshot dataSnapshot) {
-    //
-    //                                        if (dataSnapshot.exists()) {
-    //                                            userTvshowOld = dataSnapshot.getValue(UserTvshow.class);
-    //
-    //                                            if (userTvshowOld.getNumberOfEpisodes() == series.getNumberOfEpisodes()) {
-    //                                                seguindo = true;
-    //                                                setupViewPagerTabs();
-    //                                                setTitle();
-    //                                                setImageTop();
-    //                                            } else {
-    //                                                if (userTvshowOld.getNumberOfEpisodes() < series.getNumberOfEpisodes())
-    //                                                atualizarRealDate();
-    //                                            }
-    //                                        } else {
-    //                                            setupViewPagerTabs();
-    //                                            setTitle();
-    //                                            setImageTop();
-    //                                        }
-    //
-    //                                    }
-    //
-    //                                    @Override
-    //                                    public void onCancelled(DatabaseError databaseError) {
-    //                                    }
-    //                                });
-    //            } else {
-    //                seguindo = false;
-    //                setTitle();
-    //                setupViewPagerTabs();
-    //                setImageTop();
-    //            }
-    //
-    //            if (mAuth.getCurrentUser() != null) {
-    //
-    //                setEventListenerWatch();
-    //                setEventListenerFavorite();
-    //                setEventListenerRated();
-    //
-    //                Date date = null;
-    //                fab_menu.setAlpha(1);
-    //                if (series.getFirstAirDate() != null) {
-    //                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-    //                    try {
-    //                        date = sdf.parse(series.getFirstAirDate());
-    //                    } catch (ParseException e) {
-    //                        e.printStackTrace();
-    //                    }
-    //                    if (UtilsApp.verificaLancamento(date)) {
-    //                        menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
-    //                        menu_item_rated.setOnClickListener(RatedFilme());
-    //                    }
-    //                    menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
-    //                } else {
-    //                    menu_item_watchlist.setOnClickListener(addOrRemoveWatch());
-    //                    menu_item_favorite.setOnClickListener(addOrRemoveFavorite());
-    //                    menu_item_rated.setOnClickListener(RatedFilme());
-    //                }
-    //            } else {
-    //                fab_menu.setAlpha(0);
-    //            }
-    //        }
-    //    }
+        userTvshow = UtilsApp.setUserTvShow(series)
+
+        series.seasons?.forEachIndexed { index, seasonsItem ->
+
+            val subscriber = API(this)
+                    .getTvSeasons(id_tvshow, seasonsItem?.seasonNumber!!)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.newThread())
+                    .subscribe(object : Observer<TvSeasons> {
+                        override fun onCompleted() {
+
+                        }
+
+                        override fun onError(e: Throwable) {
+                            Toast.makeText(this@TvShowActivity, R.string.ops, Toast.LENGTH_SHORT).show()
+                        }
+
+                        override fun onNext(tvshow: TvSeasons) {
+                            userTvshow?.seasons?.get(index)?.userEps = setEp2(tvshow)
+                            atulizarDataBase()
+                        }
+                    })
+
+            compositeSubscription?.add(subscriber)
+
+        }
+
+    }
+
+    private fun atulizarDataBase() {
+
+        userTvshowOld?.seasons?.forEachIndexed { index, userSeasons ->
+
+            if (userTvshow?.seasons?.get(index = index)?.id == userTvshowOld?.seasons?.get(index)?.id!!) {
+                userTvshow?.seasons?.get(index = index)?.seasonNumber = userTvshowOld?.seasons?.get(index)?.seasonNumber!!
+                userTvshow?.seasons?.get(index = index)?.isVisto = userTvshowOld?.seasons?.get(index)?.isVisto!!
+            }
+
+            atulizarDataBaseEps(index)
+
+        }
+
+    }
+
+    private fun atulizarDataBaseEps(indexSeason: Int) {
+        userTvshowOld?.seasons?.get(indexSeason)?.userEps?.forEachIndexed { index: Int, userEp: UserEp ->
+            userTvshow?.seasons?.get(indexSeason)?.userEps?.set(index, userEp)
+        }
+
+        if (userTvshow?.seasons?.get(index = indexSeason)?.userEps?.size!! > userTvshowOld?.seasons?.get(index = indexSeason)?.userEps?.size!!) {
+            userTvshow?.seasons?.get(indexSeason)?.isVisto = false
+        }
+    }
+
 
     private fun setDados() {
         if (mAuth?.currentUser != null) {
@@ -774,7 +606,7 @@ class TvShowActivity : BaseActivity() {
                                             setImageTop()
                                         } else {
                                             if (userTvshowOld?.numberOfEpisodes!! < series?.numberOfEpisodes!!) {
-                                                // atualizarRealDate();
+                                                atualizarRealDate()
                                             }
                                         }
                                     } else {

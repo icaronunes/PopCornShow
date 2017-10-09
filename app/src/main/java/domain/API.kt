@@ -384,7 +384,7 @@ class API(context: Context) {
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
-                    .url("${baseUrl3}/tv/$id/season/$id_season?api_key=${Config.TMDB_API_KEY}&language=$timeZone,en")
+                    .url("${baseUrl3}tv/$id/season/$id_season?api_key=${Config.TMDB_API_KEY}&language=$timeZone,en")
                     .get()
                     .build()
             val response = client.newCall(request).execute()

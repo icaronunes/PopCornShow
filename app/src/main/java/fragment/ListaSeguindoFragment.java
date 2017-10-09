@@ -97,7 +97,6 @@ public class ListaSeguindoFragment extends Fragment {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         userTvshows.add(snapshot.getValue(UserTvshow.class));
-                        //  Log.d(TAG, snapshot.getValue(UserTvshow.class).getNome());
                     }
                     if (getView().getRootView() != null) {
                         recyclerViewMissing = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);

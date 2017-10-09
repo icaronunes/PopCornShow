@@ -28,7 +28,9 @@ import java.util.List;
 import java.util.Locale;
 
 import activity.SettingsActivity;
+import domain.EpisodesItem;
 import domain.FilmeService;
+import domain.TvSeasons;
 import domain.UserEp;
 import domain.UserSeasons;
 import domain.UserTvshow;
@@ -66,7 +68,6 @@ public class UtilsApp {
             UserSeasons userSeasons = new UserSeasons();
             userSeasons.setId(tvSeason.getId());
             userSeasons.setSeasonNumber(tvSeason.getSeasonNumber());
-
             list.add(userSeasons);
         }
         return list;
@@ -83,6 +84,18 @@ public class UtilsApp {
         }
         return eps;
     }
+    public static List<UserEp> setEp2(TvSeasons tvSeason) {
+        List<UserEp> eps = new ArrayList<>();
+        for (EpisodesItem tvEpisode : tvSeason.getEpisodes()) {
+            UserEp userEp = new UserEp();
+            userEp.setEpisodeNumber(tvEpisode.getEpisodeNumber());
+            userEp.setId(tvEpisode.getId());
+            userEp.setSeasonNumber(tvEpisode.getSeasonNumber());
+            eps.add(userEp);
+        }
+        return eps;
+    }
+
 
 
     /* Checks if external storage is available for read and write */

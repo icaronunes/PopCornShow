@@ -1,84 +1,89 @@
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/mergeJavaRes/flavor21/release/jars/2/1f/main.jar(!**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/mergeJavaRes/flavor21/release/folders/2/1f/main(!**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ba9457ea33fb3785fa79ec40356e8971-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/249e4d29a9a1be377d7a4ff762723e55-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/f153c017606899c3fbd5eefe38431bcd-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/37d156014b2fb49710e4c877f5238e3f-okhttp-3.6.0(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/5e1f65027946d297dbc6b99a9d95a399-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/e64c21434ac0bbb24435afb3d9215dc2-bolts-android-1.4.0(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/4778253c97464086ab95e825b7a0127e-google-services-3.0.0(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/d7078422c6b4e5a7cad21ba89e1cc6d2-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/923b217266f81a5061acc8abb4736c73-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/5b8f7d732be24deec5e210d0756a5f7e-constraint-collapsing_toolbar-solver-1.0.0-alpha4(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/f69ba5ab27528b37997159387a32e76b-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/407f80ca5203ef79e74a1d4ce75e48a6-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/53e178f62eeb94d2d0a4131a86bfb42e-javax.annotation-api-1.2(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/e2904fbea9aadfb25e69c4b28bc22f91-bolts-tasks-1.4.0(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/40291a1bf11fa6200568dfac9c67b941-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ac41cb077e2bf7ce977329f662ad4217-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/8b53ef106b61d36d0ca1a83d21731199-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/3d54084fbf141835a4116dd6708a30e7-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/8e672a5eae3383b862b4ec8851c33cab-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/051d2eb5b22231b2b9d99d3ebae6c808-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/617b1421432eeb1af8df5679217afad7-jackson-core-2.4.4(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/065e3b9f41704901f6f185339cc823ac-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/0ef24d6ccab29aa71024f416666a5d40-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/4e66bf07a809748c5fda4f7cce1bcde0-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/10895bf8ec96a9748bec0c5d91f9fb15-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/e2dc5e3308a3c4c446db50702101f809-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/a21f2fa3609f886025b3eb44afa62bcb-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/97d6a5873aa5649327febc272e5bb693-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/1453aba4a95906232e3e21cb0fadbd90-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/4eaf248cfeeea51bc2be44e636718166-bolts-applinks-1.4.0(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/f2d6dbf14e66447cf9654b7cd4c340cf-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/1a240210b2537fbc79a783a21ba4a7a7-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/374af23a273d9a7b3cf46340d324df77-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/06368a3ba4430cefc84f54e6c902f4d9-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/0eb77639a1ef6015a06239749eded76a-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/771154f2cd9d094ce7aee8c9d3a2ec2f-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/f74447b5e10c5cdd252dadfb9a8fb23e-guava-18.0(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/430cb34702c78be71b7b4efc83b43be1-gson-2.8.0(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/c4ae79d682143b51b71482f406396584-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/847bf2f8f8c333eafee5baf5105f74f8-commons-lang3-3.3.2(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/d30f7023b3b613af6b20768e1f2fd181-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/4d260206b73cf23ea8d4473fd0ce3eb4-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/02a98de79bd3b23e1619897ff863d3e9-jackson-databind-2.4.4(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/dc99a218b78bcb3370125f8b4708f30f-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/f9a610fbd7e22bfb87134c8004b20c3b-slf4j-api-1.7.21(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/7a0b4b1f3a3ad50482dc6bd4e9a00420-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/7515d092462782d5da865ec1b44463be-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/1a8b50e139804a782960ba67311a54e1-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/25103e7ff31fbab170d4c0fdeb69d567-support-annotations-25.3.1(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/0aa355cafb4e849710ee38381dc71c12-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/28584519f043dd8df036b48feab02a75-jackson-annotations-2.4.4(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/7e7ac5405ad9feff830495d2778f65c9-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/043a8e6eb6c231187a3538dde1906157-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ef0a65d10cea96e596a4edf6112c0830-themoviedbapi-1.4(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/6a5b4a51622bdf0b3ae835f3e8cb6bd7-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/d8d2b286a954f606755df03ee189b4e8-commons-codec-1.10(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/4890218b7248b3372488e4401c369023-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/52109a03890ca7bd18f8e2e814984ae3-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/3bd3c70434096f31098efc63296102f3-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/04f3346012f949f8f99f86f596a73f7f-jcl-over-slf4j-1.7.7(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/b7d3357e8d1ff5358c3eaec4a82c0e39-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/cad54bad39b6e9fc32aefd80b05fe107-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/735a42907e73e27ea1cbf5247e25620b-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/b69fb2c18041b4661e137bd25dcc7fbf-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/e5a3cab2a55788a9c959876be44911cf-picasso-2.5.2(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/254cb18dec338254e13d9dcc49fa8035-otto-1.3.8(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/cea66b8b8c649f647bfd0d5f780c8201-slf4j-android-1.7.21(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/52743b91ddb778e1b846ead7ee6c7bad-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/b94dd3e6fa9d12bf8b6a6ca5b66b2d8f-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/efbb5566462c8a42c5d1bb419c15086d-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/07711a53ce40fa4cddb7405bc854b9e8-okio-1.11.0(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/6593a782cb57d34bded5a9c1e2906ceb-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/85b98be9cb200449a2ddafe457e0658b-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/8e944bbe33a5a93d697263302dcb1d68-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/d7e8c1e994c06be0d203350df70290b2-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/dd31caf7f6990fdd34d3724cfc6bfcf9-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/bd5505e975b8ce1c863461fd47b4ae8a-classes(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/2/8ddfc39e3d93a3a6de9b2c10d3ee7b33-YouTubeAndroidPlayerApi(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/1/089d989be0fd859c7f20dfd2d27f94e8(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ea31a194bc796ce54bc361e41077c17b-57dbcb1c6c7ed14d515dbf800a518048f9fdf268(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/3451dd510c55f6741b29190fc0dc9359-34d323bcd7c98650733f62c445255531742eaee3(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/5565c5abfcd1ca4c863a931b6f0c4558-8cb1dcf68d89b3835f6b8620276bad0ce2e75a94(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/7f75215d3999266b48e8640c23aef9aa-7e84a58f14b03e539c66973b1348dfcc92b37959(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ade065fb6c3938bb76976293abb62c01-3a4eaa615f24f7f01c08072bdcbc45ffa148d954(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/672a8801c057dc95e87ee1b4d5f6ba3d-a2543021b3d50545d47225b9d51fcc9a4bc89e2f(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/6d6f97db9127a1a3f28e767fce13e9fe-768d0e81539fd06fc42740373e84ab6e3ccd95ae(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/f1247a109e1066f43675213fc3c418ec-69c741d2110fd5b86d0bc34687be796038c68f85(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/edc2d5fcc436910d0cf3b0fedb82d978-8357f127e3132eaedbe37aea0c48648705776bbe(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ba4794b3bf2463f6c1acddab93cb0815-6cec7753d390b52cfe748fefdbf6c9c367540e83(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/bdca5bf20557ca21da788956baf06297-5b1a933a3cb869e9a1a5c2e39ef0edf8b0f495f6(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/dcd14903923d278a3c62cc8df32b1229-48020fc59787d249114806e634c52f644245a80b(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/e12834defde0e47c3d01cb617ae6b7a6-f07471cc8daabba9b33b6c2492a169834e3c6749(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/787e52e8581ea483069633cac5fc2273-8f8b1f6b5ad05813d590e931b9eb21e8f955e83d(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/932b8d92575897213a07bbfcc0b9553a-3a66bd78a25a1f40c75058b1faf1f3c8fa2b48f1(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/dc3386636a12ba862a76fe8887a33476-5dd11c586126d0030cfe8a13fc8490b88e1279c2(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/f243c48b4a4a8f7f632e6dfb2a305d12-853eefc218e53f86499b30eb852849853d42e376(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/7b6d7f555bfb848109e4eb5a86be37d3-e633107a1b9e826ebabfa5fb2f23e0860d4a87a2(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/26c082865dbed25c1822b05dd1e1c292-11ad73441e6e778a59510e7bdebbbe93643c02bb(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/fc386fda8542ae4b838440af8a624529-aa6e9b1f8d1364f493a5c1f4b5dabefecdd446f0(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/132d3fd2cc5d5b6bf95d4d11c8980ea9-cc273d659a859add25390b7aa6eded036f001525(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/345c861e7529686d525d156d84889f98-fdb738fd2ee9f543cfe49debd9d117674e60db36(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/9befbc99e6af4382622aa5f1f383f938-c37b8da5199a30043c6ce4169d2313ab4e56fbff(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/1d65a6d9acc07de7d0f5b7b63de4a2be-b8be5144022e8fb2366e72814320a8797abb6dae(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ad2903674404d1a85a27e07bee97ffb7-0889494767d258bb31119372474a445704582ff4(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/4a50909fbeb00255875c69fc2a6baa1e-1e007753630aecd4d112f47539a0741fb9ce1439(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/f2dce511bbcad9b034961192d805b119-f48d5f356f4d1c82d2d52ef40a6b2e6c8e63145f(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/0cc2cb328494276529f66bbfda9c09f8-7bbd037387a09eb825e46e8fde2c0439b82875ab(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/7ac9b519dab49d3d891ec36a342cb03d-8f046c55754bade195bb29ce12cf47b0c219b5bf(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/a17f8f83165e0ec8df84ee6f824a344f-bfa22ab3f49fdafea5d772f62981e198b3cf0d7b(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/a9aa22ce51934a10c694e688b571d6da-d2308e9fab91cabd7c8fb9f112fce1b75f7d906d(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/3c6312fd86017408469719166c62a3e1-5daa1776eb40bec917f6f6af97b1275da6a82367(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/8199c7fdd9f0125e282d7fa432e0e3b6-d8b469a212c17745d599848be5dd690aaaafd374(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/e9e621436dd5b732eaed296b3392f7e3-b200e37a026ef0f35c6eab56f4f00651a1cf62a1(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/2877e4c8bb700baca30fb094a39349b1-878dc05837f080ceb16d09dad060cad274b90e02(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/40a44b9ee71bd64ccd364061fda79816-aee94f9f4c95adb19544f72990b5529194c2dbcb(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/201c13d7f42dbce1ae343536e8862494-2600a42eaf54c592149f2bc2118ccf27b3d0e5df(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/22be81693ec22584f923d3d8a03875c1-d7e57e6cc7147a78416c803bd6a8785747a4ac9a(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/4ea7d0f5867bd1c82a3de261cff0f01f-fd2534d49f86aa20618bcbecd6b6fc0007e9016b(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ca18013d0af7a53b3943b08ae4c75351-bbaa7a7c8170d8afb931ad6eb039f6049eabd5e5(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/c549e46d245a652aeca536d5980fe1aa-ae208e0cc90a1b07a6291f7e33e1b2bd1eb5043d(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/13eff1223d214d053a086ae9f40c2700-67040bfe6327e31fda13e041b76794bc5b581212(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/5c888307290d0f8b4213be8d55582afb-70d9461da9493ddaba46688a4811c20811bc5b29(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/3db92d6139fe30d01351de4ebd3ad21f-efd5be7032f3357279672edf84fe67b727091d11(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/fee58a7f820af1b6c8ee0f5cfa9e785f-2c8c8fd0a5702d8ef6a28069805d34c71e765d93(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/97cc94f9c19fe1bfeeb877f9ebd283f4-b495656c05da2414241638171daec526780f54f8(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/55394e093171c7b1ce2f3391103fba53-58ce908ff93877d2c2a2d2bd9e438a193d12ba88(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/294f00245374f0b1e860aa3e6c0d8335-87e6c3956eec4a25c578506d4eadabf179f084e2(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/dd94b5aa68ca95b103ec34837896cabe-c3b6ee4ad43e3f4175d86683a1011b14d0386797(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/e54ba9e6aa7d8d4eeec866f27dc9c03c-49273de86ef874ea07e9b9e1f5dd63684fb2a531(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/514b20b9efa65cd63ce89bb1b24cf997-17ecf03c3e599395e42ac5225af1ac9e7a7bafda(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/981d6f8fa675238319a00cb5f702496e-2fb83e277be1062f78537e2d4a686a650879c71b(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/180ffb0819fef80cdc2fa9a2efc139c2-e7ea4e486c0a517743326a43c02b22b521807cd1(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/3c1ac6e1052de0f7c0c5e99a7ad1cdd7-44e10e23a611492e7e46161be570788f2cf747b7(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/033c3de5f952a00e129e2234ce3d6459-5c33e5a0a6ba80ee627cdf42d88a5a5304ba0954(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/31ce4eb42e70f7adb1e6d41b4b7ed8df-96e96e5121dfa54c284bb0e0ee907da14fea568f(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ab1cc211ea4b698802a62a52923ddfb5-632bfd0d9f1ac8b9adbeca0aff2f173fce1da79c(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/f63f2b8a2d133d4085857e5e85aaf5f3-dc927f4be4d3f5f8802cba1ab68604afa86602a3(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/f749489a951a02382be8651da7daf649-9c295058ce34015ab84bb89787a6613534c83086(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/a9fa0f5150cd0484d7409377a0cee42e-288b0c124594cba37fbfc175e85e4b51e771ac17(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/735b0792abd862a8978fc3cd92c5cc95-b314fd07a440775a8d9da3dfe2a289661302c2d3(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/69bc36547443903707cabb55f8b31108-f1493374788706b31ea1dcad278bdb460053b895(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/d7d72d5f647a6331488bcd81d6e1424c-3ab919575de93395fcca69b19c4768762bcb4017(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/e5a329d061203c9f19071dfab07e588f-e943933f030e3737d42a274b068191c9b48d3922(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/370a887b580eb254c66457f418f4fd69-bbb0eb0c8a0f51cb8c7955e03274f262104e4381(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/3686755b13dcd1cd6bd541a62e524a24-f8a9064c82307e0bcb2b7826046157a234f0eeff(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ebfb91e1522bb881348b0eaf65f7a936-3d236cb5d3adf9516fbdc13f6c239a3d2872e3df(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/642a3ec0f2197d722f0c392b65ec25d8-7ba65a7eeb93a6b3ddfccf94bc8265cb8fd92ccc(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/b603945a4d9b7de664f12b15de325fcd-3b916e21a5c6c6b229d86dd36fc5acd6d5f93b15(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/6c913898438dd352d71c3af9a9e6d3f1-be523c567369d8e4e76fde048cf4f75549672ac6(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/5e6f827b463a2ee6cde341342f2148e8-4dbe40f7b8dfc463f4dfb3e692621ae8ca46ece4(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/60bde25c63df54e9f11e2c62ee1f3716-55808f55d69afb4893868247ba266fa3b7a5e4eb(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/c0a3639b74f2f19a53f8bc8bf94be35e-059e57910cc52f2ac04866c4d3d111bfd4ca11ae(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/8da152d445beef71b7f3ec26c3e03609-e7f0ac9b2fd846e2f2a1d13bc3cedbfdf6c65737(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/b77b99390986f29b9f78ca826b5ab984-5fbc991fe3aa62bab387ed6cdfadf2a5a6162bb7(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/89a38280f2d13682135d3271cba9e7d6-3cd8b34424e985972f8647ddd7fcbec0fabbd808(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/5f986b0e625a269cc63194f07c532140-7d7146adb26b8b882518880e79abf62d5084564e(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ae9bd016808169e6d9454b774aabaa50-3ca89b90763bd7bbbbc8be1dcda65967e00d18fb(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/01e71872b19a4f509a8d7eb1f51d9424-c9b9dcfc9819d3b22fd8386982efcbdac96f82fc(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/c0f8cc41210e9a40f890f6a0b2d8debf-a964cb50159126926e6fbfd072e292f44d0c6c39(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/eb410f11fc0b1c74db1cfc197c501492-88732f78b281193f8f78ea1bd0f57e5165518bc5(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/c8e93e4479d167375573cf41ec98fa8c-424a477cfcde76f58b05dd579c5026a3a0e7f228(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/3132b30991eb574b0c083566b35a13ff-aad6ae4c03e756aac8820848a9223fd6153393e6(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/2/ed698c5932a80e7397e59c4e3d45a8b1-64b4037e8ec927a963fb1fffa41cb91a69ca51dd(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/1/4432cc260bf542879e83f5a5193ed6b4(**.class)
 -outjars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/proguard/flavor21/release/jars/3/1f/main.jar
 
 -libraryjars /opt/android-sdk-linux/platforms/android-26/android.jar
@@ -269,7 +274,7 @@
     public void handleIntent(android.content.Intent);
 }
 
-# Keep implemtations of the AdMob mediation temporadasAdapter interfaces. Adapters for
+# Keep implemtations of the AdMob mediation adapter interfaces. Adapters for
 # third party ad networks implement these interfaces and are invoked by the
 # AdMob SDK via reflection.
 -keep class * extends com.google.android.gms.ads.mediation.MediationAdapter {
@@ -432,9 +437,8 @@
 
 # Proguard flags for consumers of the Google Play services SDK
 # https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
-# Keep SafeParcelable value, needed for reflection. This is required to support backwards
-# compatibility of some classes.
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+# Keep SafeParcelable NULL value, needed for reflection by DowngradeableSafeParcel
+-keepclassmembers public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
     public static final *** NULL;
 }
 
@@ -483,557 +487,542 @@
     public <methods>;
 }
 
-# view AndroidManifest.xml #generated:316
+# Copyright (C) 2017 The Android Open Source Project
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#      http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# Prevent Parcelable objects from being removed or renamed.
+-keep class android.support.v4.media.** extends android.os.Parcelable {
+    public static final android.os.Parcelable$Creator *;
+}
+
+# view AndroidManifest.xml #generated:312
 -keep class activity.ActivityPersonNetflix {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:188
+# view AndroidManifest.xml #generated:184
 -keep class activity.CrewsActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:315
--keep class desenvolvimento.Desenvolvimento {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:300
+# view AndroidManifest.xml #generated:296
 -keep class activity.DynamicLink {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:181
+# view AndroidManifest.xml #generated:177
 -keep class activity.ElencoActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:166
+# view AndroidManifest.xml #generated:162
 -keep class activity.EpsodioActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:106
+# view AndroidManifest.xml #generated:102
 -keep class activity.FavoriteActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:130
--keep class filme.activity.FilmeActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:93
--keep class listafilmes.activity.FilmesActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:258
+# view AndroidManifest.xml #generated:254
 -keep class activity.FotoPersonActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:72
+# view AndroidManifest.xml #generated:68
 -keep class activity.IntroActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:144
+# view AndroidManifest.xml #generated:140
 -keep class activity.ListaGenericaActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:237
+# view AndroidManifest.xml #generated:233
 -keep class activity.ListaUserActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:70
+# view AndroidManifest.xml #generated:66
 -keep class activity.LoginActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:60
+# view AndroidManifest.xml #generated:56
 -keep class activity.MainActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:151
--keep class oscar.OscarActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:238
+# view AndroidManifest.xml #generated:234
 -keep class activity.PersonActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:122
--keep class pessoaspopulares.PersonPopularActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:174
+# view AndroidManifest.xml #generated:170
 -keep class activity.PosterActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:195
+# view AndroidManifest.xml #generated:191
 -keep class activity.PosterGridActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:221
--keep class produtora.activity.ProdutoraActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:114
+# view AndroidManifest.xml #generated:110
 -keep class activity.RatedActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:251
+# view AndroidManifest.xml #generated:247
 -keep class activity.ReviewsActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:202
+# view AndroidManifest.xml #generated:198
 -keep class activity.SearchMultiActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:286
+# view AndroidManifest.xml #generated:282
 -keep class activity.SeguindoActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:265
+# view AndroidManifest.xml #generated:261
 -keep class activity.SettingsActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:229
+# view AndroidManifest.xml #generated:225
 -keep class activity.SimilaresActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:279
+# view AndroidManifest.xml #generated:275
 -keep class activity.Site {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:159
+# view AndroidManifest.xml #generated:155
 -keep class activity.TemporadaActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:167
+# view AndroidManifest.xml #generated:163
 -keep class activity.TrailerActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:79
--keep class tvshow.activity.TvShowActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:266
--keep class listaserie.activity.TvShowsActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:299
+# view AndroidManifest.xml #generated:295
 -keep class activity.VincularLoginActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:213
+# view AndroidManifest.xml #generated:209
 -keep class activity.WatchListActivity {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/design_bottom_navigation_item.xml #generated:26
+# view res/layout/design_bottom_navigation_item.xml #generated:26
 -keep class android.support.design.internal.BaselineLayout {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/design_navigation_item.xml #generated:17
+# view res/layout/design_navigation_item.xml #generated:17
 -keep class android.support.design.internal.NavigationMenuItemView {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/design_navigation_menu.xml #generated:17
+# view res/layout/design_navigation_menu.xml #generated:17
 -keep class android.support.design.internal.NavigationMenuView {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/design_layout_snackbar_include.xml #generated:18
+# view res/layout/design_layout_snackbar_include.xml #generated:18
 -keep class android.support.design.internal.SnackbarContentLayout {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/activity_crews.xml #generated:10
-# view res/collapsing_toolbar/activity_elenco.xml #generated:9
-# view res/collapsing_toolbar/activity_filme.xml #generated:44
-# view res/collapsing_toolbar/activity_list_main.xml #generated:15
-# view res/collapsing_toolbar/activity_main.xml #generated:30
-# view res/collapsing_toolbar/activity_person.xml #generated:8
-# view res/collapsing_toolbar/activity_person_layout.xml #generated:9
-# view res/collapsing_toolbar/activity_person_netflix.xml #generated:10
-# view res/collapsing_toolbar/activity_similares.xml #generated:8
-# view res/collapsing_toolbar/produtora_layout.xml #generated:42
-# view res/collapsing_toolbar/search_layout.xml #generated:15
-# view res/collapsing_toolbar/tvserie_activity.xml #generated:26
+# view res/layout/activity_crews.xml #generated:10
+# view res/layout/activity_elenco.xml #generated:9
+# view res/layout/activity_filme.xml #generated:43
+# view res/layout/activity_list_main.xml #generated:15
+# view res/layout/activity_main.xml #generated:30
+# view res/layout/activity_person.xml #generated:8
+# view res/layout/activity_person_layout.xml #generated:9
+# view res/layout/activity_person_netflix.xml #generated:10
+# view res/layout/activity_similares.xml #generated:8
+# view res/layout/produtora_layout.xml #generated:33
+# view res/layout/search_layout.xml #generated:15
+# view res/layout/tvserie_activity.xml #generated:26
 -keep class android.support.design.widget.AppBarLayout {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/design_text_input_password_icon.xml #generated:18
+# view res/layout/design_text_input_password_icon.xml #generated:18
 -keep class android.support.design.widget.CheckableImageButton {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/activity_filme.xml #generated:52
-# view res/collapsing_toolbar/activity_main.xml #generated:39
-# view res/collapsing_toolbar/produtora_layout.xml #generated:51
-# view res/collapsing_toolbar/tvserie_activity.xml #generated:33
+# view res/layout/activity_filme.xml #generated:51
+# view res/layout/activity_main.xml #generated:39
+# view res/layout/produtora_layout.xml #generated:41
+# view res/layout/tvserie_activity.xml #generated:33
 -keep class android.support.design.widget.CollapsingToolbarLayout {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/activity_crews.xml #generated:2
-# view res/collapsing_toolbar/activity_elenco.xml #generated:2
-# view res/collapsing_toolbar/activity_filme.xml #generated:9
-# view res/collapsing_toolbar/activity_list_main.xml #generated:10
-# view res/collapsing_toolbar/activity_main.xml #generated:10
-# view res/collapsing_toolbar/activity_person_layout.xml #generated:2
-# view res/collapsing_toolbar/activity_person_netflix.xml #generated:2
-# view res/collapsing_toolbar/activity_similares.xml #generated:2
-# view res/collapsing_toolbar/design_bottom_sheet_dialog.xml #generated:17
-# view res/collapsing_toolbar/produtora_layout.xml #generated:2
-# view res/collapsing_toolbar/search_layout.xml #generated:10
-# view res/collapsing_toolbar/tvserie_activity.xml #generated:9
+# view res/layout/activity_crews.xml #generated:2
+# view res/layout/activity_elenco.xml #generated:2
+# view res/layout/activity_filme.xml #generated:9
+# view res/layout/activity_list_main.xml #generated:10
+# view res/layout/activity_main.xml #generated:10
+# view res/layout/activity_person_layout.xml #generated:2
+# view res/layout/activity_person_netflix.xml #generated:2
+# view res/layout/activity_similares.xml #generated:2
+# view res/layout/design_bottom_sheet_dialog.xml #generated:26
+# view res/layout/produtora_layout.xml #generated:2
+# view res/layout/search_layout.xml #generated:10
+# view res/layout/tvserie_activity.xml #generated:9
 -keep class android.support.design.widget.CoordinatorLayout {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/activity_filme.xml #generated:88
-# view res/collapsing_toolbar/activity_list_main.xml #generated:50
-# view res/collapsing_toolbar/activity_main.xml #generated:89
-# view res/collapsing_toolbar/search_layout.xml #generated:80
-# view res/collapsing_toolbar/tvserie_activity.xml #generated:79
+# view res/layout/activity_filme.xml #generated:87
+# view res/layout/activity_list_main.xml #generated:50
+# view res/layout/activity_main.xml #generated:89
+# view res/layout/search_layout.xml #generated:80
+# view res/layout/tvserie_activity.xml #generated:80
 -keep class android.support.design.widget.NavigationView {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/design_layout_snackbar.xml #generated:18
-# view sw600dp-v13/res/collapsing_toolbar-sw600dp-v13/design_layout_snackbar.xml #generated:18
+# view res/layout/design_layout_snackbar.xml #generated:18
+# view sw600dp-v13/res/layout-sw600dp-v13/design_layout_snackbar.xml #generated:18
 -keep class android.support.design.widget.Snackbar$SnackbarLayout {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/activity_epsodios.xml #generated:8
-# view res/collapsing_toolbar/activity_favorite.xml #generated:10
-# view res/collapsing_toolbar/activity_main.xml #generated:57
-# view res/collapsing_toolbar/activity_person.xml #generated:15
-# view res/collapsing_toolbar/activity_usuario_list.xml #generated:11
-# view res/collapsing_toolbar/tvserie_activity.xml #generated:64
+# view res/layout/activity_epsodios.xml #generated:8
+# view res/layout/activity_favorite.xml #generated:10
+# view res/layout/activity_main.xml #generated:57
+# view res/layout/activity_person.xml #generated:15
+# view res/layout/activity_usuario_list.xml #generated:11
+# view res/layout/tvserie_activity.xml #generated:64
 -keep class android.support.design.widget.TabLayout {
     <init>(...);
 }
 
-# view large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:59
-# view large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:77
-# view res/collapsing_toolbar/activity_login.xml #generated:59
-# view res/collapsing_toolbar/activity_login.xml #generated:77
-# view res/collapsing_toolbar/criar_login.xml #generated:14
-# view res/collapsing_toolbar/criar_login.xml #generated:34
-# view res/collapsing_toolbar/criar_login.xml #generated:52
-# view res/collapsing_toolbar/recuperar_senha_layout.xml #generated:16
-# view res/collapsing_toolbar/reset_senha.xml #generated:19
-# view res/collapsing_toolbar/reset_senha.xml #generated:48
-# view small-v4/res/collapsing_toolbar-small-v4/activity_login.xml #generated:60
-# view small-v4/res/collapsing_toolbar-small-v4/activity_login.xml #generated:79
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:59
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:78
+# view large-v4/res/layout-large-v4/activity_login.xml #generated:59
+# view large-v4/res/layout-large-v4/activity_login.xml #generated:77
+# view res/layout/activity_login.xml #generated:59
+# view res/layout/activity_login.xml #generated:77
+# view res/layout/criar_login.xml #generated:14
+# view res/layout/criar_login.xml #generated:34
+# view res/layout/criar_login.xml #generated:52
+# view res/layout/recuperar_senha_layout.xml #generated:16
+# view res/layout/reset_senha.xml #generated:19
+# view res/layout/reset_senha.xml #generated:48
+# view small-v4/res/layout-small-v4/activity_login.xml #generated:60
+# view small-v4/res/layout-small-v4/activity_login.xml #generated:79
+# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:59
+# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:78
 -keep class android.support.design.widget.TextInputLayout {
     <init>(...);
 }
 
-# view large-v4/res/collapsing_toolbar-large-v4/dialog_collection.xml #generated:8
-# view res/collapsing_toolbar/activity_epsodios.xml #generated:20
-# view res/collapsing_toolbar/activity_favorite.xml #generated:20
-# view res/collapsing_toolbar/activity_filme.xml #generated:63
-# view res/collapsing_toolbar/activity_main.xml #generated:19
-# view res/collapsing_toolbar/activity_main.xml #generated:67
-# view res/collapsing_toolbar/activity_person.xml #generated:24
-# view res/collapsing_toolbar/activity_scroll_poster.xml #generated:15
-# view res/collapsing_toolbar/activity_usuario_list.xml #generated:21
-# view res/collapsing_toolbar/dialog_collection.xml #generated:8
-# view res/collapsing_toolbar/tvserie_activity.xml #generated:17
-# view small-v4/res/collapsing_toolbar-small-v4/dialog_collection.xml #generated:8
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/dialog_collection.xml #generated:8
+# view large-v4/res/layout-large-v4/dialog_collection.xml #generated:8
+# view res/layout/activity_epsodios.xml #generated:20
+# view res/layout/activity_favorite.xml #generated:20
+# view res/layout/activity_filme.xml #generated:62
+# view res/layout/activity_main.xml #generated:19
+# view res/layout/activity_main.xml #generated:67
+# view res/layout/activity_person.xml #generated:24
+# view res/layout/activity_scroll_poster.xml #generated:15
+# view res/layout/activity_usuario_list.xml #generated:21
+# view res/layout/dialog_collection.xml #generated:8
+# view res/layout/tvserie_activity.xml #generated:17
+# view small-v4/res/layout-small-v4/dialog_collection.xml #generated:8
+# view xlarge-v4/res/layout-xlarge-v4/dialog_collection.xml #generated:8
 -keep class android.support.v4.view.ViewPager {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/activity_filme.xml #generated:2
-# view res/collapsing_toolbar/activity_list_main.xml #generated:2
-# view res/collapsing_toolbar/activity_main.xml #generated:2
-# view res/collapsing_toolbar/search_layout.xml #generated:2
-# view res/collapsing_toolbar/tvserie_activity.xml #generated:2
+# view res/layout/activity_filme.xml #generated:2
+# view res/layout/activity_list_main.xml #generated:2
+# view res/layout/activity_main.xml #generated:2
+# view res/layout/search_layout.xml #generated:2
+# view res/layout/tvserie_activity.xml #generated:2
 -keep class android.support.v4.widget.DrawerLayout {
     <init>(...);
 }
 
-# view 800x480/res/collapsing_toolbar-800x480/tvshow_info.xml #generated:8
-# view 800x600/res/collapsing_toolbar-800x600/tvshow_info.xml #generated:8
-# view large-v4/res/collapsing_toolbar-large-v4/tvshow_info.xml #generated:8
-# view res/collapsing_toolbar/abc_alert_dialog_material.xml #generated:41
-# view res/collapsing_toolbar/activity_filme.xml #generated:17
-# view res/collapsing_toolbar/tvshow_info.xml #generated:8
-# view small-v4/res/collapsing_toolbar-small-v4/tvshow_info.xml #generated:8
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/tvshow_info.xml #generated:8
+# view 800x480/res/layout-800x480/tvshow_info.xml #generated:8
+# view 800x600/res/layout-800x600/tvshow_info.xml #generated:8
+# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:8
+# view res/layout/abc_alert_dialog_material.xml #generated:41
+# view res/layout/activity_filme.xml #generated:17
+# view res/layout/tvshow_info.xml #generated:8
+# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:8
+# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:8
 -keep class android.support.v4.widget.NestedScrollView {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_alert_dialog_button_bar_material.xml #generated:43
-# view res/collapsing_toolbar/abc_alert_dialog_material.xml #generated:52
-# view res/collapsing_toolbar/abc_alert_dialog_material.xml #generated:66
-# view res/collapsing_toolbar/abc_alert_dialog_title_material.xml #generated:56
+# view res/layout/abc_alert_dialog_button_bar_material.xml #generated:43
+# view res/layout/abc_alert_dialog_material.xml #generated:52
+# view res/layout/abc_alert_dialog_material.xml #generated:66
+# view res/layout/abc_alert_dialog_title_material.xml #generated:56
 -keep class android.support.v4.widget.Space {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/activity_lista.xml #generated:11
-# view res/collapsing_toolbar/activity_site.xml #generated:5
-# view res/collapsing_toolbar/fragment_list_filme.xml #generated:15
-# view res/collapsing_toolbar/produtora_layout.xml #generated:11
-# view res/collapsing_toolbar/search_layout.xml #generated:36
+# view res/layout/activity_site.xml #generated:5
+# view res/layout/search_layout.xml #generated:36
 -keep class android.support.v4.widget.SwipeRefreshLayout {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_select_dialog_material.xml #generated:23
+# view res/layout/abc_select_dialog_material.xml #generated:23
 -keep class android.support.v7.app.AlertController$RecycleListView {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_action_menu_item_layout.xml #generated:17
+# view res/layout/abc_action_menu_item_layout.xml #generated:17
 -keep class android.support.v7.view.menu.ActionMenuItemView {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_expanded_menu_layout.xml #generated:17
+# view res/layout/abc_expanded_menu_layout.xml #generated:17
 -keep class android.support.v7.view.menu.ExpandedMenuView {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_list_menu_item_layout.xml #generated:17
-# view res/collapsing_toolbar/abc_popup_menu_item_layout.xml #generated:17
+# view res/layout/abc_list_menu_item_layout.xml #generated:17
+# view res/layout/abc_popup_menu_item_layout.xml #generated:17
 -keep class android.support.v7.view.menu.ListMenuItemView {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_screen_toolbar.xml #generated:27
+# view res/layout/abc_screen_toolbar.xml #generated:27
+# view v26/res/layout-v26/abc_screen_toolbar.xml #generated:27
 -keep class android.support.v7.widget.ActionBarContainer {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_action_mode_bar.xml #generated:19
-# view res/collapsing_toolbar/abc_screen_toolbar.xml #generated:43
+# view res/layout/abc_action_mode_bar.xml #generated:19
+# view res/layout/abc_screen_toolbar.xml #generated:43
+# view v26/res/layout-v26/abc_screen_toolbar.xml #generated:44
 -keep class android.support.v7.widget.ActionBarContextView {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_screen_toolbar.xml #generated:17
+# view res/layout/abc_screen_toolbar.xml #generated:17
+# view v26/res/layout-v26/abc_screen_toolbar.xml #generated:17
 -keep class android.support.v7.widget.ActionBarOverlayLayout {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_action_menu_layout.xml #generated:17
+# view res/layout/abc_action_menu_layout.xml #generated:17
 -keep class android.support.v7.widget.ActionMenuView {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_activity_chooser_view.xml #generated:19
+# view res/layout/abc_activity_chooser_view.xml #generated:19
 -keep class android.support.v7.widget.ActivityChooserView$InnerLayout {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_alert_dialog_material.xml #generated:18
+# view res/layout/abc_alert_dialog_material.xml #generated:18
 -keep class android.support.v7.widget.AlertDialogLayout {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/com_facebook_device_auth_dialog_fragment.xml #generated:45
+# view res/layout/com_facebook_device_auth_dialog_fragment.xml #generated:45
 -keep class android.support.v7.widget.AppCompatImageView {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/epsodio_fragment.xml #generated:155
+# view res/layout/epsodio_fragment.xml #generated:155
 -keep class android.support.v7.widget.AppCompatRatingBar {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_alert_dialog_button_bar_material.xml #generated:26
+# view res/layout/abc_alert_dialog_button_bar_material.xml #generated:26
 -keep class android.support.v7.widget.ButtonBarLayout {
     <init>(...);
 }
 
-# view large-v4/res/collapsing_toolbar-large-v4/actor_netflix_list_adapter.xml #generated:2
-# view large-v4/res/collapsing_toolbar-large-v4/adapter_filmes_list.xml #generated:2
-# view large-v4/res/collapsing_toolbar-large-v4/adapter_person_popular.xml #generated:2
-# view large-v4/res/collapsing_toolbar-large-v4/adapter_produtora.xml #generated:2
-# view large-v4/res/collapsing_toolbar-large-v4/crews_filmes_layout.xml #generated:2
-# view large-v4/res/collapsing_toolbar-large-v4/person_movie_filmes_layout.xml #generated:2
-# view res/collapsing_toolbar/actor_netflix_list_adapter.xml #generated:2
-# view res/collapsing_toolbar/adapter_filmes_list.xml #generated:2
-# view res/collapsing_toolbar/adapter_person_popular.xml #generated:2
-# view res/collapsing_toolbar/adapter_produtora.xml #generated:2
-# view res/collapsing_toolbar/adapter_similares.xml #generated:2
-# view res/collapsing_toolbar/calendar_adapter.xml #generated:2
-# view res/collapsing_toolbar/com_facebook_device_auth_dialog_fragment.xml #generated:22
-# view res/collapsing_toolbar/crews_filmes_layout.xml #generated:2
-# view res/collapsing_toolbar/crews_list_adapter.xml #generated:2
-# view res/collapsing_toolbar/desenvolvimento_adapter_layout.xml #generated:7
-# view res/collapsing_toolbar/elenco_list_adapter.xml #generated:2
-# view res/collapsing_toolbar/lista.xml #generated:2
-# view res/collapsing_toolbar/person_movie_filmes_layout.xml #generated:2
-# view res/collapsing_toolbar/reviews.xml #generated:2
-# view res/collapsing_toolbar/search_list_adapter.xml #generated:2
-# view res/collapsing_toolbar/season_layout.xml #generated:2
-# view res/collapsing_toolbar/seguindo_tvshow.xml #generated:2
-# view res/collapsing_toolbar/temporada_epsodio_layout.xml #generated:2
-# view res/collapsing_toolbar/usuario_list_adapter.xml #generated:2
-# view small-v4/res/collapsing_toolbar-small-v4/actor_netflix_list_adapter.xml #generated:2
-# view small-v4/res/collapsing_toolbar-small-v4/adapter_filmes_list.xml #generated:2
-# view small-v4/res/collapsing_toolbar-small-v4/adapter_person_popular.xml #generated:2
-# view small-v4/res/collapsing_toolbar-small-v4/adapter_produtora.xml #generated:2
-# view small-v4/res/collapsing_toolbar-small-v4/crews_filmes_layout.xml #generated:2
-# view small-v4/res/collapsing_toolbar-small-v4/person_movie_filmes_layout.xml #generated:2
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/actor_netflix_list_adapter.xml #generated:2
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/adapter_filmes_list.xml #generated:2
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/adapter_person_popular.xml #generated:2
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/adapter_produtora.xml #generated:2
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/crews_filmes_layout.xml #generated:2
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/person_movie_filmes_layout.xml #generated:2
+# view large-v4/res/layout-large-v4/actor_netflix_list_adapter.xml #generated:2
+# view large-v4/res/layout-large-v4/adapter_filmes_list.xml #generated:2
+# view large-v4/res/layout-large-v4/adapter_person_popular.xml #generated:2
+# view large-v4/res/layout-large-v4/adapter_produtora.xml #generated:2
+# view large-v4/res/layout-large-v4/crews_filmes_layout.xml #generated:2
+# view large-v4/res/layout-large-v4/person_movie_filmes_layout.xml #generated:2
+# view res/layout/actor_netflix_list_adapter.xml #generated:2
+# view res/layout/adapter_filmes_list.xml #generated:2
+# view res/layout/adapter_person_popular.xml #generated:2
+# view res/layout/adapter_produtora.xml #generated:2
+# view res/layout/adapter_similares.xml #generated:2
+# view res/layout/calendar_adapter.xml #generated:2
+# view res/layout/com_facebook_device_auth_dialog_fragment.xml #generated:22
+# view res/layout/crews_filmes_layout.xml #generated:2
+# view res/layout/crews_list_adapter.xml #generated:2
+# view res/layout/desenvolvimento_adapter_layout.xml #generated:7
+# view res/layout/elenco_list_adapter.xml #generated:2
+# view res/layout/lista.xml #generated:2
+# view res/layout/person_movie_filmes_layout.xml #generated:2
+# view res/layout/reviews.xml #generated:2
+# view res/layout/search_list_adapter.xml #generated:2
+# view res/layout/season_layout.xml #generated:2
+# view res/layout/seguindo_tvshow.xml #generated:2
+# view res/layout/temporada_epsodio_layout.xml #generated:2
+# view res/layout/usuario_list_adapter.xml #generated:2
+# view small-v4/res/layout-small-v4/actor_netflix_list_adapter.xml #generated:2
+# view small-v4/res/layout-small-v4/adapter_filmes_list.xml #generated:2
+# view small-v4/res/layout-small-v4/adapter_person_popular.xml #generated:2
+# view small-v4/res/layout-small-v4/adapter_produtora.xml #generated:2
+# view small-v4/res/layout-small-v4/crews_filmes_layout.xml #generated:2
+# view small-v4/res/layout-small-v4/person_movie_filmes_layout.xml #generated:2
+# view xlarge-v4/res/layout-xlarge-v4/actor_netflix_list_adapter.xml #generated:2
+# view xlarge-v4/res/layout-xlarge-v4/adapter_filmes_list.xml #generated:2
+# view xlarge-v4/res/layout-xlarge-v4/adapter_person_popular.xml #generated:2
+# view xlarge-v4/res/layout-xlarge-v4/adapter_produtora.xml #generated:2
+# view xlarge-v4/res/layout-xlarge-v4/crews_filmes_layout.xml #generated:2
+# view xlarge-v4/res/layout-xlarge-v4/person_movie_filmes_layout.xml #generated:2
 -keep class android.support.v7.widget.CardView {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_screen_content_include.xml #generated:19
+# view res/layout/abc_screen_content_include.xml #generated:19
 -keep class android.support.v7.widget.ContentFrameLayout {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_alert_dialog_title_material.xml #generated:45
+# view res/layout/abc_alert_dialog_title_material.xml #generated:45
 -keep class android.support.v7.widget.DialogTitle {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_screen_simple_overlay_action_mode.xml #generated:23
+# view res/layout/abc_screen_simple_overlay_action_mode.xml #generated:23
 -keep class android.support.v7.widget.FitWindowsFrameLayout {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_dialog_title_material.xml #generated:22
-# view res/collapsing_toolbar/abc_screen_simple.xml #generated:17
+# view res/layout/abc_dialog_title_material.xml #generated:22
+# view res/layout/abc_screen_simple.xml #generated:17
 -keep class android.support.v7.widget.FitWindowsLinearLayout {
     <init>(...);
 }
 
-# view 800x480/res/collapsing_toolbar-800x480/fragment_container_filme.xml #generated:284
-# view 800x480/res/collapsing_toolbar-800x480/fragment_container_filme.xml #generated:303
-# view 800x480/res/collapsing_toolbar-800x480/fragment_container_filme.xml #generated:321
-# view 800x480/res/collapsing_toolbar-800x480/fragment_container_filme.xml #generated:339
-# view 800x480/res/collapsing_toolbar-800x480/tvshow_info.xml #generated:279
-# view 800x480/res/collapsing_toolbar-800x480/tvshow_info.xml #generated:297
-# view 800x480/res/collapsing_toolbar-800x480/tvshow_info.xml #generated:315
-# view 800x600/res/collapsing_toolbar-800x600/tvshow_info.xml #generated:279
-# view 800x600/res/collapsing_toolbar-800x600/tvshow_info.xml #generated:297
-# view 800x600/res/collapsing_toolbar-800x600/tvshow_info.xml #generated:315
-# view large-v4/res/collapsing_toolbar-large-v4/fragment_container_filme.xml #generated:284
-# view large-v4/res/collapsing_toolbar-large-v4/fragment_container_filme.xml #generated:303
-# view large-v4/res/collapsing_toolbar-large-v4/fragment_container_filme.xml #generated:321
-# view large-v4/res/collapsing_toolbar-large-v4/fragment_container_filme.xml #generated:339
-# view large-v4/res/collapsing_toolbar-large-v4/tvshow_info.xml #generated:279
-# view large-v4/res/collapsing_toolbar-large-v4/tvshow_info.xml #generated:297
-# view large-v4/res/collapsing_toolbar-large-v4/tvshow_info.xml #generated:315
-# view res/collapsing_toolbar/activity_crews.xml #generated:32
-# view res/collapsing_toolbar/activity_elenco.xml #generated:38
-# view res/collapsing_toolbar/activity_lista.xml #generated:21
-# view res/collapsing_toolbar/activity_person_crews.xml #generated:12
-# view res/collapsing_toolbar/activity_person_imagem.xml #generated:12
-# view res/collapsing_toolbar/activity_person_layout.xml #generated:31
-# view res/collapsing_toolbar/activity_person_movies.xml #generated:12
-# view res/collapsing_toolbar/activity_person_netflix.xml #generated:33
-# view res/collapsing_toolbar/activity_person_popular.xml #generated:16
-# view res/collapsing_toolbar/activity_person_tvshow.xml #generated:11
-# view res/collapsing_toolbar/activity_reviews.xml #generated:32
-# view res/collapsing_toolbar/activity_similares.xml #generated:37
-# view res/collapsing_toolbar/desenvolvimento_layout.xml #generated:10
-# view res/collapsing_toolbar/filmes_main.xml #generated:41
-# view res/collapsing_toolbar/filmes_main.xml #generated:57
-# view res/collapsing_toolbar/fragment_container_filme.xml #generated:284
-# view res/collapsing_toolbar/fragment_container_filme.xml #generated:303
-# view res/collapsing_toolbar/fragment_container_filme.xml #generated:321
-# view res/collapsing_toolbar/fragment_container_filme.xml #generated:339
-# view res/collapsing_toolbar/fragment_list_filme.xml #generated:20
-# view res/collapsing_toolbar/poster_grid.xml #generated:19
-# view res/collapsing_toolbar/produtora_layout.xml #generated:17
-# view res/collapsing_toolbar/search_layout.xml #generated:42
-# view res/collapsing_toolbar/seguindo.xml #generated:16
-# view res/collapsing_toolbar/temporada_layout.xml #generated:12
-# view res/collapsing_toolbar/temporadas.xml #generated:7
-# view res/collapsing_toolbar/tvshow_info.xml #generated:279
-# view res/collapsing_toolbar/tvshow_info.xml #generated:297
-# view res/collapsing_toolbar/tvshow_info.xml #generated:315
-# view res/collapsing_toolbar/tvshow_main.xml #generated:41
-# view res/collapsing_toolbar/tvshow_main.xml #generated:56
-# view small-v4/res/collapsing_toolbar-small-v4/fragment_container_filme.xml #generated:284
-# view small-v4/res/collapsing_toolbar-small-v4/fragment_container_filme.xml #generated:303
-# view small-v4/res/collapsing_toolbar-small-v4/fragment_container_filme.xml #generated:321
-# view small-v4/res/collapsing_toolbar-small-v4/fragment_container_filme.xml #generated:339
-# view small-v4/res/collapsing_toolbar-small-v4/tvshow_info.xml #generated:279
-# view small-v4/res/collapsing_toolbar-small-v4/tvshow_info.xml #generated:297
-# view small-v4/res/collapsing_toolbar-small-v4/tvshow_info.xml #generated:315
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/fragment_container_filme.xml #generated:284
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/fragment_container_filme.xml #generated:303
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/fragment_container_filme.xml #generated:321
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/fragment_container_filme.xml #generated:339
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/tvshow_info.xml #generated:280
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/tvshow_info.xml #generated:298
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/tvshow_info.xml #generated:316
+# view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:284
+# view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:303
+# view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:321
+# view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:379
+# view 800x480/res/layout-800x480/tvshow_info.xml #generated:279
+# view 800x480/res/layout-800x480/tvshow_info.xml #generated:297
+# view 800x480/res/layout-800x480/tvshow_info.xml #generated:315
+# view 800x480/res/layout-800x480/tvshow_info.xml #generated:362
+# view 800x600/res/layout-800x600/tvshow_info.xml #generated:279
+# view 800x600/res/layout-800x600/tvshow_info.xml #generated:297
+# view 800x600/res/layout-800x600/tvshow_info.xml #generated:315
+# view 800x600/res/layout-800x600/tvshow_info.xml #generated:360
+# view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:285
+# view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:304
+# view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:322
+# view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:381
+# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:279
+# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:297
+# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:315
+# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:360
+# view res/layout/activity_crews.xml #generated:40
+# view res/layout/activity_elenco.xml #generated:40
+# view res/layout/activity_lista.xml #generated:15
+# view res/layout/activity_person_crews.xml #generated:12
+# view res/layout/activity_person_imagem.xml #generated:12
+# view res/layout/activity_person_layout.xml #generated:31
+# view res/layout/activity_person_movies.xml #generated:12
+# view res/layout/activity_person_netflix.xml #generated:33
+# view res/layout/activity_person_popular.xml #generated:23
+# view res/layout/activity_person_tvshow.xml #generated:11
+# view res/layout/activity_reviews.xml #generated:32
+# view res/layout/activity_similares.xml #generated:30
+# view res/layout/desenvolvimento_layout.xml #generated:10
+# view res/layout/filmes_main.xml #generated:41
+# view res/layout/filmes_main.xml #generated:57
+# view res/layout/fragment_container_filme.xml #generated:284
+# view res/layout/fragment_container_filme.xml #generated:303
+# view res/layout/fragment_container_filme.xml #generated:321
+# view res/layout/fragment_container_filme.xml #generated:378
+# view res/layout/fragment_list_filme.xml #generated:16
+# view res/layout/poster_grid.xml #generated:19
+# view res/layout/produtora_layout.xml #generated:11
+# view res/layout/search_layout.xml #generated:42
+# view res/layout/seguindo.xml #generated:16
+# view res/layout/temporada_layout.xml #generated:12
+# view res/layout/temporadas.xml #generated:7
+# view res/layout/tvshow_info.xml #generated:279
+# view res/layout/tvshow_info.xml #generated:297
+# view res/layout/tvshow_info.xml #generated:315
+# view res/layout/tvshow_info.xml #generated:361
+# view res/layout/tvshow_main.xml #generated:41
+# view res/layout/tvshow_main.xml #generated:56
+# view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:284
+# view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:303
+# view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:321
+# view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:380
+# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:279
+# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:297
+# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:315
+# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:360
+# view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:284
+# view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:303
+# view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:321
+# view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:377
+# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:280
+# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:298
+# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:316
+# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:362
 -keep class android.support.v7.widget.RecyclerView {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_search_view.xml #generated:75
+# view res/layout/abc_search_view.xml #generated:75
 -keep class android.support.v7.widget.SearchView$SearchAutoComplete {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_screen_toolbar.xml #generated:36
-# view res/collapsing_toolbar/activity_filme.xml #generated:72
-# view res/collapsing_toolbar/activity_list_main.xml #generated:20
-# view res/collapsing_toolbar/activity_main.xml #generated:49
-# view res/collapsing_toolbar/include_toolbar.xml #generated:1
-# view res/collapsing_toolbar/produtora_layout.xml #generated:74
-# view res/collapsing_toolbar/tvserie_activity.xml #generated:56
+# view res/layout/abc_screen_toolbar.xml #generated:36
+# view res/layout/activity_filme.xml #generated:70
+# view res/layout/activity_list_main.xml #generated:20
+# view res/layout/activity_main.xml #generated:49
+# view res/layout/include_toolbar.xml #generated:1
+# view res/layout/produtora_layout.xml #generated:64
+# view res/layout/tvserie_activity.xml #generated:56
+# view v26/res/layout-v26/abc_screen_toolbar.xml #generated:37
 -keep class android.support.v7.widget.Toolbar {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/abc_screen_simple.xml #generated:25
-# view res/collapsing_toolbar/abc_screen_simple_overlay_action_mode.xml #generated:32
+# view res/layout/abc_screen_simple.xml #generated:25
+# view res/layout/abc_screen_simple_overlay_action_mode.xml #generated:32
 -keep class android.support.v7.widget.ViewStubCompat {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:43
+# view AndroidManifest.xml #generated:39
 -keep class applicaton.FilmeApplication {
     <init>(...);
 }
@@ -1053,75 +1042,65 @@
     <init>(...);
 }
 
-# view res/collapsing_toolbar/fab_filme.xml #generated:14
-# view res/collapsing_toolbar/fab_filme.xml #generated:22
-# view res/collapsing_toolbar/fab_filme.xml #generated:30
--keep class com.github.clans.fab_menu.FloatingActionButton {
+# view res/layout/fab_float.xml #generated:15
+# view res/layout/fab_float.xml #generated:23
+# view res/layout/fab_float.xml #generated:31
+-keep class com.github.clans.fab.FloatingActionButton {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/fab_filme.xml #generated:2
--keep class com.github.clans.fab_menu.FloatingActionMenu {
+# view res/layout/fab_float.xml #generated:2
+-keep class com.github.clans.fab.FloatingActionMenu {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/intro_layout.xml #generated:9
-# view res/collapsing_toolbar/intro_layout2.xml #generated:14
+# view res/layout/intro_layout.xml #generated:9
+# view res/layout/intro_layout2.xml #generated:14
 -keep class com.github.paolorotolo.appintro.AppIntroViewPager {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:360
+# view AndroidManifest.xml #generated:356
 -keep class com.google.android.gms.ads.AdActivity {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/activity_crews.xml #generated:43
-# view res/collapsing_toolbar/activity_elenco.xml #generated:50
-# view res/collapsing_toolbar/activity_favorite.xml #generated:27
-# view res/collapsing_toolbar/activity_list_main.xml #generated:37
-# view res/collapsing_toolbar/activity_lista.xml #generated:32
-# view res/collapsing_toolbar/activity_person_crews.xml #generated:30
-# view res/collapsing_toolbar/activity_person_layout.xml #generated:42
-# view res/collapsing_toolbar/activity_person_movies.xml #generated:30
-# view res/collapsing_toolbar/activity_person_netflix.xml #generated:54
-# view res/collapsing_toolbar/activity_person_popular.xml #generated:25
-# view res/collapsing_toolbar/activity_person_tvshow.xml #generated:29
-# view res/collapsing_toolbar/activity_reviews.xml #generated:10
-# view res/collapsing_toolbar/activity_similares.xml #generated:47
-# view res/collapsing_toolbar/activity_usuario_list.xml #generated:32
-# view res/collapsing_toolbar/epsodio_fragment.xml #generated:272
-# view res/collapsing_toolbar/poster_grid.xml #generated:9
-# view res/collapsing_toolbar/produtora_layout.xml #generated:28
-# view res/collapsing_toolbar/search_layout.xml #generated:66
-# view res/collapsing_toolbar/temporada_layout.xml #generated:18
+# view res/layout/activity_favorite.xml #generated:27
+# view res/layout/activity_person_layout.xml #generated:42
+# view res/layout/activity_person_netflix.xml #generated:54
+# view res/layout/activity_person_tvshow.xml #generated:30
+# view res/layout/activity_usuario_list.xml #generated:32
+# view res/layout/epsodio_fragment.xml #generated:272
+# view res/layout/poster_grid.xml #generated:9
+# view res/layout/search_layout.xml #generated:66
+# view res/layout/temporada_layout.xml #generated:18
 -keep class com.google.android.gms.ads.AdView {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:364
+# view AndroidManifest.xml #generated:361
 -keep class com.google.android.gms.appinvite.PreviewActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:356
+# view AndroidManifest.xml #generated:352
 -keep class com.google.android.gms.auth.api.signin.RevocationBoundService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:347
+# view AndroidManifest.xml #generated:343
 -keep class com.google.android.gms.auth.api.signin.internal.SignInHubActivity {
     <init>(...);
 }
 
-# view large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:140
-# view res/collapsing_toolbar/activity_login.xml #generated:137
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:142
+# view large-v4/res/layout-large-v4/activity_login.xml #generated:140
+# view res/layout/activity_login.xml #generated:137
+# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:142
 -keep class com.google.android.gms.common.SignInButton {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:381
+# view AndroidManifest.xml #generated:378
 -keep class com.google.android.gms.common.api.GoogleApiActivity {
     <init>(...);
 }
@@ -1146,12 +1125,12 @@
     <init>(...);
 }
 
-# view res/collapsing_toolbar/youtube_layout.xml #generated:9
+# view res/layout/youtube_layout.xml #generated:9
 -keep class com.google.android.youtube.player.YouTubePlayerView {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/scroll_trailer.xml #generated:17
+# view res/layout/scroll_trailer.xml #generated:17
 -keep class com.google.android.youtube.player.YouTubeThumbnailView {
     <init>(...);
 }
@@ -1171,7 +1150,7 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:375
+# view AndroidManifest.xml #generated:372
 -keep class com.google.firebase.perf.provider.FirebasePerfProvider {
     <init>(...);
 }
@@ -1221,40 +1200,80 @@
     <init>(...);
 }
 
-# view res/collapsing_toolbar/activity_main.xml #generated:76
+# view res/layout/activity_main.xml #generated:76
 -keep class com.viewpagerindicator.CirclePageIndicator {
     <init>(...);
 }
 
-# view res/collapsing_toolbar/activity_scroll_poster.xml #generated:7
+# view res/layout/activity_scroll_poster.xml #generated:7
 -keep class com.viewpagerindicator.LinePageIndicator {
     <init>(...);
 }
 
-# view large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:147
-# view large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:167
-# view res/collapsing_toolbar/activity_login.xml #generated:144
-# view res/collapsing_toolbar/activity_login.xml #generated:164
-# view small-v4/res/collapsing_toolbar-small-v4/activity_login.xml #generated:147
-# view small-v4/res/collapsing_toolbar-small-v4/activity_login.xml #generated:167
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:149
-# view xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:169
+# view AndroidManifest.xml #generated:311
+-keep class desenvolvimento.Desenvolvimento {
+    <init>(...);
+}
+
+# view AndroidManifest.xml #generated:126
+-keep class filme.activity.FilmeActivity {
+    <init>(...);
+}
+
+# view AndroidManifest.xml #generated:89
+-keep class listafilmes.activity.FilmesActivity {
+    <init>(...);
+}
+
+# view AndroidManifest.xml #generated:262
+-keep class listaserie.activity.TvShowsActivity {
+    <init>(...);
+}
+
+# view large-v4/res/layout-large-v4/activity_login.xml #generated:147
+# view large-v4/res/layout-large-v4/activity_login.xml #generated:167
+# view res/layout/activity_login.xml #generated:144
+# view res/layout/activity_login.xml #generated:164
+# view small-v4/res/layout-small-v4/activity_login.xml #generated:147
+# view small-v4/res/layout-small-v4/activity_login.xml #generated:167
+# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:149
+# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:169
 -keep class mehdi.sakout.fancybuttons.FancyButton {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:318
+# view AndroidManifest.xml #generated:314
 -keep class onsignal.CustomNotificationExtenderService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:329
+# view AndroidManifest.xml #generated:147
+-keep class oscar.OscarActivity {
+    <init>(...);
+}
+
+# view AndroidManifest.xml #generated:118
+-keep class pessoaspopulares.PersonPopularActivity {
+    <init>(...);
+}
+
+# view AndroidManifest.xml #generated:217
+-keep class produtora.activity.ProdutoraActivity {
+    <init>(...);
+}
+
+# view AndroidManifest.xml #generated:325
 -keep class provider.SuggestionProvider {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:326
+# view AndroidManifest.xml #generated:322
 -keep class provider.SuggestionRecentProvider {
+    <init>(...);
+}
+
+# view AndroidManifest.xml #generated:75
+-keep class tvshow.activity.TvShowActivity {
     <init>(...);
 }
 
@@ -1268,22 +1287,22 @@
     <init>(...);
 }
 
-# onClick large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:124
-# onClick large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:147
-# onClick large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:167
-# onClick large-v4/res/collapsing_toolbar-large-v4/activity_login.xml #generated:95
-# onClick res/collapsing_toolbar/activity_login.xml #generated:122
-# onClick res/collapsing_toolbar/activity_login.xml #generated:144
-# onClick res/collapsing_toolbar/activity_login.xml #generated:164
-# onClick res/collapsing_toolbar/activity_login.xml #generated:95
-# onClick small-v4/res/collapsing_toolbar-small-v4/activity_login.xml #generated:125
-# onClick small-v4/res/collapsing_toolbar-small-v4/activity_login.xml #generated:147
-# onClick small-v4/res/collapsing_toolbar-small-v4/activity_login.xml #generated:167
-# onClick small-v4/res/collapsing_toolbar-small-v4/activity_login.xml #generated:98
-# onClick xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:126
-# onClick xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:149
-# onClick xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:169
-# onClick xlarge-v4/res/collapsing_toolbar-xlarge-v4/activity_login.xml #generated:97
+# onClick large-v4/res/layout-large-v4/activity_login.xml #generated:124
+# onClick large-v4/res/layout-large-v4/activity_login.xml #generated:147
+# onClick large-v4/res/layout-large-v4/activity_login.xml #generated:167
+# onClick large-v4/res/layout-large-v4/activity_login.xml #generated:95
+# onClick res/layout/activity_login.xml #generated:122
+# onClick res/layout/activity_login.xml #generated:144
+# onClick res/layout/activity_login.xml #generated:164
+# onClick res/layout/activity_login.xml #generated:95
+# onClick small-v4/res/layout-small-v4/activity_login.xml #generated:125
+# onClick small-v4/res/layout-small-v4/activity_login.xml #generated:147
+# onClick small-v4/res/layout-small-v4/activity_login.xml #generated:167
+# onClick small-v4/res/layout-small-v4/activity_login.xml #generated:98
+# onClick xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:126
+# onClick xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:149
+# onClick xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:169
+# onClick xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:97
 -keepclassmembers class * {
     *** onclick(...);
 }

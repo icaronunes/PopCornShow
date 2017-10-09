@@ -500,10 +500,10 @@ class FilmeActivity : BaseActivity() {
             } else {
 
                 val filmeDB = FilmeDB()
-                filmeDB.idImdb = movieDb?.imdbId
+                filmeDB.idImdb = movieDb.imdbId
                 filmeDB.id = movieDb.id!!
-                filmeDB.title = movieDb!!.title
-                filmeDB.poster = movieDb!!.posterPath
+                filmeDB.title = movieDb.title
+                filmeDB.poster = movieDb.posterPath
 
                 myWatch!!.child(id_filme.toString()).setValue(filmeDB)
                         .addOnCompleteListener {

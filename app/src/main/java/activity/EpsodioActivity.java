@@ -9,6 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import adapter.EpsodioAdapter;
 import br.com.icaro.filme.R;
 import domain.UserSeasons;
@@ -43,6 +46,13 @@ public class EpsodioActivity extends BaseActivity {
         viewPager.setCurrentItem(posicao);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(color);
+
+        AdView adview = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+        adview.loadAd(adRequest);
     }
 
     private void setExtras() {

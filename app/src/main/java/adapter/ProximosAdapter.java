@@ -38,7 +38,7 @@ import utils.UtilsApp;
  * Created by icaro on 25/11/16.
  */
 public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.CalendarViewHolder> {
-    private final String TAG = ProximosAdapter.class.getName();
+
     private FragmentActivity context;
     private final List<UserTvshow> userTvshows;
     private int color;
@@ -46,20 +46,19 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
     public ProximosAdapter(FragmentActivity activity, List<UserTvshow> userTvshows) {
         this.context = activity;
         this.userTvshows = userTvshows;
-        //Log.d(TAG,"ProximosAdapter" );
+
     }
 
 
     @Override
     public CalendarViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(context).inflate(R.layout.calendar_adapter, parent, false);
-        //Log.d(TAG,"CalendarViewHolder" );
         return new ProximosAdapter.CalendarViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final CalendarViewHolder holder, int position) {
-        //Log.d(TAG,"onBindViewHolder" );
+
         int vistos, total;
         final UserTvshow userTvshow = userTvshows.get(position);
         holder.title.setText(userTvshow.getNome());
@@ -135,7 +134,6 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
 
     @Override
     public int getItemCount() {
-      //  Log.d(TAG,"getItemCount" );
         if (userTvshows != null) {
             return userTvshows.size();
         }
@@ -143,71 +141,55 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
 
     }
 
-    public void getEpTitle(final UserTvshow userTvshow, final TextView ep_title, final TextView proximo,
-                           final TextView dataTvshow, final View itemView, final TextView new_seguindo) {
-        int posicao = 0; //Gambiara. Tentar arrumar
+    private void getEpTitle(UserTvshow userTvshow, final TextView ep_title, final TextView proximo,
+                            final TextView dataTvshow, final View itemView, final TextView new_seguindo) {
+        int posicao = 0;
         for (final UserSeasons seasons : userTvshow.getSeasons()) {
             if (seasons.getSeasonNumber() != 0) {
-                for (final UserEp userEp : seasons.getUserEps()) {
+                for (UserEp userEp : seasons.getUserEps()) {
                     if (!userEp.isAssistido()) {
                         proximo.setText(String.valueOf("S" + seasons.getSeasonNumber() + "E" + userEp.getEpisodeNumber()));
                         final int finalPosicao = posicao;
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                final TvEpisode tvEpisode = FilmeService.getTmdbTvEpisodes()
-                                        .getEpisode(userTvshow.getId(), userEp.getSeasonNumber(), userEp.getEpisodeNumber(),
-                                                BaseActivity.getLocale(), TmdbTvEpisodes.EpisodeMethod.external_ids);
-                                context.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Date date = null;
-                                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                                        try {
-                                            date = sdf.parse(tvEpisode.getAirDate());
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                        }
+                        new Thread(() -> {
+
+                            final TvEpisode tvEpisode = FilmeService.getTmdbTvEpisodes()
+                                    .getEpisode(userTvshow.getId(), userEp.getSeasonNumber(), userEp.getEpisodeNumber(),
+                                            BaseActivity.getLocale(), TmdbTvEpisodes.EpisodeMethod.external_ids);
+                            context.runOnUiThread(() -> {
+                                Date date = null;
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                try {
+                                    date = sdf.parse(tvEpisode.getAirDate());
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
 
 //                                        if (verificaDataProximaLancamentoDistante(date)){
 //                                            itemView.setAlpha((float) 0.5);
 //                                            return;
 //                                        } TODO não mostrar episodio muito distante. Não funcionando
+                                ep_title
+                                        .setText(tvEpisode.getName() != null && !tvEpisode.getName().equals("") ? tvEpisode.getName() :
+                                                context.getResources().getString(R.string.no_epsodio));
+                                dataTvshow.setText(" - " +tvEpisode.getAirDate());
 
-                                        ep_title
-                                                .setText(tvEpisode.getName() != null && !tvEpisode.getName().equals("") ? tvEpisode.getName() :
-                                                        context.getResources().getString(R.string.no_epsodio));
-                                        dataTvshow.setText(" - " +tvEpisode.getAirDate());
 
+                                if (UtilsApp.verificaDataProximaLancamento(date)){
+                                    new_seguindo.setVisibility(View.VISIBLE);
+                                } else {
+                                    new_seguindo.setVisibility(View.GONE);
+                                }
 
-                                        if (UtilsApp.verificaDataProximaLancamento(date)){
-                                            new_seguindo.setVisibility(View.VISIBLE);
-                                        } else {
-                                            new_seguindo.setVisibility(View.GONE);
-                                        }
-
-                                        itemView.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                Intent intent = new Intent(context, TemporadaActivity.class);
-                                                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), userTvshow.getId());
-                                                intent.putExtra(Constantes.INSTANCE.getTEMPORADA_ID(), userEp.getSeasonNumber() );
-                                                intent.putExtra(Constantes.INSTANCE.getTEMPORADA_POSITION(), finalPosicao);
-                                                intent.putExtra(Constantes.INSTANCE.getNOME(), userTvshow.getNome());
-                                                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
-                                                context.startActivity(intent);
-
-                                                FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
-                                                Bundle bundle = new Bundle();
-                                                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(userTvshow.getId()));
-                                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, userTvshow.getNome());
-                                                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                                            }
-                                        });
-                                    }
+                                itemView.setOnClickListener(view -> {
+                                    Intent intent = new Intent(context, TemporadaActivity.class);
+                                    intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), userTvshow.getId());
+                                    intent.putExtra(Constantes.INSTANCE.getTEMPORADA_ID(), userEp.getSeasonNumber() );
+                                    intent.putExtra(Constantes.INSTANCE.getTEMPORADA_POSITION(), finalPosicao);
+                                    intent.putExtra(Constantes.INSTANCE.getNOME(), userTvshow.getNome());
+                                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
+                                    context.startActivity(intent);
                                 });
-                            }
+                            });
                         }).start();
                         return;
                     }

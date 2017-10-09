@@ -70,7 +70,6 @@ class TvShowFragment : Fragment() {
     private var mAuth: FirebaseAuth? = null
     private var myRef: DatabaseReference? = null
     private var userTvshow: UserTvshow? = null
-    private val temporadasAdapter: TemporadasAdapter? = null
     private var postListener: ValueEventListener? = null
     private var progressBarTemporada: ProgressBar? = null
     private var imdbDd: Imdb? = null
@@ -160,8 +159,7 @@ class TvShowFragment : Fragment() {
         //Validar se esta logado. Caso não, não precisa instanciar nada.
         subscriptions = CompositeSubscription()
         mAuth = FirebaseAuth.getInstance()
-        val database = FirebaseDatabase.getInstance()
-        myRef = database.getReference("users")
+        myRef = FirebaseDatabase.getInstance().getReference("users")
     }
 
 
@@ -317,7 +315,6 @@ class TvShowFragment : Fragment() {
                     startActivity(intent)
                 })
 
-                //REFAZER METODOS - MUITO GRANDE.
 
                 builder.setView(layout)
                 builder.show()
@@ -325,7 +322,6 @@ class TvShowFragment : Fragment() {
             } else {
                 BaseActivity.SnackBar(activity.findViewById(R.id.fab_menu_filme),
                         getString(R.string.no_vote))
-
             }
         }
 
@@ -464,13 +460,17 @@ class TvShowFragment : Fragment() {
     private fun getViewTemporadas(inflater: LayoutInflater?, container: ViewGroup?): View {
         val view = inflater?.inflate(R.layout.temporadas, container, false)
         progressBarTemporada = view?.findViewById<View>(R.id.progressBarTemporadas) as ProgressBar
-        recyclerViewTemporada = view?.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
+        recyclerViewTemporada = view.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
         recyclerViewTemporada.setHasFixedSize(true)
         recyclerViewTemporada.itemAnimator = DefaultItemAnimator()
         recyclerViewTemporada.layoutManager = LinearLayoutManager(context)
         if (mAuth?.currentUser != null) {
-
             recyclerViewTemporada.adapter = TemporadasAdapter(activity, series, onClickListener(), color, userTvshow)
+            if (progressBarTemporada != null) {
+                progressBarTemporada?.visibility = View.INVISIBLE
+            }
+        } else {
+            recyclerViewTemporada.adapter = TemporadasAdapter(activity, series, onClickListener(), color, null)
             if (progressBarTemporada != null) {
                 progressBarTemporada?.visibility = View.INVISIBLE
             }
@@ -503,7 +503,7 @@ class TvShowFragment : Fragment() {
 
                 if (isVisto(position)) {
                     Toast.makeText(context, R.string.marcado_nao_assistido_temporada, Toast.LENGTH_SHORT).show()
-                    val user = if (mAuth?.currentUser != null) mAuth?.currentUser!!.uid else ""
+                    val user = if (mAuth?.currentUser != null) mAuth?.currentUser?.uid else ""
                     val id_serie = series?.id.toString()
                     val childUpdates = HashMap<String, Any>()
 
@@ -522,7 +522,7 @@ class TvShowFragment : Fragment() {
                     val childUpdates = HashMap<String, Any>()
                     childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/visto", true)
                     setStatusEps(position, true)
-                    childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/userEps", userTvshow!!.seasons[position].userEps)
+                    childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/userEps", userTvshow?.seasons?.get(position)?.userEps!!)
 
                     myRef?.updateChildren(childUpdates)
 
@@ -548,7 +548,7 @@ class TvShowFragment : Fragment() {
         if (userTvshow != null) {
             if (userTvshow?.seasons!![position].userEps != null)
                 for (i in 0 until userTvshow?.seasons!![position]?.userEps?.size!!) {
-                    userTvshow!!.seasons[position].userEps[i].isAssistido = status
+                    userTvshow?.seasons!![position].userEps[i].isAssistido = status
                 }
         }
     }
@@ -605,7 +605,7 @@ class TvShowFragment : Fragment() {
                         .setNegativeButton(R.string.no, null)
                         .setOnDismissListener { progressBarTemporada!!.visibility = View.GONE }
                         .setPositiveButton(R.string.ok) { dialogInterface, i ->
-                            myRef!!.child(if (mAuth!!.currentUser != null) mAuth!!.currentUser!!.uid else "")
+                            myRef!!.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid else "")
                                     .child("seguindo")
                                     .child(series?.id.toString())
                                     .removeValue()
@@ -628,10 +628,11 @@ class TvShowFragment : Fragment() {
     }
 
     private fun setSinopse() {
-        if (series!!.overview == null || series!!.overview == "") {
-            descricao!!.text = getString(R.string.sem_sinopse)
+
+        if (series?.overview.isNullOrBlank()) {
+            getString(R.string.sem_sinopse)
         } else {
-            descricao!!.text = series!!.overview
+            descricao.text = series?.overview
         }
     }
 

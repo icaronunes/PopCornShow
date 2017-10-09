@@ -31,7 +31,7 @@ public class UserTvshow implements Serializable {
         this.externalIds = externalIds;
     }
 
-    private  domain.tvshow.ExternalIds externalIds;
+    private domain.tvshow.ExternalIds externalIds;
 
 
     public int getNumberOfEpisodes() {

@@ -14,6 +14,7 @@ public class UserSeasons implements Serializable {
     private List<UserEp> userEps;
     private int id;
     private int seasonNumber;
+    private boolean visto;
 
     public boolean isVisto() {
         return visto;
@@ -22,8 +23,6 @@ public class UserSeasons implements Serializable {
     public void setVisto(boolean visto) {
         this.visto = visto;
     }
-
-    private boolean visto;
 
     public UserSeasons() {
     }
