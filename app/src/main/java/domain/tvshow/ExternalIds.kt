@@ -1,8 +1,8 @@
 package domain.tvshow
 
-import javax.annotation.Generated
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import javax.annotation.Generated
 
 @Generated("com.robohorse.robopojogenerator")
 data class ExternalIds(
@@ -21,4 +21,5 @@ data class ExternalIds(
 
 	@field:SerializedName("tvrage_id")
 	val tvrageId: Int? = null
+
 ): Serializable

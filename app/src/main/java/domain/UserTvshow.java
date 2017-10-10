@@ -27,12 +27,15 @@ public class UserTvshow implements Serializable {
 
     private List<UserSeasons> seasons;
 
-    public void setExternalIds(domain.tvshow.ExternalIds externalIds) {
-        this.externalIds = externalIds;
+    private ExternalIds externalIds;
+
+    public ExternalIds getExternalIds() {
+        return externalIds;
     }
 
-    private domain.tvshow.ExternalIds externalIds;
-
+    public void setExternalIds(ExternalIds externalIds) {
+        this.externalIds = externalIds;
+    }
 
     public int getNumberOfEpisodes() {
         return numberOfEpisodes;
@@ -83,3 +86,4 @@ public class UserTvshow implements Serializable {
         this.poster = poster;
     }
 }
+

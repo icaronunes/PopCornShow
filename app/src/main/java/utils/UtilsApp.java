@@ -34,6 +34,7 @@ import domain.TvSeasons;
 import domain.UserEp;
 import domain.UserSeasons;
 import domain.UserTvshow;
+import domain.tvshow.ExternalIds;
 import domain.tvshow.SeasonsItem;
 import domain.tvshow.Tvshow;
 import info.movito.themoviedbapi.model.config.Timezone;
@@ -55,14 +56,26 @@ public class UtilsApp {
         userTvshow.setPoster(serie.getPosterPath());
         userTvshow.setId(serie.getId());
         userTvshow.setNome(serie.getOriginalName());
-        userTvshow.setExternalIds(serie.getExternal_ids());
+        userTvshow.setExternalIds(valoresExternalIds(serie.getExternal_ids()));
         userTvshow.setNumberOfEpisodes(serie.getNumberOfEpisodes());
         userTvshow.setNumberOfSeasons(serie.getNumberOfSeasons());
         userTvshow.setSeasons(setUserSeasson(serie));
         return userTvshow;
     }
 
-    public static List<UserSeasons> setUserSeasson(Tvshow serie) {
+    private static domain.ExternalIds valoresExternalIds(ExternalIds external_ids) {
+        domain.ExternalIds ext = new domain.ExternalIds();
+
+        ext.setFreebaseMid(external_ids.getFreebaseMid());
+        ext.setImdbId(external_ids.getImdbId());
+        ext.setTvdbId(external_ids.getTvdbId().toString());
+        ext.setTvrageId(external_ids.getTvrageId().toString());
+
+        return ext;
+    }
+
+
+    private static List<UserSeasons> setUserSeasson(Tvshow serie) {
         List<UserSeasons> list = new ArrayList<>();
         for (SeasonsItem tvSeason : serie.getSeasons()) {
             UserSeasons userSeasons = new UserSeasons();
@@ -84,6 +97,7 @@ public class UtilsApp {
         }
         return eps;
     }
+
     public static List<UserEp> setEp2(TvSeasons tvSeason) {
         List<UserEp> eps = new ArrayList<>();
         for (EpisodesItem tvEpisode : tvSeason.getEpisodes()) {
@@ -95,7 +109,6 @@ public class UtilsApp {
         }
         return eps;
     }
-
 
 
     /* Checks if external storage is available for read and write */
@@ -161,7 +174,7 @@ public class UtilsApp {
             if (no_ar.get(Calendar.YEAR) == hoje.get(Calendar.YEAR)) {
                 if (no_ar.get(Calendar.DAY_OF_YEAR) < (hoje.get(Calendar.DAY_OF_YEAR) + 15)
                         ) {
-                    
+
                     return true;
                 }
             }

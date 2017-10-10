@@ -16,6 +16,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
 import android.support.v7.widget.SearchView
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -108,11 +109,9 @@ class TvShowActivity : BaseActivity() {
                         setDados()
                         setFab()
                     }
-
                     override fun onError(e: Throwable) {
                         Toast.makeText(this@TvShowActivity, R.string.ops, Toast.LENGTH_SHORT).show()
                     }
-
                     override fun onNext(tvshow: Tvshow) {
                         series = tvshow
                     }
@@ -394,7 +393,6 @@ class TvShowActivity : BaseActivity() {
                     tvshowDB.title = series?.name
                     tvshowDB.id = series?.id!!
                     tvshowDB.poster = series?.posterPath
-                    // tvshowDB.getExternalIds().setId(series.getId());
 
                     myFavorite?.child(id_tvshow.toString())?.setValue(tvshowDB)
                             ?.addOnCompleteListener {
@@ -475,7 +473,6 @@ class TvShowActivity : BaseActivity() {
                         tvshowDB.id = series!!.id!!
                         tvshowDB.title = series!!.name
                         tvshowDB.poster = series!!.posterPath
-                        // tvshowDB.getExternalIds().setId(series.getId());
 
                         myRated?.child(id_tvshow.toString())?.setValue(tvshowDB)
                                 ?.addOnCompleteListener {
@@ -540,19 +537,21 @@ class TvShowActivity : BaseActivity() {
             val subscriber = API(this)
                     .getTvSeasons(id_tvshow, seasonsItem?.seasonNumber!!)
                     .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.newThread())
+                    .observeOn(Schedulers.immediate())
+                    .onBackpressureBuffer(1000)
                     .subscribe(object : Observer<TvSeasons> {
                         override fun onCompleted() {
-
+                            atulizarDataBase()
+                            setDataBase()
                         }
 
                         override fun onError(e: Throwable) {
                             Toast.makeText(this@TvShowActivity, R.string.ops, Toast.LENGTH_SHORT).show()
+                            Log.d("TAG", e.message)
                         }
 
                         override fun onNext(tvshow: TvSeasons) {
                             userTvshow?.seasons?.get(index)?.userEps = setEp2(tvshow)
-                            atulizarDataBase()
                         }
                     })
 
@@ -566,13 +565,18 @@ class TvShowActivity : BaseActivity() {
 
         userTvshowOld?.seasons?.forEachIndexed { index, userSeasons ->
 
-            if (userTvshow?.seasons?.get(index = index)?.id == userTvshowOld?.seasons?.get(index)?.id!!) {
-                userTvshow?.seasons?.get(index = index)?.seasonNumber = userTvshowOld?.seasons?.get(index)?.seasonNumber!!
-                userTvshow?.seasons?.get(index = index)?.isVisto = userTvshowOld?.seasons?.get(index)?.isVisto!!
+            if (userTvshow?.seasons?.get(index)?.id == userTvshowOld?.seasons?.get(index)?.id!!) {
+                userTvshow?.seasons?.get(index)?.seasonNumber = userTvshowOld?.seasons?.get(index)?.seasonNumber!!
+                userTvshow?.seasons?.get(index)?.isVisto = userTvshowOld?.seasons?.get(index)?.isVisto!!
             }
 
             atulizarDataBaseEps(index)
+        }
 
+        userTvshowOld?.seasons?.forEachIndexed { index: Int, userSeasons: UserSeasons? ->
+            if (userTvshow?.seasons?.get(index)?.userEps?.size!! > userTvshowOld?.seasons?.get(index)?.userEps?.size!!) {
+                userTvshow?.seasons?.get(index)?.isVisto = false
+            }
         }
 
     }
@@ -581,12 +585,25 @@ class TvShowActivity : BaseActivity() {
         userTvshowOld?.seasons?.get(indexSeason)?.userEps?.forEachIndexed { index: Int, userEp: UserEp ->
             userTvshow?.seasons?.get(indexSeason)?.userEps?.set(index, userEp)
         }
-
-        if (userTvshow?.seasons?.get(index = indexSeason)?.userEps?.size!! > userTvshowOld?.seasons?.get(index = indexSeason)?.userEps?.size!!) {
-            userTvshow?.seasons?.get(indexSeason)?.isVisto = false
-        }
     }
 
+    private fun setDataBase() {
+        val myRef = database?.getReference("users")
+        myRef?.child(mAuth?.currentUser?.uid)
+                ?.child("seguindo")
+                ?.child(series.id.toString())
+                ?.setValue(userTvshow)
+                ?.addOnCompleteListener({
+                    task ->
+                    if (task.isComplete){
+                        seguindo = true
+                        setupViewPagerTabs()
+                        setTitle()
+                        setImageTop()
+                        Toast.makeText(this@TvShowActivity, R.string.season_updated, Toast.LENGTH_SHORT).show();
+                    }
+                })
+    }
 
     private fun setDados() {
         if (mAuth?.currentUser != null) {
@@ -595,7 +612,6 @@ class TvShowActivity : BaseActivity() {
                     ?.addListenerForSingleValueEvent(
                             object : ValueEventListener {
                                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-
                                     if (dataSnapshot.exists()) {
                                         userTvshowOld = dataSnapshot.getValue(UserTvshow::class.java)
 
@@ -605,7 +621,7 @@ class TvShowActivity : BaseActivity() {
                                             setTitle()
                                             setImageTop()
                                         } else {
-                                            if (userTvshowOld?.numberOfEpisodes!! < series?.numberOfEpisodes!!) {
+                                            if (userTvshowOld?.numberOfEpisodes!! != series?.numberOfEpisodes!!) {
                                                 atualizarRealDate()
                                             }
                                         }
