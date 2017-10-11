@@ -148,7 +148,6 @@ class TvShowActivity : BaseActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.child(id_tvshow.toString()).exists()) {
                     addRated = true
-
                     if (dataSnapshot.child(id_tvshow.toString()).child("nota").exists()) {
                         val nota = dataSnapshot.child(id_tvshow.toString()).child("nota").value.toString()
                         numero_rated = java.lang.Float.parseFloat(nota)
@@ -204,6 +203,8 @@ class TvShowActivity : BaseActivity() {
         if (valueEventFavorite != null) {
             myFavorite?.removeEventListener(valueEventFavorite)
         }
+
+        compositeSubscription?.unsubscribe()
     }
 
     private fun iniciarFirebases() {
@@ -324,7 +325,7 @@ class TvShowActivity : BaseActivity() {
 
             if (addWatch) {
 
-                myWatch?.child(series?.id.toString())?.setValue(null)
+                myWatch?.child(series.id.toString())?.setValue(null)
                         ?.addOnCompleteListener {
                             Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_watch_remove), Toast.LENGTH_SHORT)
                                     .show()
@@ -334,14 +335,14 @@ class TvShowActivity : BaseActivity() {
             } else {
 
                 val tvshowDB = TvshowDB()
-                tvshowDB.externalIds = series?.external_ids
-                tvshowDB.title = series!!.name
-                tvshowDB.id = series!!.id!!
-                tvshowDB.poster = series!!.posterPath
+                tvshowDB.externalIds = series.external_ids
+                tvshowDB.title = series.name
+                tvshowDB.id = series.id!!
+                tvshowDB.poster = series.posterPath
                 //tvshowDB.getExternalIds().setId(series.getId());
 
-                myWatch!!.child(series!!.id.toString()).setValue(tvshowDB)
-                        .addOnCompleteListener {
+                myWatch?.child(series.id.toString())?.setValue(tvshowDB)
+                        ?.addOnCompleteListener {
                             Toast.makeText(this@TvShowActivity, getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
                                     .show()
 

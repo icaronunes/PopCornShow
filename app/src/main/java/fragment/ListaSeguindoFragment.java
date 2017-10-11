@@ -98,7 +98,7 @@ public class ListaSeguindoFragment extends Fragment {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         userTvshows.add(snapshot.getValue(UserTvshow.class));
                     }
-                    if (getView().getRootView() != null) {
+                    if (getView() != null) {
                         recyclerViewMissing = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);
                         recyclerViewSeguindo = (RecyclerView) getView().getRootView().findViewById(R.id.seguindo_recycle);
                         recyclerViewMissing.setAdapter(new ProximosAdapter(getActivity(), setSeriesMissing(userTvshows)));

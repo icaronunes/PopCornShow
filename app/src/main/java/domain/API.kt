@@ -1,6 +1,7 @@
 package domain
 
 import android.content.Context
+import android.util.Log
 import com.google.gson.Gson
 import domain.colecao.Colecao
 import domain.tvshow.Tvshow
@@ -395,6 +396,7 @@ class API(context: Context) {
                 subscriber.onCompleted()
             } else {
                 subscriber.onError(Throwable(response.message()))
+                Log.d("TAG", response.message())
             }
         }
     }
