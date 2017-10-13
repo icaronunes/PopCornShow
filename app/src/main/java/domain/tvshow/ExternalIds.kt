@@ -14,12 +14,12 @@ data class ExternalIds(
 	val freebaseMid: String? = null,
 
 	@field:SerializedName("tvdb_id")
-	val tvdbId: Int? = null,
+	val tvdbId: String? = null,
 
 	@field:SerializedName("freebase_id")
 	val freebaseId: String? = null,
 
 	@field:SerializedName("tvrage_id")
-	val tvrageId: Int? = null
+	val tvrageId: String? = null
 
 ): Serializable

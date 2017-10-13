@@ -55,7 +55,7 @@ class TvShowActivity : BaseActivity() {
 
     private var id_tvshow: Int = 0
     private var color_top: Int = 0
-    private lateinit var series: Tvshow
+    private var series: Tvshow? = null
     private var addFavorite = true
     private var addWatch = true
     private var addRated = true
@@ -325,7 +325,7 @@ class TvShowActivity : BaseActivity() {
 
             if (addWatch) {
 
-                myWatch?.child(series.id.toString())?.setValue(null)
+                myWatch?.child(series?.id.toString())?.setValue(null)
                         ?.addOnCompleteListener {
                             Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_watch_remove), Toast.LENGTH_SHORT)
                                     .show()
@@ -335,13 +335,13 @@ class TvShowActivity : BaseActivity() {
             } else {
 
                 val tvshowDB = TvshowDB()
-                tvshowDB.externalIds = series.external_ids
-                tvshowDB.title = series.name
-                tvshowDB.id = series.id!!
-                tvshowDB.poster = series.posterPath
+                tvshowDB.externalIds = series?.external_ids
+                tvshowDB.title = series?.name
+                tvshowDB.id = series?.id!!
+                tvshowDB.poster = series?.posterPath
                 //tvshowDB.getExternalIds().setId(series.getId());
 
-                myWatch?.child(series.id.toString())?.setValue(tvshowDB)
+                myWatch?.child(series?.id.toString())?.setValue(tvshowDB)
                         ?.addOnCompleteListener {
                             Toast.makeText(this@TvShowActivity, getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
                                     .show()
@@ -431,13 +431,13 @@ class TvShowActivity : BaseActivity() {
 
 
                 val title = alertDialog.findViewById<View>(R.id.rating_title) as TextView
-                title.text = series!!.name
+                title.text = series?.name
                 val ratingBar = alertDialog.findViewById<View>(R.id.ratingBar_rated) as RatingBar
                 ratingBar.rating = numero_rated
                 val width = resources.getDimensionPixelSize(R.dimen.popup_width)
                 val height = resources.getDimensionPixelSize(R.dimen.popup_height_rated)
 
-                alertDialog.window!!.setLayout(width, height)
+                alertDialog.window?.setLayout(width, height)
 
                 if (addRated) {
                     no.visibility = View.VISIBLE
@@ -456,10 +456,9 @@ class TvShowActivity : BaseActivity() {
                 }
 
                 ok.setOnClickListener {
-                    //  Log.d(TAG, "Adialog Rated");
 
                     val progressDialog = ProgressDialog(this@TvShowActivity,
-                            android.R.style.Theme_Material_Dialog)
+                            android.R.style.Theme_Dialog)
                     progressDialog.isIndeterminate = true
                     progressDialog.setMessage(resources.getString(R.string.salvando))
                     progressDialog.show()
@@ -533,7 +532,7 @@ class TvShowActivity : BaseActivity() {
 
         userTvshow = UtilsApp.setUserTvShow(series)
 
-        series.seasons?.forEachIndexed { index, seasonsItem ->
+        series?.seasons?.forEachIndexed { index, seasonsItem ->
 
             val subscriber = API(this)
                     .getTvSeasons(id_tvshow, seasonsItem?.seasonNumber!!)
@@ -592,7 +591,7 @@ class TvShowActivity : BaseActivity() {
         val myRef = database?.getReference("users")
         myRef?.child(mAuth?.currentUser?.uid)
                 ?.child("seguindo")
-                ?.child(series.id.toString())
+                ?.child(series?.id.toString())
                 ?.setValue(userTvshow)
                 ?.addOnCompleteListener({
                     task ->
@@ -653,10 +652,10 @@ class TvShowActivity : BaseActivity() {
 
             var date: Date? = null
             fab_menu_filme?.alpha = 1.0f
-            if (series.firstAirDate != null) {
+            if (series?.firstAirDate != null) {
                 val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 try {
-                    date = sdf.parse(series.firstAirDate)
+                    date = sdf.parse(series?.firstAirDate)
                 } catch (e: ParseException) {
                     e.printStackTrace()
                 }

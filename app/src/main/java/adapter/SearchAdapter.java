@@ -2,7 +2,6 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,15 +16,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import filme.activity.FilmeActivity;
 import activity.PersonActivity;
 import activity.SearchMultiActivity;
-import tvshow.activity.TvShowActivity;
 import br.com.icaro.filme.R;
+import filme.activity.FilmeActivity;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
 import info.movito.themoviedbapi.model.people.Person;
 import info.movito.themoviedbapi.model.tv.TvSeries;
+import tvshow.activity.TvShowActivity;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -71,24 +70,21 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
                     Intent intent = new Intent(context, FilmeActivity.class);
                     intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(imageView));
                     intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movieDb.getId());
-                    //Log.d("setOnItemClickListener", movieDb.getOriginalTitle());
                     intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movieDb.getTitle());
                     context.startActivity(intent);
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, FilmeActivity.class.getName());
-                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
-                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, FilmeActivity.class.getName());
-                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, movieDb.getTitle());
-                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 }
             });
-
+            if (movieDb.getOriginalTitle() != null)
             holder.search_title_original.setText(movieDb.getOriginalTitle());
+            if (movieDb.getVoteAverage() != 0)
             holder.search_voto_media.setText(Float.toString(movieDb.getVoteAverage()));
+            if (movieDb.getTitle() != null)
             holder.search_nome.setText(movieDb.getTitle());
-            holder.search_data_lancamento.setText(movieDb.getReleaseDate());
+            if (movieDb.getReleaseDate() != null)
+            holder.search_data_lancamento
+                    .setText(movieDb.getReleaseDate().length() >= 4 ? movieDb.getReleaseDate().substring(0,4) : movieDb.getReleaseDate());
             return;
         }
 
@@ -109,24 +105,20 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
                     int color = UtilsApp.loadPalette(imageView);
                     intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                     intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), series.getId());
-                  //  Log.d("setOnItemClickListener", series.getName());
                     intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), series.getName());
                     context.startActivity(intent);
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TvShowActivity.class.getName());
-                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, series.getId());
-                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, TvShowActivity.class.getName());
-                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, series.getName());
-                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
                 }
             });
 
+            if (series.getOriginalName() != null)
             holder.search_title_original.setText(series.getOriginalName());
+            if (series.getVoteAverage() != 0 )
             holder.search_voto_media.setText(Float.toString(series.getVoteAverage()));
+            if (series.getName() != null)
             holder.search_nome.setText(series.getName());
-            holder.search_data_lancamento.setText(series.getFirstAirDate());
+            if (series.getFirstAirDate() != null)
+            holder.search_data_lancamento
+                    .setText(series.getFirstAirDate().length() >= 4 ? series.getFirstAirDate().substring(0,4) : series.getFirstAirDate() );
             return;
         }
 
@@ -147,16 +139,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
                     int color = UtilsApp.loadPalette(imageView);
                     intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                     intent.putExtra(Constantes.INSTANCE.getPERSON_ID(), person.getId());
-                  //  Log.d("setOnItemClickListener", person.getName());
                     intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), person.getName());
                     context.startActivity(intent);
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, PersonActivity.class.getName());
-                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, PersonActivity.class.getName());
-                    bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, person.getId());
-                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, person.getName());
-                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 }
             });
 

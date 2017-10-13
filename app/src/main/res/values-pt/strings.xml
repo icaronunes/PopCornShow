@@ -57,6 +57,7 @@
 
     <string name="no">Não</string>
     <string name="filme_rated">Filme Classificado</string>
+    <string name="tvshow_rated">Série Classificada</string>
     <string name="falha_rated">Falha na classificação</string>
     <string name="filme_add_favorite">Filme Adicionado ao Favoritos</string>
 
@@ -85,7 +86,7 @@
     <string name="air_date">Passando na TV</string>
     <string name="vote_average">Votos</string>
 
-    <string name="tvshow_rated">Epsodio Classificado</string>
+    <string name="tvshow_ep_rated">Epsodio Classificado</string>
     <string name="classificar">Classificar</string>
     <string name="returnin_series">Renovada</string>
     <string name="ended">Finalizada</string>

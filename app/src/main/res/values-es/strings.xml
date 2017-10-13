@@ -154,7 +154,7 @@
     <string name="tvshow">Tv Shows</string>
     <string name="tvshow_add_favorite">Tvshow añadido a Favoritos</string>
     <string name="tvshow_nao_lancado">Tvshow aún no ha sido lanzado</string>
-    <string name="tvshow_rated">Epsodio clasificado</string>
+    <string name="tvshow_ep_rated">Epsodio clasificado</string>
     <string name="tvshow_remove_favorite">Tvshow eliminado de la lista de favoritos</string>
     <string name="tvshow_remove_rated">Nota eliminada de Tvshow</string>
     <string name="tvshow_watch_remove">Tvshow eliminado de la lista de seguimiento</string>
@@ -186,4 +186,5 @@
     <string name="nao_visto">No visto</string>
     <string name="atualizar" >Nuevo</string>
     <string name="sem_informacao_company">No hay información de la Compañía</string>
+    <string name="tvshow_rated">Serie Clasificada</string>
 </resources>

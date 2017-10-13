@@ -114,7 +114,7 @@
     <string name="tvshow">TvShows</string>
     <string name="tvshow_add_favorite">Tvshow added to Favorites</string>
     <string name="tvshow_nao_lancado">Tvshow not yet released</string>
-    <string name="tvshow_rated">Epsodio Rated</string>
+    <string name="tvshow_ep_rated">Epsodio Rated</string>
     <string name="tvshow_remove_favorite">Tvshow removed from the Favorites list</string>
     <string name="upcoming">Coming soon</string>
     <string name="usuario">User\'s TMDB</string>
@@ -212,4 +212,5 @@
     <string name="show" translatable="false">Show</string>
     <string name="atualizar">New</string>
     <string name="sem_informacao_company">No Company Information</string>
+    <string name="tvshow_rated">Tvshow Rated</string>
 </resources>

@@ -24,6 +24,7 @@ public class TvshowDB implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
+
     public int getNota() {
         return nota;
     }

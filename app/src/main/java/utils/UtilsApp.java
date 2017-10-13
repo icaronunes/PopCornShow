@@ -65,7 +65,6 @@ public class UtilsApp {
 
     private static domain.ExternalIds valoresExternalIds(ExternalIds external_ids) {
         domain.ExternalIds ext = new domain.ExternalIds();
-
         ext.setFreebaseMid(external_ids.getFreebaseMid());
         ext.setImdbId(external_ids.getImdbId());
         ext.setTvdbId(external_ids.getTvdbId().toString());

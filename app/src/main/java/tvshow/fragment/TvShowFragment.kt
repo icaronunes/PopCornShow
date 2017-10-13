@@ -27,6 +27,7 @@ import android.widget.*
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.string.in_production
 import br.com.icaro.filme.R.string.mil
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.MemoryPolicy
@@ -65,6 +66,7 @@ class TvShowFragment : Fragment() {
 
     private var tipo: Int = 0
     private var color: Int = 0
+    private var mediaNotas: Float = 0f
     private var seguindo: Boolean = false
     private var series: Tvshow? = null
     private var mAuth: FirebaseAuth? = null
@@ -91,62 +93,6 @@ class TvShowFragment : Fragment() {
         }
     }
 
-    val mediaNotas: Float
-        get() {
-            var imdb = 0f
-            var tmdb = 0f
-            var metascore = 0f
-            var tomato = 0f
-            var tamanho = 0
-
-            if (series?.voteAverage != null)
-                if (series?.voteAverage!! > 0) {
-                    try {
-                        tmdb = series?.voteAverage!!.toFloat()
-                        tamanho++
-                    } catch (e: Exception) {
-
-                    }
-
-                }
-
-            if (imdbDd?.imdbRating.isNullOrEmpty()) {
-
-                if (!imdbDd!!.imdbRating.isEmpty()) {
-                    try {
-                        imdb = java.lang.Float.parseFloat(imdbDd!!.imdbRating)
-                        tamanho++
-                    } catch (e: Exception) {
-                    }
-
-
-                }
-
-                if (imdbDd?.metascore.isNullOrEmpty()) {
-
-                    try {
-                        val meta = java.lang.Float.parseFloat(imdbDd!!.metascore)
-                        val nota = meta / 10
-                        metascore = nota
-                        tamanho++
-                    } catch (e: Exception) {
-                    }
-
-
-                }
-
-                if (imdbDd?.tomatoRating.isNullOrEmpty()) {
-
-                    try {
-                        tomato = java.lang.Float.parseFloat(imdbDd!!.tomatoRating)
-                        tamanho++
-                    } catch (e: Exception) {
-                    }
-                }
-            }
-
-            return (tmdb + imdb + metascore + tomato) / tamanho
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -186,15 +132,15 @@ class TvShowFragment : Fragment() {
             setAnimacao()
             setProgressBar()
             getImdb()
-            setMediaNota()
+            setVotoMedia()
+            setListeners()
 
         }
 
     }
 
-    private fun setMediaNota() {
+    private fun setListeners() {
         icon_site?.setOnClickListener {
-
             if (series?.homepage.isNullOrBlank()) {
                 val intent = Intent(context, Site::class.java)
                 intent.putExtra(Constantes.SITE, series?.homepage)
@@ -225,6 +171,7 @@ class TvShowFragment : Fragment() {
         }
 
         img_star?.setOnClickListener { view ->
+
             if (mediaNotas > 0) {
                 val builder = AlertDialog.Builder(activity)
                 val inflater = activity.layoutInflater
@@ -325,7 +272,6 @@ class TvShowFragment : Fragment() {
             }
         }
 
-
         icon_reviews?.setOnClickListener { view ->
             if (series!!.external_ids!!.imdbId != null) {
                 val intent = Intent(context, ReviewsActivity::class.java)
@@ -340,7 +286,6 @@ class TvShowFragment : Fragment() {
                 }
             }
         }
-
 
     }
 
@@ -588,7 +533,7 @@ class TvShowFragment : Fragment() {
                                 ?.setValue(userTvshow)
                                 ?.addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
-                                        seguir?.setText(R.string.seguir)
+                                        seguir?.setText(R.string.seguindo)
                                     } else {
                                         Toast.makeText(activity, R.string.erro_seguir, Toast.LENGTH_SHORT).show()
                                     }
@@ -608,7 +553,10 @@ class TvShowFragment : Fragment() {
                             myRef!!.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid else "")
                                     .child("seguindo")
                                     .child(series?.id.toString())
-                                    .removeValue()
+                                    .removeValue().addOnCompleteListener(OnCompleteListener { task ->
+                                if (task.isSuccessful)
+                                    seguir?.setText(R.string.seguir)
+                            })
                             seguindo = !seguindo
                             isSeguindo()
                             progressBarTemporada?.visibility = View.GONE
@@ -712,11 +660,11 @@ class TvShowFragment : Fragment() {
     }
 
     private fun setVotoMedia() {
-        val nota = mediaNotas
-        if (nota > 0) {
+        mediaNotas = getMedia()
+        if (mediaNotas > 0) {
             img_star?.setImageResource(R.drawable.icon_star)
             val formatter = DecimalFormat("0.0")
-            voto_media?.text = formatter.format(nota.toDouble())
+            voto_media?.text = formatter.format(mediaNotas)
 
         } else {
             img_star?.setImageResource(R.drawable.icon_star_off)
@@ -920,7 +868,7 @@ class TvShowFragment : Fragment() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : Observer<Imdb> {
                         override fun onCompleted() {
-                            setVotoMedia()
+
                         }
 
                         override fun onError(e: Throwable) {
@@ -937,6 +885,62 @@ class TvShowFragment : Fragment() {
 
         return null
     }
+
+    private fun getMedia(): Float {
+
+        var imdb = 0f
+        var tmdb = 0f
+        var metascore = 0f
+        var tomato = 0f
+        var tamanho = 0
+
+        if (series?.voteAverage != null)
+            if (series?.voteAverage!! > 0) {
+                try {
+                    tmdb = series?.voteAverage!!.toFloat()
+                    tamanho++
+                } catch (e: Exception) {
+
+                }
+
+            }
+
+        if (imdbDd != null) {
+
+            if (imdbDd?.imdbRating.isNullOrBlank()) {
+                try {
+                    imdb = java.lang.Float.parseFloat(imdbDd?.imdbRating)
+                    tamanho++
+                } catch (e: Exception) {
+
+                }
+            }
+
+            if (imdbDd?.metascore.isNullOrEmpty()) {
+
+                try {
+                    val meta = java.lang.Float.parseFloat(imdbDd?.metascore)
+                    val nota = meta / 10
+                    metascore = nota
+                    tamanho++
+                } catch (e: Exception) {
+                }
+
+
+            }
+
+            if (imdbDd?.tomatoRating.isNullOrEmpty()) {
+
+                try {
+                    tomato = java.lang.Float.parseFloat(imdbDd?.tomatoRating)
+                    tamanho++
+                } catch (e: Exception) {
+                }
+            }
+        }
+         return (tmdb + imdb + metascore + tomato) / tamanho
+    }
 }
+
 
 
