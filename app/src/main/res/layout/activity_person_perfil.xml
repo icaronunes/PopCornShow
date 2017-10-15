@@ -130,28 +130,20 @@
                     android:layout_weight="1"
                     android:autoLink="web"
                     android:text="@string/homepage"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
                     android:textStyle="normal|italic"
                     android:visibility="invisible" />
 
                 <ImageView
                     android:id="@+id/person_wiki"
-                    android:layout_width="@dimen/trade_size_dp_40"
+                    android:layout_width="0dp"
                     android:layout_height="@dimen/trade_size_dp_40"
                     android:layout_gravity="end|center"
-                    android:layout_weight="0.08"
+                    android:layout_weight="1"
                     android:adjustViewBounds="true"
                     android:src="@drawable/wikipedia"
                     android:visibility="invisible" />
 
-                <Button
-                    android:id="@+id/netflix"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/procurar_netflix"
-                    android:textAlignment="center"
-                    android:textColor="@color/netflixColor"
-                    android:textSize="@dimen/trade_txt_size_sp_16"
-                    android:visibility="invisible" />
 
             </LinearLayout>
 

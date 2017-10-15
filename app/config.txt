@@ -505,11 +505,6 @@
     public static final android.os.Parcelable$Creator *;
 }
 
-# view AndroidManifest.xml #generated:312
--keep class activity.ActivityPersonNetflix {
-    <init>(...);
-}
-
 # view AndroidManifest.xml #generated:184
 -keep class activity.CrewsActivity {
     <init>(...);
@@ -703,7 +698,7 @@
 # view res/layout/activity_filme.xml #generated:87
 # view res/layout/activity_list_main.xml #generated:50
 # view res/layout/activity_main.xml #generated:89
-# view res/layout/search_layout.xml #generated:80
+# view res/layout/search_layout.xml #generated:81
 # view res/layout/tvserie_activity.xml #generated:80
 -keep class android.support.design.widget.NavigationView {
     <init>(...);
@@ -744,7 +739,7 @@
 }
 
 # view large-v4/res/layout-large-v4/dialog_collection.xml #generated:8
-# view res/layout/activity_epsodios.xml #generated:20
+# view res/layout/activity_epsodios.xml #generated:21
 # view res/layout/activity_favorite.xml #generated:20
 # view res/layout/activity_filme.xml #generated:62
 # view res/layout/activity_main.xml #generated:19
@@ -790,7 +785,7 @@
 }
 
 # view res/layout/activity_site.xml #generated:5
-# view res/layout/search_layout.xml #generated:36
+# view res/layout/search_layout.xml #generated:37
 -keep class android.support.v4.widget.SwipeRefreshLayout {
     <init>(...);
 }
@@ -969,7 +964,7 @@
 # view res/layout/fragment_list_filme.xml #generated:16
 # view res/layout/poster_grid.xml #generated:19
 # view res/layout/produtora_layout.xml #generated:11
-# view res/layout/search_layout.xml #generated:42
+# view res/layout/search_layout.xml #generated:43
 # view res/layout/seguindo.xml #generated:16
 # view res/layout/temporada_layout.xml #generated:12
 # view res/layout/temporadas.xml #generated:7
@@ -1027,17 +1022,17 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:429
+# view AndroidManifest.xml #generated:428
 -keep class com.facebook.CustomTabActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:433
+# view AndroidManifest.xml #generated:432
 -keep class com.facebook.CustomTabMainActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:425
+# view AndroidManifest.xml #generated:424
 -keep class com.facebook.FacebookActivity {
     <init>(...);
 }
@@ -1060,11 +1055,12 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:356
+# view AndroidManifest.xml #generated:355
 -keep class com.google.android.gms.ads.AdActivity {
     <init>(...);
 }
 
+# view res/layout/activity_epsodios.xml #generated:28
 # view res/layout/activity_favorite.xml #generated:27
 # view res/layout/activity_person_layout.xml #generated:42
 # view res/layout/activity_person_netflix.xml #generated:54
@@ -1072,23 +1068,23 @@
 # view res/layout/activity_usuario_list.xml #generated:32
 # view res/layout/epsodio_fragment.xml #generated:272
 # view res/layout/poster_grid.xml #generated:9
-# view res/layout/search_layout.xml #generated:66
+# view res/layout/search_layout.xml #generated:67
 # view res/layout/temporada_layout.xml #generated:18
 -keep class com.google.android.gms.ads.AdView {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:361
+# view AndroidManifest.xml #generated:360
 -keep class com.google.android.gms.appinvite.PreviewActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:352
+# view AndroidManifest.xml #generated:351
 -keep class com.google.android.gms.auth.api.signin.RevocationBoundService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:343
+# view AndroidManifest.xml #generated:342
 -keep class com.google.android.gms.auth.api.signin.internal.SignInHubActivity {
     <init>(...);
 }
@@ -1100,27 +1096,27 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:378
+# view AndroidManifest.xml #generated:377
 -keep class com.google.android.gms.common.api.GoogleApiActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:440
+# view AndroidManifest.xml #generated:439
 -keep class com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:454
+# view AndroidManifest.xml #generated:453
 -keep class com.google.android.gms.measurement.AppMeasurementJobService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:435
+# view AndroidManifest.xml #generated:434
 -keep class com.google.android.gms.measurement.AppMeasurementReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:450
+# view AndroidManifest.xml #generated:449
 -keep class com.google.android.gms.measurement.AppMeasurementService {
     <init>(...);
 }
@@ -1135,67 +1131,67 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:474
+# view AndroidManifest.xml #generated:473
 -keep class com.google.firebase.iid.FirebaseInstanceIdInternalReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:460
+# view AndroidManifest.xml #generated:459
 -keep class com.google.firebase.iid.FirebaseInstanceIdReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:481
+# view AndroidManifest.xml #generated:480
 -keep class com.google.firebase.iid.FirebaseInstanceIdService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:372
+# view AndroidManifest.xml #generated:371
 -keep class com.google.firebase.perf.provider.FirebasePerfProvider {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:489
+# view AndroidManifest.xml #generated:488
 -keep class com.google.firebase.provider.FirebaseInitProvider {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:413
+# view AndroidManifest.xml #generated:412
 -keep class com.onesignal.BootUpReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:393
+# view AndroidManifest.xml #generated:392
 -keep class com.onesignal.GcmBroadcastReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:404
+# view AndroidManifest.xml #generated:403
 -keep class com.onesignal.GcmIntentService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:402
+# view AndroidManifest.xml #generated:401
 -keep class com.onesignal.NotificationOpenedReceiver {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:411
+# view AndroidManifest.xml #generated:410
 -keep class com.onesignal.NotificationRestoreService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:407
+# view AndroidManifest.xml #generated:406
 -keep class com.onesignal.PermissionsActivity {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:405
+# view AndroidManifest.xml #generated:404
 -keep class com.onesignal.SyncService {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:419
+# view AndroidManifest.xml #generated:418
 -keep class com.onesignal.UpgradeReceiver {
     <init>(...);
 }
@@ -1242,7 +1238,7 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:314
+# view AndroidManifest.xml #generated:313
 -keep class onsignal.CustomNotificationExtenderService {
     <init>(...);
 }
@@ -1262,12 +1258,12 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:325
+# view AndroidManifest.xml #generated:324
 -keep class provider.SuggestionProvider {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:322
+# view AndroidManifest.xml #generated:321
 -keep class provider.SuggestionRecentProvider {
     <init>(...);
 }

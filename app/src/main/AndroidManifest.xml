@@ -339,8 +339,6 @@
 
         <activity android:name="desenvolvimento.Desenvolvimento" />
 
-        <activity android:name="activity.ActivityPersonNetflix" />
-
         <service
             android:name="onsignal.CustomNotificationExtenderService"
             android:exported="false">

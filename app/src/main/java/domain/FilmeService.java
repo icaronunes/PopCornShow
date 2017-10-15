@@ -140,91 +140,6 @@ public class FilmeService {
     }
 
 
-    public static Netflix getNetflix(String title, int year) {
-        final String API_URL = "http://netflixroulette.net/api/api.php?";
-        final String url = API_URL + "title=" + title + "&year=" + year;
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .build();
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-        Netflix netflix = null;
-
-        try {
-            Response response = client.newCall(request).execute();
-            netflix = parseJSONNetflix(response);
-        } catch (IOException e) {
-            FirebaseCrash.report(e);
-            e.printStackTrace();
-        }
-        return netflix;
-
-    }
-
-    private static Netflix parseJSONNetflix(Response response) {
-        Gson gson = new GsonBuilder().create();
-        Netflix netflix = null;
-        netflix = gson.fromJson(response.body().charStream(), Netflix.class);
-        return netflix;
-    }
-
-    public static Netflix[] getNetflixDirector(String actor) {
-        final String API_URL = "http://netflixroulette.net/api/api.php?";
-        final String url = API_URL + "director=" + actor;
-        OkHttpClient client =new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .build();
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-        Netflix[] netflix = null;
-
-        try {
-            Response response = client.newCall(request).execute();
-            // Log.d("FilmeService", "parseJSONNetflixActor: " +response.body().string());
-            netflix = parseJSONNetflixActor(response);
-        } catch (IOException e) {
-            FirebaseCrash.report(e);
-            e.printStackTrace();
-        }
-        return netflix;
-    }
-
-
-    public static Netflix[] getNetflixActor(String actor) {
-        final String API_URL = "http://netflixroulette.net/api/api.php?";
-        final String url = API_URL + "actor=" + actor;
-        OkHttpClient client =new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .build();
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-        Netflix[] netflix = null;
-
-        try {
-            Response response = client.newCall(request).execute();
-            // Log.d("FilmeService", "parseJSONNetflixActor: " +response.body().string());
-            netflix = parseJSONNetflixActor(response);
-        } catch (IOException e) {
-            FirebaseCrash.report(e);
-            e.printStackTrace();
-        }
-        return netflix;
-
-    }
-
-    private static Netflix[] parseJSONNetflixActor(Response response) {
-        Gson gson = new GsonBuilder().create();
-        Netflix[] netflix = null;
-        netflix = gson.fromJson(response.body().charStream(), Netflix[].class);
-        return netflix;
-    }
-
     public static Imdb getImdb(String id) {
 
         final String url = "http://www.omdbapi.com/?i="+id+"&tomatoes=true&r=json&apikey=thewdb"; //API de alguem
@@ -246,7 +161,6 @@ public class FilmeService {
             e.printStackTrace();
         }
         return null;
-
     }
 
     private static Imdb parseJSONImdb(Response response) {

@@ -31,7 +31,7 @@ public class PersonActivity extends BaseActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getExtras();
-        viewPager = (ViewPager) findViewById(R.id.viewPager_person);
+        viewPager = findViewById(R.id.viewPager_person);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(nome);
 

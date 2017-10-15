@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity  {
 
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (sharedPref.getBoolean("41", true)) {
+        if (sharedPref.getBoolean("43", true)) {
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_popcorn2)
                     .setTitle(R.string.novidades_title)
@@ -78,9 +78,8 @@ public class MainActivity extends BaseActivity  {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putBoolean("41", false);
-                            editor.remove("39");
-
+                            editor.putBoolean("43", false);
+                            editor.remove("42");
                             editor.apply();
                         }
                     }).create();

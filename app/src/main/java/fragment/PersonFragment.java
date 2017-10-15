@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,7 +24,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import activity.ActivityPersonNetflix;
 import activity.Site;
 import adapter.PersonCrewsAdapter;
 import adapter.PersonImagemAdapter;
@@ -56,10 +54,9 @@ public class PersonFragment extends Fragment {
     private PersonCredits personCredits, personCreditsTvshow;
     private List<Artwork> artworks;
     private String TAG = this.getClass().getName();
-    private Button bt_netflix;
 
     public static PersonFragment newInstance(int aba, int id_person) {
-        //  Log.d("PersonFragment", "newInstance");
+
         Bundle args = new Bundle();
         args.putInt(Constantes.INSTANCE.getABA(), aba);
         args.putInt(Constantes.INSTANCE.getPERSON_ID(), id_person);
@@ -71,7 +68,6 @@ public class PersonFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //  Log.d(TAG, "onCreate");
         setRetainInstance(true);
         if (getArguments() != null) {
             tipo = getArguments().getInt(Constantes.INSTANCE.getABA());
@@ -89,7 +85,6 @@ public class PersonFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //  Log.d(TAG, "onCreateView");
         switch (tipo) {
 
             case R.string.filme: {
@@ -178,7 +173,6 @@ public class PersonFragment extends Fragment {
         conhecido = (TextView) view.findViewById(R.id.conhecido);
         place_of_birth = (TextView) view.findViewById(R.id.place_of_birth);
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
-        bt_netflix = (Button) view.findViewById(R.id.netflix);
 
         return view;
     }
@@ -294,16 +288,6 @@ public class PersonFragment extends Fragment {
                     }
                 });
 
-
-
-
-        bt_netflix.setVisibility(View.VISIBLE);
-        bt_netflix.setOnClickListener(view -> {
-
-            Intent intent = new Intent(getActivity(), ActivityPersonNetflix.class);
-            intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), personPeople.getName());
-            startActivity(intent);
-        });
     }
 
     private void setPersonMovies(PersonCredits personCredits) {
@@ -387,7 +371,6 @@ public class PersonFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            // Log.d("PersonFragment", "doInBackground");
             try {
                 personPeople = getTmdbPerson()
                         .getPersonInfo(id_person, "null"); //So retorna ingles
@@ -412,7 +395,6 @@ public class PersonFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            //  Log.d("PersonFragment", "onPostExecute");
             if (tipo == R.string.person) {
                 setPersonInformation(personPeople);
             }

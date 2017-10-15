@@ -20,6 +20,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.List;
@@ -50,8 +52,6 @@ public class SearchMultiActivity extends BaseActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private ProgressBar progressBar;
     private int pagina = 1;
-    private String TAG = this.getClass().getName();
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,18 +85,15 @@ public class SearchMultiActivity extends BaseActivity {
                 SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
                         SuggestionRecentProvider.AUTHORITY, SuggestionRecentProvider.MODE);
                 suggestions.saveRecentQuery(query, null);
-              //  Log.d("SearchMultiActivity", "ACTION_SEARCH");
 
             } else {
                 if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
 
                     Intent intent;
                     if (getIntent().getData().getLastPathSegment().equalsIgnoreCase(Multi.MediaType.MOVIE.name())) {
-                    //    Log.d("SearchMultiActivity", "ACTION_VIEW");
-                     //   Log.d("SearchMultiActivity", String.valueOf(getIntent().getData()));
-                      //  Log.d("SearchMultiActivity", String.valueOf(getIntent().getData().getLastPathSegment()));
+
                         final int id = Integer.parseInt(getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY));
-                     //   Log.d("SearchMultiActivity", id + " " + Multi.MediaType.MOVIE);
+
                         intent = new Intent(this, FilmeActivity.class);
                         intent.putExtra(Constantes.INSTANCE.getFILME_ID(), id);
                         intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
@@ -106,10 +103,8 @@ public class SearchMultiActivity extends BaseActivity {
                     }
 
                     if (getIntent().getData().getLastPathSegment().equalsIgnoreCase(Multi.MediaType.TV_SERIES.name())) {
-                     //   Log.d("SearchMultiActivity", "ACTION_VIEW");
-                      //  Log.d("SearchMultiActivity", String.valueOf(getIntent().getData().getLastPathSegment()));
                         final int id = Integer.parseInt(getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY));
-                      //  Log.d("SearchMultiActivity", "" + id);
+
                         intent = new Intent(this, TvShowActivity.class);
                         intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), id);
                         intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
@@ -119,13 +114,9 @@ public class SearchMultiActivity extends BaseActivity {
                     }
 
                     if (getIntent().getData().getLastPathSegment().equalsIgnoreCase(Multi.MediaType.PERSON.name())) {
-                       // Log.d("SearchMultiActivity", "ACTION_VIEW");
-                       // Log.d("SearchMultiActivity", String.valueOf(getIntent().getData()));
-                       // Log.d("SearchMultiActivity", String.valueOf(getIntent().getData().getLastPathSegment()));
+
                         String string = getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY);
                         final String id = string.substring(0, string.indexOf('/'));
-                      //  Log.d("SearchMultiActivity", id);
-                      //  Log.d("SearchMultiActivity", string.substring(string.indexOf('/') + 1, string.length()));
                         intent = new Intent(this, PersonActivity.class);
                         intent.putExtra(Constantes.INSTANCE.getPERSON_ID(), Integer.valueOf(id));
                         intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), string.substring(string.indexOf('/') + 1, string.length()));
@@ -154,20 +145,16 @@ public class SearchMultiActivity extends BaseActivity {
 
 
     private SwipeRefreshLayout.OnRefreshListener OnRefreshListener() {
-        return new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                progressBar.setVisibility(View.INVISIBLE);
-                if (UtilsApp.isNetWorkAvailable(SearchMultiActivity.this)) {
-                    TMDVAsync tmdvAsync = new TMDVAsync();
-                    tmdvAsync.execute();
-                    text_search_empty.setVisibility(View.GONE);
-                } else {
-                    text_search_empty.setText(R.string.no_internet);
-                    text_search_empty.setText(View.VISIBLE);
-                    swipeRefreshLayout.setEnabled(false);
-                    //snack();
-                }
+        return () -> {
+            progressBar.setVisibility(View.INVISIBLE);
+            if (UtilsApp.isNetWorkAvailable(SearchMultiActivity.this)) {
+                TMDVAsync tmdvAsync = new TMDVAsync();
+                tmdvAsync.execute();
+                text_search_empty.setVisibility(View.GONE);
+            } else {
+                text_search_empty.setText(R.string.no_internet);
+                text_search_empty.setText(View.VISIBLE);
+                swipeRefreshLayout.setEnabled(false);
             }
         };
     }
@@ -176,7 +163,6 @@ public class SearchMultiActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.menu, menu);
-       // Log.d("onCreateOptionsMenu", "Option Menu");
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -188,12 +174,12 @@ public class SearchMultiActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        AdView adview = (AdView) findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder()
-//                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-//                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-//                .build();
-//        adview.loadAd(adRequest);
+        AdView adview = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+        adview.loadAd(adRequest);
     }
 
     private class TMDVAsync extends AsyncTask<Void, Void, List<Multi>> {
@@ -201,7 +187,7 @@ public class SearchMultiActivity extends BaseActivity {
         @Override
         protected void onPreExecute() {
             swipeRefreshLayout.setEnabled(false);
-           }
+        }
 
         @Override
         protected List<Multi> doInBackground(Void... voids) {//
@@ -221,9 +207,8 @@ public class SearchMultiActivity extends BaseActivity {
                                 "en,null", pagina);
                         return movieResultsPage.getResults();
                     }
-                } catch (Exception e ){
+                } catch (Exception e) {
                     FirebaseCrash.report(e);
-                   // Log.d(TAG, e.getMessage());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -240,7 +225,6 @@ public class SearchMultiActivity extends BaseActivity {
 
             swipeRefreshLayout.setEnabled(true);
             if (movieDbs != null && pagina != 1) {
-              //  Log.d("SearchMultiActivity", "onPostExecute :" + query);
                 List<Multi> x = movieDbList;
                 movieDbList = movieDbs;
                 for (Multi movie : x) {
@@ -251,7 +235,7 @@ public class SearchMultiActivity extends BaseActivity {
 
                 movieDbList = movieDbs;
             }
-            if (movieDbList != null && movieDbList.size() >0) { // TODO: 09/01/17 pode ser null? - vai dar erro?
+            if (movieDbList != null && movieDbList.size() > 0) { // TODO: 09/01/17 pode ser null? - vai dar erro?
                 swipeRefreshLayout.setRefreshing(false);
                 recyclerView.setAdapter(new SearchAdapter(SearchMultiActivity.this, movieDbList));
                 swipeRefreshLayout.setEnabled(true);

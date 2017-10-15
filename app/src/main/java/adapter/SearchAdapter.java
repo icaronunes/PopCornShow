@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -35,7 +34,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
 
     private Context context;
     private List<Multi> multis;
-    private FirebaseAnalytics firebaseAnalytics;
 
     public SearchAdapter(SearchMultiActivity searchMultiActivity, List<Multi> movieDbList) {
         context = searchMultiActivity;
@@ -46,7 +44,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
     public HolderSearch onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.search_list_adapter, parent, false);
         HolderSearch holderSearch = new HolderSearch(view);
-        firebaseAnalytics = FirebaseAnalytics.getInstance(context);
         return holderSearch;
     }
 
