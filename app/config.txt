@@ -99,7 +99,7 @@
 -dontpreverify
 -verbose
 -dontnote com.android.vending.licensing.ILicensingService,com.google.vending.licensing.ILicensingService,com.google.android.vending.licensing.ILicensingService,android.support.**,android.net.http.**,org.apache.commons.codec.**,org.apache.http.**,org.apache.commons.logging.**,com.fasterxml.jackson.**,com.google.**,org.apache.**,com.squareup.okhttp.**
--dontwarn android.support.**,android.support.**,org.apache.commons.**,org.w3c.dom.**,com.fasterxml.jackson.**,com.google.**,com.squareup.**,info.movito.**,okio.**,okio.**,com.google.firebase.perf.network.**,com.onesignal.**,android.security.NetworkSecurityPolicy,android.app.Notification,sun.misc.Unsafe,libcore.io.Memory,com.google.android.apps.common.proguard.UsedBy*
+-dontwarn android.support.**,android.support.**,org.apache.commons.**,org.w3c.dom.**,com.fasterxml.jackson.**,com.google.**,com.squareup.**,info.movito.**,okio.**,org.apache.http.**,android.net.http.AndroidHttpClient,com.google.android.gms.**,com.android.volley.toolbox.**,okio.**,com.google.firebase.perf.network.**,com.onesignal.**,android.security.NetworkSecurityPolicy,android.app.Notification,sun.misc.Unsafe,libcore.io.Memory,com.google.android.apps.common.proguard.UsedBy*
 -printconfiguration /home/icaro/Documentos/workspace/Filme/app/config.txt
 -dump /home/icaro/Documentos/workspace/Filme/app/build/outputs/mapping/flavor21/release/dump.txt
 -printseeds /home/icaro/Documentos/workspace/Filme/app/build/outputs/mapping/flavor21/release/seeds.txt
@@ -267,6 +267,11 @@
 
 -keep class * extends android.support.v7.widget.RecyclerView {
     public static final android.support.v7.widget.RecyclerView *;
+}
+
+-keep class okhttp3.** {
+    <fields>;
+    <methods>;
 }
 
 # Ensure that proguard will not strip the handleIntent method.

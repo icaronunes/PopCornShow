@@ -180,26 +180,26 @@ class TvShowFragment : Fragment() {
 
                 if (imdbDd != null) {
                     (layout
-                            .findViewById<View>(R.id.nota_imdb) as TextView).text = if (imdbDd!!.imdbRating != null)
-                        imdbDd!!.imdbRating + "/10"
+                            .findViewById<View>(R.id.nota_imdb) as TextView).text = if (imdbDd?.imdbRating != null)
+                        imdbDd?.imdbRating + "/10"
                     else
                         "- -"
                     (layout
-                            .findViewById<View>(R.id.nota_metacritic) as TextView).text = if (imdbDd!!.metascore != null)
-                        imdbDd!!.metascore + "/100"
+                            .findViewById<View>(R.id.nota_metacritic) as TextView).text = if (imdbDd?.metascore != null)
+                        imdbDd?.metascore + "/100"
                     else
                         "- -"
                     (layout
-                            .findViewById<View>(R.id.nota_tomatoes) as TextView).text = if (imdbDd!!.tomatoRating != null)
-                        imdbDd!!.tomatoRating + "/10"
+                            .findViewById<View>(R.id.nota_tomatoes) as TextView).text = if (imdbDd?.tomatoRating != null)
+                        imdbDd?.tomatoRating + "/10"
                     else
                         "- -"
                 }
 
                 if (series != null)
                     (layout
-                            .findViewById<View>(R.id.nota_tmdb) as TextView).text = (if (series?.voteAverage!! != 0.0)
-                        series!!.voteAverage!!.toString() + "/10"
+                            .findViewById<View>(R.id.nota_tmdb) as TextView).text = (if (series?.voteAverage != 0.0)
+                        series?.voteAverage?.toString() + "/10"
                     else
                         "- -").toString()
 
@@ -669,7 +669,7 @@ class TvShowFragment : Fragment() {
         } else {
             img_star?.setImageResource(R.drawable.icon_star_off)
             voto_media?.setText(R.string.valor_zero)
-            voto_media?.setTextColor(resources.getColor(R.color.blue))
+            voto_media?.setTextColor(ContextCompat.getColor(context, R.color.blue))
         }
     }
 
