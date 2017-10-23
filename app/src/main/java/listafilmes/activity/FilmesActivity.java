@@ -8,6 +8,9 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import activity.BaseActivity;
 import br.com.icaro.filme.R;
 import listafilmes.fragment.FilmesFragment;
@@ -24,12 +27,12 @@ public class FilmesActivity extends BaseActivity {
         getExtras();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        AdView adview = (AdView) findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder()
-//                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-//                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-//                .build();
-//        adview.loadAd(adRequest);
+        AdView adview = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+        adview.loadAd(adRequest);
 
         if (savedInstanceState == null) {
             FilmesFragment filmesFragment = new FilmesFragment();

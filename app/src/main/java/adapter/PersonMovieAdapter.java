@@ -2,7 +2,6 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +10,16 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import filme.activity.FilmeActivity;
+import java.util.List;
+
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.model.people.PersonCredit;
-import info.movito.themoviedbapi.model.people.PersonCredits;
+import domain.person.CastItem;
+import filme.activity.FilmeActivity;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -29,10 +28,9 @@ import utils.UtilsApp;
  */
 public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.PersonMovieViewHolder> {
     private Context context;
-    private PersonCredits personCredits;
+    private List<CastItem> personCredits;
 
-    public PersonMovieAdapter(Context context, PersonCredits personCredits) {
-
+    public PersonMovieAdapter(Context context, List<CastItem> personCredits) {
         this.context = context;
         this.personCredits = personCredits;
 
@@ -47,10 +45,9 @@ public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.
     @Override
     public void onBindViewHolder(final PersonMovieAdapter.PersonMovieViewHolder holder, int position) {
 
-        final PersonCredit credit = personCredits.getCast().get(position);
+        final CastItem credit = personCredits.get(position);
         if (credit != null) {
 
-           // Log.d("PersonMovieAdapter", "True - " + personCredits.getCast().get(position).getMovieTitle() + " " + credit.getPosterPath());
             Picasso.with(context)
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context , 2)) + credit.getPosterPath())
                     .error(R.drawable.poster_empty)
@@ -60,37 +57,24 @@ public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.
                         @Override
                         public void onSuccess() {
                             holder.progressBar.setVisibility(View.INVISIBLE);
-                            //Log.d("PersonMovieAdapter", "Sucesso");
                             holder.title.setVisibility(View.GONE);
                         }
 
                         @Override
                         public void onError() {
-                           // Log.d("PersonMovieAdapter", "ERRO " + credit.getMovieTitle());
                             holder.progressBar.setVisibility(View.INVISIBLE);
-                            holder.title.setText(credit.getMovieTitle());
+                            holder.title.setVisibility(View.VISIBLE);
+                            holder.title.setText(credit.getTitle() + "- " + credit.getReleaseDate());//TODO null e formatar texto
                         }
                     });
 
-            holder.poster.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, FilmeActivity.class);
-                    ImageView imageView = (ImageView) view;
-                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(imageView));
-                  //  Log.d("PersonMovieAdapter", "ID - " + credit.getMovieId());
-                  //  Log.d("PersonMovieAdapter", "ID - " + credit.getMovieTitle());
-                    intent.putExtra(Constantes.INSTANCE.getFILME_ID(), credit.getMovieId());
-                    intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), credit.getMovieTitle());
-                    context.startActivity(intent);
-
-                    FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
-                    Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, FilmeActivity.class.getName() );
-                    bundle.putString(FirebaseAnalytics.Param.DESTINATION, FilmeActivity.class.getName());
-                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                }
+            holder.poster.setOnClickListener(view -> {
+                Intent intent = new Intent(context, FilmeActivity.class);
+                ImageView imageView = (ImageView) view;
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(imageView));
+                intent.putExtra(Constantes.INSTANCE.getFILME_ID(), credit.getId());
+                intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), credit.getTitle());
+                context.startActivity(intent);
             });
         }
 
@@ -98,11 +82,11 @@ public class PersonMovieAdapter extends RecyclerView.Adapter<PersonMovieAdapter.
 
     @Override
     public int getItemCount() {
-        if (personCredits.getCast() != null) {
-           // Log.d("getItemCount", "Tamanho "+personCredits.getCast().size());
-            return personCredits.getCast().size();
+        if (personCredits != null) {
+            return personCredits.size();
+        } else {
+            return 0;
         }
-        return 0;
     }
 
     class PersonMovieViewHolder extends RecyclerView.ViewHolder {

@@ -2,7 +2,6 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -20,7 +18,7 @@ import java.util.List;
 
 import activity.FotoPersonActivity;
 import br.com.icaro.filme.R;
-import info.movito.themoviedbapi.model.Artwork;
+import domain.person.ProfilesItem;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -29,15 +27,14 @@ import utils.UtilsApp;
  */
 public class PersonImagemAdapter extends RecyclerView.Adapter<PersonImagemAdapter.PersonImageViewHolder> {
     private Context context;
-    private List<Artwork> artworks;
+    private List<ProfilesItem> artworks;
     private int id_person;
     private String nome;
-    private FirebaseAnalytics firebaseAnalytics;
 
-    public PersonImagemAdapter(Context context, List<Artwork> artworks, int id_person, String nome) {
+    public PersonImagemAdapter(Context context, List<ProfilesItem> artworks, int id, String nome) {
         this.context = context;
         this.artworks = artworks;
-        this.id_person = id_person;
+        this.id_person = id;
         this.nome = nome;
     }
 
@@ -49,9 +46,9 @@ public class PersonImagemAdapter extends RecyclerView.Adapter<PersonImagemAdapte
     }
 
     @Override
-    public void onBindViewHolder(final PersonImagemAdapter.PersonImageViewHolder holder, final int position) {
-        final Artwork artwork = artworks.get(position);
-       // Log.d("PersonImagemAdapter", artwork.getFilePath());
+    public void onBindViewHolder(final PersonImagemAdapter.PersonImageViewHolder holder, int position) {
+        final ProfilesItem artwork = artworks.get(position);
+
         Picasso.with(context).load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3)) + artwork.getFilePath())
                 .placeholder(R.drawable.person)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
@@ -78,13 +75,6 @@ public class PersonImagemAdapter extends RecyclerView.Adapter<PersonImagemAdapte
                 intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), nome);
                 intent.putExtra(Constantes.INSTANCE.getPOSICAO(), position);
                 context.startActivity(intent);
-
-                firebaseAnalytics = FirebaseAnalytics.getInstance(context);
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Param.DESTINATION, FotoPersonActivity.class.getName());
-                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id_person);
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, nome);
-                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
             }
         });
     }
@@ -92,7 +82,6 @@ public class PersonImagemAdapter extends RecyclerView.Adapter<PersonImagemAdapte
     @Override
     public int getItemCount() {
         if (artworks != null && !artworks.isEmpty()) {
-           // Log.d("Image", "Tamanho " + artworks.size());
             return artworks.size();
         }
         return 0;

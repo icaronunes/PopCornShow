@@ -21,17 +21,19 @@
             android:transitionName="poster"
             android:weightSum="1">
 
-            <TextView
-                android:id="@+id/titulo_tvshow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:background="@color/black_transparente"
-                android:gravity="top|start"
-                android:lines="2"
-                android:maxLines="2"
-                android:minLines="1"
-                android:textSize="@dimen/trade_txt_size_sp_20" />
+
+                <TextView
+                    android:id="@+id/titulo_tvshow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:background="@color/black_transparente"
+                    android:gravity="top|start"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:minLines="1"
+                    android:textSize="@dimen/trade_txt_size_sp_20" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -319,8 +321,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/imdb_site"
@@ -335,8 +337,8 @@
                 <Button
                     android:id="@+id/tmdb_site"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/ver_tmdb"
                     android:textAlignment="center"
                     android:textColor="@color/tmdb_site"
@@ -361,18 +363,12 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycle_tvshow_similares"
                 android:layout_width="wrap_content"
-                android:layout_marginBottom="@dimen/trade_size_dp_3"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/trade_size_dp_3" />
 
 
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
-
-    <include
-        android:layout="@layout/include_progress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible" />
 
 </FrameLayout>

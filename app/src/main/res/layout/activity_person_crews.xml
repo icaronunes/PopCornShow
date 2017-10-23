@@ -12,6 +12,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycleView_person_crews"
             android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/trade_size_dp_50"
             android:layout_height="match_parent" />
 
         <include layout="@layout/include_progress"
@@ -28,6 +29,15 @@
             android:textStyle="normal|italic"
             android:visibility="invisible" />
 
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:visibility="visible"
+            app:adSize="SMART_BANNER"
+            app:adUnitId="@string/admob" />
 
     </FrameLayout>
 

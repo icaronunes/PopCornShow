@@ -60,7 +60,6 @@ import utils.UtilsApp;
 @Keep
 public class BaseActivity extends AppCompatActivity {
 
-    private String TAG = BaseActivity.class.getName();
     protected DrawerLayout drawerLayout;
     protected NavigationView navigationView;
     private ImageView imgUserPhoto;
@@ -89,8 +88,7 @@ public class BaseActivity extends AppCompatActivity {
                     view.setAlpha(1);
                 }
             }
-        })
-                .show();
+        }).show();
     }
 
     static public String getLocale() {
@@ -253,14 +251,9 @@ public class BaseActivity extends AppCompatActivity {
 
     private void onNavDrawerItemSelected(MenuItem menuItem) {
         Intent intent;
-        Bundle bundle = new Bundle();
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
         switch (menuItem.getItemId()) {
 
             case R.id.menu_drav_home:
-
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_MainActivity:menu_drav_home");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 intent = new Intent(this, MainActivity.class);
                 intent.putExtra(Constantes.INSTANCE.getABA(), R.id.menu_drav_home);
@@ -268,47 +261,34 @@ public class BaseActivity extends AppCompatActivity {
                 break;
 
             case R.id.nav_item_settings:
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_SettingsActivity:item_settings");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 break;
             case R.id.favorite:
 
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_FavoriteActivity:favorite");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
                 intent = new Intent(this, FavoriteActivity.class);
-
                 startActivity(intent);
 
                 break;
             case R.id.rated:
 
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_RatedActivity:rated");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 intent = new Intent(this, RatedActivity.class);
                 startActivity(intent);
                 break;
             case R.id.watchlist:
 
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_WatchListActivity:watchlist");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 intent = new Intent(this, WatchListActivity.class);
                 startActivity(intent);
                 break;
 
             case R.id.menu_drav_person:
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_PersonPopular");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 intent = new Intent(this, PersonPopularActivity.class);
                 startActivity(intent);
                 break;
 
             case R.id.menu_drav_oscar:
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_PersonPopular");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);//
+
                 intent = new Intent(this, OscarActivity.class);
                 intent.putExtra(Constantes.INSTANCE.getLISTA_ID(), getResources().getString(R.string.id_oscar));
                 intent.putExtra(Constantes.INSTANCE.getLISTA_NOME(), R.string.oscar);
@@ -320,8 +300,7 @@ public class BaseActivity extends AppCompatActivity {
                 break;
 
             case R.id.seguindo:
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_Seguindo");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);//
+
                 intent = new Intent(this, SeguindoActivity.class);
                 intent.putExtra(Constantes.INSTANCE.getLISTA_ID(), "28");
                 intent.putExtra(Constantes.INSTANCE.getLISTA_NOME(), R.string.oscar);
@@ -422,7 +401,7 @@ public class BaseActivity extends AppCompatActivity {
             searchView.setEnabled(false);
 
             return super.onCreateOptionsMenu(menu);
-        } catch (Exception e){
+        } catch (Exception e) {
             FirebaseCrash.report(e);
             Toast.makeText(this, R.string.ops, Toast.LENGTH_SHORT).show();
         }
@@ -437,10 +416,10 @@ public class BaseActivity extends AppCompatActivity {
             public void onSuccess() {
                 File file = context.getExternalCacheDir();
                 if (file != null)
-                if (!file.exists()) {
-                    file.mkdir();
+                    if (!file.exists()) {
+                        file.mkdir();
 
-                }
+                    }
                 File dir = new File(file, endereco);
                 BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                 if (drawable != null) {

@@ -94,12 +94,12 @@
 -dontoptimize
 -printmapping /home/icaro/Documentos/workspace/Filme/app/build/outputs/mapping/flavor21/release/mapping.txt
 -dontusemixedcaseclassnames
--keeppackagenames br.com.icaro.**,com.google.**,info.movito.**
+-keeppackagenames br.com.icaro.**,com.google.**,info.movito.**,okhttp3.**
 -keepattributes *Annotation*,Signature,InnerClasses,EnclosingMethod,*Annotation*,*Annotation*,Signature,*Annotation*,*Annotation*
 -dontpreverify
 -verbose
--dontnote com.android.vending.licensing.ILicensingService,com.google.vending.licensing.ILicensingService,com.google.android.vending.licensing.ILicensingService,android.support.**,android.net.http.**,org.apache.commons.codec.**,org.apache.http.**,org.apache.commons.logging.**,com.fasterxml.jackson.**,com.google.**,org.apache.**,com.squareup.okhttp.**
--dontwarn android.support.**,android.support.**,org.apache.commons.**,org.w3c.dom.**,com.fasterxml.jackson.**,com.google.**,com.squareup.**,info.movito.**,okio.**,org.apache.http.**,android.net.http.AndroidHttpClient,com.google.android.gms.**,com.android.volley.toolbox.**,okio.**,com.google.firebase.perf.network.**,com.onesignal.**,android.security.NetworkSecurityPolicy,android.app.Notification,sun.misc.Unsafe,libcore.io.Memory,com.google.android.apps.common.proguard.UsedBy*
+-dontnote com.android.vending.licensing.ILicensingService,com.google.vending.licensing.ILicensingService,com.google.android.vending.licensing.ILicensingService,android.support.**,android.net.http.**,org.apache.commons.codec.**,org.apache.http.**,org.apache.commons.logging.**,com.fasterxml.jackson.**,com.google.**,org.apache.**,com.squareup.okhttp.**,okhttp3.**
+-dontwarn android.support.**,android.support.**,org.apache.commons.**,org.w3c.dom.**,com.fasterxml.jackson.**,com.google.**,com.squareup.**,info.movito.**,okio.**,javax.annotation.**,okio.**,com.google.firebase.perf.network.**,com.onesignal.**,android.security.NetworkSecurityPolicy,android.app.Notification,sun.misc.Unsafe,libcore.io.Memory,com.google.android.apps.common.proguard.UsedBy*
 -printconfiguration /home/icaro/Documentos/workspace/Filme/app/config.txt
 -dump /home/icaro/Documentos/workspace/Filme/app/build/outputs/mapping/flavor21/release/dump.txt
 -printseeds /home/icaro/Documentos/workspace/Filme/app/build/outputs/mapping/flavor21/release/seeds.txt
@@ -257,6 +257,11 @@
     <methods>;
 }
 
+-keep class okhttp3.** {
+    <fields>;
+    <methods>;
+}
+
 -keepclassmembers class **.R$* {
     public static <fields>;
 }
@@ -267,11 +272,6 @@
 
 -keep class * extends android.support.v7.widget.RecyclerView {
     public static final android.support.v7.widget.RecyclerView *;
-}
-
--keep class okhttp3.** {
-    <fields>;
-    <methods>;
 }
 
 # Ensure that proguard will not strip the handleIntent method.
@@ -701,10 +701,10 @@
 }
 
 # view res/layout/activity_filme.xml #generated:87
-# view res/layout/activity_list_main.xml #generated:50
+# view res/layout/activity_list_main.xml #generated:51
 # view res/layout/activity_main.xml #generated:89
 # view res/layout/search_layout.xml #generated:81
-# view res/layout/tvserie_activity.xml #generated:80
+# view res/layout/tvserie_activity.xml #generated:86
 -keep class android.support.design.widget.NavigationView {
     <init>(...);
 }
@@ -931,22 +931,22 @@
 # view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:303
 # view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:321
 # view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:379
-# view 800x480/res/layout-800x480/tvshow_info.xml #generated:279
-# view 800x480/res/layout-800x480/tvshow_info.xml #generated:297
-# view 800x480/res/layout-800x480/tvshow_info.xml #generated:315
-# view 800x480/res/layout-800x480/tvshow_info.xml #generated:362
-# view 800x600/res/layout-800x600/tvshow_info.xml #generated:279
-# view 800x600/res/layout-800x600/tvshow_info.xml #generated:297
-# view 800x600/res/layout-800x600/tvshow_info.xml #generated:315
-# view 800x600/res/layout-800x600/tvshow_info.xml #generated:360
+# view 800x480/res/layout-800x480/tvshow_info.xml #generated:280
+# view 800x480/res/layout-800x480/tvshow_info.xml #generated:298
+# view 800x480/res/layout-800x480/tvshow_info.xml #generated:316
+# view 800x480/res/layout-800x480/tvshow_info.xml #generated:363
+# view 800x600/res/layout-800x600/tvshow_info.xml #generated:280
+# view 800x600/res/layout-800x600/tvshow_info.xml #generated:298
+# view 800x600/res/layout-800x600/tvshow_info.xml #generated:316
+# view 800x600/res/layout-800x600/tvshow_info.xml #generated:361
 # view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:285
 # view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:304
 # view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:322
 # view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:381
-# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:279
-# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:297
-# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:315
-# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:360
+# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:281
+# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:299
+# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:317
+# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:362
 # view res/layout/activity_crews.xml #generated:40
 # view res/layout/activity_elenco.xml #generated:40
 # view res/layout/activity_lista.xml #generated:15
@@ -973,20 +973,20 @@
 # view res/layout/seguindo.xml #generated:16
 # view res/layout/temporada_layout.xml #generated:12
 # view res/layout/temporadas.xml #generated:7
-# view res/layout/tvshow_info.xml #generated:279
-# view res/layout/tvshow_info.xml #generated:297
-# view res/layout/tvshow_info.xml #generated:315
-# view res/layout/tvshow_info.xml #generated:361
+# view res/layout/tvshow_info.xml #generated:281
+# view res/layout/tvshow_info.xml #generated:299
+# view res/layout/tvshow_info.xml #generated:317
+# view res/layout/tvshow_info.xml #generated:363
 # view res/layout/tvshow_main.xml #generated:41
 # view res/layout/tvshow_main.xml #generated:56
 # view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:284
 # view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:303
 # view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:321
 # view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:380
-# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:279
-# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:297
-# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:315
-# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:360
+# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:280
+# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:298
+# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:316
+# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:361
 # view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:284
 # view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:303
 # view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:321
@@ -1067,6 +1067,7 @@
 
 # view res/layout/activity_epsodios.xml #generated:28
 # view res/layout/activity_favorite.xml #generated:27
+# view res/layout/activity_list_main.xml #generated:38
 # view res/layout/activity_person_layout.xml #generated:42
 # view res/layout/activity_person_netflix.xml #generated:54
 # view res/layout/activity_person_tvshow.xml #generated:30

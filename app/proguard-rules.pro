@@ -49,8 +49,10 @@
 -keep class com.facebook.** {*;}
 -keep class com.google.** {*;}
 -keep class android.** {*;}
+-keep class okhttp3.** { *; }
 -keeppackagenames com.google.**
 -keeppackagenames info.movito.**
+-keeppackagenames okhttp3.**
 
 -keepclassmembers class **.R$* {
     public static <fields>;
@@ -79,3 +81,5 @@
 -dontwarn com.squareup.**
 -dontwarn info.movito.**
 -dontwarn okio.**
+-dontnote okhttp3.**
+-dontwarn javax.annotation.**

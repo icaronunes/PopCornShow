@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
 import domain.colecao.Colecao
+import domain.person.Person
 import domain.tvshow.Tvshow
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -178,8 +179,18 @@ class API(context: Context) {
             val client = OkHttpClient()
             val gson = Gson()
 
+            val url = when (tipoDeBusca) {
+
+                "upcoming", "now_playing" -> {
+                    "${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=${timeZone.replaceBefore("-", "").removeRange(0, 1)}"
+                }
+                else -> {
+                    "${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=$timeZone"
+                }
+            }
+
             val request = Request.Builder()
-                    .url("${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=$timeZone")
+                    .url(url)
                     .get()
                     .build()
             val response = client.newCall(request).execute()
@@ -336,7 +347,7 @@ class API(context: Context) {
                                             getMovieVideos(id)
                                                     .flatMap { video ->
                                                         if (video.results?.isNotEmpty()!!) {
-                                                           it.videos?.results?.addAll(video.results)
+                                                            it.videos?.results?.addAll(video.results)
                                                             Observable.from(video.results)
                                                         } else {
                                                             Observable.just(it)
@@ -380,7 +391,7 @@ class API(context: Context) {
                 }
     }
 
-    fun getTvSeasons(id: Int,id_season: Int, pagina: Int = 1): Observable<TvSeasons> {
+    fun getTvSeasons(id: Int, id_season: Int, pagina: Int = 1): Observable<TvSeasons> {
         return rx.Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
@@ -416,6 +427,29 @@ class API(context: Context) {
                 subscriber.onNext(lista)
                 subscriber.onCompleted()
             } else {
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
+    }
+
+    fun personDetalhes(id: Int): Observable<Person> {
+
+        return rx.Observable.create { subscriber ->
+            val client = OkHttpClient()
+            val gson = Gson()
+            val request = Request.Builder()
+                    .url("${baseUrl3}person/$id?api_key=${Config.TMDB_API_KEY}&language=en-US+" +"&append_to_response=combined_credits,images")
+            //,tagged_images,external_ids")
+                    .get()
+                    .build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                val json = response.body()?.string()
+                val person = gson.fromJson(json, Person::class.java)
+                subscriber.onNext(person)
+                subscriber.onCompleted()
+            } else {
+
                 subscriber.onError(Throwable(response.message()))
             }
         }

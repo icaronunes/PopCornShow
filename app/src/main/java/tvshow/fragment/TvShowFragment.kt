@@ -42,7 +42,6 @@ import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbTvSeasons
 import info.movito.themoviedbapi.model.tv.TvSeason
 import kotlinx.android.synthetic.main.fab_float.*
-import kotlinx.android.synthetic.main.include_progress.*
 import kotlinx.android.synthetic.main.tvshow_info.*
 import produtora.activity.ProdutoraActivity
 import rx.Observer
@@ -113,7 +112,7 @@ class TvShowFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         if (tipo == R.string.informacoes) {
             isSeguindo()
-            setSinopse()//Chamar depois? pelo metodo setTvShowInfomation?
+            setSinopse()
             setTitulo()
             setCategoria()
             setLancamento()
@@ -130,13 +129,10 @@ class TvShowFragment : Fragment() {
             setPoster()
             setStatus()
             setAnimacao()
-            setProgressBar()
             getImdb()
             setVotoMedia()
             setListeners()
-
         }
-
     }
 
     private fun setListeners() {
@@ -288,11 +284,6 @@ class TvShowFragment : Fragment() {
         }
 
     }
-
-    private fun setProgressBar() {
-        progress?.visibility = View.GONE
-    }
-
 
     private fun isSeguindo() {
 
@@ -491,9 +482,9 @@ class TvShowFragment : Fragment() {
 
     private fun setStatusEps(position: Int, status: Boolean) {
         if (userTvshow != null) {
-            if (userTvshow?.seasons!![position].userEps != null)
-                for (i in 0 until userTvshow?.seasons!![position]?.userEps?.size!!) {
-                    userTvshow?.seasons!![position].userEps[i].isAssistido = status
+            if (userTvshow?.seasons?.get(position)?.userEps != null)
+                for (i in 0 until userTvshow?.seasons?.get(position)?.userEps?.size!!) {
+                    userTvshow?.seasons?.get(position)?.userEps?.get(position)?.isAssistido = status
                 }
         }
     }
@@ -548,12 +539,13 @@ class TvShowFragment : Fragment() {
                         .setTitle(R.string.title_delete)
                         .setMessage(R.string.msg_parar_seguir)
                         .setNegativeButton(R.string.no, null)
-                        .setOnDismissListener { progressBarTemporada!!.visibility = View.GONE }
+                        .setOnDismissListener { progressBarTemporada?.visibility = View.GONE }
                         .setPositiveButton(R.string.ok) { dialogInterface, i ->
-                            myRef!!.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid else "")
-                                    .child("seguindo")
-                                    .child(series?.id.toString())
-                                    .removeValue().addOnCompleteListener(OnCompleteListener { task ->
+                            myRef?.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid else "")
+                                    ?.child("seguindo")
+                                    ?.child(series?.id.toString())
+                                    ?.removeValue()
+                                    ?.addOnCompleteListener(OnCompleteListener { task ->
                                 if (task.isSuccessful)
                                     seguir?.setText(R.string.seguir)
                             })

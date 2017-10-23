@@ -6,19 +6,21 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import br.com.icaro.filme.R;
+import domain.person.Person;
 import fragment.PersonFragment;
 
 /**
  * Created by icaro on 18/08/16.
  */
 public class PersonAdapter extends FragmentPagerAdapter {
-    private final int id_person;
+    private final Person person;
     private Context context;
 
-    public PersonAdapter(Context context, FragmentManager supportFragmentManager, int id_person) {
+    public PersonAdapter(Context context, FragmentManager supportFragmentManager, Person id_person) {
         super(supportFragmentManager);
         this.context = context;
-        this.id_person = id_person;
+        this.person = id_person;
+
     }
 
 
@@ -26,19 +28,19 @@ public class PersonAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         if (position == 0) {
-            return PersonFragment.newInstance(R.string.tvshow, id_person);
+            return PersonFragment.Companion.newInstance(R.string.tvshow, person);
         }
         if (position == 1) {
-            return PersonFragment.newInstance(R.string.filme, id_person);
+            return PersonFragment.Companion.newInstance(R.string.filme, person);
         }
         if (position == 2) {
-            return PersonFragment.newInstance(R.string.person, id_person);
+            return PersonFragment.Companion.newInstance(R.string.person, person);
         }
         if (position == 3) {
-            return PersonFragment.newInstance(R.string.imagem_person, id_person);
+            return PersonFragment.Companion.newInstance(R.string.imagem_person, person);
         }
         if (position == 4) {
-            return PersonFragment.newInstance(R.string.producao, id_person);
+            return PersonFragment.Companion.newInstance(R.string.producao, person);
         }
 
         return null;
@@ -46,6 +48,7 @@ public class PersonAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
+
         if (position == 0) {
             return context.getString(R.string.tvshow);
         }

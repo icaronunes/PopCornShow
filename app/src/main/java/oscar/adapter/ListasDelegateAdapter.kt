@@ -1,7 +1,5 @@
 package oscar.adapter
 
-import filme.activity.FilmeActivity
-import tvshow.activity.TvShowActivity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
@@ -12,8 +10,10 @@ import br.com.icaro.filme.R
 import com.squareup.picasso.Picasso
 import domain.ListaItemFilme
 import domain.ViewType
+import filme.activity.FilmeActivity
 import kotlinx.android.synthetic.main.lista.view.*
 import pessoaspopulares.ViewTypeDelegateAdapter
+import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
 
@@ -40,8 +40,8 @@ class ListasDelegateAdapter : ViewTypeDelegateAdapter {
                     .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.posterPath)
                     .into(img_lista)
             when(item.mediaType) {
-                "tv" -> date_oscar.text = item.first_air_date?.subSequence(0,4)
-                "movie" -> date_oscar.text = item.releaseDate?.subSequence(0,4)
+                "tv" -> date_oscar.text = if (item.first_air_date.isNullOrEmpty()) item.first_air_date?.subSequence(0,4) else "-"
+                "movie" -> date_oscar.text = if (item.first_air_date.isNullOrEmpty()) item.releaseDate?.subSequence(0,4) else "-"
             }
 
             progress.visibility = View.GONE

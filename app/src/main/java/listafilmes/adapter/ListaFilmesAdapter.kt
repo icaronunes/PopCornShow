@@ -33,17 +33,17 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
 
 
     fun addFilmes(listaMedia: List<ListaItemFilme?>?, totalPagina: Int) {
-
-        val initPosition = listaResult.size - 1
-        this.listaResult.removeAt(initPosition)
-        notifyItemRemoved(initPosition)
-        for (result in listaMedia!!) {
-            this.listaResult.add(result!!)
+        if (listaMedia?.isNotEmpty()!!) {
+            val initPosition = listaResult.size - 1
+            this.listaResult.removeAt(initPosition)
+            notifyItemRemoved(initPosition)
+            for (result in listaMedia) {
+                this.listaResult.add(result!!)
+            }
+            notifyItemRangeChanged(initPosition, this.listaResult.size + 1 /* plus loading item */)
+            if (listaResult.size < totalPagina)
+                this.listaResult.add(loading)
         }
-        notifyItemRangeChanged(initPosition, this.listaResult.size + 1 /* plus loading item */)
-        if (listaResult.size < totalPagina)
-            this.listaResult.add(loading)
-
     }
 
     override fun getItemCount(): Int = listaResult.size

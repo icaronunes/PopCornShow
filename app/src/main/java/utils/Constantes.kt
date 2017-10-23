@@ -21,6 +21,7 @@ object Constantes {
     val LISTA_NOME = "lista_nome"
     val NOME_PERSON = "nome_person"
     val PERSON_ID = "person_id"
+    val PERSON = "person"
     val SITE = "site"
     val POSICAO = "posicao"
     val TVSHOW_ID = "tvshow_id"

@@ -36,6 +36,7 @@ import com.squareup.picasso.Picasso
 import domain.*
 import domain.tvshow.Tvshow
 import kotlinx.android.synthetic.main.fab_float.*
+import kotlinx.android.synthetic.main.include_progress_horizontal.*
 import kotlinx.android.synthetic.main.tvserie_activity.*
 import rx.Observer
 import rx.android.schedulers.AndroidSchedulers
@@ -468,11 +469,11 @@ class TvShowActivity : BaseActivity() {
                         //  Log.d(TAG, "Gravou Rated");
 
                         val tvshowDB = TvshowDB()
-                        tvshowDB.externalIds = series!!.external_ids
+                        tvshowDB.externalIds = series?.external_ids
                         tvshowDB.nota = ratingBar.rating.toInt()
-                        tvshowDB.id = series!!.id!!
-                        tvshowDB.title = series!!.name
-                        tvshowDB.poster = series!!.posterPath
+                        tvshowDB.id = series?.id!!
+                        tvshowDB.title = series?.name
+                        tvshowDB.poster = series?.posterPath
 
                         myRated?.child(id_tvshow.toString())?.setValue(tvshowDB)
                                 ?.addOnCompleteListener {
@@ -501,13 +502,13 @@ class TvShowActivity : BaseActivity() {
         viewPager_tvshow?.currentItem = 0
         tabLayout.setupWithViewPager(viewPager_tvshow)
         tabLayout.setSelectedTabIndicatorColor(color_top)
-
+        progress_horizontal.visibility = View.GONE
     }
 
     private fun setImageTop() {
 
         Picasso.with(this@TvShowActivity)
-                .load(UtilsApp.getBaseUrlImagem(5)!! + series!!.backdropPath!!)
+                .load(UtilsApp.getBaseUrlImagem(5) + series?.backdropPath)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .error(R.drawable.top_empty)
@@ -565,7 +566,7 @@ class TvShowActivity : BaseActivity() {
 
         userTvshowOld?.seasons?.forEachIndexed { index, userSeasons ->
 
-            if (userTvshow?.seasons?.get(index)?.id == userTvshowOld?.seasons?.get(index)?.id!!) {
+            if (userTvshow?.seasons?.get(index)?.id == userTvshowOld?.seasons?.get(index)?.id) {
                 userTvshow?.seasons?.get(index)?.seasonNumber = userTvshowOld?.seasons?.get(index)?.seasonNumber!!
                 userTvshow?.seasons?.get(index)?.isVisto = userTvshowOld?.seasons?.get(index)?.isVisto!!
             }
@@ -621,7 +622,7 @@ class TvShowActivity : BaseActivity() {
                                             setTitle()
                                             setImageTop()
                                         } else {
-                                            if (userTvshowOld?.numberOfEpisodes!! != series?.numberOfEpisodes!!) {
+                                            if (userTvshowOld?.numberOfEpisodes != series?.numberOfEpisodes) {
                                                 atualizarRealDate()
                                             }
                                         }

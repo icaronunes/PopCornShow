@@ -21,17 +21,18 @@
             android:transitionName="poster"
             android:weightSum="1">
 
-            <TextView
-                android:id="@+id/titulo_tvshow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:background="@color/black_transparente"
-                android:gravity="top|start"
-                android:lines="2"
-                android:maxLines="2"
-                android:minLines="1"
-                android:textSize="@dimen/trade_txt_size_sp_20" />
+
+                <TextView
+                    android:id="@+id/titulo_tvshow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:background="@color/black_transparente"
+                    android:gravity="top|start"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:minLines="1"
+                    android:textSize="@dimen/trade_txt_size_sp_20" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -366,11 +367,5 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <include
-        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Small"
-        layout="@layout/include_progress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible" />
 
 </FrameLayout>

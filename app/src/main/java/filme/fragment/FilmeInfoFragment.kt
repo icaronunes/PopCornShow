@@ -20,7 +20,6 @@ import android.support.v4.view.ViewPager
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -386,7 +385,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
         if (movieDb?.posterPath != null) {
             Picasso.with(context)
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + movieDb?.posterPath!!)
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + movieDb?.posterPath)
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(img_poster)
@@ -431,7 +430,6 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                         setVotoMedia()
                     }, { erro ->
                         Toast.makeText(activity, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                        Log.d(javaClass.simpleName, "Erro " + erro.message)
                     })
             subscriptions.add(inscircaoImdb)
         }
@@ -463,8 +461,8 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
     }
 
     private fun setTitulo() {
-        if (movieDb!!.title != null) {
-            titulo_text!!.text = movieDb!!.title
+        if (movieDb?.title != null) {
+            titulo_text?.text = movieDb?.title
         }
     }
 
@@ -556,7 +554,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             }
 
-            textview_elenco!!.visibility = View.VISIBLE
+            textview_elenco?.visibility = View.VISIBLE
             recycle_filme_elenco.adapter = CastAdapter(activity, movieDb?.credits?.cast)
         } else {
             recycle_filme_elenco.visibility = View.GONE

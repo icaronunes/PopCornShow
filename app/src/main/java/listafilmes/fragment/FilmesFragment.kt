@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,42 +82,29 @@ class FilmesFragment : FragmentBase() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     (recycle_listas.adapter as ListaFilmesAdapter).addFilmes(it.results, it?.totalResults!!)
-                    pagina = it?.page!!
-                    totalPagina = it?.totalPages!!
+                    pagina = it.page!!
+                    totalPagina = it.totalPages!!
                     ++pagina
                 }, { erro ->
                     Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                    Log.d(javaClass.simpleName, "Erro " + erro.message)
+                    //Log.d(javaClass.simpleName, "Erro " + erro.message)
                 })
 
         subscriptions.add(inscricao)
 
     }
 
-    protected fun snack() {
+    private fun snack() {
         Snackbar.make(frame_list_filme!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
                     if (UtilsApp.isNetWorkAvailable(context)) {
-                        txt_listas!!.visibility = View.INVISIBLE
-                        //   val tmdvAsync = TMDVAsync()
-                        //   tmdvAsync.execute()
+                        txt_listas?.visibility = View.INVISIBLE
+                        getListaFilmes()
                     } else {
                         snack()
                     }
                 }.show()
     }
-
-//    private fun onClickListener(): FilmesAdapter.FilmeOnClickListener {
-//        return FilmesAdapter.FilmeOnClickListener { view, position ->
-//            //  Log.d("onClickMovieListener", "" + position);
-//            // Log.d("onClickMovieListener", "" + movies.get(position).getTitle());
-//            val intent = Intent(activity, FilmeActivity::class.java)
-//            intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(view))
-//            intent.putExtra(Constantes.FILME_ID, movies!![position].id)
-//            intent.putExtra(Constantes.NOME_FILME, movies!![position].title)
-//            context.startActivity(intent)
-//        }
-//    }
 
     fun getTipo(): String? {
 
@@ -130,7 +116,6 @@ class FilmesFragment : FragmentBase() {
                 return API.TIPOBUSCA.FILME.chegando
             }
 
-
             R.string.populares -> {
                 return API.TIPOBUSCA.FILME.popular
             }
@@ -141,45 +126,6 @@ class FilmesFragment : FragmentBase() {
         }
         return null
     }
-
-//    private inner class TMDVAsync : AsyncTask<Void, Void, List<MovieDb>>() {
-//
-//
-//        override fun doInBackground(vararg voids: Void): List<MovieDb>? {
-//            //  Log.d("doInBackground", "doInBackground");
-//            try {
-//                val movies = FilmeService.getTmdbMovies()
-//                return getTipo(movies)
-//            } catch (e: Exception) {
-//                // Log.d(TAG, e.getMessage());
-//                FirebaseCrash.report(e)
-//                if (context != null)
-//                    activity.runOnUiThread { Toast.makeText(context, R.string.ops, Toast.LENGTH_SHORT).show() }
-//            }
-//
-//            return null
-//        }
-//
-//
-//        override fun onPostExecute(tmdbMovies: List<MovieDb>?) {
-//            // Log.d("onPostExecute", "onPostExecute");
-//            process!!.visibility = View.GONE
-//            if (tmdbMovies != null && pagina != 1) {
-//                val x = movies
-//                movies = tmdbMovies
-//                for (movie in x!!) {
-//                    movies!!.add(movie)
-//                }
-//            } else {
-//                movies = tmdbMovies
-//            }
-//
-//            recycleView!!.adapter = FilmesAdapter(context, if (movies != null) movies else null,
-//                    onClickListener())
-//            pagina++
-//        }
-//
-//    }
 
 }
 

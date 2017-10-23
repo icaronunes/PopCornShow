@@ -1,6 +1,5 @@
 package listaserie.adapter
 
-import tvshow.activity.TvShowActivity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
@@ -15,6 +14,7 @@ import domain.ListaItemSerie
 import domain.ViewType
 import kotlinx.android.synthetic.main.adapter_filmes_list.view.*
 import pessoaspopulares.ViewTypeDelegateAdapter
+import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
 
@@ -43,11 +43,12 @@ class ListasSeriesDelegateAdapter : ViewTypeDelegateAdapter {
                     .error(R.drawable.poster_empty)
                     .into(imgFilmes, object : Callback {
                         override fun onSuccess() {
-                            progress_filmes_lista.visibility = View.GONE
+                            progress_filmes_lista?.visibility = View.GONE
                         }
 
                         override fun onError() {
-                            progress_filmes_lista.visibility = View.GONE
+                            progress_filmes_lista?.visibility = View.GONE
+                            if (item?.firstAirDate.isNullOrEmpty() && item?.firstAirDate?.length!! > 3)
                             title_filmes_lista.text = "${item?.name} - ${item?.firstAirDate?.subSequence(0, 4)}"
                             title_filmes_lista.visibility = View.VISIBLE
                         }
