@@ -41,7 +41,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import activity.PersonActivity;
+import pessoa.activity.PersonActivity;
 import br.com.icaro.filme.R;
 import domain.FilmeService;
 import domain.UserEp;

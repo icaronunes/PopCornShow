@@ -32,19 +32,19 @@ class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun addprodutoraMovie(personResults: List<ListaItemFilme?>?) {
+        if(personResults?.isNotEmpty()!!) {
+            val initPosition = ProdutoraResultsPage?.size!! - 1
+            this.ProdutoraResultsPage?.removeAt(initPosition)
+            notifyItemRemoved(initPosition)
 
-        val initPosition = ProdutoraResultsPage?.size!! - 1
-        this.ProdutoraResultsPage?.removeAt(initPosition)
-        notifyItemRemoved(initPosition)
 
-        // insert news and the loading at the end of the list
-        for (person in personResults!!) {
-            this.ProdutoraResultsPage.add(person!!)
+            for (person in personResults) {
+                this.ProdutoraResultsPage.add(person!!)
+            }
+
+            notifyItemRangeChanged(initPosition, this.ProdutoraResultsPage?.size + 1 /* plus loading item */)
+            ProdutoraResultsPage.add(loadingItem)
         }
-        //games?.add(loadingItem)
-        notifyItemRangeChanged(initPosition, this.ProdutoraResultsPage?.size + 1 /* plus loading item */)
-        ProdutoraResultsPage.add(loadingItem)
-
     }
 
 

@@ -1,6 +1,7 @@
-package activity
+package pessoa.activity
 
-import adapter.PersonAdapter
+import activity.BaseActivity
+import pessoa.adapter.PersonAdapter
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle

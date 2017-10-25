@@ -1,4 +1,4 @@
-package adapter;
+package pessoa.adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import br.com.icaro.filme.R;
 import domain.person.Person;
-import fragment.PersonFragment;
+import pessoa.fragment.PersonFragment;
 
 /**
  * Created by icaro on 18/08/16.
@@ -16,11 +16,10 @@ public class PersonAdapter extends FragmentPagerAdapter {
     private final Person person;
     private Context context;
 
-    public PersonAdapter(Context context, FragmentManager supportFragmentManager, Person id_person) {
+    public PersonAdapter(Context context, FragmentManager supportFragmentManager, Person person) {
         super(supportFragmentManager);
         this.context = context;
-        this.person = id_person;
-
+        this.person = person;
     }
 
 

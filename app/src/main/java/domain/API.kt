@@ -155,7 +155,7 @@ class API(context: Context) {
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
-                    .url("${baseUrl3}company/$company_id/movies?page=$pagina&api_key=${Config.TMDB_API_KEY}&language=en-US")
+                    .url("${baseUrl3}company/$company_id/movies?page=$pagina&api_key=${Config.TMDB_API_KEY}&language=$timeZone")
                     .get()
                     .build()
             val response = client.newCall(request).execute()

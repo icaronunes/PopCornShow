@@ -1,6 +1,6 @@
 package pessoaspopulares.adapter
 
-import activity.PersonActivity
+import pessoa.activity.PersonActivity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView

@@ -22,7 +22,7 @@ import listafilmes.activity.FilmesActivity;
 import activity.FotoPersonActivity;
 import activity.ListaGenericaActivity;
 import activity.MainActivity;
-import activity.PersonActivity;
+import pessoa.activity.PersonActivity;
 import produtora.activity.ProdutoraActivity;
 import activity.ReviewsActivity;
 import activity.SimilaresActivity;

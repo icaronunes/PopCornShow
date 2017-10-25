@@ -566,7 +566,7 @@
 }
 
 # view AndroidManifest.xml #generated:234
--keep class activity.PersonActivity {
+-keep class pessoa.activity.PersonActivity {
     <init>(...);
 }
 

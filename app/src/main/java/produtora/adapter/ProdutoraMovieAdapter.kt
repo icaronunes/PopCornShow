@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import br.com.icaro.filme.R
 import com.squareup.picasso.Callback
-import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import domain.ListaItemFilme
@@ -42,7 +41,6 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
             titleTextView_produtora.text = item.title
             Picasso.with(context)
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.posterPath)
-                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(imgFilme_produtora, object : Callback {
                         override fun onSuccess() {

@@ -20,7 +20,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import activity.PersonActivity;
+import pessoa.activity.PersonActivity;
 import br.com.icaro.filme.R;
 import domain.CastItem;
 import utils.Constantes;

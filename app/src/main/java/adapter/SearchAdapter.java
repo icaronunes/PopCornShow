@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import activity.PersonActivity;
+import pessoa.activity.PersonActivity;
 import activity.SearchMultiActivity;
 import br.com.icaro.filme.R;
 import filme.activity.FilmeActivity;

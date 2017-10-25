@@ -16,6 +16,12 @@ data class CrewItem(
 	@field:SerializedName("original_title")
 	val originalTitle: String? = null,
 
+	@field:SerializedName("name") //tvshow
+	val name: String? = null,
+
+	@field:SerializedName("original_name") //tvshow
+	val nameOriginal: String? = null,
+
 	@field:SerializedName("video")
 	val video: Boolean? = null,
 

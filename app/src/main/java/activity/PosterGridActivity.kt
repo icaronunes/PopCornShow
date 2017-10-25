@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.view.Window
 import br.com.icaro.filme.R
+import com.google.android.gms.ads.AdRequest
 import domain.PostersItem
 import kotlinx.android.synthetic.main.poster_grid.*
 import utils.Constantes
@@ -31,18 +32,18 @@ class PosterGridActivity : AppCompatActivity() {
             itemAnimator = DefaultItemAnimator()
             layoutManager = GridLayoutManager(baseContext, 2)
         }
-        //        AdView adview = (AdView) findViewById(R.id.adView);
-        //        AdRequest adRequest = new AdRequest.Builder()
-        //                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-        //                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-        //                .build();
-        //        adview.loadAd(adRequest);
+
+        val adRequest = AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build()
+        adView.loadAd(adRequest)
 
 
         if (intent.hasExtra(Constantes.POSTER)) {
             val posters = intent.getSerializableExtra(Constantes.POSTER) as List<PostersItem>
             val titulo = intent.getStringExtra(Constantes.NOME)
-            recycleView_poster_grid.adapter = PosterGridAdapter(this@PosterGridActivity, posters, titulo )
+            recycleView_poster_grid.adapter = PosterGridAdapter(this@PosterGridActivity, posters, titulo)
         }
 
     }

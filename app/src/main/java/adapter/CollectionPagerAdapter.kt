@@ -1,6 +1,5 @@
 package adapter
 
-import filme.activity.FilmeActivity
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
@@ -18,21 +17,21 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
-import domain.colecao.Colecao
+import domain.colecao.PartsItem
+import filme.activity.FilmeActivity
 import utils.Constantes
 import utils.UtilsApp
 
 /**
  * Created by icaro on 22/07/16.
  */
-class CollectionPagerAdapter(private val info: Colecao?, private val context: Context) : PagerAdapter() {
+class CollectionPagerAdapter(private val info: List<PartsItem?>?, private val context: Context) : PagerAdapter() {
     private lateinit var imageView: ImageView
     private lateinit var linearLayout: LinearLayout
     private lateinit var nome: TextView
 
     override fun getCount(): Int {
-
-        return if (info?.parts?.isNotEmpty()!!) info.parts.size else 0
+        return if (info?.isNotEmpty()!!) info?.size else 0
     }
 
     override fun isViewFromObject(view: View, obj: Any): Boolean {
@@ -41,13 +40,13 @@ class CollectionPagerAdapter(private val info: Colecao?, private val context: Co
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-
+        val item = info?.get(position)
         val view = LayoutInflater.from(context).inflate(R.layout.collection, container, false)
         nome = view.findViewById<TextView>(R.id.dateCollection)
         linearLayout = view.findViewById<LinearLayout>(R.id.collection_linear)
         imageView = view.findViewById<ImageView>(R.id.img_collection)
         Picasso.with(context)
-                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 5))!! + info?.parts!![position]?.posterPath)
+                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 5)) + item?.posterPath)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .error(R.drawable.poster_empty)
@@ -61,17 +60,25 @@ class CollectionPagerAdapter(private val info: Colecao?, private val context: Co
                     }
                 })
 
-        imageView.setOnClickListener(this.onClickListener(position))
+        imageView.setOnClickListener({
+            val intent = Intent(context, FilmeActivity::class.java)
+            intent.putExtra(Constantes.FILME_ID, item?.id)
+            intent.putExtra(Constantes.NOME_FILME, item?.title)
+            context.startActivity(intent)
+        })
 
 
-        var ano: String? = "xxxx"
-        if (info.parts[position]?.releaseDate != null) {
-            ano = info.parts[position]?.releaseDate
-            if (ano?.length!! > 4)
-                ano = ano.substring(0, 4)
+
+
+        var ano = "xxxx"
+
+        if (!item?.releaseDate.isNullOrBlank()){
+
+            if (item?.releaseDate?.length!! >= 4){ ano = item.releaseDate.substring(0,4)  }
         }
-        if (info.parts[position]?.title != null) {
-            val tituloData = info.parts[position]!!.title +
+
+        if (!item?.title.isNullOrBlank()) {
+            val tituloData = item?.title +
                     " - " + ano
             nome.text = tituloData
         }
@@ -92,18 +99,6 @@ class CollectionPagerAdapter(private val info: Colecao?, private val context: Co
             }
         }
     }
-
-    private fun onClickListener(position: Int): View.OnClickListener {
-        return View.OnClickListener {
-            val id = info?.parts!![position]!!.id
-            val title = info.parts[position]!!.title
-            val intent = Intent(context, FilmeActivity::class.java)
-            intent.putExtra(Constantes.FILME_ID, id)
-            intent.putExtra(Constantes.NOME_FILME, title)
-            context.startActivity(intent)
-        }
-    }
-
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         (container as ViewPager).removeView(`object` as View)

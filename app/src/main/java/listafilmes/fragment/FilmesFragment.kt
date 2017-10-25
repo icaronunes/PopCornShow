@@ -81,13 +81,13 @@ class FilmesFragment : FragmentBase() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    (recycle_listas.adapter as ListaFilmesAdapter).addFilmes(it.results, it?.totalResults!!)
+
+                    (recycle_listas.adapter as ListaFilmesAdapter).addFilmes(it?.results, it?.totalResults!!)
                     pagina = it.page!!
                     totalPagina = it.totalPages!!
                     ++pagina
                 }, { erro ->
                     Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                    //Log.d(javaClass.simpleName, "Erro " + erro.message)
                 })
 
         subscriptions.add(inscricao)

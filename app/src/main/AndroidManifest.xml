@@ -247,7 +247,7 @@
 
         <activity android:name="activity.ListaUserActivity" />
 
-        <activity android:name="activity.PersonActivity"
+        <activity android:name="pessoa.activity.PersonActivity"
             android:parentActivityName="activity.MainActivity"
             >
 

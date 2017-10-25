@@ -32,6 +32,7 @@ import domain.FilmeService;
 import filme.activity.FilmeActivity;
 import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.model.Multi;
+import pessoa.activity.PersonActivity;
 import provider.SuggestionRecentProvider;
 import tvshow.activity.TvShowActivity;
 import utils.Constantes;

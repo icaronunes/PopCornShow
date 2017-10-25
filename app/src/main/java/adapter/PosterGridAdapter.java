@@ -15,7 +15,6 @@ import android.widget.ProgressBar;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -47,7 +46,6 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
     @Override
     public PosterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.poster_grid_image, parent, false);
-        // Log.d("PosterGridActivity", "onCreateViewHolder ");
         return new PosterViewHolder(view);
     }
 
@@ -57,27 +55,23 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
 
             Picasso.with(context).load(UtilsApp
                     .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 4)) + artworks.get(position).getFilePath())
-                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.img, new Callback() {
                         @Override
                         public void onSuccess() {
                             holder.progressBar.setVisibility(View.GONE);
-                            holder.img.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Intent intent = new Intent(context, PosterActivity.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putSerializable(Constantes.INSTANCE.getARTWORKS(), (Serializable) artworks);
-                                    intent.putExtra(Constantes.INSTANCE.getBUNDLE(), bundle);
-                                    intent.putExtra(Constantes.INSTANCE.getPOSICAO(), position);
-                                    intent.putExtra(Constantes.INSTANCE.getNOME(), nome);
-                                    ActivityOptionsCompat opts = ActivityOptionsCompat.makeCustomAnimation(context,
-                                            android.R.anim.fade_in, android.R.anim.fade_out);
-                                    ActivityCompat.startActivity((Activity) context, intent, opts.toBundle());
-                                    FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
-                                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                                }
+                            holder.img.setOnClickListener(view -> {
+                                Intent intent = new Intent(context, PosterActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable(Constantes.INSTANCE.getARTWORKS(), (Serializable) artworks);
+                                intent.putExtra(Constantes.INSTANCE.getBUNDLE(), bundle);
+                                intent.putExtra(Constantes.INSTANCE.getPOSICAO(), position);
+                                intent.putExtra(Constantes.INSTANCE.getNOME(), nome);
+                                ActivityOptionsCompat opts = ActivityOptionsCompat.makeCustomAnimation(context,
+                                        android.R.anim.fade_in, android.R.anim.fade_out);
+                                ActivityCompat.startActivity((Activity) context, intent, opts.toBundle());
+                                FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
+                                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             });
                         }
 
@@ -91,7 +85,6 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
 
     @Override
     public int getItemCount() {
-       // Log.d("PosterGridActivity", "getItemCount " + artworks.size());
         return artworks.size() > 0 ? artworks.size() : 0;
     }
 
@@ -103,7 +96,6 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
             super(itemView);
             img = (ImageView) itemView.findViewById(R.id.img_poster_grid);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress_poster_grid);
-           // Log.d("PosterGridActivity", "PosterViewHolder " + artworks.size());
         }
     }
 }

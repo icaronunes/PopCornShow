@@ -33,7 +33,7 @@ import com.squareup.picasso.Picasso
 import domain.API
 import domain.Imdb
 import domain.Movie
-import domain.colecao.Colecao
+import domain.colecao.PartsItem
 import filme.adapter.SimilaresFilmesAdapter
 import kotlinx.android.synthetic.main.fab_float.*
 import kotlinx.android.synthetic.main.fragment_container_filme.*
@@ -56,8 +56,6 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
     private var movieDb: Movie? = null
     private var imdbDd: Imdb? = null
     private lateinit var subscriptions: CompositeSubscription
-
-    //************* Alguns metodos sendo chamados 2 vezes
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -164,14 +162,13 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
         img_star.setOnClickListener(onClickImageStar())
 
-
         icon_collection.setOnClickListener({
             if (movieDb?.belongsToCollection != null) {
                 val inscricaoMovie = API(context = activity).getColecao(movieDb?.belongsToCollection?.id!!)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
-                            getCollection(it)
+                            getCollection(it?.parts?.sortedBy { it?.releaseDate })
                         }, { erro ->
                             Toast.makeText(activity, getString(R.string.ops), Toast.LENGTH_LONG).show()
                         })
@@ -319,8 +316,8 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
     }
 
-    private fun getCollection(colecao: Colecao?) {
-        if (colecao?.parts?.size != 0) {
+    private fun getCollection(colecao: List<PartsItem?>?) {
+        if (colecao?.isNotEmpty()!!) {
             val builder = AlertDialog.Builder(activity)
             val inflater = activity.layoutInflater
             val dialog_collection = inflater.inflate(R.layout.dialog_collection, null)

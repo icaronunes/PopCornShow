@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -39,8 +38,6 @@ public class PosterScrollFragment extends Fragment {
     private String endereco, nome;
     private ImageView imageView;
     private LinearLayout linear_poster_grid;
-    private FirebaseAnalytics firebaseAnalytics;
-
 
     public static PosterScrollFragment newInstance(String endereco, String nome) {
 
@@ -49,7 +46,6 @@ public class PosterScrollFragment extends Fragment {
         args.putString(Constantes.INSTANCE.getENDERECO(), endereco);
         args.putString(Constantes.INSTANCE.getNOME_FILME(), nome);
         posterScrollFragment.setArguments(args);
-        //  Log.d("PosterScrollFragment", "newInstance: -> " + endereco);
         return posterScrollFragment;
     }
 
@@ -58,8 +54,6 @@ public class PosterScrollFragment extends Fragment {
         super.onCreate(savedInstanceState);
         endereco = getArguments().getString(Constantes.INSTANCE.getENDERECO()); // não usado!?!?!!
         nome = getArguments().getString(Constantes.INSTANCE.getNOME_FILME());
-        // Log.d("PosterScrollFragment", "onCreate: -> " + endereco);
-        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
 
     @Nullable
@@ -73,7 +67,7 @@ public class PosterScrollFragment extends Fragment {
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(imageView);
 
-        // Log.d("PosterScrollFragment", "onCreateView: -> " + endereco);
+
 
         return view;
     }
@@ -103,17 +97,12 @@ public class PosterScrollFragment extends Fragment {
     }
 
     private View.OnClickListener salvarImagem() {
-        Bundle bundle = new Bundle();
-        bundle.putString("Download_Imagem", PosterScrollFragment.this.getClass().getName());
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, nome);
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (UtilsApp.isExternalStorageWritable()) {
                     salvarArquivoNaMemoriaInterna(getContext(), imageView);
                 } else {
-                    //  Log.e("salvarArqNaMemoriaIn", "Directory not created");
                     Toast.makeText(getContext(), R.string.ops, Toast.LENGTH_LONG).show();
                 }
             }
@@ -122,18 +111,12 @@ public class PosterScrollFragment extends Fragment {
 
     private View.OnClickListener compartilharOnClick() {
 
-        Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Event.SHARE, PosterScrollFragment.this.getClass().getName());
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, nome);
-
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 File file = salvaImagemMemoriaCache(getContext(), imageView);
                 if (file != null) {
                     Intent intent = new Intent(Intent.ACTION_SEND);
-                    //final String appPackageName = getContext().getPackageName();
                     intent.putExtra(Intent.EXTRA_TEXT, nome + "  -  " + "https://q2p5q.app.goo.gl/3hX6" + " by: " + Constantes.INSTANCE.getTWITTER_URL());
                     intent.setType("image/*"); // link dynamic - https://q2p5q.app.goo.gl/3hX6
                     intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
@@ -152,8 +135,8 @@ public class PosterScrollFragment extends Fragment {
         super.onDestroy();
         File file = new File(getContext().getExternalCacheDir(), getContext().getPackageName());
         if (file.exists()) {
-            getContext().deleteDatabase(file.toString()); //Funciona??????
-           // Log.d("PosterScrollFragment", "onDestroy: "+ file.toString());
+            getContext().deleteDatabase(file.toString());
+
         }
     }
 

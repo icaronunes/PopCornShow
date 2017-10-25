@@ -1,9 +1,6 @@
-package fragment
+package pessoa.fragment
 
 import activity.Site
-import adapter.PersonCrewsAdapter
-import adapter.PersonImagemAdapter
-import adapter.PersonMovieAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -27,7 +24,10 @@ import domain.person.CastItem
 import domain.person.CrewItem
 import domain.person.Person
 import domain.person.ProfilesItem
-import info.movito.themoviedbapi.model.people.PersonCredits
+import pessoa.adapter.PersonCrewsAdapter
+import pessoa.adapter.PersonImagemAdapter
+import pessoa.adapter.PersonMovieAdapter
+import pessoa.adapter.PersonTvAdapter
 import utils.Constantes
 import utils.UtilsApp
 
@@ -35,7 +35,6 @@ import utils.UtilsApp
  * Created by icaro on 18/08/16.
  */
 class PersonFragment : Fragment() {
-
 
     private var nome_person: TextView? = null
     private var birthday: TextView? = null
@@ -70,11 +69,6 @@ class PersonFragment : Fragment() {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         when (tipo) {
 
@@ -99,8 +93,8 @@ class PersonFragment : Fragment() {
 
     private fun getViewPersonTvShow(inflater: LayoutInflater?, container: ViewGroup?): View {
 
-        val view = inflater!!.inflate(R.layout.activity_person_tvshow, container, false)
-        recyclerViewTvshow = view.findViewById<View>(R.id.recycleView_person_tvshow) as RecyclerView
+        val view = inflater?.inflate(R.layout.activity_person_tvshow, container, false)
+        recyclerViewTvshow = view?.findViewById<View>(R.id.recycleView_person_tvshow) as RecyclerView
         sem_serie = view.findViewById<View>(R.id.sem_tvshow) as TextView
         progressBar = view.findViewById<View>(R.id.progress) as ProgressBar
         recyclerViewTvshow?.layoutManager = GridLayoutManager(context, 2)
@@ -113,6 +107,11 @@ class PersonFragment : Fragment() {
                 .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
                 .build()
         adview.loadAd(adRequest)
+
+        setPersonCreditsTvshow(person?.combinedCredits?.cast?.filter { it -> it?.mediaType.equals("tv") }
+                ?.distinctBy { it -> it?.id }
+                ?.sortedBy { it -> it?.releaseDate }
+                ?.reversed() )
 
         return view
     }
@@ -147,7 +146,8 @@ class PersonFragment : Fragment() {
                 .build()
         adview.loadAd(adRequest)
 
-        setPersonCrews(person?.combinedCredits?.crew?.distinctBy { it -> it?.id }
+        setPersonCrews(person?.combinedCredits?.crew
+                ?.distinctBy { it -> it?.id }
                 ?.sortedBy { it -> it?.releaseDate }
                 ?.reversed())
 
@@ -174,7 +174,7 @@ class PersonFragment : Fragment() {
 
     private fun getViewPersonMovie(inflater: LayoutInflater?, container: ViewGroup?): View {
 
-        val view = inflater?.inflate(R.layout.activity_person_movies, container, false) // ? activity???
+        val view = inflater?.inflate(R.layout.activity_person_movies, container, false)
         recyclerViewMovie = view?.findViewById<View>(R.id.recycleView_person_movies) as RecyclerView
         sem_filmes = view.findViewById<View>(R.id.sem_filmes) as TextView
         progressBar = view.findViewById<View>(R.id.progress) as ProgressBar
@@ -219,10 +219,10 @@ class PersonFragment : Fragment() {
             var site = information.homepage
             site = site.replace("http://", "")
 
-            homepage!!.text = site
-            homepage!!.visibility = View.VISIBLE
+            homepage?.text = site
+            homepage?.visibility = View.VISIBLE
 
-            homepage!!.setOnClickListener { view ->
+            homepage?.setOnClickListener { view ->
                 val intent = Intent(context, Site::class.java)
                 intent.putExtra(Constantes.SITE, information.homepage)
                 startActivity(intent)
@@ -230,24 +230,24 @@ class PersonFragment : Fragment() {
             }
 
         } else {
-            homepage!!.visibility = View.GONE
+            homepage?.visibility = View.GONE
         }
 
         if (information.placeOfBirth != null) {
-            place_of_birth!!.text = information.placeOfBirth
-            place_of_birth!!.visibility = View.VISIBLE
+            place_of_birth?.text = information.placeOfBirth
+            place_of_birth?.visibility = View.VISIBLE
         }
 
         if (information.biography != null) {
-            biografia!!.text = information.biography
+            biografia?.text = information.biography
         } else {
-            biografia!!.setText(R.string.sem_biografia)
+            biografia?.setText(R.string.sem_biografia)
         }
 
         if (information.name != null) {
-            imageButtonWiki!!.visibility = View.VISIBLE
+            imageButtonWiki?.visibility = View.VISIBLE
 
-            imageButtonWiki!!.setOnClickListener { view ->
+            imageButtonWiki?.setOnClickListener { view ->
                 val BASEWIKI = "https://pt.wikipedia.org/wiki/"
                 val site: String
                 val intent = Intent(context, Site::class.java)
@@ -282,6 +282,7 @@ class PersonFragment : Fragment() {
 
         if (personMovies?.isEmpty()!!) {
             sem_filmes?.visibility = View.VISIBLE
+            progressBar?.visibility = View.GONE
         } else {
             progressBar?.visibility = View.GONE
             recyclerViewMovie?.adapter = PersonMovieAdapter(context, personMovies)
@@ -296,7 +297,6 @@ class PersonFragment : Fragment() {
             progressBar?.visibility = View.GONE
             return
         }
-
         recyclerViewCrews?.adapter = PersonCrewsAdapter(context, personCredits)
         progressBar?.visibility = View.GONE
 
@@ -312,23 +312,22 @@ class PersonFragment : Fragment() {
             sem_fotos?.visibility = View.VISIBLE
             progressBar?.visibility = View.GONE
         } else {
-            recyclerViewImagem?.adapter = PersonImagemAdapter(context, artworks, person?.id!!, person?.name!! )
-            progressBar!!.visibility = View.GONE
+            recyclerViewImagem?.adapter = PersonImagemAdapter(context, artworks, person?.name)
+            progressBar?.visibility = View.GONE
         }
     }
 
-    private fun setPersonCreditsTvshow(personCredits: PersonCredits?) {
-        if (personCredits == null) {
+    private fun setPersonCreditsTvshow(personCredits: List<CastItem?>?) {
+
+        if (personCredits?.isEmpty()!!) {
+            sem_serie?.visibility = View.VISIBLE
+            progressBar?.visibility = View.GONE
             return
         }
 
-        //        if (personCreditsTvshow.getCast() == null || personCreditsTvshow.getCast().isEmpty()) {
-        //            sem_serie.setVisibility(View.VISIBLE);
-        //            progressBar.setVisibility(View.GONE);
-        //        } else {
-        //           // recyclerViewTvshow.setAdapter(new PersontvAdapter(getContext(), person.getCombinedCredits().getCast()));
-        //            progressBar.setVisibility(View.GONE);
-        //        }
+        recyclerViewTvshow?.adapter = PersonTvAdapter(context, personCredits)
+        progressBar?.visibility = View.GONE
+
     }
 
     companion object {
@@ -338,71 +337,11 @@ class PersonFragment : Fragment() {
             val args = Bundle()
             args.putInt(Constantes.ABA, aba)
             args.putSerializable(Constantes.PERSON, person)
-            val f = PersonFragment()
-            f.arguments = args
-            return f
+            val fragment = PersonFragment()
+            fragment.arguments = args
+            return fragment
         }
     }
-
-    /* TODO Refazer metodo. Deve haver jeito melhor*/
-    //    private PersonCredits removerDuplicados(PersonCredits credits) {
-    //
-    //        PersonCredits temp = credits;
-    //        for (int i = 0; i <= personCredits.getCrew().size(); i++) {
-    //            for (int l = i + 1; l < personCredits.getCrew().size(); l++) {
-    //                if (personCredits.getCrew().get(i).getId() == personCredits.getCrew().get(l).getId()) {
-    //                    temp.getCrew().remove(l);
-    //                }
-    //            }
-    //        }
-    //        return temp;
-    //    }
-
-    //    private class PersonAsync extends AsyncTask<Void, Void, Void> {
-    //
-    //        @Override
-    //        protected Void doInBackground(Void... voids) {
-    //            try {
-    //                personPeople = getTmdbPerson()
-    //                        .getPersonInfo(id_person, "null"); //So retorna ingles
-    //                artworks = FilmeService.getTmdbPerson().getPersonImages(id_person);
-    //                personCredits = FilmeService.getTmdbPerson().getPersonCredits(id_person);
-    //                personCreditsTvshow = FilmeService.getPersonCreditsCombinado(id_person);
-    //
-    //            } catch (Exception e) {
-    //                FirebaseCrash.report(e);
-    //                if (getActivity() != null)
-    //                getActivity().runOnUiThread(new Runnable() {
-    //                    @Override
-    //                    public void run() {
-    //                        Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
-    //                    }
-    //                });
-    //            }
-    //
-    //            return null;
-    //        }
-    //
-    //        @Override
-    //        protected void onPostExecute(Void aVoid) {
-    //            super.onPostExecute(aVoid);
-    //            if (tipo == R.string.person) {
-    //                setPersonInformation(personPeople);
-    //            }
-    //            if (tipo == R.string.filme) {
-    //                setPersonMovies(personCredits);
-    //            }
-    //            if (tipo == R.string.producao) {
-    //                setPersonCrews(personCredits);
-    //            }
-    //            if (tipo == R.string.imagem_person) {
-    //                setPersonImagem(artworks);
-    //            }
-    //            if (tipo == R.string.tvshow) {
-    //                setPersonCreditsTvshow(personCreditsTvshow);
-    //            }
-    //        }
-    //    }
 }
 
 

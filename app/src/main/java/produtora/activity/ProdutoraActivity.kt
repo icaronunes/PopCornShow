@@ -55,13 +55,6 @@ class ProdutoraActivity : BaseActivity() {
         getDadosCompany()
         getCompanyFilmes()
 
-        /*        AdView adview = (AdView) findViewById(R.id.adView);
-                AdRequest adRequest = new AdRequest.Builder()
-                        .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                        .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-                        .build();
-                adview.loadAd(adRequest);*/
-
     }
 
     private fun getDadosCompany() {
@@ -88,7 +81,9 @@ class ProdutoraActivity : BaseActivity() {
                     .subscribe({
                         pagina = it?.page!!
                         totalPagina = it?.totalPages!!
-                        (produtora_filmes_recycler.adapter as ProdutoraAdapter).addprodutoraMovie(it.results)
+                        (produtora_filmes_recycler.adapter as ProdutoraAdapter).addprodutoraMovie(it.results
+                                ?.sortedBy { it -> it?.releaseDate }
+                                ?.reversed())
                         ++pagina
                     }, { e ->
                         Log.d(javaClass.simpleName, "Erro " + e.message)
