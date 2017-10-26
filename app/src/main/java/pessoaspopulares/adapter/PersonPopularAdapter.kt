@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import domain.PersonItem
 import domain.ViewType
-import pessoaspopulares.ViewTypeDelegateAdapter
 import utils.Constantes
 import java.util.*
 

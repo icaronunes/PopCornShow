@@ -19,7 +19,7 @@ import activity.CrewsActivity;
 import activity.ElencoActivity;
 import filme.activity.FilmeActivity;
 import listafilmes.activity.FilmesActivity;
-import activity.FotoPersonActivity;
+import pessoa.activity.FotoPersonActivity;
 import activity.ListaGenericaActivity;
 import activity.MainActivity;
 import pessoa.activity.PersonActivity;

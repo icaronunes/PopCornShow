@@ -14,7 +14,7 @@ import domain.ListaItemFilme
 import domain.ViewType
 import filme.activity.FilmeActivity
 import kotlinx.android.synthetic.main.adapter_produtora.view.*
-import pessoaspopulares.ViewTypeDelegateAdapter
+import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
 import utils.UtilsApp
 

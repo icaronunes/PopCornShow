@@ -1,6 +1,6 @@
 package pessoa.adapter
 
-import activity.FotoPersonActivity
+import pessoa.activity.FotoPersonActivity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView

@@ -13,7 +13,6 @@ import domain.PersonItem
 import domain.ViewType
 import kotlinx.android.synthetic.main.adapter_person_popular.view.*
 import kotlinx.android.synthetic.main.include_progress.view.*
-import pessoaspopulares.ViewTypeDelegateAdapter
 import utils.Constantes
 import utils.UtilsApp
 

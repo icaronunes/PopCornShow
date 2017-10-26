@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import br.com.icaro.filme.R
 import domain.ViewType
-import pessoaspopulares.ViewTypeDelegateAdapter
 
 class LoadingDelegateAdapter : ViewTypeDelegateAdapter {
 

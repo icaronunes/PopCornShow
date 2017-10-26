@@ -177,7 +177,7 @@ public class FilmeService {
 
     public static ReviewsUflixit getReviews(String id, String type) {
         try {
-            final String url = "https://uflixit.p.mashape.com/" + type + "/reviews?imdb_id=" + id;
+            final String url = "https://uflixit.p.mashape.com/movie/reviews/" + id;
             OkHttpClient client = new OkHttpClient.Builder()
                     .connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(30, TimeUnit.SECONDS)
@@ -185,8 +185,8 @@ public class FilmeService {
             Request request = new Request.Builder()
                     .url(url)
                     .addHeader("Accept", "application/json")
-                    .addHeader("X-Mashape-Key", "2m7eCR43FVmshfyoDP78TZNfNtgsp1Z0lyAjsnRX3PMQElsJA9")
-                    .build(); // Teste - BHZzlw5fvGmshgVcYJEYyRfFjEvcp1j3XVrjsndTOINYyd0z47
+                    .addHeader("X-Mashape-Key", "BHZzlw5fvGmshgVcYJEYyRfFjEvcp1j3XVrjsndTOINYyd0z47")
+                    .build(); // Teste - BHZzlw5fvGmshgVcYJEYyRfFjEvcp1j3XVrjsndTOINYyd0z47 - 2m7eCR43FVmshfyoDP78TZNfNtgsp1Z0lyAjsnRX3PMQElsJA9
             // These code snippets use an open-source library.
 
             Response response = client.newCall(request).execute();

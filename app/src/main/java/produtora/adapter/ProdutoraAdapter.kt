@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import domain.ListaItemFilme
 import domain.ViewType
-import pessoaspopulares.ViewTypeDelegateAdapter
+import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import pessoaspopulares.adapter.LoadingDelegateAdapter
 import utils.Constantes
 import java.util.*

@@ -1,5 +1,6 @@
-package activity
+package pessoa.activity
 
+import activity.BaseActivity
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle

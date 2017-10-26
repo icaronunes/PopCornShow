@@ -81,7 +81,7 @@ class FilmeActivity : BaseActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpToolBar()
         setupNavDrawer()
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setTitle(" ")
         getExtras()
 
@@ -130,10 +130,10 @@ class FilmeActivity : BaseActivity() {
 
                 if (dataSnapshot.child(id_filme.toString()).exists()) {
                     addWatch = true
-                    menu_item_watchlist!!.labelText = resources.getString(R.string.remover_watch)
+                    menu_item_watchlist?.labelText = resources.getString(R.string.remover_watch)
                 } else {
                     addWatch = false
-                    menu_item_watchlist!!.labelText = resources.getString(R.string.adicionar_watch)
+                    menu_item_watchlist?.labelText = resources.getString(R.string.adicionar_watch)
                 }
             }
 
@@ -150,8 +150,7 @@ class FilmeActivity : BaseActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.child(id_filme.toString()).exists()) {
                     addRated = true
-                    // Log.d(TAG, "False");
-                    // Log.d(TAG, "nota " + dataSnapshot.child(String.valueOf(id_filme)).child("nota"));
+
                     if (dataSnapshot.child(id_filme.toString()).child("nota").exists()) {
                         val nota = dataSnapshot.child(id_filme.toString()).child("nota").value.toString()
                         numero_rated = java.lang.Float.parseFloat(nota)
@@ -181,10 +180,10 @@ class FilmeActivity : BaseActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.child(id_filme.toString()).exists()) {
                     addFavorite = true
-                    menu_item_favorite!!.labelText = resources.getString(R.string.remover_favorite)
+                    menu_item_favorite?.labelText = resources.getString(R.string.remover_favorite)
                 } else {
                     addFavorite = false
-                    menu_item_favorite!!.labelText = resources.getString(R.string.adicionar_favorite)
+                    menu_item_favorite?.labelText = resources.getString(R.string.adicionar_favorite)
 
                 }
             }
@@ -203,17 +202,17 @@ class FilmeActivity : BaseActivity() {
 
         if (mAuth?.currentUser != null) {
 
-            myWatch = database.getReference("users").child(mAuth?.currentUser!!
-                    .uid).child("watch")
-                    .child("movie")
+            myWatch = database.getReference("users").child(mAuth?.currentUser
+                    ?.uid).child("watch")
+                    ?.child("movie")
 
-            myFavorite = database.getReference("users").child(mAuth?.currentUser!!
-                    .uid).child("favorites")
-                    .child("movie")
+            myFavorite = database.getReference("users").child(mAuth?.currentUser
+                    ?.uid).child("favorites")
+                    ?.child("movie")
 
-            myRated = database.getReference("users").child(mAuth?.currentUser!!
-                    .uid).child("rated")
-                    .child("movie")
+            myRated = database.getReference("users").child(mAuth?.currentUser
+                    ?.uid).child("rated")
+                    ?.child("movie")
         }
     }
 
@@ -374,8 +373,8 @@ class FilmeActivity : BaseActivity() {
 
                 no.setOnClickListener {
 
-                    myRated!!.child(id_filme.toString()).setValue(null)
-                            .addOnCompleteListener {
+                    myRated?.child(id_filme.toString())?.setValue(null)
+                            ?.addOnCompleteListener {
                                 Toast.makeText(this@FilmeActivity,
                                         resources.getText(R.string.remover_rated), Toast.LENGTH_SHORT).show()
                             }
@@ -400,8 +399,8 @@ class FilmeActivity : BaseActivity() {
                         filmeDB.nota = ratingBar.rating.toInt()
                         filmeDB.poster = movieDb.posterPath
 
-                        myRated!!.child(id_filme.toString()).setValue(filmeDB)
-                                .addOnCompleteListener {
+                        myRated?.child(id_filme.toString())?.setValue(filmeDB)
+                                ?.addOnCompleteListener {
                                     Toast.makeText(this@FilmeActivity, resources.getString(R.string.filme_rated), Toast.LENGTH_SHORT)
                                             .show()
 
@@ -450,8 +449,8 @@ class FilmeActivity : BaseActivity() {
 
                 if (addFavorite) {
                     //  Log.d(TAG, "Apagou Favorite");
-                    myFavorite!!.child(id_filme.toString()).setValue(null)
-                            .addOnCompleteListener {
+                    myFavorite?.child(id_filme.toString())?.setValue(null)
+                            ?.addOnCompleteListener {
                                 Toast.makeText(this@FilmeActivity, getString(R.string.filme_remove_favorite), Toast.LENGTH_SHORT).show()
 
                                 fab_menu_filme?.close(true)
@@ -464,8 +463,8 @@ class FilmeActivity : BaseActivity() {
                     filmeDB.title = movieDb?.title
                     filmeDB.poster = movieDb?.posterPath
 
-                    myFavorite!!.child(id_filme.toString()).setValue(filmeDB)
-                            .addOnCompleteListener {
+                    myFavorite?.child(id_filme.toString())?.setValue(filmeDB)
+                            ?.addOnCompleteListener {
                                 Toast.makeText(this@FilmeActivity, getString(R.string.filme_add_favorite), Toast.LENGTH_SHORT)
                                         .show()
 
@@ -505,8 +504,8 @@ class FilmeActivity : BaseActivity() {
                 filmeDB.title = movieDb.title
                 filmeDB.poster = movieDb.posterPath
 
-                myWatch!!.child(id_filme.toString()).setValue(filmeDB)
-                        .addOnCompleteListener {
+                myWatch?.child(id_filme.toString())?.setValue(filmeDB)
+                        ?.addOnCompleteListener {
                             Toast.makeText(this@FilmeActivity, getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
                                     .show()
 
@@ -552,13 +551,13 @@ class FilmeActivity : BaseActivity() {
         super.onDestroy()
 
         if (valueEventWatch != null) {
-            myWatch!!.removeEventListener(valueEventWatch!!)
+            myWatch?.removeEventListener(valueEventWatch)
         }
         if (valueEventRated != null) {
-            myRated!!.removeEventListener(valueEventRated!!)
+            myRated?.removeEventListener(valueEventRated)
         }
         if (valueEventFavorite != null) {
-            myFavorite!!.removeEventListener(valueEventFavorite!!)
+            myFavorite?.removeEventListener(valueEventFavorite)
         }
 
         subscriptions.clear()

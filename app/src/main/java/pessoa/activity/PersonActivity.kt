@@ -1,19 +1,20 @@
 package pessoa.activity
 
 import activity.BaseActivity
-import pessoa.adapter.PersonAdapter
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
-import android.support.v4.view.ViewPager
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import br.com.icaro.filme.R
 import domain.API
 import domain.person.Person
+import kotlinx.android.synthetic.main.activity_person.*
+import kotlinx.android.synthetic.main.include_progress_horizontal.*
+import pessoa.adapter.PersonAdapter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -24,7 +25,6 @@ class PersonActivity : BaseActivity() {
 
     private var id_person: Int = 0
     private var nome: String? = null
-    private var viewPager: ViewPager? = null
     private val subscription: CompositeSubscription? = null
     private lateinit var person: Person
 
@@ -37,7 +37,6 @@ class PersonActivity : BaseActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpToolBar()
         getExtras()
-        viewPager = findViewById(R.id.viewPager_person)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = nome
 
@@ -60,7 +59,7 @@ class PersonActivity : BaseActivity() {
     }
 
     protected fun snack() {
-        Snackbar.make(viewPager!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(viewPager_person!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
                     if (UtilsApp.isNetWorkAvailable(context)) {
                         getDados()
@@ -80,11 +79,11 @@ class PersonActivity : BaseActivity() {
 
     private fun setupViewPagerTabs() {
 
-        viewPager?.offscreenPageLimit = 2
-        viewPager?.adapter = PersonAdapter(context, supportFragmentManager, person)
+        viewPager_person?.offscreenPageLimit = 2
+        viewPager_person?.adapter = PersonAdapter(context, supportFragmentManager, person)
         val tabLayout = findViewById<View>(R.id.tabLayout) as TabLayout
-        viewPager?.currentItem = 2
-        tabLayout.setupWithViewPager(viewPager)
+        viewPager_person?.currentItem = 2
+        tabLayout.setupWithViewPager(viewPager_person)
         tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
 
     }
@@ -96,10 +95,13 @@ class PersonActivity : BaseActivity() {
                 .subscribe({
                     person = it
                     setupViewPagerTabs()
+                    progress_horizontal.visibility = View.GONE
                 }, { erro ->
                     Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
+
                 })
         subscription?.add(inscricao)
+
     }
 
     override fun onDestroy() {

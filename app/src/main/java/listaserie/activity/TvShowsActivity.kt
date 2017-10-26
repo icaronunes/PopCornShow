@@ -13,6 +13,8 @@ import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
 import br.com.icaro.filme.R
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import listaserie.fragment.TvShowsFragment
 import utils.Constantes
 
@@ -30,12 +32,12 @@ class TvShowsActivity : BaseActivity() {
                 .getIntExtra(Constantes.NAV_DRAW_ESCOLIDO, 0))
         supportActionBar?.title = titulo
 
-        //        AdView adview = (AdView) findViewById(R.id.adView);
-        //        AdRequest adRequest = new AdRequest.Builder()
-        //                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-        //                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-        //                .build();
-        //        adview.loadAd(adRequest);
+        val adview = findViewById<AdView>(R.id.adView)
+        val adRequest = AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build()
+        adview.loadAd(adRequest)
 
         if (savedInstanceState == null) {
             val tvShowsFragment = TvShowsFragment()

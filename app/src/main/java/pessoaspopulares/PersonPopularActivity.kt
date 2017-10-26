@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import br.com.icaro.filme.R
 import domain.API
 import kotlinx.android.synthetic.main.activity_person_popular.*
@@ -73,13 +74,12 @@ class PersonPopularActivity : BaseActivity() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        it.results?.forEach { resultsItem ->
-                            pagina = it?.page!!
-                            totalPagina = it?.totalPages!!
+                        pagina = it?.page!!
+                        totalPagina = it?.totalPages!!
                         (recycleView_person_popular.adapter as PersonPopularAdapter).addPersonPopular(it.results)
-                        }
                         ++this.pagina
                     }, { erro ->
+                        Toast.makeText(this, resources.getString(R.string.ops), Toast.LENGTH_SHORT).show()
                         Log.d(javaClass.simpleName, "Erro " + erro.message)
                     })
             subscriptions.add(inscricao)

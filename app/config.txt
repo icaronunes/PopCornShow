@@ -535,11 +535,6 @@
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:254
--keep class activity.FotoPersonActivity {
-    <init>(...);
-}
-
 # view AndroidManifest.xml #generated:68
 -keep class activity.IntroActivity {
     <init>(...);
@@ -562,11 +557,6 @@
 
 # view AndroidManifest.xml #generated:56
 -keep class activity.MainActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:234
--keep class pessoa.activity.PersonActivity {
     <init>(...);
 }
 
@@ -749,7 +739,7 @@
 # view res/layout/activity_filme.xml #generated:62
 # view res/layout/activity_main.xml #generated:19
 # view res/layout/activity_main.xml #generated:67
-# view res/layout/activity_person.xml #generated:24
+# view res/layout/activity_person.xml #generated:27
 # view res/layout/activity_scroll_poster.xml #generated:15
 # view res/layout/activity_usuario_list.xml #generated:21
 # view res/layout/dialog_collection.xml #generated:8
@@ -956,7 +946,7 @@
 # view res/layout/activity_person_movies.xml #generated:12
 # view res/layout/activity_person_netflix.xml #generated:33
 # view res/layout/activity_person_popular.xml #generated:23
-# view res/layout/activity_person_tvshow.xml #generated:11
+# view res/layout/activity_person_tvshow.xml #generated:12
 # view res/layout/activity_reviews.xml #generated:32
 # view res/layout/activity_similares.xml #generated:30
 # view res/layout/desenvolvimento_layout.xml #generated:10
@@ -1068,9 +1058,11 @@
 # view res/layout/activity_epsodios.xml #generated:28
 # view res/layout/activity_favorite.xml #generated:27
 # view res/layout/activity_list_main.xml #generated:38
+# view res/layout/activity_person_crews.xml #generated:33
 # view res/layout/activity_person_layout.xml #generated:42
+# view res/layout/activity_person_movies.xml #generated:31
 # view res/layout/activity_person_netflix.xml #generated:54
-# view res/layout/activity_person_tvshow.xml #generated:30
+# view res/layout/activity_person_tvshow.xml #generated:31
 # view res/layout/activity_usuario_list.xml #generated:32
 # view res/layout/epsodio_fragment.xml #generated:272
 # view res/layout/poster_grid.xml #generated:9
@@ -1251,6 +1243,16 @@
 
 # view AndroidManifest.xml #generated:147
 -keep class oscar.OscarActivity {
+    <init>(...);
+}
+
+# view AndroidManifest.xml #generated:254
+-keep class pessoa.activity.FotoPersonActivity {
+    <init>(...);
+}
+
+# view AndroidManifest.xml #generated:234
+-keep class pessoa.activity.PersonActivity {
     <init>(...);
 }
 

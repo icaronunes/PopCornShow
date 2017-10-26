@@ -18,7 +18,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import activity.ReviewsActivity;
 import activity.Site;
 import br.com.icaro.filme.R;
 import domain.MessageItem;
@@ -29,7 +28,7 @@ import utils.Constantes;
  * Created by icaro on 17/07/16.
  */
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.FilmeViewHolder> {
-    private final String TAG = ReviewsActivity.class.getName();
+
     private Context context;
     private ReviewsUflixit reviews;
 

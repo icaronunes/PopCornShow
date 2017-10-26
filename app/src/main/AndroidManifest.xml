@@ -274,7 +274,7 @@
             </activity>
 
 
-        <activity android:name="activity.FotoPersonActivity"
+        <activity android:name="pessoa.activity.FotoPersonActivity"
             android:parentActivityName="activity.MainActivity"
             >
 

@@ -12,7 +12,7 @@ import domain.ListaItemFilme
 import domain.ViewType
 import filme.activity.FilmeActivity
 import kotlinx.android.synthetic.main.lista.view.*
-import pessoaspopulares.ViewTypeDelegateAdapter
+import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp

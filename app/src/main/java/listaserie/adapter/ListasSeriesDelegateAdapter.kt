@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso
 import domain.ListaItemSerie
 import domain.ViewType
 import kotlinx.android.synthetic.main.adapter_filmes_list.view.*
-import pessoaspopulares.ViewTypeDelegateAdapter
+import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
