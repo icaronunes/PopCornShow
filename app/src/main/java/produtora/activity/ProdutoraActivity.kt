@@ -62,9 +62,10 @@ class ProdutoraActivity : BaseActivity() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                       company = it
-                        setImageTop()
-                        collapsing_toolbar.title = company?.name
+                            company = it
+                            setImageTop()
+                            collapsing_toolbar.title = company?.name
+
                     }, { erro ->
                         Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
                         Log.d(javaClass.simpleName, "Erro " + erro.message)

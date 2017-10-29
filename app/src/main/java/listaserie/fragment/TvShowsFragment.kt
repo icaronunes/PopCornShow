@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -86,13 +85,16 @@ class TvShowsFragment : FragmentBase() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    (recycle_listas.adapter as ListaSeriesAdapter).addSeries(it.results, it?.totalResults!!)
-                    pagina = it.page!!
-                    totalPagina = it.totalPages!!
-                    ++pagina
+                    if (view != null) {
+                        (recycle_listas.adapter as ListaSeriesAdapter).addSeries(it.results, it?.totalResults!!)
+                        pagina = it.page!!
+                        totalPagina = it.totalPages!!
+                        ++pagina
+                    }
                 }, { erro ->
-                    Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                    Log.d(javaClass.simpleName, "Erro " + erro.message)
+                    if (view != null) {
+                        Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
+                    }
                 })
 
         subscriptions.add(inscricao)

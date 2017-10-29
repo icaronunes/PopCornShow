@@ -5,7 +5,6 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -83,13 +82,15 @@ class ListaGenericaActivity : BaseActivity() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        (recycleView_favorite.adapter as ListUserAdapter).addItens(it.results, it?.totalResults!!)
+                        val itens = it.results?.sortedBy { it -> it?.releaseDate }
+                                ?.reversed()
+
+                        (recycleView_favorite.adapter as ListUserAdapter).addItens(itens, it?.totalResults!!)
                         pagina = it.page!!
                         totalPagina = it.totalPages!!
                         ++pagina
                     }, { erro ->
                         Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                        Log.d(javaClass.simpleName, "Erro " + erro.message)
                     })
             subscriptions.add(inscricao)
         }

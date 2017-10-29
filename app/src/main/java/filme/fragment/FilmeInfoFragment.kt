@@ -423,10 +423,14 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        imdbDd = it
-                        setVotoMedia()
+                        if (view != null) {
+                            imdbDd = it
+                            setVotoMedia()
+                        }
                     }, { erro ->
-                        Toast.makeText(activity, getString(R.string.ops), Toast.LENGTH_LONG).show()
+                        if (view != null) {
+                            Toast.makeText(activity, getString(R.string.ops), Toast.LENGTH_LONG).show()
+                        }
                     })
             subscriptions.add(inscircaoImdb)
         }

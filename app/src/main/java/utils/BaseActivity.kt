@@ -18,5 +18,7 @@ open class BaseActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         subscriptions.clear()
+        subscriptions.unsubscribe()
+
     }
 }

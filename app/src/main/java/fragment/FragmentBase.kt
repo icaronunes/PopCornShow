@@ -15,6 +15,7 @@ open class FragmentBase: Fragment() {
 
     override fun onPause() {
         super.onPause()
+        subscriptions.unsubscribe()
         subscriptions.clear()
     }
 

@@ -81,13 +81,16 @@ class FilmesFragment : FragmentBase() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-
-                    (recycle_listas.adapter as ListaFilmesAdapter).addFilmes(it?.results, it?.totalResults!!)
-                    pagina = it.page!!
-                    totalPagina = it.totalPages!!
-                    ++pagina
+                    if (view != null) {
+                        (recycle_listas.adapter as ListaFilmesAdapter).addFilmes(it?.results, it?.totalResults!!)
+                        pagina = it.page!!
+                        totalPagina = it.totalPages!!
+                        ++pagina
+                    }
                 }, { erro ->
-                    Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
+                    if (view != null) {
+                        Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
+                    }
                 })
 
         subscriptions.add(inscricao)

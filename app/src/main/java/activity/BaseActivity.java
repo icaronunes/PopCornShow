@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -30,7 +29,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.crash.FirebaseCrash;
@@ -66,7 +64,6 @@ public class BaseActivity extends AppCompatActivity {
     private TextView tUserName;
     private TextView tLogin;
     private TextView textLogin;
-    private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private FirebaseUser user;
 
@@ -307,14 +304,6 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
 
-//            case R.id.menu_drav_netflix:
-//                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_Netflix");
-//                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);//
-//                intent = new Intent(this, Netflix.class);
-//                startActivity(intent);
-//                break;
-
-
         }
     }
 
@@ -347,14 +336,10 @@ public class BaseActivity extends AppCompatActivity {
 
                         String numero = String.valueOf(new Random().nextInt(10));
                         //Log.d(TAG, "numero : " + numero);
-//TODO mandar somente o Map e fazer a troca na outra activity
+                        //TODO mandar somente o Map e fazer a troca na outra activity
                         intent.putExtra(Constantes.INSTANCE.getLISTA_ID(), map.get("id" + numero));
                         intent.putExtra(Constantes.INSTANCE.getLISTA_GENERICA(), map.get("title" + numero));
                         intent.putExtra(Constantes.INSTANCE.getBUNDLE(), (Serializable) map);
-
-                        Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "NavDrawer_Random:List:" + map.get("id" + numero) + ":" + "title" + numero);
-                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                         startActivity(intent);
 
@@ -444,10 +429,6 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected View.OnClickListener onClickListenerLogar() {
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
-        final Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Event.LOGIN, "Tentativa de login");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
