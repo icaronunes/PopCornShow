@@ -362,7 +362,7 @@ class FilmeActivity : BaseActivity() {
                 val width = resources.getDimensionPixelSize(R.dimen.popup_width) //Criar os Dimen do layout do login - 300dp - 300dp ??
                 val height = resources.getDimensionPixelSize(R.dimen.popup_height_rated)
 
-                alertDialog.window?.setLayout(width, height) //??????????????
+                alertDialog.window?.setLayout(width, height) //????????????
                 alertDialog.show()
 
                 if (addRated) {

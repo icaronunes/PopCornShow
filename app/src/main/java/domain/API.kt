@@ -16,6 +16,9 @@ import java.util.*
 class API(context: Context) {
 
     private var timeZone: String = "US"
+    val baseUrl3 = "https://api.themoviedb.org/3/"
+    val baseUrl4 = "https://api.themoviedb.org/4/"
+
 
     object TIPOBUSCA {
 
@@ -39,8 +42,6 @@ class API(context: Context) {
         timeZone = getIdiomaEscolhido(context)
     }
 
-    val baseUrl3 = "https://api.themoviedb.org/3/"
-    val baseUrl4 = "https://api.themoviedb.org/4/"
 
     fun PersonPopular(pagina: Int): Observable<PersonPopular> {
         return rx.Observable.create { subscriber ->
@@ -438,8 +439,8 @@ class API(context: Context) {
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
-                    .url("${baseUrl3}person/$id?api_key=${Config.TMDB_API_KEY}&language=en-US+" +"&append_to_response=combined_credits,images")
-            //,tagged_images,external_ids")
+                    .url("${baseUrl3}person/$id?api_key=${Config.TMDB_API_KEY}&language=en-US+" + "&append_to_response=combined_credits,images")
+                    //,tagged_images,external_ids")
                     .get()
                     .build()
             val response = client.newCall(request).execute()
@@ -449,7 +450,27 @@ class API(context: Context) {
                 subscriber.onNext(person)
                 subscriber.onCompleted()
             } else {
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
+    }
 
+    fun reviewsFilme(idImdb: String?): Observable<ReviewsUflixit> {
+        return rx.Observable.create { subscriber ->
+            val client = OkHttpClient()
+            val gson = Gson()
+            val request = Request.Builder()
+                    .url("https://uflixit.p.mashape.com/movie/reviews/$idImdb")
+                    .header("Accept", "application/json")
+                    .header("X-Mashape-Key", Config.UFLIXI)
+                    .build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful){
+                val json = response.body()?.string()
+                val reviews = gson.fromJson(json, ReviewsUflixit::class.java)
+                subscriber.onNext(reviews)
+                subscriber.onCompleted()
+            }else {
                 subscriber.onError(Throwable(response.message()))
             }
         }

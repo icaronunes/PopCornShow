@@ -268,20 +268,21 @@ class TvShowFragment : Fragment() {
             }
         }
 
-        icon_reviews?.setOnClickListener { view ->
-            if (series!!.external_ids!!.imdbId != null) {
-                val intent = Intent(context, ReviewsActivity::class.java)
-                intent.putExtra(Constantes.FILME_ID, series?.external_ids!!.imdbId)
-                intent.putExtra(Constantes.NOME_FILME, series?.name)
-                intent.putExtra(Constantes.MEDIATYPE, "tv-shows")
-                startActivity(intent)
-
-            } else {
-                if (activity != null) {
-                    Toast.makeText(activity, R.string.ops, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
+        icon_reviews?.visibility = View.GONE
+//        icon_reviews?.setOnClickListener { view ->
+//            if (series?.external_ids?.imdbId != null) {
+//                val intent = Intent(context, ReviewsActivity::class.java)
+//                intent.putExtra(Constantes.FILME_ID, series?.external_ids!!.imdbId)
+//                intent.putExtra(Constantes.NOME_FILME, series?.name)
+//                intent.putExtra(Constantes.MEDIATYPE, "tv-shows")
+//                startActivity(intent)
+//
+//            } else {
+//                if (activity != null) {
+//                    Toast.makeText(activity, R.string.ops, Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        } TODO - Retornar quando API Uflixit voltar a funcionar com Tvshow
 
     }
 

@@ -1,90 +1,92 @@
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/mergeJavaRes/flavor21/release/folders/2/1f/main(!**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ea31a194bc796ce54bc361e41077c17b-57dbcb1c6c7ed14d515dbf800a518048f9fdf268(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/3451dd510c55f6741b29190fc0dc9359-34d323bcd7c98650733f62c445255531742eaee3(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/5565c5abfcd1ca4c863a931b6f0c4558-8cb1dcf68d89b3835f6b8620276bad0ce2e75a94(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/7f75215d3999266b48e8640c23aef9aa-7e84a58f14b03e539c66973b1348dfcc92b37959(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ade065fb6c3938bb76976293abb62c01-3a4eaa615f24f7f01c08072bdcbc45ffa148d954(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/672a8801c057dc95e87ee1b4d5f6ba3d-a2543021b3d50545d47225b9d51fcc9a4bc89e2f(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/6d6f97db9127a1a3f28e767fce13e9fe-768d0e81539fd06fc42740373e84ab6e3ccd95ae(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/f1247a109e1066f43675213fc3c418ec-69c741d2110fd5b86d0bc34687be796038c68f85(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/edc2d5fcc436910d0cf3b0fedb82d978-8357f127e3132eaedbe37aea0c48648705776bbe(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ba4794b3bf2463f6c1acddab93cb0815-6cec7753d390b52cfe748fefdbf6c9c367540e83(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/bdca5bf20557ca21da788956baf06297-5b1a933a3cb869e9a1a5c2e39ef0edf8b0f495f6(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/dcd14903923d278a3c62cc8df32b1229-48020fc59787d249114806e634c52f644245a80b(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/e12834defde0e47c3d01cb617ae6b7a6-f07471cc8daabba9b33b6c2492a169834e3c6749(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/787e52e8581ea483069633cac5fc2273-8f8b1f6b5ad05813d590e931b9eb21e8f955e83d(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/932b8d92575897213a07bbfcc0b9553a-3a66bd78a25a1f40c75058b1faf1f3c8fa2b48f1(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/dc3386636a12ba862a76fe8887a33476-5dd11c586126d0030cfe8a13fc8490b88e1279c2(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/f243c48b4a4a8f7f632e6dfb2a305d12-853eefc218e53f86499b30eb852849853d42e376(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/7b6d7f555bfb848109e4eb5a86be37d3-e633107a1b9e826ebabfa5fb2f23e0860d4a87a2(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/26c082865dbed25c1822b05dd1e1c292-11ad73441e6e778a59510e7bdebbbe93643c02bb(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/fc386fda8542ae4b838440af8a624529-aa6e9b1f8d1364f493a5c1f4b5dabefecdd446f0(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/132d3fd2cc5d5b6bf95d4d11c8980ea9-cc273d659a859add25390b7aa6eded036f001525(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/345c861e7529686d525d156d84889f98-fdb738fd2ee9f543cfe49debd9d117674e60db36(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/9befbc99e6af4382622aa5f1f383f938-c37b8da5199a30043c6ce4169d2313ab4e56fbff(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/1d65a6d9acc07de7d0f5b7b63de4a2be-b8be5144022e8fb2366e72814320a8797abb6dae(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ad2903674404d1a85a27e07bee97ffb7-0889494767d258bb31119372474a445704582ff4(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/4a50909fbeb00255875c69fc2a6baa1e-1e007753630aecd4d112f47539a0741fb9ce1439(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/f2dce511bbcad9b034961192d805b119-f48d5f356f4d1c82d2d52ef40a6b2e6c8e63145f(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/0cc2cb328494276529f66bbfda9c09f8-7bbd037387a09eb825e46e8fde2c0439b82875ab(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/7ac9b519dab49d3d891ec36a342cb03d-8f046c55754bade195bb29ce12cf47b0c219b5bf(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/a17f8f83165e0ec8df84ee6f824a344f-bfa22ab3f49fdafea5d772f62981e198b3cf0d7b(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/a9aa22ce51934a10c694e688b571d6da-d2308e9fab91cabd7c8fb9f112fce1b75f7d906d(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/3c6312fd86017408469719166c62a3e1-5daa1776eb40bec917f6f6af97b1275da6a82367(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/8199c7fdd9f0125e282d7fa432e0e3b6-d8b469a212c17745d599848be5dd690aaaafd374(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/e9e621436dd5b732eaed296b3392f7e3-b200e37a026ef0f35c6eab56f4f00651a1cf62a1(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/2877e4c8bb700baca30fb094a39349b1-878dc05837f080ceb16d09dad060cad274b90e02(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/40a44b9ee71bd64ccd364061fda79816-aee94f9f4c95adb19544f72990b5529194c2dbcb(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/201c13d7f42dbce1ae343536e8862494-2600a42eaf54c592149f2bc2118ccf27b3d0e5df(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/22be81693ec22584f923d3d8a03875c1-d7e57e6cc7147a78416c803bd6a8785747a4ac9a(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/4ea7d0f5867bd1c82a3de261cff0f01f-fd2534d49f86aa20618bcbecd6b6fc0007e9016b(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ca18013d0af7a53b3943b08ae4c75351-bbaa7a7c8170d8afb931ad6eb039f6049eabd5e5(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/c549e46d245a652aeca536d5980fe1aa-ae208e0cc90a1b07a6291f7e33e1b2bd1eb5043d(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/13eff1223d214d053a086ae9f40c2700-67040bfe6327e31fda13e041b76794bc5b581212(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/5c888307290d0f8b4213be8d55582afb-70d9461da9493ddaba46688a4811c20811bc5b29(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/3db92d6139fe30d01351de4ebd3ad21f-efd5be7032f3357279672edf84fe67b727091d11(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/fee58a7f820af1b6c8ee0f5cfa9e785f-2c8c8fd0a5702d8ef6a28069805d34c71e765d93(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/97cc94f9c19fe1bfeeb877f9ebd283f4-b495656c05da2414241638171daec526780f54f8(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/55394e093171c7b1ce2f3391103fba53-58ce908ff93877d2c2a2d2bd9e438a193d12ba88(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/294f00245374f0b1e860aa3e6c0d8335-87e6c3956eec4a25c578506d4eadabf179f084e2(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/dd94b5aa68ca95b103ec34837896cabe-c3b6ee4ad43e3f4175d86683a1011b14d0386797(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/e54ba9e6aa7d8d4eeec866f27dc9c03c-49273de86ef874ea07e9b9e1f5dd63684fb2a531(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/514b20b9efa65cd63ce89bb1b24cf997-17ecf03c3e599395e42ac5225af1ac9e7a7bafda(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/981d6f8fa675238319a00cb5f702496e-2fb83e277be1062f78537e2d4a686a650879c71b(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/180ffb0819fef80cdc2fa9a2efc139c2-e7ea4e486c0a517743326a43c02b22b521807cd1(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/3c1ac6e1052de0f7c0c5e99a7ad1cdd7-44e10e23a611492e7e46161be570788f2cf747b7(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/033c3de5f952a00e129e2234ce3d6459-5c33e5a0a6ba80ee627cdf42d88a5a5304ba0954(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/31ce4eb42e70f7adb1e6d41b4b7ed8df-96e96e5121dfa54c284bb0e0ee907da14fea568f(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ab1cc211ea4b698802a62a52923ddfb5-632bfd0d9f1ac8b9adbeca0aff2f173fce1da79c(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/f63f2b8a2d133d4085857e5e85aaf5f3-dc927f4be4d3f5f8802cba1ab68604afa86602a3(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/f749489a951a02382be8651da7daf649-9c295058ce34015ab84bb89787a6613534c83086(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/a9fa0f5150cd0484d7409377a0cee42e-288b0c124594cba37fbfc175e85e4b51e771ac17(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/735b0792abd862a8978fc3cd92c5cc95-b314fd07a440775a8d9da3dfe2a289661302c2d3(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/69bc36547443903707cabb55f8b31108-f1493374788706b31ea1dcad278bdb460053b895(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/d7d72d5f647a6331488bcd81d6e1424c-3ab919575de93395fcca69b19c4768762bcb4017(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/e5a329d061203c9f19071dfab07e588f-e943933f030e3737d42a274b068191c9b48d3922(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/370a887b580eb254c66457f418f4fd69-bbb0eb0c8a0f51cb8c7955e03274f262104e4381(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/3686755b13dcd1cd6bd541a62e524a24-f8a9064c82307e0bcb2b7826046157a234f0eeff(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ebfb91e1522bb881348b0eaf65f7a936-3d236cb5d3adf9516fbdc13f6c239a3d2872e3df(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/642a3ec0f2197d722f0c392b65ec25d8-7ba65a7eeb93a6b3ddfccf94bc8265cb8fd92ccc(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/b603945a4d9b7de664f12b15de325fcd-3b916e21a5c6c6b229d86dd36fc5acd6d5f93b15(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/6c913898438dd352d71c3af9a9e6d3f1-be523c567369d8e4e76fde048cf4f75549672ac6(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/5e6f827b463a2ee6cde341342f2148e8-4dbe40f7b8dfc463f4dfb3e692621ae8ca46ece4(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/60bde25c63df54e9f11e2c62ee1f3716-55808f55d69afb4893868247ba266fa3b7a5e4eb(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/c0a3639b74f2f19a53f8bc8bf94be35e-059e57910cc52f2ac04866c4d3d111bfd4ca11ae(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/8da152d445beef71b7f3ec26c3e03609-e7f0ac9b2fd846e2f2a1d13bc3cedbfdf6c65737(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/b77b99390986f29b9f78ca826b5ab984-5fbc991fe3aa62bab387ed6cdfadf2a5a6162bb7(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/89a38280f2d13682135d3271cba9e7d6-3cd8b34424e985972f8647ddd7fcbec0fabbd808(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/5f986b0e625a269cc63194f07c532140-7d7146adb26b8b882518880e79abf62d5084564e(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/ae9bd016808169e6d9454b774aabaa50-3ca89b90763bd7bbbbc8be1dcda65967e00d18fb(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/01e71872b19a4f509a8d7eb1f51d9424-c9b9dcfc9819d3b22fd8386982efcbdac96f82fc(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/c0f8cc41210e9a40f890f6a0b2d8debf-a964cb50159126926e6fbfd072e292f44d0c6c39(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/eb410f11fc0b1c74db1cfc197c501492-88732f78b281193f8f78ea1bd0f57e5165518bc5(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/c8e93e4479d167375573cf41ec98fa8c-424a477cfcde76f58b05dd579c5026a3a0e7f228(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/10/3132b30991eb574b0c083566b35a13ff-aad6ae4c03e756aac8820848a9223fd6153393e6(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/2/ed698c5932a80e7397e59c4e3d45a8b1-64b4037e8ec927a963fb1fffa41cb91a69ca51dd(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/folders/1/1/4432cc260bf542879e83f5a5193ed6b4(**.class)
--outjars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/proguard/flavor21/release/jars/3/1f/main.jar
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/mergeJavaRes/flavor21/release/0.jar(!**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/0(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/1(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/2(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/3(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/4(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/5(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/6(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/7(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/8(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/9(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/10(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/11(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/12(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/13(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/14(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/15(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/16(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/17(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/18(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/19(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/20(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/21(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/22(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/23(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/24(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/25(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/26(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/27(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/28(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/29(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/30(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/31(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/32(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/33(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/34(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/35(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/36(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/37(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/38(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/39(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/40(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/41(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/42(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/43(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/44(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/45(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/46(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/47(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/48(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/49(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/50(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/51(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/52(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/53(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/54(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/55(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/56(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/57(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/58(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/59(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/60(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/61(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/62(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/63(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/64(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/65(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/66(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/67(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/68(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/69(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/70(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/71(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/72(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/73(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/74(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/75(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/76(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/77(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/78(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/79(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/80(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/81(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/82(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/83(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/84(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/85(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/86(**.class)
+-outjars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/proguard/flavor21/release/0.jar
 
 -libraryjars /opt/android-sdk-linux/platforms/android-26/android.jar
 -libraryjars /opt/android-sdk-linux/platforms/android-26/optional/org.apache.http.legacy.jar
@@ -96,14 +98,753 @@
 -dontusemixedcaseclassnames
 -keeppackagenames br.com.icaro.**,com.google.**,info.movito.**,okhttp3.**
 -keepattributes *Annotation*,Signature,InnerClasses,EnclosingMethod,*Annotation*,*Annotation*,Signature,*Annotation*,*Annotation*
--dontpreverify
 -verbose
 -dontnote com.android.vending.licensing.ILicensingService,com.google.vending.licensing.ILicensingService,com.google.android.vending.licensing.ILicensingService,android.support.**,android.net.http.**,org.apache.commons.codec.**,org.apache.http.**,org.apache.commons.logging.**,com.fasterxml.jackson.**,com.google.**,org.apache.**,com.squareup.okhttp.**,okhttp3.**
--dontwarn android.support.**,android.support.**,org.apache.commons.**,org.w3c.dom.**,com.fasterxml.jackson.**,com.google.**,com.squareup.**,info.movito.**,okio.**,javax.annotation.**,okio.**,com.google.firebase.perf.network.**,com.onesignal.**,android.security.NetworkSecurityPolicy,android.app.Notification,sun.misc.Unsafe,libcore.io.Memory,com.google.android.apps.common.proguard.UsedBy*
+-dontwarn android.support.**,android.support.**,org.apache.commons.**,org.w3c.dom.**,com.fasterxml.jackson.**,com.google.**,com.squareup.**,info.movito.**,okio.**,javax.annotation.**,okio.**,com.google.firebase.perf.network.**,android.security.NetworkSecurityPolicy,android.app.Notification,sun.misc.Unsafe,libcore.io.Memory,com.google.android.apps.common.proguard.UsedBy*,com.onesignal.**
 -printconfiguration /home/icaro/Documentos/workspace/Filme/app/config.txt
 -dump /home/icaro/Documentos/workspace/Filme/app/build/outputs/mapping/flavor21/release/dump.txt
 -printseeds /home/icaro/Documentos/workspace/Filme/app/build/outputs/mapping/flavor21/release/seeds.txt
 
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:185
+-keep class activity.CrewsActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:297
+-keep class activity.DynamicLink {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:178
+-keep class activity.ElencoActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:163
+-keep class activity.EpsodioActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:103
+-keep class activity.FavoriteActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:69
+-keep class activity.IntroActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:141
+-keep class activity.ListaGenericaActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:234
+-keep class activity.ListaUserActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:67
+-keep class activity.LoginActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:57
+-keep class activity.MainActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:171
+-keep class activity.PosterActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:192
+-keep class activity.PosterGridActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:111
+-keep class activity.RatedActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:248
+-keep class activity.ReviewsActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:199
+-keep class activity.SearchMultiActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:283
+-keep class activity.SeguindoActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:262
+-keep class activity.SettingsActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:226
+-keep class activity.SimilaresActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:276
+-keep class activity.Site {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:156
+-keep class activity.TemporadaActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:164
+-keep class activity.TrailerActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:296
+-keep class activity.VincularLoginActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:210
+-keep class activity.WatchListActivity {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-26.0.2.aar/ee83dbc9c7485ab0e0e18821a62b79fd/res/layout/design_bottom_navigation_item.xml:0
+-keep class android.support.design.internal.BaselineLayout {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-26.0.2.aar/ee83dbc9c7485ab0e0e18821a62b79fd/res/layout/design_navigation_item.xml:0
+-keep class android.support.design.internal.NavigationMenuItemView {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-26.0.2.aar/ee83dbc9c7485ab0e0e18821a62b79fd/res/layout/design_navigation_menu.xml:0
+-keep class android.support.design.internal.NavigationMenuView {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-26.0.2.aar/ee83dbc9c7485ab0e0e18821a62b79fd/res/layout/design_layout_snackbar_include.xml:0
+-keep class android.support.design.internal.SnackbarContentLayout {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_crews.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_elenco.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_netflix.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_similares.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/produtora_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:0
+-keep class android.support.design.widget.AppBarLayout {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-26.0.2.aar/ee83dbc9c7485ab0e0e18821a62b79fd/res/layout/design_text_input_password_icon.xml:0
+-keep class android.support.design.widget.CheckableImageButton {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/produtora_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:0
+-keep class android.support.design.widget.CollapsingToolbarLayout {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_crews.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_elenco.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_netflix.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_similares.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/produtora_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-26.0.2.aar/ee83dbc9c7485ab0e0e18821a62b79fd/res/layout/design_bottom_sheet_dialog.xml:0
+-keep class android.support.design.widget.CoordinatorLayout {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:0
+-keep class android.support.design.widget.NavigationView {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-26.0.2.aar/ee83dbc9c7485ab0e0e18821a62b79fd/res/layout-sw600dp-v13/design_layout_snackbar.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-26.0.2.aar/ee83dbc9c7485ab0e0e18821a62b79fd/res/layout/design_layout_snackbar.xml:0
+-keep class android.support.design.widget.Snackbar$SnackbarLayout {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_epsodios.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_favorite.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_usuario_list.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:0
+-keep class android.support.design.widget.TabLayout {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/activity_login.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/criar_login.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/recuperar_senha_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/reset_senha.xml:0
+-keep class android.support.design.widget.TextInputLayout {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/dialog_collection.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/dialog_collection.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/dialog_collection.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_epsodios.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_favorite.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_scroll_poster.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_usuario_list.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/dialog_collection.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:0
+-keep class android.support.v4.view.ViewPager {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:0
+-keep class android.support.v4.widget.DrawerLayout {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x480/tvshow_info.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x600/tvshow_info.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/tvshow_info.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/tvshow_info.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/tvshow_info.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvshow_info.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_alert_dialog_material.xml:0
+-keep class android.support.v4.widget.NestedScrollView {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_alert_dialog_button_bar_material.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_alert_dialog_material.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_alert_dialog_title_material.xml:0
+-keep class android.support.v4.widget.Space {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_site.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:0
+-keep class android.support.v4.widget.SwipeRefreshLayout {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_select_dialog_material.xml:0
+-keep class android.support.v7.app.AlertController$RecycleListView {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_action_menu_item_layout.xml:0
+-keep class android.support.v7.view.menu.ActionMenuItemView {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_expanded_menu_layout.xml:0
+-keep class android.support.v7.view.menu.ExpandedMenuView {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_list_menu_item_layout.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_popup_menu_item_layout.xml:0
+-keep class android.support.v7.view.menu.ListMenuItemView {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout-v26/abc_screen_toolbar.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_screen_toolbar.xml:0
+-keep class android.support.v7.widget.ActionBarContainer {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout-v26/abc_screen_toolbar.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_action_mode_bar.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_screen_toolbar.xml:0
+-keep class android.support.v7.widget.ActionBarContextView {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout-v26/abc_screen_toolbar.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_screen_toolbar.xml:0
+-keep class android.support.v7.widget.ActionBarOverlayLayout {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_action_menu_layout.xml:0
+-keep class android.support.v7.widget.ActionMenuView {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_activity_chooser_view.xml:0
+-keep class android.support.v7.widget.ActivityChooserView$InnerLayout {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_alert_dialog_material.xml:0
+-keep class android.support.v7.widget.AlertDialogLayout {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/facebook-android-sdk-4.16.1.aar/69dc9fa954c1adc4d5794fbf6e3deef8/res/layout/com_facebook_device_auth_dialog_fragment.xml:0
+-keep class android.support.v7.widget.AppCompatImageView {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/epsodio_fragment.xml:0
+-keep class android.support.v7.widget.AppCompatRatingBar {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_alert_dialog_button_bar_material.xml:0
+-keep class android.support.v7.widget.ButtonBarLayout {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/actor_netflix_list_adapter.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/adapter_filmes_list.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/adapter_person_popular.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/adapter_produtora.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/crews_filmes_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/person_movie_filmes_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/actor_netflix_list_adapter.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/adapter_filmes_list.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/adapter_person_popular.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/adapter_produtora.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/crews_filmes_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/person_movie_filmes_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/actor_netflix_list_adapter.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/adapter_filmes_list.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/adapter_person_popular.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/adapter_produtora.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/crews_filmes_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/person_movie_filmes_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/actor_netflix_list_adapter.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/adapter_filmes_list.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/adapter_person_popular.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/adapter_produtora.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/adapter_similares.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/calendar_adapter.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/crews_filmes_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/crews_list_adapter.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/desenvolvimento_adapter_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/elenco_list_adapter.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/lista.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/person_movie_filmes_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/reviews.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_list_adapter.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/season_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/seguindo_tvshow.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/temporada_epsodio_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/usuario_list_adapter.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/facebook-android-sdk-4.16.1.aar/69dc9fa954c1adc4d5794fbf6e3deef8/res/layout/com_facebook_device_auth_dialog_fragment.xml:0
+-keep class android.support.v7.widget.CardView {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_screen_content_include.xml:0
+-keep class android.support.v7.widget.ContentFrameLayout {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_alert_dialog_title_material.xml:0
+-keep class android.support.v7.widget.DialogTitle {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_screen_simple_overlay_action_mode.xml:0
+-keep class android.support.v7.widget.FitWindowsFrameLayout {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_dialog_title_material.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_screen_simple.xml:0
+-keep class android.support.v7.widget.FitWindowsLinearLayout {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x480/fragment_container_filme.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x480/tvshow_info.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x600/tvshow_info.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/fragment_container_filme.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/tvshow_info.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/fragment_container_filme.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/tvshow_info.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/fragment_container_filme.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/tvshow_info.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_crews.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_elenco.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_lista.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_crews.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_imagem.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_movies.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_netflix.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_popular.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_tvshow.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_reviews.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_similares.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/desenvolvimento_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/filmes_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fragment_container_filme.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fragment_list_filme.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/poster_grid.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/produtora_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/seguindo.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/temporada_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/temporadas.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvshow_info.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvshow_main.xml:0
+-keep class android.support.v7.widget.RecyclerView {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_search_view.xml:0
+-keep class android.support.v7.widget.SearchView$SearchAutoComplete {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/include_toolbar.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/produtora_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout-v26/abc_screen_toolbar.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_screen_toolbar.xml:0
+-keep class android.support.v7.widget.Toolbar {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_screen_simple.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/b72e994083ca3ca71a4cd472fde55a59/res/layout/abc_screen_simple_overlay_action_mode.xml:0
+-keep class android.support.v7.widget.ViewStubCompat {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:40
+-keep class applicaton.FilmeApplication {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:371
+-keep class com.facebook.CustomTabActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:375
+-keep class com.facebook.CustomTabMainActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:367
+-keep class com.facebook.FacebookActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fab_float.xml:0
+-keep class com.github.clans.fab.FloatingActionButton {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fab_float.xml:0
+-keep class com.github.clans.fab.FloatingActionMenu {
+    <init>(...);
+}
+
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appintro-v4.2.0.aar/f1376141fbf80fb51a22700076ba5c7d/res/layout/intro_layout.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appintro-v4.2.0.aar/f1376141fbf80fb51a22700076ba5c7d/res/layout/intro_layout2.xml:0
+-keep class com.github.paolorotolo.appintro.AppIntroViewPager {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:450
+-keep class com.google.android.gms.ads.AdActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_epsodios.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_favorite.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_crews.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_movies.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_netflix.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_tvshow.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_reviews.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_usuario_list.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/epsodio_fragment.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/poster_grid.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/temporada_layout.xml:0
+-keep class com.google.android.gms.ads.AdView {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:376
+-keep class com.google.android.gms.appinvite.PreviewActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:352
+-keep class com.google.android.gms.auth.api.signin.RevocationBoundService {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:343
+-keep class com.google.android.gms.auth.api.signin.internal.SignInHubActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:0
+-keep class com.google.android.gms.common.SignInButton {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:386
+-keep class com.google.android.gms.common.api.GoogleApiActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:396
+-keep class com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:410
+-keep class com.google.android.gms.measurement.AppMeasurementJobService {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:391
+-keep class com.google.android.gms.measurement.AppMeasurementReceiver {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:406
+-keep class com.google.android.gms.measurement.AppMeasurementService {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/youtube_layout.xml:0
+-keep class com.google.android.youtube.player.YouTubePlayerView {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/scroll_trailer.xml:0
+-keep class com.google.android.youtube.player.YouTubeThumbnailView {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:430
+-keep class com.google.firebase.iid.FirebaseInstanceIdInternalReceiver {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:416
+-keep class com.google.firebase.iid.FirebaseInstanceIdReceiver {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:437
+-keep class com.google.firebase.iid.FirebaseInstanceIdService {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:357
+-keep class com.google.firebase.perf.provider.FirebasePerfProvider {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:445
+-keep class com.google.firebase.provider.FirebaseInitProvider {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:483
+-keep class com.onesignal.BootUpReceiver {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:463
+-keep class com.onesignal.GcmBroadcastReceiver {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:474
+-keep class com.onesignal.GcmIntentService {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:472
+-keep class com.onesignal.NotificationOpenedReceiver {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:481
+-keep class com.onesignal.NotificationRestoreService {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:477
+-keep class com.onesignal.PermissionsActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:475
+-keep class com.onesignal.SyncService {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:489
+-keep class com.onesignal.UpgradeReceiver {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
+-keep class com.viewpagerindicator.CirclePageIndicator {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_scroll_poster.xml:0
+-keep class com.viewpagerindicator.LinePageIndicator {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:312
+-keep class desenvolvimento.Desenvolvimento {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:127
+-keep class filme.activity.FilmeActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:90
+-keep class listafilmes.activity.FilmesActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:263
+-keep class listaserie.activity.TvShowsActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/activity_login.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:0
+-keep class mehdi.sakout.fancybuttons.FancyButton {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:314
+-keep class onsignal.CustomNotificationExtenderService {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:148
+-keep class oscar.OscarActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:255
+-keep class pessoa.activity.FotoPersonActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:235
+-keep class pessoa.activity.PersonActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:119
+-keep class pessoaspopulares.PersonPopularActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:218
+-keep class produtora.activity.ProdutoraActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:325
+-keep class provider.SuggestionProvider {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:322
+-keep class provider.SuggestionRecentProvider {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:76
+-keep class tvshow.activity.TvShowActivity {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/xml/preferences.xml:0
+-keep class utils.LogoffDialog {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/xml/preferences.xml:0
+-keep class utils.Sobre {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/activity_login.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:0
+-keepclassmembers class * {
+    *** onclick(...);
+}
 
 -keep public class com.google.vending.licensing.ILicensingService
 
@@ -279,29 +1020,6 @@
     public void handleIntent(android.content.Intent);
 }
 
-# Keep implemtations of the AdMob mediation adapter interfaces. Adapters for
-# third party ad networks implement these interfaces and are invoked by the
-# AdMob SDK via reflection.
--keep class * extends com.google.android.gms.ads.mediation.MediationAdapter {
-    public <fields>;
-    public <methods>;
-}
-
--keep class * extends com.google.ads.mediation.MediationAdapter {
-    public <fields>;
-    public <methods>;
-}
-
--keep class * extends com.google.android.gms.ads.mediation.customevent.CustomEvent {
-    public <fields>;
-    public <methods>;
-}
-
--keep class * extends com.google.ads.mediation.customevent.CustomEvent {
-    public <fields>;
-    public <methods>;
-}
-
 # Copyright (C) 2015 The Android Open Source Project
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -319,75 +1037,6 @@
 -keep public class * extends android.support.design.widget.CoordinatorLayout$Behavior {
     public <init>(android.content.Context,android.util.AttributeSet);
     public <init>();
-}
-
-# Copyright (C) 2015 The Android Open Source Project
-# 
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-# 
-#      http://www.apache.org/licenses/LICENSE-2.0
-# 
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# When layoutManager xml attribute is used, RecyclerView inflates
-# LayoutManagers' constructors using reflection.
--keep public class * extends android.support.v7.widget.RecyclerView$LayoutManager {
-    public <init>(...);
-}
-
--keep class com.google.android.gms.common.api.GoogleApiClient {
-    void connect();
-    void disconnect();
-}
-
--keep public interface  android.app.OnActivityPausedListener {
-    <fields>;
-    <methods>;
-}
-
--keep class com.onesignal.shortcutbadger.impl.AdwHomeBadger {
-    <init>(...);
-}
-
--keep class com.onesignal.shortcutbadger.impl.ApexHomeBadger {
-    <init>(...);
-}
-
--keep class com.onesignal.shortcutbadger.impl.AsusHomeLauncher {
-    <init>(...);
-}
-
--keep class com.onesignal.shortcutbadger.impl.DefaultBadger {
-    <init>(...);
-}
-
--keep class com.onesignal.shortcutbadger.impl.HuaweiHomeBadger {
-    <init>(...);
-}
-
--keep class com.onesignal.shortcutbadger.impl.NewHtcHomeBadger {
-    <init>(...);
-}
-
--keep class com.onesignal.shortcutbadger.impl.NovaHomeBadger {
-    <init>(...);
-}
-
--keep class com.onesignal.shortcutbadger.impl.SolidHomeBadger {
-    <init>(...);
-}
-
--keep class com.onesignal.shortcutbadger.impl.SonyHomeBadger {
-    <init>(...);
-}
-
--keep class com.onesignal.shortcutbadger.impl.XiaomiHomeBadger {
-    <init>(...);
 }
 
 # To enable ProGuard in your project, edit project.properties
@@ -421,7 +1070,7 @@
     <methods>;
 }
 
-# Copyright (C) 2016 The Android Open Source Project
+# Copyright (C) 2015 The Android Open Source Project
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -434,10 +1083,33 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# keep setters in VectorDrawables so that animations can still work.
--keepclassmembers class android.support.graphics.drawable.VectorDrawableCompat$* {
-    void set*(***);
-    *** get*();
+# When layoutManager xml attribute is used, RecyclerView inflates
+# LayoutManagers' constructors using reflection.
+-keep public class * extends android.support.v7.widget.RecyclerView$LayoutManager {
+    public <init>(...);
+}
+
+# Keep implemtations of the AdMob mediation adapter interfaces. Adapters for
+# third party ad networks implement these interfaces and are invoked by the
+# AdMob SDK via reflection.
+-keep class * extends com.google.android.gms.ads.mediation.MediationAdapter {
+    public <fields>;
+    public <methods>;
+}
+
+-keep class * extends com.google.ads.mediation.MediationAdapter {
+    public <fields>;
+    public <methods>;
+}
+
+-keep class * extends com.google.android.gms.ads.mediation.customevent.CustomEvent {
+    public <fields>;
+    public <methods>;
+}
+
+-keep class * extends com.google.ads.mediation.customevent.CustomEvent {
+    public <fields>;
+    public <methods>;
 }
 
 # Proguard flags for consumers of the Google Play services SDK
@@ -492,6 +1164,25 @@
     public <methods>;
 }
 
+# Copyright (C) 2016 The Android Open Source Project
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#      http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# keep setters in VectorDrawables so that animations can still work.
+-keepclassmembers class android.support.graphics.drawable.VectorDrawableCompat$* {
+    void set*(***);
+    *** get*();
+}
+
 # Copyright (C) 2017 The Android Open Source Project
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -510,803 +1201,52 @@
     public static final android.os.Parcelable$Creator *;
 }
 
-# view AndroidManifest.xml #generated:184
--keep class activity.CrewsActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:296
--keep class activity.DynamicLink {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:177
--keep class activity.ElencoActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:162
--keep class activity.EpsodioActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:102
--keep class activity.FavoriteActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:68
--keep class activity.IntroActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:140
--keep class activity.ListaGenericaActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:233
--keep class activity.ListaUserActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:66
--keep class activity.LoginActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:56
--keep class activity.MainActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:170
--keep class activity.PosterActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:191
--keep class activity.PosterGridActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:110
--keep class activity.RatedActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:247
--keep class activity.ReviewsActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:198
--keep class activity.SearchMultiActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:282
--keep class activity.SeguindoActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:261
--keep class activity.SettingsActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:225
--keep class activity.SimilaresActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:275
--keep class activity.Site {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:155
--keep class activity.TemporadaActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:163
--keep class activity.TrailerActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:295
--keep class activity.VincularLoginActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:209
--keep class activity.WatchListActivity {
-    <init>(...);
-}
-
-# view res/layout/design_bottom_navigation_item.xml #generated:26
--keep class android.support.design.internal.BaselineLayout {
-    <init>(...);
-}
-
-# view res/layout/design_navigation_item.xml #generated:17
--keep class android.support.design.internal.NavigationMenuItemView {
-    <init>(...);
-}
-
-# view res/layout/design_navigation_menu.xml #generated:17
--keep class android.support.design.internal.NavigationMenuView {
-    <init>(...);
-}
-
-# view res/layout/design_layout_snackbar_include.xml #generated:18
--keep class android.support.design.internal.SnackbarContentLayout {
-    <init>(...);
-}
-
-# view res/layout/activity_crews.xml #generated:10
-# view res/layout/activity_elenco.xml #generated:9
-# view res/layout/activity_filme.xml #generated:43
-# view res/layout/activity_list_main.xml #generated:15
-# view res/layout/activity_main.xml #generated:30
-# view res/layout/activity_person.xml #generated:8
-# view res/layout/activity_person_layout.xml #generated:9
-# view res/layout/activity_person_netflix.xml #generated:10
-# view res/layout/activity_similares.xml #generated:8
-# view res/layout/produtora_layout.xml #generated:33
-# view res/layout/search_layout.xml #generated:15
-# view res/layout/tvserie_activity.xml #generated:26
--keep class android.support.design.widget.AppBarLayout {
-    <init>(...);
-}
-
-# view res/layout/design_text_input_password_icon.xml #generated:18
--keep class android.support.design.widget.CheckableImageButton {
-    <init>(...);
-}
-
-# view res/layout/activity_filme.xml #generated:51
-# view res/layout/activity_main.xml #generated:39
-# view res/layout/produtora_layout.xml #generated:41
-# view res/layout/tvserie_activity.xml #generated:33
--keep class android.support.design.widget.CollapsingToolbarLayout {
-    <init>(...);
-}
-
-# view res/layout/activity_crews.xml #generated:2
-# view res/layout/activity_elenco.xml #generated:2
-# view res/layout/activity_filme.xml #generated:9
-# view res/layout/activity_list_main.xml #generated:10
-# view res/layout/activity_main.xml #generated:10
-# view res/layout/activity_person_layout.xml #generated:2
-# view res/layout/activity_person_netflix.xml #generated:2
-# view res/layout/activity_similares.xml #generated:2
-# view res/layout/design_bottom_sheet_dialog.xml #generated:26
-# view res/layout/produtora_layout.xml #generated:2
-# view res/layout/search_layout.xml #generated:10
-# view res/layout/tvserie_activity.xml #generated:9
--keep class android.support.design.widget.CoordinatorLayout {
-    <init>(...);
-}
-
-# view res/layout/activity_filme.xml #generated:87
-# view res/layout/activity_list_main.xml #generated:51
-# view res/layout/activity_main.xml #generated:89
-# view res/layout/search_layout.xml #generated:81
-# view res/layout/tvserie_activity.xml #generated:86
--keep class android.support.design.widget.NavigationView {
-    <init>(...);
-}
-
-# view res/layout/design_layout_snackbar.xml #generated:18
-# view sw600dp-v13/res/layout-sw600dp-v13/design_layout_snackbar.xml #generated:18
--keep class android.support.design.widget.Snackbar$SnackbarLayout {
-    <init>(...);
-}
-
-# view res/layout/activity_epsodios.xml #generated:8
-# view res/layout/activity_favorite.xml #generated:10
-# view res/layout/activity_main.xml #generated:57
-# view res/layout/activity_person.xml #generated:15
-# view res/layout/activity_usuario_list.xml #generated:11
-# view res/layout/tvserie_activity.xml #generated:64
--keep class android.support.design.widget.TabLayout {
-    <init>(...);
-}
-
-# view large-v4/res/layout-large-v4/activity_login.xml #generated:59
-# view large-v4/res/layout-large-v4/activity_login.xml #generated:77
-# view res/layout/activity_login.xml #generated:59
-# view res/layout/activity_login.xml #generated:77
-# view res/layout/criar_login.xml #generated:14
-# view res/layout/criar_login.xml #generated:34
-# view res/layout/criar_login.xml #generated:52
-# view res/layout/recuperar_senha_layout.xml #generated:16
-# view res/layout/reset_senha.xml #generated:19
-# view res/layout/reset_senha.xml #generated:48
-# view small-v4/res/layout-small-v4/activity_login.xml #generated:60
-# view small-v4/res/layout-small-v4/activity_login.xml #generated:79
-# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:59
-# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:78
--keep class android.support.design.widget.TextInputLayout {
-    <init>(...);
-}
-
-# view large-v4/res/layout-large-v4/dialog_collection.xml #generated:8
-# view res/layout/activity_epsodios.xml #generated:21
-# view res/layout/activity_favorite.xml #generated:20
-# view res/layout/activity_filme.xml #generated:62
-# view res/layout/activity_main.xml #generated:19
-# view res/layout/activity_main.xml #generated:67
-# view res/layout/activity_person.xml #generated:27
-# view res/layout/activity_scroll_poster.xml #generated:15
-# view res/layout/activity_usuario_list.xml #generated:21
-# view res/layout/dialog_collection.xml #generated:8
-# view res/layout/tvserie_activity.xml #generated:17
-# view small-v4/res/layout-small-v4/dialog_collection.xml #generated:8
-# view xlarge-v4/res/layout-xlarge-v4/dialog_collection.xml #generated:8
--keep class android.support.v4.view.ViewPager {
-    <init>(...);
-}
-
-# view res/layout/activity_filme.xml #generated:2
-# view res/layout/activity_list_main.xml #generated:2
-# view res/layout/activity_main.xml #generated:2
-# view res/layout/search_layout.xml #generated:2
-# view res/layout/tvserie_activity.xml #generated:2
--keep class android.support.v4.widget.DrawerLayout {
-    <init>(...);
-}
-
-# view 800x480/res/layout-800x480/tvshow_info.xml #generated:8
-# view 800x600/res/layout-800x600/tvshow_info.xml #generated:8
-# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:8
-# view res/layout/abc_alert_dialog_material.xml #generated:41
-# view res/layout/activity_filme.xml #generated:17
-# view res/layout/tvshow_info.xml #generated:8
-# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:8
-# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:8
--keep class android.support.v4.widget.NestedScrollView {
-    <init>(...);
-}
-
-# view res/layout/abc_alert_dialog_button_bar_material.xml #generated:43
-# view res/layout/abc_alert_dialog_material.xml #generated:52
-# view res/layout/abc_alert_dialog_material.xml #generated:66
-# view res/layout/abc_alert_dialog_title_material.xml #generated:56
--keep class android.support.v4.widget.Space {
-    <init>(...);
-}
-
-# view res/layout/activity_site.xml #generated:5
-# view res/layout/search_layout.xml #generated:37
--keep class android.support.v4.widget.SwipeRefreshLayout {
-    <init>(...);
-}
-
-# view res/layout/abc_select_dialog_material.xml #generated:23
--keep class android.support.v7.app.AlertController$RecycleListView {
-    <init>(...);
-}
-
-# view res/layout/abc_action_menu_item_layout.xml #generated:17
--keep class android.support.v7.view.menu.ActionMenuItemView {
-    <init>(...);
-}
-
-# view res/layout/abc_expanded_menu_layout.xml #generated:17
--keep class android.support.v7.view.menu.ExpandedMenuView {
-    <init>(...);
-}
-
-# view res/layout/abc_list_menu_item_layout.xml #generated:17
-# view res/layout/abc_popup_menu_item_layout.xml #generated:17
--keep class android.support.v7.view.menu.ListMenuItemView {
-    <init>(...);
-}
-
-# view res/layout/abc_screen_toolbar.xml #generated:27
-# view v26/res/layout-v26/abc_screen_toolbar.xml #generated:27
--keep class android.support.v7.widget.ActionBarContainer {
-    <init>(...);
-}
-
-# view res/layout/abc_action_mode_bar.xml #generated:19
-# view res/layout/abc_screen_toolbar.xml #generated:43
-# view v26/res/layout-v26/abc_screen_toolbar.xml #generated:44
--keep class android.support.v7.widget.ActionBarContextView {
-    <init>(...);
-}
-
-# view res/layout/abc_screen_toolbar.xml #generated:17
-# view v26/res/layout-v26/abc_screen_toolbar.xml #generated:17
--keep class android.support.v7.widget.ActionBarOverlayLayout {
-    <init>(...);
-}
-
-# view res/layout/abc_action_menu_layout.xml #generated:17
--keep class android.support.v7.widget.ActionMenuView {
-    <init>(...);
-}
-
-# view res/layout/abc_activity_chooser_view.xml #generated:19
--keep class android.support.v7.widget.ActivityChooserView$InnerLayout {
-    <init>(...);
-}
-
-# view res/layout/abc_alert_dialog_material.xml #generated:18
--keep class android.support.v7.widget.AlertDialogLayout {
-    <init>(...);
-}
-
-# view res/layout/com_facebook_device_auth_dialog_fragment.xml #generated:45
--keep class android.support.v7.widget.AppCompatImageView {
-    <init>(...);
-}
-
-# view res/layout/epsodio_fragment.xml #generated:155
--keep class android.support.v7.widget.AppCompatRatingBar {
-    <init>(...);
-}
-
-# view res/layout/abc_alert_dialog_button_bar_material.xml #generated:26
--keep class android.support.v7.widget.ButtonBarLayout {
-    <init>(...);
-}
-
-# view large-v4/res/layout-large-v4/actor_netflix_list_adapter.xml #generated:2
-# view large-v4/res/layout-large-v4/adapter_filmes_list.xml #generated:2
-# view large-v4/res/layout-large-v4/adapter_person_popular.xml #generated:2
-# view large-v4/res/layout-large-v4/adapter_produtora.xml #generated:2
-# view large-v4/res/layout-large-v4/crews_filmes_layout.xml #generated:2
-# view large-v4/res/layout-large-v4/person_movie_filmes_layout.xml #generated:2
-# view res/layout/actor_netflix_list_adapter.xml #generated:2
-# view res/layout/adapter_filmes_list.xml #generated:2
-# view res/layout/adapter_person_popular.xml #generated:2
-# view res/layout/adapter_produtora.xml #generated:2
-# view res/layout/adapter_similares.xml #generated:2
-# view res/layout/calendar_adapter.xml #generated:2
-# view res/layout/com_facebook_device_auth_dialog_fragment.xml #generated:22
-# view res/layout/crews_filmes_layout.xml #generated:2
-# view res/layout/crews_list_adapter.xml #generated:2
-# view res/layout/desenvolvimento_adapter_layout.xml #generated:7
-# view res/layout/elenco_list_adapter.xml #generated:2
-# view res/layout/lista.xml #generated:2
-# view res/layout/person_movie_filmes_layout.xml #generated:2
-# view res/layout/reviews.xml #generated:2
-# view res/layout/search_list_adapter.xml #generated:2
-# view res/layout/season_layout.xml #generated:2
-# view res/layout/seguindo_tvshow.xml #generated:2
-# view res/layout/temporada_epsodio_layout.xml #generated:2
-# view res/layout/usuario_list_adapter.xml #generated:2
-# view small-v4/res/layout-small-v4/actor_netflix_list_adapter.xml #generated:2
-# view small-v4/res/layout-small-v4/adapter_filmes_list.xml #generated:2
-# view small-v4/res/layout-small-v4/adapter_person_popular.xml #generated:2
-# view small-v4/res/layout-small-v4/adapter_produtora.xml #generated:2
-# view small-v4/res/layout-small-v4/crews_filmes_layout.xml #generated:2
-# view small-v4/res/layout-small-v4/person_movie_filmes_layout.xml #generated:2
-# view xlarge-v4/res/layout-xlarge-v4/actor_netflix_list_adapter.xml #generated:2
-# view xlarge-v4/res/layout-xlarge-v4/adapter_filmes_list.xml #generated:2
-# view xlarge-v4/res/layout-xlarge-v4/adapter_person_popular.xml #generated:2
-# view xlarge-v4/res/layout-xlarge-v4/adapter_produtora.xml #generated:2
-# view xlarge-v4/res/layout-xlarge-v4/crews_filmes_layout.xml #generated:2
-# view xlarge-v4/res/layout-xlarge-v4/person_movie_filmes_layout.xml #generated:2
--keep class android.support.v7.widget.CardView {
-    <init>(...);
-}
-
-# view res/layout/abc_screen_content_include.xml #generated:19
--keep class android.support.v7.widget.ContentFrameLayout {
-    <init>(...);
-}
-
-# view res/layout/abc_alert_dialog_title_material.xml #generated:45
--keep class android.support.v7.widget.DialogTitle {
-    <init>(...);
-}
-
-# view res/layout/abc_screen_simple_overlay_action_mode.xml #generated:23
--keep class android.support.v7.widget.FitWindowsFrameLayout {
-    <init>(...);
-}
-
-# view res/layout/abc_dialog_title_material.xml #generated:22
-# view res/layout/abc_screen_simple.xml #generated:17
--keep class android.support.v7.widget.FitWindowsLinearLayout {
-    <init>(...);
-}
-
-# view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:284
-# view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:303
-# view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:321
-# view 800x480/res/layout-800x480/fragment_container_filme.xml #generated:379
-# view 800x480/res/layout-800x480/tvshow_info.xml #generated:280
-# view 800x480/res/layout-800x480/tvshow_info.xml #generated:298
-# view 800x480/res/layout-800x480/tvshow_info.xml #generated:316
-# view 800x480/res/layout-800x480/tvshow_info.xml #generated:363
-# view 800x600/res/layout-800x600/tvshow_info.xml #generated:280
-# view 800x600/res/layout-800x600/tvshow_info.xml #generated:298
-# view 800x600/res/layout-800x600/tvshow_info.xml #generated:316
-# view 800x600/res/layout-800x600/tvshow_info.xml #generated:361
-# view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:285
-# view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:304
-# view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:322
-# view large-v4/res/layout-large-v4/fragment_container_filme.xml #generated:381
-# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:281
-# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:299
-# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:317
-# view large-v4/res/layout-large-v4/tvshow_info.xml #generated:362
-# view res/layout/activity_crews.xml #generated:40
-# view res/layout/activity_elenco.xml #generated:40
-# view res/layout/activity_lista.xml #generated:15
-# view res/layout/activity_person_crews.xml #generated:12
-# view res/layout/activity_person_imagem.xml #generated:12
-# view res/layout/activity_person_layout.xml #generated:31
-# view res/layout/activity_person_movies.xml #generated:12
-# view res/layout/activity_person_netflix.xml #generated:33
-# view res/layout/activity_person_popular.xml #generated:23
-# view res/layout/activity_person_tvshow.xml #generated:12
-# view res/layout/activity_reviews.xml #generated:32
-# view res/layout/activity_similares.xml #generated:30
-# view res/layout/desenvolvimento_layout.xml #generated:10
-# view res/layout/filmes_main.xml #generated:41
-# view res/layout/filmes_main.xml #generated:57
-# view res/layout/fragment_container_filme.xml #generated:284
-# view res/layout/fragment_container_filme.xml #generated:303
-# view res/layout/fragment_container_filme.xml #generated:321
-# view res/layout/fragment_container_filme.xml #generated:378
-# view res/layout/fragment_list_filme.xml #generated:16
-# view res/layout/poster_grid.xml #generated:19
-# view res/layout/produtora_layout.xml #generated:11
-# view res/layout/search_layout.xml #generated:43
-# view res/layout/seguindo.xml #generated:16
-# view res/layout/temporada_layout.xml #generated:12
-# view res/layout/temporadas.xml #generated:7
-# view res/layout/tvshow_info.xml #generated:281
-# view res/layout/tvshow_info.xml #generated:299
-# view res/layout/tvshow_info.xml #generated:317
-# view res/layout/tvshow_info.xml #generated:363
-# view res/layout/tvshow_main.xml #generated:41
-# view res/layout/tvshow_main.xml #generated:56
-# view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:284
-# view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:303
-# view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:321
-# view small-v4/res/layout-small-v4/fragment_container_filme.xml #generated:380
-# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:280
-# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:298
-# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:316
-# view small-v4/res/layout-small-v4/tvshow_info.xml #generated:361
-# view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:284
-# view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:303
-# view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:321
-# view xlarge-v4/res/layout-xlarge-v4/fragment_container_filme.xml #generated:377
-# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:280
-# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:298
-# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:316
-# view xlarge-v4/res/layout-xlarge-v4/tvshow_info.xml #generated:362
--keep class android.support.v7.widget.RecyclerView {
-    <init>(...);
-}
-
-# view res/layout/abc_search_view.xml #generated:75
--keep class android.support.v7.widget.SearchView$SearchAutoComplete {
-    <init>(...);
-}
-
-# view res/layout/abc_screen_toolbar.xml #generated:36
-# view res/layout/activity_filme.xml #generated:70
-# view res/layout/activity_list_main.xml #generated:20
-# view res/layout/activity_main.xml #generated:49
-# view res/layout/include_toolbar.xml #generated:1
-# view res/layout/produtora_layout.xml #generated:64
-# view res/layout/tvserie_activity.xml #generated:56
-# view v26/res/layout-v26/abc_screen_toolbar.xml #generated:37
--keep class android.support.v7.widget.Toolbar {
-    <init>(...);
-}
-
-# view res/layout/abc_screen_simple.xml #generated:25
-# view res/layout/abc_screen_simple_overlay_action_mode.xml #generated:32
--keep class android.support.v7.widget.ViewStubCompat {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:39
--keep class applicaton.FilmeApplication {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:428
--keep class com.facebook.CustomTabActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:432
--keep class com.facebook.CustomTabMainActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:424
--keep class com.facebook.FacebookActivity {
-    <init>(...);
-}
-
-# view res/layout/fab_float.xml #generated:15
-# view res/layout/fab_float.xml #generated:23
-# view res/layout/fab_float.xml #generated:31
--keep class com.github.clans.fab.FloatingActionButton {
-    <init>(...);
-}
-
-# view res/layout/fab_float.xml #generated:2
--keep class com.github.clans.fab.FloatingActionMenu {
-    <init>(...);
-}
-
-# view res/layout/intro_layout.xml #generated:9
-# view res/layout/intro_layout2.xml #generated:14
--keep class com.github.paolorotolo.appintro.AppIntroViewPager {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:355
--keep class com.google.android.gms.ads.AdActivity {
-    <init>(...);
-}
-
-# view res/layout/activity_epsodios.xml #generated:28
-# view res/layout/activity_favorite.xml #generated:27
-# view res/layout/activity_list_main.xml #generated:38
-# view res/layout/activity_person_crews.xml #generated:33
-# view res/layout/activity_person_layout.xml #generated:42
-# view res/layout/activity_person_movies.xml #generated:31
-# view res/layout/activity_person_netflix.xml #generated:54
-# view res/layout/activity_person_tvshow.xml #generated:31
-# view res/layout/activity_usuario_list.xml #generated:32
-# view res/layout/epsodio_fragment.xml #generated:272
-# view res/layout/poster_grid.xml #generated:9
-# view res/layout/search_layout.xml #generated:67
-# view res/layout/temporada_layout.xml #generated:18
--keep class com.google.android.gms.ads.AdView {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:360
--keep class com.google.android.gms.appinvite.PreviewActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:351
--keep class com.google.android.gms.auth.api.signin.RevocationBoundService {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:342
--keep class com.google.android.gms.auth.api.signin.internal.SignInHubActivity {
-    <init>(...);
-}
-
-# view large-v4/res/layout-large-v4/activity_login.xml #generated:140
-# view res/layout/activity_login.xml #generated:137
-# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:142
--keep class com.google.android.gms.common.SignInButton {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:377
--keep class com.google.android.gms.common.api.GoogleApiActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:439
--keep class com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:453
--keep class com.google.android.gms.measurement.AppMeasurementJobService {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:434
--keep class com.google.android.gms.measurement.AppMeasurementReceiver {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:449
--keep class com.google.android.gms.measurement.AppMeasurementService {
-    <init>(...);
-}
-
-# view res/layout/youtube_layout.xml #generated:9
--keep class com.google.android.youtube.player.YouTubePlayerView {
-    <init>(...);
-}
-
-# view res/layout/scroll_trailer.xml #generated:17
--keep class com.google.android.youtube.player.YouTubeThumbnailView {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:473
--keep class com.google.firebase.iid.FirebaseInstanceIdInternalReceiver {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:459
--keep class com.google.firebase.iid.FirebaseInstanceIdReceiver {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:480
--keep class com.google.firebase.iid.FirebaseInstanceIdService {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:371
--keep class com.google.firebase.perf.provider.FirebasePerfProvider {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:488
--keep class com.google.firebase.provider.FirebaseInitProvider {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:412
--keep class com.onesignal.BootUpReceiver {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:392
--keep class com.onesignal.GcmBroadcastReceiver {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:403
--keep class com.onesignal.GcmIntentService {
-    <init>(...);
+-keep class com.google.android.gms.common.api.GoogleApiClient {
+    void connect();
+    void disconnect();
 }
 
-# view AndroidManifest.xml #generated:401
--keep class com.onesignal.NotificationOpenedReceiver {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:410
--keep class com.onesignal.NotificationRestoreService {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:406
--keep class com.onesignal.PermissionsActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:404
--keep class com.onesignal.SyncService {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:418
--keep class com.onesignal.UpgradeReceiver {
-    <init>(...);
-}
-
-# view res/layout/activity_main.xml #generated:76
--keep class com.viewpagerindicator.CirclePageIndicator {
-    <init>(...);
-}
-
-# view res/layout/activity_scroll_poster.xml #generated:7
--keep class com.viewpagerindicator.LinePageIndicator {
-    <init>(...);
+-keep public interface  android.app.OnActivityPausedListener {
+    <fields>;
+    <methods>;
 }
 
-# view AndroidManifest.xml #generated:311
--keep class desenvolvimento.Desenvolvimento {
+-keep class com.onesignal.shortcutbadger.impl.AdwHomeBadger {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:126
--keep class filme.activity.FilmeActivity {
+-keep class com.onesignal.shortcutbadger.impl.ApexHomeBadger {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:89
--keep class listafilmes.activity.FilmesActivity {
+-keep class com.onesignal.shortcutbadger.impl.AsusHomeLauncher {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:262
--keep class listaserie.activity.TvShowsActivity {
+-keep class com.onesignal.shortcutbadger.impl.DefaultBadger {
     <init>(...);
 }
 
-# view large-v4/res/layout-large-v4/activity_login.xml #generated:147
-# view large-v4/res/layout-large-v4/activity_login.xml #generated:167
-# view res/layout/activity_login.xml #generated:144
-# view res/layout/activity_login.xml #generated:164
-# view small-v4/res/layout-small-v4/activity_login.xml #generated:147
-# view small-v4/res/layout-small-v4/activity_login.xml #generated:167
-# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:149
-# view xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:169
--keep class mehdi.sakout.fancybuttons.FancyButton {
+-keep class com.onesignal.shortcutbadger.impl.HuaweiHomeBadger {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:313
--keep class onsignal.CustomNotificationExtenderService {
+-keep class com.onesignal.shortcutbadger.impl.NewHtcHomeBadger {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:147
--keep class oscar.OscarActivity {
+-keep class com.onesignal.shortcutbadger.impl.NovaHomeBadger {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:254
--keep class pessoa.activity.FotoPersonActivity {
+-keep class com.onesignal.shortcutbadger.impl.SolidHomeBadger {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:234
--keep class pessoa.activity.PersonActivity {
+-keep class com.onesignal.shortcutbadger.impl.SonyHomeBadger {
     <init>(...);
 }
 
-# view AndroidManifest.xml #generated:118
--keep class pessoaspopulares.PersonPopularActivity {
+-keep class com.onesignal.shortcutbadger.impl.XiaomiHomeBadger {
     <init>(...);
-}
-
-# view AndroidManifest.xml #generated:217
--keep class produtora.activity.ProdutoraActivity {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:324
--keep class provider.SuggestionProvider {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:321
--keep class provider.SuggestionRecentProvider {
-    <init>(...);
-}
-
-# view AndroidManifest.xml #generated:75
--keep class tvshow.activity.TvShowActivity {
-    <init>(...);
-}
-
-# view res/xml/preferences.xml #generated:22
--keep class utils.LogoffDialog {
-    <init>(...);
-}
-
-# view res/xml/preferences.xml #generated:29
--keep class utils.Sobre {
-    <init>(...);
-}
-
-# onClick large-v4/res/layout-large-v4/activity_login.xml #generated:124
-# onClick large-v4/res/layout-large-v4/activity_login.xml #generated:147
-# onClick large-v4/res/layout-large-v4/activity_login.xml #generated:167
-# onClick large-v4/res/layout-large-v4/activity_login.xml #generated:95
-# onClick res/layout/activity_login.xml #generated:122
-# onClick res/layout/activity_login.xml #generated:144
-# onClick res/layout/activity_login.xml #generated:164
-# onClick res/layout/activity_login.xml #generated:95
-# onClick small-v4/res/layout-small-v4/activity_login.xml #generated:125
-# onClick small-v4/res/layout-small-v4/activity_login.xml #generated:147
-# onClick small-v4/res/layout-small-v4/activity_login.xml #generated:167
-# onClick small-v4/res/layout-small-v4/activity_login.xml #generated:98
-# onClick xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:126
-# onClick xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:149
-# onClick xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:169
-# onClick xlarge-v4/res/layout-xlarge-v4/activity_login.xml #generated:97
--keepclassmembers class * {
-    *** onclick(...);
 }
