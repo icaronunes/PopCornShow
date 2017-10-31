@@ -11,11 +11,10 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.graphics.Palette;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -207,7 +206,7 @@ public class UtilsApp {
             stream.close();
         } catch (IOException e) {
             // Log.e(TAG, e.getMessage(), e);
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
         }
 
     }
@@ -241,40 +240,10 @@ public class UtilsApp {
             out.close();
             //  Log.e("salvarArqNaMemoriaIn", "fechado");
         } catch (IOException e) {
-            FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
-            FirebaseCrash.report(e);
-            // Log.e(TAG, e.getMessage(), e);
+            Crashlytics.logException(e);
+
         }
     }
-
-//    public static boolean isNetWorkAvailable(Context context)
-//
-//
-//        try {
-//            ConnectivityManager connectivityManager =
-//                    (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
-//            if (connectivityManager == null) {
-//                return false;
-//            } else {
-//
-//                NetworkInfo[] networkInfos = connectivityManager.getAllNetworkInfo();
-//                if (networkInfos != null) {
-//                    for (int i = 0; i < networkInfos.length; i++) {
-//                        if (networkInfos[i].isConnected()) {
-//                            return true;
-//                        }
-//                    }
-//                }
-//            }
-//
-//        } catch (SecurityException e) {
-//            FirebaseCrash.logcat(Log.ERROR, TAG, "NPE caught");
-//            FirebaseCrash.report(e);
-//        }
-//
-//        return false;
-//    }
-    // Verificar se o metodo verificaConexao fica melhor.
 
     public static boolean isNetWorkAvailable(Context context) {
         boolean conectado;

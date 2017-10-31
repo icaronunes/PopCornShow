@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -38,6 +38,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
 
     public interface TemporadaOnClickListener {
         void onClickVerTemporada(View view, int position);
+
         void onClickTemporada(View view, int position);
     }
 
@@ -49,7 +50,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         this.seasons = seasons;
         this.seguindo = seguindo;
         this.temporadaOnClickListener = temporadaOnClickListener;
-        FilmeApplication.getInstance().getBus().register(this);
+          FilmeApplication.getInstance().getBus().register(this);
     }
 
 
@@ -63,7 +64,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
     @Subscribe
     public void onBusAtualizarListaCarros(UserSeasons seasons) {
         //seasons.getUserEps().get(position).setAssistido(!seasons.getUserEps().get(position).isAssistido());
-      //  Log.d(TAG, "onBusAtualizarListaCarros: "+ seasons.toString());
+        //  Log.d(TAG, "onBusAtualizarListaCarros: "+ seasons.toString());
         this.seasons = seasons;
     }
 
@@ -78,62 +79,47 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         try {
             TvEpisode episode = tvSeason.getEpisodes().get(position);
 
-        holder.numero.setText(context.getString(R.string.epsodio) + " " + episode.getEpisodeNumber());
+            holder.numero.setText(context.getString(R.string.epsodio) + " " + episode.getEpisodeNumber());
 
-        holder.data.setText(episode.getAirDate() != null ? episode.getAirDate() : context.getString(R.string.sem_data));
-        holder.nome.setText(episode.getName() != "" ? episode.getName() : context.getString(R.string.sem_nome));
-        if (episode.getVoteAverage() > 0) {
-            String votos = (String) String.valueOf(episode.getVoteAverage()).subSequence(0, 3);
-            if (episode.getVoteAverage() < 10) {
-                holder.nota.setText(votos + "/" + episode.getVoteCount());
+            holder.data.setText(episode.getAirDate() != null ? episode.getAirDate() : context.getString(R.string.sem_data));
+            holder.nome.setText(episode.getName() != "" ? episode.getName() : context.getString(R.string.sem_nome));
+            if (episode.getVoteAverage() > 0) {
+                String votos = (String) String.valueOf(episode.getVoteAverage()).subSequence(0, 3);
+                if (episode.getVoteAverage() < 10) {
+                    holder.nota.setText(votos + "/" + episode.getVoteCount());
+                } else {
+                    votos = votos.replace(".", "");
+                    holder.nota.setText(votos + "/" + episode.getVoteCount());
+                }
             } else {
-                votos = votos.replace(".", "");
-                holder.nota.setText(votos + "/" + episode.getVoteCount());
-            }
-        } else {
-            holder.nota.setText(context.getString(R.string.sem_nota));
-        }
-
-        //Log.d("Temporada", "Rating " + episode.getUserRating());
-        Picasso.with(context)
-                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context,2)) + episode.getStillPath())
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-                .error(R.drawable.empty_popcorn)
-                .into(holder.poster);
-
-        if (!seguindo){
-         //   Log.d(TAG, "seguindo");
-            holder.bt_visto.setVisibility(View.GONE);
-        }
-
-        if (seasons != null && seguindo ) {
-            if (seasons.getUserEps().get(position).isAssistido()) {
-             //   Log.d(TAG, "visto");
-                holder.bt_visto.setImageResource(R.drawable.icon_visto);
-            } else {
-                holder.bt_visto.setImageResource(R.drawable.icon_movie_now);
-            }
-        }
-
-
-        holder.bt_visto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                temporadaOnClickListener.onClickVerTemporada(v, position);
-                //seasons.getUserEps().get(position).setAssistido(!seasons.getUserEps().get(position).isAssistido());
+                holder.nota.setText(context.getString(R.string.sem_nota));
             }
 
-        });
+            Picasso.with(context)
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + episode.getStillPath())
+                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
+                    .error(R.drawable.empty_popcorn)
+                    .into(holder.poster);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                temporadaOnClickListener.onClickTemporada(view, position);
+            if (!seguindo) {
+                holder.bt_visto.setVisibility(View.GONE);
             }
-        });
-        } catch (Exception e){
-            FirebaseCrash.report(e);
+
+            if (seasons != null && seguindo) {
+                if (seasons.getUserEps().get(position).isAssistido()) {
+                    holder.bt_visto.setImageResource(R.drawable.icon_visto);
+                } else {
+                    holder.bt_visto.setImageResource(R.drawable.icon_movie_now);
+                }
+            }
+
+
+            holder.bt_visto.setOnClickListener(v -> temporadaOnClickListener.onClickVerTemporada(v, position));
+
+            holder.itemView.setOnClickListener(view -> temporadaOnClickListener.onClickTemporada(view, position));
+        } catch (Exception e) {
+            Crashlytics.logException(e);
             Toast.makeText(context, R.string.ops_seguir_novamente, Toast.LENGTH_SHORT).show();
         }
 
@@ -152,10 +138,9 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
     }
 
 
-
     public class HoldeTemporada extends RecyclerView.ViewHolder {
 
-       private TextView nome, numero, nota, data;
+        private TextView nome, numero, nota, data;
         private ImageView poster, bt_visto;
 
         public HoldeTemporada(View itemView) {

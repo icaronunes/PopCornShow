@@ -76,7 +76,6 @@ class CrewsActivity : BaseActivity() {
         lista = intent.getSerializableExtra(Constantes.PRODUCAO) as List<CrewItem?>?
         id = intent.getIntExtra(Constantes.ID, 0)
         season = intent.getIntExtra(Constantes.TVSEASONS, -100)
-
     }
 
     override fun onDestroy() {

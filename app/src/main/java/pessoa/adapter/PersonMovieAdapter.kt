@@ -46,8 +46,8 @@ class PersonMovieAdapter(private val context: Context, private val personCredits
                     override fun onError() {
                         holder.progressBar.visibility = View.INVISIBLE
                         val data = StringBuilder()
-                        if (credit?.releaseDate.isNullOrBlank() ) {
-                            data.append(if (credit?.releaseDate?.length!! >= 4) " - " + credit?.releaseDate?.substring(0, 4) else "")
+                        if (!credit?.releaseDate.isNullOrBlank() ) {
+                            data.append(if (credit?.releaseDate?.length!! >= 4) " - " + credit.releaseDate.substring(0, 4) else "")
                         }
                         holder.title.text = credit?.title + data
                         holder.title.visibility = View.VISIBLE

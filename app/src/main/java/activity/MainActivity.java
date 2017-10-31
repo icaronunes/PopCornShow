@@ -13,7 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.text.ParseException;
@@ -207,7 +207,7 @@ public class MainActivity extends BaseActivity  {
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                 idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             } catch (Exception e){
-                FirebaseCrash.report(e);
+                Crashlytics.logException(e);
             }
 
 
@@ -220,7 +220,7 @@ public class MainActivity extends BaseActivity  {
                             , 1);
                 } catch (Exception e) {
                    //  Log.d(TAG, e.getMessage());
-                    FirebaseCrash.report(e);
+                    Crashlytics.logException(e);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -236,7 +236,7 @@ public class MainActivity extends BaseActivity  {
                     tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies("en", 1);
                 } catch (Exception e) {
                       // Log.d(TAG, e.toString());
-                    FirebaseCrash.report(e);
+                    Crashlytics.logException(e);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

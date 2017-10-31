@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.crash.FirebaseCrash;
 
 import br.com.icaro.filme.R;
 import utils.Config;
@@ -57,13 +57,13 @@ public class TrailerActivity extends YouTubeBaseActivity implements YouTubePlaye
                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             }
         } catch ( Exception e){
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             Toast.makeText(this, R.string.ops, Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-        FirebaseCrash.report(new Exception("Erro em \"onInitializationFailure\" dentro de " + this.getClass()));
+        Crashlytics.logException(new Exception("Erro em \"onInitializationFailure\" dentro de " + this.getClass()));
     }
 }

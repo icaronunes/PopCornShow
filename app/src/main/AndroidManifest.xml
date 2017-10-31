@@ -19,10 +19,9 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-
-        <meta-data android:name="firebase_analytics_collection_enabled" android:value="true"/>
         <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_application_id"/>
+        <meta-data android:name="firebase_crash_collection_enabled" android:value="false" />
 
         <activity
             android:name="activity.MainActivity"
@@ -362,10 +361,10 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <!-- TWITTER -->
-        <!--<meta-data-->
-            <!--android:name="io.fabric.ApiKey"-->
-            <!--android:value="e614e58bfe119737a7605e7f5b003431514e9a70" />-->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="e614e58bfe119737a7605e7f5b003431514e9a70"
+            />
 
     </application>
 

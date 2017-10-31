@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.Keep;
 
+import com.crashlytics.android.Crashlytics;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.firebase.crash.FirebaseCrash;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -125,7 +125,7 @@ public class FilmeService {
             //  Log.d("domian.ListaJava", String.valueOf(response.body().charStream()));
             items = parseJSONLista(response);
         } catch (IOException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
         return items;
@@ -157,7 +157,7 @@ public class FilmeService {
             return parseJSONImdb(response);
 
         } catch (IOException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
         return null;
@@ -170,7 +170,7 @@ public class FilmeService {
             imdb = gson.fromJson(response.body().string(), Imdb.class);
 
         } catch (Exception e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
         }
         return imdb;
     }
@@ -194,8 +194,8 @@ public class FilmeService {
             return parseJSONReviws(response);
 
         } catch (IOException e) {
-            e.printStackTrace();
-            FirebaseCrash.report(e);
+
+            Crashlytics.logException(e);
         }
         return null;
 
@@ -208,7 +208,7 @@ public class FilmeService {
             reviewsUflixit = gson.fromJson(response.body().string(), ReviewsUflixit.class);
 
         } catch (Exception e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
         }
         return reviewsUflixit;
     }
@@ -306,7 +306,7 @@ public class FilmeService {
 
             }
         } catch (Exception e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
         }
         return false;
     }
@@ -352,7 +352,7 @@ public class FilmeService {
 
             }
         } catch (Exception e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
         }
         return false;
     }
@@ -402,7 +402,7 @@ public class FilmeService {
 
             }
         } catch (Exception e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
         }
         return false;
     }

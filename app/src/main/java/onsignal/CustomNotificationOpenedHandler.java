@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.TaskStackBuilder;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.onesignal.OSNotificationAction;
@@ -17,25 +17,25 @@ import org.json.JSONObject;
 
 import activity.CrewsActivity;
 import activity.ElencoActivity;
-import filme.activity.FilmeActivity;
-import listafilmes.activity.FilmesActivity;
-import pessoa.activity.FotoPersonActivity;
 import activity.ListaGenericaActivity;
 import activity.MainActivity;
-import pessoa.activity.PersonActivity;
-import produtora.activity.ProdutoraActivity;
 import activity.ReviewsActivity;
 import activity.SimilaresActivity;
 import activity.Site;
 import activity.TemporadaActivity;
 import activity.TrailerActivity;
-import tvshow.activity.TvShowActivity;
-import listaserie.activity.TvShowsActivity;
 import applicaton.FilmeApplication;
 import domain.FilmeDB;
 import domain.FilmeService;
+import filme.activity.FilmeActivity;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.MovieDb;
+import listafilmes.activity.FilmesActivity;
+import listaserie.activity.TvShowsActivity;
+import pessoa.activity.FotoPersonActivity;
+import pessoa.activity.PersonActivity;
+import produtora.activity.ProdutoraActivity;
+import tvshow.activity.TvShowActivity;
 import utils.Constantes;
 
 import static activity.BaseActivity.getLocale;
@@ -53,6 +53,7 @@ import static info.movito.themoviedbapi.TmdbMovies.MovieMethod.videos;
 public class CustomNotificationOpenedHandler implements OneSignal.NotificationOpenedHandler {
     private static final String TAG = CustomNotificationOpenedHandler.class.getName();
     private JSONObject jsonData;
+
 
     // This fires when a notification is opened by tapping on it.
     @Override
@@ -365,22 +366,9 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
 
             }
 
-//            if (action.equals("TvshowActivity")) {
-//                FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-//                String id_filme = jsonData.getString("id");
-//                DatabaseReference myWatch = database.getReference("users").child(mAuth.getCurrentUser()
-//                        .getUid()).child("watch")
-//                        .child("tvshow");
-//
-//                myWatch.child(String.valueOf(id_filme)).setValue(null);
-//
-//            }
 
         }catch (Exception e){
-           // Log.d(TAG, "isButton: "+e.getMessage());
-           // Log.d(TAG, "isButton: "+e.toString());
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
         }
     }
 }

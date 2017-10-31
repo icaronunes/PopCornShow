@@ -17,15 +17,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import listafilmes.activity.FilmesActivity;
 import activity.SettingsActivity;
-import listaserie.activity.TvShowsActivity;
 import adapter.MovieMainAdapter;
 import adapter.TvShowMainAdapter;
 import br.com.icaro.filme.R;
@@ -34,6 +32,8 @@ import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbTV;
 import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
+import listafilmes.activity.FilmesActivity;
+import listaserie.activity.TvShowsActivity;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -325,7 +325,7 @@ public class MainFragment extends Fragment {
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
             } catch (Exception e){
-                FirebaseCrash.report(e);
+                Crashlytics.logException(e);
             }
             if (idioma_padrao) {
                 try {
@@ -339,7 +339,7 @@ public class MainFragment extends Fragment {
                     }
                 } catch (Exception e) {
                    // Log.d(TAG, e.getMessage());
-                    FirebaseCrash.report(e);
+                    Crashlytics.logException(e);
                     if (getActivity() != null)
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -359,7 +359,7 @@ public class MainFragment extends Fragment {
                         cinema = tmdbMovies.getUpcoming("en", 1);
                     }
                 } catch (Exception e) {
-                    FirebaseCrash.report(e);
+                    Crashlytics.logException(e);
                     if (getActivity() != null)
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -388,7 +388,7 @@ public class MainFragment extends Fragment {
                     }
                 }
             } catch (Exception e){
-                FirebaseCrash.report(e);
+                Crashlytics.logException(e);
                 if (getActivity() != null)
                 Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
             }

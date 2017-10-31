@@ -26,8 +26,8 @@ import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import br.com.icaro.filme.R
+import com.crashlytics.android.Crashlytics
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.crash.FirebaseCrash
 import com.google.firebase.database.*
 import domain.API
 import domain.FilmeDB
@@ -266,7 +266,7 @@ class FilmeActivity : BaseActivity() {
 
             searchView.isEnabled = false
         } catch (e: Exception) {
-            FirebaseCrash.report(e)
+            Crashlytics.logException(e);
             Toast.makeText(this, R.string.ops, Toast.LENGTH_SHORT).show()
         }
 

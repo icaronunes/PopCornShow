@@ -20,9 +20,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.List;
 
@@ -209,7 +209,7 @@ public class SearchMultiActivity extends BaseActivity {
                         return movieResultsPage.getResults();
                     }
                 } catch (Exception e) {
-                    FirebaseCrash.report(e);
+                    Crashlytics.logException(e);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

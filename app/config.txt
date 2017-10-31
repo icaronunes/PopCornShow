@@ -86,6 +86,7 @@
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/84(**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/85(**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/86(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/87(**.class)
 -outjars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/proguard/flavor21/release/0.jar
 
 -libraryjars /opt/android-sdk-linux/platforms/android-26/android.jar
@@ -99,124 +100,124 @@
 -keeppackagenames br.com.icaro.**,com.google.**,info.movito.**,okhttp3.**
 -keepattributes *Annotation*,Signature,InnerClasses,EnclosingMethod,*Annotation*,*Annotation*,Signature,*Annotation*,*Annotation*
 -verbose
--dontnote com.android.vending.licensing.ILicensingService,com.google.vending.licensing.ILicensingService,com.google.android.vending.licensing.ILicensingService,android.support.**,android.net.http.**,org.apache.commons.codec.**,org.apache.http.**,org.apache.commons.logging.**,com.fasterxml.jackson.**,com.google.**,org.apache.**,com.squareup.okhttp.**,okhttp3.**
--dontwarn android.support.**,android.support.**,org.apache.commons.**,org.w3c.dom.**,com.fasterxml.jackson.**,com.google.**,com.squareup.**,info.movito.**,okio.**,javax.annotation.**,okio.**,com.google.firebase.perf.network.**,android.security.NetworkSecurityPolicy,android.app.Notification,sun.misc.Unsafe,libcore.io.Memory,com.google.android.apps.common.proguard.UsedBy*,com.onesignal.**
+-dontnote com.android.vending.licensing.ILicensingService,com.google.vending.licensing.ILicensingService,com.google.android.vending.licensing.ILicensingService,android.support.**,android.net.http.**,org.apache.commons.codec.**,org.apache.http.**,org.apache.commons.logging.**,com.fasterxml.jackson.**,com.google.**,org.apache.**,com.squareup.okhttp.**,okhttp3.**,rx.internal.util.PlatformDependent
+-dontwarn android.support.**,android.support.**,org.apache.commons.**,org.w3c.dom.**,com.fasterxml.jackson.**,com.google.**,com.squareup.**,info.movito.**,okio.**,javax.annotation.**,okio.**,com.google.firebase.perf.network.**,android.security.NetworkSecurityPolicy,android.app.Notification,sun.misc.Unsafe,libcore.io.Memory,com.google.android.apps.common.proguard.UsedBy*,com.onesignal.**,sun.misc.**
 -printconfiguration /home/icaro/Documentos/workspace/Filme/app/config.txt
 -dump /home/icaro/Documentos/workspace/Filme/app/build/outputs/mapping/flavor21/release/dump.txt
 -printseeds /home/icaro/Documentos/workspace/Filme/app/build/outputs/mapping/flavor21/release/seeds.txt
 
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:185
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:188
 -keep class activity.CrewsActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:297
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:300
 -keep class activity.DynamicLink {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:178
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:181
 -keep class activity.ElencoActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:163
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:166
 -keep class activity.EpsodioActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:103
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:106
 -keep class activity.FavoriteActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:69
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:72
 -keep class activity.IntroActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:141
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:144
 -keep class activity.ListaGenericaActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:234
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:237
 -keep class activity.ListaUserActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:67
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:70
 -keep class activity.LoginActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:57
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:60
 -keep class activity.MainActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:171
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:174
 -keep class activity.PosterActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:192
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:195
 -keep class activity.PosterGridActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:111
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:114
 -keep class activity.RatedActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:248
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:251
 -keep class activity.ReviewsActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:199
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:202
 -keep class activity.SearchMultiActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:283
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:286
 -keep class activity.SeguindoActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:262
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:265
 -keep class activity.SettingsActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:226
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:229
 -keep class activity.SimilaresActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:276
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:279
 -keep class activity.Site {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:156
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:159
 -keep class activity.TemporadaActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:164
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:167
 -keep class activity.TrailerActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:296
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:299
 -keep class activity.VincularLoginActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:210
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:213
 -keep class activity.WatchListActivity {
     <init>(...);
 }
@@ -569,17 +570,17 @@
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:371
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:374
 -keep class com.facebook.CustomTabActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:375
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:378
 -keep class com.facebook.CustomTabMainActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:367
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:370
 -keep class com.facebook.FacebookActivity {
     <init>(...);
 }
@@ -600,7 +601,7 @@
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:450
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:453
 -keep class com.google.android.gms.ads.AdActivity {
     <init>(...);
 }
@@ -623,17 +624,17 @@
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:376
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:379
 -keep class com.google.android.gms.appinvite.PreviewActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:352
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:355
 -keep class com.google.android.gms.auth.api.signin.RevocationBoundService {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:343
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:346
 -keep class com.google.android.gms.auth.api.signin.internal.SignInHubActivity {
     <init>(...);
 }
@@ -645,27 +646,27 @@
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:386
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:389
 -keep class com.google.android.gms.common.api.GoogleApiActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:396
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:399
 -keep class com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:410
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:413
 -keep class com.google.android.gms.measurement.AppMeasurementJobService {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:391
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:394
 -keep class com.google.android.gms.measurement.AppMeasurementReceiver {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:406
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:409
 -keep class com.google.android.gms.measurement.AppMeasurementService {
     <init>(...);
 }
@@ -680,67 +681,67 @@
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:430
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:433
 -keep class com.google.firebase.iid.FirebaseInstanceIdInternalReceiver {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:416
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:419
 -keep class com.google.firebase.iid.FirebaseInstanceIdReceiver {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:437
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:440
 -keep class com.google.firebase.iid.FirebaseInstanceIdService {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:357
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:360
 -keep class com.google.firebase.perf.provider.FirebasePerfProvider {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:445
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:448
 -keep class com.google.firebase.provider.FirebaseInitProvider {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:483
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:486
 -keep class com.onesignal.BootUpReceiver {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:463
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:466
 -keep class com.onesignal.GcmBroadcastReceiver {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:474
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:477
 -keep class com.onesignal.GcmIntentService {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:472
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:475
 -keep class com.onesignal.NotificationOpenedReceiver {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:481
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:484
 -keep class com.onesignal.NotificationRestoreService {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:477
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:480
 -keep class com.onesignal.PermissionsActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:475
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:478
 -keep class com.onesignal.SyncService {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:489
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:492
 -keep class com.onesignal.UpgradeReceiver {
     <init>(...);
 }
@@ -755,22 +756,22 @@
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:312
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:315
 -keep class desenvolvimento.Desenvolvimento {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:127
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:130
 -keep class filme.activity.FilmeActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:90
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:93
 -keep class listafilmes.activity.FilmesActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:263
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:266
 -keep class listaserie.activity.TvShowsActivity {
     <init>(...);
 }
@@ -783,47 +784,47 @@
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:314
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:317
 -keep class onsignal.CustomNotificationExtenderService {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:148
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:151
 -keep class oscar.OscarActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:255
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:258
 -keep class pessoa.activity.FotoPersonActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:235
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:238
 -keep class pessoa.activity.PersonActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:119
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:122
 -keep class pessoaspopulares.PersonPopularActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:218
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:221
 -keep class produtora.activity.ProdutoraActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:325
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:328
 -keep class provider.SuggestionProvider {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:322
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:325
 -keep class provider.SuggestionRecentProvider {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:76
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:79
 -keep class tvshow.activity.TvShowActivity {
     <init>(...);
 }
@@ -1249,4 +1250,17 @@
 
 -keep class com.onesignal.shortcutbadger.impl.XiaomiHomeBadger {
     <init>(...);
+}
+
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+    long producerIndex;
+    long consumerIndex;
+}
+
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }

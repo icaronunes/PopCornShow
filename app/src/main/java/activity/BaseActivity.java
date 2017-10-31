@@ -27,11 +27,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.squareup.picasso.Callback;
@@ -387,7 +387,7 @@ public class BaseActivity extends AppCompatActivity {
 
             return super.onCreateOptionsMenu(menu);
         } catch (Exception e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             Toast.makeText(this, R.string.ops, Toast.LENGTH_SHORT).show();
         }
         return true;

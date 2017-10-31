@@ -4,10 +4,14 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.onesignal.OneSignal;
 import com.squareup.otto.Bus;
 
+import br.com.icaro.filme.BuildConfig;
+import io.fabric.sdk.android.Fabric;
 import onsignal.CustomNotificationOpenedHandler;
 import onsignal.CustomNotificationReceivedHandler;
 
@@ -29,31 +33,28 @@ public class FilmeApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-       // Log.d(TAG, "FilmeApplication.onCreate");
+        // Log.d(TAG, "FilmeApplication.onCreate");
 
-            OneSignal.startInit(this)
-                    .setNotificationOpenedHandler(new CustomNotificationOpenedHandler())
-                    .setNotificationReceivedHandler(new CustomNotificationReceivedHandler())
-                    .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                    .init();
+        OneSignal.startInit(this)
+                .setNotificationOpenedHandler(new CustomNotificationOpenedHandler())
+                .setNotificationReceivedHandler(new CustomNotificationReceivedHandler())
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .init();
 
+        final Fabric fabric = new Fabric.Builder(this)
+                .kits(new Crashlytics())
+                .debuggable(true)
+                .build();
+        Fabric.with(fabric);
 
-        if (br.com.icaro.filme.BuildConfig.REPORT_CRASH) {
-            FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-            mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
-          //  Log.d(TAG, "REPORT_CRASH - TRUE");
-        } else {
-            FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-            mFirebaseAnalytics.setAnalyticsCollectionEnabled(false);
-         //   Log.d(TAG, "REPORT_CRASH - FALSE");
-        }
+        Crashlytics crashlyticsKit = new Crashlytics.Builder()
+                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build();
+        Fabric.with(this, crashlyticsKit);
 
-//        if (LeakCanary.isInAnalyzerProcess(this)) {
-//            // This process is dedicated to LeakCanary for heap analysis.
-//            // You should not init your app in this process.
-//            return;
-//        }
-//        LeakCanary.install(this);
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFirebaseAnalytics.setAnalyticsCollectionEnabled(br.com.icaro.filme.BuildConfig.REPORT_CRASH);
+
 
     }
 
@@ -69,7 +70,7 @@ public class FilmeApplication extends Application {
 
     }
 
-    public Bus getBus(){
+    public Bus getBus() {
         return bus;
     }
 
