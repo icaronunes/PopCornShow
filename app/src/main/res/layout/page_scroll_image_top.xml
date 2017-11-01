@@ -38,7 +38,6 @@
         android:textColor="@color/white"
         android:textSize="@dimen/trade_txt_size_sp_16"
         android:textStyle="normal|bold"
-        android:elevation="@dimen/trade_size_dp_3"
         android:typeface="serif" />
 
 
