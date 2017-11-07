@@ -55,6 +55,10 @@
                     android:layout_marginTop="@dimen/trade_size_dp_40"
                     android:background="@color/accent2" />
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewpage_top_main"
                     android:layout_width="match_parent"
@@ -63,6 +67,15 @@
                     android:background="@color/transparent"
                     android:contentDescription="@string/foto_principal"
                     android:scaleType="centerCrop" />
+
+                    <ImageView
+                        android:id="@+id/activity_main_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_popcorn2" />
+
+                </FrameLayout>
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"

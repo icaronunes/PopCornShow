@@ -89,9 +89,6 @@
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/87(**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/88(**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/89(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/90(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/91(**.class)
--injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/92(**.class)
 -outjars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/proguard/flavor21/release/0.jar
 
 -libraryjars /opt/android-sdk-linux/platforms/android-26/android.jar

@@ -48,8 +48,6 @@ import info.movito.themoviedbapi.model.tv.TvSeason;
 public class UtilsApp {
 
 
-    private static String TAG = UtilsApp.class.getName();
-
     public static UserTvshow setUserTvShow(Tvshow serie) {
         UserTvshow userTvshow = new UserTvshow();
         userTvshow.setPoster(serie.getPosterPath());

@@ -52,7 +52,7 @@ import java.util.*
 class FilmeActivity : BaseActivity() {
     private var color_fundo: Int = 0
     private var id_filme: Int = 0
-    private lateinit var movieDb: Movie
+    private var movieDb: Movie? = null
     private var addFavorite = true
     private var addWatch = true
     private var addRated = true
@@ -110,7 +110,7 @@ class FilmeActivity : BaseActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     movieDb = it
-                    title = movieDb.title
+                    title = movieDb?.title
                     top_img_viewpager?.adapter = ImagemTopFragment(supportFragmentManager)
                     progress_horizontal?.visibility = View.GONE
                     setFAB()
@@ -277,6 +277,7 @@ class FilmeActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if (item.itemId == R.id.share) {
+            if (movieDb != null){
 
             salvaImagemMemoriaCache(this@FilmeActivity, movieDb?.posterPath, object : SalvarImageShare {
                 override fun retornaFile(file: File) {
@@ -293,6 +294,9 @@ class FilmeActivity : BaseActivity() {
                 }
             })
 
+        } else {
+                Toast.makeText(this@FilmeActivity, resources.getString(R.string.erro_ainda_sem_imagem), Toast.LENGTH_SHORT).show()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -301,7 +305,7 @@ class FilmeActivity : BaseActivity() {
         // Get the unique appcode for this app.
 
         val link = "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3DFA%26id%3D"
-        (movieDb.id).toString() + "&apn=br.com.icaro.filme"
+        (movieDb?.id).toString() + "&apn=br.com.icaro.filme"
 
         // If the deep link is used in an advertisement, this value must be set to 1.
         val isAd = false
@@ -393,11 +397,11 @@ class FilmeActivity : BaseActivity() {
                         }
 
                         val filmeDB = FilmeDB()
-                        filmeDB.id = movieDb.id!!
-                        filmeDB.idImdb = movieDb.imdbId
-                        filmeDB.title = movieDb.title
+                        filmeDB.id = movieDb?.id!!
+                        filmeDB.idImdb = movieDb?.imdbId
+                        filmeDB.title = movieDb?.title
                         filmeDB.nota = ratingBar.rating.toInt()
-                        filmeDB.poster = movieDb.posterPath
+                        filmeDB.poster = movieDb?.posterPath
 
                         myRated?.child(id_filme.toString())?.setValue(filmeDB)
                                 ?.addOnCompleteListener {
@@ -437,7 +441,7 @@ class FilmeActivity : BaseActivity() {
             var date: Date? = null
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             try {
-                date = sdf.parse(movieDb.releaseDate)
+                date = sdf.parse(movieDb?.releaseDate)
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
@@ -458,8 +462,8 @@ class FilmeActivity : BaseActivity() {
                 } else {
 
                     val filmeDB = FilmeDB()
-                    filmeDB.id = movieDb.id!!
-                    filmeDB.idImdb = movieDb.imdbId
+                    filmeDB.id = movieDb?.id!!
+                    filmeDB.idImdb = movieDb?.imdbId
                     filmeDB.title = movieDb?.title
                     filmeDB.poster = movieDb?.posterPath
 
@@ -499,10 +503,10 @@ class FilmeActivity : BaseActivity() {
             } else {
 
                 val filmeDB = FilmeDB()
-                filmeDB.idImdb = movieDb.imdbId
-                filmeDB.id = movieDb.id!!
-                filmeDB.title = movieDb.title
-                filmeDB.poster = movieDb.posterPath
+                filmeDB.idImdb = movieDb?.imdbId
+                filmeDB.id = movieDb?.id!!
+                filmeDB.title = movieDb?.title
+                filmeDB.poster = movieDb?.posterPath
 
                 myWatch?.child(id_filme.toString())?.setValue(filmeDB)
                         ?.addOnCompleteListener {
@@ -566,17 +570,17 @@ class FilmeActivity : BaseActivity() {
     private inner class ImagemTopFragment(supportFragmentManager: FragmentManager) : FragmentPagerAdapter(supportFragmentManager) {
 
         override fun getItem(position: Int): Fragment? {
-            return if (movieDb.images?.backdrops != null) {
+            return if (movieDb?.images?.backdrops != null) {
                 if (position == 0) {
-                    ImagemTopFilmeScrollFragment.newInstance(movieDb.backdropPath)
-                } else ImagemTopFilmeScrollFragment.newInstance(movieDb.images?.backdrops!![position]?.filePath)
+                    ImagemTopFilmeScrollFragment.newInstance(movieDb?.backdropPath)
+                } else ImagemTopFilmeScrollFragment.newInstance(movieDb?.images?.backdrops!![position]?.filePath)
             } else null
         }
 
         override fun getCount(): Int {
-            if (movieDb.images?.backdrops != null) {
+            if (movieDb?.images?.backdrops != null) {
 
-                val tamanho = movieDb.images?.backdrops?.size
+                val tamanho = movieDb?.images?.backdrops?.size
                 return if (tamanho!! > 0) tamanho else 1 // ???????????????? tamahao vai ser nulo?
             }
             return 0

@@ -446,7 +446,10 @@ class TvShowFragment : Fragment() {
 
                     childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/visto", false)
                     setStatusEps(position, false)
-                    childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/userEps", userTvshow?.seasons?.get(position)?.userEps!!)
+                    userTvshow?.seasons?.get(position)?.userEps?.forEachIndexed { index, userEp ->
+                        childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/userEps/$index/assistido", false)
+                    }
+
 
                     myRef?.updateChildren(childUpdates)
 
@@ -459,8 +462,9 @@ class TvShowFragment : Fragment() {
                     val childUpdates = HashMap<String, Any>()
                     childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/visto", true)
                     setStatusEps(position, true)
-                    childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/userEps", userTvshow?.seasons?.get(position)?.userEps!!)
-
+                    userTvshow?.seasons?.get(position)?.userEps?.forEachIndexed { index, userEp ->
+                        childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/userEps/$index/assistido", true)
+                    }
                     myRef?.updateChildren(childUpdates)
 
                 }

@@ -1,5 +1,7 @@
 package activity;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -11,6 +13,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -35,12 +38,12 @@ import info.movito.themoviedbapi.model.tv.TvSeries;
 import utils.UtilsApp;
 
 
-public class MainActivity extends BaseActivity  {
+public class MainActivity extends BaseActivity {
 
-    private static final String TAG = MainActivity.class.getName();
     private ViewPager viewPager_main, viewpage_top_main;
     private TvResultsPage tmdbTv;
     private MovieResultsPage tmdbMovies;
+    private ImageView img;
     private TabLayout tabLayout;
     private List<TopMain> multi = new ArrayList<>();
 
@@ -58,7 +61,9 @@ public class MainActivity extends BaseActivity  {
         viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);
         viewpage_top_main = (ViewPager) findViewById(R.id.viewpage_top_main);
         viewpage_top_main.setOffscreenPageLimit(3);
+        img = findViewById(R.id.activity_main_img);
 
+        animacao();
 
 
         if (UtilsApp.isNetWorkAvailable(this)) {
@@ -85,6 +90,20 @@ public class MainActivity extends BaseActivity  {
                     }).create();
             dialog.show();
         }
+
+    }
+
+    private void animacao() {
+        AnimatorSet set = new AnimatorSet();
+        ObjectAnimator animator = ObjectAnimator.ofFloat(img, "alpha", 0.1f, 1f);
+        animator.setDuration(5000);
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(img, "alpha", 1f, 0.1f);
+        animator.setDuration(5000);
+        ObjectAnimator animator3 = ObjectAnimator.ofFloat(img, "alpha", 0.1f, 1f);
+        animator.setDuration(5000);
+        set.playSequentially(animator, animator2, animator3);
+        set.start();
+
 
     }
 
@@ -206,7 +225,7 @@ public class MainActivity extends BaseActivity  {
             try {
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                 idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-            } catch (Exception e){
+            } catch (Exception e) {
                 Crashlytics.logException(e);
             }
 
@@ -219,7 +238,7 @@ public class MainActivity extends BaseActivity  {
                     tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies(getLocale()
                             , 1);
                 } catch (Exception e) {
-                   //  Log.d(TAG, e.getMessage());
+                    //  Log.d(TAG, e.getMessage());
                     Crashlytics.logException(e);
                     runOnUiThread(new Runnable() {
                         @Override
@@ -235,7 +254,7 @@ public class MainActivity extends BaseActivity  {
                     tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("en", 1, UtilsApp.getTimezone());
                     tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies("en", 1);
                 } catch (Exception e) {
-                      // Log.d(TAG, e.toString());
+                    // Log.d(TAG, e.toString());
                     Crashlytics.logException(e);
                     runOnUiThread(new Runnable() {
                         @Override
@@ -252,6 +271,7 @@ public class MainActivity extends BaseActivity  {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             mescla();
+            img.setVisibility(View.GONE);
         }
     }
 

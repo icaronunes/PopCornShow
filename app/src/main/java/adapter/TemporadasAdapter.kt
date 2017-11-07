@@ -74,7 +74,7 @@ class TemporadasAdapter(val context: FragmentActivity, private val series: Tvsho
     override fun onBindViewHolder(holder: TemporadasAdapter.HoldeTemporada, position: Int) {
 
         holder.temporada.text = context.getString(R.string.temporada) + " " + series?.seasons!![position]?.seasonNumber!!
-        Picasso.with(context).load(UtilsApp.getBaseUrlImagem(2)!! + series.seasons[position]?.posterPath)
+        Picasso.with(context).load(UtilsApp.getBaseUrlImagem(2) + series.seasons[position]?.posterPath)
                 .error(R.drawable.poster_empty)
                 .into(holder.image_temporada)
         holder.data.text = series.seasons[position]?.airDate ?: ""

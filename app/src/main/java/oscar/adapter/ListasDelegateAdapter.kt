@@ -40,8 +40,8 @@ class ListasDelegateAdapter : ViewTypeDelegateAdapter {
                     .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.posterPath)
                     .into(img_lista)
             when(item.mediaType) {
-                "tv" -> date_oscar.text = if (item.first_air_date.isNullOrEmpty()) item.first_air_date?.subSequence(0,4) else "-"
-                "movie" -> date_oscar.text = if (item.first_air_date.isNullOrEmpty()) item.releaseDate?.subSequence(0,4) else "-"
+                "tv" -> date_oscar.text = if (item.first_air_date.isNullOrEmpty() && item.first_air_date?.length!! > 3) item.first_air_date?.subSequence(0,4) else "-"
+                "movie" -> date_oscar.text = if (item.first_air_date.isNullOrEmpty() && item.first_air_date?.length!! > 3) item.releaseDate?.subSequence(0,4) else "-"
             }
 
             progress.visibility = View.GONE

@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         stateListener = getAuthStateListener();
 
-        setGoogle();
+       // setGoogle();
         setFacebook();
 
         mAuthProgressDialog = new ProgressDialog(this);
