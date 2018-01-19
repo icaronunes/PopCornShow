@@ -114,11 +114,17 @@ class SeguindoActivity : BaseActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 userTvshowFire = ArrayList()
                 if (dataSnapshot.exists()) {
-                    dataSnapshot.children
-                            .asSequence()
-                            .map { it.getValue(UserTvshow::class.java) }
-                            .forEach { userTvshowFire?.add(it!!) }
-                    veriricarSerie()
+                    try {
+                        dataSnapshot.children
+                                .asSequence()
+                                .map {
+                                        it.getValue(UserTvshow::class.java)
+                                }
+                                .forEach { userTvshowFire?.add(it!!) }
+                        veriricarSerie()
+                    } catch (e: Exception) {
+
+                    }
                 }
                 setupViewPagerTabs()
                 progressBar?.visibility = View.GONE
@@ -145,7 +151,8 @@ class SeguindoActivity : BaseActivity() {
                                 userTvshowNovo = UtilsApp.setUserTvShow(serie)
                                 userTvshow.seasons.forEachIndexed { indexSeason, userSeasons ->
                                     if (serie?.seasons!![indexSeason]?.episodeCount != userSeasons.userEps.size) {
-                                        atualizarRealDate(indexSerie, indexSeason, serie, userTvshow)}
+                                        atualizarRealDate(indexSerie, indexSeason, serie, userTvshow)
+                                    }
                                 }
                             }
                         }

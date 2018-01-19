@@ -10,6 +10,7 @@ import java.io.Serializable;
 @Keep
 public class TvshowDB implements Serializable {
 
+
     private String poster;
 
     private String title;

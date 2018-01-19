@@ -160,28 +160,18 @@ public class ListaFavoriteFragment extends Fragment {
             @Override
             public void onClick(final View view, final int position) {
                 Intent intent = new Intent(getActivity(), TvShowActivity.class);
-              //  Log.d("OnClick", "Onclick");
                 ImageView imageView = (ImageView) view;
                 int color = UtilsApp.loadPalette(imageView);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
-                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), 1 ); // tvSeries.get(position).getExternalIds().getId());
+                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(),  tvSeries.get(position).getId());
                 intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), tvSeries.get(position).getTitle());
                 startActivity(intent);
-
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaWatchlistFragment:ListaTvShowAdapter.ListaOnClickListener:onclick");
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getTitle());
-                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, tvSeries.get(position).getNota());
-
-                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
             }
 
             @Override
             public void onClickLong(View view, final int position) {
 
                 final TvshowDB tvshowDB = tvSeries.get(position);
-               // Log.d("OnClick", "onClickLong");
                 new AlertDialog.Builder(getActivity())
                         .setIcon(R.drawable.icon_agenda)
                         .setTitle(tvshowDB.getTitle())

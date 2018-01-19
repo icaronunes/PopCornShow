@@ -6,7 +6,6 @@ import android.support.multidex.MultiDex;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.onesignal.OneSignal;
 import com.squareup.otto.Bus;
 
@@ -52,8 +51,8 @@ public class FilmeApplication extends Application {
                 .build();
         Fabric.with(this, crashlyticsKit);
 
-        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        mFirebaseAnalytics.setAnalyticsCollectionEnabled(br.com.icaro.filme.BuildConfig.REPORT_CRASH);
+//        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+//        mFirebaseAnalytics.setAnalyticsCollectionEnabled(br.com.icaro.filme.BuildConfig.REPORT_CRASH);
 
 
     }

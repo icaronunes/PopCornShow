@@ -1,6 +1,5 @@
 package listafilmes.adapter
 
-import filme.activity.FilmeActivity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
@@ -13,6 +12,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import domain.ListaItemFilme
 import domain.ViewType
+import filme.activity.FilmeActivity
 import kotlinx.android.synthetic.main.adapter_filmes_list.view.*
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
@@ -48,7 +48,8 @@ class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
 
                         override fun onError() {
                             progress_filmes_lista.visibility = View.GONE
-                            title_filmes_lista.text = "${item?.title} - ${item?.releaseDate?.subSequence(0,4)}"
+                            val dataLancamento = if (!item.releaseDate.isNullOrEmpty() && item.releaseDate?.length!! > 3) item.releaseDate.subSequence(0,4) else "-"
+                            title_filmes_lista.text = "${item?.title} - $dataLancamento"
                             title_filmes_lista.visibility = View.VISIBLE
                         }
                     } )
@@ -65,7 +66,7 @@ class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
             when(context.javaClass.simpleName) {
 
                 "FilmesActivity" -> {title_filmes_lista.visibility = View.GONE}
-                else -> {title_filmes_lista.text = item?.releaseDate?.subSequence(0,4) }
+                else -> {title_filmes_lista.text = if (!item?.releaseDate.isNullOrEmpty() && item?.releaseDate?.length!! > 3) item.releaseDate .subSequence(0,4) else "-"}
             }
         }
 

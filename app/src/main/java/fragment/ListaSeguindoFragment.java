@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -96,7 +98,20 @@ public class ListaSeguindoFragment extends Fragment {
                 if (dataSnapshot.exists()) {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        userTvshows.add(snapshot.getValue(UserTvshow.class));
+                        try {
+                            UserTvshow userTvshow = snapshot.getValue(UserTvshow.class);
+                            userTvshows.add(userTvshow);
+                        } catch (Exception e) {
+                            Crashlytics.logException(e);
+                            if (snapshot.hasChild("nome") && getActivity() != null) {
+                                String nome = snapshot.child("nome").getValue(String.class);
+                                Toast.makeText(getActivity(), getResources().getString(R.string.ops_seguir_novamente) + " - " + nome, Toast.LENGTH_LONG).show();
+                            } else {
+                                if (getActivity() != null) {
+                                    Toast.makeText(getActivity(), getResources().getString(R.string.ops_seguir_novamente), Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        }
                     }
                     if (getView() != null) {
                         recyclerViewMissing = (RecyclerView) getView().getRootView().findViewById(R.id.temporadas_recycle);

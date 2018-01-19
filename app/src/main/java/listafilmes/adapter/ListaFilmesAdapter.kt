@@ -6,8 +6,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import domain.ListaItemFilme
 import domain.ViewType
-import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import pessoaspopulares.adapter.LoadingDelegateAdapter
+import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
 import java.util.*
 
@@ -40,6 +40,8 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
             for (result in listaMedia) {
                 this.listaResult.add(result!!)
             }
+            this.listaResult.sortedBy { (it as ListaItemFilme).releaseDate  }
+                    .reversed()
             notifyItemRangeChanged(initPosition, this.listaResult.size + 1 /* plus loading item */)
             if (listaResult.size < totalPagina)
                 this.listaResult.add(loading)

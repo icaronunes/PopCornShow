@@ -58,6 +58,7 @@ public class MainActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(" ");
 
+
         viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);
         viewpage_top_main = (ViewPager) findViewById(R.id.viewpage_top_main);
         viewpage_top_main.setOffscreenPageLimit(3);
@@ -91,7 +92,11 @@ public class MainActivity extends BaseActivity {
             dialog.show();
         }
 
+
+
+
     }
+
 
     private void animacao() {
         AnimatorSet set = new AnimatorSet();
@@ -254,7 +259,7 @@ public class MainActivity extends BaseActivity {
                     tmdbTv = FilmeService.getTmdbTvShow().getAiringToday("en", 1, UtilsApp.getTimezone());
                     tmdbMovies = FilmeService.getTmdbMovies().getNowPlayingMovies("en", 1);
                 } catch (Exception e) {
-                    // Log.d(TAG, e.toString());
+
                     Crashlytics.logException(e);
                     runOnUiThread(new Runnable() {
                         @Override

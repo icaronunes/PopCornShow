@@ -310,17 +310,22 @@ class TvShowFragment : Fragment() {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                     if (dataSnapshot.exists()) {
-                        userTvshow = dataSnapshot.getValue(UserTvshow::class.java)
+                        try {
+                            userTvshow = dataSnapshot.getValue(UserTvshow::class.java)
 
-                        if (getView() != null) {
-                            recyclerViewTemporada = getView()?.rootView?.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
-                            recyclerViewTemporada.adapter = TemporadasAdapter(activity, series, onClickListener(), color, userTvshow)
-                            if (progressBarTemporada != null) {
+                            if (getView() != null) {
+                                recyclerViewTemporada = getView()?.rootView?.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
+                                recyclerViewTemporada.adapter = TemporadasAdapter(activity, series, onClickListener(), color, userTvshow)
+                                if (progressBarTemporada != null) {
 
-                                progressBarTemporada?.visibility = View.INVISIBLE
+                                    progressBarTemporada?.visibility = View.INVISIBLE
+                                }
+                            }
+                        } catch (e: Exception){
+                            activity.let {
+                                Toast.makeText(activity, R.string.ops_seguir_novamente, Toast.LENGTH_LONG).show()
                             }
                         }
-
                     } else {
                         if (getView() != null) {
                             recyclerViewTemporada = getView()?.rootView?.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
@@ -504,7 +509,7 @@ class TvShowFragment : Fragment() {
     private fun onClickSeguir(): OnClickListener {
         return OnClickListener { view ->
             if (view != null) {
-                progressBarTemporada = view?.rootView?.findViewById<View>(R.id.progressBarTemporadas) as ProgressBar
+                progressBarTemporada = view.rootView?.findViewById<View>(R.id.progressBarTemporadas) as ProgressBar
                 progressBarTemporada?.visibility = View.VISIBLE
             }
 

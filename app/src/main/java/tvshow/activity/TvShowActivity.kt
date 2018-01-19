@@ -26,6 +26,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import br.com.icaro.filme.R
+import com.crashlytics.android.Crashlytics
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -109,9 +110,11 @@ class TvShowActivity : BaseActivity() {
                         setDados()
                         setFab()
                     }
+
                     override fun onError(e: Throwable) {
                         Toast.makeText(this@TvShowActivity, R.string.ops, Toast.LENGTH_SHORT).show()
                     }
+
                     override fun onNext(tvshow: Tvshow) {
                         series = tvshow
                     }
@@ -334,7 +337,7 @@ class TvShowActivity : BaseActivity() {
             } else {
 
                 val tvshowDB = TvshowDB()
-                tvshowDB.externalIds = series?.external_ids
+                //  tvshowDB.externalIds = series?.external_ids
                 tvshowDB.title = series?.name
                 tvshowDB.id = series?.id!!
                 tvshowDB.poster = series?.posterPath
@@ -371,25 +374,25 @@ class TvShowActivity : BaseActivity() {
             }
 
             if (!UtilsApp.verificaLancamento(date)) {
-                val mFirebaseAnalytics = FirebaseAnalytics.getInstance(this@TvShowActivity)
                 Toast.makeText(this@TvShowActivity, R.string.tvshow_nao_lancado, Toast.LENGTH_SHORT).show()
                 val bundle = Bundle()
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Favorite - Tvshow ainda não foi lançado.")
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
             } else {
 
                 if (addFavorite) {
-                    myFavorite?.child(id_tvshow.toString())?.setValue(null)
-                            ?.addOnCompleteListener {
-                                Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_remove_favorite), Toast.LENGTH_SHORT).show()
-                                val bundle = Bundle()
+                    try {
+                        myFavorite?.child(id_tvshow.toString())?.setValue(null)
+                                ?.addOnCompleteListener {
+                                    Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_remove_favorite), Toast.LENGTH_SHORT).show()
+                                }
+                    } catch (e: Exception) {
 
-                            }
+                    }
 
                 } else {
 
                     val tvshowDB = TvshowDB()
-                    tvshowDB.externalIds = series?.external_ids
+                    // tvshowDB.externalIds = series?.external_ids
                     tvshowDB.title = series?.name
                     tvshowDB.id = series?.id!!
                     tvshowDB.poster = series?.posterPath
@@ -398,7 +401,6 @@ class TvShowActivity : BaseActivity() {
                             ?.addOnCompleteListener {
                                 Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_add_favorite), Toast.LENGTH_SHORT)
                                         .show()
-
                             }
                 }
 
@@ -467,7 +469,7 @@ class TvShowActivity : BaseActivity() {
                         //  Log.d(TAG, "Gravou Rated");
 
                         val tvshowDB = TvshowDB()
-                        tvshowDB.externalIds = series?.external_ids
+                        //tvshowDB.externalIds = series?.external_ids
                         tvshowDB.nota = ratingBar.rating.toInt()
                         tvshowDB.id = series?.id!!
                         tvshowDB.title = series?.name
@@ -592,9 +594,8 @@ class TvShowActivity : BaseActivity() {
                 ?.child("seguindo")
                 ?.child(series?.id.toString())
                 ?.setValue(userTvshow)
-                ?.addOnCompleteListener({
-                    task ->
-                    if (task.isComplete){
+                ?.addOnCompleteListener({ task ->
+                    if (task.isComplete) {
                         seguindo = true
                         setupViewPagerTabs()
                         setTitle()
@@ -612,24 +613,32 @@ class TvShowActivity : BaseActivity() {
                             object : ValueEventListener {
                                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                                     if (dataSnapshot.exists()) {
-                                        userTvshowOld = dataSnapshot.getValue(UserTvshow::class.java)
+                                        try {
+                                            userTvshowOld = dataSnapshot.getValue(UserTvshow::class.java)
 
-                                        if (userTvshowOld?.numberOfEpisodes == series?.numberOfEpisodes) {
-                                            seguindo = true
+                                            if (userTvshowOld?.numberOfEpisodes == series?.numberOfEpisodes) {
+                                                seguindo = true
+                                                setupViewPagerTabs()
+                                                setTitle()
+                                                setImageTop()
+                                            } else {
+                                                if (userTvshowOld?.numberOfEpisodes != series?.numberOfEpisodes) {
+                                                    atualizarRealDate()
+                                                }
+                                            }
+                                        } catch (e: Exception) {
                                             setupViewPagerTabs()
                                             setTitle()
                                             setImageTop()
-                                        } else {
-                                            if (userTvshowOld?.numberOfEpisodes != series?.numberOfEpisodes) {
-                                                atualizarRealDate()
-                                            }
+                                            Toast.makeText(this@TvShowActivity, resources.getString(R.string
+                                                    .ops_seguir_novamente), Toast.LENGTH_LONG).show()
+                                            Crashlytics.logException(e)
                                         }
                                     } else {
                                         setupViewPagerTabs()
                                         setTitle()
                                         setImageTop()
                                     }
-
                                 }
 
                                 override fun onCancelled(databaseError: DatabaseError) {}

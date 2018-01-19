@@ -29,7 +29,13 @@
                 android:contentDescription="@string/imagem_filme"
                 android:scaleType="centerInside" />
 
-            <include layout="@layout/include_progress" />
+            <ProgressBar
+                android:id="@+id/progress_filmes_lista"
+                style="@android:style/Widget.DeviceDefault.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:elevation="3dp" />
 
             <TextView
                 android:id="@+id/title_filmes_lista"

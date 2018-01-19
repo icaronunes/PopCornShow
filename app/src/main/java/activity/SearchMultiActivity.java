@@ -145,6 +145,7 @@ public class SearchMultiActivity extends BaseActivity {
     }
 
 
+
     private SwipeRefreshLayout.OnRefreshListener OnRefreshListener() {
         return () -> {
             progressBar.setVisibility(View.INVISIBLE);
@@ -191,7 +192,7 @@ public class SearchMultiActivity extends BaseActivity {
         }
 
         @Override
-        protected List<Multi> doInBackground(Void... voids) {//
+        protected List<Multi> doInBackground(Void... voids) {
             if (!query.isEmpty()) {
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(SearchMultiActivity.this);
                 boolean idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);

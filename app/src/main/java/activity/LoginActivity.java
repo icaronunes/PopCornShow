@@ -8,12 +8,14 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -312,15 +314,27 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
+                    logUser();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 } else {
-                 //   Log.d(TAG, "não logou... ");
+                    Log.d(TAG, "não logou... ");
                 }
             }
         };
 
         return callback;
+    }
+
+    //Crash
+    private void logUser() {
+        // TODO: Use the current user's information
+        // You can call any combination of these three methods
+        if (mAuth.getCurrentUser() != null) {
+            Crashlytics.setUserIdentifier(mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "");
+            Crashlytics.setUserEmail(mAuth.getCurrentUser().getEmail());
+            Crashlytics.setUserName(mAuth.getCurrentUser().getDisplayName());
+        }
     }
 
     private void signIn() {

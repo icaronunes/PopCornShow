@@ -51,11 +51,11 @@ public class UtilsApp {
     public static UserTvshow setUserTvShow(Tvshow serie) {
         UserTvshow userTvshow = new UserTvshow();
         userTvshow.setPoster(serie.getPosterPath());
-        userTvshow.setId(serie.getId());
+        userTvshow.setId(serie.getId() != null ? serie.getId() : -1);
         userTvshow.setNome(serie.getOriginalName());
-        userTvshow.setExternalIds(valoresExternalIds(serie.getExternal_ids()));
-        userTvshow.setNumberOfEpisodes(serie.getNumberOfEpisodes());
-        userTvshow.setNumberOfSeasons(serie.getNumberOfSeasons());
+        //userTvshow.setExternalIds(valoresExternalIds(serie.getExternal_ids()));
+        userTvshow.setNumberOfEpisodes(serie.getNumberOfEpisodes() != null ? serie.getNumberOfEpisodes() : 0);
+        userTvshow.setNumberOfSeasons(serie.getNumberOfSeasons() != null ? serie.getNumberOfSeasons() : 0);
         userTvshow.setSeasons(setUserSeasson(serie));
         return userTvshow;
     }

@@ -338,7 +338,6 @@ public class MainFragment extends Fragment {
                         cinema = tmdbMovies.getUpcoming(getLocale(), 1);
                     }
                 } catch (Exception e) {
-                   // Log.d(TAG, e.getMessage());
                     Crashlytics.logException(e);
                     if (getActivity() != null)
                     getActivity().runOnUiThread(new Runnable() {
@@ -367,7 +366,7 @@ public class MainFragment extends Fragment {
                             Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
                         }
                     });
-                    //Log.d(TAG, e.getMessage());
+
                 }
             }
             return null;
