@@ -78,8 +78,10 @@ public class PosterScrollFragment extends Fragment {
         linear_poster_grid = (LinearLayout) view.findViewById(R.id.linear_poster_grid);
         ImageView compartilhar = (ImageView) view.findViewById(R.id.compartilhar);
         ImageView salvar = (ImageView) view.findViewById(R.id.salvar);
-
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+
+            linear_poster_grid.setVisibility(View.VISIBLE);
+
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -92,6 +94,8 @@ public class PosterScrollFragment extends Fragment {
             });
             compartilhar.setOnClickListener(compartilharOnClick());
             salvar.setOnClickListener(salvarImagem());
+        } else {
+            linear_poster_grid.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -110,7 +114,6 @@ public class PosterScrollFragment extends Fragment {
     }
 
     private View.OnClickListener compartilharOnClick() {
-
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,7 +149,7 @@ public class PosterScrollFragment extends Fragment {
 
         if (!file.exists()) {
             file.mkdir();
-            //  Log.e("salvarArqNaMemoriaIn", "Directory created");
+
         }
         File dir = new File(file, endereco);
 
