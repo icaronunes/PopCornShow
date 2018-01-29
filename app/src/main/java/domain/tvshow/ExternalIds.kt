@@ -8,18 +8,18 @@ import javax.annotation.Generated
 data class ExternalIds(
 
 	@field:SerializedName("imdb_id")
-	val imdbId: String? = null,
+	var imdbId: String? = null,
 
 	@field:SerializedName("freebase_mid")
-	val freebaseMid: String? = null,
+	var freebaseMid: String? = null,
 
 	@field:SerializedName("tvdb_id")
-	val tvdbId: String? = null,
+	var tvdbId: String? = null,
 
 	@field:SerializedName("freebase_id")
-	val freebaseId: String? = null,
+	var freebaseId: String? = null,
 
 	@field:SerializedName("tvrage_id")
-	val tvrageId: String? = null
+	var tvrageId: String? = null
 
 ): Serializable

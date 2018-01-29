@@ -37,19 +37,19 @@ class FilmesFragment : FragmentBase() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            if (activity.intent.action == null) {
-                this.abaEscolhida = arguments.getInt(Constantes.NAV_DRAW_ESCOLIDO)
+            if (activity?.intent?.action == null) {
+                this.abaEscolhida = arguments?.getInt(Constantes.NAV_DRAW_ESCOLIDO)!!
             } else {
-                this.abaEscolhida = Integer.parseInt(arguments.getString(Constantes.NAV_DRAW_ESCOLIDO))
+                this.abaEscolhida = Integer.parseInt(arguments?.getString(Constantes.NAV_DRAW_ESCOLIDO))
             }
         }
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(activity)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_list_filme, container, false)
+        return inflater.inflate(R.layout.fragment_list_filme, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -61,7 +61,7 @@ class FilmesFragment : FragmentBase() {
             itemAnimator = DefaultItemAnimator()
             addOnScrollListener(InfiniteScrollListener({ getListaFilmes() }, gridLayout))
             setHasFixedSize(true)
-            adapter = ListaFilmesAdapter(activity)
+            adapter = ListaFilmesAdapter(activity!!)
         }
 
         if (!UtilsApp.isNetWorkAvailable(context)) {
@@ -77,7 +77,7 @@ class FilmesFragment : FragmentBase() {
 
     fun getListaFilmes() {
 
-        val inscricao = API(context).BuscaDeFilmes(getTipo(), pagina = pagina, local = getIdiomaEscolhido(context))
+        val inscricao = API(context!!).BuscaDeFilmes(getTipo(), pagina = pagina, local = getIdiomaEscolhido(context!!))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

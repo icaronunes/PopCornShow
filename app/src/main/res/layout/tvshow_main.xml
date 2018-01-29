@@ -1,62 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/accent2"
     android:orientation="vertical">
 
-    <LinearLayout
+    <HorizontalScrollView
+        android:id="@+id/horizontal_tvshow_button_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_margin="@dimen/trade_size_dp_6"
+        android:layout_marginTop="@dimen/trade_size_dp_6"
+        android:minHeight="@dimen/trade_size_dp_30"
+        android:scrollbars="none">
 
-        <HorizontalScrollView
-            android:id="@+id/horizontal_tvshow_button_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/trade_size_dp_6"
-            android:layout_marginTop="@dimen/trade_size_dp_6"
-            android:minHeight="@dimen/trade_size_dp_30"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:id="@+id/scroll_tvshow_button_main"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
-
-        </HorizontalScrollView>
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/scroll_tvshow_button_main"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/trade_size_dp_6"
-            android:layout_marginStart="@dimen/trade_size_dp_6"
-            android:text="@string/populares"
-            android:textColor="@color/blue"
-            android:textStyle="normal|bold"
-            android:typeface="serif" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
+
+    </HorizontalScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/trade_size_dp_6"
+        android:layout_marginStart="@dimen/trade_size_dp_6"
+        android:text="@string/populares"
+        android:textColor="@color/blue"
+        android:textStyle="normal|bold"
+        android:typeface="serif" />
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/tvshow_popular_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tvshow_popular_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/trade_size_dp_6"
-            android:layout_marginStart="@dimen/trade_size_dp_6"
-            android:text="@string/today"
-            android:textColor="@color/red"
-            android:textStyle="normal|bold"
-            android:typeface="monospace" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/trade_size_dp_6"
+        android:layout_marginStart="@dimen/trade_size_dp_6"
+        android:text="@string/today"
+        android:textColor="@color/red"
+        android:textStyle="normal|bold"
+        android:typeface="monospace" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycle_tvshowtoday_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycle_tvshowtoday_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

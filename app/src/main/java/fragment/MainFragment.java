@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,14 +47,11 @@ import static utils.UtilsApp.getTimezone;
  */
 public class MainFragment extends Fragment {
 
-    final static String TAG = MainFragment.class.getName();
     private List<String> buttonFilme, buttonTvshow;
     private int tipo;
     private TvResultsPage popularTvshow = null, toDay = null;
     private MovieResultsPage popularMovie = null, cinema = null;
 
-
-    private FirebaseAnalytics mFirebaseAnalytics;
     private RecyclerView recycle_tvshow_popular_main;
     private RecyclerView recycle_tvshowtoday_main;
     private RecyclerView recycle_movie_popular_main;
@@ -81,8 +77,6 @@ public class MainFragment extends Fragment {
         if (getArguments() != null) {
             tipo = getArguments().getInt(Constantes.INSTANCE.getABA());
         }
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
-
     }
 
     @Override
@@ -124,7 +118,6 @@ public class MainFragment extends Fragment {
                             intent.putExtra(Constantes.INSTANCE.getABA(), R.string.now_playing);
                             intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.now_playing);
                             startActivity(intent);
-
                             break;
                         }
 
@@ -140,11 +133,6 @@ public class MainFragment extends Fragment {
 
                         case 2: {
 
-                            Bundle bundle = new Bundle();
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Button_Filme");
-                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
-                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
                             Intent intent = new Intent(getActivity(), FilmesActivity.class);
                             intent.putExtra(Constantes.INSTANCE.getABA(), R.string.populares);
                             intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.populares);
@@ -153,11 +141,6 @@ public class MainFragment extends Fragment {
                         }
 
                         case 3: {
-
-                            Bundle bundle = new Bundle();
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Button_Filme");
-                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
-                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                             Intent intent = new Intent(getActivity(), FilmesActivity.class);
                             intent.putExtra(Constantes.INSTANCE.getABA(), R.string.top_rated);
@@ -192,43 +175,27 @@ public class MainFragment extends Fragment {
 
                         case 0: {
 
-                            Bundle bundle = new Bundle();
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Button_Tvshow");
-                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
-                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
                             intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.air_date);
                             startActivity(intent);
                             break;
                         }
                         case 1: {
-                            Bundle bundle = new Bundle();
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Button_Tvshow");
-                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
-                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
-                            intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(),  R.string.today);
+                            intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.today);
                             startActivity(intent);
                             break;
                         }
                         case 2: {
-                            Bundle bundle = new Bundle();
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Button_Tvshow");
-                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
-                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
-                            intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(),  R.string.populares);
+                            intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.populares);
                             startActivity(intent);
                             break;
                         }
 
                         case 3: {
-
-                            Bundle bundle = new Bundle();
-                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Button_Tvshow");
-                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, button.getText().toString());
-                            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                             Intent intent = new Intent(getActivity(), TvShowsActivity.class);
                             intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.top_rated);
@@ -265,11 +232,9 @@ public class MainFragment extends Fragment {
 
         recycle_movie_popular_main = (RecyclerView) view.findViewById(R.id.recycle_movie_popular_main);
         recycle_movieontheair_main = (RecyclerView) view.findViewById(R.id.recycle_movieontheair_main);
-
         recycle_movie_popular_main.setHasFixedSize(true);
         recycle_movie_popular_main.setItemAnimator(new DefaultItemAnimator());
         recycle_movie_popular_main.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-
         recycle_movieontheair_main.setHasFixedSize(true);
         recycle_movieontheair_main.setItemAnimator(new DefaultItemAnimator());
         recycle_movieontheair_main.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -324,7 +289,7 @@ public class MainFragment extends Fragment {
 
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-            } catch (Exception e){
+            } catch (Exception e) {
                 Crashlytics.logException(e);
             }
             if (idioma_padrao) {
@@ -340,16 +305,16 @@ public class MainFragment extends Fragment {
                 } catch (Exception e) {
                     Crashlytics.logException(e);
                     if (getActivity() != null)
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                 }
             } else {
                 try { // É preciso? o tmdb não retorna 'en' se não houver o idioma?
-                     if (UtilsApp.isNetWorkAvailable(getActivity())) {
+                    if (UtilsApp.isNetWorkAvailable(getActivity())) {
                         TmdbTV tmdbTv = FilmeService.getTmdbTvShow();
                         TmdbMovies tmdbMovies = FilmeService.getTmdbMovies();
                         popularTvshow = tmdbTv.getPopular("en", 1);
@@ -360,12 +325,12 @@ public class MainFragment extends Fragment {
                 } catch (Exception e) {
                     Crashlytics.logException(e);
                     if (getActivity() != null)
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                 }
             }
@@ -386,10 +351,10 @@ public class MainFragment extends Fragment {
                         setScrollMovieOntheAir();
                     }
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 Crashlytics.logException(e);
                 if (getActivity() != null)
-                Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.ops, Toast.LENGTH_SHORT).show();
             }
         }
 

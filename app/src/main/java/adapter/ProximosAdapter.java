@@ -11,11 +11,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +23,6 @@ import java.util.Locale;
 
 import activity.BaseActivity;
 import activity.TemporadaActivity;
-import tvshow.activity.TvShowActivity;
 import br.com.icaro.filme.R;
 import domain.FilmeService;
 import domain.UserEp;
@@ -31,6 +30,7 @@ import domain.UserSeasons;
 import domain.UserTvshow;
 import info.movito.themoviedbapi.TmdbTvEpisodes;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
+import tvshow.activity.TvShowActivity;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -63,7 +63,7 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
         final UserTvshow userTvshow = userTvshows.get(position);
         holder.title.setText(userTvshow.getNome());
 
-        vistos  = contagemDeFaltantes(userTvshow);
+        vistos = contagemDeFaltantes(userTvshow);
         total = contamgeTotalEp(userTvshow);
         holder.faltando.setText(vistos + "/" + total);
         holder.progressBar.setMax(userTvshow.getNumberOfEpisodes());
@@ -106,11 +106,11 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
     }
 
     private int contamgeTotalEp(UserTvshow userTvshow) {
-        int total =0;
+        int total = 0;
 
         for (UserSeasons seasons : userTvshow.getSeasons()) {
             if (seasons.getSeasonNumber() != 0 && seasons.getUserEps() != null)
-            total = total + seasons.getUserEps().size();
+                total = total + seasons.getUserEps().size();
         }
 
         return total;
@@ -120,13 +120,13 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
         int contagem = 0;
         for (UserSeasons seasons : userTvshow.getSeasons()) {
             if (seasons.getSeasonNumber() != 0) {
-                if(seasons.getUserEps() != null)
-                for (UserEp userEp : seasons.getUserEps()) {
+                if (seasons.getUserEps() != null)
+                    for (UserEp userEp : seasons.getUserEps()) {
                         if (userEp.isAssistido()) {
                             contagem = contagem + 1;
                         }
 
-                }
+                    }
             }
         }
         return contagem;
@@ -151,45 +151,46 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
                         proximo.setText(String.valueOf("S" + seasons.getSeasonNumber() + "E" + userEp.getEpisodeNumber()));
                         final int finalPosicao = posicao;
                         new Thread(() -> {
+                            try {
+                                final TvEpisode tvEpisode = FilmeService.getTmdbTvEpisodes()
+                                        .getEpisode(userTvshow.getId(), userEp.getSeasonNumber(), userEp.getEpisodeNumber(),
+                                                BaseActivity.getLocale(), TmdbTvEpisodes.EpisodeMethod.external_ids);
 
-                            final TvEpisode tvEpisode = FilmeService.getTmdbTvEpisodes()
-                                    .getEpisode(userTvshow.getId(), userEp.getSeasonNumber(), userEp.getEpisodeNumber(),
-                                            BaseActivity.getLocale(), TmdbTvEpisodes.EpisodeMethod.external_ids);
-                            context.runOnUiThread(() -> {
-                                Date date = null;
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                                try {
-                                    date = sdf.parse(tvEpisode.getAirDate());
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
+                                context.runOnUiThread(() -> {
+                                    Date date = null;
+                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                    try {
+                                        date = sdf.parse(tvEpisode.getAirDate());
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
 
-//                                        if (verificaDataProximaLancamentoDistante(date)){
-//                                            itemView.setAlpha((float) 0.5);
-//                                            return;
 //                                        } TODO não mostrar episodio muito distante. Não funcionando
-                                ep_title
-                                        .setText(tvEpisode.getName() != null && !tvEpisode.getName().equals("") ? tvEpisode.getName() :
-                                                context.getResources().getString(R.string.no_epsodio));
-                                dataTvshow.setText(" - " +tvEpisode.getAirDate());
+                                    ep_title
+                                            .setText(tvEpisode.getName() != null && !tvEpisode.getName().equals("") ? tvEpisode.getName() :
+                                                    context.getResources().getString(R.string.no_epsodio));
+                                    dataTvshow.setText(" - " + tvEpisode.getAirDate());
 
 
-                                if (UtilsApp.verificaDataProximaLancamento(date)){
-                                    new_seguindo.setVisibility(View.VISIBLE);
-                                } else {
-                                    new_seguindo.setVisibility(View.GONE);
-                                }
+                                    if (UtilsApp.verificaDataProximaLancamento(date)) {
+                                        new_seguindo.setVisibility(View.VISIBLE);
+                                    } else {
+                                        new_seguindo.setVisibility(View.GONE);
+                                    }
 
-                                itemView.setOnClickListener(view -> {
-                                    Intent intent = new Intent(context, TemporadaActivity.class);
-                                    intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), userTvshow.getId());
-                                    intent.putExtra(Constantes.INSTANCE.getTEMPORADA_ID(), userEp.getSeasonNumber() );
-                                    intent.putExtra(Constantes.INSTANCE.getTEMPORADA_POSITION(), finalPosicao);
-                                    intent.putExtra(Constantes.INSTANCE.getNOME(), userTvshow.getNome());
-                                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
-                                    context.startActivity(intent);
+                                    itemView.setOnClickListener(view -> {
+                                        Intent intent = new Intent(context, TemporadaActivity.class);
+                                        intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), userTvshow.getId());
+                                        intent.putExtra(Constantes.INSTANCE.getTEMPORADA_ID(), userEp.getSeasonNumber());
+                                        intent.putExtra(Constantes.INSTANCE.getTEMPORADA_POSITION(), finalPosicao);
+                                        intent.putExtra(Constantes.INSTANCE.getNOME(), userTvshow.getNome());
+                                        intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
+                                        context.startActivity(intent);
+                                    });
                                 });
-                            });
+                            } catch (Exception e){
+                                Crashlytics.logException(e);
+                            }
                         }).start();
                         return;
                     }

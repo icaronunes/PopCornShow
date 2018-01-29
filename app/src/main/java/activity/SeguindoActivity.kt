@@ -142,15 +142,18 @@ class SeguindoActivity : BaseActivity() {
         userTvshowFire?.forEachIndexed { indexSerie, userTvshow ->
             var serie: Tvshow? = null
             val subscriber = API(this)
-                    .getTvShow(userTvshow.id)
+                    .getTvShowLite(userTvshow.id)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : Observer<Tvshow> {
-                        override fun onCompleted() {
+                        override fun onCompleted() { serie
                             if (serie?.numberOfEpisodes != userTvshow.numberOfEpisodes) {
                                 userTvshowNovo = UtilsApp.setUserTvShow(serie)
+                                Log.d(this@SeguindoActivity.javaClass.name, serie?.name)
                                 userTvshow.seasons.forEachIndexed { indexSeason, userSeasons ->
-                                    if (serie?.seasons!![indexSeason]?.episodeCount != userSeasons.userEps.size) {
+                                    Log.d(this@SeguindoActivity.javaClass.name, "${serie?.name} ${indexSeason}")
+                                    if (userSeasons?.userEps != null && serie?.seasons?.size!! < indexSeason)
+                                    if (serie?.seasons?.get(indexSeason)?.episodeCount != userSeasons.userEps.size) {
                                         atualizarRealDate(indexSerie, indexSeason, serie, userTvshow)
                                     }
                                 }
@@ -158,7 +161,7 @@ class SeguindoActivity : BaseActivity() {
                         }
 
                         override fun onError(e: Throwable) {
-                            // Toast.makeText(this@SeguindoActivity, R.string.ops, Toast.LENGTH_SHORT).show()
+                             Toast.makeText(this@SeguindoActivity, R.string.ops, Toast.LENGTH_SHORT).show()
                             Log.d("TAG", e.message)
                         }
 

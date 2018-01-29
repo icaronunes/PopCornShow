@@ -1,64 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:background="@color/accent2"
-    android:layout_height="match_parent"
-    android:scrollbars="none">
+<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/accent2"-->
+    <!--android:scrollbars="none">-->
 
-    <LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/accent2"
+    android:orientation="vertical">
+
+    <HorizontalScrollView
+        android:id="@+id/horizontal_filme_button_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_margin="@dimen/trade_size_dp_6"
+        android:layout_marginTop="@dimen/trade_size_dp_6"
+        android:minHeight="@dimen/trade_size_dp_30"
+        android:scrollbars="none">
 
-        <HorizontalScrollView
-            android:id="@+id/horizontal_filme_button_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/trade_size_dp_6"
-            android:layout_marginTop="@dimen/trade_size_dp_6"
-            android:minHeight="@dimen/trade_size_dp_30"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:id="@+id/scroll_filme_button_main"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
-
-        </HorizontalScrollView>
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/scroll_filme_button_main"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/trade_size_dp_6"
-            android:layout_marginStart="@dimen/trade_size_dp_6"
-            android:text="@string/populares"
-            android:textColor="@color/red"
-            android:textSize="@dimen/trade_txt_size_sp_16"
-            android:textStyle="normal|bold"
-            android:typeface="serif" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycle_movie_popular_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/trade_size_dp_100" />
+    </HorizontalScrollView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/trade_size_dp_6"
-            android:layout_marginStart="@dimen/trade_size_dp_6"
-            android:text="@string/em_breve"
-            android:textColor="@color/blue"
-            android:textStyle="normal|bold"
-            android:typeface="serif" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/trade_size_dp_6"
+        android:layout_marginStart="@dimen/trade_size_dp_6"
+        android:text="@string/populares"
+        android:textColor="@color/red"
+        android:textSize="@dimen/trade_txt_size_sp_16"
+        android:textStyle="normal|bold"
+        android:typeface="serif" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycle_movieontheair_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/trade_size_dp_100" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycle_movie_popular_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:minHeight="@dimen/trade_size_dp_100" />
 
-    </LinearLayout>
-</ScrollView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/trade_size_dp_6"
+        android:layout_marginStart="@dimen/trade_size_dp_6"
+        android:text="@string/em_breve"
+        android:textColor="@color/blue"
+        android:textStyle="normal|bold"
+        android:typeface="serif" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycle_movieontheair_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:minHeight="@dimen/trade_size_dp_100" />
+
+</LinearLayout>
+<!--</ScrollView>-->

@@ -62,14 +62,14 @@ class PersonFragment : Fragment() {
         super.onCreate(savedInstanceState)
         retainInstance = true
         if (arguments != null) {
-            tipo = arguments.getInt(Constantes.ABA)
+            tipo = arguments?.getInt(Constantes.ABA)!!
             if (person == null) {
-                person = arguments.getSerializable(Constantes.PERSON) as Person
+                person = arguments?.getSerializable(Constantes.PERSON) as Person
             }
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         when (tipo) {
 
             R.string.filme -> {
@@ -285,7 +285,7 @@ class PersonFragment : Fragment() {
             progressBar?.visibility = View.GONE
         } else {
             progressBar?.visibility = View.GONE
-            recyclerViewMovie?.adapter = PersonMovieAdapter(context, personMovies)
+            recyclerViewMovie?.adapter = PersonMovieAdapter(context!!, personMovies)
             progressBar?.visibility = View.GONE
         }
     }
@@ -297,7 +297,7 @@ class PersonFragment : Fragment() {
             progressBar?.visibility = View.GONE
             return
         }
-        recyclerViewCrews?.adapter = PersonCrewsAdapter(context, personCredits)
+        recyclerViewCrews?.adapter = PersonCrewsAdapter(context!!, personCredits)
         progressBar?.visibility = View.GONE
 
 
@@ -312,7 +312,7 @@ class PersonFragment : Fragment() {
             sem_fotos?.visibility = View.VISIBLE
             progressBar?.visibility = View.GONE
         } else {
-            recyclerViewImagem?.adapter = PersonImagemAdapter(context, artworks, person?.name)
+            recyclerViewImagem?.adapter = PersonImagemAdapter(context!!, artworks, person?.name)
             progressBar?.visibility = View.GONE
         }
     }
@@ -325,7 +325,7 @@ class PersonFragment : Fragment() {
             return
         }
 
-        recyclerViewTvshow?.adapter = PersonTvAdapter(context, personCredits)
+        recyclerViewTvshow?.adapter = PersonTvAdapter(context!!, personCredits)
         progressBar?.visibility = View.GONE
 
     }

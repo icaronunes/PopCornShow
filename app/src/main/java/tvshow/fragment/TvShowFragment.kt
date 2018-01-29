@@ -96,10 +96,10 @@ class TvShowFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            tipo = arguments.getInt(Constantes.ABA)
-            series = arguments.getSerializable(Constantes.SERIE) as Tvshow
-            color = arguments.getInt(Constantes.COLOR_TOP)
-            seguindo = arguments.getBoolean(Constantes.USER)
+            tipo = arguments?.getInt(Constantes.ABA)!!
+            series = arguments?.getSerializable(Constantes.SERIE) as Tvshow
+            color = arguments?.getInt(Constantes.COLOR_TOP)!!
+            seguindo = arguments?.getBoolean(Constantes.USER)!!
         }
         //Validar se esta logado. Caso não, não precisa instanciar nada.
         subscriptions = CompositeSubscription()
@@ -143,7 +143,7 @@ class TvShowFragment : Fragment() {
                 startActivity(intent)
 
             } else {
-                BaseActivity.SnackBar(activity.findViewById(R.id.fab_menu_filme),
+                BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
                         getString(R.string.no_site))
             }
         }
@@ -169,24 +169,24 @@ class TvShowFragment : Fragment() {
         img_star?.setOnClickListener { view ->
 
             if (mediaNotas > 0) {
-                val builder = AlertDialog.Builder(activity)
-                val inflater = activity.layoutInflater
-                val layout = inflater.inflate(R.layout.layout_notas, null)
+                val builder = AlertDialog.Builder(activity!!)
+                val inflater = activity?.layoutInflater
+                val layout = inflater?.inflate(R.layout.layout_notas, null)
 
 
                 if (imdbDd != null) {
                     (layout
-                            .findViewById<View>(R.id.nota_imdb) as TextView).text = if (imdbDd?.imdbRating != null)
+                            ?.findViewById<View>(R.id.nota_imdb) as TextView).text = if (imdbDd?.imdbRating != null)
                         imdbDd?.imdbRating + "/10"
                     else
                         "- -"
                     (layout
-                            .findViewById<View>(R.id.nota_metacritic) as TextView).text = if (imdbDd?.metascore != null)
+                            ?.findViewById<View>(R.id.nota_metacritic) as TextView).text = if (imdbDd?.metascore != null)
                         imdbDd?.metascore + "/100"
                     else
                         "- -"
                     (layout
-                            .findViewById<View>(R.id.nota_tomatoes) as TextView).text = if (imdbDd?.tomatoRating != null)
+                            ?.findViewById<View>(R.id.nota_tomatoes) as TextView).text = if (imdbDd?.tomatoRating != null)
                         imdbDd?.tomatoRating + "/10"
                     else
                         "- -"
@@ -194,12 +194,12 @@ class TvShowFragment : Fragment() {
 
                 if (series != null)
                     (layout
-                            .findViewById<View>(R.id.nota_tmdb) as TextView).text = (if (series?.voteAverage != 0.0)
+                            ?.findViewById<View>(R.id.nota_tmdb) as TextView).text = (if (series?.voteAverage != 0.0)
                         series?.voteAverage?.toString() + "/10"
                     else
                         "- -").toString()
 
-                (layout.findViewById<View>(R.id.image_metacritic) as ImageView).setOnClickListener(OnClickListener {
+                (layout?.findViewById<View>(R.id.image_metacritic) as ImageView).setOnClickListener(OnClickListener {
                     if (imdbDd == null) {
                         return@OnClickListener
                     }
@@ -217,7 +217,7 @@ class TvShowFragment : Fragment() {
                     }
                 })
 
-                (layout.findViewById<View>(R.id.image_tomatoes) as ImageView).setOnClickListener(OnClickListener {
+                (layout?.findViewById<View>(R.id.image_tomatoes) as ImageView).setOnClickListener(OnClickListener {
                     if (imdbDd == null) {
                         return@OnClickListener
                     }
@@ -234,7 +234,7 @@ class TvShowFragment : Fragment() {
                     }
                 })
 
-                (layout.findViewById<View>(R.id.image_imdb) as ImageView).setOnClickListener(OnClickListener {
+                (layout?.findViewById<View>(R.id.image_imdb) as ImageView).setOnClickListener(OnClickListener {
                     if (imdbDd == null) {
                         return@OnClickListener
                     }
@@ -263,7 +263,7 @@ class TvShowFragment : Fragment() {
                 builder.show()
 
             } else {
-                BaseActivity.SnackBar(activity.findViewById(R.id.fab_menu_filme),
+                BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
                         getString(R.string.no_vote))
             }
         }
@@ -301,7 +301,7 @@ class TvShowFragment : Fragment() {
     }
 
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         if (mAuth?.currentUser != null) {
@@ -315,7 +315,7 @@ class TvShowFragment : Fragment() {
 
                             if (getView() != null) {
                                 recyclerViewTemporada = getView()?.rootView?.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
-                                recyclerViewTemporada.adapter = TemporadasAdapter(activity, series, onClickListener(), color, userTvshow)
+                                recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, userTvshow)
                                 if (progressBarTemporada != null) {
 
                                     progressBarTemporada?.visibility = View.INVISIBLE
@@ -329,7 +329,7 @@ class TvShowFragment : Fragment() {
                     } else {
                         if (getView() != null) {
                             recyclerViewTemporada = getView()?.rootView?.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
-                            recyclerViewTemporada.adapter = TemporadasAdapter(activity, series, onClickListener(), color, null)
+                            recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, null)
                             if (progressBarTemporada != null) {
                                 progressBarTemporada?.visibility = View.INVISIBLE
                             }
@@ -385,7 +385,7 @@ class TvShowFragment : Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         when (tipo) {
 
@@ -407,12 +407,12 @@ class TvShowFragment : Fragment() {
         recyclerViewTemporada.itemAnimator = DefaultItemAnimator()
         recyclerViewTemporada.layoutManager = LinearLayoutManager(context)
         if (mAuth?.currentUser != null) {
-            recyclerViewTemporada.adapter = TemporadasAdapter(activity, series, onClickListener(), color, userTvshow)
+            recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, userTvshow)
             if (progressBarTemporada != null) {
                 progressBarTemporada?.visibility = View.INVISIBLE
             }
         } else {
-            recyclerViewTemporada.adapter = TemporadasAdapter(activity, series, onClickListener(), color, null)
+            recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, null)
             if (progressBarTemporada != null) {
                 progressBarTemporada?.visibility = View.INVISIBLE
             }
@@ -437,7 +437,7 @@ class TvShowFragment : Fragment() {
                 intent.putExtra(Constantes.TEMPORADA_POSITION, position)
                 intent.putExtra(Constantes.TVSHOW_ID, series?.id)
                 intent.putExtra(Constantes.COLOR_TOP, color)
-                context.startActivity(intent)
+                context?.startActivity(intent)
 
             }
 
@@ -545,7 +545,7 @@ class TvShowFragment : Fragment() {
 
             } else {
 
-                val dialog = AlertDialog.Builder(context)
+                val dialog = AlertDialog.Builder(context!!)
                         .setTitle(R.string.title_delete)
                         .setMessage(R.string.msg_parar_seguir)
                         .setNegativeButton(R.string.no, null)
@@ -615,8 +615,8 @@ class TvShowFragment : Fragment() {
                 intent.putExtra(Constantes.NOME, series?.name)
                 val transition = getString(R.string.poster_transition)
                 val compat = ActivityOptionsCompat
-                        .makeSceneTransitionAnimation(activity, img_poster, transition)
-                ActivityCompat.startActivity(activity, intent, compat.toBundle())
+                        .makeSceneTransitionAnimation(activity!!, img_poster, transition)
+                ActivityCompat.startActivity(activity!!, intent, compat.toBundle())
 
             }
         } else {
@@ -632,14 +632,14 @@ class TvShowFragment : Fragment() {
                 primeiraProdutora = primeiraProdutora.subSequence(0, 27) as String
                 primeiraProdutora += "..."
             }
-            produtora?.setTextColor(ContextCompat.getColor(context, R.color.primary))
+            produtora?.setTextColor(ContextCompat.getColor(context!!, R.color.primary))
             produtora?.text = primeiraProdutora
 
             produtora?.setOnClickListener { view ->
                 if (series?.productionCompanies?.isNotEmpty()!!) {
                     val intent = Intent(context, ProdutoraActivity::class.java)
                     intent.putExtra(Constantes.PRODUTORA_ID, series?.productionCompanies?.get(0)?.id)
-                    context.startActivity(intent)
+                    context?.startActivity(intent)
                 } else {
                     Toast.makeText(context, getString(R.string.sem_informacao_company), Toast.LENGTH_SHORT).show()
                 }
@@ -671,7 +671,7 @@ class TvShowFragment : Fragment() {
         } else {
             img_star?.setImageResource(R.drawable.icon_star_off)
             voto_media?.setText(R.string.valor_zero)
-            voto_media?.setTextColor(ContextCompat.getColor(context, R.color.blue))
+            voto_media?.setTextColor(ContextCompat.getColor(context!!, R.color.blue))
         }
     }
 
@@ -787,7 +787,7 @@ class TvShowFragment : Fragment() {
             val intent = Intent(context, SimilaresActivity::class.java)
             intent.putExtra(Constantes.SIMILARES_TVSHOW, series?.similar?.results as Serializable)
             intent.putExtra(Constantes.NOME, series?.name)
-            activity.startActivity(intent)
+            activity?.startActivity(intent)
         })
 
         if (series?.similar?.results?.isNotEmpty()!!) {
@@ -803,13 +803,13 @@ class TvShowFragment : Fragment() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                     when (newState) {
                         0 -> {
-                            activity.fab_menu_filme.visibility = View.VISIBLE
+                            activity?.fab_menu_filme?.visibility = View.VISIBLE
                         }
                         1 -> {
-                            activity.fab_menu_filme.visibility = View.INVISIBLE
+                            activity?.fab_menu_filme?.visibility = View.INVISIBLE
                         }
                         2 -> {
-                            activity.fab_menu_filme.visibility = View.INVISIBLE
+                            activity?.fab_menu_filme?.visibility = View.INVISIBLE
                         }
                     }
 
@@ -865,7 +865,7 @@ class TvShowFragment : Fragment() {
     fun getImdb(): Imdb? {
 
         if (series != null) {
-            val inscricaoImdb = API(context).getOmdbpi(series?.external_ids?.imdbId)
+            val inscricaoImdb = API(context!!).getOmdbpi(series?.external_ids?.imdbId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : Observer<Imdb> {

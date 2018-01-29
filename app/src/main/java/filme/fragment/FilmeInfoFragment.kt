@@ -61,7 +61,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             val bundle = arguments
-            movieDb = bundle.getSerializable(Constantes.FILME) as Movie
+            movieDb = bundle?.getSerializable(Constantes.FILME) as Movie
         }
         subscriptions = CompositeSubscription()
     }
@@ -134,13 +134,13 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                     var valor = movieDb!!.budget.toString()
                     if (valor.length >= 6)
                         valor = valor.substring(0, valor.length - 6)
-                    BaseActivity.SnackBar(activity.findViewById(R.id.fab_menu_filme),
+                    BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
                             getString(R.string.orcamento_budget) + " " +
                                     getString(R.string.dollar)
                                     + " " + valor + " " + getString(R.string.milhoes_budget))
 
                 } else {
-                    BaseActivity.SnackBar(activity.findViewById(R.id.fab_menu_filme),
+                    BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
                             getString(R.string.no_budget))
                 }
             }
@@ -154,7 +154,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                 startActivity(intent)
 
             } else {
-                BaseActivity.SnackBar(activity.findViewById(R.id.fab_menu_filme),
+                BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
                         getString(R.string.no_site))
             }
         }
@@ -164,7 +164,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
         icon_collection.setOnClickListener({
             if (movieDb?.belongsToCollection != null) {
-                val inscricaoMovie = API(context = activity).getColecao(movieDb?.belongsToCollection?.id!!)
+                val inscricaoMovie = API(context = context!!).getColecao(movieDb?.belongsToCollection?.id!!)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
@@ -175,7 +175,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
                 subscriptions.add(inscricaoMovie)
             } else {
-                BaseActivity.SnackBar(activity.findViewById(R.id.fab_menu_filme),
+                BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
                         getString(R.string.sem_informacao_colletion))
             }
         })
@@ -210,7 +210,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
             override fun onClick(p0: View?) {
                 if (mediaNotas > 0) {
                     val builder = AlertDialog.Builder(activity)
-                    val inflater = activity.layoutInflater
+                    val inflater = activity?.layoutInflater!!
                     val layout = inflater.inflate(R.layout.layout_notas, null)
 
                     if (imdbDd != null) {
@@ -307,7 +307,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                     builder.show()
 
                 } else {
-                    BaseActivity.SnackBar(activity.findViewById(R.id.fab_menu_filme),
+                    BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
                             getString(R.string.no_vote))
 
                 }
@@ -319,10 +319,10 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
     private fun getCollection(colecao: List<PartsItem?>?) {
         if (colecao?.isNotEmpty()!!) {
             val builder = AlertDialog.Builder(activity)
-            val inflater = activity.layoutInflater
-            val dialog_collection = inflater.inflate(R.layout.dialog_collection, null)
-            val pager = dialog_collection.findViewById<ViewPager>(R.id.viewpager_collection)
-            pager.adapter = CollectionPagerAdapter(colecao, context)
+            val inflater = activity?.layoutInflater
+            val dialog_collection = inflater?.inflate(R.layout.dialog_collection, null)
+            val pager = dialog_collection?.findViewById<ViewPager>(R.id.viewpager_collection)
+            pager?.adapter = CollectionPagerAdapter(colecao, context!!)
             builder.setView(dialog_collection)
             builder.show()
 
@@ -393,8 +393,8 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                 intent.putExtra(Constantes.POSTER, movieDb?.images?.posters as Serializable)
                 intent.putExtra(Constantes.NOME, movieDb?.title)
                 val compat = ActivityOptionsCompat
-                        .makeSceneTransitionAnimation(activity, img_poster, transition)
-                ActivityCompat.startActivity(activity, intent, compat.toBundle())
+                        .makeSceneTransitionAnimation(activity!!, img_poster, transition)
+                ActivityCompat.startActivity(activity!!, intent, compat.toBundle())
 
             }
         } else {
@@ -406,7 +406,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
         if (!movieDb?.productionCompanies?.isEmpty()!!) {
 
             produtora.text = movieDb?.productionCompanies?.get(0)?.name
-            produtora.setTextColor(ContextCompat.getColor(context, R.color.primary))
+            produtora.setTextColor(ContextCompat.getColor(context!!, R.color.primary))
             produtora.setOnClickListener {
                 val intent = Intent(context, ProdutoraActivity::class.java)
                 intent.putExtra(Constantes.PRODUTORA_ID, movieDb?.productionCompanies!![0]?.id)
@@ -419,7 +419,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
     private fun getImdb() {
         if (movieDb?.imdbId != null) {
-            val inscircaoImdb = API(activity).getOmdbpi(movieDb?.imdbId)
+            val inscircaoImdb = API(context!!).getOmdbpi(movieDb?.imdbId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
@@ -446,7 +446,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
         } else {
             img_star?.setImageResource(R.drawable.icon_star_off)
             voto_media?.setText(R.string.valor_zero)
-            voto_media?.setTextColor(ContextCompat.getColor(context, R.color.blue))
+            voto_media?.setTextColor(ContextCompat.getColor(context!!, R.color.blue))
         }
     }
 
@@ -594,13 +594,13 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                     when (newState) {
                         0 -> {
-                            activity.fab_menu_filme.visibility = View.VISIBLE
+                            activity?.fab_menu_filme?.visibility = View.VISIBLE
                         }
                         1 -> {
-                            activity.fab_menu_filme.visibility = View.INVISIBLE
+                            activity?.fab_menu_filme?.visibility = View.INVISIBLE
                         }
                         2 -> {
-                            activity.fab_menu_filme.visibility = View.INVISIBLE
+                            activity?.fab_menu_filme?.visibility = View.INVISIBLE
                         }
                     }
 
@@ -608,7 +608,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
             })
 
             textview_similares.visibility = View.VISIBLE
-            recycle_filme_similares.adapter = SimilaresFilmesAdapter(activity, movieDb?.similar?.resultsSimilar)
+            recycle_filme_similares.adapter = SimilaresFilmesAdapter(activity!!, movieDb?.similar?.resultsSimilar)
         } else {
             textview_similares.visibility = View.GONE
             recycle_filme_similares.visibility = View.GONE;

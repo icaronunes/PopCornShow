@@ -65,6 +65,10 @@
   public static final android.support.v7.widget.RecyclerView *;
 }
 
+-keep class domain.* {
+  *;
+}
+
 -dontwarn android.support.**
 -dontnote android.net.http.**
 -dontnote org.apache.commons.codec.**
