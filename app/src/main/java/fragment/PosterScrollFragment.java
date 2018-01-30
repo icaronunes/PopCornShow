@@ -91,9 +91,10 @@ public class PosterScrollFragment extends Fragment {
             }
         });
 
-        compartilhar.setOnClickListener(compartilharOnClick());
-        salvar.setOnClickListener(salvarImagem());
-
+        compartilhar
+                .setOnClickListener(compartilharOnClick());
+        salvar
+                .setOnClickListener(salvarImagem());
 
     }
 
