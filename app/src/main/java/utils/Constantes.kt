@@ -63,5 +63,9 @@ object Constantes {
 
     }
 
+    object PermissaoAndroid {
+        val REQUEST_PERMISSIONS_CODE_STORE = 1
+    }
+
 }
 

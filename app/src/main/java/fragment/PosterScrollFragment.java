@@ -1,16 +1,18 @@
 package fragment;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +40,7 @@ public class PosterScrollFragment extends Fragment {
     private String endereco, nome;
     private ImageView imageView;
     private LinearLayout linear_poster_grid;
+    private final static int REQUEST_PERMISSIONS_CODE = 1;
 
     public static PosterScrollFragment newInstance(String endereco, String nome) {
 
@@ -67,8 +70,6 @@ public class PosterScrollFragment extends Fragment {
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(imageView);
 
-
-
         return view;
     }
 
@@ -79,32 +80,62 @@ public class PosterScrollFragment extends Fragment {
         ImageView compartilhar = (ImageView) view.findViewById(R.id.compartilhar);
         ImageView salvar = (ImageView) view.findViewById(R.id.salvar);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (linear_poster_grid.getVisibility() == View.INVISIBLE) {
-                        linear_poster_grid.setVisibility(View.VISIBLE);
-                    } else {
-                        linear_poster_grid.setVisibility(View.INVISIBLE);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (linear_poster_grid.getVisibility() == View.INVISIBLE) {
+                    linear_poster_grid.setVisibility(View.VISIBLE);
+                } else {
+                    linear_poster_grid.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        compartilhar.setOnClickListener(compartilharOnClick());
+        salvar.setOnClickListener(salvarImagem());
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode) {
+            case REQUEST_PERMISSIONS_CODE:
+                for (int i = 0; i < permissions.length; i++) {
+                    if (permissions[i].equalsIgnoreCase(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+
+                        salvarImagem();
                     }
                 }
-            });
-            compartilhar.setOnClickListener(compartilharOnClick());
-            salvar.setOnClickListener(salvarImagem());
         }
-
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private View.OnClickListener salvarImagem() {
         return new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                if (UtilsApp.isExternalStorageWritable()) {
-                    salvarArquivoNaMemoriaInterna(getContext(), imageView);
-                } else {
-                    Toast.makeText(getContext(), R.string.ops, Toast.LENGTH_LONG).show();
-                }
+                if (getActivity() != null)
+                    if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                            Toast.makeText(getContext(), getString(R.string.permitir_acesso_armazenamento), Toast.LENGTH_LONG).show();
+                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS_CODE);
+                        } else {
+                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS_CODE);
+                        }
+
+                    } else {
+                        if (UtilsApp.isExternalStorageWritable()) {
+                            salvarArquivoNaMemoriaInterna(getContext(), imageView);
+                        } else {
+                            Toast.makeText(getContext(), R.string.ops, Toast.LENGTH_LONG).show();
+                        }
+                    }
             }
         };
     }
@@ -119,7 +150,7 @@ public class PosterScrollFragment extends Fragment {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.putExtra(Intent.EXTRA_TEXT, nome + "  -  " + "https://q2p5q.app.goo.gl/3hX6" + " by: " + Constantes.INSTANCE.getTWITTER_URL());
                     intent.setType("image/*"); // link dynamic - https://q2p5q.app.goo.gl/3hX6
-                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                    intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.getUriDownloadImage(getContext(), file));
                     startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
                 } else {
                     Toast.makeText(getContext(), getResources().getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show();
@@ -156,7 +187,7 @@ public class PosterScrollFragment extends Fragment {
             UtilsApp.writeBitmap(dir, bitmap);
         }
         File file2 = new File(getContext().getExternalCacheDir(), getContext().getPackageName());
-        Log.d("PosterScrollFragment", "onDestroy: "+ file2.toString());
+        // Log.d("PosterScrollFragment", "onDestroy: "+ file2.toString());
         return dir;
     }
 
@@ -164,9 +195,9 @@ public class PosterScrollFragment extends Fragment {
         File file = new File(Environment
                 .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath(), getResources().getString(R.string.app_name));
 
-            if (!file.exists()) {
-                file.mkdir();
-            }
+        if (!file.exists()) {
+            file.mkdir();
+        }
 
         File dir = new File(file, endereco);
 

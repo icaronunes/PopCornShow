@@ -213,4 +213,5 @@
     <string name="atualizar">New</string>
     <string name="sem_informacao_company">No Company Information</string>
     <string name="tvshow_rated">Tvshow Rated</string>
+    <string name="permitir_acesso_armazenamento">Para salvar imagem  é necessario permitir acesso a meoria interna.</string>
 </resources>

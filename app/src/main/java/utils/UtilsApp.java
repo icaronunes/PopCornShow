@@ -6,9 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.v4.content.FileProvider;
 import android.support.v7.graphics.Palette;
 import android.telephony.TelephonyManager;
 import android.view.View;
@@ -110,10 +112,7 @@ public class UtilsApp {
     /* Checks if external storage is available for read and write */
     public static boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 
     /* Checks if external storage is available to at least read */
@@ -231,15 +230,12 @@ public class UtilsApp {
         try {
             if (!file.exists()) {
                 file.createNewFile();
-                //  Log.e("salvarArqNaMemoriaIn", "Arquivo Criado");
             }
             FileOutputStream out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();
-            //  Log.e("salvarArqNaMemoriaIn", "fechado");
         } catch (IOException e) {
             Crashlytics.logException(e);
-
         }
     }
 
@@ -337,6 +333,17 @@ public class UtilsApp {
                 }
             }
         }
+    }
+
+    public static Uri getUriDownloadImage(Context context, File file) {
+        Uri uri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = FileProvider.getUriForFile(context, context.getPackageName() + ".provider", file);
+        } else {
+            uri = Uri.fromFile(file);
+        }
+
+        return uri;
     }
 
     public static String getBaseUrlImagem(int tamanho) {

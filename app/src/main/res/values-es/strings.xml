@@ -187,4 +187,5 @@
     <string name="atualizar" >Nuevo</string>
     <string name="sem_informacao_company">No hay información de la Compañía</string>
     <string name="tvshow_rated">Serie Clasificada</string>
+    <string name="permitir_acesso_armazenamento">Para salvar imagem  é necessario permitir acesso a meoria interna.</string>
 </resources>
