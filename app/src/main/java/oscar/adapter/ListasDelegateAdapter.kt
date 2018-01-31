@@ -26,6 +26,7 @@ class ListasDelegateAdapter : ViewTypeDelegateAdapter {
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
             ListViewHolder(parent)
 
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType, context: Context?) {
         (holder as ListViewHolder).bind(item as ListaItemFilme)
     }

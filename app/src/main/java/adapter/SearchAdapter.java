@@ -9,13 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import pessoa.activity.PersonActivity;
 import activity.SearchMultiActivity;
 import br.com.icaro.filme.R;
 import filme.activity.FilmeActivity;
@@ -23,6 +20,7 @@ import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
 import info.movito.themoviedbapi.model.people.Person;
 import info.movito.themoviedbapi.model.tv.TvSeries;
+import pessoa.activity.PersonActivity;
 import tvshow.activity.TvShowActivity;
 import utils.Constantes;
 import utils.UtilsApp;
@@ -55,8 +53,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
 
             Picasso.with(context)
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + movieDb.getPosterPath())
-                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .error(R.drawable.poster_empty)
                     .into(holder.poster);
 
@@ -90,8 +86,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
             Picasso.with(context)
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + series.getPosterPath())
                     .error(R.drawable.poster_empty)
-                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.poster);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -124,8 +118,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
             Picasso.with(context)
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + person.getProfilePath())
                     .error(R.drawable.poster_empty)
-                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.poster);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {

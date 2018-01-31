@@ -41,8 +41,6 @@ class SimilaresListaFilmeAdapter(private val similaresActivity: SimilaresActivit
 
         Picasso.with(similaresActivity)
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(similaresActivity, 2)) + item?.posterPath)
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.imageView)
 
         holder.itemView.setOnClickListener {

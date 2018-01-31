@@ -20,8 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -66,8 +64,6 @@ public class PosterScrollFragment extends Fragment {
         imageView = (ImageView) view.findViewById(R.id.img_poster_scroll);
         Picasso.with(getContext())
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(getContext(), 5)) + endereco)
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(imageView);
 
         return view;
@@ -91,10 +87,8 @@ public class PosterScrollFragment extends Fragment {
             }
         });
 
-        compartilhar
-                .setOnClickListener(compartilharOnClick());
-        salvar
-                .setOnClickListener(salvarImagem());
+        compartilhar.setOnClickListener(compartilharOnClick());
+        salvar.setOnClickListener(salvarImagem());
 
     }
 
@@ -165,10 +159,11 @@ public class PosterScrollFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        File file = new File(getContext().getExternalCacheDir(), getContext().getPackageName());
-        if (file.exists()) {
-            getContext().deleteDatabase(file.toString());
-
+        if (getContext() != null) {
+            File file = new File(getContext().getExternalCacheDir(), getContext().getPackageName());
+            if (file.exists()) {
+                getContext().deleteDatabase(file.toString());
+            }
         }
     }
 

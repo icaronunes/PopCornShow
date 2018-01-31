@@ -34,7 +34,6 @@ class PersonImagemAdapter(private val context: Context, private val artworks: Li
 
         Picasso.with(context).load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3)) + item?.filePath)
                 .placeholder(R.drawable.person)
-                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.imageButton, object : Callback {
                     override fun onSuccess() {
                         holder.progressBar.visibility = View.GONE

@@ -508,8 +508,6 @@ class TvShowActivity : BaseActivity() {
 
         Picasso.with(this@TvShowActivity)
                 .load(UtilsApp.getBaseUrlImagem(5) + series?.backdropPath)
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .error(R.drawable.top_empty)
                 .into(img_top_tvshow)
 

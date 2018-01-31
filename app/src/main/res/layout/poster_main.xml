@@ -17,11 +17,10 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_margin="@dimen/trade_size_dp_2"
-            android:background="@color/accent2"
-            android:scaleType="centerInside"
             android:adjustViewBounds="true"
+            android:background="@color/accent2"
             android:cropToPadding="true"
-            android:src="@drawable/poster_empty" />
+            android:scaleType="centerCrop" />
 
         <ProgressBar
             android:id="@+id/progress_poster_grid"

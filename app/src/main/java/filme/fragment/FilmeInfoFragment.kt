@@ -383,8 +383,6 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
         if (movieDb?.posterPath != null) {
             Picasso.with(context)
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + movieDb?.posterPath)
-                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(img_poster)
 
             img_poster.setOnClickListener {

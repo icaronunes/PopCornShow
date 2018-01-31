@@ -45,8 +45,6 @@ class SimilaresFilmesAdapter(activity: FragmentActivity, val similarItems: List<
             Picasso.with(context)
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + it.posterPath)
                     .placeholder(R.drawable.poster_empty)
-                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.imgPagerSimilares, object : Callback {
                         override fun onSuccess() {
                             color_top = UtilsApp.loadPalette(holder.imgPagerSimilares)

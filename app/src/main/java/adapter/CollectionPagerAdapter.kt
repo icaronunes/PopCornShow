@@ -47,8 +47,6 @@ class CollectionPagerAdapter(private val info: List<PartsItem?>?, private val co
         imageView = view.findViewById<ImageView>(R.id.img_collection)
         Picasso.with(context)
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 5)) + item?.posterPath)
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .error(R.drawable.poster_empty)
                 .into(imageView, object : Callback {
                     override fun onSuccess() {

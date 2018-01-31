@@ -37,8 +37,6 @@ class CrewsAdapter(private val context: CrewsActivity, private val crews: List<C
         Picasso.with(context)
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + crew?.profilePath)
                 .error(R.drawable.person)
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.img_crew)
 
         holder.itemView.setOnClickListener {
