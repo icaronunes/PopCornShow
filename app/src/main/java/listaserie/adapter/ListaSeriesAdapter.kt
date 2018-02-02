@@ -6,8 +6,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import domain.ListaItemSerie
 import domain.ViewType
-import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import pessoaspopulares.adapter.LoadingDelegateAdapter
+import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
 import java.util.*
 
@@ -19,7 +19,6 @@ class ListaSeriesAdapter(private val context: Context) : RecyclerView.Adapter<Re
         delegateAdapters.put(Constantes.BuscaConstants.LOADING, LoadingDelegateAdapter())
         delegateAdapters.put(Constantes.BuscaConstants.NEWS, ListasSeriesDelegateAdapter())
         listaResult.add(loading)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =

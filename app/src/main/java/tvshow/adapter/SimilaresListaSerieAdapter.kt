@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import br.com.icaro.filme.R
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import domain.tvshow.ResultsItem
 import tvshow.activity.TvShowActivity
@@ -31,8 +29,6 @@ class SimilaresListaSerieAdapter(private val similaresActivity: SimilaresActivit
 
         Picasso.with(similaresActivity)
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(similaresActivity, 2))!! + item?.posterPath)
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.imageView)
 
         holder.itemView.setOnClickListener {
@@ -40,7 +36,7 @@ class SimilaresListaSerieAdapter(private val similaresActivity: SimilaresActivit
             val color = UtilsApp.loadPalette(holder.imageView)
             intent.putExtra(Constantes.COLOR_TOP, color)
             intent.putExtra(Constantes.TVSHOW_ID, item?.id)
-            similaresActivity?.startActivity(intent)
+            similaresActivity.startActivity(intent)
 
         }
     }

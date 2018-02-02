@@ -1,7 +1,6 @@
 package adapter;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,17 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import tvshow.activity.TvShowActivity;
 import br.com.icaro.filme.R;
 import domain.UserTvshow;
+import tvshow.activity.TvShowActivity;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -47,8 +43,6 @@ public class SeguindoRecycleAdapter extends RecyclerView.Adapter<SeguindoRecycle
     public void onBindViewHolder(final SeguindoRecycleAdapter.SeguindoViewHolder holder, int position) {
         final UserTvshow userTvshow = userTvshows.get(position);
         Picasso.with(context).load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context,2)) + userTvshow.getPoster())
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.poster, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -72,13 +66,6 @@ public class SeguindoRecycleAdapter extends RecyclerView.Adapter<SeguindoRecycle
                 intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), userTvshow.getNome());
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(holder.poster));
                 context.startActivity(intent);
-
-                FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(userTvshow.getId()));
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, userTvshow.getNome());
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
             }
         });
 

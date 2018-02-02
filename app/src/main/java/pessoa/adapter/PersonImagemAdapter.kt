@@ -1,6 +1,5 @@
 package pessoa.adapter
 
-import pessoa.activity.FotoPersonActivity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
@@ -14,6 +13,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import domain.person.ProfilesItem
+import pessoa.activity.FotoPersonActivity
 import utils.Constantes
 import utils.UtilsApp
 import java.io.Serializable
@@ -34,7 +34,6 @@ class PersonImagemAdapter(private val context: Context, private val artworks: Li
 
         Picasso.with(context).load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3)) + item?.filePath)
                 .placeholder(R.drawable.person)
-                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.imageButton, object : Callback {
                     override fun onSuccess() {
                         holder.progressBar.visibility = View.GONE

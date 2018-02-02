@@ -1,28 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/trade_size_dp_6"
+    android:layout_margin="@dimen/trade_size_dp_2"
     app:cardElevation="@dimen/trade_size_dp_3">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/seguindo_imageView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/seguindo_imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:adjustViewBounds="false"
-            android:contentDescription="@string/imagem_filme"
-            android:cropToPadding="false"
-            android:scaleType="centerCrop" />
-
-    </FrameLayout>
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/poster_empty"
+        tools:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/seguindo_title"

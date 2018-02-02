@@ -203,4 +203,5 @@
     <string name="nao_visto">Não Visto</string>
     <string name="atualizar" >Nova</string>
     <string name="sem_informacao_company">Sem informações da Companhia</string>
+    <string name="permitir_acesso_armazenamento">Para salvar imagem  é necessario permitir acesso a meoria interna.</string>
 </resources>

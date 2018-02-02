@@ -89,10 +89,13 @@
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/87(**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/88(**.class)
 -injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/89(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/90(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/91(**.class)
+-injars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/FirebasePerformancePlugin/flavor21/release/92(**.class)
 -outjars /home/icaro/Documentos/workspace/Filme/app/build/intermediates/transforms/proguard/flavor21/release/0.jar
 
--libraryjars /opt/android-sdk-linux/platforms/android-26/android.jar
--libraryjars /opt/android-sdk-linux/platforms/android-26/optional/org.apache.http.legacy.jar
+-libraryjars /media/icaro/ef513178-7730-4712-b18d-1aa94590106f/android-sdk-linux/platforms/android-27/android.jar
+-libraryjars /media/icaro/ef513178-7730-4712-b18d-1aa94590106f/android-sdk-linux/platforms/android-27/optional/org.apache.http.legacy.jar
 
 -forceprocessing
 -printusage /home/icaro/Documentos/workspace/Filme/app/build/outputs/mapping/flavor21/release/usage.txt
@@ -100,14 +103,79 @@
 -printmapping /home/icaro/Documentos/workspace/Filme/app/build/outputs/mapping/flavor21/release/mapping.txt
 -dontusemixedcaseclassnames
 -keeppackagenames br.com.icaro.**,com.google.**,info.movito.**,okhttp3.**
--keepattributes *Annotation*,Signature,InnerClasses,EnclosingMethod,*Annotation*,*Annotation*,Signature,*Annotation*,*Annotation*
+-keepattributes *Annotation*,Signature,InnerClasses,EnclosingMethod,*Annotation*,*Annotation*,Signature,*Annotation*,*Annotation*,*Annotation*
 -verbose
 -dontnote com.android.vending.licensing.ILicensingService,com.google.vending.licensing.ILicensingService,com.google.android.vending.licensing.ILicensingService,android.support.**,android.net.http.**,org.apache.commons.codec.**,org.apache.http.**,org.apache.commons.logging.**,com.fasterxml.jackson.**,com.google.**,org.apache.**,com.squareup.okhttp.**,okhttp3.**,rx.internal.util.PlatformDependent
--dontwarn android.support.**,android.support.**,org.apache.commons.**,org.w3c.dom.**,com.fasterxml.jackson.**,com.google.**,com.squareup.**,info.movito.**,okio.**,javax.annotation.**,okio.**,com.google.firebase.perf.network.**,android.security.NetworkSecurityPolicy,android.app.Notification,sun.misc.Unsafe,libcore.io.Memory,com.google.android.apps.common.proguard.UsedBy*,com.onesignal.**,sun.misc.**,com.google.firebase.analytics.FirebaseAnalytics,com.google.firebase.analytics.FirebaseAnalytics$Event,com.google.firebase.analytics.FirebaseAnalytics$Param
+-dontwarn android.support.**,android.util.FloatMath,android.support.**,org.apache.commons.**,org.w3c.dom.**,com.fasterxml.jackson.**,com.google.**,com.squareup.**,info.movito.**,okio.**,javax.annotation.**,okio.**,com.google.firebase.perf.network.**,android.security.NetworkSecurityPolicy,android.app.Notification,sun.misc.Unsafe,libcore.io.Memory,com.google.android.apps.common.proguard.UsedBy*,com.onesignal.**,sun.misc.**,com.google.firebase.analytics.FirebaseAnalytics,com.google.firebase.analytics.FirebaseAnalytics$Event,com.google.firebase.analytics.FirebaseAnalytics$Param
 -printconfiguration /home/icaro/Documentos/workspace/Filme/app/config.txt
 -dump /home/icaro/Documentos/workspace/Filme/app/build/outputs/mapping/flavor21/release/dump.txt
 -printseeds /home/icaro/Documentos/workspace/Filme/app/build/outputs/mapping/flavor21/release/seeds.txt
 
+
+-keep public class com.google.vending.licensing.ILicensingService
+
+-keep public class com.android.vending.licensing.ILicensingService
+
+-keep public class com.google.android.vending.licensing.ILicensingService
+
+# For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
+-keepclasseswithmembers,allowshrinking class * {
+    native <methods>;
+}
+
+# Keep setters in Views so that animations can still work.
+-keepclassmembers public class * extends android.view.View {
+    void set*(***);
+    *** get*();
+}
+
+# We want to keep methods in Activity that could be used in the XML attribute onClick.
+-keepclassmembers class * extends android.app.Activity {
+    public void *(android.view.View);
+}
+
+# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
+-keepclassmembers enum  * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final ** CREATOR;
+}
+
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+# Preserve annotated Javascript interface methods.
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface
+    <methods>;
+}
+
+# Understand the @Keep support annotation.
+-keep class android.support.annotation.Keep
+
+-keep @android.support.annotation.Keep class * {
+    <fields>;
+    <methods>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <methods>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep
+    <init>(...);
+}
 
 # Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:185
 -keep class activity.CrewsActivity {
@@ -224,345 +292,394 @@
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-26.0.2.aar/fe8ba0fb85c02ba62c95e5beed9d21b0/res/layout/design_bottom_navigation_item.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-27.0.2.aar/7ad5e9df05e466c3c9fb55392db3414f/res/layout/design_bottom_navigation_item.xml:26
 -keep class android.support.design.internal.BaselineLayout {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-26.0.2.aar/fe8ba0fb85c02ba62c95e5beed9d21b0/res/layout/design_navigation_item.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-27.0.2.aar/7ad5e9df05e466c3c9fb55392db3414f/res/layout/design_navigation_item.xml:17
 -keep class android.support.design.internal.NavigationMenuItemView {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-26.0.2.aar/fe8ba0fb85c02ba62c95e5beed9d21b0/res/layout/design_navigation_menu.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-27.0.2.aar/7ad5e9df05e466c3c9fb55392db3414f/res/layout/design_navigation_menu.xml:17
 -keep class android.support.design.internal.NavigationMenuView {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-26.0.2.aar/fe8ba0fb85c02ba62c95e5beed9d21b0/res/layout/design_layout_snackbar_include.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-27.0.2.aar/7ad5e9df05e466c3c9fb55392db3414f/res/layout/design_layout_snackbar_include.xml:18
 -keep class android.support.design.internal.SnackbarContentLayout {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_crews.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_elenco.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_netflix.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_similares.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/produtora_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_crews.xml:10
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_elenco.xml:9
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:43
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:15
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:30
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person.xml:8
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_layout.xml:9
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_netflix.xml:10
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_similares.xml:8
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/produtora_layout.xml:33
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:15
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:26
 -keep class android.support.design.widget.AppBarLayout {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-26.0.2.aar/fe8ba0fb85c02ba62c95e5beed9d21b0/res/layout/design_text_input_password_icon.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-27.0.2.aar/7ad5e9df05e466c3c9fb55392db3414f/res/layout/design_text_input_password_icon.xml:18
 -keep class android.support.design.widget.CheckableImageButton {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/produtora_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:51
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:38
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/produtora_layout.xml:41
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:33
 -keep class android.support.design.widget.CollapsingToolbarLayout {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_crews.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_elenco.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_netflix.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_similares.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/produtora_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:0
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-26.0.2.aar/fe8ba0fb85c02ba62c95e5beed9d21b0/res/layout/design_bottom_sheet_dialog.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_crews.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_elenco.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:9
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:10
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:10
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_layout.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_netflix.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_similares.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/produtora_layout.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:10
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:9
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-27.0.2.aar/7ad5e9df05e466c3c9fb55392db3414f/res/layout/design_bottom_sheet_dialog.xml:26
 -keep class android.support.design.widget.CoordinatorLayout {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:87
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:51
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:99
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:81
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:86
 -keep class android.support.design.widget.NavigationView {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-26.0.2.aar/fe8ba0fb85c02ba62c95e5beed9d21b0/res/layout-sw600dp-v13/design_layout_snackbar.xml:0
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-26.0.2.aar/fe8ba0fb85c02ba62c95e5beed9d21b0/res/layout/design_layout_snackbar.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-27.0.2.aar/7ad5e9df05e466c3c9fb55392db3414f/res/layout-sw600dp-v13/design_layout_snackbar.xml:18
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/design-27.0.2.aar/7ad5e9df05e466c3c9fb55392db3414f/res/layout/design_layout_snackbar.xml:18
 -keep class android.support.design.widget.Snackbar$SnackbarLayout {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_epsodios.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_favorite.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_usuario_list.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_epsodios.xml:8
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_favorite.xml:10
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:50
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person.xml:15
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_usuario_list.xml:11
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:64
 -keep class android.support.design.widget.TabLayout {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/activity_login.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/criar_login.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/recuperar_senha_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/reset_senha.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:59
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:77
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/activity_login.xml:60
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/activity_login.xml:79
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:59
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:78
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:59
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:77
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/criar_login.xml:14
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/criar_login.xml:34
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/criar_login.xml:52
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/recuperar_senha_layout.xml:16
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/reset_senha.xml:19
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/reset_senha.xml:48
 -keep class android.support.design.widget.TextInputLayout {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/dialog_collection.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/dialog_collection.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/dialog_collection.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_epsodios.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_favorite.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_scroll_poster.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_usuario_list.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/dialog_collection.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:341
+-keep class android.support.v4.content.FileProvider {
+    <init>(...);
+}
+
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/dialog_collection.xml:8
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/dialog_collection.xml:8
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/dialog_collection.xml:8
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_epsodios.xml:21
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_favorite.xml:20
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:62
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:19
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:62
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person.xml:27
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_scroll_poster.xml:15
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_usuario_list.xml:21
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/dialog_collection.xml:8
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:17
 -keep class android.support.v4.view.ViewPager {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:2
 -keep class android.support.v4.widget.DrawerLayout {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x480/tvshow_info.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x600/tvshow_info.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/tvshow_info.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/tvshow_info.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/tvshow_info.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvshow_info.xml:0
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_alert_dialog_material.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x480/tvshow_info.xml:8
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x600/tvshow_info.xml:8
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/tvshow_info.xml:8
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/tvshow_info.xml:8
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/tvshow_info.xml:8
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:17
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvshow_info.xml:8
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_alert_dialog_material.xml:41
 -keep class android.support.v4.widget.NestedScrollView {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_alert_dialog_button_bar_material.xml:0
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_alert_dialog_material.xml:0
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_alert_dialog_title_material.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_alert_dialog_button_bar_material.xml:43
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_alert_dialog_material.xml:52
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_alert_dialog_material.xml:66
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_alert_dialog_title_material.xml:56
 -keep class android.support.v4.widget.Space {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_site.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_site.xml:5
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:37
 -keep class android.support.v4.widget.SwipeRefreshLayout {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_select_dialog_material.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_select_dialog_material.xml:23
 -keep class android.support.v7.app.AlertController$RecycleListView {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_action_menu_item_layout.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_action_menu_item_layout.xml:17
 -keep class android.support.v7.view.menu.ActionMenuItemView {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_expanded_menu_layout.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_expanded_menu_layout.xml:17
 -keep class android.support.v7.view.menu.ExpandedMenuView {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_list_menu_item_layout.xml:0
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_popup_menu_item_layout.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_list_menu_item_layout.xml:17
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_popup_menu_item_layout.xml:17
 -keep class android.support.v7.view.menu.ListMenuItemView {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout-v26/abc_screen_toolbar.xml:0
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_screen_toolbar.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout-v26/abc_screen_toolbar.xml:27
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_screen_toolbar.xml:27
 -keep class android.support.v7.widget.ActionBarContainer {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout-v26/abc_screen_toolbar.xml:0
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_action_mode_bar.xml:0
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_screen_toolbar.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout-v26/abc_screen_toolbar.xml:44
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_action_mode_bar.xml:19
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_screen_toolbar.xml:43
 -keep class android.support.v7.widget.ActionBarContextView {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout-v26/abc_screen_toolbar.xml:0
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_screen_toolbar.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout-v26/abc_screen_toolbar.xml:17
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_screen_toolbar.xml:17
 -keep class android.support.v7.widget.ActionBarOverlayLayout {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_action_menu_layout.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_action_menu_layout.xml:17
 -keep class android.support.v7.widget.ActionMenuView {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_activity_chooser_view.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_activity_chooser_view.xml:19
 -keep class android.support.v7.widget.ActivityChooserView$InnerLayout {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_alert_dialog_material.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_alert_dialog_material.xml:18
 -keep class android.support.v7.widget.AlertDialogLayout {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/facebook-android-sdk-4.16.1.aar/d07938913d78985935dee746e11d77a4/res/layout/com_facebook_device_auth_dialog_fragment.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/facebook-android-sdk-4.16.1.aar/b6330af7a46333616d008534010a0428/res/layout/com_facebook_device_auth_dialog_fragment.xml:45
 -keep class android.support.v7.widget.AppCompatImageView {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/epsodio_fragment.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/epsodio_fragment.xml:155
 -keep class android.support.v7.widget.AppCompatRatingBar {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_alert_dialog_button_bar_material.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_alert_dialog_button_bar_material.xml:26
 -keep class android.support.v7.widget.ButtonBarLayout {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/actor_netflix_list_adapter.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/adapter_filmes_list.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/adapter_person_popular.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/adapter_produtora.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/crews_filmes_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/person_movie_filmes_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/actor_netflix_list_adapter.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/adapter_filmes_list.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/adapter_person_popular.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/adapter_produtora.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/crews_filmes_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/person_movie_filmes_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/actor_netflix_list_adapter.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/adapter_filmes_list.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/adapter_person_popular.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/adapter_produtora.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/crews_filmes_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/person_movie_filmes_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/actor_netflix_list_adapter.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/adapter_filmes_list.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/adapter_person_popular.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/adapter_produtora.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/adapter_similares.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/calendar_adapter.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/crews_filmes_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/crews_list_adapter.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/desenvolvimento_adapter_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/elenco_list_adapter.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/lista.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/person_movie_filmes_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/reviews.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_list_adapter.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/season_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/seguindo_tvshow.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/temporada_epsodio_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/usuario_list_adapter.xml:0
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/facebook-android-sdk-4.16.1.aar/d07938913d78985935dee746e11d77a4/res/layout/com_facebook_device_auth_dialog_fragment.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/actor_netflix_list_adapter.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/adapter_filmes_list.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/adapter_person_popular.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/adapter_produtora.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/crews_filmes_layout.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/person_movie_filmes_layout.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/actor_netflix_list_adapter.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/adapter_filmes_list.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/adapter_person_popular.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/adapter_produtora.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/crews_filmes_layout.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/person_movie_filmes_layout.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/actor_netflix_list_adapter.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/adapter_filmes_list.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/adapter_person_popular.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/adapter_produtora.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/crews_filmes_layout.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/person_movie_filmes_layout.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/actor_netflix_list_adapter.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/adapter_filmes_list.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/adapter_person_popular.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/adapter_produtora.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/adapter_similares.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/calendar_adapter.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/crews_filmes_layout.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/crews_list_adapter.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/desenvolvimento_adapter_layout.xml:7
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/elenco_list_adapter.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/lista.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/person_movie_filmes_layout.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/reviews.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_list_adapter.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/season_layout.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/seguindo_tvshow.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/temporada_epsodio_layout.xml:2
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/usuario_list_adapter.xml:2
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/facebook-android-sdk-4.16.1.aar/b6330af7a46333616d008534010a0428/res/layout/com_facebook_device_auth_dialog_fragment.xml:22
 -keep class android.support.v7.widget.CardView {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_screen_content_include.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_screen_content_include.xml:19
 -keep class android.support.v7.widget.ContentFrameLayout {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_alert_dialog_title_material.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_alert_dialog_title_material.xml:45
 -keep class android.support.v7.widget.DialogTitle {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_screen_simple_overlay_action_mode.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_screen_simple_overlay_action_mode.xml:23
 -keep class android.support.v7.widget.FitWindowsFrameLayout {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_dialog_title_material.xml:0
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_screen_simple.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_dialog_title_material.xml:22
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_screen_simple.xml:17
 -keep class android.support.v7.widget.FitWindowsLinearLayout {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x480/fragment_container_filme.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x480/tvshow_info.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x600/tvshow_info.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/fragment_container_filme.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/tvshow_info.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/fragment_container_filme.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/tvshow_info.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/fragment_container_filme.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/tvshow_info.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_crews.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_elenco.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_lista.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_crews.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_imagem.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_movies.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_netflix.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_popular.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_tvshow.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_reviews.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_similares.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/desenvolvimento_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/filmes_main.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fragment_container_filme.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fragment_list_filme.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/poster_grid.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/produtora_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/seguindo.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/temporada_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/temporadas.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvshow_info.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvshow_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x480/fragment_container_filme.xml:284
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x480/fragment_container_filme.xml:303
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x480/fragment_container_filme.xml:321
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x480/fragment_container_filme.xml:379
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x480/tvshow_info.xml:280
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x480/tvshow_info.xml:298
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x480/tvshow_info.xml:316
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x480/tvshow_info.xml:363
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x600/tvshow_info.xml:280
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x600/tvshow_info.xml:298
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x600/tvshow_info.xml:316
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-800x600/tvshow_info.xml:361
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/fragment_container_filme.xml:285
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/fragment_container_filme.xml:304
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/fragment_container_filme.xml:322
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/fragment_container_filme.xml:381
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/tvshow_info.xml:281
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/tvshow_info.xml:299
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/tvshow_info.xml:317
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/tvshow_info.xml:362
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/fragment_container_filme.xml:284
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/fragment_container_filme.xml:303
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/fragment_container_filme.xml:321
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/fragment_container_filme.xml:380
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/tvshow_info.xml:280
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/tvshow_info.xml:298
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/tvshow_info.xml:316
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/tvshow_info.xml:361
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/fragment_container_filme.xml:284
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/fragment_container_filme.xml:303
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/fragment_container_filme.xml:321
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/fragment_container_filme.xml:377
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/tvshow_info.xml:280
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/tvshow_info.xml:298
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/tvshow_info.xml:316
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/tvshow_info.xml:362
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_crews.xml:40
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_elenco.xml:40
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_lista.xml:15
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_crews.xml:12
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_imagem.xml:12
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_layout.xml:31
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_movies.xml:12
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_netflix.xml:33
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_popular.xml:23
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_tvshow.xml:12
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_reviews.xml:24
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_similares.xml:30
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/desenvolvimento_layout.xml:10
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/filmes_main.xml:42
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/filmes_main.xml:60
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fragment_container_filme.xml:284
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fragment_container_filme.xml:303
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fragment_container_filme.xml:321
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fragment_container_filme.xml:378
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fragment_list_filme.xml:16
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/poster_grid.xml:19
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/produtora_layout.xml:11
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:43
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/seguindo.xml:16
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/temporada_layout.xml:12
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/temporadas.xml:7
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvshow_info.xml:281
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvshow_info.xml:299
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvshow_info.xml:317
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvshow_info.xml:363
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvshow_main.xml:36
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvshow_main.xml:52
 -keep class android.support.v7.widget.RecyclerView {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_search_view.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_search_view.xml:75
 -keep class android.support.v7.widget.SearchView$SearchAutoComplete {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/include_toolbar.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/produtora_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:0
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout-v26/abc_screen_toolbar.xml:0
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_screen_toolbar.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_filme.xml:70
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:20
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:80
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/include_toolbar.xml:1
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/produtora_layout.xml:64
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/tvserie_activity.xml:56
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout-v26/abc_screen_toolbar.xml:37
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_screen_toolbar.xml:36
 -keep class android.support.v7.widget.Toolbar {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_screen_simple.xml:0
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.2.aar/8eef1188b4e0ddc9030287338e52b1ce/res/layout/abc_screen_simple_overlay_action_mode.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_screen_simple.xml:25
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/d71eaf217a5bce1186044895c71c20ad/res/layout/abc_screen_simple_overlay_action_mode.xml:32
 -keep class android.support.v7.widget.ViewStubCompat {
     <init>(...);
 }
@@ -572,193 +689,195 @@
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:493
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:499
 -keep class com.crashlytics.android.CrashlyticsInitProvider {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:369
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:375
 -keep class com.facebook.CustomTabActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:373
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:379
 -keep class com.facebook.CustomTabMainActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:365
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:371
 -keep class com.facebook.FacebookActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fab_float.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fab_float.xml:15
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fab_float.xml:23
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fab_float.xml:31
 -keep class com.github.clans.fab.FloatingActionButton {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fab_float.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/fab_float.xml:2
 -keep class com.github.clans.fab.FloatingActionMenu {
     <init>(...);
 }
 
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appintro-v4.2.0.aar/1966b1b26c46ac1f82d829279dd9425a/res/layout/intro_layout.xml:0
-# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appintro-v4.2.0.aar/1966b1b26c46ac1f82d829279dd9425a/res/layout/intro_layout2.xml:0
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appintro-v4.2.0.aar/eb95f691fad851b90b3fcc621fb07a51/res/layout/intro_layout.xml:9
+# Referenced at /root/.gradle/caches/transforms-1/files-1.1/appintro-v4.2.0.aar/eb95f691fad851b90b3fcc621fb07a51/res/layout/intro_layout2.xml:14
 -keep class com.github.paolorotolo.appintro.AppIntroViewPager {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:448
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:454
 -keep class com.google.android.gms.ads.AdActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_epsodios.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_favorite.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_crews.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_movies.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_netflix.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_tvshow.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_reviews.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_usuario_list.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/epsodio_fragment.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/poster_grid.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/temporada_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_epsodios.xml:28
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_favorite.xml:27
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_list_main.xml:38
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_crews.xml:33
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_layout.xml:42
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_movies.xml:31
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_netflix.xml:54
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_person_tvshow.xml:31
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_reviews.xml:10
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_usuario_list.xml:32
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/epsodio_fragment.xml:272
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/poster_grid.xml:9
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/search_layout.xml:67
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/temporada_layout.xml:18
 -keep class com.google.android.gms.ads.AdView {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:374
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:380
 -keep class com.google.android.gms.appinvite.PreviewActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:350
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:360
 -keep class com.google.android.gms.auth.api.signin.RevocationBoundService {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:341
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:351
 -keep class com.google.android.gms.auth.api.signin.internal.SignInHubActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:140
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:142
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:137
 -keep class com.google.android.gms.common.SignInButton {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:384
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:390
 -keep class com.google.android.gms.common.api.GoogleApiActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:394
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:400
 -keep class com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:408
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:414
 -keep class com.google.android.gms.measurement.AppMeasurementJobService {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:389
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:395
 -keep class com.google.android.gms.measurement.AppMeasurementReceiver {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:404
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:410
 -keep class com.google.android.gms.measurement.AppMeasurementService {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/youtube_layout.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/youtube_layout.xml:9
 -keep class com.google.android.youtube.player.YouTubePlayerView {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/scroll_trailer.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/scroll_trailer.xml:17
 -keep class com.google.android.youtube.player.YouTubeThumbnailView {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:428
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:434
 -keep class com.google.firebase.iid.FirebaseInstanceIdInternalReceiver {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:414
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:420
 -keep class com.google.firebase.iid.FirebaseInstanceIdReceiver {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:435
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:441
 -keep class com.google.firebase.iid.FirebaseInstanceIdService {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:355
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:365
 -keep class com.google.firebase.perf.provider.FirebasePerfProvider {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:443
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:449
 -keep class com.google.firebase.provider.FirebaseInitProvider {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:481
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:487
 -keep class com.onesignal.BootUpReceiver {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:461
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:467
 -keep class com.onesignal.GcmBroadcastReceiver {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:472
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:478
 -keep class com.onesignal.GcmIntentService {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:470
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:476
 -keep class com.onesignal.NotificationOpenedReceiver {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:479
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:485
 -keep class com.onesignal.NotificationRestoreService {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:475
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:481
 -keep class com.onesignal.PermissionsActivity {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:473
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:479
 -keep class com.onesignal.SyncService {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:487
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/build/intermediates/manifests/full/flavor21/release/AndroidManifest.xml:493
 -keep class com.onesignal.UpgradeReceiver {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_main.xml:86
 -keep class com.viewpagerindicator.CirclePageIndicator {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_scroll_poster.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_scroll_poster.xml:7
 -keep class com.viewpagerindicator.LinePageIndicator {
     <init>(...);
 }
@@ -783,10 +902,14 @@
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/activity_login.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:147
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:167
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/activity_login.xml:147
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/activity_login.xml:167
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:149
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:169
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:144
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:164
 -keep class mehdi.sakout.fancybuttons.FancyButton {
     <init>(...);
 }
@@ -836,87 +959,34 @@
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/xml/preferences.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/xml/preferences.xml:22
 -keep class utils.LogoffDialog {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/xml/preferences.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/xml/preferences.xml:29
 -keep class utils.Sobre {
     <init>(...);
 }
 
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/activity_login.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:0
-# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:0
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:95
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:124
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:147
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-large/activity_login.xml:167
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/activity_login.xml:98
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/activity_login.xml:125
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/activity_login.xml:147
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-small/activity_login.xml:167
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:97
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:126
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:149
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout-xlarge/activity_login.xml:169
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:95
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:122
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:144
+# Referenced at /home/icaro/Documentos/workspace/Filme/app/src/main/res/layout/activity_login.xml:164
 -keepclassmembers class * {
     *** onclick(...);
-}
-
--keep public class com.google.vending.licensing.ILicensingService
-
--keep public class com.android.vending.licensing.ILicensingService
-
--keep public class com.google.android.vending.licensing.ILicensingService
-
-# For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
--keepclasseswithmembers,allowshrinking class * {
-    native <methods>;
-}
-
-# Keep setters in Views so that animations can still work.
--keepclassmembers public class * extends android.view.View {
-    void set*(***);
-    *** get*();
-}
-
-# We want to keep methods in Activity that could be used in the XML attribute onClick.
--keepclassmembers class * extends android.app.Activity {
-    public void *(android.view.View);
-}
-
-# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
--keepclassmembers enum  * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
-
--keepclassmembers class * extends android.os.Parcelable {
-    public static final ** CREATOR;
-}
-
--keepclassmembers class **.R$* {
-    public static <fields>;
-}
-
-# Preserve annotated Javascript interface methods.
--keepclassmembers class * {
-    @android.webkit.JavascriptInterface
-    <methods>;
-}
-
-# Understand the @Keep support annotation.
--keep class android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class * {
-    <fields>;
-    <methods>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <methods>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep
-    <init>(...);
 }
 
 -keep class br.com.icaro.** {
@@ -1021,6 +1091,11 @@
 
 -keep class * extends android.support.v7.widget.RecyclerView {
     public static final android.support.v7.widget.RecyclerView *;
+}
+
+-keep class domain.* {
+    <fields>;
+    <methods>;
 }
 
 # Ensure that proguard will not strip the handleIntent method.
@@ -1204,6 +1279,27 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# FragmentTransitionSupport is instantiated in support-fragment via reflection.
+-keep public class android.support.transition.FragmentTransitionSupport
+
+# Keep a field in transition that is used to keep a reference to weakly-referenced object
+-keepclassmembers class android.support.transition.ChangeBounds$* extends android.animation.AnimatorListenerAdapter {
+    android.support.transition.ChangeBounds$ViewBounds mViewBounds;
+}
+
+# Copyright (C) 2017 The Android Open Source Project
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#      http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # Prevent Parcelable objects from being removed or renamed.
 -keep class android.support.v4.media.** extends android.os.Parcelable {
     public static final android.os.Parcelable$Creator *;
@@ -1285,5 +1381,22 @@
 
 -keep class com.google.android.gms.ads.identifier.AdvertisingIdClient$Info {
     <fields>;
+    <methods>;
+}
+
+-keepclassmembers enum  android.arch.lifecycle.Lifecycle$Event {
+    <fields>;
+}
+
+-keep class * extends android.arch.lifecycle.LifecycleObserver
+
+-keep class * extends android.arch.lifecycle.GeneratedAdapter {
+    <init>(...);
+}
+
+-keepclassmembers class ** {
+    @android.arch.lifecycle.OnLifecycleEvent
+    <fields>;
+    @android.arch.lifecycle.OnLifecycleEvent
     <methods>;
 }

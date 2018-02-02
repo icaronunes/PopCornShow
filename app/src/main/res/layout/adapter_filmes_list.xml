@@ -29,7 +29,6 @@
                 android:id="@+id/imgFilmes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/imagem_filme"
@@ -41,8 +40,7 @@
                 style="@android:style/Widget.DeviceDefault.ProgressBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:elevation="3dp" />
+                android:layout_gravity="center" />
 
 
             <TextView
@@ -53,7 +51,6 @@
                 android:layout_marginLeft="@dimen/trade_size_dp_6"
                 android:layout_marginRight="@dimen/trade_size_dp_6"
                 android:background="@color/black_transparente"
-                android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/white"
                 android:textSize="@dimen/trade_txt_size_sp_16"
                 android:typeface="serif" />

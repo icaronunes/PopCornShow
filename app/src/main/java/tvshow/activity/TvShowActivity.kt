@@ -11,7 +11,6 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
@@ -277,7 +276,7 @@ class TvShowActivity : BaseActivity() {
                         intent.type = "message/rfc822"
                         intent.putExtra(Intent.EXTRA_TEXT, series?.name + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL)
                         intent.type = "image/*"
-                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file))
+                        intent.putExtra(Intent.EXTRA_STREAM,  UtilsApp.getUriDownloadImage(this@TvShowActivity, file))
                         startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar_filme)))
 
                     }
@@ -509,8 +508,6 @@ class TvShowActivity : BaseActivity() {
 
         Picasso.with(this@TvShowActivity)
                 .load(UtilsApp.getBaseUrlImagem(5) + series?.backdropPath)
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .error(R.drawable.top_empty)
                 .into(img_top_tvshow)
 

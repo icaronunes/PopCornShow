@@ -8,7 +8,6 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.CollapsingToolbarLayout
@@ -285,7 +284,7 @@ class FilmeActivity : BaseActivity() {
                     intent.type = "message/rfc822"
                     intent.putExtra(Intent.EXTRA_TEXT, movieDb?.title + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL)
                     intent.type = "image/*"
-                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file))
+                    intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.getUriDownloadImage(this@FilmeActivity, file))
                     startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar_filme)))
                 }
 
@@ -301,11 +300,11 @@ class FilmeActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+
     fun buildDeepLink(): String {
         // Get the unique appcode for this app.
 
-        val link = "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3DFA%26id%3D"
-        (movieDb?.id).toString() + "&apn=br.com.icaro.filme"
+        val link = "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3DFA%26id%3D${(movieDb?.id)}&apn=br.com.icaro.filme"
 
         // If the deep link is used in an advertisement, this value must be set to 1.
         val isAd = false

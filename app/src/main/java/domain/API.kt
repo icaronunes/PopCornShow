@@ -305,7 +305,27 @@ class API(context: Context) {
             if (response.isSuccessful) {
                 val json = response.body()?.string()
                 val tvshow = gson.fromJson(json, Tvshow::class.java)
-                tvshow
+                subscriber.onNext(tvshow)
+                subscriber.onCompleted()
+            } else {
+                subscriber.onError(Throwable(response.message()))
+            }
+        }
+    }
+
+    fun getTvShowLite(id: Int): Observable<Tvshow> { // Usado em "Seguindo"
+        return rx.Observable.create { subscriber ->
+            val client = OkHttpClient()
+            val gson = Gson()
+            val request = Request.Builder()
+                    .url("${baseUrl3}tv/$id?api_key=${Config.TMDB_API_KEY}" + "&language=$timeZone" +
+                            "&append_to_response=release_dates,external_ids&include_image_language=en,null")
+                    .get()
+                    .build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                val json = response.body()?.string()
+                val tvshow = gson.fromJson(json, Tvshow::class.java)
                 subscriber.onNext(tvshow)
                 subscriber.onCompleted()
             } else {
