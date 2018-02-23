@@ -16,10 +16,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.widget.SearchView
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.Window
+import android.view.*
 import android.widget.Button
 import android.widget.RatingBar
 import android.widget.TextView
@@ -361,11 +358,9 @@ class FilmeActivity : BaseActivity() {
                 val title = alertDialog.findViewById<View>(R.id.rating_title) as TextView
                 title.text = movieDb?.title
                 val ratingBar = alertDialog.findViewById<View>(R.id.ratingBar_rated) as RatingBar
-                ratingBar.rating = numero_rated
-                val width = resources.getDimensionPixelSize(R.dimen.popup_width) //Criar os Dimen do layout do login - 300dp - 300dp ??
-                val height = resources.getDimensionPixelSize(R.dimen.popup_height_rated)
+                ratingBar.rating = (numero_rated / 2)
 
-                alertDialog.window?.setLayout(width, height) //????????????
+                alertDialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
                 alertDialog.show()
 
                 if (addRated) {
@@ -373,6 +368,8 @@ class FilmeActivity : BaseActivity() {
                 } else {
                     no.visibility = View.GONE
                 }
+
+
 
                 no.setOnClickListener {
 
@@ -399,17 +396,17 @@ class FilmeActivity : BaseActivity() {
                         filmeDB.id = movieDb?.id!!
                         filmeDB.idImdb = movieDb?.imdbId
                         filmeDB.title = movieDb?.title
-                        filmeDB.nota = ratingBar.rating.toInt()
+                        filmeDB.nota = ratingBar.rating * 2
                         filmeDB.poster = movieDb?.posterPath
 
                         myRated?.child(id_filme.toString())?.setValue(filmeDB)
                                 ?.addOnCompleteListener {
-                                    Toast.makeText(this@FilmeActivity, resources.getString(R.string.filme_rated), Toast.LENGTH_SHORT)
+                                    Toast.makeText(this@FilmeActivity, resources.getString(R.string.filme_rated) +" - " + ratingBar.rating * 2, Toast.LENGTH_SHORT)
                                             .show()
 
                                     fab_menu_filme?.close(true)
                                 }
-                        Thread(Runnable { FilmeService.ratedMovieGuest(id_filme, ratingBar.rating.toInt(), this@FilmeActivity) }).start()
+                        Thread(Runnable { FilmeService.ratedMovieGuest(id_filme, (ratingBar.rating * 2) .toInt(), this@FilmeActivity) }).start()
                     }
                     alertDialog.dismiss()
                 })

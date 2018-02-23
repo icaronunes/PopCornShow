@@ -15,7 +15,7 @@ public class TvshowDB implements Serializable {
 
     private String title;
 
-    private int nota;
+    private float nota;
 
     private domain.tvshow.ExternalIds externalIds;
 
@@ -26,7 +26,7 @@ public class TvshowDB implements Serializable {
         this.title = title;
     }
 
-    public int getNota() {
+    public float getNota() {
         return nota;
     }
 
@@ -35,7 +35,7 @@ public class TvshowDB implements Serializable {
         return title;
     }
 
-    public void setNota(int nota) {
+    public void setNota(float nota) {
         this.nota = nota;
     }
 

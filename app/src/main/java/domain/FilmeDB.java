@@ -15,13 +15,13 @@ public class FilmeDB implements Serializable {
     private String title;
     private int id;
 
-    private int nota;
+    private float nota;
 
 
     public void setTitle(String title) {
         this.title = title;
     }
-    public int getNota() {
+    public float getNota() {
         return nota;
     }
 
@@ -30,7 +30,7 @@ public class FilmeDB implements Serializable {
         return title;
     }
 
-    public void setNota(int nota) {
+    public void setNota(float nota) {
         this.nota = nota;
     }
 

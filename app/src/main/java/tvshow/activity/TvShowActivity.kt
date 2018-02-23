@@ -6,7 +6,6 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.app.Dialog
-import android.app.ProgressDialog
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
@@ -16,10 +15,7 @@ import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
 import android.support.v7.widget.SearchView
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.Window
+import android.view.*
 import android.widget.Button
 import android.widget.RatingBar
 import android.widget.TextView
@@ -29,8 +25,6 @@ import com.crashlytics.android.Crashlytics
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import domain.*
 import domain.tvshow.Tvshow
@@ -433,11 +427,9 @@ class TvShowActivity : BaseActivity() {
                 val title = alertDialog.findViewById<View>(R.id.rating_title) as TextView
                 title.text = series?.name
                 val ratingBar = alertDialog.findViewById<View>(R.id.ratingBar_rated) as RatingBar
-                ratingBar.rating = numero_rated
-                val width = resources.getDimensionPixelSize(R.dimen.popup_width)
-                val height = resources.getDimensionPixelSize(R.dimen.popup_height_rated)
+                ratingBar.rating = numero_rated / 2
 
-                alertDialog.window?.setLayout(width, height)
+                alertDialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
 
                 if (addRated) {
                     no.visibility = View.VISIBLE
@@ -457,19 +449,13 @@ class TvShowActivity : BaseActivity() {
 
                 ok.setOnClickListener {
 
-                    val progressDialog = ProgressDialog(this@TvShowActivity,
-                            android.R.style.Theme_Dialog)
-                    progressDialog.isIndeterminate = true
-                    progressDialog.setMessage(resources.getString(R.string.salvando))
-                    progressDialog.show()
-
                     if (UtilsApp.isNetWorkAvailable(this@TvShowActivity)) {
 
                         //  Log.d(TAG, "Gravou Rated");
 
                         val tvshowDB = TvshowDB()
                         //tvshowDB.externalIds = series?.external_ids
-                        tvshowDB.nota = ratingBar.rating.toInt()
+                        tvshowDB.nota = ratingBar.rating * 2
                         tvshowDB.id = series?.id!!
                         tvshowDB.title = series?.name
                         tvshowDB.poster = series?.posterPath
@@ -477,15 +463,15 @@ class TvShowActivity : BaseActivity() {
                         myRated?.child(id_tvshow.toString())?.setValue(tvshowDB)
                                 ?.addOnCompleteListener {
                                     Toast.makeText(this@TvShowActivity,
-                                            getString(R.string.tvshow_rated), Toast.LENGTH_SHORT)
+                                            getString(R.string.tvshow_rated) + " - ${tvshowDB.nota}", Toast.LENGTH_SHORT)
                                             .show()
 
                                 }
 
-                        Thread(Runnable { FilmeService.ratedTvshowGuest(id_tvshow, ratingBar.rating.toInt(), this@TvShowActivity) }).start()
+                        Thread(Runnable { FilmeService.ratedTvshowGuest(id_tvshow, (ratingBar.rating * 2).toInt(), this@TvShowActivity) })
+                                .start()
 
                     }
-                    progressDialog.dismiss()
                     alertDialog.dismiss()
                     fab_menu_filme?.close(true)
                 }

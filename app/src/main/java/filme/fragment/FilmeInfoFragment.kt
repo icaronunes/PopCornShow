@@ -27,8 +27,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import br.com.icaro.filme.R
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import domain.API
 import domain.Imdb

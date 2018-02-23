@@ -2,18 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_weight="1"
-    android:weightSum="100"
-    android:layout_marginTop="@dimen/trade_size_dp_6">
+    android:layout_marginTop="@dimen/trade_size_dp_6"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/rating_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rating_title"
+        android:layout_marginBottom="@dimen/trade_size_dp_3"
         android:gravity="center"
-        android:textStyle="normal|bold"
-        android:layout_marginBottom="@dimen/trade_size_dp_3" />
+        android:textStyle="normal|bold" />
 
     <RatingBar
         android:id="@+id/ratingBar_rated"
@@ -21,33 +19,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="2dp"
         android:isIndicator="false"
-        android:numStars="10"
-        android:stepSize="1"
-        android:weightSum="100" />
+        android:max="5"
+        android:numStars="5"
+        android:stepSize="0.5" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="match_parent">
-
-    <Button
-        android:id="@+id/cancel_rated"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nao_visto"
-        android:background="@drawable/button_nao_visto"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/trade_size_dp_6" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancel_rated"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/trade_size_dp_6"
+            android:layout_weight="1"
+            android:background="@drawable/button_nao_visto"
+            android:text="@string/nao_visto" />
 
         <Button
             android:id="@+id/ok_rated"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/ok"
-            android:background="@drawable/button_visto"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/trade_size_dp_6" />
+            android:layout_margin="@dimen/trade_size_dp_6"
+            android:layout_weight="2"
+            android:background="@drawable/button_visto"
+            android:text="@string/ok" />
 
     </LinearLayout>
 
