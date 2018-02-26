@@ -1,8 +1,8 @@
 package applicaton;
 
-import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -18,7 +18,7 @@ import onsignal.CustomNotificationReceivedHandler;
  * Created by icaro on 01/08/16.
  */
 
-public class FilmeApplication extends Application {
+public class FilmeApplication extends MultiDexApplication {
 
     private static final String TAG = FilmeApplication.class.getName();
     private static FilmeApplication instance = null;
@@ -31,8 +31,9 @@ public class FilmeApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         instance = this;
-        // Log.d(TAG, "FilmeApplication.onCreate");
+       
 
         OneSignal.startInit(this)
                 .setNotificationOpenedHandler(new CustomNotificationOpenedHandler())
@@ -50,10 +51,6 @@ public class FilmeApplication extends Application {
                 .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
                 .build();
         Fabric.with(this, crashlyticsKit);
-
-//        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-//        mFirebaseAnalytics.setAnalyticsCollectionEnabled(br.com.icaro.filme.BuildConfig.REPORT_CRASH);
-
 
     }
 

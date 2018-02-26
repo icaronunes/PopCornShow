@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:folding-cell="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.icaro.foldin.MainActivity">
+
+    <com.ramotion.foldingcell.FoldingCell
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/folding_cell"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="true"
+        android:clipToPadding="false"
+        folding-cell:additionalFlipsCount="3"
+        folding-cell:animationDuration="1300"
+        folding-cell:backSideColor="@color/colorPrimary"
+        folding-cell:cameraHeight="30">
+        ​
+
+        <include layout="@layout/epsodio_detalhes"
+            />
+
+        <include layout="@layout/item_epsodio"/>
+        ​
+    </com.ramotion.foldingcell.FoldingCell>
+
+</LinearLayout>

@@ -30,6 +30,7 @@
     @com.squareup.otto.Subscribe public *;
     @com.squareup.otto.Produce public *;
 }
+
 -keep class * implements android.os.AsyncTask {
   public static final android.os.AsyncTask *;
 }
