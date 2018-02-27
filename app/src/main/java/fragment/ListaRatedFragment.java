@@ -304,14 +304,6 @@ public class ListaRatedFragment extends Fragment {
 
                                             recyclerViewTvShow.getAdapter().notifyItemChanged(position);
 
-                                            Bundle bundle = new Bundle();
-                                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaRatedFragment:ListaTvShowAdapter.ListaOnClickListener:onClickLong");
-                                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getTitle());
-                                            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tv");
-                                            bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
-                                            bundle.putString("Rated", "Excluiu TvShow");
-                                            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
                                         }
                                     });
                         }

@@ -4,8 +4,7 @@
     xmlns:folding-cell="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.icaro.foldin.MainActivity">
+    android:layout_height="match_parent">
 
     <com.ramotion.foldingcell.FoldingCell
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,7 +15,7 @@
         android:clipToPadding="false"
         folding-cell:additionalFlipsCount="3"
         folding-cell:animationDuration="1300"
-        folding-cell:backSideColor="@color/colorPrimary"
+        folding-cell:backSideColor="@color/primary"
         folding-cell:cameraHeight="30">
         ​
 

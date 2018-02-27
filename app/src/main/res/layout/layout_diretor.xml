@@ -23,7 +23,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher_round"/>
+            android:src="@drawable/person"/>
 
     </LinearLayout>
 
@@ -70,7 +70,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher_round"/>
+            android:src="@drawable/person"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -86,6 +86,7 @@
         android:layout_width="18dp"
         android:layout_height="match_parent"
         android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
         android:background="@android:color/holo_green_dark"
         android:orientation="vertical"/>
 
