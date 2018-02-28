@@ -28,7 +28,6 @@ class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType, context: Context?) {
         this.context = context
         (holder as ListViewHolder).bind(item as ListaItemFilme)
-
     }
 
     inner class ListViewHolder(parent: ViewGroup) :

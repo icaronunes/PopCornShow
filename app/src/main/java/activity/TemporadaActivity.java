@@ -22,7 +22,6 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import adapter.TemporadaAdapter;
+import adapter.TemporadaFoldinAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
 import domain.FilmeService;
@@ -238,13 +238,6 @@ public class TemporadaActivity extends BaseActivity {
                 intent.putExtra(Constantes.INSTANCE.getSEGUINDO(), seguindo);
                 startActivity(intent);
 
-                FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(TemporadaActivity.this);
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TemporadaAdapter.class.getName());
-                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, tvSeason.getId());
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeason.getName());
-                bundle.putString(FirebaseAnalytics.Param.DESTINATION, EpsodioActivity.class.getName());
-                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             }
         };
     }
@@ -405,16 +398,18 @@ public class TemporadaActivity extends BaseActivity {
                                           //  Log.w(TAG, "seguindo - true");
                                             seasons = dataSnapshot.getValue(UserSeasons.class);
                                             recyclerView
-                                                    .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
-                                                            tvSeason, seasons, seguindo,
-                                                            onClickListener()));
+                                                    .setAdapter(new TemporadaFoldinAdapter(TemporadaActivity.this, tvSeason, seasons, seguindo, onClickListener()));
+//                                                    .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
+//                                                            tvSeason, seasons, seguindo,
+//                                                            onClickListener()));
                                         } else {
                                          //   Log.d(TAG, "onDataChange " + "Não seguindo.");
                                             seguindo = false;
                                             recyclerView
-                                                    .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
-                                                            tvSeason, seasons, seguindo,
-                                                            onClickListener()));
+                                                    .setAdapter(new TemporadaFoldinAdapter(TemporadaActivity.this, tvSeason, seasons, seguindo, onClickListener()));
+                                                    //.setAdapter(new TemporadaAdapter(TemporadaActivity.this,
+                                                    //        tvSeason, seasons, seguindo,
+                                                    //        onClickListener()));
                                         }
                                     }
 

@@ -18,12 +18,13 @@
             android:layout_margin="3dp"
             android:gravity="center"
             android:text="Diretor"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <ImageView
+            android:id="@+id/layout_diretor_nome_diretor_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/person"/>
+            android:src="@drawable/person" />
 
     </LinearLayout>
 
@@ -37,6 +38,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/layout_diretor_nome_diretor"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="top"
@@ -45,9 +47,10 @@
             android:fontFamily="monospace"
             android:gravity="start"
             android:text="J.J. Abram"
-            android:textStyle="italic"/>
+            android:textStyle="italic" />
 
         <TextView
+            android:id="@+id/layout_diretor_nome_escritor"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="bottom"
@@ -56,7 +59,7 @@
             android:fontFamily="monospace"
             android:gravity="bottom|end"
             android:text="J.J. Abram"
-            android:textStyle="italic"/>
+            android:textStyle="italic" />
 
     </LinearLayout>
 
@@ -68,9 +71,10 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/layout_diretor_nome_escritor_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/person"/>
+            android:src="@drawable/person" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -78,16 +82,17 @@
             android:layout_margin="3dp"
             android:gravity="center"
             android:text="Escritor"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_diretor_nome_visto"
         android:layout_width="18dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
         android:background="@android:color/holo_green_dark"
-        android:orientation="vertical"/>
+        android:orientation="vertical" />
 
 </LinearLayout>

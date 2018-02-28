@@ -36,7 +36,6 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
 
     public interface TemporadaOnClickListener {
         void onClickVerTemporada(View view, int position);
-
         void onClickTemporada(View view, int position);
     }
 
