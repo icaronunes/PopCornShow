@@ -6,6 +6,7 @@
     <color name="accent">#3603cf</color>
 
     <color name="accent2">#16042d</color>
+
     <!-- Outras cores -->
     <color name="transparent">#00000000</color>
     <color name="transparent2">#37000000</color>
@@ -35,6 +36,6 @@
     <color name="imdb">#d9ac09</color>
     <color name="netflixColor">#b90a0c</color>
     <color name="blue_main">#ef0f0ffc</color>
-
+    <color name="transparente">#12000000</color>
 
 </resources>

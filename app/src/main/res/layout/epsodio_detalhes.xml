@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/colorButtonNormal"
-    android:visibility="visible"
+    android:visibility="gone"
     app:cardCornerRadius="3dp"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    tools:visibility="visible">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:adjustViewBounds="true"
+            android:adjustViewBounds="false"
             android:cropToPadding="false"
             android:scaleType="centerCrop"
             android:src="@drawable/poster_empty" />
@@ -72,7 +74,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
-                            android:layout_weight="1"
+                            android:layout_weight="0.5"
                             android:gravity="center"
                             android:text="NOTA: "
                             android:textAllCaps="false" />
@@ -82,7 +84,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center"
+                            android:gravity="start"
                             android:text="9.0" />
 
                     </LinearLayout>
@@ -97,7 +99,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
-                            android:layout_weight="1"
+                            android:layout_weight="0.5"
                             android:gravity="center"
                             android:text="VOTOS: "
                             android:textAllCaps="false" />
@@ -107,7 +109,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center"
+                            android:gravity="start"
                             android:text="21" />
 
                     </LinearLayout>
@@ -147,14 +149,23 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <RatingBar
-                android:id="@+id/epsodio_detalhes_progress"
-                style="@style/Widget.AppCompat.RatingBar.Indicator"
+            <LinearLayout
+                android:id="@+id/epsodio_detalhes_linear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:numStars="5" />
+                android:orientation="horizontal">
+
+                <RatingBar
+                    android:id="@+id/epsodio_detalhes_progress"
+                    style="@style/CustomRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/epsodio_detalhes_ler_mais"
@@ -162,8 +173,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_gravity="right|end"
+                android:layout_marginLeft="18dp"
                 android:layout_marginStart="18dp"
-                android:layout_toEndOf="@+id/epsodio_detalhes_progress"
+                android:layout_toEndOf="@+id/epsodio_detalhes_linear"
+                android:layout_toRightOf="@+id/epsodio_detalhes_linear"
                 android:text="VER MAIS" />
 
         </RelativeLayout>

@@ -1,5 +1,6 @@
 package activity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +18,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -29,7 +34,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import adapter.TemporadaAdapter;
@@ -39,9 +48,13 @@ import br.com.icaro.filme.R;
 import domain.FilmeService;
 import domain.UserEp;
 import domain.UserSeasons;
+import info.movito.themoviedbapi.TmdbTvSeasons;
+import info.movito.themoviedbapi.model.tv.TvEpisode;
 import info.movito.themoviedbapi.model.tv.TvSeason;
 import utils.Constantes;
 import utils.UtilsApp;
+
+import static java.lang.String.valueOf;
 
 /**
  * Created by icaro on 26/08/16.
@@ -85,7 +98,7 @@ public class TemporadaActivity extends BaseActivity {
         adview.loadAd(adRequest);
 
         mAuth = FirebaseAuth.getInstance();
-        myRef =  FirebaseDatabase.getInstance().getReference("users");
+        myRef = FirebaseDatabase.getInstance().getReference("users");
 
 
         if (UtilsApp.isNetWorkAvailable(this)) {
@@ -112,7 +125,7 @@ public class TemporadaActivity extends BaseActivity {
 
     public void getExtras() {
 
-        if (getIntent().getAction() == null){
+        if (getIntent().getAction() == null) {
             temporada_id = getIntent().getIntExtra(Constantes.INSTANCE.getTEMPORADA_ID(), 0);
             temporada_position = getIntent().getIntExtra(Constantes.INSTANCE.getTEMPORADA_POSITION(), 0);
             serie_id = getIntent().getIntExtra(Constantes.INSTANCE.getTVSHOW_ID(), 0);
@@ -131,7 +144,7 @@ public class TemporadaActivity extends BaseActivity {
 
     }
 
-    private TemporadaAdapter.TemporadaOnClickListener onClickListener(){
+    private TemporadaAdapter.TemporadaOnClickListener onClickListener() {
         return new TemporadaAdapter.TemporadaOnClickListener() {
 
             @Override
@@ -139,7 +152,7 @@ public class TemporadaActivity extends BaseActivity {
                 positionep = position;
                 if (seasons != null) {
                     if (seasons.getUserEps().get(position).isAssistido()) {
-                      //  Log.d(TAG, "FALSE");
+                        //  Log.d(TAG, "FALSE");
                         String id = String.valueOf(serie_id);
 
                         Toast.makeText(TemporadaActivity.this, R.string.marcado_nao_assistido, Toast.LENGTH_SHORT).show();
@@ -148,84 +161,85 @@ public class TemporadaActivity extends BaseActivity {
 
                         Map<String, Object> childUpdates = new HashMap<String, Object>();
 
-                        childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/userEps/"+position+"/assistido", false);
-                        childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/visto/", false);
+                        childUpdates.put("/" + user + "/seguindo/" + id + "/seasons/" + temporada_position + "/userEps/" + position + "/assistido", false);
+                        childUpdates.put("/" + user + "/seguindo/" + id + "/seasons/" + temporada_position + "/visto/", false);
 
                         myRef.updateChildren(childUpdates);
-                    //    Log.d(TAG, "desvisto");
+                        //    Log.d(TAG, "desvisto");
 
                     } else {
-                      //  Log.d(TAG, "TRUE");
-                            if (isAssistidoAnteriores(position)){
-                                AlertDialog dialog = new AlertDialog.Builder(TemporadaActivity.this)
-                                        .setTitle(R.string.title_marcar_ep_anteriores)
-                                        .setMessage(R.string.msg_marcar_ep_anteriores)
-                                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                String id = String.valueOf(serie_id);
+                        //  Log.d(TAG, "TRUE");
+                        if (isAssistidoAnteriores(position)) {
+                            AlertDialog dialog = new AlertDialog.Builder(TemporadaActivity.this)
+                                    .setTitle(R.string.title_marcar_ep_anteriores)
+                                    .setMessage(R.string.msg_marcar_ep_anteriores)
+                                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            String id = String.valueOf(serie_id);
 
-                                                String user = mAuth.getCurrentUser().getUid();
+                                            String user = mAuth.getCurrentUser().getUid();
 
-                                                Map<String, Object> childUpdates = new HashMap<String, Object>();
-                                                for (int i = 0; i <= position; i++) {
-                                                    childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/userEps/"+i+"/assistido", true);
-                                                }
-
-                                                if (position == seasons.getUserEps().size()-1){
-                                                    childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/visto/",  true);
-                                                } else {
-                                                    childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/visto/",  TemporadaTodaAssistida(position));
-                                                }
-
-                                                myRef.updateChildren(childUpdates);
-
-                                                Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
+                                            Map<String, Object> childUpdates = new HashMap<String, Object>();
+                                            for (int i = 0; i <= position; i++) {
+                                                childUpdates.put("/" + user + "/seguindo/" + id + "/seasons/" + temporada_position + "/userEps/" + i + "/assistido", true);
                                             }
-                                        })
-                                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                String id = String.valueOf(serie_id);
 
-                                                String user = mAuth.getCurrentUser().getUid();
-
-                                                Map<String, Object> childUpdates = new HashMap<String, Object>();
-
-                                                childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/userEps/"+position+"/assistido", true);
-                                                childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/visto/",  TemporadaTodaAssistida(position));
-
-                                                myRef.updateChildren(childUpdates);
-
-                                                Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
+                                            if (position == seasons.getUserEps().size() - 1) {
+                                                childUpdates.put("/" + user + "/seguindo/" + id + "/seasons/" + temporada_position + "/visto/", true);
+                                            } else {
+                                                childUpdates.put("/" + user + "/seguindo/" + id + "/seasons/" + temporada_position + "/visto/", TemporadaTodaAssistida(position));
                                             }
-                                        })
-                                        .create();
 
-                                dialog.show();
-                            } else {
+                                            myRef.updateChildren(childUpdates);
 
-                                String id = String.valueOf(serie_id);
+                                            Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            String id = String.valueOf(serie_id);
 
-                                String user = mAuth.getCurrentUser().getUid();
+                                            String user = mAuth.getCurrentUser().getUid();
 
-                                Map<String, Object> childUpdates = new HashMap<String, Object>();
+                                            Map<String, Object> childUpdates = new HashMap<String, Object>();
 
-                                childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/userEps/"+position+"/assistido", true);
-                                childUpdates.put("/"+user+"/seguindo/"+id+"/seasons/"+temporada_position+"/visto/",  TemporadaTodaAssistida(position));
+                                            childUpdates.put("/" + user + "/seguindo/" + id + "/seasons/" + temporada_position + "/userEps/" + position + "/assistido", true);
+                                            childUpdates.put("/" + user + "/seguindo/" + id + "/seasons/" + temporada_position + "/visto/", TemporadaTodaAssistida(position));
 
-                                myRef.updateChildren(childUpdates);
+                                            myRef.updateChildren(childUpdates);
 
-                                Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .create();
 
-                            }
+                            dialog.show();
+                        } else {
+
+                            String id = String.valueOf(serie_id);
+
+                            String user = mAuth.getCurrentUser().getUid();
+
+                            Map<String, Object> childUpdates = new HashMap<String, Object>();
+
+                            childUpdates.put("/" + user + "/seguindo/" + id + "/seasons/" + temporada_position + "/userEps/" + position + "/assistido", true);
+                            childUpdates.put("/" + user + "/seguindo/" + id + "/seasons/" + temporada_position + "/visto/", TemporadaTodaAssistida(position));
+
+                            myRef.updateChildren(childUpdates);
+
+                            Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
+
                         }
+                    }
                 }
             }
 
             @Override
             public void onClickTemporada(View view, int position) {
                 Intent intent = new Intent(TemporadaActivity.this, EpsodioActivity.class);
+
                 intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), serie_id);
                 intent.putExtra(Constantes.INSTANCE.getTVSEASON_ID(), tvSeason.getId());
                 intent.putExtra(Constantes.INSTANCE.getEPSODIO_ID(), tvSeason.getEpisodes().get(position).getId());
@@ -234,32 +248,124 @@ public class TemporadaActivity extends BaseActivity {
                 intent.putExtra(Constantes.INSTANCE.getTVSEASONS(), tvSeason);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                 intent.putExtra(Constantes.INSTANCE.getNOME(), nome_temporada);
-                intent.putExtra(Constantes.INSTANCE.getUSER(), seasons );
+                intent.putExtra(Constantes.INSTANCE.getUSER(), seasons);
                 intent.putExtra(Constantes.INSTANCE.getSEGUINDO(), seguindo);
                 startActivity(intent);
 
+            }
+
+            @Override
+            public void onClickTemporadaNota(View view, TvEpisode epsodio, int position, UserEp userEp) {
+                Date date = null;
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                try {
+                    date = sdf.parse(epsodio.getAirDate() != null ? epsodio.getAirDate() : null);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if (UtilsApp.verificaLancamento(date) && mAuth.getCurrentUser() != null && seguindo) {
+
+
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                            .getReference("users")
+                            .child(mAuth.getCurrentUser().getUid())
+                            .child("seguindo")
+                            .child(valueOf(serie_id))
+                            .child("seasons")
+                            .child(valueOf(temporada_position));
+
+
+                    final Dialog alertDialog = new Dialog(TemporadaActivity.this);
+                    alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    alertDialog.setContentView(R.layout.adialog_custom_rated);
+
+                    Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
+                    Button nao_visto = (Button) alertDialog.findViewById(R.id.cancel_rated);
+
+                    if (userEp != null) {
+                        if (!userEp.isAssistido()) {
+                            nao_visto.setVisibility(View.INVISIBLE);
+                        }
+                    } else {
+                        nao_visto.setVisibility(View.INVISIBLE);
+                    }
+
+                    TextView title = (TextView) alertDialog.findViewById(R.id.rating_title);
+                    title.setText(epsodio.getName() != null ? epsodio.getName() : "");
+                    final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
+                    ratingBar.setRating(userEp.getNota());
+                    int width = getResources().getDimensionPixelSize(R.dimen.popup_width);
+                    int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
+
+                    alertDialog.getWindow().setLayout(width, height);
+                    alertDialog.show();
+
+                    nao_visto.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            if (seguindo) {
+
+                                Map<String, Object> childUpdates = new HashMap<String, Object>();
+
+                                childUpdates.put("/userEps/" + position + "/assistido", false);
+                                childUpdates.put("/visto/", false);
+                                childUpdates.put("/userEps/" + position + "/nota", 0);
+                                databaseReference.updateChildren(childUpdates);
+                            }
+                            alertDialog.dismiss();
+                        }
+                    });
+
+                    ok.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+
+                            Map<String, Object> childUpdates = new HashMap<String, Object>();
+
+                            childUpdates.put("/userEps" + "/" + position + "/assistido", true);
+                            childUpdates.put("/visto", TemporadaTodaAssistida(position));
+                            childUpdates.put("/userEps/" + position + "/nota", ratingBar.getRating());
+                            databaseReference.updateChildren(childUpdates);
+
+                            alertDialog.dismiss();
+
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    FilmeService
+                                            .ratedTvshowEpsodioGuest(serie_id, seasons
+                                                    .getSeasonNumber(), position, (int) ratingBar
+                                                    .getRating(), getApplicationContext());
+                                }
+                            }).start();
+                        }
+                    });
+
+                }
             }
         };
     }
 
     private boolean TemporadaTodaAssistida(int position) {
-       // Log.d(TAG, "TemporadaTodaAssistida");
+
         for (UserEp userEp : seasons.getUserEps()) {
             if (!seasons.getUserEps().get(position).equals(userEp)) {
                 if (!userEp.isAssistido()) {
-              //      Log.d(TAG, "TemporadaTodaAssistida - false");
                     return false;
                 }
             }
         }
-        //Log.d(TAG, "TemporadaTodaAssistida - true");
         return true;
     }
 
     private boolean isAssistidoAnteriores(int position) {
 
         for (int i = 0; i < position; i++) {
-            if (!seasons.getUserEps().get(i).isAssistido()){
+            if (!seasons.getUserEps().get(i).isAssistido()) {
                 return true;
             }
         }
@@ -267,14 +373,13 @@ public class TemporadaActivity extends BaseActivity {
     }
 
 
-    private void setListener(){
+    private void setListener() {
 
         postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists() && seguindo) {
-                  //  Log.d(TAG, "key listener: " + dataSnapshot.getKey());
                     seasons = dataSnapshot.getValue(UserSeasons.class);
 
 //                    if (recyclerView.isShown()) {
@@ -293,15 +398,15 @@ public class TemporadaActivity extends BaseActivity {
 
                     recyclerView
                             .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
-                                    tvSeason, seasons ,seguindo,
-                                    onClickListener() ));
+                                    tvSeason, seasons, seguindo,
+                                    onClickListener()));
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Getting Post failed, log a message
-               // Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
                 // ...
             }
         };
@@ -346,21 +451,21 @@ public class TemporadaActivity extends BaseActivity {
             try {
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(TemporadaActivity.this);
                 idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-            } catch (Exception e){
+            } catch (Exception e) {
                 Crashlytics.logException(e);
             }
             try {
                 if (idioma_padrao) {
                     tvSeason = FilmeService.getTmdbTvSeasons()
-                            .getSeason(serie_id, temporada_id, getLocale());
+                            .getSeason(serie_id, temporada_id, getLocale(), TmdbTvSeasons.SeasonMethod.credits);
 
                     return null;
                 } else {
                     tvSeason = FilmeService.getTmdbTvSeasons()
-                            .getSeason(serie_id, temporada_id, "en"); //????
+                            .getSeason(serie_id, temporada_id, "en", TmdbTvSeasons.SeasonMethod.credits);
                     return null;
                 }
-            } catch (Exception e ){
+            } catch (Exception e) {
 
                 Crashlytics.logException(e);
                 runOnUiThread(new Runnable() {
@@ -378,9 +483,11 @@ public class TemporadaActivity extends BaseActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if (tvSeason == null) {return; }
+            if (tvSeason == null) {
+                return;
+            }
 
-            getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada );
+            getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada);
 
             if (mAuth.getCurrentUser() != null) {
                 myRef.child(mAuth.getCurrentUser().getUid())
@@ -395,7 +502,7 @@ public class TemporadaActivity extends BaseActivity {
                                         // Get user value
                                         if (dataSnapshot.exists()) {
                                             seguindo = true;
-                                          //  Log.w(TAG, "seguindo - true");
+                                            //  Log.w(TAG, "seguindo - true");
                                             seasons = dataSnapshot.getValue(UserSeasons.class);
                                             recyclerView
                                                     .setAdapter(new TemporadaFoldinAdapter(TemporadaActivity.this, tvSeason, seasons, seguindo, onClickListener()));
@@ -403,19 +510,19 @@ public class TemporadaActivity extends BaseActivity {
 //                                                            tvSeason, seasons, seguindo,
 //                                                            onClickListener()));
                                         } else {
-                                         //   Log.d(TAG, "onDataChange " + "Não seguindo.");
+                                            //   Log.d(TAG, "onDataChange " + "Não seguindo.");
                                             seguindo = false;
                                             recyclerView
-                                                    .setAdapter(new TemporadaFoldinAdapter(TemporadaActivity.this, tvSeason, seasons, seguindo, onClickListener()));
-                                                    //.setAdapter(new TemporadaAdapter(TemporadaActivity.this,
-                                                    //        tvSeason, seasons, seguindo,
-                                                    //        onClickListener()));
+                                                    .setAdapter(new TemporadaFoldinAdapter(TemporadaActivity.this, tvSeason, null, seguindo, onClickListener()));
+                                            //.setAdapter(new TemporadaAdapter(TemporadaActivity.this,
+                                            //        tvSeason, seasons, seguindo,
+                                            //        onClickListener()));
                                         }
                                     }
 
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
-                                      //  Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                                        //  Log.w(TAG, "getUser:onCancelled", databaseError.toException());
                                     }
                                 });
                 setListener();

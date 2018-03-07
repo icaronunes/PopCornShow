@@ -13,6 +13,7 @@ import info.movito.themoviedbapi.model.tv.TvSeason
 import kotlinx.android.synthetic.main.epsodio_detalhes.view.*
 import kotlinx.android.synthetic.main.foldin_main.view.*
 import kotlinx.android.synthetic.main.item_epsodio.view.*
+import kotlinx.android.synthetic.main.layout_diretor.view.*
 import utils.UtilsApp
 
 /**
@@ -20,10 +21,9 @@ import utils.UtilsApp
  */
 
 class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSeason: TvSeason,
-                             val seasons: UserSeasons?, val seguindo: Boolean, valtemporadaOnClickListener: TemporadaAdapter.TemporadaOnClickListener) : RecyclerView.Adapter<TemporadaFoldinAdapter.HoldeTemporada>() {
+                             val seasons: UserSeasons?, val seguindo: Boolean, val temporadaOnClickListener: TemporadaAdapter.TemporadaOnClickListener) : RecyclerView.Adapter<TemporadaFoldinAdapter.HoldeTemporada>() {
 
     private var unfoldedIndexes = HashSet<Int>()
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TemporadaFoldinAdapter.HoldeTemporada? {
         val view = LayoutInflater.from(temporadaActivity).inflate(R.layout.foldin_main, parent, false)
@@ -33,50 +33,93 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
     override fun onBindViewHolder(holder: TemporadaFoldinAdapter.HoldeTemporada, position: Int) {
 
         val ep = tvSeason.episodes[position]
+        val epUser = seasons?.userEps?.get(position)
+
+        holder.progress_detalhe.visibility = if (seguindo) {
+            View.VISIBLE
+        } else {
+            View.INVISIBLE
+        }
 
         holder.titulo.text = ep.name
-        //holder.nota.text = seasons.userEps[position].nota.toString()
+
         holder.numero.text = ep.episodeNumber.toString()
-        val color = if (seasons?.isVisto!!) temporadaActivity.resources.getColor(R.color.green) else {
-            temporadaActivity.resources.getColor(R.color.gray_reviews)
-        }
-        holder.visto.setBackgroundColor(color)
+
+        holder.visto.setBackgroundColor(if (epUser?.isAssistido!!) temporadaActivity.resources.getColor(R.color.green) else {
+            this.temporadaActivity.resources.getColor(R.color.gray_reviews)
+        })
+
+        holder.visto_detelhe.setBackgroundColor(if (epUser?.isAssistido) temporadaActivity.resources.getColor(R.color.green) else {
+            this.temporadaActivity.resources.getColor(R.color.gray_reviews)
+        })
+
         holder.resumo.text = ep.overview
         holder.votos.text = ep.voteCount.toString()
 
 
-        holder.cell.isUnfolded.let {
-            Picasso.with(temporadaActivity)
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 3)) + ep.stillPath)
-                    .error(R.drawable.empty_popcorn)
-                    .into(holder.img)
-            holder.resumo_detalhe.text = ep.overview
-            holder.nota_user.text = seasons?.userEps[position].nota.toString()
-            holder.detalhes_votos.text = ep.voteCount.toString()
-            ep.voteAverage.let {
-                holder.detalhes_nota.text = ep?.voteAverage?.toString()
-            }
+        //  holder.cell.isUnfolded.let {
+        Picasso.with(temporadaActivity)
+                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 3)) + ep.stillPath)
+                .error(R.drawable.empty_popcorn)
+                .into(holder.img)
+        holder.resumo_detalhe.text = ep.overview
 
+        if (ep?.voteAverage?.toString()?.length!! >= 2) {
+            holder.detalhes_nota.text = ep.voteAverage.toString().slice(0..2)
+            holder.nota.text = ep.voteAverage.toString().slice(0..2)
+        }
+        holder.detalhes_votos.text = ep.voteCount.toString()
+        ep.voteAverage.let {
+            holder.detalhes_nota.text = ep?.voteAverage?.toString()
+        }
+
+        if (epUser != null && seguindo) {
+            holder.nota_user.text = epUser.nota.toString()
+            holder.progress_detalhe.rating = epUser?.nota!!
         }
 
         if (holder.cell.isUnfolded) {
             if (unfoldedIndexes.contains(position)) {
                 holder.cell.unfold(true)
-                //registerFold(position)
-                // registerToggle(position)
+                registerToggle(position)
             } else {
                 holder.cell.fold(true)
-                // registerFold(position)
-                // registerToggle(position)
+                registerToggle(position)
             }
         }
 
-        holder.cell.setOnClickListener {
+        val diretor = ep?.credits?.crew?.first {
+            it.job == "Director"
+        }.toString()
 
+        val escritor = ep?.credits?.crew?.first {
+            it.job == "writer"
+        }.toString()
+
+        holder.name_diretor.text = if (diretor.equals("null", true)) {
+            " - "
+        } else {
+            diretor
+        }
+        holder.nome_escritor.text = if (escritor.equals("null", true)) {
+            " - "
+        } else {
+            escritor
+        }
+
+        holder.cell.setOnClickListener {
             holder.cell.toggle(false)
-            // registerFold(position)
             registerToggle(position)
         }
+
+        holder.ver_mais.setOnClickListener {
+            this.temporadaOnClickListener.onClickTemporada(it, position)
+        }
+
+        holder.linear.setOnClickListener {
+            this.temporadaOnClickListener.onClickTemporadaNota(holder.progress_detalhe, ep, position, epUser)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -126,6 +169,12 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         val progress_detalhe = itemView.epsodio_detalhes_progress
         val ver_mais = itemView.epsodio_detalhes_ler_mais
         //layout_diretor
+        val visto_detelhe = itemView.layout_diretor_nome_visto
+        val escritor_img = itemView.layout_diretor_nome_escritor_img
+        val diretor_img = itemView.layout_diretor_nome_diretor_img
+        val name_diretor = itemView.layout_diretor_nome_diretor
+        val nome_escritor = itemView.layout_diretor_nome_escritor
+        val linear = itemView.epsodio_detalhes_linear
 
     }
 }
