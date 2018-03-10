@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:clipChildren="true"
         android:clipToPadding="false"
-        folding-cell:animationDuration="1300"
+        folding-cell:animationDuration="1000"
         folding-cell:backSideColor="@color/accent2"
         folding-cell:cameraHeight="30">
         ​

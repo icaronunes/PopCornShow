@@ -58,7 +58,7 @@ public class UserEp implements Serializable{
         return nota;
     }
 
-    public void setNota(int nota) {
+    public void setNota(float nota) {
         this.nota = nota;
     }
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import br.com.icaro.filme.R
 import com.ramotion.foldingcell.FoldingCell
 import com.squareup.picasso.Picasso
+import domain.UserEp
 import domain.UserSeasons
 import info.movito.themoviedbapi.model.tv.TvSeason
 import kotlinx.android.synthetic.main.epsodio_detalhes.view.*
@@ -35,23 +36,36 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         val ep = tvSeason.episodes[position]
         val epUser = seasons?.userEps?.get(position)
 
-        holder.progress_detalhe.visibility = if (seguindo) {
+        holder.linear.visibility = if (seguindo) {
             View.VISIBLE
         } else {
-            View.INVISIBLE
+            View.GONE
         }
 
         holder.titulo.text = ep.name
 
         holder.numero.text = ep.episodeNumber.toString()
+        if (seguindo) {
+            holder.visto.setBackgroundColor(if (epUser?.isAssistido!!) temporadaActivity.resources.getColor(R.color.green) else {
+                this.temporadaActivity.resources.getColor(R.color.gray_reviews)
+            })
 
-        holder.visto.setBackgroundColor(if (epUser?.isAssistido!!) temporadaActivity.resources.getColor(R.color.green) else {
-            this.temporadaActivity.resources.getColor(R.color.gray_reviews)
-        })
+            holder.visto.setOnClickListener {
+                this.temporadaOnClickListener.onClickVerTemporada(it, position)
+            }
 
-        holder.visto_detelhe.setBackgroundColor(if (epUser?.isAssistido) temporadaActivity.resources.getColor(R.color.green) else {
-            this.temporadaActivity.resources.getColor(R.color.gray_reviews)
-        })
+            holder.visto_detelhe.setBackgroundColor(if (epUser?.isAssistido) temporadaActivity.resources.getColor(R.color.green) else {
+                this.temporadaActivity.resources.getColor(R.color.gray_reviews)
+            })
+
+            holder.visto_detelhe.setOnClickListener {
+                this.temporadaOnClickListener.onClickVerTemporada(it, position)
+            }
+
+        } else {
+            holder.visto_detelhe.visibility = View.GONE
+            holder.ver_mais.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+        }
 
         holder.resumo.text = ep.overview
         holder.votos.text = ep.voteCount.toString()
@@ -75,7 +89,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
 
         if (epUser != null && seguindo) {
             holder.nota_user.text = epUser.nota.toString()
-            holder.progress_detalhe.rating = epUser?.nota!!
+            holder.progress_detalhe.rating = epUser.nota
         }
 
         if (holder.cell.isUnfolded) {
@@ -149,11 +163,19 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         unfoldedIndexes.add(position)
     }
 
+    fun notificarMudanca(ep: UserEp?, position: Int){
+
+        seasons?.userEps?.set(position, ep)
+        notifyItemChanged(position)
+
+    }
+
     inner class HoldeTemporada(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         //Foldin
         val cell: FoldingCell = itemView.folding_cell
         //item_epsodio
+
         val titulo = itemView.item_epsodio_titulo
         val resumo = itemView.item_epsodio_titulo_resumo
         val numero = itemView.item_epsodio_numero
@@ -161,6 +183,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         val votos = itemView.item_epsodio_votos
         val nota = itemView.item_epsodio_nota
         //epsodio_detalhes
+
         val img = itemView.epsodio_detalhes_img
         val resumo_detalhe = itemView.epsodio_detalhes_resumo
         val detalhes_nota = itemView.epsodio_detalhes_nota
@@ -169,6 +192,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         val progress_detalhe = itemView.epsodio_detalhes_progress
         val ver_mais = itemView.epsodio_detalhes_ler_mais
         //layout_diretor
+
         val visto_detelhe = itemView.layout_diretor_nome_visto
         val escritor_img = itemView.layout_diretor_nome_escritor_img
         val diretor_img = itemView.layout_diretor_nome_diretor_img

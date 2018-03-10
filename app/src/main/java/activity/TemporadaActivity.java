@@ -64,7 +64,7 @@ public class TemporadaActivity extends BaseActivity {
 
     private final String TAG = TemporadaActivity.class.getName();
 
-    private int temporada_id, temporada_position, positionep;
+    private int temporada_id, temporada_position;
     private String nome_temporada;
     private int serie_id, color;
     private TvSeason tvSeason;
@@ -149,7 +149,7 @@ public class TemporadaActivity extends BaseActivity {
 
             @Override
             public void onClickVerTemporada(View view, final int position) {
-                positionep = position;
+
                 if (seasons != null) {
                     if (seasons.getUserEps().get(position).isAssistido()) {
                         //  Log.d(TAG, "FALSE");
@@ -164,11 +164,40 @@ public class TemporadaActivity extends BaseActivity {
                         childUpdates.put("/" + user + "/seguindo/" + id + "/seasons/" + temporada_position + "/userEps/" + position + "/assistido", false);
                         childUpdates.put("/" + user + "/seguindo/" + id + "/seasons/" + temporada_position + "/visto/", false);
 
-                        myRef.updateChildren(childUpdates);
-                        //    Log.d(TAG, "desvisto");
+                        myRef.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                if (databaseError == null) {
+                                    databaseReference
+                                            .child(user).child("seguindo")
+                                            .child(id).child("seasons")
+                                            .child(String.valueOf(temporada_position))
+                                            .child("userEps").child(String.valueOf(position))
+                                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    if (dataSnapshot.exists()) {
+                                                        UserEp userEp = dataSnapshot.getValue(UserEp.class);
+                                                        ((TemporadaFoldinAdapter) recyclerView.getAdapter()).notificarMudanca(userEp, position);
+                                                    } else {
+                                                        Toast.makeText(TemporadaActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            });
+
+                                } else {
+                                    Toast.makeText(TemporadaActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
 
                     } else {
-                        //  Log.d(TAG, "TRUE");
+
                         if (isAssistidoAnteriores(position)) {
                             AlertDialog dialog = new AlertDialog.Builder(TemporadaActivity.this)
                                     .setTitle(R.string.title_marcar_ep_anteriores)
@@ -191,7 +220,37 @@ public class TemporadaActivity extends BaseActivity {
                                                 childUpdates.put("/" + user + "/seguindo/" + id + "/seasons/" + temporada_position + "/visto/", TemporadaTodaAssistida(position));
                                             }
 
-                                            myRef.updateChildren(childUpdates);
+                                            myRef.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
+                                                @Override
+                                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                                    if (databaseError == null) {
+                                                        databaseReference.child(user).child("seguindo")
+                                                                .child(id).child("seasons")
+                                                                .child(String.valueOf(temporada_position))
+                                                                .child("userEps")
+                                                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                    @Override
+                                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                        if (dataSnapshot.exists()) {
+                                                                            for (int i = 0; i <= position; i++) {
+                                                                                UserEp userEp = dataSnapshot.child(String.valueOf(i)).getValue(UserEp.class);
+                                                                                ((TemporadaFoldinAdapter) recyclerView.getAdapter()).notificarMudanca(userEp, i);
+                                                                            }
+                                                                        } else {
+                                                                            Toast.makeText(TemporadaActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                                                                        }
+                                                                    }
+
+                                                                    @Override
+                                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                                    }
+                                                                });
+                                                    } else {
+                                                        Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
 
                                             Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
                                         }
@@ -208,7 +267,35 @@ public class TemporadaActivity extends BaseActivity {
                                             childUpdates.put("/" + user + "/seguindo/" + id + "/seasons/" + temporada_position + "/userEps/" + position + "/assistido", true);
                                             childUpdates.put("/" + user + "/seguindo/" + id + "/seasons/" + temporada_position + "/visto/", TemporadaTodaAssistida(position));
 
-                                            myRef.updateChildren(childUpdates);
+                                            myRef.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
+                                                @Override
+                                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                                    if (databaseError == null) {
+                                                        databaseReference.child(user).child("seguindo")
+                                                                .child(id).child("seasons")
+                                                                .child(String.valueOf(temporada_position))
+                                                                .child("userEps").child(String.valueOf(position))
+                                                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                    @Override
+                                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                        if (dataSnapshot.exists()) {
+                                                                            UserEp userEp = dataSnapshot.getValue(UserEp.class);
+                                                                            ((TemporadaFoldinAdapter) recyclerView.getAdapter()).notificarMudanca(userEp, position);
+                                                                        } else {
+                                                                            Toast.makeText(TemporadaActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                                                                        }
+                                                                    }
+
+                                                                    @Override
+                                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                                    }
+                                                                });
+                                                    } else {
+                                                        Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
 
                                             Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
                                         }
@@ -227,7 +314,35 @@ public class TemporadaActivity extends BaseActivity {
                             childUpdates.put("/" + user + "/seguindo/" + id + "/seasons/" + temporada_position + "/userEps/" + position + "/assistido", true);
                             childUpdates.put("/" + user + "/seguindo/" + id + "/seasons/" + temporada_position + "/visto/", TemporadaTodaAssistida(position));
 
-                            myRef.updateChildren(childUpdates);
+                            myRef.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                    if (databaseError == null) {
+                                        databaseReference.child(user).child("seguindo")
+                                                .child(id).child("seasons")
+                                                .child(String.valueOf(temporada_position))
+                                                .child("userEps").child(String.valueOf(position))
+                                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        if (dataSnapshot.exists()) {
+                                                            UserEp userEp = dataSnapshot.getValue(UserEp.class);
+                                                            ((TemporadaFoldinAdapter) recyclerView.getAdapter()).notificarMudanca(userEp, position);
+                                                        } else {
+                                                            Toast.makeText(TemporadaActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                    } else {
+                                        Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
 
                             Toast.makeText(TemporadaActivity.this, R.string.marcado_assistido, Toast.LENGTH_SHORT).show();
 
@@ -313,7 +428,38 @@ public class TemporadaActivity extends BaseActivity {
                                 childUpdates.put("/userEps/" + position + "/assistido", false);
                                 childUpdates.put("/visto/", false);
                                 childUpdates.put("/userEps/" + position + "/nota", 0);
-                                databaseReference.updateChildren(childUpdates);
+                                databaseReference.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        if (databaseError == null) {
+                                            databaseReference
+                                                    .child("userEps")
+                                                    .child(String.valueOf(position))
+                                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                            UserEp userEp = dataSnapshot
+                                                                    .getValue(UserEp.class);
+                                                            if (userEp != null) {
+                                                                ((TemporadaFoldinAdapter) recyclerView.getAdapter()).notificarMudanca(userEp, position);
+                                                            } else {
+                                                                Toast.makeText(TemporadaActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                                                            }
+
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(DatabaseError databaseError) {
+
+                                                        }
+                                                    });
+                                        } else {
+                                            Toast.makeText(TemporadaActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
                             }
                             alertDialog.dismiss();
                         }
@@ -323,31 +469,61 @@ public class TemporadaActivity extends BaseActivity {
                         @Override
                         public void onClick(View view) {
 
-
                             Map<String, Object> childUpdates = new HashMap<String, Object>();
 
                             childUpdates.put("/userEps" + "/" + position + "/assistido", true);
                             childUpdates.put("/visto", TemporadaTodaAssistida(position));
                             childUpdates.put("/userEps/" + position + "/nota", ratingBar.getRating());
-                            databaseReference.updateChildren(childUpdates);
+                            databaseReference.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                    if (databaseError == null) {
+                                        databaseReference
+                                                .child("userEps")
+                                                .child(String.valueOf(position))
+                                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        UserEp userEp = dataSnapshot.getValue(UserEp.class);
+                                                        if (userEp != null) {
+                                                            ((TemporadaFoldinAdapter) recyclerView.getAdapter()).notificarMudanca(userEp, position);
+                                                            setNotaIMDB(position, (int) ratingBar.getRating());
+                                                        } else {
+                                                            Toast.makeText(TemporadaActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                                                        }
+
+
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                    } else {
+                                        Toast.makeText(TemporadaActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
 
                             alertDialog.dismiss();
-
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    FilmeService
-                                            .ratedTvshowEpsodioGuest(serie_id, seasons
-                                                    .getSeasonNumber(), position, (int) ratingBar
-                                                    .getRating(), getApplicationContext());
-                                }
-                            }).start();
                         }
                     });
 
                 }
             }
         };
+    }
+
+    private void setNotaIMDB(int position, int ratingBar) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                FilmeService
+                        .ratedTvshowEpsodioGuest(serie_id, seasons
+                                .getSeasonNumber(), position, ratingBar, getApplicationContext());
+            }
+        }).start();
     }
 
     private boolean TemporadaTodaAssistida(int position) {
@@ -391,13 +567,14 @@ public class TemporadaActivity extends BaseActivity {
 //                                        tvSeason, seasons, seguindo,
 //                                        onClickListener()));
 //                    }
+
                     FilmeApplication.getInstance().getBus().post(seasons);
                     recyclerView.getAdapter().notifyDataSetChanged();
 
                 } else {
 
                     recyclerView
-                            .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
+                            .setAdapter(new TemporadaFoldinAdapter(TemporadaActivity.this,
                                     tvSeason, seasons, seguindo,
                                     onClickListener()));
                 }
@@ -528,7 +705,7 @@ public class TemporadaActivity extends BaseActivity {
                 setListener();
             } else {
                 recyclerView
-                        .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
+                        .setAdapter(new TemporadaFoldinAdapter(TemporadaActivity.this,
                                 tvSeason, seasons, seguindo,
                                 onClickListener()));
             }

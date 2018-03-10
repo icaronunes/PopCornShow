@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="?attr/colorButtonNormal"
     android:visibility="visible"
     app:cardCornerRadius="3dp"
@@ -33,7 +33,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text=" O inverno está chegando"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/item_epsodio_numero"
@@ -45,7 +45,7 @@
                     android:layout_marginStart="3dp"
                     android:gravity="center"
                     android:text="3 "
-                    android:textStyle="bold|italic"/>
+                    android:textStyle="bold|italic" />
 
             </LinearLayout>
 
@@ -55,11 +55,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
-                android:text="/search - Text based search is the most common way.
-                You provide a query string and we provide the closest match. Searching by text takes into account all original, translated, alternative names and titles."
-                android:maxLines="4"
                 android:ellipsize="end"
-                android:textAlignment="center"/>
+                android:maxLines="3"
+                android:textAlignment="center"
+                tools:text="/search - Text based search is the most common way.
+                You provide a query string and we provide the closest match. Searching by text takes into account all original, translated, alternative names and titles." />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -73,21 +73,21 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="112dp"
-                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="NOTA: "
-                        android:textAllCaps="false"/>
+                        android:text="@string/nota"
+                        android:textAllCaps="false" />
 
                     <TextView
                         android:id="@+id/item_epsodio_nota"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="9.0"/>
+                        android:text="9.0" />
 
                 </LinearLayout>
 
@@ -104,7 +104,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="VOTOS: "
-                        android:textAllCaps="false"/>
+                        android:textAllCaps="false" />
 
                     <TextView
                         android:id="@+id/item_epsodio_votos"
@@ -112,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="21"/>
+                        android:text="21" />
 
                 </LinearLayout>
 
@@ -125,8 +125,8 @@
             android:id="@+id/item_epsodio_visto"
             android:layout_width="20dp"
             android:layout_height="match_parent"
-            tools:background="@color/primary"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            tools:background="@color/primary" />
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

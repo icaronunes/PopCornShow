@@ -54,10 +54,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
-                    android:fontFamily="sans-serif-smallcaps"
                     android:text="Our API is available for everyone to use. A TMDb user account is required to request an API key. Professional users are approved on a per application basis."
-                    android:textAlignment="center"
-                    android:typeface="sans" />
+                    android:textAlignment="center" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -138,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="serif"
-            android:text="5.5"
+            android:text="-"
             android:textSize="12sp"
             android:typeface="serif" />
 
@@ -172,6 +170,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
+                android:background="@drawable/button_nao_visto"
                 android:layout_gravity="right|end"
                 android:layout_marginLeft="18dp"
                 android:layout_marginStart="18dp"
