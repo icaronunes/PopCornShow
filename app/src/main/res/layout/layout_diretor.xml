@@ -23,16 +23,16 @@
 
         <ImageView
             android:id="@+id/layout_diretor_nome_diretor_img"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/trade_size_dp_60"
             android:layout_height="wrap_content"
-            android:src="@drawable/person" />
+            android:adjustViewBounds="true"
+            tools:src="@drawable/person" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-
         android:layout_margin="3dp"
         android:layout_weight="1"
         android:gravity="top"
@@ -73,9 +73,10 @@
 
         <ImageView
             android:id="@+id/layout_diretor_nome_escritor_img"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/trade_size_dp_60"
             android:layout_height="wrap_content"
-            android:src="@drawable/person" />
+            android:adjustViewBounds="true"
+            tools:src="@drawable/person" />
 
         <TextView
             android:layout_width="wrap_content"

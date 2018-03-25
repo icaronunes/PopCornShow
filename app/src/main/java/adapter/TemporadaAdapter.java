@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import activity.TemporadaActivity;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
+import domain.EpisodesItem;
 import domain.UserEp;
 import domain.UserSeasons;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
@@ -38,7 +39,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
     public interface TemporadaOnClickListener {
         void onClickVerTemporada(View view, int position);
         void onClickTemporada(View view, int position);
-        void onClickTemporadaNota(View view, TvEpisode ep, int position, UserEp userEp);
+        void onClickTemporadaNota(View view, EpisodesItem ep, int position, UserEp userEp);
     }
 
     public TemporadaAdapter(TemporadaActivity temporadaActivity, TvSeason tvSeason,

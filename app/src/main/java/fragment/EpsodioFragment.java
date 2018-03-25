@@ -42,6 +42,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import br.com.icaro.filme.R;
+import domain.EpisodesItem;
 import domain.FilmeService;
 import domain.UserEp;
 import domain.UserSeasons;
@@ -64,7 +65,7 @@ public class EpsodioFragment extends Fragment {
 
     private int tvshow_id, color, position, temporada_position;
     private Credits credits;
-    private TvEpisode episode;
+    private EpisodesItem episode;
 
    private String nome_serie;
     private LinearLayout linear_director, linear_air_date, linear_write, linear_vote;
@@ -84,7 +85,7 @@ public class EpsodioFragment extends Fragment {
     private LinearLayout relativeLayout;
     private UserSeasons seasons;
 
-    public static Fragment newInstance(TvEpisode tvEpisode, String nome_serie, int tvshow_id,
+    public static Fragment newInstance(EpisodesItem tvEpisode, String nome_serie, int tvshow_id,
                                        int color, boolean seguindo, int position, UserSeasons seasons, int temporada_position) {
 
         EpsodioFragment fragment = new EpsodioFragment();
@@ -107,7 +108,7 @@ public class EpsodioFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            episode = (TvEpisode) getArguments().getSerializable(Constantes.INSTANCE.getEPSODIO());
+            episode = (EpisodesItem) getArguments().getSerializable(Constantes.INSTANCE.getEPSODIO());
             nome_serie = getArguments().getString(Constantes.INSTANCE.getNOME_TVSHOW());
             tvshow_id = getArguments().getInt(Constantes.INSTANCE.getTVSHOW_ID());
             color = getArguments().getInt(Constantes.INSTANCE.getCOLOR_TOP());

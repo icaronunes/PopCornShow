@@ -45,12 +45,16 @@ import adapter.TemporadaAdapter;
 import adapter.TemporadaFoldinAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
+import domain.API;
+import domain.EpisodesItem;
 import domain.FilmeService;
+import domain.TvSeasons;
 import domain.UserEp;
 import domain.UserSeasons;
-import info.movito.themoviedbapi.TmdbTvSeasons;
-import info.movito.themoviedbapi.model.tv.TvEpisode;
-import info.movito.themoviedbapi.model.tv.TvSeason;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -67,13 +71,14 @@ public class TemporadaActivity extends BaseActivity {
     private int temporada_id, temporada_position;
     private String nome_temporada;
     private int serie_id, color;
-    private TvSeason tvSeason;
+    private TvSeasons tvSeason;
     private RecyclerView recyclerView;
     private boolean seguindo;
     private UserSeasons seasons;
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
     private ValueEventListener postListener;
+    private CompositeSubscription subscription;
 
 
     @Override
@@ -99,15 +104,18 @@ public class TemporadaActivity extends BaseActivity {
 
         mAuth = FirebaseAuth.getInstance();
         myRef = FirebaseDatabase.getInstance().getReference("users");
+        subscription = new CompositeSubscription();
 
 
         if (UtilsApp.isNetWorkAvailable(this)) {
-            new TMDVAsync().execute();
+            //new TMDVAsync().execute();
+            getDados();
         } else {
             snack();
         }
 
     }
+
 
     protected void snack() {
         Snackbar.make(recyclerView, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
@@ -115,7 +123,8 @@ public class TemporadaActivity extends BaseActivity {
                     @Override
                     public void onClick(View view) {
                         if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
-                            new TMDVAsync().execute();
+                            //new TMDVAsync().execute();
+                            getDados();
                         } else {
                             snack();
                         }
@@ -370,7 +379,7 @@ public class TemporadaActivity extends BaseActivity {
             }
 
             @Override
-            public void onClickTemporadaNota(View view, TvEpisode epsodio, int position, UserEp userEp) {
+            public void onClickTemporadaNota(View view, EpisodesItem epsodio, int position, UserEp userEp) {
                 Date date = null;
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -604,6 +613,7 @@ public class TemporadaActivity extends BaseActivity {
                     .child("seasons")
                     .child(String.valueOf(temporada_position)).removeEventListener(postListener);
         }
+        subscription.clear();
     }
 
     @Override
@@ -620,6 +630,82 @@ public class TemporadaActivity extends BaseActivity {
         return true;
     }
 
+
+    private void getDados() {
+        new API(this).getTvSeasons(serie_id, temporada_id, temporada_position)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<TvSeasons>() {
+                    @Override
+                    public void onCompleted() {
+
+                        if (tvSeason == null) {
+                            return;
+                        }
+
+                        getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada);
+
+                        if (mAuth.getCurrentUser() != null) {
+                            myRef.child(mAuth.getCurrentUser().getUid())
+                                    .child("seguindo")
+                                    .child(String.valueOf(serie_id))
+                                    .child("seasons")
+                                    .child(String.valueOf(temporada_position))
+                                    .addListenerForSingleValueEvent(
+                                            new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    // Get user value
+                                                    if (dataSnapshot.exists()) {
+                                                        seguindo = true;
+                                                        //  Log.w(TAG, "seguindo - true");
+                                                        seasons = dataSnapshot.getValue(UserSeasons.class);
+                                                        recyclerView
+                                                                .setAdapter(new TemporadaFoldinAdapter(TemporadaActivity.this, tvSeason, seasons, seguindo, onClickListener()));
+//                                                    .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
+//                                                            tvSeason, seasons, seguindo,
+//                                                            onClickListener()));
+                                                    } else {
+                                                        //   Log.d(TAG, "onDataChange " + "Não seguindo.");
+                                                        seguindo = false;
+                                                        recyclerView
+                                                                .setAdapter(new TemporadaFoldinAdapter(TemporadaActivity.this, tvSeason, null, seguindo, onClickListener()));
+                                                        //.setAdapter(new TemporadaAdapter(TemporadaActivity.this,
+                                                        //        tvSeason, seasons, seguindo,
+                                                        //        onClickListener()));
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+                                                    //  Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                                                }
+                                            });
+                            setListener();
+                        } else {
+                            recyclerView
+                                    .setAdapter(new TemporadaFoldinAdapter(TemporadaActivity.this,
+                                            tvSeason, seasons, seguindo,
+                                            onClickListener()));
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Crashlytics.logException(e);
+                        Toast.makeText(TemporadaActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(TvSeasons tvSeasons) {
+                        tvSeason = tvSeasons;
+                    }
+                });
+
+    }
+
+
     private class TMDVAsync extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -633,13 +719,13 @@ public class TemporadaActivity extends BaseActivity {
             }
             try {
                 if (idioma_padrao) {
-                    tvSeason = FilmeService.getTmdbTvSeasons()
-                            .getSeason(serie_id, temporada_id, getLocale(), TmdbTvSeasons.SeasonMethod.credits);
+                  //  tvSeason = FilmeService.getTmdbTvSeasons()
+                 //           .getSeason(serie_id, temporada_id, getLocale(), TmdbTvSeasons.SeasonMethod.credits);
 
                     return null;
                 } else {
-                    tvSeason = FilmeService.getTmdbTvSeasons()
-                            .getSeason(serie_id, temporada_id, "en", TmdbTvSeasons.SeasonMethod.credits);
+                //    tvSeason = FilmeService.getTmdbTvSeasons()
+                //            .getSeason(serie_id, temporada_id, "en", TmdbTvSeasons.SeasonMethod.credits);
                     return null;
                 }
             } catch (Exception e) {

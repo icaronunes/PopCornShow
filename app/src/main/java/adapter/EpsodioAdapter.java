@@ -4,9 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import domain.TvSeasons;
 import domain.UserSeasons;
 import fragment.EpsodioFragment;
-import info.movito.themoviedbapi.model.tv.TvSeason;
 
 /**
  * Created by icaro on 27/08/16.
@@ -14,14 +14,14 @@ import info.movito.themoviedbapi.model.tv.TvSeason;
 public class EpsodioAdapter extends FragmentPagerAdapter {
 
     private final boolean seguindo;
-    private TvSeason tvSeason;
+    private TvSeasons tvSeason;
     private String nome_serie;
     private int tvshow_id, color, temporada_position;
     private UserSeasons seasons;
 
 
     public EpsodioAdapter(FragmentManager supportFragmentManager,
-                          TvSeason tvSeason, String nome_serie, int tvshowid,
+                          TvSeasons tvSeason, String nome_serie, int tvshowid,
                           int color, boolean seguindo, UserSeasons seasons, int temporada_position) {
         super(supportFragmentManager);
         this.tvSeason = tvSeason;

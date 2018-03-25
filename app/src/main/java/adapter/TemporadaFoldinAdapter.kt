@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import br.com.icaro.filme.R
 import com.ramotion.foldingcell.FoldingCell
 import com.squareup.picasso.Picasso
+import domain.CrewItem
+import domain.TvSeasons
 import domain.UserEp
 import domain.UserSeasons
-import info.movito.themoviedbapi.model.tv.TvSeason
 import kotlinx.android.synthetic.main.epsodio_detalhes.view.*
 import kotlinx.android.synthetic.main.foldin_main.view.*
 import kotlinx.android.synthetic.main.item_epsodio.view.*
@@ -21,7 +22,7 @@ import utils.UtilsApp
  * Created by root on 27/02/18.
  */
 
-class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSeason: TvSeason,
+class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSeason: TvSeasons,
                              val seasons: UserSeasons?, val seguindo: Boolean, val temporadaOnClickListener: TemporadaAdapter.TemporadaOnClickListener) : RecyclerView.Adapter<TemporadaFoldinAdapter.HoldeTemporada>() {
 
     private var unfoldedIndexes = HashSet<Int>()
@@ -33,7 +34,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
 
     override fun onBindViewHolder(holder: TemporadaFoldinAdapter.HoldeTemporada, position: Int) {
 
-        val ep = tvSeason.episodes[position]
+        val ep = tvSeason.episodes?.get(position)!!
         val epUser = seasons?.userEps?.get(position)
 
         holder.linear.visibility = if (seguindo) {
@@ -70,10 +71,8 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         holder.resumo.text = ep.overview
         holder.votos.text = ep.voteCount.toString()
 
-
-        //  holder.cell.isUnfolded.let {
         Picasso.with(temporadaActivity)
-                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 3)) + ep.stillPath)
+                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 4)) + ep.stillPath)
                 .error(R.drawable.empty_popcorn)
                 .into(holder.img)
         holder.resumo_detalhe.text = ep.overview
@@ -84,7 +83,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         }
         holder.detalhes_votos.text = ep.voteCount.toString()
         ep.voteAverage.let {
-            holder.detalhes_nota.text = ep?.voteAverage?.toString()
+            holder.detalhes_nota.text = ep.voteAverage?.toString()
         }
 
         if (epUser != null && seguindo) {
@@ -102,23 +101,42 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
             }
         }
 
-        val diretor = ep?.credits?.crew?.first {
-            it.job == "Director"
-        }.toString()
+        var diretorName: String? = "null"
+        var escritorName: String? = "null"
 
-        val escritor = ep?.credits?.crew?.first {
-            it.job == "writer"
-        }.toString()
+        val diretor: CrewItem? =  ep.crew?.firstOrNull ({
+            it?.job == "Director"
+        })
 
-        holder.name_diretor.text = if (diretor.equals("null", true)) {
-            " - "
-        } else {
-            diretor
+        if (diretor != null) {
+            diretorName = diretor.name
+            Picasso.with(temporadaActivity)
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 2)) + diretor.profilePath)
+                    .error(R.drawable.person)
+                    .into(holder.diretor_img)
         }
-        holder.nome_escritor.text = if (escritor.equals("null", true)) {
-            " - "
+
+        val escritor: CrewItem? = ep.crew?.firstOrNull {
+            it?.job == "Writer"
+        }
+
+        if (escritor != null) {
+            escritorName = escritor.name
+            Picasso.with(temporadaActivity)
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 2)) + escritor.profilePath)
+                    .error(R.drawable.person)
+                    .into(holder.escritor_img)
+        }
+
+        holder.name_diretor.text = if (diretorName.equals("null", true)) {
+            " ? "
         } else {
-            escritor
+            diretorName
+        }
+        holder.nome_escritor.text = if (escritorName.equals("null", true)) {
+            " ? "
+        } else {
+            escritorName
         }
 
         holder.cell.setOnClickListener {
@@ -138,14 +156,15 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
 
     override fun getItemCount(): Int {
         if (seguindo) {
-            seasons?.userEps.let {
-                return it?.size!!
+            if (seasons?.userEps?.isNotEmpty()!!) {
+                return seasons.userEps.size
             }
         } else {
-            tvSeason.episodes.let {
-                return it.size
+            if (tvSeason.episodes?.isNotEmpty()!!){
+                return tvSeason.episodes.size
             }
         }
+        return 0
     }
 
     private fun registerToggle(position: Int) {
@@ -163,7 +182,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         unfoldedIndexes.add(position)
     }
 
-    fun notificarMudanca(ep: UserEp?, position: Int){
+    fun notificarMudanca(ep: UserEp?, position: Int) {
 
         seasons?.userEps?.set(position, ep)
         notifyItemChanged(position)

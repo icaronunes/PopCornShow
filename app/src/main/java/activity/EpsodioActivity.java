@@ -14,8 +14,8 @@ import com.google.android.gms.ads.AdView;
 
 import adapter.EpsodioAdapter;
 import br.com.icaro.filme.R;
+import domain.TvSeasons;
 import domain.UserSeasons;
-import info.movito.themoviedbapi.model.tv.TvSeason;
 import utils.Constantes;
 
 /**
@@ -25,7 +25,7 @@ public class EpsodioActivity extends BaseActivity {
 
     private int tvshow_id, posicao, color, temporada_position;
     private String nome_temporada;
-    private TvSeason tvSeason;
+    private TvSeasons tvSeason;
     private UserSeasons seasons;
     private boolean seguindo;
 
@@ -61,7 +61,7 @@ public class EpsodioActivity extends BaseActivity {
             tvshow_id = getIntent().getIntExtra(Constantes.INSTANCE.getTVSHOW_ID(), 0);
             posicao = getIntent().getIntExtra(Constantes.INSTANCE.getPOSICAO(), 0);
             color = getIntent().getIntExtra(Constantes.INSTANCE.getCOLOR_TOP(), 0);
-            tvSeason = (TvSeason) getIntent().getSerializableExtra(Constantes.INSTANCE.getTVSEASONS());
+            tvSeason = (TvSeasons) getIntent().getSerializableExtra(Constantes.INSTANCE.getTVSEASONS());
             nome_temporada = getIntent().getStringExtra(Constantes.INSTANCE.getNOME());
             temporada_position = getIntent().getIntExtra(Constantes.INSTANCE.getTEMPORADA_POSITION(), 0);
             //colocar no Signal
@@ -73,7 +73,7 @@ public class EpsodioActivity extends BaseActivity {
             tvshow_id = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getTVSHOW_ID()));
             posicao = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getPOSICAO()));
             color = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getCOLOR_TOP()));
-            tvSeason = (TvSeason) getIntent().getSerializableExtra(Constantes.INSTANCE.getTVSEASONS());
+            tvSeason = (TvSeasons) getIntent().getSerializableExtra(Constantes.INSTANCE.getTVSEASONS());
             temporada_position = getIntent().getIntExtra(Constantes.INSTANCE.getTEMPORADA_POSITION(), 0);
             nome_temporada = getIntent().getStringExtra(Constantes.INSTANCE.getNOME());
             seguindo = getIntent().getBooleanExtra(Constantes.INSTANCE.getSEGUINDO(), false);
