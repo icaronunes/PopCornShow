@@ -31,7 +31,6 @@ public class ImagemTopFilmeScrollFragment extends Fragment {
         return topScrollFragment;
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
