@@ -38,6 +38,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
         this.sinopse = overview;
     }
 
+
     @Override
     public TrailerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.scroll_trailer, parent, false);

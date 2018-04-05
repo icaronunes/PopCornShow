@@ -15,6 +15,7 @@ import br.com.icaro.filme.R;
 import utils.Config;
 import utils.Constantes;
 
+
 /**
  * Created by icaro on 12/07/16.
  */
