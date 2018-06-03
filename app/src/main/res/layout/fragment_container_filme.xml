@@ -16,12 +16,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:layout_marginEnd="@dimen/trade_size_dp_2"
-        android:layout_marginRight="@dimen/trade_size_dp_2"
         android:background="@color/black_transparente"
         android:gravity="top|start"
+        android:hint="DealPoll 2"
         android:lines="2"
         android:maxLines="2"
         android:minLines="1"
+        android:paddingLeft="@dimen/trade_size_dp_10"
         android:textSize="@dimen/trade_txt_size_sp_20" />
 
 

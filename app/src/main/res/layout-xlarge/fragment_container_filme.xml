@@ -22,6 +22,7 @@
         android:lines="2"
         android:maxLines="2"
         android:minLines="1"
+        android:paddingLeft="@dimen/trade_size_dp_15"
         android:textSize="@dimen/trade_txt_size_sp_20" />
 
 
