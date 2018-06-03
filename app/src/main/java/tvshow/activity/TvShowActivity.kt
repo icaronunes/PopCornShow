@@ -270,7 +270,7 @@ class TvShowActivity : BaseActivity() {
                         intent.type = "message/rfc822"
                         intent.putExtra(Intent.EXTRA_TEXT, series?.name + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL)
                         intent.type = "image/*"
-                        intent.putExtra(Intent.EXTRA_STREAM,  UtilsApp.getUriDownloadImage(this@TvShowActivity, file))
+                        intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.getUriDownloadImage(this@TvShowActivity, file))
                         startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar_filme)))
 
                     }
@@ -547,7 +547,7 @@ class TvShowActivity : BaseActivity() {
 
     private fun atulizarDataBase() {
 
-        userTvshowOld?.seasons?.forEachIndexed { index, userSeasons ->
+        userTvshowOld?.seasons?.forEachIndexed { index, _ ->
 
             if (userTvshow?.seasons?.get(index)?.id == userTvshowOld?.seasons?.get(index)?.id) {
                 userTvshow?.seasons?.get(index)?.seasonNumber = userTvshowOld?.seasons?.get(index)?.seasonNumber!!
@@ -558,7 +558,11 @@ class TvShowActivity : BaseActivity() {
         }
 
         userTvshowOld?.seasons?.forEachIndexed { index: Int, userSeasons: UserSeasons? ->
-            if (userTvshow?.seasons?.get(index)?.userEps?.size!! > userTvshowOld?.seasons?.get(index)?.userEps?.size!!) {
+
+            val epsSeasonTotal = userTvshow?.seasons?.get(index)?.userEps?.size ?: -1
+            val epsSeasonTotalOld = userTvshowOld?.seasons?.get(index)?.userEps?.size ?: -2
+
+            if (epsSeasonTotal > epsSeasonTotalOld) {
                 userTvshow?.seasons?.get(index)?.isVisto = false
             }
         }
@@ -566,6 +570,7 @@ class TvShowActivity : BaseActivity() {
     }
 
     private fun atulizarDataBaseEps(indexSeason: Int) {
+
         userTvshowOld?.seasons?.get(indexSeason)?.userEps?.forEachIndexed { index: Int, userEp: UserEp ->
             userTvshow?.seasons?.get(indexSeason)?.userEps?.set(index, userEp)
         }
@@ -605,9 +610,7 @@ class TvShowActivity : BaseActivity() {
                                                 setTitle()
                                                 setImageTop()
                                             } else {
-                                                if (userTvshowOld?.numberOfEpisodes != series?.numberOfEpisodes) {
-                                                    atualizarRealDate()
-                                                }
+                                                atualizarRealDate()
                                             }
                                         } catch (e: Exception) {
                                             setupViewPagerTabs()

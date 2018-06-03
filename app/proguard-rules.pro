@@ -16,13 +16,15 @@
 ##   public *;
 ##}
 -printconfiguration config.txt
--printmapping mapping.txt
+#-printmapping mapping.txt
 
 -verbose
 
 -keepattributes *Annotation*
 -keepattributes *Annotation*,Signature
-
+-keepattributes SourceFile,LineNumberTable
+-keep class com.crashlytics.** { *; }
+-dontwarn com.crashlytics.**
 
 -keeppackagenames br.com.icaro.**
 -keep class br.com.icaro.** {*;}

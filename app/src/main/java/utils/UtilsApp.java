@@ -85,7 +85,7 @@ public class UtilsApp {
     }
 
     public static List<UserEp> setEp(TvSeason tvSeason) {
-        List<UserEp> eps = new ArrayList<>();
+        List<UserEp> eps = new ArrayList<UserEp>();
         for (TvEpisode tvEpisode : tvSeason.getEpisodes()) {
             UserEp userEp = new UserEp();
             userEp.setEpisodeNumber(tvEpisode.getEpisodeNumber());
@@ -93,6 +93,7 @@ public class UtilsApp {
             userEp.setSeasonNumber(tvEpisode.getSeasonNumber());
             eps.add(userEp);
         }
+
         return eps;
     }
 

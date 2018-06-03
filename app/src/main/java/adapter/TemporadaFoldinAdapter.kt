@@ -34,7 +34,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
 
     override fun onBindViewHolder(holder: TemporadaFoldinAdapter.HoldeTemporada, position: Int) {
 
-        val ep = tvSeason.episodes?.get(position)!!
+        val ep = tvSeason.episodes?.get(position)
         val epUser = seasons?.userEps?.get(position)
 
         holder.linear.visibility = if (seguindo) {
@@ -43,9 +43,9 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
             View.GONE
         }
 
-        holder.titulo.text = ep.name
+        holder.titulo.text = ep?.name
 
-        holder.numero.text = ep.episodeNumber.toString()
+        holder.numero.text = ep?.episodeNumber.toString()
         if (seguindo) {
             holder.visto.setBackgroundColor(if (epUser?.isAssistido!!) temporadaActivity.resources.getColor(R.color.green) else {
                 this.temporadaActivity.resources.getColor(R.color.gray_reviews)
@@ -68,14 +68,14 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
             holder.ver_mais.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
         }
 
-        holder.resumo.text = ep.overview
-        holder.votos.text = ep.voteCount.toString()
+        holder.resumo.text = ep?.overview
+        holder.votos.text = ep?.voteCount.toString()
 
         Picasso.with(temporadaActivity)
-                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 4)) + ep.stillPath)
+                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 4)) + ep?.stillPath)
                 .error(R.drawable.empty_popcorn)
                 .into(holder.img)
-        holder.resumo_detalhe.text = ep.overview
+        holder.resumo_detalhe.text = ep?.overview
 
         if (ep?.voteAverage?.toString()?.length!! >= 2) {
             holder.detalhes_nota.text = ep.voteAverage.toString().slice(0..2)
