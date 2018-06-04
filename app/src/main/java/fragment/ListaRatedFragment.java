@@ -1,7 +1,6 @@
 package fragment;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,18 +28,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.Serializable;
 import java.util.List;
 
-import filme.activity.FilmeActivity;
-import tvshow.activity.TvShowActivity;
 import adapter.ListaFilmeAdapter;
 import adapter.ListaTvShowAdapter;
 import br.com.icaro.filme.R;
 import domain.FilmeDB;
 import domain.TvshowDB;
+import filme.activity.FilmeActivity;
+import tvshow.activity.TvShowActivity;
 import tvshow.fragment.TvShowFragment;
 import utils.Constantes;
 import utils.UtilsApp;
-
-import static android.R.attr.id;
 
 
 /**
@@ -119,20 +116,12 @@ public class ListaRatedFragment extends Fragment {
                 startActivity(intent);
 
 
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaRatedFragment:ListaFilmeAdapter.ListaOnClickListener:onClick");
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movies.get(position).getTitle());
-                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tv");
-                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
-                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
             }
 
             @Override
             public void onClickLong(View view, final int position) {
-               // Log.d("setupNavDrawer", "Login");
-                final boolean[] status = {false};
-                final Dialog alertDialog = new Dialog(getActivity());
+
+                final Dialog alertDialog = new Dialog(getContext());
                 alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 alertDialog.setContentView(R.layout.adialog_custom_rated);
 
@@ -141,8 +130,8 @@ public class ListaRatedFragment extends Fragment {
                 final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
                 int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
                 int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
-               // Log.d(TAG, "Valor Rated" + movies.get(position).getNota());
-                ratingBar.setRating(movies.get(position).getNota());
+
+                ratingBar.setRating(movies.get(position).getNota() / 2);
 
 
                 no.setOnClickListener(new View.OnClickListener() {
@@ -175,13 +164,6 @@ public class ListaRatedFragment extends Fragment {
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       // Log.d(TAG, "Adialog Rated");
-                        final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
-                                android.R.style.Theme_Material_Dialog);
-                        progressDialog.setIndeterminate(true);
-                        progressDialog.setMessage(getResources().getString(R.string.salvando));
-                        progressDialog.show();
-
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -191,7 +173,7 @@ public class ListaRatedFragment extends Fragment {
 
                         if (ratingBar.getRating() > 0) {
 
-                            movies.get(position).setNota((int) ratingBar.getRating());
+                            movies.get(position).setNota(ratingBar.getRating() * 2);
 
                             myRated.setValue(movies.get(position))
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -199,17 +181,11 @@ public class ListaRatedFragment extends Fragment {
                                         public void onComplete(@NonNull Task<Void> task) {
 
                                             recyclerViewFilme.getAdapter().notifyItemChanged(position);
-                                            Bundle bundle = new Bundle();
-                                            bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaRatedFragment:ListaFilmeAdapter.ListaOnClickListener:onLongClick");
-                                            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movies.get(position).getTitle());
-                                            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tv");
-                                            bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
-                                            bundle.putString("Rated", "Excluiu TvShow");
-                                            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                                         }
                                     });
                         }
-                        progressDialog.dismiss();
+
                         alertDialog.dismiss();
                     }
 
@@ -237,8 +213,7 @@ public class ListaRatedFragment extends Fragment {
 
             @Override
             public void onClickLong(View view, final int position) {
-               // Log.d("setupNavDrawer", "Login");
-                final boolean[] status = {false};
+
                 final Dialog alertDialog = new Dialog(getActivity());
                 alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 alertDialog.setContentView(R.layout.adialog_custom_rated);
@@ -248,13 +223,12 @@ public class ListaRatedFragment extends Fragment {
                 final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
                 int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
                 int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
-                ratingBar.setRating(tvSeries.get(position).getNota());
+                ratingBar.setRating(tvSeries.get(position).getNota() / 2);
                 alertDialog.getWindow().setLayout(width, height);
 
                 no.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       // Log.d(TAG, "Apagou Rated");
 
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -279,12 +253,6 @@ public class ListaRatedFragment extends Fragment {
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                      //  Log.d(TAG, "Adialog Rated");
-                        final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
-                                android.R.style.Theme_Material_Dialog);
-                        progressDialog.setIndeterminate(true);
-                        progressDialog.setMessage(getResources().getString(R.string.salvando));
-                        progressDialog.show();
 
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -295,7 +263,7 @@ public class ListaRatedFragment extends Fragment {
 
                         if (ratingBar.getRating() > 0) {
 
-                            tvSeries.get(position).setNota((int) ratingBar.getRating());
+                            tvSeries.get(position).setNota( ratingBar.getRating() * 2);
 
                             myRated.setValue(tvSeries.get(position))
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -307,7 +275,7 @@ public class ListaRatedFragment extends Fragment {
                                         }
                                     });
                         }
-                        progressDialog.dismiss();
+
                         alertDialog.dismiss();
                     }
 

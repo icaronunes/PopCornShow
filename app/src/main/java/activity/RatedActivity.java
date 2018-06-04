@@ -164,7 +164,7 @@ public class RatedActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(1);
         viewPager.setCurrentItem(0);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.accent));
+        tabLayout.setSelectedTabIndicatorColor(getBaseContext().getResources().getColor(R.color.accent));
         viewPager.setAdapter(new RatedAdapater(RatedActivity.this, getSupportFragmentManager(),
                 tvSeries, movieDbs));
     }

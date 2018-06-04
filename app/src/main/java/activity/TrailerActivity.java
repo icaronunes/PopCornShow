@@ -59,6 +59,7 @@ public class TrailerActivity extends YouTubeBaseActivity implements YouTubePlaye
             }
         } catch ( Exception e){
             Crashlytics.logException(e);
+            if (!isFinishing())
             Toast.makeText(this, R.string.ops, Toast.LENGTH_LONG).show();
         }
     }
