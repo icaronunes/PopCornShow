@@ -69,7 +69,8 @@ class ReviewsActivity : BaseActivity() {
     }
 
     private fun getReviews() {
-        if (id_filme.isNotEmpty()) {
+
+        if (id_filme.isNotEmpty() && false) {
             val inscricao = API(context = this).reviewsFilme(id_filme)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -80,7 +81,6 @@ class ReviewsActivity : BaseActivity() {
                     }, {erro ->
                         Toast.makeText(this@ReviewsActivity, R.string.ops, Toast.LENGTH_SHORT).show()
                         textview_reviews_empty?.visibility = View.VISIBLE
-                        erro
                     })
 
 

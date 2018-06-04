@@ -103,7 +103,7 @@ class API(context: Context) {
         }
     }
 
-    fun BuscaNetFlix(query: String, days: Int = 14, andor: String = "and", audio: String = "Any",
+    fun buscaNetFlix(query: String = "", days: Int = 14, andor: String = "and", audio: String = "Any",
                      countrylist: String = "all", endImdbRate: Int = 10, EndNetfRate: Int = 10, genreid: Int = 0,
                      imdbvotes: Int = 0, page: Int = 1, startImdbRate: Int = 0, startNetRate: Int = 0,
                      sortby: String = "Relevance", subtitle: String = "Any", startYear: Int = 1900, typeVideo: String = "Any"): Observable<PersonPopular> {
@@ -485,12 +485,12 @@ class API(context: Context) {
                     .header("X-Mashape-Key", Config.UFLIXI)
                     .build()
             val response = client.newCall(request).execute()
-            if (response.isSuccessful){
+            if (response.isSuccessful) {
                 val json = response.body()?.string()
                 val reviews = gson.fromJson(json, ReviewsUflixit::class.java)
                 subscriber.onNext(reviews)
                 subscriber.onCompleted()
-            }else {
+            } else {
                 subscriber.onError(Throwable(response.message()))
             }
         }

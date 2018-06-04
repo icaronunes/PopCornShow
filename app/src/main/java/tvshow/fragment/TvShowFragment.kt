@@ -30,8 +30,6 @@ import br.com.icaro.filme.R.string.mil
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import domain.API
 import domain.Imdb
@@ -317,7 +315,6 @@ class TvShowFragment : Fragment() {
                                 recyclerViewTemporada = getView()?.rootView?.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
                                 recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, userTvshow)
                                 if (progressBarTemporada != null) {
-
                                     progressBarTemporada?.visibility = View.INVISIBLE
                                 }
                             }

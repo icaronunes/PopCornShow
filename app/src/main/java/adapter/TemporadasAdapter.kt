@@ -73,7 +73,7 @@ class TemporadasAdapter(val context: FragmentActivity, private val series: Tvsho
 
     override fun onBindViewHolder(holder: TemporadasAdapter.HoldeTemporada, position: Int) {
 
-        holder.temporada.text = context.getString(R.string.temporada) + " " + series?.seasons!![position]?.seasonNumber!!
+        holder.temporada.text = "${context.getString(R.string.temporada)} ${series?.seasons!![position]?.seasonNumber!!}"
         Picasso.with(context).load(UtilsApp.getBaseUrlImagem(2) + series.seasons[position]?.posterPath)
                 .error(R.drawable.poster_empty)
                 .into(holder.image_temporada)
@@ -98,7 +98,7 @@ class TemporadasAdapter(val context: FragmentActivity, private val series: Tvsho
 
     private fun isVisto(position: Int): Boolean {
         if (userTvshow != null) {
-            if (userTvshow.seasons.size < position) {
+            if (userTvshow.seasons.size > position) {
                return userTvshow.seasons[position].isVisto
             }
         }
