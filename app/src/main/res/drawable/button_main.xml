@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:state_pressed="true" >
-        <shape android:shape="oval"  >
-            <corners android:radius="6dip" />
-            <gradient android:gradientRadius="-60" android:startColor="@color/white"  />
-        </shape>
-    </item>
-    <!--<item android:state_focused="true">-->
+    <!--<item android:state_pressed="true" >-->
         <!--<shape android:shape="rectangle"  >-->
-            <!--<corners android:radius="3dip" />-->
-            <!--<stroke android:width="10dip" android:color="#5e7974" />-->
-            <!--<solid android:color="#58857e"/>-->
+            <!--<corners android:radius="6dip" />-->
         <!--</shape>-->
     <!--</item>-->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="3dip" />
+            <stroke android:width="10dip" android:color="@color/red2" />
+            <solid
+                android:color="@color/red"/>
+        </shape>
+    </item>
     <item >
-        <shape android:shape="oval" >
-            <corners android:radius="30dip" />
-            <solid  android:color="@color/black_button"
-                android:width="20dip"/>
+        <shape android:shape="rectangle" >
+            <corners android:radius="15dip" />
+            <solid  android:color="@color/color_botton_main"
+                android:width="10dip"/>
         </shape>
     </item>
 

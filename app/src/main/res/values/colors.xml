@@ -15,6 +15,7 @@
     <color name="blue">#137cbe</color>
 
     <color name="red">#c70202</color>
+    <color name="red2">#b90a0c</color>
     <color name="green">#0f0</color>
     <color name="yellow">#fff000</color>
     <color name="gray">#cccccc</color>
@@ -37,5 +38,6 @@
     <color name="netflixColor">#b90a0c</color>
     <color name="blue_main">#ef0f0ffc</color>
     <color name="transparente">#12000000</color>
+    <color name="color_botton_main">#df531812</color>
 
 </resources>
