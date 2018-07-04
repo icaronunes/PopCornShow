@@ -1,3 +1,7 @@
+#Arquivos com SENHA E KEY
+app/src/main/java/utils/Config.java
+app/config.txt
+
 /build
 # Built application files
 *.apk
