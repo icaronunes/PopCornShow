@@ -1,3 +1,8 @@
+#Arquivos com SENHA E KEY
+app/src/main/java/utils/Config.java
+app/config.txt
+app/keystore.jks
+
 /build
 # Built application files
 *.apk
@@ -40,6 +45,7 @@ captures/
 .idea/gradle.xml
 .idea/dictionaries
 .idea/libraries
+.idea/*
 
 # Keystore files
 # Uncomment the following line if you do not want to check your keystore files in.
