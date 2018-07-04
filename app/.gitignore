@@ -1,6 +1,7 @@
 #Arquivos com SENHA E KEY
 app/src/main/java/utils/Config.java
 app/config.txt
+app/keystore.jks
 
 /build
 # Built application files
