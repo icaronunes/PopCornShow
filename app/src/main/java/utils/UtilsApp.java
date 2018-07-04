@@ -1,5 +1,6 @@
 package utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -14,6 +15,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.graphics.Palette;
 import android.telephony.TelephonyManager;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import com.crashlytics.android.Crashlytics;

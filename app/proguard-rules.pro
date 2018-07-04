@@ -90,3 +90,4 @@
 -dontwarn okio.**
 -dontnote okhttp3.**
 -dontwarn javax.annotation.**
+-dontwarn org.conscrypt.**

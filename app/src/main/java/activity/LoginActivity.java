@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import java.util.Arrays;
 
 import br.com.icaro.filme.R;
+import utils.UtilsApp;
 
 /**
  * Created by icaro on 06/11/16.
@@ -77,12 +79,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mAuth = FirebaseAuth.getInstance();
         FacebookSdk.sdkInitialize(getBaseContext());
         setContentView(R.layout.activity_login);
+        UtilsApp.hideSoftKeyboard(this);
         email = (EditText) findViewById(R.id.login);
         pass = (EditText) findViewById(R.id.pass);
         TextView recuperar = (TextView) findViewById(R.id.recuperar_senha);
 
-
         stateListener = getAuthStateListener();
+
+        hideSoftKeyboard();
 
        // setGoogle();
         setFacebook();
@@ -168,6 +172,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         });
 
     }
+
+    private void hideSoftKeyboard() {
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+        );
+    }
+
 
     private boolean validarParametros(TextInputLayout login, TextInputLayout senha, TextInputLayout repetirSenha) {
         String Slogin, Ssenha, Srepetir;
