@@ -2,6 +2,7 @@
 app/src/main/java/utils/Config.java
 app/config.txt
 app/keystore.jks
+filme.iml
 
 /build
 # Built application files
