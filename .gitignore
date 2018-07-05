@@ -4,10 +4,12 @@ app/config.txt
 app/keystore.jks
 filme.imlgit
 
+
 /build
 # Built application files
 *.apk
 *.ap_
+
 
 
 # Files for the ART/Dalvik VM

@@ -59,6 +59,7 @@ import java.text.DecimalFormat
 /**
  * Created by icaro on 23/08/16.
  */
+
 class TvShowFragment : Fragment() {
 
     private var tipo: Int = 0
