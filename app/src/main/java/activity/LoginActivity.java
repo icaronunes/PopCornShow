@@ -79,7 +79,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mAuth = FirebaseAuth.getInstance();
         FacebookSdk.sdkInitialize(getBaseContext());
         setContentView(R.layout.activity_login);
-        UtilsApp.hideSoftKeyboard(this);
         email = (EditText) findViewById(R.id.login);
         pass = (EditText) findViewById(R.id.pass);
         TextView recuperar = (TextView) findViewById(R.id.recuperar_senha);
