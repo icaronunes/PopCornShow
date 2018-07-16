@@ -3,12 +3,15 @@ package domain
 import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
+import domain.busca.MultiSearch
 import domain.colecao.Colecao
 import domain.person.Person
 import domain.tvshow.Tvshow
+import info.movito.themoviedbapi.TmdbSearch
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import rx.Observable
+import rx.Subscriber
 import utils.Config
 import utils.getIdiomaEscolhido
 import java.util.*
@@ -496,4 +499,27 @@ class API(context: Context) {
         }
     }
 
+    fun procuraMulti(query: String?) : Observable<MultiSearch> {
+        return rx.Observable.create(Observable.OnSubscribe { subscriber ->
+            val client = OkHttpClient()
+            val gson = Gson()
+            val request = Request.Builder()
+                    .url("${baseUrl3}search/multi?api_key=${Config.TMDB_API_KEY}&language=${timeZone}&query=${query}&page=1&include_adult=false")
+                    .get()
+                    .build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful){
+                val json = response.body()?.string()
+                val multi = gson.fromJson(json, MultiSearch::class.java)
+                subscriber.onNext(multi)
+                subscriber.onCompleted()
+            } else {
+                subscriber.onError(Throwable(response.message()))
+            }
+
+        })
+    }
+
 }
+
+// https://api.themoviedb.org/3/search/multi?api_key=fb14e77a32282ed59a8122a266010b70&language=pt-BR&query=lost&page=1&include_adult=false

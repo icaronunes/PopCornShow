@@ -182,8 +182,7 @@ public class PosterScrollFragment extends Fragment {
             Bitmap bitmap = drawable.getBitmap();
             UtilsApp.writeBitmap(dir, bitmap);
         }
-        File file2 = new File(getContext().getExternalCacheDir(), getContext().getPackageName());
-        // Log.d("PosterScrollFragment", "onDestroy: "+ file2.toString());
+
         return dir;
     }
 
