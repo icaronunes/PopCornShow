@@ -53,7 +53,7 @@ public class CrewAdapter extends RecyclerView.Adapter<CrewAdapter.CrewViewHolder
         if (crew.getName() != null && crew.getJob() != null) {
             holder.textCrewJob.setText(crew.getJob());
             holder.textCrewNome.setText(crew.getName());
-            Picasso.with(context)
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + crew.getProfilePath())
                     .placeholder(R.drawable.person)
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
@@ -65,9 +65,10 @@ public class CrewAdapter extends RecyclerView.Adapter<CrewAdapter.CrewViewHolder
                         }
 
                         @Override
-                        public void onError() {
+                        public void onError(Exception e) {
                             holder.progressBarCrew.setVisibility(View.GONE);
                         }
+
                     });
         } else {
             holder.textCrewJob.setVisibility(View.GONE);

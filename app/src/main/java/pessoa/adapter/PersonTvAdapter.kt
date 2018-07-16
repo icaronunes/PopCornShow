@@ -17,6 +17,7 @@ import domain.person.CastItem
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
+import java.lang.Exception
 
 /**
  * Created by icaro on 18/08/16.
@@ -32,17 +33,12 @@ class PersonTvAdapter(private val context: Context, private val personCredits: L
 
         val credit = personCredits[position]
 
-            Picasso.with(context)
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3)) + credit?.posterPath)
                     .error(R.drawable.poster_empty)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.poster, object : Callback {
-                        override fun onSuccess() {
-                            holder.progressBar.visibility = View.INVISIBLE
-                            holder.title.visibility = View.GONE
-                        }
-
-                        override fun onError() {
+                        override fun onError(e: Exception?) {
                             holder.progressBar.visibility = View.INVISIBLE
                             val data = StringBuilder()
                             if (!credit?.releaseDate.isNullOrBlank()) {
@@ -50,7 +46,11 @@ class PersonTvAdapter(private val context: Context, private val personCredits: L
                             }
                             holder.title.text = credit?.name + data
                             holder.title.visibility = View.VISIBLE
+                        }
 
+                        override fun onSuccess() {
+                            holder.progressBar.visibility = View.INVISIBLE
+                            holder.title.visibility = View.GONE
                         }
                     })
 

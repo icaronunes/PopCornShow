@@ -48,7 +48,7 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
 
         final MovieDb movieDb = movieDbs.getResults().get(position);
 
-        Picasso.with(context)
+        Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem( UtilsApp.getTamanhoDaImagem(context, 2)) + movieDb.getPosterPath())
                 .into(holder.img_poster_grid, new Callback() {
                     @Override
@@ -57,7 +57,7 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         holder.progress_poster_grid.setVisibility(View.GONE);
                         holder.title_main.setText(movieDb.getTitle());
                         holder.title_main.setVisibility(View.VISIBLE);

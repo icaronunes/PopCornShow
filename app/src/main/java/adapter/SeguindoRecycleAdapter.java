@@ -42,14 +42,14 @@ public class SeguindoRecycleAdapter extends RecyclerView.Adapter<SeguindoRecycle
     @Override
     public void onBindViewHolder(final SeguindoRecycleAdapter.SeguindoViewHolder holder, int position) {
         final UserTvshow userTvshow = userTvshows.get(position);
-        Picasso.with(context).load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context,2)) + userTvshow.getPoster())
+        Picasso.get().load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context,2)) + userTvshow.getPoster())
                 .into(holder.poster, new Callback() {
                     @Override
                     public void onSuccess() {
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         holder.title.setText(userTvshow.getNome());
                         holder.poster.setImageResource(R.drawable.poster_empty);
                         holder.title.setVisibility(View.VISIBLE);

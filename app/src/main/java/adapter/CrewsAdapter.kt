@@ -34,7 +34,7 @@ class CrewsAdapter(private val context: CrewsActivity, private val crews: List<C
         holder?.crew_character.text = crew?.department + " " + crew?.job
 
         holder.crew_nome.text = crew?.name
-        Picasso.with(context)
+        Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + crew?.profilePath)
                 .error(R.drawable.person)
                 .into(holder.img_crew)

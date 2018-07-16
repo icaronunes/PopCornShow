@@ -71,7 +71,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         holder.resumo.text = ep?.overview
         holder.votos.text = ep?.voteCount.toString()
 
-        Picasso.with(temporadaActivity)
+        Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 4)) + ep?.stillPath)
                 .error(R.drawable.empty_popcorn)
                 .into(holder.img)
@@ -110,7 +110,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
 
         if (diretor != null) {
             diretorName = diretor.name
-            Picasso.with(temporadaActivity)
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 2)) + diretor.profilePath)
                     .error(R.drawable.person)
                     .into(holder.diretor_img)
@@ -122,7 +122,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
 
         if (escritor != null) {
             escritorName = escritor.name
-            Picasso.with(temporadaActivity)
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 2)) + escritor.profilePath)
                     .error(R.drawable.person)
                     .into(holder.escritor_img)

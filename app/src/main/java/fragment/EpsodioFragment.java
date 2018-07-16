@@ -427,7 +427,7 @@ public class EpsodioFragment extends Fragment {
     private void setImage() {
 
 
-        Picasso.with(getContext())
+        Picasso.get()
                 .load(UtilsApp
                 .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(getContext(), 4)) + episode.getStillPath())
                 .error(R.drawable.top_empty)
@@ -440,9 +440,9 @@ public class EpsodioFragment extends Fragment {
                     }
 
                     @Override
-                    public void onError() {
-
+                    public void onError(Exception e) {
                     }
+
                 });
 
     }

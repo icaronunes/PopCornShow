@@ -32,7 +32,7 @@ class PersonDelegateAdapter : ViewTypeDelegateAdapter {
 
         fun bind(item: PersonItem) = with(itemView) {
 
-            Picasso.with(context)
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.profilePath).into(img_popular_person)
             text_person_name.text = item.name
             progress.visibility = View.GONE

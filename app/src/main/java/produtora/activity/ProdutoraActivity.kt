@@ -116,12 +116,12 @@ class ProdutoraActivity : BaseActivity() {
 
     private fun setImageTop() {
         if (company?.logo_path != null) {
-            Picasso.with(this)
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(this, 4))!! + company?.logo_path)
                     .into(top_img_produtora)
             top_img_produtora.setColorFilter(resources.getColor(R.color.black_transparente_produtora), PorterDuff.Mode.DARKEN)
         } else {
-            Picasso.with(this).load(R.drawable.empty_produtora2)
+            Picasso.get().load(R.drawable.empty_produtora2)
                     .into(top_img_produtora)
         }
 

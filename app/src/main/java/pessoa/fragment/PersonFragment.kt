@@ -30,6 +30,7 @@ import pessoa.adapter.PersonMovieAdapter
 import pessoa.adapter.PersonTvAdapter
 import utils.Constantes
 import utils.UtilsApp
+import java.lang.Exception
 
 /**
  * Created by icaro on 18/08/16.
@@ -261,19 +262,20 @@ class PersonFragment : Fragment() {
         }
 
 
-        Picasso.with(context).load(UtilsApp.getBaseUrlImagem(2) + information.profilePath)
+        Picasso.get().load(UtilsApp.getBaseUrlImagem(2) + information.profilePath)
                 .placeholder(R.drawable.person)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(imageView, object : Callback {
+                    override fun onError(e: Exception?) {
+                        progressBar?.visibility = View.VISIBLE
+                    }
+
                     override fun onSuccess() {
                         imageView?.visibility = View.VISIBLE
                         progressBar?.visibility = View.GONE
                     }
 
-                    override fun onError() {
-                        progressBar?.visibility = View.VISIBLE
-                    }
                 })
 
     }

@@ -47,7 +47,7 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
     public void onBindViewHolder(final TvShowMainAdapter.TvShowPopularesViewHolder holder, final int position) {
         final TvSeries series = popularTvshow.getResults().get(position);
 
-        Picasso.with(context)
+        Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem( UtilsApp.getTamanhoDaImagem(context, 2)) + series.getPosterPath())
                 .into(holder.img_poster_grid, new Callback() {
                     @Override
@@ -56,12 +56,13 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         holder.progress_poster_grid.setVisibility(View.GONE);
                         holder.title_main.setText(series.getName());
                         holder.title_main.setVisibility(View.VISIBLE);
                         holder.img_poster_grid.setImageResource(R.drawable.poster_empty);
                     }
+
                 });
 
         holder.img_poster_grid.setOnClickListener(new View.OnClickListener() {

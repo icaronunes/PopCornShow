@@ -18,6 +18,7 @@ import filme.activity.FilmeActivity
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
+import java.lang.Exception
 
 /**
  * Created by icaro on 18/08/16.
@@ -33,18 +34,11 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
 
         val item = personCredits?.get(position)
 
-        Picasso.with(context).load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3))!! + item?.posterPath)
+        Picasso.get().load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3))!! + item?.posterPath)
                 .placeholder(R.drawable.poster_empty)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.poster, object : Callback {
-
-
-                    override fun onSuccess() {
-                        holder.title.visibility = View.INVISIBLE
-                        holder.progressBar.visibility = View.INVISIBLE
-                    }
-
-                    override fun onError() {
+                    override fun onError(e: Exception?) {
                         holder.progressBar.visibility = View.INVISIBLE
                         val data = StringBuilder()
                         if (item?.releaseDate != null) {
@@ -58,6 +52,12 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
                             holder.title.text = item?.title + data
                         }
                         holder.title.visibility = View.VISIBLE
+                    }
+
+
+                    override fun onSuccess() {
+                        holder.title.visibility = View.INVISIBLE
+                        holder.progressBar.visibility = View.INVISIBLE
                     }
                 })
 

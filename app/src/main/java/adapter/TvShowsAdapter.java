@@ -49,7 +49,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
         if (series != null) {
 
 
-            Picasso.with(context)
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 4)) + series.getPosterPath())
                     .error(R.drawable.poster_empty)
                     .into(holder.imagem_filme, new Callback() {
@@ -61,7 +61,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
                         }
 
                         @Override
-                        public void onError() {
+                        public void onError(Exception e) {
                             String title = series.getName();
                             String release = series.getFirstAirDate();
                             holder.title.setText(title + " - " + release);

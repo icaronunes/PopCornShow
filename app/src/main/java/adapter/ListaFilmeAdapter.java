@@ -64,7 +64,7 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
         }
 
 
-            Picasso.with(context)
+            Picasso.get()
                     .load(UtilsApp
                     .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + movie.getPoster())
                     .into(holder.imageView, new Callback() {
@@ -74,7 +74,7 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
                         }
 
                         @Override
-                        public void onError() {
+                        public void onError(Exception e) {
 
                         }
                     });

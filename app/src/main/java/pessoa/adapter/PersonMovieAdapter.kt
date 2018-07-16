@@ -17,6 +17,7 @@ import domain.person.CastItem
 import filme.activity.FilmeActivity
 import utils.Constantes
 import utils.UtilsApp
+import java.lang.Exception
 
 /**
  * Created by icaro on 18/08/16.
@@ -33,17 +34,12 @@ class PersonMovieAdapter(private val context: Context, private val personCredits
         val credit = personCredits?.get(position)
 
 
-        Picasso.with(context)
+        Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + credit?.posterPath)
                 .error(R.drawable.poster_empty)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.poster, object : Callback {
-                    override fun onSuccess() {
-                        holder.progressBar.visibility = View.INVISIBLE
-                        holder.title.visibility = View.GONE
-                    }
-
-                    override fun onError() {
+                    override fun onError(e: Exception?) {
                         holder.progressBar.visibility = View.INVISIBLE
                         val data = StringBuilder()
                         if (!credit?.releaseDate.isNullOrBlank() ) {
@@ -52,6 +48,12 @@ class PersonMovieAdapter(private val context: Context, private val personCredits
                         holder.title.text = credit?.title + data
                         holder.title.visibility = View.VISIBLE
                     }
+
+                    override fun onSuccess() {
+                        holder.progressBar.visibility = View.INVISIBLE
+                        holder.title.visibility = View.GONE
+                    }
+
                 })
 
         holder.poster.setOnClickListener { view ->

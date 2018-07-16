@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.adapter_filmes_list.view.*
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
 import utils.UtilsApp
+import java.lang.Exception
 
 class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
 
@@ -37,19 +38,19 @@ class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
         fun bind(item: ListaItemFilme) = with(itemView) {
             putdata(context, item, title_filmes_lista)
 
-            Picasso.with(context).load(UtilsApp
+            Picasso.get().load(UtilsApp
                     .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.posterPath)
                     .error(R.drawable.poster_empty)
                     .into(imgFilmes, object: Callback {
-                        override fun onSuccess() {
-                            progress_filmes_lista.visibility = View.GONE
-                        }
-
-                        override fun onError() {
+                        override fun onError(e: Exception?) {
                             progress_filmes_lista.visibility = View.GONE
                             val dataLancamento = if (!item.releaseDate.isNullOrEmpty() && item.releaseDate?.length!! > 3) item.releaseDate.subSequence(0,4) else "-"
                             title_filmes_lista.text = "${item?.title} - $dataLancamento"
                             title_filmes_lista.visibility = View.VISIBLE
+                        }
+
+                        override fun onSuccess() {
+                            progress_filmes_lista.visibility = View.GONE
                         }
                     } )
 

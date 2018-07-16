@@ -17,6 +17,7 @@ import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
+import java.lang.Exception
 
 class ListasSeriesDelegateAdapter : ViewTypeDelegateAdapter {
 
@@ -38,19 +39,19 @@ class ListasSeriesDelegateAdapter : ViewTypeDelegateAdapter {
         fun bind(item: ListaItemSerie?) = with(itemView) {
             putdata(context, item, title_filmes_lista)
 
-            Picasso.with(context).load(UtilsApp
+            Picasso.get().load(UtilsApp
                     .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item?.posterPath)
                     .error(R.drawable.poster_empty)
                     .into(imgFilmes, object : Callback {
-                        override fun onSuccess() {
-                            progress_filmes_lista?.visibility = View.GONE
-                        }
-
-                        override fun onError() {
+                        override fun onError(e: Exception?) {
                             progress_filmes_lista?.visibility = View.GONE
                             if (item?.firstAirDate.isNullOrEmpty() && item?.firstAirDate?.length!! > 3)
-                            title_filmes_lista.text = "${item?.name} - ${item?.firstAirDate?.subSequence(0, 4)}"
+                                title_filmes_lista.text = "${item?.name} - ${item?.firstAirDate?.subSequence(0, 4)}"
                             title_filmes_lista.visibility = View.VISIBLE
+                        }
+
+                        override fun onSuccess() {
+                            progress_filmes_lista?.visibility = View.GONE
                         }
                     })
 

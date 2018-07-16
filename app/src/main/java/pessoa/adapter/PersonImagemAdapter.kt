@@ -17,6 +17,7 @@ import pessoa.activity.FotoPersonActivity
 import utils.Constantes
 import utils.UtilsApp
 import java.io.Serializable
+import java.lang.Exception
 
 /**
  * Created by icaro on 18/08/16.
@@ -32,14 +33,14 @@ class PersonImagemAdapter(private val context: Context, private val artworks: Li
     override fun onBindViewHolder(holder: PersonImagemAdapter.PersonImageViewHolder, position: Int) {
         val item = artworks!![position]
 
-        Picasso.with(context).load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3)) + item?.filePath)
+        Picasso.get().load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3)) + item?.filePath)
                 .placeholder(R.drawable.person)
                 .into(holder.imageButton, object : Callback {
-                    override fun onSuccess() {
+                    override fun onError(e: Exception?) {
                         holder.progressBar.visibility = View.GONE
                     }
 
-                    override fun onError() {
+                    override fun onSuccess() {
                         holder.progressBar.visibility = View.GONE
                     }
                 })

@@ -27,7 +27,7 @@ class SimilaresListaSerieAdapter(private val similaresActivity: SimilaresActivit
         holder.similares_title_original.text = item?.originalName
         holder.similares_voto_media.text = item?.voteAverage.toString()
 
-        Picasso.with(similaresActivity)
+        Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(similaresActivity, 2))!! + item?.posterPath)
                 .into(holder.imageView)
 

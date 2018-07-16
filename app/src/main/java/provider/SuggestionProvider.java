@@ -6,41 +6,27 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
-import android.util.Log;
-import android.widget.ImageView;
-import android.widget.RemoteViews;
 
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import domain.API;
 import domain.busca.MultiSearch;
 import domain.busca.ResultsItem;
-import info.movito.themoviedbapi.TmdbApi;
-import info.movito.themoviedbapi.TmdbSearch;
-import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
-import info.movito.themoviedbapi.model.people.Person;
-import info.movito.themoviedbapi.model.tv.TvSeries;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-import utils.Config;
 import utils.UtilsApp;
 
 public class SuggestionProvider extends ContentProvider {
@@ -115,34 +101,34 @@ public class SuggestionProvider extends ContentProvider {
 
 			for (int position = 0; position < multis.getResults().size() && cursor.getCount() < 7; position++) {
 
-				// Log.d("SuggestionProvider", String.valueOf(Multi.MediaType.MOVIE));
 				ResultsItem item = multis.getResults().get(position);
-				//(MovieDb) multis.getResults().get(position);
-				String id = String.valueOf(item.getId());
-				String nome = item.getName();
-				String data = item.getReleaseDate();
 				String mediaType = item.getMediaType();
+				String id = "";
+				String nome = "";
+				String data = "";
+
+				if (mediaType.equalsIgnoreCase(Multi.MediaType.TV_SERIES.toString())) {
+					// Log.d("SuggestionProvider", String.valueOf(Multi.MediaType.TV_SERIES));
+					data = item.getFirstAirDate();
+					nome = item.getName();
+					id = item.getId().toString();
+				}
+
+				if (mediaType.equalsIgnoreCase(Multi.MediaType.MOVIE.toString())) {
+
+					id = item.getId().toString();
+					nome = item.getTitle();
+					data = item.getReleaseDate();
+				}
+
+				if (mediaType.equalsIgnoreCase(Multi.MediaType.PERSON.toString())) {
+					id = item.getId().toString();
+					nome = item.getName();
+				}
 				String url = UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(getContext(), 1)) + item.getPosterPath();
 				if (item.getPosterPath() != null)
-				img =  UtilsApp.aguardarImagemPesquisa(getContext(), getImagem(url), item.getPosterPath());
+					img = UtilsApp.aguardarImagemPesquisa(getContext(), getImagem(url), item.getPosterPath());
 
-//                if (multis.getResults().get(position).getMediaType().equals(Multi.MediaType.TV_SERIES)) {
-//                    TvSeries series = (TvSeries) multis.getResults().get(position);
-//                   // Log.d("SuggestionProvider", String.valueOf(Multi.MediaType.TV_SERIES));
-//                    data = series.getFirstAirDate();
-//                    nome = series.getName();
-//                    id = String.valueOf(series.getId());
-//                    mediaType = series.getMediaType().name();
-//
-//                }
-//                if (multis.getResults().get(position).getMediaType().equals(Multi.MediaType.PERSON)) {
-//                  //  Log.d("SuggestionProvider", String.valueOf(Multi.MediaType.PERSON));
-//                    Person person = (Person) multis.getResults().get(position);
-//                    mediaType = Multi.MediaType.PERSON.name();
-//                    nome = person.getName();
-//                    id = String.valueOf(person.getId() + "/"+person.getName());
-//                    data = "";
-//                }
 
 				//Log.d("SuggestionProvider", nome);
 				cursor.addRow(new Object[]{position, nome, data, id, mediaType, img.toURI()});
@@ -153,21 +139,21 @@ public class SuggestionProvider extends ContentProvider {
 		return cursor;
 	}
 
-	private Bitmap getImagem(String url){
-		Handler handler = new Handler(Looper.getMainLooper());
+	private Bitmap getImagem(String url) {
 		imageView = null;
-		handler.post(new Runnable() {
+		Handler uiHandler = new Handler(Looper.getMainLooper());
+		uiHandler.post(new Runnable() {
 			@Override
 			public void run() {
-				Picasso.with(getContext()).load(url).into(new Target() {
+				Picasso.get().load(url).into(new Target() {
 					@Override
 					public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
 						imageView = bitmap;
 					}
 
 					@Override
-					public void onBitmapFailed(Drawable errorDrawable) {
-
+					public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+						imageView = null;
 					}
 
 					@Override
@@ -177,6 +163,7 @@ public class SuggestionProvider extends ContentProvider {
 				});
 			}
 		});
+
 		return imageView;
 	}
 

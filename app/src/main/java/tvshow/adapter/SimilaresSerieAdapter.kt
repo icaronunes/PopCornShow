@@ -18,6 +18,7 @@ import domain.tvshow.ResultsItem
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
+import java.lang.Exception
 
 class SimilaresSerieAdapter(val activity: FragmentActivity?, val similarItems: List<ResultsItem?>?) : RecyclerView.Adapter<SimilaresSerieAdapter.SimilaresSerieHolde>() {
 
@@ -28,16 +29,16 @@ class SimilaresSerieAdapter(val activity: FragmentActivity?, val similarItems: L
         holder.progressBarSimilares.visibility = View.VISIBLE
         if (tvshow?.posterPath != null) {
             holder.textSimilares.visibility = View.GONE
-            Picasso.with(activity)
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(activity, 2)) + tvshow.posterPath)
                     .placeholder(R.drawable.poster_empty)
                     .into(holder.imgPagerSimilares, object : Callback {
-                        override fun onSuccess() {
-                            color_top = UtilsApp.loadPalette(holder.imgPagerSimilares)
+                        override fun onError(e: Exception?) {
                             holder.progressBarSimilares.visibility = View.GONE
                         }
 
-                        override fun onError() {
+                        override fun onSuccess() {
+                            color_top = UtilsApp.loadPalette(holder.imgPagerSimilares)
                             holder.progressBarSimilares.visibility = View.GONE
                         }
                     })

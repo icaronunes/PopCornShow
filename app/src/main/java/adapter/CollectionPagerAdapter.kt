@@ -21,6 +21,7 @@ import domain.colecao.PartsItem
 import filme.activity.FilmeActivity
 import utils.Constantes
 import utils.UtilsApp
+import java.lang.Exception
 
 /**
  * Created by icaro on 22/07/16.
@@ -45,17 +46,18 @@ class CollectionPagerAdapter(private val info: List<PartsItem?>?, private val co
         nome = view.findViewById<TextView>(R.id.dateCollection)
         linearLayout = view.findViewById<LinearLayout>(R.id.collection_linear)
         imageView = view.findViewById<ImageView>(R.id.img_collection)
-        Picasso.with(context)
+        Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 5)) + item?.posterPath)
                 .error(R.drawable.poster_empty)
                 .into(imageView, object : Callback {
+                    override fun onError(e: Exception?) {
+
+                    }
+
                     override fun onSuccess() {
                         loadPaletteCollection()
                     }
 
-                    override fun onError() {
-
-                    }
                 })
 
         imageView.setOnClickListener({

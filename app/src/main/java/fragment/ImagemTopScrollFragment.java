@@ -56,7 +56,7 @@ public class ImagemTopScrollFragment extends Fragment {
 
         if (topMains.getMediaType().equalsIgnoreCase(Multi.MediaType.MOVIE.name())) {
            // Log.d("ImagemTopScrollFragment", "Movie " + topMains.getNome());
-            Picasso.with(getContext())
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(getContext(), 5)) + topMains.getImagem())
                     .error(R.drawable.top_empty)
                     .into(imageView);
@@ -74,7 +74,7 @@ public class ImagemTopScrollFragment extends Fragment {
             title.setText(topMains.getNome());
         } else {
            // Log.d("ImagemTopScrollFragment", "TVshow " + topMains.getNome());
-            Picasso.with(getContext()).load(UtilsApp.getBaseUrlImagem(5) + topMains.getImagem())
+            Picasso.get().load(UtilsApp.getBaseUrlImagem(5) + topMains.getImagem())
                     .error(R.drawable.top_empty)
                     .into(imageView);
             imageView.setOnClickListener(new View.OnClickListener() {

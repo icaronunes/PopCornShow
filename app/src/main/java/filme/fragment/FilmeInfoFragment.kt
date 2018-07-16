@@ -379,7 +379,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
     private fun setPoster() {
 
         if (movieDb?.posterPath != null) {
-            Picasso.with(context)
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + movieDb?.posterPath)
                     .into(img_poster)
 

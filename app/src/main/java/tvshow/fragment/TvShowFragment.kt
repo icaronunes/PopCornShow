@@ -601,7 +601,7 @@ class TvShowFragment : Fragment() {
 
     private fun setPoster() {
         if (series?.posterPath != null) {
-            Picasso.with(context)
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + series!!.posterPath!!)
                     .into(img_poster)
 

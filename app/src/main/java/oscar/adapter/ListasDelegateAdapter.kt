@@ -36,7 +36,7 @@ class ListasDelegateAdapter : ViewTypeDelegateAdapter {
 
         fun bind(item: ListaItemFilme) = with(itemView) {
 
-            Picasso.with(context).load(UtilsApp
+            Picasso.get().load(UtilsApp
                     .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.posterPath)
                     .into(img_lista)
             when(item.mediaType) {

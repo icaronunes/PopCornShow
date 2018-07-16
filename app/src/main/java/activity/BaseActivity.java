@@ -185,7 +185,7 @@ public class BaseActivity extends AppCompatActivity {
                             grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
                             tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
                             tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
-                            Picasso.with(getBaseContext()).load(user.getPhotoUrl())
+                            Picasso.get().load(user.getPhotoUrl())
                                     .placeholder(R.drawable.user)
                                     .into(imgUserPhoto);
                             imgUserPhoto.setOnClickListener(onClickListenerlogado());
@@ -197,7 +197,7 @@ public class BaseActivity extends AppCompatActivity {
                             grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
                             tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
                             tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
-                            Picasso.with(getBaseContext()).load(user.getPhotoUrl())
+                            Picasso.get().load(user.getPhotoUrl())
                                     .placeholder(R.drawable.user)
                                     .into(imgUserPhoto);
                             imgUserPhoto.setOnClickListener(onClickListenerlogado());
@@ -209,7 +209,7 @@ public class BaseActivity extends AppCompatActivity {
                             grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
                             tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
                             tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
-                            Picasso.with(getBaseContext()).load(user.getPhotoUrl())
+                            Picasso.get().load(user.getPhotoUrl())
                                     .placeholder(R.drawable.user)
                                     .into(imgUserPhoto);
                             imgUserPhoto.setOnClickListener(onClickListenerlogado());
@@ -396,7 +396,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void salvaImagemMemoriaCache(final Context context, final String endereco, final SalvarImageShare callback) {
 
         final ImageView imageView = new ImageView(context);
-        Picasso.with(context).load(UtilsApp.getBaseUrlImagem(4) + endereco).into(imageView, new Callback() {
+        Picasso.get().load(UtilsApp.getBaseUrlImagem(4) + endereco).into(imageView, new Callback() {
             @Override
             public void onSuccess() {
                 File file = context.getExternalCacheDir();
@@ -415,7 +415,7 @@ public class BaseActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onError() {
+            public void onError(Exception e) {
                 callback.RetornoFalha();
             }
         });
@@ -457,7 +457,7 @@ public class BaseActivity extends AppCompatActivity {
                     alertDialog.show();
 
                     ImageView user_img = (ImageView) alertDialog.findViewById(R.id.userImage);
-                    Picasso.with(BaseActivity.this)
+                    Picasso.get()
                             .load(user.getPhotoUrl())
                             .placeholder(R.drawable.user)
                             .into(user_img);

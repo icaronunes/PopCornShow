@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.adapter_produtora.view.*
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
 import utils.UtilsApp
+import java.lang.Exception
 
 
 /**
@@ -39,17 +40,17 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
         fun bind(item: ListaItemFilme) = with(itemView){
             progress_bar?.visibility = View.VISIBLE
             titleTextView_produtora.text = item.title
-            Picasso.with(context)
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.posterPath)
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(imgFilme_produtora, object : Callback {
+                        override fun onError(e: Exception?) {
+                            progress_bar?.visibility = View.GONE
+                        }
+
                         override fun onSuccess() {
                             progress_bar?.visibility = View.GONE
 
-                        }
-
-                        override fun onError() {
-                            progress_bar?.visibility = View.GONE
                         }
                     })
 

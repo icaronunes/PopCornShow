@@ -52,7 +52,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
         if (personCast.getName() != null || personCast.getCharacter() != null) {
             holder.textCastPersonagem.setText(personCast.getCharacter());
             holder.textCastNome.setText(personCast.getName());
-            Picasso.with(context)
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + personCast.getProfilePath())
                     .placeholder(R.drawable.person)
                     .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
@@ -64,7 +64,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
                         }
 
                         @Override
-                        public void onError() {
+                        public void onError(Exception e) {
                             holder.progressBar.setVisibility(View.INVISIBLE);
                         }
                     });

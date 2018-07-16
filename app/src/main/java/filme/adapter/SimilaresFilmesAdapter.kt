@@ -19,6 +19,7 @@ import domain.ResultsSimilarItem
 import filme.activity.FilmeActivity
 import utils.Constantes
 import utils.UtilsApp
+import java.lang.Exception
 
 /**
  * Created by icaro on 22/02/17.
@@ -42,18 +43,19 @@ class SimilaresFilmesAdapter(activity: FragmentActivity, val similarItems: List<
         holder.progressBarSimilares.visibility = View.VISIBLE
         if (it.title != null && it.posterPath != null) {
             holder.textSimilares.visibility = View.GONE
-            Picasso.with(context)
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + it.posterPath)
                     .placeholder(R.drawable.poster_empty)
                     .into(holder.imgPagerSimilares, object : Callback {
+                        override fun onError(e: Exception?) {
+                            holder.progressBarSimilares.visibility = View.GONE
+                        }
+
                         override fun onSuccess() {
                             color_top = UtilsApp.loadPalette(holder.imgPagerSimilares)
                             holder.progressBarSimilares.visibility = View.GONE
                         }
 
-                        override fun onError() {
-                            holder.progressBarSimilares.visibility = View.GONE
-                        }
                     })
 
             holder.imgPagerSimilares.setOnClickListener { view ->

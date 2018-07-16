@@ -53,7 +53,7 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
     public void onBindViewHolder(final PosterViewHolder holder, final int position) {
         if (artworks.size() > 0) {
 
-            Picasso.with(context).load(UtilsApp
+            Picasso.get().load(UtilsApp
                     .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 4)) + artworks.get(position).getFilePath())
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.img, new Callback() {
@@ -76,7 +76,7 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
                         }
 
                         @Override
-                        public void onError() {
+                        public void onError(Exception e) {
 
                         }
                     });

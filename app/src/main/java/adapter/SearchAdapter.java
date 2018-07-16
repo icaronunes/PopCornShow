@@ -51,7 +51,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
         if (multis.get(position).getMediaType().equals(Multi.MediaType.MOVIE)) {
             final MovieDb movieDb = ((MovieDb) multis.get(position));
 
-            Picasso.with(context)
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + movieDb.getPosterPath())
                     .error(R.drawable.poster_empty)
                     .into(holder.poster);
@@ -83,7 +83,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
 
         if (multis.get(position).getMediaType().equals(Multi.MediaType.TV_SERIES)) {
             final TvSeries series = (TvSeries) multis.get(position);
-            Picasso.with(context)
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + series.getPosterPath())
                     .error(R.drawable.poster_empty)
                     .into(holder.poster);
@@ -115,7 +115,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.HolderSear
 
         if (multis.get(position).getMediaType().equals(Multi.MediaType.PERSON)) {
             final Person person = (Person) multis.get(position);
-            Picasso.with(context)
+            Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + person.getProfilePath())
                     .error(R.drawable.poster_empty)
                     .into(holder.poster);

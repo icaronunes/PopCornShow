@@ -492,7 +492,7 @@ class TvShowActivity : BaseActivity() {
 
     private fun setImageTop() {
 
-        Picasso.with(this@TvShowActivity)
+        Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem(5) + series?.backdropPath)
                 .error(R.drawable.top_empty)
                 .into(img_top_tvshow)
