@@ -4,7 +4,8 @@
 <p>Repositorio com o codigo do App - <a href="https://play.google.com/store/apps/details?id=br.com.icaro.filme">PopCorn Show</a>
  no Google Play
  
-<img src="https://lh3.googleusercontent.com/by2KEpF6Zlqc-ssqWlQ3G0Rj7XI-tbVYoGBMz4eVcynv3cJBPToJWatairJ9ACnphHo=w1920-h947-rw" width="250"><img src="https://lh3.googleusercontent.com/-v3UtI554gl991_eSMMXN1MAAqxJfDCpUg1J5JmeGJnSNR2KpMhRRgLyxl-RYnJh1A=w1920-h947-rw" width="250"><img src="https://lh3.googleusercontent.com/DCLb_leSc08uTXwHLDpPKHkYVKyAzSgcYBlM_5E8dIsmkXwl2dME6ZvBY0QQJv7QBwQ=w1920-h947-rw" width="250">
+<img src="https://firebasestorage.googleapis.com/v0/b/livro-android-1327.appspot.com/o/Screenshot_2018-07-17-21-54-36-378_br.com.icaro.filme.png?alt=media&token=82657a67-a573-43ad-9c95-6b61fcb75a19" width="250"><img src="https://firebasestorage.googleapis.com/v0/b/livro-android-1327.appspot.com/o/Screenshot_2018-07-17-21-54-36-378_br.com.icaro.filme.png?alt=media&token=82657a67-a573-43ad-9c95-6b61fcb75a19" width="250"><img src="https://firebasestorage.googleapis.com/v0/b/livro-android-1327.appspot.com/o/Screenshot_2018-07-17-21-57-57-628_br.com.icaro.filme.png?alt=media&token=c68e1f34-6791-475e-8d0f-1bff756d7e1c" width="250">
+<img src="https://firebasestorage.googleapis.com/v0/b/livro-android-1327.appspot.com/o/Screenshot_2018-07-17-21-58-17-706_br.com.icaro.filme.png?alt=media&token=8c678089-197b-496b-ab77-4436b4554ffb" width="250">
 
 <b>O sistema está escrito em Java e Kotlin.</b>
 
