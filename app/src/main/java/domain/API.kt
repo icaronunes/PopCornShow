@@ -500,7 +500,9 @@ class API(context: Context) {
     }
 
     fun procuraMulti(query: String?) : Observable<MultiSearch> {
-        return rx.Observable.create(Observable.OnSubscribe { subscriber ->
+        return rx.Observable
+                .create(Observable.OnSubscribe { subscriber ->
+                    if (query.equals("search_suggest_query")) Throwable("")
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -508,6 +510,7 @@ class API(context: Context) {
                     .get()
                     .build()
             val response = client.newCall(request).execute()
+            Log.d(this.toString(), "entrou... - $query")
             if (response.isSuccessful){
                 val json = response.body()?.string()
                 val multi = gson.fromJson(json, MultiSearch::class.java)
@@ -521,5 +524,3 @@ class API(context: Context) {
     }
 
 }
-
-// https://api.themoviedb.org/3/search/multi?api_key=fb14e77a32282ed59a8122a266010b70&language=pt-BR&query=lost&page=1&include_adult=false

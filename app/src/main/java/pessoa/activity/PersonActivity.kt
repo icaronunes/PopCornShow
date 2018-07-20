@@ -26,7 +26,7 @@ class PersonActivity : BaseActivity() {
     private var id_person: Int = 0
     private var nome: String? = null
     private val subscription: CompositeSubscription? = null
-    private lateinit var person: Person
+    //private lateinit var person: Person
 
     private val context: Context
         get() = this
@@ -46,6 +46,10 @@ class PersonActivity : BaseActivity() {
             snack()
         }
 
+    }
+
+    private fun setTitleActionBar(title: String?){
+        supportActionBar?.title = title
     }
 
     private fun getExtras() {
@@ -77,7 +81,7 @@ class PersonActivity : BaseActivity() {
         return true
     }
 
-    private fun setupViewPagerTabs() {
+    private fun setupViewPagerTabs(person: Person) {
 
         viewPager_person?.offscreenPageLimit = 2
         viewPager_person?.adapter = PersonAdapter(context, supportFragmentManager, person)
@@ -93,8 +97,8 @@ class PersonActivity : BaseActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    person = it
-                    setupViewPagerTabs()
+                    setTitleActionBar(it.name)
+                    setupViewPagerTabs(it)
                     progress_horizontal.visibility = View.GONE
                 }, { erro ->
                     Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()

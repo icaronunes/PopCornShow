@@ -23,6 +23,7 @@
         <!-- Cor de acentuação para as views (checkbox, textfield etc.) -->
         <item name="colorAccent">@color/accent</item>
         <item name="windowActionBar">false</item>
+        <item name="android:autoCompleteTextViewStyle">@color/green</item>
         <item name="windowNoTitle">true</item>
     </style>
 

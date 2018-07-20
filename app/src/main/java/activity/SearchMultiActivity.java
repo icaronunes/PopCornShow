@@ -37,6 +37,7 @@ import provider.SuggestionRecentProvider;
 import tvshow.activity.TvShowActivity;
 import utils.Constantes;
 import utils.UtilsApp;
+import utils.enums.EnumTypeMedia;
 
 
 /**
@@ -91,20 +92,19 @@ public class SearchMultiActivity extends BaseActivity {
                 if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
 
                     Intent intent;
-                    if (getIntent().getData().getLastPathSegment().equalsIgnoreCase(Multi.MediaType.MOVIE.name())) {
-
-                        final int id = Integer.parseInt(getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY));
+                    if (getIntent().getData().getLastPathSegment().equalsIgnoreCase(EnumTypeMedia.MOVIE.getType())) {
 
                         intent = new Intent(this, FilmeActivity.class);
+                        int id = Integer.parseInt(getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY));//ID
                         intent.putExtra(Constantes.INSTANCE.getFILME_ID(), id);
                         intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                         startActivity(intent);
                         finish();
                         return;
-                    }
+                    } else
 
-                    if (getIntent().getData().getLastPathSegment().equalsIgnoreCase(Multi.MediaType.TV_SERIES.name())) {
-                        final int id = Integer.parseInt(getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY));
+                    if (getIntent().getData().getLastPathSegment().equalsIgnoreCase(EnumTypeMedia.TV.getType())) {
+                        final int id = Integer.parseInt(getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY));//ID
 
                         intent = new Intent(this, TvShowActivity.class);
                         intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), id);
@@ -112,21 +112,18 @@ public class SearchMultiActivity extends BaseActivity {
                         startActivity(intent);
                         finish();
                         return;
-                    }
+                    } else
 
-                    if (getIntent().getData().getLastPathSegment().equalsIgnoreCase(Multi.MediaType.PERSON.name())) {
+                    if (getIntent().getData().getLastPathSegment().equalsIgnoreCase(EnumTypeMedia.PERSON.getType())) {
 
-                        String string = getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY);
-                        final String id = string.substring(0, string.indexOf('/'));
                         intent = new Intent(this, PersonActivity.class);
-                        intent.putExtra(Constantes.INSTANCE.getPERSON_ID(), Integer.valueOf(id));
-                        intent.putExtra(Constantes.INSTANCE.getNOME_PERSON(), string.substring(string.indexOf('/') + 1, string.length()));
+                        int id = Integer.parseInt(getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY));//ID
+                        intent.putExtra(Constantes.INSTANCE.getPERSON_ID(), id);
                         intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                         startActivity(intent);
                         finish();
                         return;
                     }
-
                 }
             }
         }
