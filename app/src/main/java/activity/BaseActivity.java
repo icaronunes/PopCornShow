@@ -383,14 +383,15 @@ public class BaseActivity extends AppCompatActivity {
             SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
             searchView.setQueryHint(getResources().getString(R.string.procurar));
-            searchView.setEnabled(false);
+            searchView.setSubmitButtonEnabled(true);
+            searchView.setEnabled(true);
 
             return super.onCreateOptionsMenu(menu);
         } catch (Exception e) {
             Crashlytics.logException(e);
             Toast.makeText(this, R.string.ops, Toast.LENGTH_SHORT).show();
         }
-        return true;
+        return false;
     }
 
     protected void salvaImagemMemoriaCache(final Context context, final String endereco, final SalvarImageShare callback) {

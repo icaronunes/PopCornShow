@@ -62,5 +62,8 @@ data class ResultsItem(
 	val releaseDate: String? = null,
 
 	@field:SerializedName("adult")
-	val adult: Boolean? = null
+	val adult: Boolean? = null,
+
+	@field:SerializedName("profile_path")
+	val profile_path: String? = null
 ): Serializable

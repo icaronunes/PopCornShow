@@ -12,7 +12,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -21,15 +21,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Predicate;
 
+import br.com.icaro.filme.R;
 import domain.API;
 import domain.busca.MultiSearch;
 import domain.busca.ResultsItem;
-import info.movito.themoviedbapi.model.Multi;
+import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -41,13 +42,9 @@ public class SuggestionProvider extends ContentProvider {
 
 	private MultiSearch multis;
 	private CompositeSubscription subscriptions = new CompositeSubscription();
-	private File img = null;
-	private Bitmap imageView;
-	private MatrixCursor cursor;
 
 	@Override
 	public boolean onCreate() {
-		//Log.d("SuggestionProvider", "Entrou");
 		return true;
 	}
 
@@ -56,11 +53,17 @@ public class SuggestionProvider extends ContentProvider {
 	                    String[] selectionArgs, String sortOrder) {
 		String query1 = uri.getLastPathSegment().toLowerCase();
 		if (query1.equals("search_suggest_query")) return null;
-		cursor = null;
+
+		MatrixCursor cursor = null;
 		Subscription inscricao = new API(this.getContext())
 				.procuraMulti(query1)
-				.debounce(1000, TimeUnit.MILLISECONDS)
+				.doOnNext(multiSearch -> {
+					for (ResultsItem resultsItem : multiSearch.getResults()) {
+						UtilsApp.gravarImg(getContext(), resultsItem);
+					}
+				})
 				.distinctUntilChanged()
+				.debounce(300, TimeUnit.MILLISECONDS)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Observer<MultiSearch>() {
@@ -71,13 +74,12 @@ public class SuggestionProvider extends ContentProvider {
 
 					@Override
 					public void onError(Throwable e) {
-
+						Toast.makeText(getContext(), getContext().getString(R.string.ops), Toast.LENGTH_SHORT).show();
 					}
 
 					@Override
 					public void onNext(MultiSearch multiRetorno) {
 						multis = multiRetorno;
-
 					}
 				});
 		subscriptions.add(inscricao);
@@ -89,8 +91,9 @@ public class SuggestionProvider extends ContentProvider {
 							SearchManager.SUGGEST_COLUMN_TEXT_1,
 							SearchManager.SUGGEST_COLUMN_TEXT_2,
 							SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA,
-							SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID
-							//SearchManager.SUGGEST_COLUMN_ICON_1
+							SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID,
+							SearchManager.SUGGEST_COLUMN_ICON_1
+
 					}
 			);
 		} else {
@@ -100,86 +103,60 @@ public class SuggestionProvider extends ContentProvider {
 							SearchManager.SUGGEST_COLUMN_TEXT_1,
 							SearchManager.SUGGEST_COLUMN_TEXT_2,
 							SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA,
-							SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID
+							SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID,
+							SearchManager.SUGGEST_COLUMN_ICON_1
+
 					}
 			);
 		}
 
 		if (multis != null) {
-			String query = uri.getLastPathSegment().toUpperCase();
-			int limit = Integer.parseInt(uri.getQueryParameter(SearchManager.SUGGEST_PARAMETER_LIMIT));
-			List<Object[]> list = new ArrayList<>();
 
-			for (int position = 0; position < multis.getResults().size() && cursor.getCount() < 7; position++) {
+			for (int position = 0; position < multis.getResults().size() && cursor.getCount() < 10; position++) {
 
 				ResultsItem item = multis.getResults().get(position);
 				String mediaType = item.getMediaType();
 				String id = "";
 				String nome = "";
 				String data = "";
+				String img = "";
 
 				if (mediaType.equalsIgnoreCase(EnumTypeMedia.TV.getType())) {
-					// Log.d("SuggestionProvider", String.valueOf(Multi.MediaType.TV_SERIES));
-					if (item.getName().isEmpty() || item.getName() == null) continue;
+					if (item.getPosterPath() != null && !item.getPosterPath().isEmpty() && !item.getPosterPath().equalsIgnoreCase(""))
+					//UtilsApp.saveImagemSearch(getContext(), item.getPosterPath());
 					data = item.getFirstAirDate();
 					nome = item.getName();
 					id = item.getId().toString();
+					img = item.getPosterPath();
 				} else if (mediaType.equalsIgnoreCase(EnumTypeMedia.MOVIE.getType())) {
-
-					if (item.getTitle().isEmpty() || item.getTitle() == null) continue;
+					if (item.getPosterPath() != null && !item.getPosterPath().isEmpty() && !item.getPosterPath().equalsIgnoreCase(""))
+					//UtilsApp.saveImagemSearch(getContext(), item.getPosterPath());
 					id = item.getId().toString();
 					nome = item.getTitle();
 					data = item.getReleaseDate();
+					img = item.getPosterPath();
 				} else if (mediaType.equalsIgnoreCase(EnumTypeMedia.PERSON.getType())) {
-					if (item.getName().isEmpty() || item.getName() == null) continue;
+					if (item.getProfile_path() != null && !item.getProfile_path().isEmpty() && !item.getProfile_path().equalsIgnoreCase(""))
+					//UtilsApp.saveImagemSearch(getContext(), item.getProfile_path());
 					id = item.getId().toString();
 					nome = item.getName();
+					img = item.getProfile_path();
 				}
-
-				String url = UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(getContext(), 1)) + item.getPosterPath();
-				if (item.getPosterPath() != null)
-					img = UtilsApp.aguardarImagemPesquisa(getContext(), getImagem(url), item.getPosterPath());
 
 				if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-					cursor.addRow(new Object[]{position, nome, data, id, mediaType});
-					//img.toURI()
+					if (img != null && !img.isEmpty() && !img.equalsIgnoreCase("")) {
+						Uri uriImg = UtilsApp.getUriDownloadImage(getContext(), new File(getContext().getExternalCacheDir().toString() + "/" + img));
+						cursor.addRow(new Object[]{position, nome, data, id, mediaType, uriImg});
+					} else {
+						cursor.addRow(new Object[]{position, nome, data, id, mediaType, null});
+					}
 				} else {
-					cursor.addRow(new Object[]{position, nome, data, id, mediaType});
+					cursor
+							.addRow(new Object[]{position, nome, data, id, mediaType});
 				}
 			}
-
 		}
-
-
 		return cursor;
-	}
-
-	private Bitmap getImagem(String url) {
-		imageView = null;
-		Handler uiHandler = new Handler(Looper.getMainLooper());
-		uiHandler.post(new Runnable() {
-			@Override
-			public void run() {
-				Picasso.get().load(url).into(new Target() {
-					@Override
-					public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-						imageView = bitmap;
-					}
-
-					@Override
-					public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-						imageView = null;
-					}
-
-					@Override
-					public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-					}
-				});
-			}
-		});
-
-		return imageView;
 	}
 
 	@Override

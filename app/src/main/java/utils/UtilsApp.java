@@ -14,6 +14,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.FileProvider;
 import android.support.v7.graphics.Palette;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
@@ -23,6 +24,10 @@ import com.crashlytics.android.Crashlytics;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,12 +42,14 @@ import domain.TvSeasons;
 import domain.UserEp;
 import domain.UserSeasons;
 import domain.UserTvshow;
+import domain.busca.ResultsItem;
 import domain.tvshow.ExternalIds;
 import domain.tvshow.SeasonsItem;
 import domain.tvshow.Tvshow;
 import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
 import info.movito.themoviedbapi.model.tv.TvSeason;
+import utils.enums.EnumTypeMedia;
 
 
 /**
@@ -231,7 +238,7 @@ public class UtilsApp {
 	}
 
 	public static File aguardarImagemPesquisa(Context context, Bitmap bitmap, String endereco) {
-		//Usar metodo do BaseActivity
+
 		File file = context.getExternalCacheDir();
 
 		if (!file.exists()) {
@@ -365,6 +372,47 @@ public class UtilsApp {
 		}
 
 		return uri;
+	}
+
+	public static void saveImagemSearch(Context context, String enderecoImagem) {
+		InputStream input = null;
+		try {
+			URL url = new URL(getBaseUrlImagem(1) + enderecoImagem);
+			input = url.openStream();
+
+			String storagePath = context.getExternalCacheDir().toString() + "/" + enderecoImagem;
+			OutputStream output = new FileOutputStream(new File(storagePath));
+
+			byte[] buffer = new byte[10000000];
+			int bytesRead = 0;
+			while ((bytesRead = input.read(buffer, 0, buffer.length)) >= 0) {
+				output.write(buffer, 0, bytesRead);
+			}
+		} catch (Exception e) {
+			Log.d("UtilsApp", e.getMessage());
+		} finally {
+			try {
+				if (input != null)
+					input.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void gravarImg(Context context, ResultsItem item ){
+
+		if (item.getMediaType().equalsIgnoreCase(EnumTypeMedia.TV.getType())) {
+			if (item.getPosterPath() != null && !item.getPosterPath().isEmpty() && !item.getPosterPath().equalsIgnoreCase(""))
+				UtilsApp.saveImagemSearch(context, item.getPosterPath());
+		} else if (item.getMediaType().equalsIgnoreCase(EnumTypeMedia.MOVIE.getType())) {
+			if (item.getPosterPath() != null && !item.getPosterPath().isEmpty() && !item.getPosterPath().equalsIgnoreCase(""))
+				UtilsApp.saveImagemSearch(context, item.getPosterPath());
+
+		} else if (item.getMediaType().equalsIgnoreCase(EnumTypeMedia.PERSON.getType())) {
+			if (item.getProfile_path() != null && !item.getProfile_path().isEmpty() && !item.getProfile_path().equalsIgnoreCase(""))
+				UtilsApp.saveImagemSearch(context, item.getProfile_path());
+		}
 	}
 
 	public static String getBaseUrlImagem(int tamanho) {
