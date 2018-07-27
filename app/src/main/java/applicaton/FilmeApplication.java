@@ -20,48 +20,56 @@ import onsignal.CustomNotificationReceivedHandler;
 
 public class FilmeApplication extends MultiDexApplication {
 
-    private static final String TAG = FilmeApplication.class.getName();
-    private static FilmeApplication instance = null;
-    private Bus bus = new Bus();
+	private static final String TAG = FilmeApplication.class.getName();
+	private static FilmeApplication instance = null;
+	private Bus bus = new Bus();
 
-    public static FilmeApplication getInstance() {
-        return instance;
-    }
+	public static FilmeApplication getInstance() {
+		return instance;
+	}
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+	@Override
+	public void onCreate() {
+		super.onCreate();
 
-        instance = this;
-       
+		instance = this;
 
-        OneSignal.startInit(this)
-                .setNotificationOpenedHandler(new CustomNotificationOpenedHandler())
-                .setNotificationReceivedHandler(new CustomNotificationReceivedHandler())
-                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                .init();
 
-        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build();
-        Fabric.with(this, crashlyticsKit);
+		OneSignal.startInit(this)
+				.setNotificationOpenedHandler(new CustomNotificationOpenedHandler())
+				.setNotificationReceivedHandler(new CustomNotificationReceivedHandler())
+				.inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+				.init();
 
-    }
+		Crashlytics crashlyticsKit = new Crashlytics.Builder()
+				.core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+				.build();
+		Fabric.with(this, crashlyticsKit);
 
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
-    }
+		try {
+			if (getExternalCacheDir().exists()) {
+				if (getExternalCacheDir().length() > 1000000 * 3) {
+					getExternalCacheDir().delete();
+				}
+			}
+		} catch (Exception e) {
+		}
 
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
+	}
 
-    }
+	@Override
+	protected void attachBaseContext(Context base) {
+		super.attachBaseContext(base);
+		MultiDex.install(this);
+	}
 
-    public Bus getBus() {
-        return bus;
-    }
+	@Override
+	public void onTerminate() {
+		super.onTerminate();
+	}
+
+	public Bus getBus() {
+		return bus;
+	}
 
 }

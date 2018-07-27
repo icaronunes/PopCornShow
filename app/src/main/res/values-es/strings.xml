@@ -82,7 +82,7 @@
     <string name="notificacao">Notificación</string>
     <string name="notificacao_summary">Obtener la notificación</string>
     <string name="nova_senha">Nueva Contraseña</string>
-    <string name="novidades_text">** Retirar la asociación con Netflix. Los datos quedaron fechados ** \n\n ** Banner en algunas pantallas ** \n \n ** Sus valoraciones ahora se envían al TMDB. \n Deforma anomina.\n (Con grandes poderes viene grandes responsabilidades)</string>
+    <string name="novidades_text">** Sus evaluaciones ahora se envían al TMDB. \n\n (Con grandes poderes viene grandes responsabilidades) \n\n ** Búsqueda ahora trae imagen en la búsqueda **</string>
     <string name="novidades_title">Noticias</string>
     <string name="now_playing">Jugando ahora</string>
     <string name="ops">Oops! algo mal</string>

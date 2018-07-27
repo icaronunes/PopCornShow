@@ -187,7 +187,7 @@
     <string name="ajuda_desenvolvimento">Development</string>
     <string name="twitter_text" translatable="false">Twitter</string>
     <string name="novidades_title">News</string>
-    <string name="novidades_text">** Withdraw association with Netflix. Data was dated ** \n\n ** Banner on some screens **\n \n ** Your reviews are now sent to TMDB. \n Deform anomina.\n ( With great powers comes great responsibilities)</string>
+    <string name="novidades_text">** Your reviews are now sent to TMDB. \n\n (With great powers comes great responsibilities) \n\n ** Search now brings image in search **</string>
     <string name="star_avaliados">Evaluation</string>
     <string name="budget">Budget</string>
     <string name="homepage" translatable="false">Homepager</string>

@@ -63,7 +63,7 @@ public class SuggestionProvider extends ContentProvider {
 					}
 				})
 				.distinctUntilChanged()
-				.debounce(300, TimeUnit.MILLISECONDS)
+				.debounce(350, TimeUnit.MILLISECONDS)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Observer<MultiSearch>() {
@@ -93,7 +93,6 @@ public class SuggestionProvider extends ContentProvider {
 							SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA,
 							SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID,
 							SearchManager.SUGGEST_COLUMN_ICON_1
-
 					}
 			);
 		} else {
@@ -104,7 +103,6 @@ public class SuggestionProvider extends ContentProvider {
 							SearchManager.SUGGEST_COLUMN_TEXT_2,
 							SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA,
 							SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID,
-							SearchManager.SUGGEST_COLUMN_ICON_1
 
 					}
 			);
@@ -122,22 +120,19 @@ public class SuggestionProvider extends ContentProvider {
 				String img = "";
 
 				if (mediaType.equalsIgnoreCase(EnumTypeMedia.TV.getType())) {
-					if (item.getPosterPath() != null && !item.getPosterPath().isEmpty() && !item.getPosterPath().equalsIgnoreCase(""))
-					//UtilsApp.saveImagemSearch(getContext(), item.getPosterPath());
+
 					data = item.getFirstAirDate();
 					nome = item.getName();
 					id = item.getId().toString();
 					img = item.getPosterPath();
 				} else if (mediaType.equalsIgnoreCase(EnumTypeMedia.MOVIE.getType())) {
-					if (item.getPosterPath() != null && !item.getPosterPath().isEmpty() && !item.getPosterPath().equalsIgnoreCase(""))
-					//UtilsApp.saveImagemSearch(getContext(), item.getPosterPath());
+
 					id = item.getId().toString();
 					nome = item.getTitle();
 					data = item.getReleaseDate();
 					img = item.getPosterPath();
 				} else if (mediaType.equalsIgnoreCase(EnumTypeMedia.PERSON.getType())) {
-					if (item.getProfile_path() != null && !item.getProfile_path().isEmpty() && !item.getProfile_path().equalsIgnoreCase(""))
-					//UtilsApp.saveImagemSearch(getContext(), item.getProfile_path());
+
 					id = item.getId().toString();
 					nome = item.getName();
 					img = item.getProfile_path();
@@ -151,8 +146,7 @@ public class SuggestionProvider extends ContentProvider {
 						cursor.addRow(new Object[]{position, nome, data, id, mediaType, null});
 					}
 				} else {
-					cursor
-							.addRow(new Object[]{position, nome, data, id, mediaType});
+					cursor.addRow(new Object[]{position, nome, data, id, mediaType});
 				}
 			}
 		}

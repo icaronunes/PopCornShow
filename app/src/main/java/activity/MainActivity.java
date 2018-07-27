@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Locale;
 
 import adapter.MainAdapter;
+import br.com.icaro.filme.BuildConfig;
 import br.com.icaro.filme.R;
 import domain.FilmeService;
 import domain.TopMain;
@@ -75,7 +76,7 @@ public class MainActivity extends BaseActivity {
 
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (sharedPref.getBoolean("43", true)) {
+        if (sharedPref.getBoolean(String.valueOf(BuildConfig.VERSION_CODE), true)) {
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_popcorn2)
                     .setTitle(R.string.novidades_title)
@@ -84,16 +85,13 @@ public class MainActivity extends BaseActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putBoolean("43", false);
-                            editor.remove("42");
+                            editor.putBoolean(String.valueOf(BuildConfig.VERSION_CODE), false);
+                            editor.remove(String.valueOf(BuildConfig.VERSION_CODE-1));
                             editor.apply();
                         }
                     }).create();
             dialog.show();
         }
-
-
-
 
     }
 

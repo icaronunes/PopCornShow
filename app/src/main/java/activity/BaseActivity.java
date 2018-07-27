@@ -101,7 +101,6 @@ public class BaseActivity extends AppCompatActivity {
     protected void setUpToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
-
             toolbar.setTitleTextColor(getResources().getColor(R.color.white));
             setSupportActionBar(toolbar);
         }
@@ -391,7 +390,7 @@ public class BaseActivity extends AppCompatActivity {
             Crashlytics.logException(e);
             Toast.makeText(this, R.string.ops, Toast.LENGTH_SHORT).show();
         }
-        return false;
+        return true;
     }
 
     protected void salvaImagemMemoriaCache(final Context context, final String endereco, final SalvarImageShare callback) {
