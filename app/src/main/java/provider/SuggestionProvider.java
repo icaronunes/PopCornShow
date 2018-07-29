@@ -5,33 +5,21 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.MatrixCursor;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Handler;
-import android.os.Looper;
 import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import br.com.icaro.filme.R;
 import domain.API;
 import domain.busca.MultiSearch;
 import domain.busca.ResultsItem;
-import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import utils.UtilsApp;
@@ -42,6 +30,7 @@ public class SuggestionProvider extends ContentProvider {
 
 	private MultiSearch multis;
 	private CompositeSubscription subscriptions = new CompositeSubscription();
+	private MatrixCursor cursor;
 
 	@Override
 	public boolean onCreate() {
@@ -54,7 +43,6 @@ public class SuggestionProvider extends ContentProvider {
 		String query1 = uri.getLastPathSegment().toLowerCase();
 		if (query1.equals("search_suggest_query")) return null;
 
-		MatrixCursor cursor = null;
 		Subscription inscricao = new API(this.getContext())
 				.procuraMulti(query1)
 				.doOnNext(multiSearch -> {

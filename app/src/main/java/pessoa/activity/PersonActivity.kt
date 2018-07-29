@@ -78,7 +78,7 @@ class PersonActivity : BaseActivity() {
         if (item.itemId == android.R.id.home) {
             finish()
         }
-        return true
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setupViewPagerTabs(person: Person) {

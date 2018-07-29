@@ -55,11 +55,6 @@ class ListaGenericaActivity : BaseActivity() {
             adapter = ListUserAdapter(this@ListaGenericaActivity)
         }
 
-        //        AdView adview = (AdView) findViewById(R.id.adView);
-        //        AdRequest adRequest = new AdRequest.Builder()
-        //                .build();
-        //        adview.loadAd(adRequest);
-
     }
 
     override fun onResume() {
@@ -99,7 +94,10 @@ class ListaGenericaActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            android.R.id.home -> finish()
+            android.R.id.home -> {
+                finish()
+                return true
+            }
             R.id.nova_lista -> {
                 val numero = Random().nextInt(10).toString()
                 supportActionBar?.title = map?.get("title$numero")

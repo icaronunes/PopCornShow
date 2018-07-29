@@ -27,7 +27,6 @@ class OscarActivity : BaseActivity() {
     private val list_id = "28" // Id da lista com Ganhadores do Oscar 28
     private var pagina = 1
     private var totalPagina = 1
-    private val TAG = this.javaClass.name
 
     private var subscriptions = CompositeSubscription()
 
@@ -47,12 +46,6 @@ class OscarActivity : BaseActivity() {
             setHasFixedSize(true)
             recycleView_favorite.adapter = ListUserAdapter(this@OscarActivity)
         }
-
-        //        AdView adview = (AdView) findViewById(R.id.adView);
-        //        AdRequest adRequest = new AdRequest.Builder()
-        //                .build();
-        //        adview.loadAd(adRequest);
-
     }
 
 
@@ -64,6 +57,14 @@ class OscarActivity : BaseActivity() {
         } else {
             snack()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onPause() {
@@ -82,7 +83,7 @@ class OscarActivity : BaseActivity() {
                 }.show()
     }
 
-    fun getOscar() {
+    private fun getOscar() {
 
         val teste = API(context = this).loadMovieComVideo(18)
                 .subscribeOn(Schedulers.io())
@@ -112,13 +113,6 @@ class OscarActivity : BaseActivity() {
             subscriptions.add(teste)
         }
 
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-        }
-        return super.onOptionsItemSelected(item)
     }
 
 

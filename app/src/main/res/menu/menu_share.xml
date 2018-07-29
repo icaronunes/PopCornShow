@@ -7,8 +7,12 @@
         android:checkable="false"
         android:icon="@drawable/icon_find"
         android:title="@string/search"
-        app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="always|collapseActionView" />
+        android:focusableInTouchMode="true"
+        android:iconifiedByDefault="true"
+        app:iconifiedByDefault="true"
+        app:showAsAction="ifRoom"
+        android:background="@color/white"
+         />
 
     <item
         android:id="@+id/share"

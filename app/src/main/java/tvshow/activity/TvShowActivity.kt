@@ -242,24 +242,6 @@ class TvShowActivity : BaseActivity() {
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        try {
-            menuInflater.inflate(R.menu.menu_share, menu)
-
-            val searchView = menu.findItem(R.id.search).actionView as SearchView
-            val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            searchView.queryHint = resources.getString(R.string.procurar)
-            searchView.isEnabled = false
-
-        } catch (e: Exception) {
-            Toast.makeText(this, R.string.ops, Toast.LENGTH_SHORT).show()
-        }
-
-        return true
-    }
-
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (series != null) {
             if (item.itemId == R.id.share) {
@@ -285,6 +267,11 @@ class TvShowActivity : BaseActivity() {
             Toast.makeText(this@TvShowActivity, resources.getString(R.string.erro_ainda_sem_imagem), Toast.LENGTH_SHORT).show()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_share, menu)//
+        return true
     }
 
     fun buildDeepLink(): String {

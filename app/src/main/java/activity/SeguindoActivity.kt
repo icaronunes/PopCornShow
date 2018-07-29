@@ -82,7 +82,6 @@ class SeguindoActivity : BaseActivity() {
         Snackbar.make(linearLayout!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
                     if (UtilsApp.isNetWorkAvailable(baseContext)) {
-                        //text_elenco_no_internet.setVisibility(View.GONE);
                         iniciarFirebases()
                         setEventListenerSeguindo()
                     } else {
@@ -94,6 +93,7 @@ class SeguindoActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()
+            return true
         }
         return super.onOptionsItemSelected(item)
     }

@@ -51,14 +51,6 @@ public class WatchListActivity extends BaseActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress);
         linearLayout = (LinearLayout) findViewById(R.id.linear_usuario_list);
 
-//        AdView adview = (AdView) findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder()
-//                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-//                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-//                .build();
-//        adview.loadAd(adRequest);
-//        iniciarFirebases();
-
         if (UtilsApp.isNetWorkAvailable(this)){
 
             iniciarFirebases();
@@ -87,6 +79,7 @@ public class WatchListActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home){
             finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
