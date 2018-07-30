@@ -27,7 +27,7 @@ class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         ProdutoraResultsPage.add(loadingItem)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
        return delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder!!, ProdutoraResultsPage[position], context = null)
     }
 

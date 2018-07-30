@@ -27,7 +27,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
 
     private var unfoldedIndexes = HashSet<Int>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TemporadaFoldinAdapter.HoldeTemporada? {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TemporadaFoldinAdapter.HoldeTemporada {
         val view = LayoutInflater.from(temporadaActivity).inflate(R.layout.foldin_main, parent, false)
         return HoldeTemporada(view)
     }

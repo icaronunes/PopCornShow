@@ -41,7 +41,7 @@ class SimilaresListaSerieAdapter(private val similaresActivity: SimilaresActivit
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SimilareViewHolde {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimilareViewHolde {
         val view = LayoutInflater.from(similaresActivity).inflate(R.layout.adapter_similares, parent, false)
         return SimilareViewHolde(view)
     }

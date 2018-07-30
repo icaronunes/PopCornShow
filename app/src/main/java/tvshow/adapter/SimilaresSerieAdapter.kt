@@ -55,7 +55,7 @@ class SimilaresSerieAdapter(val activity: FragmentActivity?, val similarItems: L
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SimilaresSerieHolde {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimilaresSerieHolde {
         val view = LayoutInflater.from(activity).inflate(R.layout.scroll_similares, parent, false)
         return SimilaresSerieHolde(view)
     }

@@ -3,25 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="br.com.icaro.filme">
 
-    <uses-sdk tools:overrideLibrary="com.facebook, android.support.customtabs"/>
+    <uses-sdk android:targetSdkVersion="27" android:minSdkVersion="14"
+        tools:overrideLibrary="com.facebook, com.onesignal, android.support.customtabs"
+        tools:ignore="MultipleUsesSdk" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name="applicaton.FilmeApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:largeHeap="true"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-        <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_application_id"/>
-        <meta-data android:name="firebase_crash_collection_enabled" android:value="false" />
+        <meta-data
+            android:name="com.onesignal.NotificationOpened.DEFAULT"
+            android:value="DISABLE" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_application_id" />
+        <meta-data
+            android:name="firebase_crash_collection_enabled"
+            android:value="false" />
 
         <activity
             android:name="activity.MainActivity"
@@ -59,16 +67,19 @@
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
 
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
 
         </activity>
 
-        <activity android:name="listafilmes.activity.FilmesActivity"
+        <activity
+            android:name="listafilmes.activity.FilmesActivity"
             android:parentActivityName="activity.MainActivity">
 
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
 
             <meta-data
                 android:name="android.app.searchable"
@@ -109,8 +120,9 @@
             android:parentActivityName="activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar.NavDrawer">
 
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
 
             <meta-data
                 android:name="android.app.searchable"
@@ -120,12 +132,13 @@
                 android:value="activity.SearchMultiActivity" />
         </activity>
 
-        <activity android:name="activity.ListaGenericaActivity"
-            android:parentActivityName="activity.MainActivity"
-            >
+        <activity
+            android:name="activity.ListaGenericaActivity"
+            android:parentActivityName="activity.MainActivity">
 
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
 
         </activity>
 
@@ -138,67 +151,72 @@
                 android:value="activity.SearchMultiActivity" />
         </activity>
 
-        <activity android:name="activity.TemporadaActivity"
-            android:parentActivityName="activity.MainActivity" >
+        <activity
+            android:name="activity.TemporadaActivity"
+            android:parentActivityName="activity.MainActivity">
 
-        <meta-data android:name="android.support.PARENT_ACTIVITY"
-            android:value="activity.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
 
         </activity>
 
-        <activity android:name="activity.EpsodioActivity"/>
+        <activity android:name="activity.EpsodioActivity" />
 
 
-        <activity android:name="activity.TrailerActivity"
-            android:parentActivityName="activity.MainActivity"
-            >
+        <activity
+            android:name="activity.TrailerActivity"
+            android:parentActivityName="activity.MainActivity">
 
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
 
         </activity>
 
         <activity
             android:name="activity.PosterActivity"
-            android:parentActivityName="activity.MainActivity"
-           >
+            android:parentActivityName="activity.MainActivity">
 
-        <meta-data android:name="android.support.PARENT_ACTIVITY"
-            android:value="activity.MainActivity"/>
-
-        </activity>
-
-
-        <activity android:name="activity.ElencoActivity"
-            android:parentActivityName="activity.MainActivity"
-            >
-
-
-        <meta-data android:name="android.support.PARENT_ACTIVITY"
-            android:value="activity.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
 
         </activity>
 
 
+        <activity
+            android:name="activity.ElencoActivity"
+            android:parentActivityName="activity.MainActivity">
 
-        <activity android:name="activity.CrewsActivity"
-            android:parentActivityName="activity.MainActivity"
-            >
 
-
-        <meta-data android:name="android.support.PARENT_ACTIVITY"
-            android:value="activity.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
 
         </activity>
 
 
-        <activity android:name="activity.PosterGridActivity"
-            android:parentActivityName="activity.MainActivity"
-            >
+        <activity
+            android:name="activity.CrewsActivity"
+            android:parentActivityName="activity.MainActivity">
 
 
-        <meta-data android:name="android.support.PARENT_ACTIVITY"
-            android:value="activity.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
+
+        </activity>
+
+
+        <activity
+            android:name="activity.PosterGridActivity"
+            android:parentActivityName="activity.MainActivity">
+
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
         </activity>
 
         <activity
@@ -228,8 +246,9 @@
             android:theme="@style/AppTheme.NoActionBar">
 
 
-        <meta-data android:name="android.support.PARENT_ACTIVITY"
-            android:value="activity.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
 
         </activity>
 
@@ -239,16 +258,17 @@
             android:theme="@style/AppTheme.NoActionBar">
 
 
-        <meta-data android:name="android.support.PARENT_ACTIVITY"
-            android:value="activity.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
         </activity>
 
 
         <activity android:name="activity.ListaUserActivity" />
 
-        <activity android:name="pessoa.activity.PersonActivity"
-            android:parentActivityName="activity.MainActivity"
-            >
+        <activity
+            android:name="pessoa.activity.PersonActivity"
+            android:parentActivityName="activity.MainActivity">
 
             <meta-data
                 android:name="android.app.searchable"
@@ -258,37 +278,42 @@
                 android:value="activity.SearchMultiActivity" />
 
 
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
         </activity>
 
-        <activity android:name="activity.ReviewsActivity"
-            android:parentActivityName="activity.MainActivity"
-            >
+        <activity
+            android:name="activity.ReviewsActivity"
+            android:parentActivityName="activity.MainActivity">
 
 
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
 
-            </activity>
-
-
-        <activity android:name="pessoa.activity.FotoPersonActivity"
-            android:parentActivityName="activity.MainActivity"
-            >
+        </activity>
 
 
-        <meta-data android:name="android.support.PARENT_ACTIVITY"
-            android:value="activity.MainActivity"/>
+        <activity
+            android:name="pessoa.activity.FotoPersonActivity"
+            android:parentActivityName="activity.MainActivity">
+
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
         </activity>
 
         <activity android:name="activity.SettingsActivity" />
 
-        <activity android:name="listaserie.activity.TvShowsActivity"
+        <activity
+            android:name="listaserie.activity.TvShowsActivity"
             android:parentActivityName="activity.MainActivity">
 
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
 
             <meta-data
                 android:name="android.app.searchable"
@@ -298,20 +323,22 @@
                 android:value="activity.SearchMultiActivity" />
         </activity>
 
-        <activity android:name="activity.Site"
-            android:parentActivityName="activity.MainActivity"
-            >
+        <activity
+            android:name="activity.Site"
+            android:parentActivityName="activity.MainActivity">
 
-        <meta-data android:name="android.support.PARENT_ACTIVITY"
-            android:value="activity.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
         </activity>
 
-        <activity android:name="activity.SeguindoActivity"
-            android:parentActivityName="activity.MainActivity"
-           >
+        <activity
+            android:name="activity.SeguindoActivity"
+            android:parentActivityName="activity.MainActivity">
 
-        <meta-data android:name="android.support.PARENT_ACTIVITY"
-            android:value="activity.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="activity.MainActivity" />
 
             <meta-data
                 android:name="android.app.searchable"
@@ -322,16 +349,22 @@
 
         </activity>
 
-        <activity android:name="activity.VincularLoginActivity"/>
+        <activity android:name="activity.VincularLoginActivity" />
 
         <activity android:name="activity.DynamicLink">
 
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:host="br.com.icaro.filme" android:scheme="http"/>
-                <data android:host="br.com.icaro.filme" android:scheme="https"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="br.com.icaro.filme"
+                    android:scheme="http" />
+                <data
+                    android:host="br.com.icaro.filme"
+                    android:scheme="https" />
             </intent-filter>
 
         </activity>
@@ -363,8 +396,7 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="e614e58bfe119737a7605e7f5b003431514e9a70"
-            />
+            android:value="e614e58bfe119737a7605e7f5b003431514e9a70" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -373,7 +405,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
 
     </application>

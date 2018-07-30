@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/trade_size_dp_250"
+    android:minHeight="121dp"
     android:orientation="vertical"
     android:padding="@dimen/trade_size_dp_50">
 
     <android.support.v7.widget.SearchView
         android:id="@+id/layout_search_multi_search"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/trade_size_dp_50"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:focusableInTouchMode="true"
         android:iconifiedByDefault="true"
@@ -19,7 +20,6 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/layout_search_multi_recycler"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/trade_size_dp_350"
+        android:layout_height="@dimen/trade_size_dp_250"
         android:clipToPadding="true" />
-
 </LinearLayout>

@@ -19,10 +19,11 @@ import utils.Constantes
 import utils.UtilsApp
 import utils.enums.EnumTypeMedia
 
-internal class MultiAdapter(val application: Context, val multiRetorno: MultiSearch, val icon: Drawable?) : RecyclerView.Adapter<MultiAdapter.HolderView>() {
+ class MultiAdapter(val application: Context, val multiRetorno: MultiSearch, val icon: Drawable?) : RecyclerView.Adapter<MultiAdapter.HolderView>() {
 
 
-	override fun onBindViewHolder(holder: HolderView, position: Int) {
+
+	 override fun onBindViewHolder(holder: HolderView, position: Int) {
 		val item = multiRetorno.results?.get(position)!!
 
 		when (item.mediaType) {
@@ -96,7 +97,7 @@ internal class MultiAdapter(val application: Context, val multiRetorno: MultiSea
 	}
 
 
-	override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MultiAdapter.HolderView {
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MultiAdapter.HolderView {
 		val view = LayoutInflater.from(application).inflate(R.layout.search_list_multi_adapter, parent, false)
 		return HolderView(view)
 	}
