@@ -29,6 +29,7 @@ android {
         targetSdkVersion 27
         versionCode 63
         versionName "6.2"
+
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -71,6 +72,7 @@ android {
                     storePassword ""
                     keyAlias ""
                     keyPassword ""
+
                 }
             }
             packagingOptions {
@@ -170,5 +172,4 @@ dependencies {
     }
 }
 apply plugin: 'com.google.gms.google-services'
-
 
