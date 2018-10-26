@@ -3,6 +3,7 @@ package adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Keep;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,10 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import br.com.icaro.filme.R;
+import domain.ListaItemSerie;
+import domain.ListaSeries;
+import domain.movie.ListaFilmes;
+import domain.movie.ListaItemFilme;
 import info.movito.themoviedbapi.TvResultsPage;
 import info.movito.themoviedbapi.model.tv.TvSeries;
 import tvshow.activity.TvShowActivity;
@@ -29,23 +34,23 @@ import utils.UtilsApp;
 @Keep
 public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.TvShowPopularesViewHolder>{
     private Context context;
-    private TvResultsPage popularTvshow;
+    private ListaSeries popularTvshow;
 
-    public TvShowMainAdapter(FragmentActivity activity, TvResultsPage popularTvshow) {
+    public TvShowMainAdapter(FragmentActivity activity, ListaSeries popularTvshow) {
         context = activity;
         this.popularTvshow = popularTvshow;
     }
 
     @Override
-    public TvShowMainAdapter.TvShowPopularesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TvShowMainAdapter.TvShowPopularesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.poster_main, parent, false);
         return new TvShowPopularesViewHolder(view);
     }
 
     @Override
     @Keep
-    public void onBindViewHolder(final TvShowMainAdapter.TvShowPopularesViewHolder holder, final int position) {
-        final TvSeries series = popularTvshow.getResults().get(position);
+    public void onBindViewHolder(@NonNull final TvShowMainAdapter.TvShowPopularesViewHolder holder, final int position) {
+        final ListaItemSerie series = popularTvshow.getResults().get(position);
 
         Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem( UtilsApp.getTamanhoDaImagem(context, 2)) + series.getPosterPath())

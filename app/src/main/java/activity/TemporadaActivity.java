@@ -45,7 +45,7 @@ import adapter.TemporadaAdapter;
 import adapter.TemporadaFoldinAdapter;
 import applicaton.FilmeApplication;
 import br.com.icaro.filme.R;
-import domain.API;
+import domain.Api;
 import domain.EpisodesItem;
 import domain.FilmeService;
 import domain.TvSeasons;
@@ -632,7 +632,7 @@ public class TemporadaActivity extends BaseActivity {
 
 
     private void getDados() {
-        new API(this).getTvSeasons(serie_id, temporada_id, temporada_position)
+        new Api(this).getTvSeasons(serie_id, temporada_id, temporada_position)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<TvSeasons>() {

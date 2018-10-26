@@ -141,7 +141,7 @@ public class FilmeService {
 
     public static Imdb getImdb(String id) {
 
-        final String url = "http://www.omdbapi.com/?i="+id+"&tomatoes=true&r=json&apikey=thewdb"; //API de alguem
+        final String url = "http://www.omdbapi.com/?i="+id+"&tomatoes=true&r=json&apikey=thewdb"; //Api de alguem
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)

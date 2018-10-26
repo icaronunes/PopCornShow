@@ -17,6 +17,8 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import domain.movie.ListaFilmes;
+import domain.movie.ListaItemFilme;
 import filme.activity.FilmeActivity;
 import br.com.icaro.filme.R;
 import info.movito.themoviedbapi.model.MovieDb;
@@ -30,9 +32,9 @@ import utils.UtilsApp;
 @Keep
 public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.MovieViewHolder>{
     private Context context;
-    private MovieResultsPage movieDbs ;
+    private ListaFilmes movieDbs ;
 
-    public MovieMainAdapter(FragmentActivity context, MovieResultsPage movieDbs) {
+    public MovieMainAdapter(FragmentActivity context, ListaFilmes movieDbs) {
         this.context = context;
         this.movieDbs = movieDbs;
     }
@@ -46,7 +48,7 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
     @Override
     public void onBindViewHolder(final MovieMainAdapter.MovieViewHolder holder, final int position) {
 
-        final MovieDb movieDb = movieDbs.getResults().get(position);
+        final ListaItemFilme movieDb = movieDbs.getResults().get(position);
 
         Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem( UtilsApp.getTamanhoDaImagem(context, 2)) + movieDb.getPosterPath())

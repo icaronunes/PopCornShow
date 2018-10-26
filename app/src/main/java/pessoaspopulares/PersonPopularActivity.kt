@@ -11,7 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import br.com.icaro.filme.R
-import domain.API
+import domain.Api
 import kotlinx.android.synthetic.main.activity_person_popular.*
 import pessoaspopulares.adapter.PersonPopularAdapter
 import rx.android.schedulers.AndroidSchedulers
@@ -70,7 +70,7 @@ class PersonPopularActivity : BaseActivity() {
 
     fun getPerson() {
         if (pagina <= totalPagina) {
-            val inscricao = API(this).PersonPopular(pagina)
+            val inscricao = Api(this).PersonPopular(pagina)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

@@ -5,7 +5,6 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.pm.ActivityInfo
-import android.os.AsyncTask
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.design.widget.Snackbar
@@ -17,26 +16,17 @@ import android.widget.ImageView
 import android.widget.Toast
 import br.com.icaro.filme.BuildConfig
 import br.com.icaro.filme.R
-import com.crashlytics.android.Crashlytics
 import com.viewpagerindicator.CirclePageIndicator
-import domain.API
-import domain.FilmeService
+import domain.Api
 import domain.ListaSeries
-import domain.movie.ListaFilmes
 import domain.TopMain
+import domain.movie.ListaFilmes
 import fragment.ViewPageMainTopFragment
-import info.movito.themoviedbapi.TvResultsPage
-import info.movito.themoviedbapi.model.core.MovieResultsPage
 import kotlinx.coroutines.experimental.Dispatchers
 import kotlinx.coroutines.experimental.GlobalScope
-import kotlinx.coroutines.experimental.android.HandlerContext
-import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 import utils.UtilsApp
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class MainActivity : BaseActivity() {
@@ -93,8 +83,8 @@ class MainActivity : BaseActivity() {
     private fun getTopoLista() {
         GlobalScope.launch(Dispatchers.Main) {
             try {
-                val movies = async(Dispatchers.Default) { API(this@MainActivity).getNowPlayingMovies(this@MainActivity) }
-                val tvshow = async(Dispatchers.Default) { API(this@MainActivity).getAiringToday(this@MainActivity) }
+                val movies = async(Dispatchers.Default) { Api(this@MainActivity).getNowPlayingMovies() }
+                val tvshow = async(Dispatchers.Default) { Api(this@MainActivity).getAiringToday() }
 
                 mescla(tmdbMovies = movies.await(), tmdbTv = tvshow.await())
             } catch (ex: Exception) {
@@ -142,8 +132,8 @@ class MainActivity : BaseActivity() {
     private fun setupViewBotton() {
 
         viewPager_main = findViewById<View>(R.id.viewPager_main) as ViewPager
-        viewPager_main!!.offscreenPageLimit = 2
         tabLayout = findViewById<View>(R.id.tabLayout) as TabLayout
+        viewPager_main!!.offscreenPageLimit = 2
         viewPager_main!!.currentItem = 0
         viewPager_main!!.adapter = MainAdapter(this, supportFragmentManager)
         tabLayout!!.setupWithViewPager(viewPager_main)
@@ -153,7 +143,6 @@ class MainActivity : BaseActivity() {
 
         viewPager_main!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
             }
 
             override fun onPageSelected(position: Int) {
@@ -166,9 +155,7 @@ class MainActivity : BaseActivity() {
                 }
             }
 
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
+            override fun onPageScrollStateChanged(state: Int) {}
         })
     }
 
@@ -188,7 +175,7 @@ class MainActivity : BaseActivity() {
         }.toList()
 
         for (index in 0..15) {
-            val topMain = TopMain()
+            val topMain = TopMain()// criar class utilitaria
             if (index % 2 == 0) {
                 if (index <= listaFilmes.size) {
                     val movieDb = listaFilmes[index]!!
@@ -211,7 +198,7 @@ class MainActivity : BaseActivity() {
         }
 
         setupViewPagerTabs()
-        img!!.visibility = View.GONE
+        img?.visibility = View.GONE
     }
 
 }

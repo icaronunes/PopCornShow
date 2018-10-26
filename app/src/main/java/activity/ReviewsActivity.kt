@@ -12,7 +12,7 @@ import android.view.View
 import android.widget.Toast
 import br.com.icaro.filme.R
 import com.google.android.gms.ads.AdRequest
-import domain.API
+import domain.Api
 import kotlinx.android.synthetic.main.activity_reviews.*
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -71,7 +71,7 @@ class ReviewsActivity : BaseActivity() {
     private fun getReviews() {
 
         if (id_filme.isNotEmpty() && false) {
-            val inscricao = API(context = this).reviewsFilme(id_filme)
+            val inscricao = Api(context = this).reviewsFilme(id_filme)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

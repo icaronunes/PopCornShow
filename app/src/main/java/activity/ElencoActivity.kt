@@ -11,7 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import br.com.icaro.filme.R
-import domain.API
+import domain.Api
 import domain.CastItem
 import kotlinx.android.synthetic.main.activity_elenco.*
 import kotlinx.android.synthetic.main.include_progress_horizontal.*
@@ -53,7 +53,7 @@ class ElencoActivity : BaseActivity() {
                 elenco_recycleview.adapter = ElencoAdapter(this@ElencoActivity, lista)
                 progress_horizontal.visibility = View.GONE
             } else {
-                val inscricaoMovie = API(context = this).getTvCreditosTemporada(id, season)
+                val inscricaoMovie = Api(context = this).getTvCreditosTemporada(id, season)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
@@ -106,7 +106,7 @@ class ElencoActivity : BaseActivity() {
                             elenco_recycleview.adapter = ElencoAdapter(this@ElencoActivity, lista)
                             progress_horizontal.visibility = View.GONE
                         } else {
-                            val inscricaoMovie = API(context = this).getTvCreditosTemporada(id, season)
+                            val inscricaoMovie = Api(context = this).getTvCreditosTemporada(id, season)
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe({

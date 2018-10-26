@@ -11,7 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import br.com.icaro.filme.R
-import domain.API
+import domain.Api
 import domain.CrewItem
 import kotlinx.android.synthetic.main.activity_crews.*
 import kotlinx.android.synthetic.main.include_progress_horizontal.*
@@ -50,7 +50,7 @@ class CrewsActivity : BaseActivity() {
                 crews_recyclerview?.adapter = CrewsAdapter(this@CrewsActivity, lista)
                 progress_horizontal.visibility = View.GONE
             } else {
-                val inscricaoMovie = API(context = this).getTvCreditosTemporada(id, season)
+                val inscricaoMovie = Api(context = this).getTvCreditosTemporada(id, season)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
@@ -91,7 +91,7 @@ class CrewsActivity : BaseActivity() {
                             crews_recyclerview?.adapter = CrewsAdapter(this@CrewsActivity, lista)
                             progress_horizontal.visibility = View.GONE
                         } else {
-                            val inscricaoMovie = API(context = this).getTvCreditosTemporada(id, season)
+                            val inscricaoMovie = Api(context = this).getTvCreditosTemporada(id, season)
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe({

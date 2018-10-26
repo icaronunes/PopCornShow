@@ -29,9 +29,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowId;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -57,7 +55,7 @@ import java.util.concurrent.TimeUnit;
 
 import br.com.icaro.filme.BuildConfig;
 import br.com.icaro.filme.R;
-import domain.API;
+import domain.Api;
 import domain.busca.MultiSearch;
 import oscar.OscarActivity;
 import pessoaspopulares.PersonPopularActivity;
@@ -259,7 +257,7 @@ public class BaseActivity extends AppCompatActivity {
 			}
 //            case R.id.list: {
 //                this.navigationView.setCheckedItem(id);
-//            } //Metoda da API não carrega filmes_main da list.
+//            } //Metoda da Api não carrega filmes_main da list.
 
 		}//??????????? Cade os outros?
 
@@ -438,7 +436,7 @@ public class BaseActivity extends AppCompatActivity {
 					public boolean onQueryTextChange(String newText) {
 						if (newText.isEmpty() || newText.length() < 2) return false;
 
-						Subscription inscricao = new API(BaseActivity.this)
+						Subscription inscricao = new Api(BaseActivity.this)
 								.procuraMulti(newText)
 								.distinctUntilChanged()
 								.debounce(1200, TimeUnit.MILLISECONDS)

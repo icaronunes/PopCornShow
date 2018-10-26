@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import br.com.icaro.filme.R
-import domain.API
+import domain.Api
 import fragment.FragmentBase
 import kotlinx.android.synthetic.main.fragment_list_filme.*
 import listaserie.adapter.ListaSeriesAdapter
@@ -78,8 +78,8 @@ class TvShowsFragment : FragmentBase() {
 
     fun getListaSereies() {
 
-        val inscricao = API(context!!)
-                .BuscaDeSeries(getListaTipo(), pagina = pagina, local = getIdiomaEscolhido(context!!))
+        val inscricao = Api(context!!)
+                .buscaDeSeries(getListaTipo(), pagina = pagina, local = getIdiomaEscolhido(context!!))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -102,13 +102,13 @@ class TvShowsFragment : FragmentBase() {
 
         when (abaEscolhida) {
 
-            R.string.air_date -> return API.TIPOBUSCA.SERIE.semana
+            R.string.air_date -> return Api.TIPOBUSCA.SERIE.semana
 
-            R.string.today -> return API.TIPOBUSCA.SERIE.hoje
+            R.string.today -> return Api.TIPOBUSCA.SERIE.hoje
 
-            R.string.populares -> return API.TIPOBUSCA.SERIE.popular
+            R.string.populares -> return Api.TIPOBUSCA.SERIE.popular
 
-            R.string.top_rated -> return API.TIPOBUSCA.SERIE.melhores
+            R.string.top_rated -> return Api.TIPOBUSCA.SERIE.melhores
         }
         return null
     }

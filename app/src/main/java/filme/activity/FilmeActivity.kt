@@ -4,8 +4,6 @@ import activity.BaseActivity
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.app.Dialog
-import android.app.SearchManager
-import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Build
@@ -15,18 +13,15 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v7.widget.SearchView
 import android.view.*
 import android.widget.Button
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import br.com.icaro.filme.R
-import br.com.icaro.filme.R.id.*
-import com.crashlytics.android.Crashlytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import domain.API
+import domain.Api
 import domain.FilmeDB
 import domain.FilmeService
 import domain.Movie
@@ -68,7 +63,7 @@ class FilmeActivity : BaseActivity() {
 
     private var subscriptions = CompositeSubscription()
     /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * ATTENTION: This was auto-generated to implement the App Indexing Api.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
 
@@ -102,7 +97,7 @@ class FilmeActivity : BaseActivity() {
 
     private fun getDados() {
 
-        val inscricaoMovie = API(context = this).loadMovieComVideo(id_filme)
+        val inscricaoMovie = Api(context = this).loadMovieComVideo(id_filme)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

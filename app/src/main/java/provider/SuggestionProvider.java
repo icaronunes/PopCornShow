@@ -14,7 +14,7 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import br.com.icaro.filme.R;
-import domain.API;
+import domain.Api;
 import domain.busca.MultiSearch;
 import domain.busca.ResultsItem;
 import rx.Observer;
@@ -43,7 +43,7 @@ public class SuggestionProvider extends ContentProvider {
 		String query1 = uri.getLastPathSegment().toLowerCase();
 		if (query1.equals("search_suggest_query")) return null;
 
-		Subscription inscricao = new API(this.getContext())
+		Subscription inscricao = new Api(this.getContext())
 				.procuraMulti(query1)
 				.doOnNext(multiSearch -> {
 					for (ResultsItem resultsItem : multiSearch.getResults()) {

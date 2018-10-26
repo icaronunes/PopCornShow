@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import br.com.icaro.filme.R
 import com.google.firebase.analytics.FirebaseAnalytics
-import domain.API
+import domain.Api
 import fragment.FragmentBase
 import kotlinx.android.synthetic.main.fragment_list_filme.*
 import listafilmes.adapter.ListaFilmesAdapter
@@ -77,7 +77,7 @@ class FilmesFragment : FragmentBase() {
 
     fun getListaFilmes() {
 
-        val inscricao = API(context!!).BuscaDeFilmes(getTipo(), pagina = pagina, local = getIdiomaEscolhido(context!!))
+        val inscricao = Api(context!!).buscaDeFilmes(getTipo(), pagina = pagina, local = getIdiomaEscolhido(context!!))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -113,18 +113,18 @@ class FilmesFragment : FragmentBase() {
 
         when (abaEscolhida) {
 
-            R.string.now_playing -> return API.TIPOBUSCA.FILME.agora
+            R.string.now_playing -> return Api.TIPOBUSCA.FILME.agora
 
             R.string.upcoming -> {
-                return API.TIPOBUSCA.FILME.chegando
+                return Api.TIPOBUSCA.FILME.chegando
             }
 
             R.string.populares -> {
-                return API.TIPOBUSCA.FILME.popular
+                return Api.TIPOBUSCA.FILME.popular
             }
 
             R.string.top_rated -> {
-                return API.TIPOBUSCA.FILME.melhores
+                return Api.TIPOBUSCA.FILME.melhores
             }
         }
         return null

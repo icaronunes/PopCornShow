@@ -343,7 +343,7 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     public void run() {
                         TmdbMovies movies = FilmeService.getTmdbMovies();
                         MovieDb movieDb = movies.getMovie(id, getLocale()
-                                        //.toLanguageTag() não funciona na API 14
+                                        //.toLanguageTag() não funciona na Api 14
                                         + ",en,null"
                                 , credits, releases, videos, similar, alternative_titles, images);
                        // Log.d(TAG, "run: "+movieDb.getTitle());

@@ -11,7 +11,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import br.com.icaro.filme.R
-import domain.API
+import domain.Api
 import kotlinx.android.synthetic.main.activity_lista.*
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -85,7 +85,7 @@ class OscarActivity : BaseActivity() {
 
     private fun getOscar() {
 
-        val teste = API(context = this).loadMovieComVideo(18)
+        val teste = Api(context = this).loadMovieComVideo(18)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -97,7 +97,7 @@ class OscarActivity : BaseActivity() {
                 })
 
         if (totalPagina >= pagina) {
-            val inscricao = API(context = this).getLista(id = list_id, pagina = pagina)
+            val inscricao = Api(context = this).getLista(id = list_id, pagina = pagina)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

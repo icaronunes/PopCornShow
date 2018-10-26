@@ -1,10 +1,9 @@
 package fragment
 
+import adapter.MovieMainAdapter
+import adapter.TvShowMainAdapter
 import android.content.Intent
-import android.content.SharedPreferences
-import android.os.AsyncTask
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -15,36 +14,27 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
-
-import com.crashlytics.android.Crashlytics
-
-import java.util.ArrayList
-
-import activity.SettingsActivity
-import adapter.MovieMainAdapter
-import adapter.TvShowMainAdapter
 import br.com.icaro.filme.R
+import br.com.icaro.filme.R.string.filmes_main
+import domain.Api
 import domain.FilmeService
-import info.movito.themoviedbapi.TmdbMovies
-import info.movito.themoviedbapi.TmdbTV
+import domain.ListaSeries
+import domain.movie.ListaFilmes
+import domain.movie.ListaItemFilme
 import info.movito.themoviedbapi.TvResultsPage
 import info.movito.themoviedbapi.model.core.MovieResultsPage
-import listafilmes.activity.FilmesActivity
-import listaserie.activity.TvShowsActivity
-import utils.Constantes
-import utils.UtilsApp
-
-import br.com.icaro.filme.R.string.filmes_main
-import kotlinx.android.synthetic.main.filmes_main.*
-import kotlinx.android.synthetic.main.tvshow_main.*
 import kotlinx.coroutines.experimental.Dispatchers
 import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
-import java.util.Arrays.asList
-import utils.UtilsApp.getLocale
+import listafilmes.activity.FilmesActivity
+import listaserie.activity.TvShowsActivity
+import utils.Constantes
+import utils.UtilsApp
 import utils.UtilsApp.getTimezone
 import utils.getIdiomaEscolhido
+import java.util.*
+import java.util.Arrays.asList
 
 
 /**
@@ -55,10 +45,6 @@ class MainFragment : Fragment() {
     private var buttonFilme: List<String>? = null
     private var buttonTvshow: List<String>? = null
     private var tipo: Int = 0
-    private var popularTvshow: TvResultsPage? = null
-    private var toDay: TvResultsPage? = null
-    private var popularMovie: MovieResultsPage? = null
-    private var cinema: MovieResultsPage? = null
 
     private lateinit var tvshow_popular_main: RecyclerView
     private lateinit var recycle_tvshowtoday_main: RecyclerView
@@ -115,7 +101,6 @@ class MainFragment : Fragment() {
                         intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.upcoming)
                         startActivity(intent)
                     }
-
 
                     2 -> {
 
@@ -215,11 +200,14 @@ class MainFragment : Fragment() {
         if (UtilsApp.isNetWorkAvailable(context!!)) {
             try {
                 GlobalScope.launch(Dispatchers.Main) {
-                    val popular = async(Dispatchers.Default) { FilmeService.getTmdbMovies()
-                            .getPopularMovies(getIdiomaEscolhido(context), 1) }
+                    val popular = async(Dispatchers.Default) {
+                        Api(context!!).getMoviePopular()
+                    }
                     setScrollMoviePopular(popular.await())
-                    val upComing = async(Dispatchers.Default) { FilmeService.getTmdbMovies()
-                            .getUpcoming(getIdiomaEscolhido(context), 1) }
+
+                    val upComing = async(Dispatchers.Default) {
+                        Api(context!!).getUpcoming()
+                    }
                     setScrollMovieOntheAir(upComing.await())
                 }
             } catch (ex: java.lang.Exception) {
@@ -249,11 +237,13 @@ class MainFragment : Fragment() {
         if (UtilsApp.isNetWorkAvailable(context!!)) {
             try {
                 GlobalScope.launch(Dispatchers.Main) {
-                    val popular = async(Dispatchers.Default) { FilmeService.getTmdbTvShow()
-                            .getPopular(getIdiomaEscolhido(context), 1) }
+                    val popular = async(Dispatchers.Default) {
+                        Api(context!!).getPopularTv()
+                    }
                     setScrollTvShowPopulares(popular.await())
-                    val airTv = async(Dispatchers.Default) { FilmeService.getTmdbTvShow()
-                            .getAiringToday(getIdiomaEscolhido(context), 1, getTimezone()) }
+                    val airTv = async(Dispatchers.Default) {
+                        Api(context!!).getAiringToday()
+                    }
                     setScrollTvShowToDay(airTv.await())
                 }
             } catch (ex: java.lang.Exception) {
@@ -266,99 +256,22 @@ class MainFragment : Fragment() {
         return view
     }
 
-    private fun setScrollTvShowToDay(toDay: TvResultsPage) {
+    private fun setScrollTvShowToDay(toDay: ListaSeries) {
         recycle_tvshowtoday_main.adapter = TvShowMainAdapter(activity, toDay)
     }
 
-    private fun setScrollMoviePopular(popular: MovieResultsPage) {
-        recycle_movieontheair_main.adapter = MovieMainAdapter(activity, popular)
-    }
-
-    private fun setScrollMovieOntheAir(airDay: MovieResultsPage) {
-        recycle_movie_popular_main.adapter = MovieMainAdapter(activity, airDay)
-    }
-
-    private fun setScrollTvShowPopulares(popularTvShow: TvResultsPage) {
+    private fun setScrollTvShowPopulares(popularTvShow: ListaSeries) {
         tvshow_popular_main.adapter = TvShowMainAdapter(activity, popularTvShow)
     }
 
-
-    private inner class MainAsync : AsyncTask<Void, Void, Void>() {
-
-        override fun doInBackground(vararg voids: Void): Void? {
-
-            if (isDetached) {
-                return null
-            }
-
-            var idioma_padrao = false
-            try {
-
-                val sharedPref = PreferenceManager.getDefaultSharedPreferences(activity)
-                idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true)
-            } catch (e: Exception) {
-                Crashlytics.logException(e)
-            }
-
-            if (idioma_padrao) {
-                try {
-                    if (UtilsApp.isNetWorkAvailable(activity!!)) {
-                        val tmdbTv = FilmeService.getTmdbTvShow()
-                        val tmdbMovies = FilmeService.getTmdbMovies()
-                        popularTvshow = tmdbTv.getPopular(getLocale(), 1)
-                        toDay = tmdbTv.getAiringToday(getLocale(), 1, getTimezone())
-                        popularMovie = tmdbMovies.getPopularMovies(getLocale(), 1)
-                        cinema = tmdbMovies.getUpcoming(getLocale(), 1)
-                    }
-                } catch (e: Exception) {
-                    Crashlytics.logException(e)
-                    if (activity != null)
-                        activity!!.runOnUiThread { Toast.makeText(activity, R.string.ops, Toast.LENGTH_SHORT).show() }
-                }
-
-            } else {
-                try { // É preciso? o tmdb não retorna 'en' se não houver o idioma?
-                    if (UtilsApp.isNetWorkAvailable(activity!!)) {
-                        val tmdbTv = FilmeService.getTmdbTvShow()
-                        val tmdbMovies = FilmeService.getTmdbMovies()
-                        popularTvshow = tmdbTv.getPopular("en", 1)
-                        toDay = tmdbTv.getAiringToday("en", 1, getTimezone())
-                        popularMovie = tmdbMovies.getPopularMovies("en", 1)
-                        cinema = tmdbMovies.getUpcoming("en", 1)
-                    }
-                } catch (e: Exception) {
-                    Crashlytics.logException(e)
-                    if (activity != null)
-                        activity!!.runOnUiThread { Toast.makeText(activity, R.string.ops, Toast.LENGTH_SHORT).show() }
-
-                }
-
-            }
-            return null
-        }
-
-        override fun onPostExecute(aVoid: Void?) {
-            super.onPostExecute(aVoid)
-            try {
-                if (UtilsApp.isNetWorkAvailable(activity!!) && isAdded) {
-                    if (tipo == R.string.tvshow_main) {
-                        //setScrollTvShowPopulares()
-                        // setScrollTvShowToDay()
-                    }
-                    if (tipo == R.string.filmes_main) {
-                        //setScrollMoviePopular()
-                        //setScrollMovieOntheAir()
-                    }
-                }
-            } catch (e: Exception) {
-                Crashlytics.logException(e)
-                if (activity != null)
-                    Toast.makeText(activity, R.string.ops, Toast.LENGTH_SHORT).show()
-            }
-
-        }
-
+    private fun setScrollMoviePopular(popular: ListaFilmes) {
+        recycle_movieontheair_main.adapter = MovieMainAdapter(activity, popular)
     }
+
+    private fun setScrollMovieOntheAir(airDay: ListaFilmes) {
+        recycle_movie_popular_main.adapter = MovieMainAdapter(activity, airDay)
+    }
+
 
     companion object {
 

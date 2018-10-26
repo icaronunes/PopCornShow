@@ -15,7 +15,7 @@ import android.widget.Toast
 import br.com.icaro.filme.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import domain.API
+import domain.Api
 import domain.TvSeasons
 import domain.UserTvshow
 import domain.tvshow.Tvshow
@@ -141,7 +141,7 @@ class SeguindoActivity : BaseActivity() {
 
         userTvshowFire?.forEachIndexed { indexSerie, userTvshow ->
             var serie: Tvshow? = null
-            val subscriber = API(this)
+            val subscriber = Api(this)
                     .getTvShowLite(userTvshow.id)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -176,7 +176,7 @@ class SeguindoActivity : BaseActivity() {
     fun atualizarRealDate(indexSerie: Int, indexSeason: Int, serie: Tvshow?, userTvshow: UserTvshow) {
 
         var tvseasonRetorno: TvSeasons? = null
-        val subscriber = API(this)
+        val subscriber = Api(this)
                 .getTvSeasons(userTvshow.id, userTvshow.numberOfSeasons)
                 .debounce(5000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())

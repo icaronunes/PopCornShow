@@ -28,7 +28,7 @@ import android.widget.TextView
 import android.widget.Toast
 import br.com.icaro.filme.R
 import com.squareup.picasso.Picasso
-import domain.API
+import domain.Api
 import domain.Imdb
 import domain.Movie
 import domain.colecao.PartsItem
@@ -162,7 +162,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
         icon_collection.setOnClickListener({
             if (movieDb?.belongsToCollection != null) {
-                val inscricaoMovie = API(context = context!!).getColecao(movieDb?.belongsToCollection?.id!!)
+                val inscricaoMovie = Api(context = context!!).getColecao(movieDb?.belongsToCollection?.id!!)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
@@ -415,7 +415,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
     private fun getImdb() {
         if (movieDb?.imdbId != null) {
-            val inscircaoImdb = API(context!!).getOmdbpi(movieDb?.imdbId)
+            val inscircaoImdb = Api(context!!).getOmdbpi(movieDb?.imdbId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

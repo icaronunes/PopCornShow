@@ -10,7 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import br.com.icaro.filme.R
-import domain.API
+import domain.Api
 import domain.person.Person
 import kotlinx.android.synthetic.main.activity_person.*
 import kotlinx.android.synthetic.main.include_progress_horizontal.*
@@ -93,7 +93,7 @@ class PersonActivity : BaseActivity() {
     }
 
     private fun getDados() {
-        val inscricao = API(context = this).personDetalhes(id_person)
+        val inscricao = Api(context = this).personDetalhes(id_person)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

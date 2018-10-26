@@ -6,14 +6,11 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.app.Dialog
-import android.app.SearchManager
-import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
-import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.*
 import android.widget.Button
@@ -94,7 +91,7 @@ class TvShowActivity : BaseActivity() {
 
     private fun getDadosTvshow() {
 
-        val subscriber = API(this)
+        val subscriber = Api(this)
                 .loadTvshowComVideo(id_tvshow)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -505,7 +502,7 @@ class TvShowActivity : BaseActivity() {
 
         series?.seasons?.forEachIndexed { index, seasonsItem ->
 
-            val subscriber = API(this)
+            val subscriber = Api(this)
                     .getTvSeasons(id_tvshow, seasonsItem?.seasonNumber!!)
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.immediate())

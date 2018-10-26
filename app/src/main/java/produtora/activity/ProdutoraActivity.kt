@@ -13,7 +13,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import br.com.icaro.filme.R
 import com.squareup.picasso.Picasso
-import domain.API
+import domain.Api
 import domain.Company
 import kotlinx.android.synthetic.main.produtora_layout.*
 import produtora.adapter.ProdutoraAdapter
@@ -58,7 +58,7 @@ class ProdutoraActivity : BaseActivity() {
     }
 
     private fun getDadosCompany() {
-            val inscricao = API(this).getCompany(id_produtora)
+            val inscricao = Api(this).getCompany(id_produtora)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
@@ -76,7 +76,7 @@ class ProdutoraActivity : BaseActivity() {
     private fun getCompanyFilmes() {
 
         if (pagina <= totalPagina) {
-            val inscricao = API(this).getCompanyFilmes(id_produtora, pagina)
+            val inscricao = Api(this).getCompanyFilmes(id_produtora, pagina)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

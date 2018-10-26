@@ -31,7 +31,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
-import domain.API
+import domain.Api
 import domain.Imdb
 import domain.UserTvshow
 import domain.tvshow.SeasonsItem
@@ -281,7 +281,7 @@ class TvShowFragment : Fragment() {
 //                    Toast.makeText(activity, R.string.ops, Toast.LENGTH_SHORT).show()
 //                }
 //            }
-//        } TODO - Retornar quando API Uflixit voltar a funcionar com Tvshow
+//        } TODO - Retornar quando Api Uflixit voltar a funcionar com Tvshow
 
     }
 
@@ -861,7 +861,7 @@ class TvShowFragment : Fragment() {
     fun getImdb(): Imdb? {
 
         if (series != null) {
-            val inscricaoImdb = API(context!!).getOmdbpi(series?.external_ids?.imdbId)
+            val inscricaoImdb = Api(context!!).getOmdbpi(series?.external_ids?.imdbId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : Observer<Imdb> {

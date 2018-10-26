@@ -8,6 +8,7 @@ import domain.movie.Lista
 import domain.movie.ListaFilmes
 import domain.person.Person
 import domain.tvshow.Tvshow
+import info.movito.themoviedbapi.TvResultsPage
 import okhttp3.*
 import rx.Observable
 import utils.Config
@@ -17,7 +18,7 @@ import java.util.*
 import kotlin.coroutines.experimental.suspendCoroutine
 
 
-class API(context: Context) {
+class Api(val context: Context) {
 
     private var timeZone: String = "US"
     val baseUrl3 = "https://api.themoviedb.org/3/"
@@ -67,7 +68,7 @@ class API(context: Context) {
         }
     }
 
-    fun getLista(id: String, pagina: Int = 1): Observable<Lista> {
+    fun getLista(id: String, pagina: Int = 1): Observable<ListaFilmes> {
         return rx.Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
@@ -78,7 +79,7 @@ class API(context: Context) {
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
                 val json = response.body()?.string()
-                val lista = gson.fromJson(json, Lista::class.java)
+                val lista = gson.fromJson(json, ListaFilmes::class.java)
                 subscriber.onNext(lista)
                 subscriber.onCompleted()
             } else {
@@ -92,7 +93,7 @@ class API(context: Context) {
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
-                    .url("http://www.omdbapi.com/?i=$id&tomatoes=true&r=json&apikey=${Config.OMDBAPI_API_KEY}") //API de alguem)
+                    .url("http://www.omdbapi.com/?i=$id&tomatoes=true&r=json&apikey=${Config.OMDBAPI_API_KEY}") //Api de alguem)
                     .get()
                     .build()
             val response = client.newCall(request).execute()
@@ -178,7 +179,7 @@ class API(context: Context) {
     }
 
 
-    fun BuscaDeFilmes(tipoDeBusca: String? = TIPOBUSCA.FILME.agora, pagina: Int = 1, local: String = "US"): Observable<ListaFilmes> {
+    fun buscaDeFilmes(tipoDeBusca: String? = TIPOBUSCA.FILME.agora, pagina: Int = 1, local: String = "US"): Observable<ListaFilmes> {
         // tipos de buscas - "now_playing", "upcoming", "top_rated", "popular" - Mude o tipo, para mudar busca
         return rx.Observable.create { subscriber ->
             val client = OkHttpClient()
@@ -210,7 +211,7 @@ class API(context: Context) {
         }
     }
 
-    fun BuscaDeSeries(tipoDeBusca: String? = TIPOBUSCA.SERIE.popular, pagina: Int = 1, local: String = "US"): Observable<ListaSeries> {
+    fun buscaDeSeries(tipoDeBusca: String? = TIPOBUSCA.SERIE.popular, pagina: Int = 1, local: String = "US"): Observable<ListaSeries> {
         // tipos de buscas - "now_playing", "upcoming", "top_rated", "popular" - Mude o tipo, para mudar busca
         return rx.Observable.create { subscriber ->
             val client = OkHttpClient()
@@ -245,7 +246,6 @@ class API(context: Context) {
             if (response.isSuccessful) {
                 val json = response.body()?.string()
                 val lista = gson.fromJson(json, Movie::class.java)
-                lista
                 subscriber.onNext(lista)
                 subscriber.onCompleted()
             } else {
@@ -461,7 +461,6 @@ class API(context: Context) {
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}person/$id?api_key=${Config.TMDB_API_KEY}&language=en-US+" + "&append_to_response=combined_credits,images")
-                    //,tagged_images,external_ids")
                     .get()
                     .build()
             val response = client.newCall(request).execute()
@@ -520,7 +519,7 @@ class API(context: Context) {
                 }
     }
 
-    suspend fun getNowPlayingMovies(context: Context): ListaFilmes {
+    suspend fun getNowPlayingMovies(): ListaFilmes {
         return suspendCoroutine { continuation ->
             val client = OkHttpClient()
             val idioma = getIdiomaEscolhido(context)
@@ -547,12 +546,61 @@ class API(context: Context) {
         }
     }
 
-    suspend fun getAiringToday(context: Context): ListaSeries {
+    suspend fun getMoviePopular(): ListaFilmes {
         return suspendCoroutine { continuation ->
             val client = OkHttpClient()
-            val idioma = getIdiomaEscolhido(context)
             val request = Request.Builder()
-                    .url("${baseUrl3}tv/airing_today?api_key=${Config.TMDB_API_KEY}&language=$idioma&page=1")
+                    .url("${baseUrl3}movie/popular?api_key=${Config.TMDB_API_KEY}&language=${getIdiomaEscolhido(context)}&page=1")
+                    .get()
+                    .build()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    continuation.resumeWithException(Throwable(e.message))
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val json = response.body()?.string()
+                    try {
+                        val listaTv = Gson().fromJson(json, ListaFilmes::class.java)
+                        continuation.resume(listaTv)
+                    } catch (ex: Exception) {
+                        continuation.resumeWithException(Throwable(ex.message))
+                    }
+                }
+            })
+        }
+    }
+
+    suspend fun getUpcoming(): ListaFilmes {
+        return suspendCoroutine { continuation ->
+            val client = OkHttpClient()
+            val request = Request.Builder()
+                    .url("${baseUrl3}movie/upcoming?api_key=${Config.TMDB_API_KEY}&language=${getIdiomaEscolhido(context)}&page=1")
+                    .get()
+                    .build()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    continuation.resumeWithException(Throwable(e.message))
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val json = response.body()?.string()
+                    try {
+                        val listaTv = Gson().fromJson(json, ListaFilmes::class.java)
+                        continuation.resume(listaTv)
+                    } catch (ex: Exception) {
+                        continuation.resumeWithException(Throwable(ex.message))
+                    }
+                }
+            })
+        }
+    }
+
+    suspend fun getAiringToday(): ListaSeries {
+        return suspendCoroutine { continuation ->
+            val client = OkHttpClient()
+            val request = Request.Builder()
+                    .url("${baseUrl3}tv/airing_today?api_key=${Config.TMDB_API_KEY}&language=${getIdiomaEscolhido(context)}&page=1")
                     .get()
                     .build()
             client.newCall(request).enqueue(object : Callback {
@@ -572,5 +620,32 @@ class API(context: Context) {
             })
         }
     }
+
+
+    suspend fun getPopularTv(): ListaSeries {
+        return suspendCoroutine { continuation ->
+            val client = OkHttpClient()
+            val request = Request.Builder()
+                    .url("${baseUrl3}tv/popular?api_key=${Config.TMDB_API_KEY}&language=${getIdiomaEscolhido(context)}&page=1")
+                    .get()
+                    .build()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    continuation.resumeWithException(Throwable(e.message))
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val json = response.body()?.string()
+                    try {
+                        val listaTv = Gson().fromJson(json, ListaSeries::class.java)
+                        continuation.resume(listaTv)
+                    } catch (ex: Exception) {
+                        continuation.resumeWithException(Throwable(ex.message))
+                    }
+                }
+            })
+        }
+    }
+
 
 }
