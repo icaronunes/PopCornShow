@@ -1,7 +1,6 @@
 package domain
 
 import android.content.Context
-import android.util.Log
 import com.google.gson.Gson
 import domain.busca.MultiSearch
 import domain.colecao.Colecao
@@ -500,16 +499,15 @@ class API(context: Context) {
 
     fun procuraMulti(query: String?): Observable<MultiSearch> {
         return rx.Observable
-                .create(Observable.OnSubscribe { subscriber ->
+                .create { subscriber ->
                     if (query.equals("search_suggest_query")) Throwable("")
                     val client = OkHttpClient()
                     val gson = Gson()
                     val request = Request.Builder()
-                            .url("${baseUrl3}search/multi?api_key=${Config.TMDB_API_KEY}&language=${timeZone}&query=${query}&page=1&include_adult=false")
+                            .url("${baseUrl3}search/multi?api_key=${Config.TMDB_API_KEY}&language=$timeZone&query=$query&page=1&include_adult=false")
                             .get()
                             .build()
                     val response = client.newCall(request).execute()
-                    Log.d(this.toString(), "entrou... - $query")
                     if (response.isSuccessful) {
                         val json = response.body()?.string()
                         val multi = gson.fromJson(json, MultiSearch::class.java)
@@ -519,14 +517,15 @@ class API(context: Context) {
                         subscriber.onError(Throwable(response.message()))
                     }
 
-                })
+                }
     }
 
-    suspend fun getNowPlayingMovies(): ListaFilmes {
+    suspend fun getNowPlayingMovies(context: Context): ListaFilmes {
         return suspendCoroutine { continuation ->
             val client = OkHttpClient()
+            val idioma = getIdiomaEscolhido(context)
             val request = Request.Builder()
-                    .url("${baseUrl3}movie/now_playing?api_key=${Config.TMDB_API_KEY}&language=$timeZone&page=1")
+                    .url("${baseUrl3}movie/now_playing?api_key=${Config.TMDB_API_KEY}&language=$idioma&page=1")
                     .get()
                     .build()
             client.newCall(request).enqueue(object : Callback {
@@ -548,11 +547,12 @@ class API(context: Context) {
         }
     }
 
-    suspend fun getAiringToday(): ListaSeries {
+    suspend fun getAiringToday(context: Context): ListaSeries {
         return suspendCoroutine { continuation ->
             val client = OkHttpClient()
+            val idioma = getIdiomaEscolhido(context)
             val request = Request.Builder()
-                    .url("${baseUrl3}tv/airing_today?api_key=${Config.TMDB_API_KEY}&language=$timeZone&page=1")
+                    .url("${baseUrl3}tv/airing_today?api_key=${Config.TMDB_API_KEY}&language=$idioma&page=1")
                     .get()
                     .build()
             client.newCall(request).enqueue(object : Callback {

@@ -69,7 +69,7 @@ class ListaGenericaActivity : BaseActivity() {
     }
 
 
-    fun getLista() {
+    private fun getLista() {
         if (totalPagina >= pagina) {
             val inscricao = API(context = this).getLista(id = list_id, pagina = pagina)
                     .subscribeOn(Schedulers.io())

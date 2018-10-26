@@ -107,49 +107,46 @@ public class MainFragment extends Fragment {
             button.setText(buttonFilme.get(i));
 
             final int finalI = i;
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    switch (finalI) {
+            button.setOnClickListener(view1 -> {
+                switch (finalI) {
 
-                        case 0: {
+                    case 0: {
 
-                            Intent intent = new Intent(getActivity(), FilmesActivity.class);
-                            intent.putExtra(Constantes.INSTANCE.getABA(), R.string.now_playing);
-                            intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.now_playing);
-                            startActivity(intent);
-                            break;
-                        }
-
-                        case 1: {
-
-                            Intent intent = new Intent(getActivity(), FilmesActivity.class);
-                            intent.putExtra(Constantes.INSTANCE.getABA(), R.string.upcoming);
-                            intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.upcoming);
-                            startActivity(intent);
-                            break;
-                        }
-
-
-                        case 2: {
-
-                            Intent intent = new Intent(getActivity(), FilmesActivity.class);
-                            intent.putExtra(Constantes.INSTANCE.getABA(), R.string.populares);
-                            intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.populares);
-                            startActivity(intent);
-                            break;
-                        }
-
-                        case 3: {
-
-                            Intent intent = new Intent(getActivity(), FilmesActivity.class);
-                            intent.putExtra(Constantes.INSTANCE.getABA(), R.string.top_rated);
-                            intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.top_rated);
-                            startActivity(intent);
-                            break;
-                        }
-
+                        Intent intent = new Intent(getActivity(), FilmesActivity.class);
+                        intent.putExtra(Constantes.INSTANCE.getABA(), R.string.now_playing);
+                        intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.now_playing);
+                        startActivity(intent);
+                        break;
                     }
+
+                    case 1: {
+
+                        Intent intent = new Intent(getActivity(), FilmesActivity.class);
+                        intent.putExtra(Constantes.INSTANCE.getABA(), R.string.upcoming);
+                        intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.upcoming);
+                        startActivity(intent);
+                        break;
+                    }
+
+
+                    case 2: {
+
+                        Intent intent = new Intent(getActivity(), FilmesActivity.class);
+                        intent.putExtra(Constantes.INSTANCE.getABA(), R.string.populares);
+                        intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.populares);
+                        startActivity(intent);
+                        break;
+                    }
+
+                    case 3: {
+
+                        Intent intent = new Intent(getActivity(), FilmesActivity.class);
+                        intent.putExtra(Constantes.INSTANCE.getABA(), R.string.top_rated);
+                        intent.putExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.top_rated);
+                        startActivity(intent);
+                        break;
+                    }
+
                 }
             });
 
@@ -214,7 +211,7 @@ public class MainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Log.d(TAG, "onCreateView");
+
         switch (tipo) {
 
             case filmes_main: {

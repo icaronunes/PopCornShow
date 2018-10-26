@@ -372,7 +372,6 @@ public class BaseActivity extends AppCompatActivity {
 		for (int i = 0; i <= 9; i++) {
 			map.put("id" + i, mFirebaseRemoteConfig.getString("id" + i));
 			map.put("title" + i, mFirebaseRemoteConfig.getString("title" + i));
-			// Log.d("Log", "numero "+i);
 		}
 		return map;
 	}
@@ -395,7 +394,7 @@ public class BaseActivity extends AppCompatActivity {
 					View view = getLayoutInflater().inflate(R.layout.layout_search_multi, null);
 					dialog = new AlertDialog.Builder(BaseActivity.this, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen)
 							.setView(view)
-
+							.setCancelable(true)
 							.create();
 				}
 
@@ -440,7 +439,6 @@ public class BaseActivity extends AppCompatActivity {
 						if (newText.isEmpty() || newText.length() < 2) return false;
 
 						Subscription inscricao = new API(BaseActivity.this)
-
 								.procuraMulti(newText)
 								.distinctUntilChanged()
 								.debounce(1200, TimeUnit.MILLISECONDS)
@@ -479,9 +477,7 @@ public class BaseActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
 		getMenuInflater().inflate(R.menu.menu, menu);//
-
 		return true;
 	}
 
@@ -527,12 +523,7 @@ public class BaseActivity extends AppCompatActivity {
 	}
 
 	protected View.OnClickListener onClickListenerLogar() {
-		return new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				startActivity(new Intent(BaseActivity.this, LoginActivity.class));
-			}
-		};
+		return view -> startActivity(new Intent(BaseActivity.this, LoginActivity.class));
 	}
 
 	//Fecha Menu Lateral
@@ -544,141 +535,107 @@ public class BaseActivity extends AppCompatActivity {
 	}
 
 	protected View.OnClickListener onClickListenerlogado() {
-		return new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (user != null) {
-					final android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog
+		return view -> {
+			if (user != null) {
+				final AlertDialog alertDialog = new AlertDialog
+						.Builder(BaseActivity.this)
+						.setView(R.layout.user)
+						.create();
+				alertDialog.show();
+
+				ImageView user_img = (ImageView) alertDialog.findViewById(R.id.userImage);
+				Picasso.get()
+						.load(user.getPhotoUrl())
+						.placeholder(R.drawable.user)
+						.into(user_img);
+
+				TextView email = (TextView) alertDialog.findViewById(R.id.text_user_email);
+				email.setText(user.getEmail() != null ? user.getEmail() : "N/A");
+				TextView uid = (TextView) alertDialog.findViewById(R.id.text_user_uid);
+				uid.setText(user.getUid());
+				TextView login = (TextView) alertDialog.findViewById(R.id.text_user_login);
+				login.setText(user.getDisplayName() != null ? user.getDisplayName() : "N/A");
+				Button reset = (Button) alertDialog.findViewById(R.id.bt_reset);
+				Button desativar = (Button) alertDialog.findViewById(R.id.bt_desativar);
+				Button vincular_login = (Button) alertDialog.findViewById(R.id.vincular_login);
+
+				vincular_login.setOnClickListener(it -> startActivity(new Intent(BaseActivity.this, VincularLoginActivity.class)));
+
+				desativar.setOnClickListener(it -> {
+
+					AlertDialog dialog = new AlertDialog.Builder(BaseActivity.this)
+							.setTitle(getResources().getString(R.string.deletar_conta))
+							.setMessage(getResources().getString(R.string.deletar_conta_txt))
+							.setNegativeButton(getResources().getString(R.string.cancel), null)
+							.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialogInterface, int i) {
+									user.delete()
+											.addOnCompleteListener(task -> {
+												if (task.isSuccessful()) {
+													Toast.makeText(BaseActivity.this, getResources().getString(R.string.conta_deletada), Toast.LENGTH_LONG)
+															.show();
+													FirebaseAuth.getInstance().signOut();
+													finish();
+													startActivity(new Intent(BaseActivity.this, LoginActivity.class));
+												} else {
+													Toast.makeText(BaseActivity.this, getResources().getString(R.string.falha_delete_conta), Toast.LENGTH_LONG)
+															.show();
+												}
+											});
+								}
+
+							}).create();
+					dialog.show();
+				});
+
+				reset.setOnClickListener(it -> {
+					final AlertDialog alertDialogReset = new AlertDialog
 							.Builder(BaseActivity.this)
-							.setView(R.layout.user)
+							.setView(R.layout.reset_senha)
 							.create();
-					alertDialog.show();
+					alertDialogReset.show();
 
-					ImageView user_img = (ImageView) alertDialog.findViewById(R.id.userImage);
-					Picasso.get()
-							.load(user.getPhotoUrl())
-							.placeholder(R.drawable.user)
-							.into(user_img);
+					final TextInputLayout senha = (TextInputLayout) alertDialogReset.findViewById(R.id.pass);
+					final TextInputLayout repetir_senha = (TextInputLayout) alertDialogReset.findViewById(R.id.repetir_pass);
 
-					TextView email = (TextView) alertDialog.findViewById(R.id.text_user_email);
-					email.setText(user.getEmail() != null ? user.getEmail() : "N/A");
-					TextView uid = (TextView) alertDialog.findViewById(R.id.text_user_uid);
-					uid.setText(user.getUid());
-					TextView login = (TextView) alertDialog.findViewById(R.id.text_user_login);
-					login.setText(user.getDisplayName() != null ? user.getDisplayName() : "N/A");
-					Button reset = (Button) alertDialog.findViewById(R.id.bt_reset);
-					Button desativar = (Button) alertDialog.findViewById(R.id.bt_desativar);
-					Button vincular_login = (Button) alertDialog.findViewById(R.id.vincular_login);
+					Button cancel = (Button) alertDialogReset.findViewById(R.id.bt_cancel);
 
-					vincular_login.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View view) {
-							startActivity(new Intent(BaseActivity.this, VincularLoginActivity.class));
-						}
-					});
+					cancel.setOnClickListener(cancel_it -> alertDialogReset.dismiss());
 
-					desativar.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View view) {
+					Button ok = (Button) alertDialogReset.findViewById(R.id.bt_ok);
+					ok.setOnClickListener(ok_it -> {
+						String senhaString = senha.getEditText().getText().toString();
+						String repetirSenha = repetir_senha.getEditText().getText().toString();
 
-							AlertDialog dialog = new AlertDialog.Builder(BaseActivity.this)
-									.setTitle(getResources().getString(R.string.deletar_conta))
-									.setMessage(getResources().getString(R.string.deletar_conta_txt))
-									.setNegativeButton(getResources().getString(R.string.cancel), null)
-									.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-										@Override
-										public void onClick(DialogInterface dialogInterface, int i) {
-											user.delete()
-													.addOnCompleteListener(new OnCompleteListener<Void>() {
-														@Override
-														public void onComplete(@NonNull Task<Void> task) {
-															if (task.isSuccessful()) {
-																Toast.
-																		makeText(BaseActivity.this, getResources().getString(R.string.conta_deletada), Toast.LENGTH_LONG)
-																		.show();
-																FirebaseAuth.getInstance().signOut();
-																finish();
-																startActivity(new Intent(BaseActivity.this, LoginActivity.class));
+						boolean tamanhoSenha = validatePassword(repetirSenha);
+						boolean tamanhoRetiriSenha = validatePassword(senhaString);
 
-															} else {
-																Toast.
-																		makeText(BaseActivity.this, getResources().getString(R.string.falha_delete_conta), Toast.LENGTH_LONG)
-																		.show();
-															}
-														}
-													});
+						if (tamanhoSenha && tamanhoRetiriSenha
+								&& senhaString.equals(repetirSenha)) {
+							user.updatePassword(senhaString)
+									.addOnCompleteListener(task -> {
+										if (task.isSuccessful()) {
+											alertDialogReset.dismiss();
+											Toast.makeText(BaseActivity.this,
+															getResources().getString(R.string.reset_senha_ok), Toast.LENGTH_LONG).show();
+										} else {
+											Toast.makeText(BaseActivity.this,
+															getResources().getString(R.string.falha_reset_senha), Toast.LENGTH_LONG).show();
 										}
-
-									}).create();
-							dialog.show();
+									});
+						} else {
+							// Log.d(TAG, "Não entrou");
 						}
 					});
+				});
 
-					reset.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View view) {
-							final android.support.v7.app.AlertDialog alertDialogReset = new android.support.v7.app.AlertDialog
-									.Builder(BaseActivity.this)
-									.setView(R.layout.reset_senha)
-									.create();
-							alertDialogReset.show();
-
-							final TextInputLayout senha = (TextInputLayout) alertDialogReset.findViewById(R.id.pass);
-							final TextInputLayout repetir_senha = (TextInputLayout) alertDialogReset.findViewById(R.id.repetir_pass);
-
-							Button cancel = (Button) alertDialogReset.findViewById(R.id.bt_cancel);
-							cancel.setOnClickListener(new View.OnClickListener() {
-								@Override
-								public void onClick(View view) {
-									alertDialogReset.dismiss();
-								}
-							});
-
-							Button ok = (Button) alertDialogReset.findViewById(R.id.bt_ok);
-							ok.setOnClickListener(new View.OnClickListener() {
-								@Override
-								public void onClick(View view) {
-									String senhaString = senha.getEditText().getText().toString();
-									String repetirSenha = repetir_senha.getEditText().getText().toString();
-
-									boolean tamanhoSenha = validatePassword(repetirSenha);
-									boolean tamanhoRetiriSenha = validatePassword(senhaString);
-
-									if (tamanhoSenha && tamanhoRetiriSenha
-											&& senhaString.equals(repetirSenha)) {
-										user.updatePassword(senhaString)
-												.addOnCompleteListener(new OnCompleteListener<Void>() {
-													@Override
-													public void onComplete(@NonNull Task<Void> task) {
-														if (task.isSuccessful()) {
-															// Log.d(TAG, senha.getEditText().getText().toString());
-															// Log.d(TAG, repetir_senha.getEditText().getText().toString());
-															alertDialogReset.dismiss();
-															Toast.
-																	makeText(BaseActivity.this,
-																			getResources().getString(R.string.reset_senha_ok), Toast.LENGTH_LONG).show();
-														} else {
-															Toast.
-																	makeText(BaseActivity.this,
-																			getResources().getString(R.string.falha_reset_senha), Toast.LENGTH_LONG).show();
-														}
-													}
-												});
-									} else {
-										// Log.d(TAG, "Não entrou");
-									}
-								}
-							});
-						}
-					});
-
-					if (user.isAnonymous()) {
-						reset.setVisibility(View.GONE);
-						desativar.setVisibility(View.GONE);
-						vincular_login.setVisibility(View.VISIBLE);
-					}
-
+				if (user.isAnonymous()) {
+					reset.setVisibility(View.GONE);
+					desativar.setVisibility(View.GONE);
+					vincular_login.setVisibility(View.VISIBLE);
 				}
+
 			}
 		};
 	}
@@ -700,7 +657,6 @@ public class BaseActivity extends AppCompatActivity {
 
 	public interface SalvarImageShare {
 		void retornaFile(File file);
-
 		void RetornoFalha();
 	}
 }

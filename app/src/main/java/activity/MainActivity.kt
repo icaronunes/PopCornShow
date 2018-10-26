@@ -28,6 +28,7 @@ import fragment.ViewPageMainTopFragment
 import info.movito.themoviedbapi.TvResultsPage
 import info.movito.themoviedbapi.model.core.MovieResultsPage
 import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.android.HandlerContext
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -38,7 +39,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
- class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity() {
 
     private var viewPager_main: ViewPager? = null
     private var viewpage_top_main: ViewPager? = null
@@ -57,14 +58,11 @@ import java.util.*
         supportActionBar!!.setTitle(" ")
 
 
-        viewPager_main = findViewById<View>(R.id.viewPager_main) as ViewPager
-        viewpage_top_main = findViewById<View>(R.id.viewpage_top_main) as ViewPager
-        viewpage_top_main!!.offscreenPageLimit = 3
-
         img = findViewById(R.id.activity_main_img)
 
         if (UtilsApp.isNetWorkAvailable(this)) {
             getTopoLista(UI)
+            setupViewBotton()
         } else {
             snack()
         }
@@ -92,10 +90,10 @@ import java.util.*
     }
 
     private fun getTopoLista(UI: HandlerContext) {
-        launch(UI) {
+        GlobalScope.launch(Dispatchers.Main) {
             try {
-                val movies = async(Dispatchers.Default) { API(this@MainActivity).getNowPlayingMovies() }
-                val tvshow = async(Dispatchers.Default) { API(this@MainActivity).getAiringToday() }
+                val movies = async(Dispatchers.Default) { API(this@MainActivity).getNowPlayingMovies(this@MainActivity) }
+                val tvshow = async(Dispatchers.Default) { API(this@MainActivity).getAiringToday(this@MainActivity) }
 
                 mescla(tmdbMovies = movies.await(), tmdbTv = tvshow.await())
             } catch (ex: Exception) {
@@ -132,14 +130,21 @@ import java.util.*
 
     private fun setupViewPagerTabs() {
 
+        viewpage_top_main = findViewById<View>(R.id.viewpage_top_main) as ViewPager
+        viewpage_top_main!!.offscreenPageLimit = 3
+        viewpage_top_main!!.adapter = ViewPageMainTopFragment(supportFragmentManager, multi)
+        val circlePageIndicator = findViewById<View>(R.id.indication_main) as CirclePageIndicator
+        circlePageIndicator.setViewPager(viewpage_top_main)
+    }
+
+    private fun setupViewBotton() {
+
+        viewPager_main = findViewById<View>(R.id.viewPager_main) as ViewPager
         viewPager_main!!.offscreenPageLimit = 2
         tabLayout = findViewById<View>(R.id.tabLayout) as TabLayout
         viewPager_main!!.currentItem = 0
         viewPager_main!!.adapter = MainAdapter(this, supportFragmentManager)
         tabLayout!!.setupWithViewPager(viewPager_main)
-        val circlePageIndicator = findViewById<View>(R.id.indication_main) as CirclePageIndicator
-        viewpage_top_main!!.adapter = ViewPageMainTopFragment(supportFragmentManager, multi)
-        circlePageIndicator.setViewPager(viewpage_top_main)
 
         tabLayout!!.setSelectedTabIndicatorColor(resources.getColor(R.color.blue_main))
         tabLayout!!.setTabTextColors(resources.getColor(R.color.red), resources.getColor(R.color.white))
@@ -163,7 +168,6 @@ import java.util.*
 
             }
         })
-
     }
 
     override fun onResume() {
