@@ -3,7 +3,7 @@ package produtora.adapter
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import domain.ListaItemFilme
+import domain.movie.ListaItemFilme
 import domain.ViewType
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import pessoaspopulares.adapter.LoadingDelegateAdapter

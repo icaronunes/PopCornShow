@@ -1,6 +1,7 @@
-package domain
+package domain.movie
 
 import com.google.gson.annotations.SerializedName
+import domain.ViewType
 import utils.Constantes
 
 /**
@@ -9,30 +10,20 @@ import utils.Constantes
 data class ListaFilmes(
 
         @field:SerializedName("page")
-        val page: Int? = null,
+        val page: Int = 0,
 
         @field:SerializedName("total_pages")
-        val totalPages: Int? = null,
+        val totalPages: Int = 0,
 
         @field:SerializedName("dates")
         val dates: Date? = null,
 
         @field:SerializedName("results")
-        val results: List<ListaItemFilme?>? = null,
+        val results: List<ListaItemFilme?> = mutableListOf<ListaItemFilme>(),
 
         @field:SerializedName("total_results")
-        val totalResults: Int? = null
+        val totalResults: Int = 0
 ): ViewType {
     override fun getViewType() = Constantes.BuscaConstants.NEWS
 }
 
-data class Date(
-
-        @field:SerializedName("maximum")
-        val maximum: String? = null,
-
-        @field:SerializedName("minimum")
-        val minimum: String? = null
-) : ViewType {
-    override fun getViewType() = Constantes.BuscaConstants.NEWS
-}

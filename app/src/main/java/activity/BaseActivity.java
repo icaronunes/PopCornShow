@@ -7,9 +7,11 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -35,6 +37,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -682,6 +685,16 @@ public class BaseActivity extends AppCompatActivity {
 
 	public boolean validatePassword(String password) {
 		return password.length() > 5;
+	}
+
+	protected boolean getIdioma(){
+		try {
+			SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+			return sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
+		} catch (Exception e) {
+			Crashlytics.logException(e);
+			return false;
+		}
 	}
 
 

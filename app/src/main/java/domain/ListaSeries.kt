@@ -14,7 +14,7 @@ data class ListaSeries(
         val totalPages: Int? = null,
 
         @field:SerializedName("results")
-        val results: List<ListaItemSerie?>? = null,
+        val results: List<ListaItemSerie> = mutableListOf<ListaItemSerie>(),
 
         @field:SerializedName("total_results")
         val totalResults: Int? = null

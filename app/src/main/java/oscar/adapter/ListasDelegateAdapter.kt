@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import br.com.icaro.filme.R
 import com.squareup.picasso.Picasso
-import domain.ListaItemFilme
+import domain.movie.ListaItemFilme
 import domain.ViewType
 import filme.activity.FilmeActivity
 import kotlinx.android.synthetic.main.lista.view.*

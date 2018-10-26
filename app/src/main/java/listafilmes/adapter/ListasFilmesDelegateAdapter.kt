@@ -10,7 +10,7 @@ import android.widget.TextView
 import br.com.icaro.filme.R
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import domain.ListaItemFilme
+import domain.movie.ListaItemFilme
 import domain.ViewType
 import filme.activity.FilmeActivity
 import kotlinx.android.synthetic.main.adapter_filmes_list.view.*

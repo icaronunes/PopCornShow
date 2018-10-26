@@ -29,8 +29,6 @@ class ListaGenericaActivity : BaseActivity() {
     private var totalPagina: Int = 1
     private var pagina = 1
     private lateinit var map: Map<String, String>
-    private val TAG = this.javaClass.name
-
 
     private var subscriptions = CompositeSubscription()
 
@@ -43,7 +41,7 @@ class ListaGenericaActivity : BaseActivity() {
         supportActionBar?.title = intent.getStringExtra(Constantes.LISTA_GENERICA)
         list_id = intent.getStringExtra(Constantes.LISTA_ID)
         if (intent.hasExtra(Constantes.BUNDLE)) {
-            map =  HashMap()
+            map = HashMap()
             map = intent.getSerializableExtra(Constantes.BUNDLE) as Map<String, String>
         }
         recycleView_favorite.apply {
@@ -82,7 +80,7 @@ class ListaGenericaActivity : BaseActivity() {
 
                         (recycleView_favorite.adapter as ListUserAdapter).addItens(itens, it?.totalResults!!)
                         pagina = it.page!!
-                        totalPagina = it.totalPages!!
+                        totalPagina = it.totalPages
                         ++pagina
                     }, { erro ->
                         Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
@@ -112,8 +110,8 @@ class ListaGenericaActivity : BaseActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        if (intent.hasExtra(Constantes.BUNDLE) )
-        menuInflater.inflate(R.menu.menu_random_lista, menu)
+        if (intent.hasExtra(Constantes.BUNDLE))
+            menuInflater.inflate(R.menu.menu_random_lista, menu)
 
         return true
     }

@@ -138,6 +138,7 @@ public class UtilsApp {
 	public static boolean verificaLancamento(Date air_date) {
 		boolean data;
 		//Arrumar. Ta esquisito.
+		if (air_date == null) return false;
 		Date myDate = Calendar.getInstance().getTime();
 		if (air_date.before(myDate)) {
 			data = true;

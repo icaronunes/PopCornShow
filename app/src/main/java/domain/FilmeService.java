@@ -104,7 +104,6 @@ public class FilmeService {
 
     public static TmdbCollections getTmdbCollections() {
         TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
-
         return tmdbApi.getCollections();
     }
 

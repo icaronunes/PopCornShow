@@ -7,8 +7,6 @@ import javax.annotation.Generated
 @Generated("com.robohorse.robopojogenerator")
 data class Tvshow(
 
-
-
         @field:SerializedName("original_language")
         val originalLanguage: String? = null,
 
