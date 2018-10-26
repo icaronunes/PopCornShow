@@ -134,7 +134,7 @@ class SeguindoActivity : BaseActivity() {
 
             }
         }
-        seguindoDataBase?.addListenerForSingleValueEvent(eventListener)
+        seguindoDataBase?.addListenerForSingleValueEvent(eventListener!!)
     }
 
     fun veriricarSerie() {
@@ -232,18 +232,18 @@ class SeguindoActivity : BaseActivity() {
 
         atualizarDatabase = FirebaseDatabase.getInstance()
         val myRef = atualizarDatabase?.getReference("users")
-        myRef?.child(mAuth?.currentUser?.uid)
+        myRef?.child(mAuth?.currentUser?.uid!!)
                 ?.child("seguindo")
                 ?.child(userTvshowNovo?.id.toString())
                 ?.updateChildren(childUpdates)
-                ?.addOnCompleteListener({ task ->
+                ?.addOnCompleteListener { task ->
                     if (task.isComplete) {
                         setupViewPagerTabs()
                         Toast.makeText(this@SeguindoActivity, R.string.season_updated, Toast.LENGTH_SHORT).show();
                     } else {
                         Log.d("TAG", task.exception.toString())
                     }
-                })
+                }
 
 
     }

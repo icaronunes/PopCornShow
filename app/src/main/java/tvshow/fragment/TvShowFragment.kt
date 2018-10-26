@@ -342,7 +342,7 @@ class TvShowFragment : Fragment() {
 
             myRef?.child(mAuth?.currentUser!!
                     .uid)?.child("seguindo")?.child(series?.id.toString())
-                    ?.addValueEventListener(postListener)
+                    ?.addValueEventListener(postListener!!)
         }
     }
 
@@ -526,7 +526,7 @@ class TvShowFragment : Fragment() {
                             userTvshow?.seasons?.get(i)?.userEps = setEp(tvSeason)
                         }
 
-                        myRef?.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid else "")
+                        myRef?.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid!! else "")
                                 ?.child("seguindo")
                                 ?.child(series?.id.toString())
                                 ?.setValue(userTvshow)
@@ -549,7 +549,7 @@ class TvShowFragment : Fragment() {
                         .setNegativeButton(R.string.no, null)
                         .setOnDismissListener { progressBarTemporada?.visibility = View.GONE }
                         .setPositiveButton(R.string.ok) { dialogInterface, i ->
-                            myRef?.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid else "")
+                            myRef?.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid!! else "")
                                     ?.child("seguindo")
                                     ?.child(series?.id.toString())
                                     ?.removeValue()
@@ -570,7 +570,7 @@ class TvShowFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         if (myRef != null && mAuth?.currentUser != null) {
-            myRef?.removeEventListener(postListener)
+            myRef?.removeEventListener(postListener!!)
         }
         subscriptions?.unsubscribe()
     }

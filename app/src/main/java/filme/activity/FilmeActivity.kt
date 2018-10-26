@@ -22,6 +22,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import br.com.icaro.filme.R
+import br.com.icaro.filme.R.id.*
 import com.crashlytics.android.Crashlytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -137,7 +138,7 @@ class FilmeActivity : BaseActivity() {
 
             }
         }
-        myWatch?.addValueEventListener(valueEventWatch)
+        myWatch?.addValueEventListener(valueEventWatch!!)
 
     }
 
@@ -167,7 +168,7 @@ class FilmeActivity : BaseActivity() {
 
             }
         }
-        myRated?.addValueEventListener(valueEventRated)
+        myRated?.addValueEventListener(valueEventRated!!)
 
     }
 
@@ -188,7 +189,7 @@ class FilmeActivity : BaseActivity() {
 
             }
         }
-        myFavorite?.addValueEventListener(valueEventFavorite)
+        myFavorite?.addValueEventListener(valueEventFavorite!!)
     }
 
     private fun iniciarFirebases() {
@@ -199,16 +200,16 @@ class FilmeActivity : BaseActivity() {
         if (mAuth?.currentUser != null) {
 
             myWatch = database.getReference("users").child(mAuth?.currentUser
-                    ?.uid).child("watch")
-                    ?.child("movie")
+                    ?.uid!!).child("watch")
+                    .child("movie")
 
             myFavorite = database.getReference("users").child(mAuth?.currentUser
-                    ?.uid).child("favorites")
-                    ?.child("movie")
+                    ?.uid!!).child("favorites")
+                    .child("movie")
 
             myRated = database.getReference("users").child(mAuth?.currentUser
-                    ?.uid).child("rated")
-                    ?.child("movie")
+                    ?.uid!!).child("rated")
+                    .child("movie")
         }
     }
 
@@ -259,24 +260,24 @@ class FilmeActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if (item.itemId == R.id.share) {
-            if (movieDb != null){
+            if (movieDb != null) {
 
-            salvaImagemMemoriaCache(this@FilmeActivity, movieDb?.posterPath, object : SalvarImageShare {
-                override fun retornaFile(file: File) {
-                    val intent = Intent(Intent.ACTION_SEND)
-                    intent.type = "message/rfc822"
-                    intent.putExtra(Intent.EXTRA_TEXT, movieDb?.title + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL)
-                    intent.type = "image/*"
-                    intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.getUriDownloadImage(this@FilmeActivity, file))
-                    startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar_filme)))
-                }
+                salvaImagemMemoriaCache(this@FilmeActivity, movieDb?.posterPath, object : SalvarImageShare {
+                    override fun retornaFile(file: File) {
+                        val intent = Intent(Intent.ACTION_SEND)
+                        intent.type = "message/rfc822"
+                        intent.putExtra(Intent.EXTRA_TEXT, movieDb?.title + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL)
+                        intent.type = "image/*"
+                        intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.getUriDownloadImage(this@FilmeActivity, file))
+                        startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar_filme)))
+                    }
 
-                override fun RetornoFalha() {
-                    Toast.makeText(this@FilmeActivity, resources.getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show()
-                }
-            })
+                    override fun RetornoFalha() {
+                        Toast.makeText(this@FilmeActivity, resources.getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show()
+                    }
+                })
 
-        } else {
+            } else {
                 Toast.makeText(this@FilmeActivity, resources.getString(R.string.erro_ainda_sem_imagem), Toast.LENGTH_SHORT).show()
             }
         }
@@ -387,12 +388,12 @@ class FilmeActivity : BaseActivity() {
 
                         myRated?.child(id_filme.toString())?.setValue(filmeDB)
                                 ?.addOnCompleteListener {
-                                    Toast.makeText(this@FilmeActivity, resources.getString(R.string.filme_rated) +" - " + ratingBar.rating * 2, Toast.LENGTH_SHORT)
+                                    Toast.makeText(this@FilmeActivity, resources.getString(R.string.filme_rated) + " - " + ratingBar.rating * 2, Toast.LENGTH_SHORT)
                                             .show()
 
                                     fab_menu_filme?.close(true)
                                 }
-                        Thread(Runnable { FilmeService.ratedMovieGuest(id_filme, (ratingBar.rating * 2) .toInt(), this@FilmeActivity) }).start()
+                        Thread(Runnable { FilmeService.ratedMovieGuest(id_filme, (ratingBar.rating * 2).toInt(), this@FilmeActivity) }).start()
                     }
                     alertDialog.dismiss()
                 })
@@ -537,13 +538,13 @@ class FilmeActivity : BaseActivity() {
         super.onDestroy()
 
         if (valueEventWatch != null) {
-            myWatch?.removeEventListener(valueEventWatch)
+            myWatch?.removeEventListener(valueEventWatch!!)
         }
         if (valueEventRated != null) {
-            myRated?.removeEventListener(valueEventRated)
+            myRated?.removeEventListener(valueEventRated!!)
         }
         if (valueEventFavorite != null) {
-            myFavorite?.removeEventListener(valueEventFavorite)
+            myFavorite?.removeEventListener(valueEventFavorite!!)
         }
 
         subscriptions.clear()

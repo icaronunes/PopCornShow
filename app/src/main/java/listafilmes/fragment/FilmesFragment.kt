@@ -44,7 +44,7 @@ class FilmesFragment : FragmentBase() {
             }
         }
 
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(activity)
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

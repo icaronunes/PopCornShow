@@ -135,7 +135,7 @@ class TvShowActivity : BaseActivity() {
 
             }
         }
-        myWatch?.addValueEventListener(valueEventWatch)
+        myWatch?.addValueEventListener(valueEventWatch!!)
 
     }
 
@@ -164,7 +164,7 @@ class TvShowActivity : BaseActivity() {
 
             }
         }
-        myRated?.addValueEventListener(valueEventRated)
+        myRated?.addValueEventListener(valueEventRated!!)
 
     }
 
@@ -185,19 +185,19 @@ class TvShowActivity : BaseActivity() {
 
             }
         }
-        myFavorite?.addValueEventListener(valueEventFavorite)
+        myFavorite?.addValueEventListener(valueEventFavorite!!)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         if (valueEventWatch != null) {
-            myWatch?.removeEventListener(valueEventWatch)
+            myWatch?.removeEventListener(valueEventWatch!!)
         }
         if (valueEventRated != null) {
-            myRated?.removeEventListener(valueEventRated)
+            myRated?.removeEventListener(valueEventRated!!)
         }
         if (valueEventFavorite != null) {
-            myFavorite?.removeEventListener(valueEventFavorite)
+            myFavorite?.removeEventListener(valueEventFavorite!!)
         }
 
         compositeSubscription?.unsubscribe()
@@ -208,11 +208,11 @@ class TvShowActivity : BaseActivity() {
         database = FirebaseDatabase.getInstance()
 
         if (mAuth?.currentUser != null) {
-            myWatch = database?.getReference("users")?.child(mAuth?.currentUser?.uid)?.child("watch")?.child("tvshow")
+            myWatch = database?.getReference("users")?.child(mAuth?.currentUser?.uid!!)?.child("watch")?.child("tvshow")
 
-            myFavorite = database?.getReference("users")?.child(mAuth?.currentUser?.uid)?.child("favorites")?.child("tvshow")
+            myFavorite = database?.getReference("users")?.child(mAuth?.currentUser?.uid!!)?.child("favorites")?.child("tvshow")
 
-            myRated = database?.getReference("users")?.child(mAuth?.currentUser?.uid)?.child("rated")?.child("tvshow")
+            myRated = database?.getReference("users")?.child(mAuth?.currentUser?.uid!!)?.child("rated")?.child("tvshow")
         }
 
     }
@@ -565,11 +565,11 @@ class TvShowActivity : BaseActivity() {
 
     private fun setDataBase() {
         val myRef = database?.getReference("users")
-        myRef?.child(mAuth?.currentUser?.uid)
+        myRef?.child(mAuth?.currentUser?.uid!!)
                 ?.child("seguindo")
                 ?.child(series?.id.toString())
                 ?.setValue(userTvshow)
-                ?.addOnCompleteListener({ task ->
+                ?.addOnCompleteListener { task ->
                     if (task.isComplete) {
                         seguindo = true
                         setupViewPagerTabs()
@@ -577,13 +577,13 @@ class TvShowActivity : BaseActivity() {
                         setImageTop()
                         Toast.makeText(this@TvShowActivity, R.string.season_updated, Toast.LENGTH_SHORT).show();
                     }
-                })
+                }
     }
 
     private fun setDados() {
         if (mAuth?.currentUser != null) {
             val myRef = database?.getReference("users")
-            myRef?.child(mAuth?.currentUser?.uid)?.child("seguindo")?.child(series?.id.toString())
+            myRef?.child(mAuth?.currentUser?.uid!!)?.child("seguindo")?.child(series?.id.toString())
                     ?.addListenerForSingleValueEvent(
                             object : ValueEventListener {
                                 override fun onDataChange(dataSnapshot: DataSnapshot) {

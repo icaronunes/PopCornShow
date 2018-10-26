@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="br.com.icaro.filme">
 
-    <uses-sdk android:targetSdkVersion="27" android:minSdkVersion="14"
+    <uses-sdk android:targetSdkVersion="27"
         tools:overrideLibrary="com.facebook, com.onesignal, android.support.customtabs"
         tools:ignore="MultipleUsesSdk" />
 

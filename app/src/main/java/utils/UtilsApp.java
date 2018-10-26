@@ -149,6 +149,8 @@ public class UtilsApp {
 	}
 
 	public static boolean verificaDataProximaLancamento(Date air_date) {
+
+		if (air_date == null ) return false;
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(air_date);
 		Calendar hoje = Calendar.getInstance();
