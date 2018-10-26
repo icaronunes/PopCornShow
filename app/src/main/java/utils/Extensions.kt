@@ -10,7 +10,7 @@ import java.util.*
 /**
  * Created by icaro on 03/09/17.
  */
-fun getIdiomaEscolhido(context: Context): String {
+fun getIdiomaEscolhido(context: Context?): String {
 
     val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
     val idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true)

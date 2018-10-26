@@ -25,10 +25,10 @@ public class MainAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return MainFragment.newInstance(R.string.tvshow_main);
+            return MainFragment.Companion.newInstance(R.string.tvshow_main);
         }
         if (position == 1) {
-            return MainFragment.newInstance(R.string.filmes_main);
+            return MainFragment.Companion.newInstance(R.string.filmes_main);
         }
         return null;
     }

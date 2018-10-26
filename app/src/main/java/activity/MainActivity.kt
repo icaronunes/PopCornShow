@@ -57,11 +57,12 @@ class MainActivity : BaseActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setTitle(" ")
 
+        viewpage_top_main = findViewById<View>(R.id.viewpage_top_main) as ViewPager
 
         img = findViewById(R.id.activity_main_img)
 
         if (UtilsApp.isNetWorkAvailable(this)) {
-            getTopoLista(UI)
+            getTopoLista()
             setupViewBotton()
         } else {
             snack()
@@ -89,7 +90,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun getTopoLista(UI: HandlerContext) {
+    private fun getTopoLista() {
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 val movies = async(Dispatchers.Default) { API(this@MainActivity).getNowPlayingMovies(this@MainActivity) }
@@ -121,7 +122,8 @@ class MainActivity : BaseActivity() {
         Snackbar.make(viewpage_top_main!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
                     if (UtilsApp.isNetWorkAvailable(baseContext)) {
-                        getTopoLista(UI)
+                        getTopoLista()
+                        setupViewBotton()
                     } else {
                         snack()
                     }
