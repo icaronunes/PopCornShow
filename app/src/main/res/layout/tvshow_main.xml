@@ -9,8 +9,8 @@
         android:id="@+id/horizontal_tvshow_button_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/trade_size_dp_6"
-        android:layout_marginTop="@dimen/trade_size_dp_6"
+        android:layout_marginTop="@dimen/trade_size_dp_3"
+        android:layout_marginBottom="2dp"
         android:minHeight="@dimen/trade_size_dp_30"
         android:scrollbars="none">
 
@@ -25,10 +25,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/trade_size_dp_6"
         android:layout_marginStart="@dimen/trade_size_dp_6"
+        android:layout_marginLeft="@dimen/trade_size_dp_6"
         android:text="@string/populares"
         android:textColor="@color/blue"
+        android:textSize="@dimen/trade_txt_size_sp_16"
         android:textStyle="normal|bold"
         android:typeface="serif" />
 
@@ -42,12 +43,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/trade_size_dp_6"
         android:layout_marginStart="@dimen/trade_size_dp_6"
+        android:layout_marginLeft="@dimen/trade_size_dp_6"
         android:text="@string/today"
         android:textColor="@color/red"
+        android:textSize="@dimen/trade_txt_size_sp_16"
         android:textStyle="normal|bold"
-        android:typeface="monospace" />
+        android:typeface="serif" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_tvshowtoday_main"

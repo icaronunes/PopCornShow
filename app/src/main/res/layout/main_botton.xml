@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_main_button"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/trade_size_dp_2"
+    android:layout_marginRight="@dimen/trade_size_dp_2"
     android:orientation="vertical">
 
     <Button
         android:id="@+id/button_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/trade_size_dp_8"
-        android:layout_marginRight="@dimen/trade_size_dp_6"
         android:layout_marginEnd="@dimen/trade_size_dp_6"
         android:background="@drawable/button_main"
-        android:textColor="@color/white"
+        android:minWidth="@dimen/trade_size_dp_90"
         android:minHeight="@dimen/trade_size_dp_35"
-        android:minWidth="@dimen/trade_size_dp_90"/>
+        android:padding="@dimen/trade_size_dp_2"
+        android:textColor="@color/white" />
 
 </LinearLayout>

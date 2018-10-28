@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import br.com.icaro.filme.R;
@@ -54,6 +56,7 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
 
         Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem( UtilsApp.getTamanhoDaImagem(context, 2)) + series.getPosterPath())
+                .error(R.drawable.poster_empty)
                 .into(holder.img_poster_grid, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -65,21 +68,17 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
                         holder.progress_poster_grid.setVisibility(View.GONE);
                         holder.title_main.setText(series.getName());
                         holder.title_main.setVisibility(View.VISIBLE);
-                        holder.img_poster_grid.setImageResource(R.drawable.poster_empty);
                     }
 
                 });
 
-        holder.img_poster_grid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        holder.img_poster_grid.setOnClickListener(view -> {
 
-                Intent intent = new Intent(context, TvShowActivity.class);
-                intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), series.getName());
-                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), series.getId());
-                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(holder.img_poster_grid));
-                context.startActivity(intent);
-            }
+            Intent intent = new Intent(context, TvShowActivity.class);
+            intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), series.getName());
+            intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), series.getId());
+            intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(holder.img_poster_grid));
+            context.startActivity(intent);
         });
 
     }
@@ -99,13 +98,18 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
         private ProgressBar progress_poster_grid;
         private ImageView img_poster_grid;
 
+
         TvShowPopularesViewHolder(View itemView) {
             super(itemView);
-
             title_main = (TextView) itemView.findViewById(R.id.title_main);
             progress_poster_grid = (ProgressBar) itemView.findViewById(R.id.progress_poster_grid);
             img_poster_grid = (ImageView) itemView.findViewById(R.id.img_poster_grid);
 
         }
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
     }
 }

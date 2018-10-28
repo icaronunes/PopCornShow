@@ -52,6 +52,7 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
 
         Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem( UtilsApp.getTamanhoDaImagem(context, 2)) + movieDb.getPosterPath())
+                .error(R.drawable.poster_empty)
                 .into(holder.img_poster_grid, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -63,20 +64,12 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
                         holder.progress_poster_grid.setVisibility(View.GONE);
                         holder.title_main.setText(movieDb.getTitle());
                         holder.title_main.setVisibility(View.VISIBLE);
-                        holder.img_poster_grid.setImageResource(R.drawable.poster_empty);
                     }
                 });
 
         holder.img_poster_grid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Movie");
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movieDb.getTitle());
-                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDb.getId());
-                FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 Intent intent = new Intent(context, FilmeActivity.class);
                 intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movieDb.getTitle());
