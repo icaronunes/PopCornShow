@@ -22,10 +22,7 @@ import domain.ListaSeries
 import domain.TopMain
 import domain.movie.ListaFilmes
 import fragment.ViewPageMainTopFragment
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.GlobalScope
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.*
 import utils.UtilsApp
 
 
@@ -36,6 +33,7 @@ class MainActivity : BaseActivity() {
     private var img: ImageView? = null
     private var tabLayout: TabLayout? = null
     private val multi = mutableListOf<TopMain>()
+    private lateinit var rotina: Job
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +79,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun getTopoLista() {
-        GlobalScope.launch(Dispatchers.Main) {
+       rotina =  GlobalScope.launch(Dispatchers.Main) {
             try {
                 val movies = async(Dispatchers.Default) { Api(this@MainActivity).getNowPlayingMovies() }
                 val tvshow = async(Dispatchers.Default) { Api(this@MainActivity).getAiringToday() }
@@ -199,6 +197,11 @@ class MainActivity : BaseActivity() {
 
         setupViewPagerTabs()
         img?.visibility = View.GONE
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        rotina.cancel()
     }
 
 }
