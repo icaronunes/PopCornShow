@@ -1,5 +1,6 @@
-package activity
+package seguindo
 
+import activity.BaseActivity
 import adapter.SeguindoAdapater
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -19,6 +20,7 @@ import domain.Api
 import domain.TvSeasons
 import domain.UserTvshow
 import domain.tvshow.Tvshow
+import kotlinx.coroutines.experimental.*
 import rx.Observer
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -45,6 +47,9 @@ class SeguindoActivity : BaseActivity() {
 
     private var userTvshowFire: MutableList<UserTvshow>? = null
     private var userTvshowNovo: UserTvshow? = null
+
+    private var job: Job? = null
+    private var rotina: Job? = null
 
     private var compositeSubscription: CompositeSubscription? = null
 
@@ -102,7 +107,7 @@ class SeguindoActivity : BaseActivity() {
     private fun setupViewPagerTabs() {
 
         viewPager?.offscreenPageLimit = 1
-        viewPager?.currentItem = 0
+        viewPager?.currentItem = 2
         tabLayout?.setupWithViewPager(viewPager)
         tabLayout?.setSelectedTabIndicatorColor(resources.getColor(R.color.accent))
         viewPager?.adapter = SeguindoAdapater(this@SeguindoActivity, supportFragmentManager,
@@ -118,7 +123,7 @@ class SeguindoActivity : BaseActivity() {
                         dataSnapshot.children
                                 .asSequence()
                                 .map {
-                                        it.getValue(UserTvshow::class.java)
+                                    it.getValue(UserTvshow::class.java)
                                 }
                                 .forEach { userTvshowFire?.add(it!!) }
                         veriricarSerie()
@@ -137,6 +142,27 @@ class SeguindoActivity : BaseActivity() {
         seguindoDataBase?.addListenerForSingleValueEvent(eventListener!!)
     }
 
+    fun verificarSerieCoroutine() {
+        userTvshowFire?.forEachIndexed { indexFire, tvFire ->
+            rotina = GlobalScope.launch(Dispatchers.IO) {
+                val serie = Api(context = this@SeguindoActivity).getTvShowLiteC(tvFire.id)
+                if (serie.numberOfEpisodes == tvFire.numberOfEpisodes) {
+                    try {
+                        tvFire.seasons?.forEachIndexed { index, userSeasons ->
+                            if (userSeasons.userEps.size != serie.seasons?.get(index)?.episodeCount) {
+                                atualizarRealDate(indexFire, index, serie, tvFire)
+                            }
+                        }
+
+                    } catch (ex: Exception) {
+                    ex.message
+                    }
+                }
+            }
+        }
+
+    }
+
     fun veriricarSerie() {
 
         userTvshowFire?.forEachIndexed { indexSerie, userTvshow ->
@@ -146,22 +172,25 @@ class SeguindoActivity : BaseActivity() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : Observer<Tvshow> {
-                        override fun onCompleted() { serie
+                        override fun onCompleted() {
                             if (serie?.numberOfEpisodes != userTvshow.numberOfEpisodes) {
                                 userTvshowNovo = UtilsApp.setUserTvShow(serie)
-                                Log.d(this@SeguindoActivity.javaClass.name, serie?.name)
                                 userTvshow.seasons.forEachIndexed { indexSeason, userSeasons ->
                                     Log.d(this@SeguindoActivity.javaClass.name, "${serie?.name} ${indexSeason}")
-                                    if (userSeasons?.userEps != null && serie?.seasons?.size!! < indexSeason)
-                                    if (serie?.seasons?.get(indexSeason)?.episodeCount != userSeasons.userEps.size) {
-                                        atualizarRealDate(indexSerie, indexSeason, serie, userTvshow)
-                                    }
+                                    //if (userSeasons?.userEps != null && serie?.seasons?.get(indexSeason)?.episodeCount < indexSeason)
+                                       try {
+                                           if (serie?.seasons?.get(indexSeason)?.episodeCount != userSeasons.userEps.size) {
+                                               atualizarRealDate(indexSerie, indexSeason, serie, userTvshow)
+                                           }
+                                       } catch (ex: java.lang.Exception) { }
                                 }
+                            }else {
+                                //Toast.makeText(this@SeguindoActivity, "ERROOOO", Toast.LENGTH_SHORT).show()
                             }
                         }
 
                         override fun onError(e: Throwable) {
-                             Toast.makeText(this@SeguindoActivity, R.string.ops, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@SeguindoActivity, R.string.ops, Toast.LENGTH_SHORT).show()
                             Log.d("TAG", e.message)
                         }
 
@@ -173,31 +202,39 @@ class SeguindoActivity : BaseActivity() {
         }
     }
 
+
     fun atualizarRealDate(indexSerie: Int, indexSeason: Int, serie: Tvshow?, userTvshow: UserTvshow) {
 
-        var tvseasonRetorno: TvSeasons? = null
-        val subscriber = Api(this)
-                .getTvSeasons(userTvshow.id, userTvshow.numberOfSeasons)
-                .debounce(5000, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.immediate())
-                .subscribe(object : Observer<TvSeasons> {
-                    override fun onCompleted() {
-                        userTvshowNovo?.seasons?.get(indexSeason)?.userEps = UtilsApp.setEp2(tvseasonRetorno)
-                        atulizarDataBase(indexSerie, indexSeason)
-                    }
+//        job = GlobalScope.launch(Dispatchers.IO) {
+//            val tvSeasons = Api(this@SeguindoActivity).getTvSeasonsC(id = indexSerie, id_season = userTvshow.numberOfSeasons)
+//            userTvshowNovo?.seasons?.get(indexSeason)?.userEps = UtilsApp.setEp2(tvSeasons)
+//            atulizarDataBase(indexSerie, indexSeason)
+//
+//        }
 
-                    override fun onError(e: Throwable) {
-                        //Toast.makeText(this@SeguindoActivity, R.string.ops, Toast.LENGTH_SHORT).show()
-                        Log.d("TAG", e.message)
-                    }
+               var tvseasonRetorno: TvSeasons? = null
+               val subscriber = Api(this)
+                       .getTvSeasons(userTvshow.id, userTvshow.numberOfSeasons)
+                       .debounce(5000, TimeUnit.MILLISECONDS)
+                       .subscribeOn(Schedulers.io())
+                       .observeOn(Schedulers.immediate())
+                       .subscribe(object : Observer<TvSeasons> {
+                           override fun onCompleted() {
+                               userTvshowNovo?.seasons?.get(indexSeason)?.userEps = UtilsApp.setEp2(tvseasonRetorno)
+                               atulizarDataBase(indexSerie, indexSeason)
+                           }
 
-                    override fun onNext(tvseason: TvSeasons) {
-                        tvseasonRetorno = tvseason
-                    }
-                })
+                           override fun onError(e: Throwable) {
+                               //Toast.makeText(this@SeguindoActivity, R.string.ops, Toast.LENGTH_SHORT).show()
+                               Log.d("TAG", e.message)
+                           }
 
-        compositeSubscription?.add(subscriber)
+                           override fun onNext(tvseason: TvSeasons) {
+                               tvseasonRetorno = tvseason
+                           }
+                       })
+
+               compositeSubscription?.add(subscriber)
     }
 
     private fun atulizarDataBase(indexSerie: Int, indexSeason: Int) {
@@ -218,16 +255,16 @@ class SeguindoActivity : BaseActivity() {
             userTvshowNovo?.seasons?.get(indexSeason)?.isVisto = false
         }
 
-        setDataBase(userTvshowNovo, indexSerie, indexSeason)
+        setDataBase(userTvshowNovo, indexSeason)
     }
 
-    private fun setDataBase(userTvshowNovo: UserTvshow?, indexSerie: Int, index: Int) {
+    private fun setDataBase(userTvshowNovo: UserTvshow?, index: Int) {
 
         val childUpdates = HashMap<String, Any>().apply {
             put("/numberOfEpisodes", userTvshowNovo?.numberOfEpisodes!!)
-            put("/numberOfSeasons", userTvshowNovo?.numberOfSeasons)
+            put("/numberOfSeasons", userTvshowNovo.numberOfSeasons)
             put("/poster", userTvshowNovo.poster)
-            put("seasons/${index}", userTvshowNovo.seasons!![index])
+            put("seasons/$index", userTvshowNovo.seasons!![index])
         }
 
         atualizarDatabase = FirebaseDatabase.getInstance()
@@ -244,8 +281,6 @@ class SeguindoActivity : BaseActivity() {
                         Log.d("TAG", task.exception.toString())
                     }
                 }
-
-
     }
 
     override fun onDestroy() {
@@ -254,5 +289,12 @@ class SeguindoActivity : BaseActivity() {
             seguindoDataBase?.removeEventListener(eventListener!!)
         }
         compositeSubscription?.unsubscribe()
+        if (job != null) {
+            job!!.cancel()
+        }
+        if (rotina != null) {
+            rotina!!.cancel()
+        }
     }
+
 }

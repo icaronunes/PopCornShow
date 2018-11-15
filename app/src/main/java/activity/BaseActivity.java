@@ -64,6 +64,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+import seguindo.SeguindoActivity;
 import utils.Constantes;
 import utils.UtilsApp;
 

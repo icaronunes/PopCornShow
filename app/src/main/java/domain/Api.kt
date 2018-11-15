@@ -339,6 +339,33 @@ class Api(val context: Context) {
     }
 
 
+    suspend fun getTvShowLiteC(id: Int): Tvshow { // Usado em "Seguindo"
+        return suspendCoroutine { cont ->
+            val request = Request.Builder()
+                    .url("${baseUrl3}tv/$id?api_key=${Config.TMDB_API_KEY}" + "&language=$timeZone" +
+                            "&append_to_response=release_dates,external_ids&include_image_language=en,null")
+                    .get()
+                    .build()
+            OkHttpClient().newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    cont.resumeWithException(Throwable(e.message))
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    try {
+                        val json = response.body()?.string()
+                        val tvshow = Gson().fromJson(json, Tvshow::class.java)
+                        cont.resume(tvshow)
+                    } catch (ex: Exception) {
+                        cont.resumeWithException(Throwable(ex.message))
+                    }
+                }
+
+            })
+        }
+    }
+
+
     fun getColecao(id: Int): Observable<Colecao> {
         return rx.Observable.create { subscriber ->
             val client = OkHttpClient()
@@ -644,6 +671,29 @@ class Api(val context: Context) {
                     }
                 }
             })
+        }
+    }
+
+    suspend fun getTvSeasonsC(id: Int, id_season: Int): TvSeasons{
+        return suspendCoroutine {cont ->
+            val client = OkHttpClient()
+            val gson = Gson()
+            val request = Request.Builder()
+                    .url("${baseUrl3}tv/$id/season/$id_season?api_key=${Config.TMDB_API_KEY}&language=$timeZone,en")
+                    .get()
+                    .build()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    cont.resumeWithException(Throwable(e.message))
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val json = response.body()?.string()
+                    val lista = gson.fromJson(json, TvSeasons::class.java)
+                    cont.resume(lista)
+                }
+            })
+
         }
     }
 

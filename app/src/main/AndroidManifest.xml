@@ -333,7 +333,7 @@
         </activity>
 
         <activity
-            android:name="activity.SeguindoActivity"
+            android:name="seguindo.SeguindoActivity"
             android:parentActivityName="activity.MainActivity">
 
             <meta-data

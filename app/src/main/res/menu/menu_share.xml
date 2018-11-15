@@ -12,7 +12,7 @@
         app:iconifiedByDefault="true"
         app:showAsAction="ifRoom"
         android:background="@color/white"
-         />
+        />
 
     <item
         android:id="@+id/share"

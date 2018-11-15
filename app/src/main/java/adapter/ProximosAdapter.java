@@ -152,7 +152,7 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
                                     Date date = null;
                                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                                     try {
-                                        date = sdf.parse(tvEpisode.getAirDate());
+                                        date = sdf.parse(tvEpisode.getAirDate() );
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }

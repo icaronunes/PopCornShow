@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
-import activity.SeguindoActivity;
+import seguindo.SeguindoActivity;
 import br.com.icaro.filme.R;
 import domain.UserTvshow;
 import fragment.ListaSeguindoFragment;
