@@ -126,7 +126,7 @@ class SeguindoActivity : BaseActivity() {
                                     it.getValue(UserTvshow::class.java)
                                 }
                                 .forEach { userTvshowFire?.add(it!!) }
-                        veriricarSerie()
+                        verificarSerieCoroutine()
                     } catch (e: Exception) {
 
                     }
@@ -145,17 +145,18 @@ class SeguindoActivity : BaseActivity() {
     fun verificarSerieCoroutine() {
         userTvshowFire?.forEachIndexed { indexFire, tvFire ->
             rotina = GlobalScope.launch(Dispatchers.IO) {
-                val serie = Api(context = this@SeguindoActivity).getTvShowLiteC(tvFire.id)
-                if (serie.numberOfEpisodes == tvFire.numberOfEpisodes) {
+                val serie = async { Api(context = this@SeguindoActivity).getTvShowLiteC(tvFire.id) }.await()
+                if (serie.numberOfEpisodes != tvFire.numberOfEpisodes) {
                     try {
                         tvFire.seasons?.forEachIndexed { index, userSeasons ->
                             if (userSeasons.userEps.size != serie.seasons?.get(index)?.episodeCount) {
+                                userTvshowNovo = UtilsApp.setUserTvShow(serie)
                                 atualizarRealDate(indexFire, index, serie, tvFire)
                             }
                         }
 
                     } catch (ex: Exception) {
-                    ex.message
+                        ex.message
                     }
                 }
             }
@@ -163,7 +164,7 @@ class SeguindoActivity : BaseActivity() {
 
     }
 
-    fun veriricarSerie() {
+    fun verificarSerie() {
 
         userTvshowFire?.forEachIndexed { indexSerie, userTvshow ->
             var serie: Tvshow? = null
@@ -175,16 +176,23 @@ class SeguindoActivity : BaseActivity() {
                         override fun onCompleted() {
                             if (serie?.numberOfEpisodes != userTvshow.numberOfEpisodes) {
                                 userTvshowNovo = UtilsApp.setUserTvShow(serie)
-                                userTvshow.seasons.forEachIndexed { indexSeason, userSeasons ->
-                                    Log.d(this@SeguindoActivity.javaClass.name, "${serie?.name} ${indexSeason}")
-                                    //if (userSeasons?.userEps != null && serie?.seasons?.get(indexSeason)?.episodeCount < indexSeason)
-                                       try {
-                                           if (serie?.seasons?.get(indexSeason)?.episodeCount != userSeasons.userEps.size) {
-                                               atualizarRealDate(indexSerie, indexSeason, serie, userTvshow)
-                                           }
-                                       } catch (ex: java.lang.Exception) { }
+                                val desatualizados = userTvshow.seasons.filterIndexed { index, userSeasons ->
+                                    serie?.seasons?.get(index)?.episodeCount != userSeasons.userEps.size
                                 }
-                            }else {
+                                if (desatualizados.isNotEmpty()) {
+                                    Log.d(this@SeguindoActivity.javaClass.name, "Desatualizado - ${desatualizados?.get(0).seasonNumber}")
+                                    desatualizados.forEachIndexed { indexSeason, userSeasons ->
+                                        Log.d(this@SeguindoActivity.javaClass.name, "${serie?.name} $indexSeason")
+                                        //if (userSeasons?.userEps != null && serie?.seasons?.get(indexSeason)?.episodeCount < indexSeason)
+                                        try {
+                                            if (serie?.seasons?.get(indexSeason)?.episodeCount != userSeasons.userEps.size) {
+                                                atualizarRealDate(indexSerie, indexSeason, serie, userTvshow)
+                                            }
+                                        } catch (ex: java.lang.Exception) {
+                                        }
+                                    }
+                                }
+                            } else {
                                 //Toast.makeText(this@SeguindoActivity, "ERROOOO", Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -205,36 +213,36 @@ class SeguindoActivity : BaseActivity() {
 
     fun atualizarRealDate(indexSerie: Int, indexSeason: Int, serie: Tvshow?, userTvshow: UserTvshow) {
 
-//        job = GlobalScope.launch(Dispatchers.IO) {
-//            val tvSeasons = Api(this@SeguindoActivity).getTvSeasonsC(id = indexSerie, id_season = userTvshow.numberOfSeasons)
-//            userTvshowNovo?.seasons?.get(indexSeason)?.userEps = UtilsApp.setEp2(tvSeasons)
-//            atulizarDataBase(indexSerie, indexSeason)
+        job = GlobalScope.launch(Dispatchers.IO) {
+            val tvSeasons = async { Api(this@SeguindoActivity).getTvSeasonsC(id = userTvshow.id, id_season = userTvshow.numberOfSeasons) }.await()
+            userTvshowNovo?.seasons?.get(indexSeason)?.userEps = UtilsApp.setEp2(tvSeasons)
+            atulizarDataBase(indexSerie, indexSeason)
+
+        }
+
+//        var tvseasonRetorno: TvSeasons? = null
+//        val subscriber = Api(this)
+//                .getTvSeasons(userTvshow.id, userTvshow.numberOfSeasons)
+//                .debounce(5000, TimeUnit.MILLISECONDS)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(Schedulers.immediate())
+//                .subscribe(object : Observer<TvSeasons> {
+//                    override fun onCompleted() {
+//                        userTvshowNovo?.seasons?.get(indexSeason)?.userEps = UtilsApp.setEp2(tvseasonRetorno)
+//                        atulizarDataBase(indexSerie, indexSeason)
+//                    }
 //
-//        }
-
-               var tvseasonRetorno: TvSeasons? = null
-               val subscriber = Api(this)
-                       .getTvSeasons(userTvshow.id, userTvshow.numberOfSeasons)
-                       .debounce(5000, TimeUnit.MILLISECONDS)
-                       .subscribeOn(Schedulers.io())
-                       .observeOn(Schedulers.immediate())
-                       .subscribe(object : Observer<TvSeasons> {
-                           override fun onCompleted() {
-                               userTvshowNovo?.seasons?.get(indexSeason)?.userEps = UtilsApp.setEp2(tvseasonRetorno)
-                               atulizarDataBase(indexSerie, indexSeason)
-                           }
-
-                           override fun onError(e: Throwable) {
-                               //Toast.makeText(this@SeguindoActivity, R.string.ops, Toast.LENGTH_SHORT).show()
-                               Log.d("TAG", e.message)
-                           }
-
-                           override fun onNext(tvseason: TvSeasons) {
-                               tvseasonRetorno = tvseason
-                           }
-                       })
-
-               compositeSubscription?.add(subscriber)
+//                    override fun onError(e: Throwable) {
+//                        //Toast.makeText(this@SeguindoActivity, R.string.ops, Toast.LENGTH_SHORT).show()
+//                        Log.d("TAG", e.message)
+//                    }
+//
+//                    override fun onNext(tvseason: TvSeasons) {
+//                        tvseasonRetorno = tvseason
+//                    }
+//                })
+//
+//        compositeSubscription?.add(subscriber)
     }
 
     private fun atulizarDataBase(indexSerie: Int, indexSeason: Int) {
@@ -248,9 +256,12 @@ class SeguindoActivity : BaseActivity() {
     private fun atulizarDataBaseEps(indexSerie: Int, indexSeason: Int) {
 
         for ((indexEp, userEp) in userTvshowFire?.get(indexSerie)?.seasons?.get(indexSeason)?.userEps?.withIndex()!!) {
-            userTvshowNovo?.seasons?.get(indexSeason)?.userEps?.set(indexEp, userEp)
+            if (indexSeason <= userTvshowNovo?.seasons?.size!!)
+                userTvshowNovo?.seasons
+                        ?.get(indexSeason)
+                        ?.userEps?.set(indexEp, userEp)
         }
-
+//usar outro metodo para validar
         if (userTvshowNovo?.seasons?.get(indexSeason)?.userEps?.size!! > userTvshowFire?.get(indexSerie)?.seasons?.get(indexSeason)!!.userEps.size) {
             userTvshowNovo?.seasons?.get(indexSeason)?.isVisto = false
         }
@@ -261,7 +272,7 @@ class SeguindoActivity : BaseActivity() {
     private fun setDataBase(userTvshowNovo: UserTvshow?, index: Int) {
 
         val childUpdates = HashMap<String, Any>().apply {
-            put("/numberOfEpisodes", userTvshowNovo?.numberOfEpisodes!!)
+            put("/numberOfEpisodes", userTvshowNovo?.numberOfEpisodes!!) //TODO nao atualiza numero
             put("/numberOfSeasons", userTvshowNovo.numberOfSeasons)
             put("/poster", userTvshowNovo.poster)
             put("seasons/$index", userTvshowNovo.seasons!![index])
