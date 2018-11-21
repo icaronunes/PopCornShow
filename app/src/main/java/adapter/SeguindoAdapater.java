@@ -33,11 +33,11 @@ public class SeguindoAdapater extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return ListaSeguindoFragment.newInstance(position, userTvshows);
+            return ListaSeguindoFragment.Companion.newInstance(position, userTvshows);
         }
 
         if (position == 1){
-            return ListaSeguindoFragment.newInstance(position, userTvshows);
+            return ListaSeguindoFragment.Companion.newInstance(position, userTvshows);
         }
 
         return null;
