@@ -66,7 +66,9 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
         holder.faltando.setText(vistos + "/" + total);
         holder.progressBar.setMax(userTvshow.getNumberOfEpisodes());
         holder.progressBar.setProgress(vistos);
-        getEpTitle(userTvshow, holder.ep_title, holder.proximo, holder.date, holder.itemView, holder.new_seguindo);
+       // getEpTitle(userTvshow, holder.ep_title, holder.proximo, holder.date, holder.itemView, holder.new_seguindo);
+        holder.ep_title.setText(userTvshow.getSeasons().get(0).getUserEps().get(0).getTitle());
+        holder.date.setText(userTvshow.getSeasons().get(0).getUserEps().get(0).getDataEstreia());
         Picasso.get().load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + userTvshow.getPoster())
                 .error(R.drawable.poster_empty)
                 .into(holder.poster, new Callback() {

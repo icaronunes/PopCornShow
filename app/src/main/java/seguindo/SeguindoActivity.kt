@@ -149,7 +149,7 @@ class SeguindoActivity : BaseActivity() {
                 if (serie.numberOfEpisodes != tvFire.numberOfEpisodes) {
                     try {
                         tvFire.seasons?.forEachIndexed { index, userSeasons ->
-                            if (userSeasons.userEps.size != serie.seasons?.get(index)?.episodeCount) {
+                            if (userSeasons.userEps?.size != serie.seasons?.get(index)?.episodeCount) {
                                 userTvshowNovo = UtilsApp.setUserTvShow(serie)
                                 atualizarRealDate(indexFire, index, serie, tvFire)
                             }
@@ -164,7 +164,7 @@ class SeguindoActivity : BaseActivity() {
 
     }
 
-    fun verificarSerie() {
+    /*fun verificarSerie() {
 
         userTvshowFire?.forEachIndexed { indexSerie, userTvshow ->
             var serie: Tvshow? = null
@@ -208,7 +208,7 @@ class SeguindoActivity : BaseActivity() {
                     })
             compositeSubscription?.add(subscriber)
         }
-    }
+    }*/
 
 
     fun atualizarRealDate(indexSerie: Int, indexSeason: Int, serie: Tvshow?, userTvshow: UserTvshow) {
@@ -247,8 +247,8 @@ class SeguindoActivity : BaseActivity() {
 
     private fun atulizarDataBase(indexSerie: Int, indexSeason: Int) {
 
-        userTvshowNovo?.seasons?.get(indexSeason)?.seasonNumber = userTvshowFire!![indexSerie].seasons[indexSeason].seasonNumber
-        userTvshowNovo?.seasons?.get(indexSeason)?.isVisto = userTvshowFire!![indexSerie].seasons[indexSeason].isVisto
+        userTvshowNovo?.seasons?.get(indexSeason)?.seasonNumber = userTvshowFire!![indexSerie].seasons!![indexSeason].seasonNumber
+        userTvshowNovo?.seasons?.get(indexSeason)?.isVisto = userTvshowFire!![indexSerie].seasons!![indexSeason].isVisto
         atulizarDataBaseEps(indexSerie, indexSeason)
 
     }
@@ -262,7 +262,7 @@ class SeguindoActivity : BaseActivity() {
                         ?.userEps?.set(indexEp, userEp)
         }
 //usar outro metodo para validar
-        if (userTvshowNovo?.seasons?.get(indexSeason)?.userEps?.size!! > userTvshowFire?.get(indexSerie)?.seasons?.get(indexSeason)!!.userEps.size) {
+        if (userTvshowNovo?.seasons?.get(indexSeason)?.userEps?.size!! > userTvshowFire?.get(indexSerie)?.seasons?.get(indexSeason)!!.userEps?.size!!) {
             userTvshowNovo?.seasons?.get(indexSeason)?.isVisto = false
         }
 
@@ -274,7 +274,7 @@ class SeguindoActivity : BaseActivity() {
         val childUpdates = HashMap<String, Any>().apply {
             put("/numberOfEpisodes", userTvshowNovo?.numberOfEpisodes!!) //TODO nao atualiza numero
             put("/numberOfSeasons", userTvshowNovo.numberOfSeasons)
-            put("/poster", userTvshowNovo.poster)
+            put("/poster", userTvshowNovo.poster!!)
             put("seasons/$index", userTvshowNovo.seasons!![index])
         }
 

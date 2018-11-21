@@ -98,8 +98,8 @@ class TemporadasAdapter(val context: FragmentActivity, private val series: Tvsho
 
     private fun isVisto(position: Int): Boolean {
         if (userTvshow != null) {
-            if (userTvshow.seasons.size > position) {
-               return userTvshow.seasons[position].isVisto
+            if (userTvshow.seasons?.size!! > position) {
+               return userTvshow.seasons!![position].isVisto
             }
         }
         return false

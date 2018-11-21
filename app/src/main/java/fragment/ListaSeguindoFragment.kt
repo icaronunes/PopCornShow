@@ -1,5 +1,6 @@
 package fragment
 
+import activity.BaseActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
@@ -25,11 +26,15 @@ import java.util.ArrayList
 
 import adapter.ProximosAdapter
 import adapter.SeguindoRecycleAdapter
+import android.util.Log
 import br.com.icaro.filme.R
-import domain.UserEp
+import domain.FilmeService
 import domain.UserSeasons
 import domain.UserTvshow
+import info.movito.themoviedbapi.TmdbTvEpisodes
+import kotlinx.coroutines.experimental.*
 import utils.Constantes
+import kotlin.coroutines.experimental.suspendCoroutine
 
 /**
  * Created by icaro on 25/11/16.
@@ -43,6 +48,7 @@ class ListaSeguindoFragment : Fragment() {
     private var recyclerViewSeguindo: RecyclerView? = null
     private var eventListener: ValueEventListener? = null
     private var seguindoDataBase: DatabaseReference? = null
+    private lateinit var routina: Job
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,10 +104,12 @@ class ListaSeguindoFragment : Fragment() {
 
                     }
                     if (getView() != null) {
-                        recyclerViewMissing = getView()!!.rootView.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
-                        recyclerViewSeguindo = getView()!!.rootView.findViewById<View>(R.id.seguindo_recycle) as RecyclerView
-                        recyclerViewMissing!!.adapter = ProximosAdapter(activity, setSeriesMissing(userTvshows!!))
-                        recyclerViewSeguindo!!.adapter = SeguindoRecycleAdapter(activity, userTvshows)
+                        GlobalScope.launch(Dispatchers.Main) {
+                            recyclerViewMissing = getView()!!.rootView.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
+                            recyclerViewSeguindo = getView()!!.rootView.findViewById<View>(R.id.seguindo_recycle) as RecyclerView
+                            recyclerViewMissing!!.adapter = ProximosAdapter(activity, async(Dispatchers.IO) { setSeriesMissing(userTvshows!!) }.await())
+                            recyclerViewSeguindo!!.adapter = SeguindoRecycleAdapter(activity, userTvshows)
+                        }
                     }
                 }
             }
@@ -114,25 +122,67 @@ class ListaSeguindoFragment : Fragment() {
 
     }
 
-    private fun setSeriesMissing(userTvshows: List<UserTvshow>): List<UserTvshow> {
-        val temp = ArrayList<UserTvshow>()
 
-        for (userTvshow in userTvshows) {
-            var season = true
-            for (seasons in userTvshow.seasons) {
-                if (seasons.seasonNumber != 0 && seasons.userEps != null && season)
-                    for (userEp in seasons.userEps) {
-                        if (!userEp.isAssistido) {
-                            temp.add(userTvshow)
-                            season = false
-                            break
+    private suspend fun setSeriesMissing(userTvshows: List<UserTvshow>): List<UserTvshow> {
+        return suspendCoroutine { cont ->
+            val temp = arrayListOf<UserTvshow>()
+            userTvshows.forEachIndexed tvshow@{ index, userTvshow ->
+                userTvshows[index].seasons?.forEachIndexed { indexSeason, season ->
+                    if (season.seasonNumber != 0) {
+                        val naoVisto = season.userEps?.firstOrNull {
+                            !it.isAssistido
+                        }
+
+                        if (naoVisto != null) {
+                            try {
+                                val tvEpisode = FilmeService.getTmdbTvEpisodes()
+                                        .getEpisode(userTvshow.id, userTvshow.numberOfSeasons, naoVisto.episodeNumber,
+                                                BaseActivity.getLocale(), TmdbTvEpisodes.EpisodeMethod.external_ids)
+
+                                Log.d(TAG, "$tvEpisode - ${userTvshow.nome}")
+
+                                val tvshow: UserTvshow = userTvshows[index].copy(seasons = mutableListOf<UserSeasons>())
+
+                                val userEp = naoVisto.apply {
+                                    dataEstreia = tvEpisode.airDate
+                                    title = tvEpisode.name
+                                }
+
+                                val seasonNaoVisto = userTvshow.seasons!![indexSeason].copy(userEps = mutableListOf())
+                                seasonNaoVisto.userEps?.add(userEp)
+                                tvshow.seasons?.add(seasonNaoVisto)
+                                temp.add(tvshow)
+                                return@tvshow
+                            } catch (ex: java.lang.Exception) {
+                                Log.d(TAG, "Erro - ${ex.message}")
+                                cont.resumeWithException(ex)
+                            }
                         }
                     }
+                }
             }
-        }// gambiara. Arrumar!
-
-        return temp
+            cont.resume(temp)
+        }
     }
+//    private fun setSeriesMissing(userTvshows: List<UserTvshow>): List<UserTvshow> {
+//        val temp = ArrayList<UserTvshow>()
+//
+//        for (userTvshow in userTvshows) {
+//            var season = true
+//            for (seasons in userTvshow.seasons) {
+//                if (seasons.seasonNumber != 0 && seasons.userEps != null && season)
+//                    for (userEp in seasons.userEps) {
+//                        if (!userEp.isAssistido) {
+//                            temp.add(userTvshow)
+//                            season = false
+//                            break
+//                        }
+//                    }
+//            }
+//        }// gambiara. Arrumar!
+//
+//        return temp
+//    }
 
     private fun getViewMissing(inflater: LayoutInflater, container: ViewGroup?): View {
         val view = inflater.inflate(R.layout.temporadas, container, false) // Criar novo layout
@@ -141,12 +191,14 @@ class ListaSeguindoFragment : Fragment() {
         recyclerViewMissing!!.setHasFixedSize(true)
         recyclerViewMissing!!.itemAnimator = DefaultItemAnimator()
         recyclerViewMissing!!.layoutManager = LinearLayoutManager(context)
-        val missing = setSeriesMissing(userTvshows!!)
-        if (missing.size > 0) {
-            recyclerViewMissing!!.adapter = ProximosAdapter(activity, missing)
-        } else {
-            view.findViewById<View>(R.id.text_search_empty).visibility = View.VISIBLE
-            (view.findViewById<View>(R.id.text_search_empty) as TextView).setText(R.string.empty)
+        GlobalScope.launch(Dispatchers.Main) {
+            val missing = async(Dispatchers.IO) { setSeriesMissing(userTvshows!!) }.await()
+            if (missing.size > 0) {
+                recyclerViewMissing!!.adapter = ProximosAdapter(activity, missing)
+            } else {
+                view.findViewById<View>(R.id.text_search_empty).visibility = View.VISIBLE
+                (view.findViewById<View>(R.id.text_search_empty) as TextView).setText(R.string.empty)
+            }
         }
         return view
     }

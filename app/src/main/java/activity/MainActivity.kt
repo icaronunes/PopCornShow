@@ -49,6 +49,7 @@ class MainActivity : BaseActivity() {
 
         img = findViewById(R.id.activity_main_img)
 
+
         if (UtilsApp.isNetWorkAvailable(this)) {
             getTopoLista()
             setupViewBotton()

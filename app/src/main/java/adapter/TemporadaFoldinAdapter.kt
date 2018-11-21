@@ -157,7 +157,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
     override fun getItemCount(): Int {
         if (seguindo) {
             if (seasons?.userEps?.isNotEmpty()!!) {
-                return seasons.userEps.size
+                return seasons.userEps!!.size!!
             }
         } else {
             if (tvSeason.episodes?.isNotEmpty()!!){
@@ -184,7 +184,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
 
     fun notificarMudanca(ep: UserEp?, position: Int) {
 
-        seasons?.userEps?.set(position, ep)
+        seasons?.userEps?.set(position, ep!!)
         notifyItemChanged(position)
 
     }
