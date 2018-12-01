@@ -28,12 +28,17 @@ import adapter.ProximosAdapter
 import adapter.SeguindoRecycleAdapter
 import android.util.Log
 import br.com.icaro.filme.R
+import domain.Api
 import domain.FilmeService
 import domain.UserSeasons
 import domain.UserTvshow
+import domain.tvshow.Tvshow
 import info.movito.themoviedbapi.TmdbTvEpisodes
 import kotlinx.coroutines.experimental.*
 import utils.Constantes
+import utils.UtilsApp
+import java.util.HashMap
+import kotlin.coroutines.experimental.CoroutineContext
 import kotlin.coroutines.experimental.suspendCoroutine
 
 /**
@@ -48,7 +53,13 @@ class ListaSeguindoFragment : Fragment() {
     private var recyclerViewSeguindo: RecyclerView? = null
     private var eventListener: ValueEventListener? = null
     private var seguindoDataBase: DatabaseReference? = null
-    private lateinit var routina: Job
+    private var rotina: Job? = null
+    private var userTvshowNovo: UserTvshow? = null
+
+    private var mAuth: FirebaseAuth? = null
+    private var atualizarDatabase: FirebaseDatabase? = null
+
+    private lateinit var adapter: ProximosAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +67,7 @@ class ListaSeguindoFragment : Fragment() {
             tipo = arguments!!.getInt(Constantes.ABA)
             userTvshows = arguments!!.getSerializable(Constantes.SEGUINDO) as MutableList<UserTvshow>
         }
-
+        adapter = ProximosAdapter(this.activity, mutableListOf())
         val mAuth = FirebaseAuth.getInstance()
         val database = FirebaseDatabase.getInstance()
         seguindoDataBase = database.getReference("users").child(mAuth.currentUser!!
@@ -81,125 +92,109 @@ class ListaSeguindoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        eventListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                userTvshows = ArrayList()
-                if (dataSnapshot.exists()) {
+        Log.d("Icaro", "onViewCreated")
+        verificarSerieCoroutine()
+    }
 
-                    for (snapshot in dataSnapshot.children) {
-                        try {
-                            val userTvshow = snapshot.getValue(UserTvshow::class.java)
-                            userTvshows!!.add(userTvshow!!)
-                        } catch (e: Exception) {
-                            Crashlytics.logException(e)
-                            if (snapshot.hasChild("nome") && activity != null) {
-                                val nome = snapshot.child("nome").getValue(String::class.java)
-                                Toast.makeText(activity, resources.getString(R.string.ops_seguir_novamente) + " - " + nome, Toast.LENGTH_LONG).show()
-                            } else {
-                                if (activity != null) {
-                                    Toast.makeText(activity, resources.getString(R.string.ops_seguir_novamente), Toast.LENGTH_LONG).show()
-                                }
+
+    fun verificarSerieCoroutine() {
+        userTvshows?.forEachIndexed { indexFire, tvFire ->
+            rotina = GlobalScope.launch(Dispatchers.IO) {
+                val serie = async { Api(context = context!!).getTvShowLiteC(tvFire.id) }.await()
+                if (serie.numberOfEpisodes != tvFire.numberOfEpisodes) {
+                    try {
+                        tvFire.seasons?.forEachIndexed { index, userSeasons ->
+                            if (userSeasons.userEps?.size != serie.seasons?.get(index)?.episodeCount) {
+                                userTvshowNovo = UtilsApp.setUserTvShow(serie)
+                                atualizarRealDate(indexFire, index, serie, tvFire)
                             }
                         }
 
+                    } catch (ex: Exception) {
+                        ex.message
                     }
-                    if (getView() != null) {
+                } else {
+                    withContext(Dispatchers.Main) {
+                        adapter.add(tvFire)
+                    }
+                }
+            }
+        }
+
+    }
+
+    fun atualizarRealDate(indexSerie: Int, indexSeason: Int, serie: Tvshow?, userTvshow: UserTvshow) {
+
+        GlobalScope.launch(Dispatchers.IO) {
+            val tvSeasons = async { Api(context!!).getTvSeasonsC(id = userTvshow.id, id_season = userTvshow.numberOfSeasons) }.await()
+            userTvshowNovo?.seasons?.get(indexSeason)?.userEps = UtilsApp.setEp2(tvSeasons)
+            atulizarDataBase(indexSerie, indexSeason)
+
+        }
+    }
+
+    private fun atulizarDataBase(indexSerie: Int, indexSeason: Int) {
+
+        userTvshowNovo?.seasons?.get(indexSeason)?.seasonNumber = userTvshows!![indexSerie].seasons!![indexSeason].seasonNumber
+        userTvshowNovo?.seasons?.get(indexSeason)?.isVisto = userTvshows!![indexSerie].seasons!![indexSeason].isVisto
+        atulizarDataBaseEps(indexSerie, indexSeason)
+
+    }
+
+    private fun atulizarDataBaseEps(indexSerie: Int, indexSeason: Int) {
+
+        for ((indexEp, userEp) in userTvshows?.get(indexSerie)?.seasons?.get(indexSeason)?.userEps?.withIndex()!!) {
+            if (indexSeason <= userTvshowNovo?.seasons?.size!!)
+                userTvshowNovo?.seasons
+                        ?.get(indexSeason)
+                        ?.userEps?.set(indexEp, userEp)
+        }
+        //usar outro metodo para validar
+        if (userTvshowNovo?.seasons?.get(indexSeason)?.userEps?.size!! > userTvshows?.get(indexSerie)?.seasons?.get(indexSeason)!!.userEps?.size!!) {
+            userTvshowNovo?.seasons?.get(indexSeason)?.isVisto = false
+        }
+
+        setDataBase(userTvshowNovo, indexSeason)
+    }
+
+    private fun setDataBase(userTvshowNovo: UserTvshow?, index: Int) {
+
+        val childUpdates = HashMap<String, Any>().apply {
+            put("/numberOfEpisodes", userTvshowNovo?.numberOfEpisodes!!) //TODO nao atualiza numero
+            put("/numberOfSeasons", userTvshowNovo.numberOfSeasons)
+            put("/poster", userTvshowNovo.poster!!)
+            put("seasons/$index", userTvshowNovo.seasons!![index])
+        }
+
+        atualizarDatabase = FirebaseDatabase.getInstance()
+        val myRef = atualizarDatabase?.getReference("users")
+        myRef?.child(mAuth?.currentUser?.uid!!)
+                ?.child("seguindo")
+                ?.child(userTvshowNovo?.id.toString())
+                ?.updateChildren(childUpdates)
+                ?.addOnCompleteListener { task ->
+                    if (task.isComplete) {
                         GlobalScope.launch(Dispatchers.Main) {
-                            recyclerViewMissing = getView()!!.rootView.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
-                            recyclerViewSeguindo = getView()!!.rootView.findViewById<View>(R.id.seguindo_recycle) as RecyclerView
-                            recyclerViewMissing!!.adapter = ProximosAdapter(activity, async(Dispatchers.IO) { setSeriesMissing(userTvshows!!) }.await())
-                            recyclerViewSeguindo!!.adapter = SeguindoRecycleAdapter(activity, userTvshows)
+                            adapter.add(userTvshowNovo!!)
+                            Toast.makeText(context, R.string.season_updated, Toast.LENGTH_SHORT).show();
                         }
+                    } else {
+                        Log.d("TAG", task.exception.toString())
                     }
                 }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-        }
-        seguindoDataBase!!.addValueEventListener(eventListener)
-
     }
 
-
-    private suspend fun setSeriesMissing(userTvshows: List<UserTvshow>): List<UserTvshow> {
-        return suspendCoroutine { cont ->
-            val temp = arrayListOf<UserTvshow>()
-            userTvshows.forEachIndexed tvshow@{ index, userTvshow ->
-                userTvshows[index].seasons?.forEachIndexed { indexSeason, season ->
-                    if (season.seasonNumber != 0) {
-                        val naoVisto = season.userEps?.firstOrNull {
-                            !it.isAssistido
-                        }
-
-                        if (naoVisto != null) {
-                            try {
-                                val tvEpisode = FilmeService.getTmdbTvEpisodes()
-                                        .getEpisode(userTvshow.id, userTvshow.numberOfSeasons, naoVisto.episodeNumber,
-                                                BaseActivity.getLocale(), TmdbTvEpisodes.EpisodeMethod.external_ids)
-
-                                Log.d(TAG, "$tvEpisode - ${userTvshow.nome}")
-
-                                val tvshow: UserTvshow = userTvshows[index].copy(seasons = mutableListOf<UserSeasons>())
-
-                                val userEp = naoVisto.apply {
-                                    dataEstreia = tvEpisode.airDate
-                                    title = tvEpisode.name
-                                }
-
-                                val seasonNaoVisto = userTvshow.seasons!![indexSeason].copy(userEps = mutableListOf())
-                                seasonNaoVisto.userEps?.add(userEp)
-                                tvshow.seasons?.add(seasonNaoVisto)
-                                temp.add(tvshow)
-                                return@tvshow
-                            } catch (ex: java.lang.Exception) {
-                                Log.d(TAG, "Erro - ${ex.message}")
-                                cont.resumeWithException(ex)
-                            }
-                        }
-                    }
-                }
-            }
-            cont.resume(temp)
-        }
-    }
-//    private fun setSeriesMissing(userTvshows: List<UserTvshow>): List<UserTvshow> {
-//        val temp = ArrayList<UserTvshow>()
-//
-//        for (userTvshow in userTvshows) {
-//            var season = true
-//            for (seasons in userTvshow.seasons) {
-//                if (seasons.seasonNumber != 0 && seasons.userEps != null && season)
-//                    for (userEp in seasons.userEps) {
-//                        if (!userEp.isAssistido) {
-//                            temp.add(userTvshow)
-//                            season = false
-//                            break
-//                        }
-//                    }
-//            }
-//        }// gambiara. Arrumar!
-//
-//        return temp
-//    }
 
     private fun getViewMissing(inflater: LayoutInflater, container: ViewGroup?): View {
+        Log.d("Icaro", "getViewMissing")
         val view = inflater.inflate(R.layout.temporadas, container, false) // Criar novo layout
         view.findViewById<View>(R.id.progressBarTemporadas).visibility = View.GONE
+       // adapter = ProximosAdapter(activity, mutableListOf<UserTvshow>())
         recyclerViewMissing = view.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
         recyclerViewMissing!!.setHasFixedSize(true)
         recyclerViewMissing!!.itemAnimator = DefaultItemAnimator()
         recyclerViewMissing!!.layoutManager = LinearLayoutManager(context)
-        GlobalScope.launch(Dispatchers.Main) {
-            val missing = async(Dispatchers.IO) { setSeriesMissing(userTvshows!!) }.await()
-            if (missing.size > 0) {
-                recyclerViewMissing!!.adapter = ProximosAdapter(activity, missing)
-            } else {
-                view.findViewById<View>(R.id.text_search_empty).visibility = View.VISIBLE
-                (view.findViewById<View>(R.id.text_search_empty) as TextView).setText(R.string.empty)
-            }
-        }
+        recyclerViewMissing!!.adapter = adapter
         return view
     }
 
@@ -223,6 +218,10 @@ class ListaSeguindoFragment : Fragment() {
         super.onDestroy()
         if (eventListener != null) {
             seguindoDataBase!!.removeEventListener(eventListener!!)
+        }
+
+        if (rotina != null) {
+            rotina!!.cancel()
         }
     }
 

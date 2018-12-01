@@ -126,7 +126,6 @@ class SeguindoActivity : BaseActivity() {
                                     it.getValue(UserTvshow::class.java)
                                 }
                                 .forEach { userTvshowFire?.add(it!!) }
-                        verificarSerieCoroutine()
                     } catch (e: Exception) {
 
                     }

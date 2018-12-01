@@ -1,6 +1,8 @@
 package adapter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -66,7 +70,7 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
         holder.faltando.setText(vistos + "/" + total);
         holder.progressBar.setMax(userTvshow.getNumberOfEpisodes());
         holder.progressBar.setProgress(vistos);
-       // getEpTitle(userTvshow, holder.ep_title, holder.proximo, holder.date, holder.itemView, holder.new_seguindo);
+        // getEpTitle(userTvshow, holder.ep_title, holder.proximo, holder.date, holder.itemView, holder.new_seguindo);
         holder.ep_title.setText(userTvshow.getSeasons().get(0).getUserEps().get(0).getTitle());
         holder.date.setText(userTvshow.getSeasons().get(0).getUserEps().get(0).getDataEstreia());
         Picasso.get().load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + userTvshow.getPoster())
@@ -154,7 +158,7 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
                                     Date date = null;
                                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                                     try {
-                                        date = sdf.parse(tvEpisode.getAirDate() );
+                                        date = sdf.parse(tvEpisode.getAirDate());
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -182,7 +186,7 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
                                         context.startActivity(intent);
                                     });
                                 });
-                            } catch (Exception e){
+                            } catch (Exception e) {
                                 Crashlytics.logException(e);
                             }
                         }).start();
@@ -192,6 +196,11 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
             }
             posicao++;
         }
+    }
+
+    public void add(@NotNull UserTvshow tvFire) {
+        userTvshows.add(tvFire);
+        notifyDataSetChanged();
     }
 
     class CalendarViewHolder extends RecyclerView.ViewHolder {
