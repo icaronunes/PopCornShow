@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import br.com.icaro.filme.R;
@@ -56,7 +58,11 @@ public class SeguindoRecycleAdapter extends RecyclerView.Adapter<SeguindoRecycle
                     }
                 });
 
-
+        if (userTvshow.getDesatualizada()) {
+            holder.circulo.setVisibility(View.VISIBLE);
+        } else {
+            holder.circulo.setVisibility(View.GONE);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +77,11 @@ public class SeguindoRecycleAdapter extends RecyclerView.Adapter<SeguindoRecycle
 
     }
 
+    public void add(@NotNull UserTvshow tvFire) {
+        userTvshows.add(tvFire);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         if (userTvshows != null) {
@@ -83,11 +94,13 @@ public class SeguindoRecycleAdapter extends RecyclerView.Adapter<SeguindoRecycle
 
         private ImageView poster;
         private TextView title;
+        private ImageView circulo;
 
         SeguindoViewHolder(View itemView) {
             super(itemView);
             poster = (ImageView) itemView.findViewById(R.id.seguindo_imageView);
             title = (TextView) itemView.findViewById(R.id.seguindo_title);
+            circulo = itemView.findViewById(R.id.seguindo_circulo);
         }
     }
 }

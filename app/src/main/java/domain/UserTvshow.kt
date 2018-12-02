@@ -23,6 +23,8 @@ data class UserTvshow(
 
         var seasons: MutableList<UserSeasons>? = null,
 
-        var externalIds: ExternalIds? = null
+        var externalIds: ExternalIds? = null,
+
+        var desatualizada: Boolean = false
 ) : Serializable
 

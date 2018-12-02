@@ -19,6 +19,15 @@
         android:src="@drawable/poster_empty"
         tools:scaleType="fitXY" />
 
+    <ImageView
+        android:id="@+id/seguindo_circulo"
+        android:background="@drawable/circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/trade_size_dp_10"
+        android:layout_marginLeft="@dimen/trade_size_dp_10"
+        android:layout_marginTop="@dimen/trade_size_dp_10" />
+
     <TextView
         android:id="@+id/seguindo_title"
         android:layout_width="wrap_content"

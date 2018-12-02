@@ -214,5 +214,6 @@
     <string name="sem_informacao_company">No Company Information</string>
     <string name="tvshow_rated">Tvshow Rated</string>
     <string name="permitir_acesso_armazenamento">Para salvar imagem  é necessario permitir acesso a meoria interna.</string>
-    <string name="empty_data">--/--/--</string>
+    <string name="empty_data" translatable="false">--/--/--</string>
+    <string name="circulo" translatable="false">&#xf101;</string>
 </resources>
