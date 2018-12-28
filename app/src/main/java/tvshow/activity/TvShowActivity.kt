@@ -227,7 +227,7 @@ class TvShowActivity : BaseActivity() {
         }
     }
 
-    protected fun snack() {
+    private fun snack() {
         Snackbar.make(viewPager_tvshow, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
                     if (UtilsApp.isNetWorkAvailable(baseContext)) {
@@ -503,7 +503,7 @@ class TvShowActivity : BaseActivity() {
         series?.seasons?.forEachIndexed { index, seasonsItem ->
 
             val subscriber = Api(this)
-                    .getTvSeasons(id_tvshow, seasonsItem?.seasonNumber!!)
+                    .getTvSeasons(id_tvshow, seasonsItem?.seasonNumber!!, 1)
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.immediate())
                     .onBackpressureBuffer(1000)

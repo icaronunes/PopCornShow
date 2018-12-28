@@ -49,6 +49,7 @@ import domain.tvshow.Tvshow;
 import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
 import info.movito.themoviedbapi.model.tv.TvSeason;
+import rx.schedulers.Schedulers;
 import utils.enums.EnumTypeMedia;
 
 

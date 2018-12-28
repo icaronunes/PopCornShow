@@ -461,6 +461,32 @@ class Api(val context: Context) {
         }
     }
 
+    suspend fun getTvSeasons(id: Int, id_season: Int): TvSeasons {
+        return suspendCoroutine { cont ->
+            val request = Request.Builder()
+                    .url("${baseUrl3}tv/$id/season/$id_season?api_key=${Config.TMDB_API_KEY}&language=$timeZone,en")
+                    .get()
+                    .build()
+
+            OkHttpClient().newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    cont.resumeWithException(Throwable(e.message))
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    try {
+                        val json = response.body()?.string()
+                        val tvshow = Gson().fromJson(json, TvSeasons::class.java)
+                        cont.resume(tvshow)
+                    } catch (ex: Exception) {
+                        cont.resumeWithException(Throwable(ex.message))
+                    }
+                }
+
+            })
+        }
+    }
+
     fun getTvCreditosTemporada(id: Int, id_season: Int): Observable<Credits> {
         return rx.Observable.create { subscriber ->
             val client = OkHttpClient()
@@ -674,8 +700,8 @@ class Api(val context: Context) {
         }
     }
 
-    suspend fun getTvSeasonsC(id: Int, id_season: Int): TvSeasons{
-        return suspendCoroutine {cont ->
+    suspend fun getTvSeasonsC(id: Int, id_season: Int): TvSeasons {
+        return suspendCoroutine { cont ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()

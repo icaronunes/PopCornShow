@@ -23,6 +23,7 @@ import domain.tvshow.Tvshow
 import kotlinx.coroutines.experimental.*
 import utils.Constantes
 import utils.UtilsApp
+import utils.UtilsKt
 import java.io.Serializable
 import java.util.*
 
@@ -67,7 +68,7 @@ class ListaSeguindoFragment : Fragment() {
         Log.d("Icaro", "onViewCreated")
         when (tipo) {
             0 -> {
-                //verificarProximoEp()
+                verificarProximoEp()
             }
 
             1 -> {
@@ -76,8 +77,21 @@ class ListaSeguindoFragment : Fragment() {
         }
     }
 
+    private fun verificarProximoEp() {
+        userTvshows?.forEach {
+            try{
+                GlobalScope.launch(Dispatchers.Main) {
+                    //Pegar serie atualizada do Server. Enviar para o metodo para atualizar baseado nela
+                    val serieAtualizada = UtilsKt().atualizarSerie(this@ListaSeguindoFragment.context, serie = it )
+
+                }
+            }
+        }
+    }
+
     fun verificarSerieCoroutine() {
-        userTvshows?.forEachIndexed { indexFire, tvFire ->
+
+        userTvshows?.forEach { tvFire ->
             try {
                 rotina = GlobalScope.launch(Dispatchers.Main) {
                     val serie = async(Dispatchers.IO) { Api(context = context!!).getTvShowLiteC(tvFire.id) }.await()
@@ -105,10 +119,10 @@ class ListaSeguindoFragment : Fragment() {
         view.findViewById<View>(R.id.progressBarTemporadas).visibility = View.GONE
         adapterProximo = ProximosAdapter(this.activity, mutableListOf<UserTvshow>())
         recyclerViewMissing = view.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
-        recyclerViewMissing!!.setHasFixedSize(true)
-        recyclerViewMissing!!.itemAnimator = DefaultItemAnimator()
-        recyclerViewMissing!!.layoutManager = LinearLayoutManager(context)
-        recyclerViewMissing!!.adapter = adapterProximo
+        recyclerViewMissing?.setHasFixedSize(true)
+        recyclerViewMissing?.itemAnimator = DefaultItemAnimator()
+        recyclerViewMissing?.layoutManager = LinearLayoutManager(context)
+        recyclerViewMissing?.adapter = adapterProximo
         return view
     }
 
@@ -117,10 +131,10 @@ class ListaSeguindoFragment : Fragment() {
         view.findViewById<View>(R.id.progressBarTemporadas).visibility = View.GONE
         recyclerViewSeguindo = view.findViewById<View>(R.id.seguindo_recycle) as RecyclerView
         adapterSeguindo = SeguindoRecycleAdapter(activity, mutableListOf<UserTvshow>())
-        recyclerViewSeguindo!!.setHasFixedSize(true)
-        recyclerViewSeguindo!!.itemAnimator = DefaultItemAnimator()
-        recyclerViewSeguindo!!.layoutManager = GridLayoutManager(context, 4)
-        recyclerViewSeguindo!!.adapter = adapterSeguindo
+        recyclerViewSeguindo?.setHasFixedSize(true)
+        recyclerViewSeguindo?.itemAnimator = DefaultItemAnimator()
+        recyclerViewSeguindo?.layoutManager = GridLayoutManager(context, 4)
+        recyclerViewSeguindo?.adapter = adapterSeguindo
         return view
     }
 
