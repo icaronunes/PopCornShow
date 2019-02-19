@@ -82,9 +82,14 @@ class ListaSeguindoFragment : Fragment() {
             try{
                 GlobalScope.launch(Dispatchers.Main) {
                     //Pegar serie atualizada do Server. Enviar para o metodo para atualizar baseado nela
-                    val serieAtualizada = UtilsKt().atualizarSerie(this@ListaSeguindoFragment.context, serie = it )
+                    val serie = async(Dispatchers.IO) { Api(context = context!!).getTvShowLiteC(it.id) }.await()
+                    val serieAtualizada = UtilsKt().atualizarSerie(this@ListaSeguindoFragment.context, serie = serie )
+                    adapterProximo?.add(serieAtualizada)
+                    Log.d(this.javaClass.name, serieAtualizada.toString() )
 
                 }
+            } catch(ex: Exception){
+
             }
         }
     }

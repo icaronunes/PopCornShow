@@ -53,13 +53,13 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
 
 
     @Override
-    public CalendarViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(context).inflate(R.layout.calendar_adapter, parent, false);
         return new ProximosAdapter.CalendarViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final CalendarViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final CalendarViewHolder holder, int position) {
 
         int vistos, total;
         final UserTvshow userTvshow = userTvshows.get(position);
@@ -71,8 +71,22 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
         holder.progressBar.setMax(userTvshow.getNumberOfEpisodes());
         holder.progressBar.setProgress(vistos);
         // getEpTitle(userTvshow, holder.ep_title, holder.proximo, holder.date, holder.itemView, holder.new_seguindo);
-        holder.ep_title.setText(userTvshow.getSeasons().get(0).getUserEps().get(0).getTitle());
-        holder.date.setText(userTvshow.getSeasons().get(0).getUserEps().get(0).getDataEstreia());
+        if (userTvshow.getSeasons() != null) {
+            if (userTvshow.getSeasons().size() != 0) {
+                if (userTvshow.getSeasons().get(0).getUserEps() != null) {
+                    if (userTvshow.getSeasons().get(0).getUserEps().size() != 0) {
+                        if (userTvshow.getSeasons().get(0).getUserEps().get(0).getTitle() != null) {
+                            String title = userTvshow.getSeasons().get(0).getUserEps().get(0).getTitle();
+                            holder.ep_title.setText(title);
+                        }
+                        if (userTvshow.getSeasons().get(0).getUserEps().get(0).getDataEstreia() != null) {
+                            holder.date.setText(userTvshow.getSeasons().get(0).getUserEps().get(0).getDataEstreia());
+                        }
+                    }
+                }
+            }
+        }
+
         Picasso.get().load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + userTvshow.getPoster())
                 .error(R.drawable.poster_empty)
                 .into(holder.poster, new Callback() {
@@ -83,7 +97,7 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
 
                     @Override
                     public void onError(Exception e) {
-
+                        e.getMessage();
                     }
 
                 });

@@ -17,11 +17,13 @@ class UtilsKt {
             try {
                 rotina =  GlobalScope.launch(Dispatchers.Main) {
                     val season = async(Dispatchers.IO) { Api(context = context!!).getTvSeasons(serie.id!!, seasonsItem?.seasonNumber!!) }.await()
-                    userTvshow.seasons!![index].userEps = UtilsApp.setEp2(season)
+                    val userEp =  UtilsApp.setEp2(season)
+                    if (userEp != null)
+                    userTvshow.seasons!![index].userEps = userEp
 
                 }
             } catch (ex: Exception) {
-                Toast.makeText(context, context.getString(R.string.ops), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context?.getString(R.string.ops), Toast.LENGTH_SHORT).show()
             }
         }
         if (rotina.isActive || rotina.isCompleted) rotina.cancel()

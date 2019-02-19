@@ -85,13 +85,17 @@ public class UtilsApp {
 
 	private static List<UserSeasons> setUserSeasson(Tvshow serie) {
 		List<UserSeasons> list = new ArrayList<>();
-		for (SeasonsItem tvSeason : serie.getSeasons()) {
-			UserSeasons userSeasons = new UserSeasons();
-			userSeasons.setId(tvSeason.getId());
-			userSeasons.setSeasonNumber(tvSeason.getSeasonNumber());
-			list.add(userSeasons);
+		try {
+			for (SeasonsItem tvSeason : serie.getSeasons()) {
+				UserSeasons userSeasons = new UserSeasons();
+				userSeasons.setId(tvSeason.getId());
+				userSeasons.setSeasonNumber(tvSeason.getSeasonNumber());
+				list.add(userSeasons);
+			}
+			return list;
+		} catch (Exception e){
+			return list;
 		}
-		return list;
 	}
 
 	public static List<UserEp> setEp(TvSeason tvSeason) {
@@ -109,14 +113,18 @@ public class UtilsApp {
 
 	public static List<UserEp> setEp2(TvSeasons tvSeason) {
 		List<UserEp> eps = new ArrayList<>();
-		for (EpisodesItem tvEpisode : tvSeason.getEpisodes()) {
-			UserEp userEp = new UserEp();
-			userEp.setEpisodeNumber(tvEpisode.getEpisodeNumber());
-			userEp.setId(tvEpisode.getId());
-			userEp.setSeasonNumber(tvEpisode.getSeasonNumber());
-			eps.add(userEp);
+		 try {
+			for (EpisodesItem tvEpisode : tvSeason.getEpisodes()) {
+				UserEp userEp = new UserEp();
+				userEp.setEpisodeNumber(tvEpisode.getEpisodeNumber());
+				userEp.setId(tvEpisode.getId());
+				userEp.setSeasonNumber(tvEpisode.getSeasonNumber());
+				eps.add(userEp);
+			}
+			return eps;
+		} catch (Exception e){
+			return null;
 		}
-		return eps;
 	}
 
 
