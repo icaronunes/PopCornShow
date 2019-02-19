@@ -105,7 +105,7 @@ import utils.enums.EnumTypeMedia
 	override fun getItemCount(): Int = multiRetorno.results?.size!!
 
 
-	inner class HolderView(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+	inner class HolderView(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 		var poster: ImageView
 		var search_nome: TextView
