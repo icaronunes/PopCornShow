@@ -51,7 +51,6 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
 
     }
 
-
     @Override
     public CalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(context).inflate(R.layout.calendar_adapter, parent, false);
@@ -70,7 +69,7 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
         holder.faltando.setText(vistos + "/" + total);
         holder.progressBar.setMax(userTvshow.getNumberOfEpisodes());
         holder.progressBar.setProgress(vistos);
-        // getEpTitle(userTvshow, holder.ep_title, holder.proximo, holder.date, holder.itemView, holder.new_seguindo);
+      //  getEpTitle(userTvshow, holder.ep_title, holder.proximo, holder.date, holder.itemView, holder.new_seguindo);
         if (userTvshow.getSeasons() != null) {
             if (userTvshow.getSeasons().size() != 0) {
                 if (userTvshow.getSeasons().get(0).getUserEps() != null) {
@@ -119,7 +118,7 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
 
     private int contamgeTotalEp(UserTvshow userTvshow) {
         int total = 0;
-
+        // mudar, pegar total de ep, com numero recebido, menos eps da temporada zero
         for (UserSeasons seasons : userTvshow.getSeasons()) {
             if (seasons.getSeasonNumber() != 0 && seasons.getUserEps() != null)
                 total = total + seasons.getUserEps().size();
@@ -214,7 +213,8 @@ public class ProximosAdapter extends RecyclerView.Adapter<ProximosAdapter.Calend
 
     public void add(@NotNull UserTvshow tvFire) {
         userTvshows.add(tvFire);
-        notifyDataSetChanged();
+        notifyItemInserted(userTvshows.size());
+
     }
 
     class CalendarViewHolder extends RecyclerView.ViewHolder {

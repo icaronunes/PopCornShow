@@ -796,7 +796,7 @@ class TvShowFragment : Fragment() {
 
             recycle_tvshow_similares.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
-                override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     when (newState) {
                         0 -> {
                             activity?.fab_menu_filme?.visibility = View.VISIBLE

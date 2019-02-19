@@ -259,7 +259,7 @@ class SeguindoActivity : BaseActivity() {
                         ?.get(indexSeason)
                         ?.userEps?.set(indexEp, userEp)
         }
-//usar outro metodo para validar
+        //usar outro metodo para validar
         if (userTvshowNovo?.seasons?.get(indexSeason)?.userEps?.size!! > userTvshowFire?.get(indexSerie)?.seasons?.get(indexSeason)!!.userEps?.size!!) {
             userTvshowNovo?.seasons?.get(indexSeason)?.isVisto = false
         }

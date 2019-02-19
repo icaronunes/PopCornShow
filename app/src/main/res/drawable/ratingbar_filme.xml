@@ -6,6 +6,6 @@
     <item android:id="@android:id/secondaryProgress"
         android:drawable="@drawable/ratingbar_half" />
 
-    <item android:id="@+android:id/progress"
+    <item android:id="@android:id/progress"
         android:drawable="@drawable/ratingbar_filled" />
 </layer-list>

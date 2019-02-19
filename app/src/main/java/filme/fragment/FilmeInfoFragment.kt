@@ -587,7 +587,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
             recycle_filme_similares.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
-                override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     when (newState) {
                         0 -> {
                             activity?.fab_menu_filme?.visibility = View.VISIBLE
