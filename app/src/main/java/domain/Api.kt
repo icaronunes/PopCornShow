@@ -15,7 +15,9 @@ import utils.Config
 import utils.getIdiomaEscolhido
 import java.io.IOException
 import java.util.*
-import kotlin.coroutines.experimental.suspendCoroutine
+import kotlin.coroutines.suspendCoroutine
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 
 class Api(val context: Context) {

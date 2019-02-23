@@ -23,10 +23,10 @@ import domain.movie.ListaFilmes
 import domain.movie.ListaItemFilme
 import info.movito.themoviedbapi.TvResultsPage
 import info.movito.themoviedbapi.model.core.MovieResultsPage
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.GlobalScope
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import listafilmes.activity.FilmesActivity
 import listaserie.activity.TvShowsActivity
 import utils.Constantes

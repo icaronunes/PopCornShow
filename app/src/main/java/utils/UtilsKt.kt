@@ -6,7 +6,7 @@ import br.com.icaro.filme.R
 import domain.Api
 import domain.UserTvshow
 import domain.tvshow.Tvshow
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 
 class UtilsKt {
 

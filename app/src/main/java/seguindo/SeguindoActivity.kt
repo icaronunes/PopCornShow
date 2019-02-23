@@ -17,17 +17,12 @@ import br.com.icaro.filme.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import domain.Api
-import domain.TvSeasons
 import domain.UserTvshow
 import domain.tvshow.Tvshow
-import kotlinx.coroutines.experimental.*
-import rx.Observer
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
+import kotlinx.coroutines.*
 import rx.subscriptions.CompositeSubscription
 import utils.UtilsApp
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by icaro on 25/11/16.
@@ -218,7 +213,7 @@ class SeguindoActivity : BaseActivity() {
 
         }
 
-//        var tvseasonRetorno: TvSeasons? = null
+/*        var tvseasonRetorno: TvSeasons? = null
 //        val subscriber = Api(this)
 //                .getTvSeasons(userTvshow.id, userTvshow.numberOfSeasons)
 //                .debounce(5000, TimeUnit.MILLISECONDS)
@@ -241,6 +236,7 @@ class SeguindoActivity : BaseActivity() {
 //                })
 //
 //        compositeSubscription?.add(subscriber)
+*/
     }
 
     private fun atulizarDataBase(indexSerie: Int, indexSeason: Int) {
@@ -285,7 +281,7 @@ class SeguindoActivity : BaseActivity() {
                 ?.addOnCompleteListener { task ->
                     if (task.isComplete) {
                         setupViewPagerTabs()
-                        Toast.makeText(this@SeguindoActivity, R.string.season_updated, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this@SeguindoActivity, R.string.season_updated, Toast.LENGTH_SHORT).show()
                     } else {
                         Log.d("TAG", task.exception.toString())
                     }

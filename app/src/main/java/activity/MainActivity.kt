@@ -22,7 +22,7 @@ import domain.ListaSeries
 import domain.TopMain
 import domain.movie.ListaFilmes
 import fragment.ViewPageMainTopFragment
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 import utils.UtilsApp
 
 
