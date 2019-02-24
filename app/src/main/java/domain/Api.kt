@@ -4,20 +4,18 @@ import android.content.Context
 import com.google.gson.Gson
 import domain.busca.MultiSearch
 import domain.colecao.Colecao
-import domain.movie.Lista
 import domain.movie.ListaFilmes
 import domain.person.Person
 import domain.tvshow.Tvshow
-import info.movito.themoviedbapi.TvResultsPage
 import okhttp3.*
 import rx.Observable
 import utils.Config
 import utils.getIdiomaEscolhido
 import java.io.IOException
 import java.util.*
-import kotlin.coroutines.suspendCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 
 class Api(val context: Context) {
@@ -49,6 +47,9 @@ class Api(val context: Context) {
         timeZone = getIdiomaEscolhido(context)
     }
 
+    private fun getKey(): String{
+        return if (Random(2).nextInt() % 2 == 0) Config.TMDB_API_KEY else  Config.TMDB_API_KEY2
+    }
 
     fun PersonPopular(pagina: Int): Observable<PersonPopular> {
         return rx.Observable.create { subscriber ->
@@ -358,6 +359,31 @@ class Api(val context: Context) {
                         val json = response.body()?.string()
                         val tvshow = Gson().fromJson(json, Tvshow::class.java)
                         cont.resume(tvshow)
+                    } catch (ex: Exception) {
+                        cont.resumeWithException(Throwable(ex.message))
+                    }
+                }
+
+            })
+        }
+    }
+
+    suspend fun getTvShowEpC(id: Int, idTemp: Int, idEp: Int): EpisodesItem { // Usado em "Seguindo"
+        return suspendCoroutine { cont -> 2
+            val request = Request.Builder()
+                    .url("${baseUrl3}tv/$id/season/$idTemp/episode/$idEp?api_key=${getKey()}" + "&language=$timeZone")
+                    .get()
+                    .build()
+            OkHttpClient().newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    cont.resumeWithException(Throwable(e.message))
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    try {
+                        val json = response.body()?.string()
+                        val ep = Gson().fromJson(json, EpisodesItem::class.java)
+                        cont.resume(ep)
                     } catch (ex: Exception) {
                         cont.resumeWithException(Throwable(ex.message))
                     }

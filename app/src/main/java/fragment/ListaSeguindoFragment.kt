@@ -12,20 +12,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import br.com.icaro.filme.R
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import domain.Api
+import domain.UserEp
 import domain.UserTvshow
-import domain.tvshow.Tvshow
 import kotlinx.coroutines.*
+import org.apache.commons.lang3.tuple.MutablePair
 import utils.Constantes
-import utils.UtilsApp
-import utils.UtilsKt
 import java.io.Serializable
-import java.util.*
 
 /**
  * Created by icaro on 25/11/16.
@@ -72,24 +66,45 @@ class ListaSeguindoFragment : Fragment() {
             }
 
             1 -> {
-                verificarSerieCoroutine()
+                //verificarSerieCoroutine()
             }
         }
     }
 
     private fun verificarProximoEp() {
-        userTvshows?.forEach {
-            try{
-                GlobalScope.launch(Dispatchers.Main) {
+        val series = mutableListOf<Pair<UserEp, UserTvshow>>()
+        userTvshows?.forEach eps@{ userTvshow ->
+            userTvshow.seasons?.forEach {
+                if (it.seasonNumber != 0)
+                    it.userEps?.forEach { userEp ->
+                        if (!userEp.isAssistido) {
+                            val pair = Pair(userEp, userTvshow)
+                            series.add(pair)
+                            adapterProximo?.addSeries(pair)
+                            return@eps
+                        }
+                    }
+            }
+        }
+        atualizar(series)
+    }
+
+
+    private fun atualizar(series: MutableList<Pair<UserEp, UserTvshow>>) {
+
+        series?.forEach {
+            try {
+                GlobalScope.launch(Dispatchers.IO) {
                     //Pegar serie atualizada do Server. Enviar para o metodo para atualizar baseado nela
-                    val serie = async(Dispatchers.IO) { Api(context = context!!).getTvShowLiteC(it.id) }.await()
-                    val serieAtualizada = UtilsKt().atualizarSerie(this@ListaSeguindoFragment.context, serie = serie )
-                    adapterProximo?.add(serieAtualizada)
-                    Log.d(this.javaClass.name, serieAtualizada.toString() )
-
+                    val serie = async(Dispatchers.IO) { Api(context = context!!).getTvShowLiteC(it.second.id) }.await()
+                    val ep = async(Dispatchers.IO) { Api(context = context!!).getTvShowEpC(it.second.id, it.first.seasonNumber, it.first.episodeNumber) }.await()
+                    val ultima = MutablePair(ep, serie)
+                    launch(Dispatchers.Main) {
+                        adapterProximo?.addAtual(ultima)
+                    }
                 }
-            } catch(ex: Exception){
-
+            } catch (ex: Exception) {
+                Log.d(this.javaClass.name, ex.toString())
             }
         }
     }
@@ -122,7 +137,7 @@ class ListaSeguindoFragment : Fragment() {
         Log.d("Icaro", "getViewMissing")
         val view = inflater.inflate(R.layout.temporadas, container, false) // Criar novo layout
         view.findViewById<View>(R.id.progressBarTemporadas).visibility = View.GONE
-        adapterProximo = ProximosAdapter(this.activity, mutableListOf<UserTvshow>())
+        adapterProximo = ProximosAdapter(requireActivity())
         recyclerViewMissing = view.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
         recyclerViewMissing?.setHasFixedSize(true)
         recyclerViewMissing?.itemAnimator = DefaultItemAnimator()
