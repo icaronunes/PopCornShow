@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.icaro.filme.R
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import domain.Api
 import domain.UserEp
 import domain.UserTvshow
@@ -92,7 +93,7 @@ class ListaSeguindoFragment : Fragment() {
 
     private fun atualizar(series: MutableList<Pair<UserEp, UserTvshow>>) {
 
-        series?.forEach {
+        series.forEach {
             try {
                 GlobalScope.launch(Dispatchers.IO) {
                     //Pegar serie atualizada do Server. Enviar para o metodo para atualizar baseado nela
@@ -107,6 +108,7 @@ class ListaSeguindoFragment : Fragment() {
                 Log.d(this.javaClass.name, ex.toString())
             }
         }
+        (recyclerViewMissing as ShimmerRecyclerView).hideShimmerAdapter()
     }
 
     fun verificarSerieCoroutine() {
@@ -138,7 +140,8 @@ class ListaSeguindoFragment : Fragment() {
         val view = inflater.inflate(R.layout.temporadas, container, false) // Criar novo layout
         view.findViewById<View>(R.id.progressBarTemporadas).visibility = View.GONE
         adapterProximo = ProximosAdapter(requireActivity())
-        recyclerViewMissing = view.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
+        recyclerViewMissing = view.findViewById<ShimmerRecyclerView>(R.id.temporadas_recycle) as ShimmerRecyclerView
+        (recyclerViewMissing as ShimmerRecyclerView).showShimmerAdapter()
         recyclerViewMissing?.setHasFixedSize(true)
         recyclerViewMissing?.itemAnimator = DefaultItemAnimator()
         recyclerViewMissing?.layoutManager = LinearLayoutManager(context)

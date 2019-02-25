@@ -35,7 +35,7 @@ public class SeguindoAdapater extends FragmentPagerAdapter {
             return ListaSeguindoFragment.Companion.newInstance(position, userTvshows);
         }
 
-        if (position == 1){
+        if (position == 1) {
             return ListaSeguindoFragment.Companion.newInstance(position, userTvshows);
         }
 

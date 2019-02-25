@@ -1,6 +1,7 @@
 package adapter
 
 import adapter.ProximosAdapter.CalendarViewHolder
+import android.content.Intent
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,11 +11,16 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import br.com.icaro.filme.R
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import domain.EpisodesItem
 import domain.UserEp
 import domain.UserTvshow
 import domain.tvshow.Tvshow
 import org.apache.commons.lang3.tuple.MutablePair
+import tvshow.activity.TvShowActivity
+import utils.Constantes
+import utils.UtilsApp
 
 /**
  * Created by icaro on 25/11/16.
@@ -22,12 +28,12 @@ import org.apache.commons.lang3.tuple.MutablePair
 class ProximosAdapter(private val context: FragmentActivity)
     : RecyclerView.Adapter<CalendarViewHolder>() {
 
-    private var color: Int = 0
+    private var color_top: Int = 0
     private val userTvshows: MutableList<
             MutablePair<
                     Pair<UserEp, UserTvshow>,
                     MutablePair<EpisodesItem, Tvshow>?
-                 >> = mutableListOf()
+                    >> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.calendar_adapter, parent, false)
@@ -37,15 +43,80 @@ class ProximosAdapter(private val context: FragmentActivity)
     override fun onBindViewHolder(view: CalendarViewHolder, position: Int) {
         val (old, new) = userTvshows[position]
         if (new != null) {
+            val epVistos = epNubmber(new)
             view.title.text = new.right.name
-            view.proximo.text = "${new.left.seasonNumber}/${new.left.episodeNumber}"
-            view.ep_title.text =  new.left.name
-            view.faltando.text = "${new.left.episodeNumber}/${new.right.numberOfEpisodes}"
-            view.progressBar.max = new.right.numberOfEpisodes!!
-            view.progressBar.progress = new.left.episodeNumber!!
-        } else {
+            view.proximo.text = "S${new.left.seasonNumber}/E${new.left.episodeNumber}"
+            view.ep_title.text = new.left.name
+            view.faltando.text = "$epVistos/${new.right.numberOfEpisodes}"
+            view.progressBar.isIndeterminate = false
 
+            view.progressBar.progress = epVistos
+            view.progressBar.max = totalSemSeasonZero(new)
+            view.date.text = if (new.right.lastAirDate.equals(new.left.airDate)) {
+                view.new_seguindo.visibility = View.GONE
+                new.right.lastAirDate
+            } else {
+                view.new_seguindo.visibility = View.VISIBLE
+                new.right.lastAirDate
+            }
+
+            view.eps_faltantes.text = "+${(new.right.numberOfEpisodes?.minus(epVistos))}"
+
+            setImage(view.poster, new.right.posterPath)
+
+        } else {
+            view.title.text = old.second.nome
+            view.proximo.text = ""//"S${new.left.seasonNumber}/E${new.left.episodeNumber}"
+            view.ep_title.text = old.second.nome
+            view.faltando.text = "${old.first.episodeNumber}/${old.second.numberOfEpisodes}"
+            view.progressBar.isIndeterminate = true
+            view.date.text = old.first.dataEstreia
+
+            setImage(view.poster, old.second.poster)
         }
+
+        view.poster.setOnClickListener {
+            val intent = Intent(context, TvShowActivity::class.java)
+            intent.putExtra(Constantes.COLOR_TOP, color_top)
+            intent.putExtra(Constantes.TVSHOW_ID, old.second.id)
+            intent.putExtra(Constantes.NOME_TVSHOW, old.second.nome)
+            context.startActivity(intent)
+        }
+    }
+
+    private fun totalSemSeasonZero(new: MutablePair<EpisodesItem, Tvshow>?): Int {
+
+        return if (new?.right?.seasons?.get(0)?.seasonNumber == 0) {
+            new.right?.numberOfEpisodes?.minus(new.right?.seasons!![0]?.episodeCount!!)!!
+        } else {
+            new?.right?.numberOfEpisodes!!
+        }
+    }
+
+    private fun epNubmber(new: MutablePair<EpisodesItem, Tvshow>?): Int {
+        var epTotoal = 0
+        new?.right?.seasons?.forEach {
+            if (it?.seasonNumber != 0 && new.left.seasonNumber != it?.seasonNumber) {
+                epTotoal += it?.episodeCount!!
+            }
+        }
+        epTotoal += new?.left?.episodeNumber!!
+        return epTotoal
+    }
+
+    private fun setImage(viewImage: ImageView, url: String?) {
+        Picasso.get()
+                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + url)
+                .placeholder(R.drawable.poster_empty)
+                .into(viewImage, object : Callback {
+                    override fun onError(e: Exception?) {
+                        // holder.progressBarSimilares.visibility = View.GONE
+                    }
+
+                    override fun onSuccess() {
+                        color_top = UtilsApp.loadPalette(viewImage)
+                    }
+                })
     }
 
     override fun getItemCount(): Int {
@@ -53,21 +124,42 @@ class ProximosAdapter(private val context: FragmentActivity)
 
     }
 
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     fun addSeries(series: Pair<UserEp, UserTvshow>, atual: MutablePair<EpisodesItem, Tvshow>? = null) {
         userTvshows.add(MutablePair(series, atual))
-        notifyItemChanged(userTvshows.size)
+        notifyItemInserted(userTvshows.size)
     }
 
     fun addAtual(ultima: MutablePair<EpisodesItem, Tvshow>) {
         val t = userTvshows.find {
-           it.left.first.id == ultima.left.id
-        }
-        val index = userTvshows.indexOf(t)
-        if(index != -1) {
-        userTvshows[index].right = ultima
-        notifyItemChanged(index)
+            it.left.second.id == ultima.right.id
         }
 
+        userTvshows.forEachIndexed { index, it ->
+
+            if (it.left.second.id == ultima.right.id) {
+                userTvshows[index].right = ultima
+                notifyItemChanged(index)
+            }
+        }
+//        // val index = userTvshows.indexOf(t)
+//        val tv = userTvshows.filterIndexed { index, t ->
+//            t.right?.right?.id == ultima.right.id
+//        }
+//        val index = userTvshows.takeIf { }
+//        if (index != -1) {
+//            userTvshows[index].right = ultima
+//            notifyItemChanged(index)
+//        }
+//    }
     }
 
     inner class CalendarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

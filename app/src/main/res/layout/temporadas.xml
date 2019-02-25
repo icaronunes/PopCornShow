@@ -2,11 +2,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
+    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
         android:id="@+id/temporadas_recycle"
         android:layout_width="match_parent"
+        app:shimmer_demo_layout_manager_type="linear_vertical"
+        app:shimmer_demo_angle="1"
+        app:shimmer_demo_reverse_animation="true"
         android:layout_height="match_parent" />
 
     <ProgressBar

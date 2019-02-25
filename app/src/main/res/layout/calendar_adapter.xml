@@ -20,13 +20,11 @@
             android:id="@+id/poster"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
             android:adjustViewBounds="true"
             android:cropToPadding="true"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             android:src="@drawable/poster_empty"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,6 +53,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="2dp"
+
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/poster"
             app:layout_constraintTop_toBottomOf="@+id/title"
             tools:text="S1E2" />
@@ -68,6 +68,7 @@
             android:layout_marginTop="2dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/proximo_ver"
             app:layout_constraintTop_toBottomOf="@+id/title"
@@ -95,15 +96,17 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="sans-serif"
             android:text="@string/new_segiundo"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/imdb"
             android:textStyle="normal|bold"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            tools:visibility="visible" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -130,9 +133,10 @@
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:indeterminate="true"
                 android:layout_marginLeft="@dimen/trade_size_dp_10"
                 android:layout_marginRight="@dimen/trade_size_dp_10"
-                 />
+                android:theme="@style/AppTheme" />
 
         </LinearLayout>
 
@@ -142,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
             android:textStyle="normal|bold"
             app:layout_constraintBottom_toBottomOf="parent"
