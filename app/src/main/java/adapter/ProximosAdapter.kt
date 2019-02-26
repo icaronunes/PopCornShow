@@ -21,6 +21,9 @@ import org.apache.commons.lang3.tuple.MutablePair
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 /**
  * Created by icaro on 25/11/16.
@@ -52,12 +55,27 @@ class ProximosAdapter(private val context: FragmentActivity)
 
             view.progressBar.progress = epVistos
             view.progressBar.max = totalSemSeasonZero(new)
-            view.date.text = if (new.right.lastAirDate.equals(new.left.airDate)) {
-                view.new_seguindo.visibility = View.GONE
-                new.right.lastAirDate
-            } else {
-                view.new_seguindo.visibility = View.VISIBLE
-                new.right.lastAirDate
+            view.date.text = when {
+                totalSemSeasonZero(new).minus(epNubmber(new)) == 0 -> {
+                    view.new_seguindo.visibility = View.GONE
+                    new.right.lastAirDate
+                }
+
+                isEplancado(new.left.airDate) -> {
+                    view.new_seguindo.visibility = View.VISIBLE
+                    new.right.lastAirDate
+                }
+
+                new.right.lastAirDate.equals(new.left.airDate) -> {
+                    view.new_seguindo.visibility = View.VISIBLE
+                    new.right.lastAirDate
+                }
+
+                else -> {
+                    view.new_seguindo.visibility = View.GONE
+                    new.right.lastAirDate
+                    //Todo contagem errada. quando falta um, monstra que falta 0
+                }
             }
 
             view.eps_faltantes.text = "+${(new.right.numberOfEpisodes?.minus(epVistos))}"
@@ -82,6 +100,14 @@ class ProximosAdapter(private val context: FragmentActivity)
             intent.putExtra(Constantes.NOME_TVSHOW, old.second.nome)
             context.startActivity(intent)
         }
+    }
+
+    private fun isEplancado(airDate: String?): Boolean {
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val dateEpNew =  sdf.parse(airDate)
+        val toDay = Calendar.getInstance()
+        toDay.add(Calendar.DAY_OF_YEAR, -1)
+        return dateEpNew.after(toDay.time)
     }
 
     private fun totalSemSeasonZero(new: MutablePair<EpisodesItem, Tvshow>?): Int {
@@ -150,16 +176,6 @@ class ProximosAdapter(private val context: FragmentActivity)
                 notifyItemChanged(index)
             }
         }
-//        // val index = userTvshows.indexOf(t)
-//        val tv = userTvshows.filterIndexed { index, t ->
-//            t.right?.right?.id == ultima.right.id
-//        }
-//        val index = userTvshows.takeIf { }
-//        if (index != -1) {
-//            userTvshows[index].right = ultima
-//            notifyItemChanged(index)
-//        }
-//    }
     }
 
     inner class CalendarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
