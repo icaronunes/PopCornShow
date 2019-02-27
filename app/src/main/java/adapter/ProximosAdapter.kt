@@ -1,5 +1,6 @@
 package adapter
 
+import activity.TemporadaActivity
 import adapter.ProximosAdapter.CalendarViewHolder
 import android.content.Intent
 import android.support.v4.app.FragmentActivity
@@ -78,7 +79,12 @@ class ProximosAdapter(private val context: FragmentActivity)
                 }
             }
 
-            view.eps_faltantes.text = "+${(new.right.numberOfEpisodes?.minus(epVistos))}"
+            view.eps_faltantes.text = if ((new.right.numberOfEpisodes?.minus(epVistos)) == 0) {
+                view.eps_faltantes.visibility = View.GONE
+                ""
+            } else {
+                "${(new.right.numberOfEpisodes?.minus(epVistos))}"
+            }
 
             setImage(view.poster, new.right.posterPath)
 
@@ -93,6 +99,16 @@ class ProximosAdapter(private val context: FragmentActivity)
             setImage(view.poster, old.second.poster)
         }
 
+        view.itemView.setOnClickListener { _ ->
+            val intent = Intent(context, TemporadaActivity::class.java)
+            intent.putExtra(Constantes.TVSHOW_ID, old.second.id)
+            intent.putExtra(Constantes.TEMPORADA_ID, old.first.seasonNumber)
+            intent.putExtra(Constantes.TEMPORADA_POSITION, temporadaZero(old?.second?.seasons?.get(0)?.seasonNumber, old.first.seasonNumber)) //old.first.episodeNumber)
+            intent.putExtra(Constantes.NOME, new?.right?.name)
+            intent.putExtra(Constantes.COLOR_TOP, color_top)
+            context.startActivity(intent)
+        }
+
         view.poster.setOnClickListener {
             val intent = Intent(context, TvShowActivity::class.java)
             intent.putExtra(Constantes.COLOR_TOP, color_top)
@@ -102,9 +118,16 @@ class ProximosAdapter(private val context: FragmentActivity)
         }
     }
 
+    private fun temporadaZero(new: Int?, episodeNumber: Int): Int {
+        if(new == 0){
+            return episodeNumber
+        }
+        return episodeNumber - 1
+    }
+
     private fun isEplancado(airDate: String?): Boolean {
         val sdf = SimpleDateFormat("yyyy-MM-dd")
-        val dateEpNew =  sdf.parse(airDate)
+        val dateEpNew = sdf.parse(airDate)
         val toDay = Calendar.getInstance()
         toDay.add(Calendar.DAY_OF_YEAR, -1)
         return dateEpNew.after(toDay.time)

@@ -67,7 +67,7 @@ class ListaSeguindoFragment : Fragment() {
             }
 
             1 -> {
-                //verificarSerieCoroutine()
+                verificarSerieCoroutine()
             }
         }
     }
