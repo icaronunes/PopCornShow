@@ -39,7 +39,6 @@ import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.Date
 
 
 class TvShowActivity : BaseActivity() {

@@ -54,10 +54,12 @@ class ProximosAdapter(private val context: FragmentActivity)
             view.faltando.text = "$epVistos/${new.right.numberOfEpisodes}"
             view.progressBar.isIndeterminate = false
 
-            view.progressBar.progress = epVistos
+            epVistos?.let {
+                view.progressBar.progress = it
+            }
             view.progressBar.max = totalSemSeasonZero(new)
             view.date.text = when {
-                totalSemSeasonZero(new).minus(epNubmber(new)) == 0 -> {
+                epNubmber(new)?.let { totalSemSeasonZero(new).minus(it) } == 0 -> {
                     view.new_seguindo.visibility = View.GONE
                     new.right.lastAirDate
                 }
@@ -79,11 +81,11 @@ class ProximosAdapter(private val context: FragmentActivity)
                 }
             }
 
-            view.eps_faltantes.text = if ((new.right.numberOfEpisodes?.minus(epVistos)) == 0) {
+            view.eps_faltantes.text = if ((epVistos?.let { new.right.numberOfEpisodes?.minus(it) }) == 0) {
                 view.eps_faltantes.visibility = View.GONE
                 ""
             } else {
-                "${(new.right.numberOfEpisodes?.minus(epVistos))}"
+                "${(epVistos?.let { new.right.numberOfEpisodes?.minus(it) })}"
             }
 
             setImage(view.poster, new.right.posterPath)
@@ -119,18 +121,22 @@ class ProximosAdapter(private val context: FragmentActivity)
     }
 
     private fun temporadaZero(new: Int?, episodeNumber: Int): Int {
-        if(new == 0){
+        if (new == 0) {
             return episodeNumber
         }
         return episodeNumber - 1
     }
 
     private fun isEplancado(airDate: String?): Boolean {
-        val sdf = SimpleDateFormat("yyyy-MM-dd")
-        val dateEpNew = sdf.parse(airDate)
-        val toDay = Calendar.getInstance()
-        toDay.add(Calendar.DAY_OF_YEAR, -1)
-        return dateEpNew.after(toDay.time)
+        try {
+            val sdf = SimpleDateFormat("yyyy-MM-dd")
+            val dateEpNew = sdf.parse(airDate)
+            val toDay = Calendar.getInstance()
+            toDay.add(Calendar.DAY_OF_YEAR, -1)
+            return dateEpNew.after(toDay.time)
+        } catch (Ex: java.lang.Exception) {
+            return false
+        }
     }
 
     private fun totalSemSeasonZero(new: MutablePair<EpisodesItem, Tvshow>?): Int {
@@ -142,14 +148,16 @@ class ProximosAdapter(private val context: FragmentActivity)
         }
     }
 
-    private fun epNubmber(new: MutablePair<EpisodesItem, Tvshow>?): Int {
+    private fun epNubmber(new: MutablePair<EpisodesItem, Tvshow>?): Int? {
         var epTotoal = 0
         new?.right?.seasons?.forEach {
             if (it?.seasonNumber != 0 && new.left.seasonNumber != it?.seasonNumber) {
                 epTotoal += it?.episodeCount!!
             }
         }
-        epTotoal += new?.left?.episodeNumber!!
+        new?.left?.episodeNumber?.let {
+            epTotoal + it
+        }
         return epTotoal
     }
 

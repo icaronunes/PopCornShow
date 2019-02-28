@@ -18,6 +18,7 @@ import domain.Api
 import domain.UserEp
 import domain.UserTvshow
 import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Main
 import org.apache.commons.lang3.tuple.MutablePair
 import utils.Constantes
 import java.io.Serializable
@@ -115,18 +116,17 @@ class ListaSeguindoFragment : Fragment() {
 
         userTvshows?.forEach { tvFire ->
             try {
-                rotina = GlobalScope.launch(Dispatchers.Main) {
-                    val serie = async(Dispatchers.IO) { Api(context = context!!).getTvShowLiteC(tvFire.id) }.await()
-                    if (serie.id == null) {
-                        adapterSeguindo?.add(tvFire)
-                        return@launch
-                    }
+                adapterSeguindo?.add(tvFire)
+                rotina = GlobalScope.launch(Dispatchers.IO) {
+                    val serie = async {
+                        delay(600)
+                        Api(context = context!!).getTvShowLiteC(tvFire.id)
+                    }.await()
                     if (serie.numberOfEpisodes != tvFire.numberOfEpisodes) {
-                        tvFire.desatualizada = true
-                        adapterSeguindo?.add(tvFire)
-
-                    } else {
-                        adapterSeguindo?.add(tvFire)
+                        launch(Main) {
+                            tvFire.desatualizada = true
+                            adapterSeguindo?.addAtualizado(tvFire)
+                        }
                     }
                 }
             } catch (ex: Exception) {
@@ -136,7 +136,6 @@ class ListaSeguindoFragment : Fragment() {
     }
 
     private fun getViewMissing(inflater: LayoutInflater, container: ViewGroup?): View {
-        Log.d("Icaro", "getViewMissing")
         val view = inflater.inflate(R.layout.temporadas, container, false) // Criar novo layout
         view.findViewById<View>(R.id.progressBarTemporadas).visibility = View.GONE
         adapterProximo = ProximosAdapter(requireActivity())
