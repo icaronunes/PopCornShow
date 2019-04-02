@@ -14,7 +14,6 @@ import br.com.icaro.filme.R
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.VideoOptions
 import com.google.android.gms.ads.formats.NativeAdOptions
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -87,20 +86,12 @@ class FilmesFragment : FragmentBase() {
 	
 	private fun getAnuncio() {
 		
-		val videoOptions = VideoOptions.Builder()
-				.setStartMuted(false)
-				.build()
-		
-		val adOptions = NativeAdOptions.Builder()
-				.setVideoOptions(videoOptions)
-				.build()
-		
+	
 		val adLoader = AdLoader.Builder(context, "ca-app-pub-3940256099942544/2247696110")
 				.forUnifiedNativeAd { ad: UnifiedNativeAd ->
 					// Show the ad.
 					(recycle_listas.adapter as ListaFilmesAdapter).addAd(ad)
 				}
-				.withNativeAdOptions(adOptions)
 				.withAdListener(object : AdListener() {
 					override fun onAdFailedToLoad(errorCode: Int) {
 						// Handle the failure by logging, altering the UI, and so on.
@@ -111,6 +102,7 @@ class FilmesFragment : FragmentBase() {
 						// Methods in the NativeAdOptions.Builder class can be
 						// used here to specify individual options settings.
 						.setAdChoicesPlacement(NativeAdOptions.ADCHOICES_BOTTOM_LEFT)
+						.setImageOrientation(NativeAdOptions.ORIENTATION_PORTRAIT)
 						.build())
 				.build()
 		

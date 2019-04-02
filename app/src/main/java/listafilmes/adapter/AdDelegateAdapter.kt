@@ -51,16 +51,16 @@ class AdDelegateAdapter : ViewTypeDelegateAdapter {
 			if (nativeAd.icon !== null) ad_icon.setImageDrawable(nativeAd.icon.drawable)
 			adView.iconView = ad_icon
 			
-			if (nativeAd.price !== null) ad_price.text = nativeAd.price
+			if (nativeAd.price !== null) ad_price.text = nativeAd.price else ad_price.visibility = View.GONE
 			adView.priceView = ad_price
 			
-			if (nativeAd.store !== null) ad_store.text = nativeAd.store
+			if (nativeAd.store !== null) ad_store.text = nativeAd.store else ad_store.visibility = View.GONE
 			adView.storeView = ad_store
 			
-			if (nativeAd.starRating !== null) ad_stars.rating = nativeAd.starRating.toFloat()
+			if (nativeAd.starRating !== null) ad_stars.rating = nativeAd.starRating.toFloat() else ad_stars.visibility = View.GONE
 			adView.starRatingView = ad_stars
 			
-			if (nativeAd.advertiser !== null) ad_advertiser.text = nativeAd.advertiser
+			if (nativeAd.advertiser !== null) ad_advertiser.text = nativeAd.advertiser  else ad_advertiser.visibility = View.GONE
 			adView.advertiserView = ad_advertiser
 			
 			// Assign native ad object to the native view.
