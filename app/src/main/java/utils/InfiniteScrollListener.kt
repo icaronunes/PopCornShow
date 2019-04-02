@@ -4,7 +4,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 
-class InfiniteScrollListener(val function: () -> Unit, val gridLayout: GridLayoutManager)
+class InfiniteScrollListener(val anuncio: () -> Unit = {}, val getMedia: () -> Unit = {},  val gridLayout: GridLayoutManager)
     : RecyclerView.OnScrollListener() {
 
     private var previousTotal = 0
@@ -30,8 +30,9 @@ class InfiniteScrollListener(val function: () -> Unit, val gridLayout: GridLayou
             }
             if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
                 Log.i("InfiniteScrollListener", "End reached")
-                function()
+                anuncio()
                 loading = true
+                getMedia()
 
             }
 

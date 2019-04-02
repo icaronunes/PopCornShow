@@ -49,7 +49,7 @@ class PersonPopularActivity : BaseActivity() {
             itemAnimator = DefaultItemAnimator()
             val gridLayout = GridLayoutManager(this@PersonPopularActivity, 3)
             layoutManager = gridLayout
-            addOnScrollListener(InfiniteScrollListener({ getPerson() }, gridLayout))
+            addOnScrollListener(InfiniteScrollListener({ getPerson() }, {}, gridLayout))
             recycleView_person_popular.adapter = PersonPopularAdapter()
         }
 

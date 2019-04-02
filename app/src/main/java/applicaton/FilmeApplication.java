@@ -6,6 +6,7 @@ import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
+import com.google.android.gms.ads.MobileAds;
 import com.onesignal.OneSignal;
 import com.squareup.otto.Bus;
 
@@ -13,6 +14,7 @@ import br.com.icaro.filme.BuildConfig;
 import io.fabric.sdk.android.Fabric;
 import onsignal.CustomNotificationOpenedHandler;
 import onsignal.CustomNotificationReceivedHandler;
+import utils.Config;
 
 /**
  * Created by icaro on 01/08/16.
@@ -33,8 +35,7 @@ public class FilmeApplication extends MultiDexApplication {
 		super.onCreate();
 
 		instance = this;
-
-
+		
 		OneSignal.startInit(this)
 				.setNotificationOpenedHandler(new CustomNotificationOpenedHandler())
 				.setNotificationReceivedHandler(new CustomNotificationReceivedHandler())
@@ -45,6 +46,8 @@ public class FilmeApplication extends MultiDexApplication {
 				.core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
 				.build();
 		Fabric.with(this, crashlyticsKit);
+
+		MobileAds.initialize(this, Config.ADMOB);
 
 		try {
 			if (getExternalCacheDir().exists()) {

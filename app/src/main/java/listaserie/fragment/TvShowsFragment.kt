@@ -9,9 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import br.com.icaro.filme.R
+import com.google.android.gms.ads.AdRequest
 import domain.Api
 import fragment.FragmentBase
-import kotlinx.android.synthetic.main.fragment_list_filme.*
+import kotlinx.android.synthetic.main.fragment_list_medias.*
 import listaserie.adapter.ListaSeriesAdapter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -39,16 +40,21 @@ class TvShowsFragment : FragmentBase() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_list_filme, container, false)
+            inflater.inflate(R.layout.fragment_list_medias, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        
+        val adRequest = AdRequest.Builder()
+                .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+                .build()
+        adView.loadAd(adRequest)
 
         recycle_listas.apply {
             val gridLayout = GridLayoutManager(activity, 2)
             layoutManager = gridLayout
             itemAnimator = DefaultItemAnimator()
-            addOnScrollListener(InfiniteScrollListener( {getListaSereies()} , gridLayout))
+            addOnScrollListener(InfiniteScrollListener( {getListaSereies()} ,{}, gridLayout))
             setHasFixedSize(true)
             adapter = ListaSeriesAdapter(context)
         }

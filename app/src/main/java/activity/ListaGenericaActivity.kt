@@ -49,7 +49,7 @@ class ListaGenericaActivity : BaseActivity() {
             layoutManager = gridlayout
             itemAnimator = DefaultItemAnimator()
             setHasFixedSize(true)
-            addOnScrollListener(InfiniteScrollListener({ getLista() }, gridlayout))
+            addOnScrollListener(InfiniteScrollListener({ getLista() },{}, gridlayout))
             adapter = ListUserAdapter(this@ListaGenericaActivity)
         }
 

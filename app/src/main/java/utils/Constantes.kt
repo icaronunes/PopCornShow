@@ -58,9 +58,9 @@ object Constantes {
     object BuscaConstants {
 
         val NEWS = 1
-
         val LOADING =2
-
+        val AD = 3
+	
     }
 
     object PermissaoAndroid {

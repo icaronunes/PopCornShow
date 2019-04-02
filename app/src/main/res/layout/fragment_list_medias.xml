@@ -1,15 +1,23 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/frame_list_filme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        app:adSize="BANNER"
+        app:adUnitId="@string/admob" />
+
     <TextView
         android:id="@+id/txt_listas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|center"
-        android:layout_marginTop="@dimen/trade_size_dp_240"
+        android:layout_gravity="center"
         android:visibility="invisible" />
 
 
@@ -17,6 +25,8 @@
         android:id="@+id/recycle_listas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/trade_size_dp_50"
         android:scrollbars="vertical" />
+
 
 </FrameLayout>

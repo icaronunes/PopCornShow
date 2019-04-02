@@ -49,7 +49,7 @@ class ProdutoraActivity : BaseActivity() {
             layoutManager = gridlayout
             setHasFixedSize(true)
             itemAnimator = DefaultItemAnimator()
-            addOnScrollListener(InfiniteScrollListener({getCompanyFilmes()}, gridlayout))
+            addOnScrollListener(InfiniteScrollListener({getCompanyFilmes()}, {}, gridlayout))
             adapter = ProdutoraAdapter()
         }
         getDadosCompany()

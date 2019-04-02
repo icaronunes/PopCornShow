@@ -10,14 +10,13 @@ import android.widget.TextView
 import br.com.icaro.filme.R
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import domain.movie.ListaItemFilme
 import domain.ViewType
+import domain.movie.ListaItemFilme
 import filme.activity.FilmeActivity
 import kotlinx.android.synthetic.main.adapter_filmes_list.view.*
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
 import utils.UtilsApp
-import java.lang.Exception
 
 class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
 
@@ -54,12 +53,12 @@ class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
                         }
                     } )
 
-            itemView.setOnClickListener({
+            itemView.setOnClickListener {
                 val intent = Intent(context, FilmeActivity::class.java)
                 intent.putExtra(Constantes.FILME_ID, item.id)
                 intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(imgFilmes))
                 context.startActivity(intent)
-            })
+            }
         }
 
         private fun putdata(context: Context, item: ListaItemFilme?, title_filmes_lista: TextView){

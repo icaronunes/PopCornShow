@@ -26,25 +26,13 @@
 
         </android.support.design.widget.AppBarLayout>
 
-            <FrameLayout
-                android:id="@+id/container_list_main"
-                class="listafilmes.fragment.FilmesFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/trade_size_dp_50"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:collapsing_toolbar="@collapsing_toolbar/fragment_list_filme" />
-
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
+        <FrameLayout
+            android:id="@+id/container_list_main"
+            class="listafilmes.fragment.FilmesFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="bottom"
-            android:visibility="visible"
-            app:adSize="SMART_BANNER"
-            app:adUnitId="@string/admob" />
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:collapsing_toolbar="@collapsing_toolbar/fragment_list_filme" />
 
     </android.support.design.widget.CoordinatorLayout>
 
@@ -55,6 +43,9 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_drawer_header"
-        app:menu="@menu/nav_drawe_menu" />
+        app:menu="@menu/nav_drawe_menu">
+
+
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

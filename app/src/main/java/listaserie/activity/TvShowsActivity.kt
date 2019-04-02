@@ -5,16 +5,10 @@ package listaserie.activity
  */
 
 import activity.BaseActivity
-import android.app.SearchManager
-import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.support.v7.widget.SearchView
 import android.view.Menu
-import android.view.MenuItem
 import br.com.icaro.filme.R
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import listaserie.fragment.TvShowsFragment
 import utils.Constantes
 
@@ -31,14 +25,7 @@ class TvShowsActivity : BaseActivity() {
         val titulo = resources.getString(intent
                 .getIntExtra(Constantes.NAV_DRAW_ESCOLIDO, 0))
         supportActionBar?.title = titulo
-
-        val adview = findViewById<AdView>(R.id.adView)
-        val adRequest = AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-                .build()
-        adview.loadAd(adRequest)
-
+        
         if (savedInstanceState == null) {
             val tvShowsFragment = TvShowsFragment()
             tvShowsFragment.arguments = intent.extras

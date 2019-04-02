@@ -42,7 +42,7 @@ class OscarActivity : BaseActivity() {
             val gridLayout = GridLayoutManager(this@OscarActivity, 3)
             layoutManager = gridLayout
             itemAnimator = DefaultItemAnimator()
-            addOnScrollListener(InfiniteScrollListener({ getOscar() }, gridLayout))
+            addOnScrollListener(InfiniteScrollListener({ getOscar() }, {}, gridLayout))
             setHasFixedSize(true)
             recycleView_favorite.adapter = ListUserAdapter(this@OscarActivity)
         }
