@@ -40,21 +40,25 @@ class ListaGenericaActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = intent.getStringExtra(Constantes.LISTA_GENERICA)
         list_id = intent.getStringExtra(Constantes.LISTA_ID)
+        
         if (intent.hasExtra(Constantes.BUNDLE)) {
             map = HashMap()
             map = intent.getSerializableExtra(Constantes.BUNDLE) as Map<String, String>
         }
+        createRecyler()
+    }
+    
+    private fun createRecyler() {
         recycleView_favorite.apply {
             val gridlayout = GridLayoutManager(this@ListaGenericaActivity, 3);
             layoutManager = gridlayout
             itemAnimator = DefaultItemAnimator()
             setHasFixedSize(true)
-            addOnScrollListener(InfiniteScrollListener({ getLista() },{}, gridlayout))
+            addOnScrollListener(InfiniteScrollListener({ getLista() }, gridlayout))
             adapter = ListUserAdapter(this@ListaGenericaActivity)
         }
-
     }
-
+    
     override fun onResume() {
         super.onResume()
         subscriptions = CompositeSubscription()
@@ -75,11 +79,11 @@ class ListaGenericaActivity : BaseActivity() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        val itens = it.results?.sortedBy { it -> it?.releaseDate }
-                                ?.reversed()
+                        val itens = it.results.sortedBy { it?.releaseDate }
+                                .reversed()
 
                         (recycleView_favorite.adapter as ListUserAdapter).addItens(itens, it?.totalResults!!)
-                        pagina = it.page!!
+                        pagina = it.page
                         totalPagina = it.totalPages
                         ++pagina
                     }, { erro ->
@@ -97,10 +101,10 @@ class ListaGenericaActivity : BaseActivity() {
                 return true
             }
             R.id.nova_lista -> {
+                createRecyler()
                 val numero = Random().nextInt(10).toString()
-                supportActionBar?.title = map?.get("title$numero")
-                list_id = map?.get("id$numero").toString()
-                recycleView_favorite.adapter = ListUserAdapter(this)
+                supportActionBar?.title = map["title$numero"]
+                list_id = map["id$numero"].toString()
                 pagina = 1
                 totalPagina = 1
                 getLista()

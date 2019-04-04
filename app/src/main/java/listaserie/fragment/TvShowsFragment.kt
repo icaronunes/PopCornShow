@@ -3,7 +3,7 @@ package listaserie.fragment
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +16,8 @@ import kotlinx.android.synthetic.main.fragment_list_medias.*
 import listaserie.adapter.ListaSeriesAdapter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import utils.Constantes
-import utils.InfiniteScrollListener
-import utils.UtilsApp
-import utils.getIdiomaEscolhido
+import utils.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by icaro on 14/09/16.
@@ -51,10 +49,10 @@ class TvShowsFragment : FragmentBase() {
         adView.loadAd(adRequest)
 
         recycle_listas.apply {
-            val gridLayout = GridLayoutManager(activity, 2)
-            layoutManager = gridLayout
+            val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            this.layoutManager = layoutManager
             itemAnimator = DefaultItemAnimator()
-            addOnScrollListener(InfiniteScrollListener( {getListaSereies()} ,{}, gridLayout))
+            addOnScrollListener(InfiniteScrollStaggeredListener({}, {getListaSereies()} , layoutManager))
             setHasFixedSize(true)
             adapter = ListaSeriesAdapter(context)
         }
@@ -88,12 +86,21 @@ class TvShowsFragment : FragmentBase() {
                 .buscaDeSeries(getListaTipo(), pagina = pagina, local = getIdiomaEscolhido(context!!))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .debounce(2, TimeUnit.SECONDS)
                 .subscribe({
                     if (view != null) {
-                        (recycle_listas.adapter as ListaSeriesAdapter).addSeries(it.results, it?.totalResults!!)
-                        pagina = it.page!!
-                        totalPagina = it.totalPages!!
-                        ++pagina
+                        if (pagina == it.page) {
+                            (recycle_listas.adapter as ListaSeriesAdapter).addSeries(it.results, it?.totalResults!!)
+                            pagina = it.page
+                            totalPagina = it.totalPages!!
+                            ++pagina
+    
+                            
+                            UtilsKt.getAnuncio(context!!, 2) {
+                                if (recycle_listas != null && recycle_listas.adapter.getItemViewType(recycle_listas.adapter.itemCount - 1) != Constantes.BuscaConstants.AD)
+                                (recycle_listas.adapter as ListaSeriesAdapter).addAd(it, totalPagina)
+                            }
+                        }
                     }
                 }, { erro ->
                     if (view != null) {

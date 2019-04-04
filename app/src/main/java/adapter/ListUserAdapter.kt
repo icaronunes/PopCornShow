@@ -4,8 +4,8 @@ import android.content.Context
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import domain.movie.ListaItemFilme
 import domain.ViewType
+import domain.movie.ListaItemFilme
 import oscar.adapter.ListasDelegateAdapter
 import pessoaspopulares.adapter.LoadingDelegateAdapter
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
@@ -42,7 +42,7 @@ class ListUserAdapter(private val context: Context) : RecyclerView.Adapter<Recyc
             val initPosition = listaResult.size - 1
             this.listaResult.removeAt(initPosition)
             notifyItemRemoved(initPosition)
-            for (result in listaMedia!!) {
+            for (result in listaMedia) {
                 this.listaResult.add(result!!)
             }
             this.listaResult.sortedBy { (it as ListaItemFilme).releaseDate  }

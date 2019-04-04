@@ -49,7 +49,7 @@ class ProdutoraActivity : BaseActivity() {
             layoutManager = gridlayout
             setHasFixedSize(true)
             itemAnimator = DefaultItemAnimator()
-            addOnScrollListener(InfiniteScrollListener({getCompanyFilmes()}, {}, gridlayout))
+            addOnScrollListener(InfiniteScrollListener({getCompanyFilmes()}, gridlayout))
             adapter = ProdutoraAdapter()
         }
         getDadosCompany()
@@ -89,7 +89,6 @@ class ProdutoraActivity : BaseActivity() {
                     }, { e ->
                         Log.d(javaClass.simpleName, "Erro " + e.message)
                     })
-
             subscriptions.add(inscricao)
         }
 

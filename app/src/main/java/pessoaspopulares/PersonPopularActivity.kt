@@ -49,7 +49,7 @@ class PersonPopularActivity : BaseActivity() {
             itemAnimator = DefaultItemAnimator()
             val gridLayout = GridLayoutManager(this@PersonPopularActivity, 3)
             layoutManager = gridLayout
-            addOnScrollListener(InfiniteScrollListener({ getPerson() }, {}, gridLayout))
+            addOnScrollListener(InfiniteScrollListener({ getPerson() }, gridLayout))
             recycleView_person_popular.adapter = PersonPopularAdapter()
         }
 
@@ -75,7 +75,7 @@ class PersonPopularActivity : BaseActivity() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         pagina = it?.page!!
-                        totalPagina = it?.totalPages!!
+                        totalPagina = it.totalPages!!
                         (recycleView_person_popular.adapter as PersonPopularAdapter).addPersonPopular(it.results)
                         ++this.pagina
                     }, { erro ->

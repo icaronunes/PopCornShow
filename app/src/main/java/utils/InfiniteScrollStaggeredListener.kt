@@ -1,19 +1,20 @@
 package utils
 
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.util.Log
 
 
-class InfiniteScrollListener(val getMedia: () -> Unit = {}, private val gridLayout: GridLayoutManager)
-	: RecyclerView.OnScrollListener() {  //Todo - codigo chamado mais de uma vez
+class InfiniteScrollStaggeredListener(val anuncio: () -> Unit = {}, val getMedia: () -> Unit = {}, private val gridLayout: StaggeredGridLayoutManager)
+	: RecyclerView.OnScrollListener() { //Todo - codigo chamado mais de uma vez
 	
 	private var previousTotal = 0
 	private var loading = true
-	private var visibleThreshold = 3
+	private var visibleThreshold = 1
 	private var firstVisibleItem = 0
 	private var visibleItemCount = 0
 	private var totalItemCount = 0
+	private var totaltem = 0
 	
 	override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 		super.onScrolled(recyclerView, dx, dy)
@@ -21,16 +22,18 @@ class InfiniteScrollListener(val getMedia: () -> Unit = {}, private val gridLayo
 			
 			visibleItemCount = recyclerView.childCount
 			totalItemCount = gridLayout.itemCount
-			firstVisibleItem = gridLayout.findFirstVisibleItemPosition()
+			firstVisibleItem = gridLayout.findFirstCompletelyVisibleItemPositions(intArrayOf(0,1))[0]
+			
 			
 			if (loading) {
 				if (totalItemCount > previousTotal) {
 					loading = false
 					previousTotal = totalItemCount
+					Log.i("InfiniteScrollListener", "loading")
 				}
 			}
-			if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-				Log.i("InfiniteScrollListener", "End reached")
+
+			if (!loading && totalItemCount - 4 <= firstVisibleItem) {
 				getMedia()
 				loading = true
 			}

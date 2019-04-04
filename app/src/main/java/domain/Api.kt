@@ -1,6 +1,7 @@
 package domain
 
 import android.content.Context
+import android.util.Log
 import com.google.gson.Gson
 import domain.busca.MultiSearch
 import domain.colecao.Colecao
@@ -187,9 +188,9 @@ class Api(val context: Context) {
         return rx.Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
-
+            Log.d("Api", "pagina $pagina")
             val url = when (tipoDeBusca) {
-
+               
                 "upcoming", "now_playing" -> {
                     "${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=${timeZone.replaceBefore("-", "").removeRange(0, 1)}"
                 }

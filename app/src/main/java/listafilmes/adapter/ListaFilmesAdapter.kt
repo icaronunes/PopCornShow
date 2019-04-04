@@ -21,7 +21,7 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
 		delegateAdapters.put(Constantes.BuscaConstants.LOADING, LoadingDelegateAdapter())
 		delegateAdapters.put(Constantes.BuscaConstants.NEWS, ListasFilmesDelegateAdapter())
 		delegateAdapters.put(Constantes.BuscaConstants.AD, AdDelegateAdapter())
-		listaResult.add(loading)
+		//listaResult.add(loading)
 		
 	}
 	
@@ -38,26 +38,38 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
 	fun addFilmes(listaMedia: List<ListaItemFilme?>?, totalPagina: Int) {
 		if (listaMedia?.isNotEmpty()!!) {
 			val initPosition = listaResult.size - 1
-			//  this.listaResult.removeAt(initPosition)
-			// notifyItemRemoved(initPosition)
+			if(!listaResult.isEmpty() && listaResult[listaResult.size - 1].getViewType() == Constantes.BuscaConstants.LOADING) {
+				this.listaResult.removeAt(listaResult.size - 1)
+			}
 			for (result in listaMedia) {
 				this.listaResult.add(result!!)
 			}
-			//this.listaResult.sortedBy { (it as ListaItemFilme).releaseDate }
-		//			.reversed()
-			//notifyDataSetChanged()
-			notifyItemRangeChanged(initPosition, this.listaResult.size + 1 /* plus loading item */)
-//			if (listaResult.size < totalPagina)
-//				this.listaResult.add(loading)
+			this.listaResult.sortedBy {
+				if (it is ListaItemFilme) it.releaseDate
+				true
+			}.reversed()
+			
+			notifyItemRangeChanged(initPosition, this.listaResult.size - 1 /* plus loading item */)
+			if (listaResult.size < totalPagina) {
+				listaResult.add(loading)
+				notifyItemInserted(listaResult.size - 1)
+			}
 		}
 	}
 	
 	override fun getItemCount(): Int = listaResult.size
 	
 	
-	fun addAd(ad: UnifiedNativeAd) {
+	fun addAd(ad: UnifiedNativeAd, totalPagina: Int) {
+		if(listaResult[listaResult.size - 1].getViewType() == Constantes.BuscaConstants.LOADING) {
+			this.listaResult.removeAt(listaResult.size - 1)
+		}
 		listaResult.add(ListAd(ad))
-		notifyItemInserted(listaResult.size -1)
+		notifyItemInserted(listaResult.size - 1)
+		if (listaResult.size < totalPagina) {
+			listaResult.add(loading)
+			notifyItemInserted(listaResult.size - 1)
+		}
 	}
 	
 	companion object {
