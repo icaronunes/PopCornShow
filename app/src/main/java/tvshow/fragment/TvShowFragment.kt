@@ -623,10 +623,10 @@ class TvShowFragment : Fragment() {
     private fun setProdutora() {
         var primeiraProdutora: String?
         if (series?.networks!!.isNotEmpty()) {
-            primeiraProdutora = series?.networks!![0]?.name
+            primeiraProdutora = series?.productionCompanies!![0]?.name
             if (primeiraProdutora?.length!! >= 27) {
                 primeiraProdutora = primeiraProdutora.subSequence(0, 27) as String
-                primeiraProdutora += "..."
+                primeiraProdutora += "..." //Todo fazer no XML
             }
             produtora?.setTextColor(ContextCompat.getColor(context!!, R.color.primary))
             produtora?.text = primeiraProdutora
