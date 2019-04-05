@@ -8,12 +8,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -36,6 +39,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -86,7 +91,13 @@ public class BaseActivity extends AppCompatActivity {
 	private FirebaseUser user;
 	private Dialog dialog;
 	private CompositeSubscription subscriptions = new CompositeSubscription();
-
+	
+	@Override
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+	}
+	
 	public static void SnackBar(final View view, String msg) {
 
 		Snackbar.make(view, msg
@@ -124,6 +135,14 @@ public class BaseActivity extends AppCompatActivity {
 			toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 			setSupportActionBar(toolbar);
 		}
+	}
+	
+	protected void setAdmob(){
+		AdView adview = findViewById(R.id.adView);
+		AdRequest adRequest = new AdRequest.Builder()
+									  .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+								.build();
+		adview.loadAd(adRequest);
 	}
 
 	protected void setupNavDrawer() {

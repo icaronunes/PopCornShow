@@ -41,7 +41,8 @@ class ElencoActivity : BaseActivity() {
         getExtras()
 
         supportActionBar?.title = title
-
+        setAdmob()
+        
         elenco_recycleview.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)

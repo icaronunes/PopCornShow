@@ -42,6 +42,8 @@ class CrewsActivity : BaseActivity() {
             setHasFixedSize(true)
             itemAnimator = DefaultItemAnimator()
         }
+        
+        setAdmob()
 
         supportActionBar?.title = title
 

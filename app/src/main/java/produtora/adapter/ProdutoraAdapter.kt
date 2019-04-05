@@ -3,10 +3,10 @@ package produtora.adapter
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import domain.movie.ListaItemFilme
 import domain.ViewType
-import pessoaspopulares.adapter.ViewTypeDelegateAdapter
+import domain.movie.ListaItemFilme
 import pessoaspopulares.adapter.LoadingDelegateAdapter
+import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
 import java.util.*
 
@@ -33,8 +33,8 @@ class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun addprodutoraMovie(personResults: List<ListaItemFilme?>?) {
         if(personResults?.isNotEmpty()!!) {
-            val initPosition = ProdutoraResultsPage?.size!! - 1
-            this.ProdutoraResultsPage?.removeAt(initPosition)
+            val initPosition = ProdutoraResultsPage.size- 1
+            this.ProdutoraResultsPage.removeAt(initPosition)
             notifyItemRemoved(initPosition)
 
 

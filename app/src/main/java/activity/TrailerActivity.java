@@ -33,12 +33,7 @@ public class TrailerActivity extends YouTubeBaseActivity implements YouTubePlaye
         youtube_key = getIntent().getStringExtra(Constantes.INSTANCE.getYOU_TUBE_KEY());
         youTubeView.initialize(Config.YOUTUBE_API_KEY, this);
         sinopse.setText(getIntent().getStringExtra(Constantes.INSTANCE.getSINOPSE()));
-
-//        AdView adview = (AdView) findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder()
-//                .build();
-//        adview.loadAd(adRequest);
-
+        
     }
 
     @Override

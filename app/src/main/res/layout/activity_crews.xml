@@ -26,6 +26,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/trade_size_dp_50"
             android:background="@android:color/transparent">
 
             <TextView
@@ -48,15 +49,14 @@
 
     </LinearLayout>
 
-    <!--<com.google.android.gms.ads.AdView-->
-        <!--android:id="@+id/adView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--android:visibility="gone"-->
-        <!--app:adSize="SMART_BANNER"-->
-        <!--app:adUnitId="@string/admob" />-->
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="@string/admob" />
 
 </android.support.design.widget.CoordinatorLayout>

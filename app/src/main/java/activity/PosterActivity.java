@@ -48,13 +48,13 @@ public class PosterActivity extends AppCompatActivity {
         viewPager.setAdapter(new PosterFragment(getSupportFragmentManager()));
         titlePageIndicator.setViewPager(viewPager);
         titlePageIndicator.setCurrentItem(getIntent().getExtras().getInt(Constantes.INSTANCE.getPOSICAO()));
-
+ 
     }
 
     private class PosterFragment extends FragmentPagerAdapter {
 
 
-        public PosterFragment(FragmentManager fm) {
+        PosterFragment(FragmentManager fm) {
             super(fm);
         }
 

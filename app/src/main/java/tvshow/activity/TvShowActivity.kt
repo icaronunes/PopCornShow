@@ -99,7 +99,6 @@ class TvShowActivity : BaseActivity() {
                         setDados()
                         setFab()
                     }
-
                     override fun onError(e: Throwable) {
                         Toast.makeText(this@TvShowActivity, R.string.ops, Toast.LENGTH_SHORT).show()
                     }

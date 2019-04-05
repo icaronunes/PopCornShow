@@ -37,6 +37,8 @@ class SimilaresActivity : BaseActivity() {
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         getExtras()
+        
+        setAdmob()
 
         supportActionBar?.title = title
 
