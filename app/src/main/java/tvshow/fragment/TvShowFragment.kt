@@ -180,12 +180,12 @@ class TvShowFragment : Fragment() {
                     else
                         "- -"
                     (layout
-                            ?.findViewById<View>(R.id.nota_metacritic) as TextView).text = if (imdbDd?.metascore != null)
+                            .findViewById<View>(R.id.nota_metacritic) as TextView).text = if (imdbDd?.metascore != null)
                         imdbDd?.metascore + "/100"
                     else
                         "- -"
                     (layout
-                            ?.findViewById<View>(R.id.nota_tomatoes) as TextView).text = if (imdbDd?.tomatoRating != null)
+                            .findViewById<View>(R.id.nota_tomatoes) as TextView).text = if (imdbDd?.tomatoRating != null)
                         imdbDd?.tomatoRating + "/10"
                     else
                         "- -"
@@ -216,7 +216,7 @@ class TvShowFragment : Fragment() {
                     }
                 })
 
-                (layout?.findViewById<View>(R.id.image_tomatoes) as ImageView).setOnClickListener(OnClickListener {
+                (layout.findViewById<View>(R.id.image_tomatoes) as ImageView).setOnClickListener(OnClickListener {
                     if (imdbDd == null) {
                         return@OnClickListener
                     }
@@ -233,7 +233,7 @@ class TvShowFragment : Fragment() {
                     }
                 })
 
-                (layout?.findViewById<View>(R.id.image_imdb) as ImageView).setOnClickListener(OnClickListener {
+                (layout.findViewById<View>(R.id.image_imdb) as ImageView).setOnClickListener(OnClickListener {
                     if (imdbDd == null) {
                         return@OnClickListener
                     }
@@ -449,7 +449,7 @@ class TvShowFragment : Fragment() {
 
                     childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/visto", false)
                     setStatusEps(position, false)
-                    userTvshow?.seasons?.get(position)?.userEps?.forEachIndexed { index, userEp ->
+                    userTvshow?.seasons?.get(position)?.userEps?.forEachIndexed { index, _ ->
                         childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/userEps/$index/assistido", false)
                     }
 
@@ -465,7 +465,7 @@ class TvShowFragment : Fragment() {
                     val childUpdates = HashMap<String, Any>()
                     childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/visto", true)
                     setStatusEps(position, true)
-                    userTvshow?.seasons?.get(position)?.userEps?.forEachIndexed { index, userEp ->
+                    userTvshow?.seasons?.get(position)?.userEps?.forEachIndexed { index, _ ->
                         childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/userEps/$index/assistido", true)
                     }
                     myRef?.updateChildren(childUpdates)
@@ -548,7 +548,7 @@ class TvShowFragment : Fragment() {
                         .setMessage(R.string.msg_parar_seguir)
                         .setNegativeButton(R.string.no, null)
                         .setOnDismissListener { progressBarTemporada?.visibility = View.GONE }
-                        .setPositiveButton(R.string.ok) { dialogInterface, i ->
+                        .setPositiveButton(R.string.ok) { _, i ->
                             myRef?.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid!! else "")
                                     ?.child("seguindo")
                                     ?.child(series?.id.toString())
@@ -621,9 +621,8 @@ class TvShowFragment : Fragment() {
     }
 
     private fun setProdutora() {
-        var primeiraProdutora: String?
         if (series?.networks!!.isNotEmpty()) {
-            primeiraProdutora = series?.productionCompanies!![0]?.name
+           var  primeiraProdutora = series?.productionCompanies!![0]?.name
             if (primeiraProdutora?.length!! >= 27) {
                 primeiraProdutora = primeiraProdutora.subSequence(0, 27) as String
                 primeiraProdutora += "..." //Todo fazer no XML
@@ -631,7 +630,7 @@ class TvShowFragment : Fragment() {
             produtora?.setTextColor(ContextCompat.getColor(context!!, R.color.primary))
             produtora?.text = primeiraProdutora
 
-            produtora?.setOnClickListener { view ->
+            produtora?.setOnClickListener {
                 if (series?.productionCompanies?.isNotEmpty()!!) {
                     val intent = Intent(context, ProdutoraActivity::class.java)
                     intent.putExtra(Constantes.PRODUTORA_ID, series?.productionCompanies?.get(0)?.id)
@@ -709,7 +708,7 @@ class TvShowFragment : Fragment() {
 
                 if (popularidade[0] == '0' && isAdded) {
                     popularidade = popularidade.substring(2, popularidade.length)
-                    popularity?.text = popularidade + " " + getString(mil)
+                    popularity?.text = "$popularidade  ${getString(mil)}"
 
                 } else {
 
@@ -779,13 +778,13 @@ class TvShowFragment : Fragment() {
 
     private fun setSimilares() {
 
-        text_similares.setOnClickListener({
+        text_similares.setOnClickListener {
             val intent = Intent(context, SimilaresActivity::class.java)
             intent.putExtra(Constantes.SIMILARES_TVSHOW, series?.similar?.results as Serializable)
             intent.putExtra(Constantes.NOME, series?.name)
             activity?.startActivity(intent)
-        })
-
+        }
+    
         if (series?.similar?.results?.isNotEmpty()!!) {
 
             recycle_tvshow_similares?.apply {
@@ -907,7 +906,7 @@ class TvShowFragment : Fragment() {
 
             if (imdbDd?.imdbRating.isNullOrBlank()) {
                 try {
-                    imdb = java.lang.Float.parseFloat(imdbDd?.imdbRating)
+                    imdb = java.lang.Float.parseFloat(imdbDd?.imdbRating!!)
                     tamanho++
                 } catch (e: Exception) {
 
@@ -917,7 +916,7 @@ class TvShowFragment : Fragment() {
             if (imdbDd?.metascore.isNullOrEmpty()) {
 
                 try {
-                    val meta = java.lang.Float.parseFloat(imdbDd?.metascore)
+                    val meta = java.lang.Float.parseFloat(imdbDd?.metascore!!)
                     val nota = meta / 10
                     metascore = nota
                     tamanho++
@@ -930,7 +929,7 @@ class TvShowFragment : Fragment() {
             if (imdbDd?.tomatoRating.isNullOrEmpty()) {
 
                 try {
-                    tomato = java.lang.Float.parseFloat(imdbDd?.tomatoRating)
+                    tomato = java.lang.Float.parseFloat(imdbDd?.tomatoRating!!)
                     tamanho++
                 } catch (e: Exception) {
                 }

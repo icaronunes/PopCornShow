@@ -44,7 +44,7 @@ class TvShowsFragment : FragmentBase() {
         super.onActivityCreated(savedInstanceState)
         
         val adRequest = AdRequest.Builder()
-                .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+               // .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
                 .build()
         adView.loadAd(adRequest)
 
