@@ -217,4 +217,6 @@
     <string name="empty_data" translatable="false">--/--/--</string>
     <string name="circulo" translatable="false">&#xf101;</string>
     <string name="site" translatable="false">site</string>
+    <string name="proximo_ep">Next Ep:</string>
+    <string name="ultimo_ep">Last Ep:</string>
 </resources>

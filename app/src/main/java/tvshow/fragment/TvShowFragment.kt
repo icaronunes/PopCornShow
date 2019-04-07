@@ -42,7 +42,7 @@ import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbTvSeasons
 import info.movito.themoviedbapi.model.tv.TvSeason
 import kotlinx.android.synthetic.main.fab_float.*
-import kotlinx.android.synthetic.main.tvshow_info2.*
+import kotlinx.android.synthetic.main.tvshow_info.*
 import produtora.activity.ProdutoraActivity
 import rx.Observer
 import rx.android.schedulers.AndroidSchedulers
@@ -132,7 +132,22 @@ class TvShowFragment : FragmentBase() {
 			getImdb()
 			setVotoMedia()
 			setListeners()
+			setNomeUltimoEp()
+			setUltimoEpDate()
 			setAdmob()
+		}
+	}
+	
+	private fun setUltimoEpDate() {
+		proximo_ep_date.let {
+			it.text = series?.lastEpisodeAir?.airDate
+			
+		}
+	}
+	
+	private fun setNomeUltimoEp() {
+		series?.lastEpisodeAir.let {
+			ultimo_ep_name.text = it?.name
 		}
 	}
 	
@@ -486,7 +501,7 @@ class TvShowFragment : FragmentBase() {
 	}
 	
 	private fun getViewInformacoes(inflater: LayoutInflater?, container: ViewGroup?): View? {
-		val view = inflater?.inflate(R.layout.tvshow_info2, container, false)
+		val view = inflater?.inflate(R.layout.tvshow_info, container, false)
 		view?.findViewById<Button>(R.id.seguir)?.setOnClickListener(onClickSeguir())
 		
 		return view
@@ -649,7 +664,9 @@ class TvShowFragment : FragmentBase() {
 		if (mediaNotas > 0) {
 			img_star?.setImageResource(R.drawable.icon_star)
 			val formatter = DecimalFormat("0.0")
-			voto_media?.text = formatter.format(mediaNotas)
+			val valor = formatter.format(mediaNotas)
+			voto_media?.text = valor
+			frame_nota.contentDescription = valor
 			
 		} else {
 			img_star?.setImageResource(R.drawable.icon_star_off)
@@ -785,6 +802,7 @@ class TvShowFragment : FragmentBase() {
 				
 				override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
 					when (newState) {
+						
 						0 -> {
 							activity?.fab_menu_filme?.visibility = View.VISIBLE
 						}
@@ -798,6 +816,7 @@ class TvShowFragment : FragmentBase() {
 					
 				}
 			})
+			
 			text_similares.visibility = View.VISIBLE
 			recycle_tvshow_similares.adapter = SimilaresSerieAdapter(activity, series?.similar?.results)
 		} else {

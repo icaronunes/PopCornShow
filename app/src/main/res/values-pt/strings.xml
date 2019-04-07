@@ -204,4 +204,6 @@
     <string name="atualizar" >Nova</string>
     <string name="sem_informacao_company">Sem informações da Companhia</string>
     <string name="permitir_acesso_armazenamento">Para salvar imagem  é necessario permitir acesso a meoria interna.</string>
+    <string name="proximo_ep">Próximo Ep:</string>
+    <string name="ultimo_ep">Último Ep:</string>
 </resources>

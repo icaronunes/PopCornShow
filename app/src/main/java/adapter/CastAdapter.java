@@ -14,15 +14,13 @@ import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import pessoa.activity.PersonActivity;
 import br.com.icaro.filme.R;
 import domain.CastItem;
+import pessoa.activity.PersonActivity;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -52,11 +50,10 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
         if (personCast.getName() != null || personCast.getCharacter() != null) {
             holder.textCastPersonagem.setText(personCast.getCharacter());
             holder.textCastNome.setText(personCast.getName());
+            
             Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + personCast.getProfilePath())
                     .placeholder(R.drawable.person)
-                    .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.imageView, new Callback() {
                         @Override
                         public void onSuccess() {
