@@ -105,7 +105,7 @@
     <string name="suas_listas">Your Lists</string>
     <string name="tempo_nao_informado">Time N/A</string>
     <string name="temporada">Season: </string>
-    <string name="temporadas">Seasons</string>
+    <string name="temporadas">Seasons:</string>
     <string name="text_logoff_dialog">After logging out, it will not be possible to interact with the application.</string>
     <string name="title_logoff_dialog">Log out of PopCorn Show?</string>
     <string name="toast_salvar_imagem">Image saved in the folder of the application</string>
@@ -216,4 +216,5 @@
     <string name="permitir_acesso_armazenamento">Para salvar imagem  é necessario permitir acesso a meoria interna.</string>
     <string name="empty_data" translatable="false">--/--/--</string>
     <string name="circulo" translatable="false">&#xf101;</string>
+    <string name="site" translatable="false">site</string>
 </resources>

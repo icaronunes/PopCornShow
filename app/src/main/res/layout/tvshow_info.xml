@@ -16,7 +16,7 @@
         <LinearLayout
             android:id="@+id/linear_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:transitionName="poster"
             android:weightSum="1">
@@ -78,8 +78,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/trade_size_dp_2"
                     android:layout_marginStart="@dimen/trade_size_dp_2"
+                    android:layout_marginLeft="@dimen/trade_size_dp_2"
                     android:maxLength="30"
                     android:maxLines="1" />
 
@@ -193,8 +193,8 @@
                                 android:id="@+id/original_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/trade_size_dp_2"
                                 android:layout_marginStart="@dimen/trade_size_dp_2"
+                                android:layout_marginLeft="@dimen/trade_size_dp_2"
                                 android:textSize="@dimen/trade_txt_size_sp_14" />
 
                         </LinearLayout>
@@ -215,8 +215,8 @@
                                 android:id="@+id/popularity"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/trade_size_dp_2"
                                 android:layout_marginStart="@dimen/trade_size_dp_2"
+                                android:layout_marginLeft="@dimen/trade_size_dp_2"
                                 android:textSize="@dimen/trade_txt_size_sp_14" />
 
                         </LinearLayout>
@@ -237,8 +237,8 @@
                                 android:id="@+id/production_countries"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/trade_size_dp_2"
                                 android:layout_marginStart="@dimen/trade_size_dp_2"
+                                android:layout_marginLeft="@dimen/trade_size_dp_2"
                                 android:textSize="@dimen/trade_txt_size_sp_14" />
 
                         </LinearLayout>
@@ -259,8 +259,8 @@
                                 android:id="@+id/temporadas"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/trade_size_dp_2"
                                 android:layout_marginStart="@dimen/trade_size_dp_2"
+                                android:layout_marginLeft="@dimen/trade_size_dp_2"
                                 android:textSize="@dimen/trade_txt_size_sp_14" />
 
                         </LinearLayout>
@@ -360,6 +360,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/trade_txt_size_sp_18"
                 android:textStyle="normal|bold"
+                tools:visibility="visible"
                 android:visibility="invisible" />
 
             <android.support.v7.widget.RecyclerView
