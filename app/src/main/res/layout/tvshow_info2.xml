@@ -42,11 +42,11 @@
                 android:id="@+id/categoria_tvshow"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
                 android:layout_weight="1"
                 android:maxLines="1"
                 app:layout_constraintEnd_toStartOf="@+id/lancamento"
@@ -59,8 +59,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
                 android:gravity="end"
                 android:textStyle="normal|bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -73,8 +73,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
                 android:layout_marginTop="4dp"
                 android:text="@string/produtora"
                 android:textStyle="normal|italic"
@@ -89,8 +89,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="4dp"
                 android:layout_marginLeft="4dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
                 android:maxLength="30"
                 android:maxLines="1"
                 app:layout_constraintEnd_toStartOf="@+id/status"
@@ -100,30 +100,28 @@
 
             <TextView
                 android:id="@+id/status"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
                 android:gravity="end"
                 android:textSize="@dimen/trade_txt_size_sp_18"
                 android:textStyle="normal|bold|italic"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/produtora"
+                app:layout_constraintTop_toBottomOf="@+id/categoria_tvshow"
                 tools:text="Renovado" />
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card_poster"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
                 android:layout_marginTop="2dp"
                 app:cardCornerRadius="@dimen/trade_size_dp_3"
                 app:cardElevation="3dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true"
-                app:contentPadding="@dimen/trade_size_dp_2"
+                app:contentPadding="@dimen/trade_size_dp_3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView">
 
@@ -131,12 +129,12 @@
                     android:id="@+id/img_poster"
                     android:layout_width="@dimen/trade_size_dp_126"
                     android:layout_height="match_parent"
-                    android:layout_margin="2dp"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/poster_filme"
                     android:cropToPadding="true"
                     android:scaleType="fitCenter"
                     android:transitionName="poster"
+                    tools:layout_height="180dp"
                     tools:srcCompat="@drawable/person" />
 
             </android.support.v7.widget.CardView>
@@ -202,8 +200,8 @@
                 android:layout_height="@dimen/trade_size_dp_42"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_nao_visto"
                 android:textSize="@dimen/trade_txt_size_sp_13"
@@ -215,136 +213,204 @@
 
             <!-- Detalhes - titulo Original - Popularidade - Pais Produtor - Temporadas -->
 
-            <android.support.constraint.Guideline
-                android:id="@+id/guideline2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="221dp" />
 
-            <TextView
-                android:id="@+id/textView3"
+            <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="4dp"
-                android:text="@string/original_title"
-                android:textSize="@dimen/trade_txt_size_sp_14"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                app:cardCornerRadius="@dimen/trade_size_dp_2"
+                app:cardElevation="3dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintBottom_toBottomOf="@+id/card_poster"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/card_poster"
-                app:layout_constraintTop_toBottomOf="@+id/seguir" />
+                app:layout_constraintTop_toBottomOf="@+id/seguir">
 
-            <TextView
-                android:id="@+id/original_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:ellipsize="end"
-                android:gravity="right|end"
-                android:maxLines="2"
-                android:textSize="@dimen/trade_txt_size_sp_14"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.47"
-                app:layout_constraintStart_toEndOf="@+id/textView3"
-                app:layout_constraintTop_toTopOf="@+id/textView3"
-                tools:text="Game of thrones" />
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="4dp"
-                android:text="@string/popularity"
-                android:textSize="@dimen/trade_txt_size_sp_14"
-                app:layout_constraintStart_toEndOf="@+id/card_poster"
-                app:layout_constraintTop_toBottomOf="@+id/original_title" />
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="0dp"
+                        android:layout_height="19dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/original_title"
+                        android:textSize="@dimen/trade_txt_size_sp_14"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/popularity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:gravity="right"
-                android:textSize="@dimen/trade_txt_size_sp_14"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/textView4"
-                app:layout_constraintTop_toTopOf="@+id/textView4"
-                tools:text="281.4 Mi" />
+                    <TextView
+                        android:id="@+id/original_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginRight="2dp"
+                        android:ellipsize="end"
+                        android:gravity="right|end"
+                        android:maxLines="2"
+                        android:textSize="@dimen/trade_txt_size_sp_14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.47"
+                        app:layout_constraintStart_toEndOf="@+id/textView3"
+                        app:layout_constraintTop_toTopOf="@+id/textView3"
+                        tools:text="Game of thrones" />
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="0dp"
+                        android:layout_height="19dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/popularity"
+                        android:textSize="@dimen/trade_txt_size_sp_14"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+                    <TextView
+                        android:id="@+id/popularity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginRight="2dp"
+                        android:gravity="right"
+                        android:textSize="@dimen/trade_txt_size_sp_14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/textView4"
+                        app:layout_constraintTop_toTopOf="@+id/textView4"
+                        tools:text="281.4 Mi" />
 
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/production_countries"
-                android:textSize="@dimen/trade_txt_size_sp_14"
-                app:layout_constraintStart_toStartOf="@+id/textView4"
-                app:layout_constraintTop_toBottomOf="@+id/popularity" />
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginLeft="2dp"
+                        android:text="@string/production_countries"
+                        android:textSize="@dimen/trade_txt_size_sp_14"
+                        app:layout_constraintStart_toStartOf="@+id/textView4"
+                        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-            <TextView
-                android:id="@+id/production_countries"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:gravity="right"
-                android:maxLines="1"
-                android:textSize="@dimen/trade_txt_size_sp_14"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/textView5"
-                app:layout_constraintTop_toTopOf="@+id/textView5"
-                tools:text="US BR PT FR" />
+                    <TextView
+                        android:id="@+id/production_countries"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginRight="2dp"
+                        android:gravity="right"
+                        android:maxLines="1"
+                        android:textSize="@dimen/trade_txt_size_sp_14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/textView5"
+                        app:layout_constraintTop_toTopOf="@+id/textView5"
+                        tools:text="US BR PT FR" />
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:text="@string/temporadas"
-                android:textSize="@dimen/trade_txt_size_sp_14"
-                app:layout_constraintStart_toEndOf="@+id/card_poster"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                    <TextView
+                        android:id="@+id/season_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/temporadas"
+                        android:textSize="@dimen/trade_txt_size_sp_14"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-            <TextView
-                android:id="@+id/temporadas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:textSize="@dimen/trade_txt_size_sp_14"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/textView6"
-                app:layout_constraintTop_toTopOf="@+id/textView6"
-                tools:text="8" />
+                    <TextView
+                        android:id="@+id/temporadas"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginRight="2dp"
+                        android:textSize="@dimen/trade_txt_size_sp_14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/season_label"
+                        tools:text="8" />
+
+                    <TextView
+                        android:id="@+id/ultimoEp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="2dp"
+                        android:text="Ultimo EP:"
+                        android:textSize="@dimen/trade_txt_size_sp_14"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/season_label" />
+
+
+                    <TextView
+                        android:id="@+id/ultimo_ep_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginRight="2dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="Bolinho de queijo:"
+                        android:textSize="@dimen/trade_txt_size_sp_14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/ultimoEp" />
+
+                    <TextView
+                        android:id="@+id/proximoEp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="Proximo EP:"
+                        android:textSize="@dimen/trade_txt_size_sp_14"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ultimoEp" />
+
+
+                    <TextView
+                        android:id="@+id/proximo_ep_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginRight="2dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="01-12-098"
+                        android:textSize="@dimen/trade_txt_size_sp_14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/proximoEp" />
+
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!--Descrição da serie-->
 
             <TextView
                 android:id="@+id/descricao"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/trade_size_dp_3"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:textSize="@dimen/trade_txt_size_sp_14"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card_poster"
