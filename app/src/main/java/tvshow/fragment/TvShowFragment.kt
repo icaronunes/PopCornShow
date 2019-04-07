@@ -621,7 +621,7 @@ class TvShowFragment : Fragment() {
     }
 
     private fun setProdutora() {
-        if (series?.networks!!.isNotEmpty()) {
+        if (series?.productionCompanies!!.isNotEmpty()) {
            var  primeiraProdutora = series?.productionCompanies!![0]?.name
             if (primeiraProdutora?.length!! >= 27) {
                 primeiraProdutora = primeiraProdutora.subSequence(0, 27) as String
