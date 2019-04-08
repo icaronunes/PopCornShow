@@ -27,6 +27,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import br.com.icaro.filme.R
+import com.google.android.gms.ads.AdRequest
 import com.squareup.picasso.Picasso
 import domain.Api
 import domain.Imdb
@@ -34,7 +35,7 @@ import domain.Movie
 import domain.colecao.PartsItem
 import filme.adapter.SimilaresFilmesAdapter
 import kotlinx.android.synthetic.main.fab_float.*
-import kotlinx.android.synthetic.main.fragment_container_filme.*
+import kotlinx.android.synthetic.main.filme_info.*
 import produtora.activity.ProdutoraActivity
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -53,6 +54,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
     private var movieDb: Movie? = null
     private var imdbDd: Imdb? = null
+    private var color: Int = 0
     private lateinit var subscriptions: CompositeSubscription
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +62,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
         if (arguments != null) {
             val bundle = arguments
             movieDb = bundle?.getSerializable(Constantes.FILME) as Movie
+            color = bundle.getInt(Constantes.COLOR_TOP, 0)
         }
         subscriptions = CompositeSubscription()
     }
@@ -71,7 +74,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        return inflater.inflate(R.layout.fragment_container_filme, container, false)
+        return inflater.inflate(R.layout.filme_info, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -96,18 +99,9 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
         setTrailer()
         setSimilares()
         setAnimacao()
-
-        icon_reviews.setOnClickListener {
-            if (movieDb?.imdbId != null) {
-                val intent = Intent(context, ReviewsActivity::class.java)
-                intent.putExtra(Constantes.NOME_FILME, movieDb?.title)
-                intent.putExtra(Constantes.MEDIATYPE, "movie")
-                val id = movieDb?.imdbId
-                intent.putExtra(Constantes.FILME_ID, id)
-                startActivity(intent)
-            }
-        }
-
+        setStatus()
+	    setAdMob()
+        
         imdb_site?.setOnClickListener {
             val intent = Intent(activity, Site::class.java)
             intent.putExtra(Constantes.SITE,
@@ -160,7 +154,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
         img_star.setOnClickListener(onClickImageStar())
 
-        icon_collection.setOnClickListener({
+        icon_collection.setOnClickListener {
             if (movieDb?.belongsToCollection != null) {
                 val inscricaoMovie = Api(context = context!!).getColecao(movieDb?.belongsToCollection?.id!!)
                         .subscribeOn(Schedulers.io())
@@ -170,14 +164,14 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                         }, { erro ->
                             Toast.makeText(activity, getString(R.string.ops), Toast.LENGTH_LONG).show()
                         })
-
+        
                 subscriptions.add(inscricaoMovie)
             } else {
                 BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
                         getString(R.string.sem_informacao_colletion))
             }
-        })
-
+        }
+    
         textview_elenco.setOnClickListener {
             val intent = Intent(context, ElencoActivity::class.java)
             intent.putExtra(Constantes.ELENCO, movieDb?.credits?.cast as  Serializable )
@@ -202,7 +196,16 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
 
         }
     }
-
+	
+	private fun setAdMob() =  adView.loadAd(AdRequest.Builder().build())
+	
+	private fun setStatus() {
+        movieDb?.status.let {
+            status.text = it
+            status.setTextColor(color)
+        }
+    }
+    
     private fun onClickImageStar(): View.OnClickListener? {
         return object : View.OnClickListener {
             override fun onClick(p0: View?) {
@@ -274,20 +277,20 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                             })
 
                     layout.findViewById<ImageView>(R.id.image_imdb)
-                            .setOnClickListener(OnClickListener@ {
+                            .setOnClickListener OnClickListener@ {
                                 if (imdbDd == null) {
                                     return@OnClickListener
                                 }
-
+    
                                 if (imdbDd?.imdbID != null) {
-
+        
                                     val url = "http://www.imdb.com/title/" + imdbDd?.imdbID
                                     val intent = Intent(activity, Site::class.java)
                                     intent.putExtra(Constantes.SITE, url)
                                     startActivity(intent)
                                 }
-                            })
-
+                            }
+    
                     layout.findViewById<ImageView>(R.id.image_tmdb)
                             .setOnClickListener(View.OnClickListener {
                                 if (movieDb == null) {
@@ -366,13 +369,11 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                 .setDuration(2300)
         val alphaBuget = ObjectAnimator.ofFloat(img_budget, "alpha", 0f, 1f)
                 .setDuration(2500)
-        val alphaReviews = ObjectAnimator.ofFloat(icon_reviews, "alpha", 0f, 1f)
-                .setDuration(2800)
         val alphaSite = ObjectAnimator.ofFloat(icon_site, "alpha", 0f, 1f)
                 .setDuration(3000)
         val alphaCollecton = ObjectAnimator.ofFloat(icon_collection, "alpha", 0f, 1f)
                 .setDuration(3300)
-        animatorSet.playTogether(alphaStar, alphaBuget, alphaMedia, alphaReviews, alphaSite, alphaCollecton)
+        animatorSet.playTogether(alphaStar, alphaBuget, alphaMedia, alphaSite, alphaCollecton)
         animatorSet.start()
     }
 
@@ -620,11 +621,11 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
             lancamento.text = if (movieDb?.releaseDate?.length!! > 9) "${movieDb?.releaseDate?.subSequence(0,10)} ${Locale.getDefault().country}" else "N/A"
             releases?.forEach { date ->
                 if (date?.iso31661 == Locale.getDefault().country) {
-                    date?.releaseDates?.forEach({ it ->
+                    date?.releaseDates?.forEach { it ->
                         if (it?.type == 1 || it?.type == 2 || it?.type == 3) {
                             lancamento.text = if (it?.releaseDate?.length!! > 9) "${movieDb?.releaseDate?.subSequence(0, 10)} ${Locale.getDefault().country}" else "N/A"
                         }
-                    })
+                    }
                 }
             }
 
@@ -651,7 +652,6 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
     private fun setHome() {
         if (movieDb?.homepage != null) {
             if (movieDb?.homepage?.length!! > 5) {
-                // Log.d("SETHOME", movieDb.getHomepage());
                 icon_site!!.setImageResource(R.drawable.site_on)
             } else {
                 icon_site!!.setImageResource(R.drawable.site_off)

@@ -508,6 +508,7 @@ class FilmeActivity : BaseActivity() {
         val filmeFrag = FilmeInfoFragment()
         val bundle = Bundle()
         bundle.putSerializable(Constantes.FILME, movieDb)
+        bundle.putInt(Constantes.COLOR_TOP, color_fundo)
         filmeFrag.arguments = bundle
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {

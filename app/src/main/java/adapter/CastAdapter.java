@@ -3,6 +3,7 @@ package adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,13 +39,13 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
 
 
     @Override
-    public CastViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CastViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.scroll_elenco, parent, false);
         return new CastViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final CastViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final CastViewHolder holder, final int position) {
         holder.progressBar.setVisibility(View.VISIBLE);
         final CastItem personCast = casts.get(position);
         if (personCast.getName() != null || personCast.getCharacter() != null) {
