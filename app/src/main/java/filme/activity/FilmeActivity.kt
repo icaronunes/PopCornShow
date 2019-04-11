@@ -94,6 +94,8 @@ class FilmeActivity : BaseActivity() {
         }
 
     }
+    
+    
 
     private fun getDados() {
 

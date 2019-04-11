@@ -96,12 +96,12 @@ class ListaSeguindoFragment : Fragment() {
 
         series.forEach {
             try {
-                GlobalScope.launch(Dispatchers.IO) {
+                GlobalScope.launch(Dispatchers.Main) {
                     //Pegar serie atualizada do Server. Enviar para o metodo para atualizar baseado nela
-                    val serie = async(Dispatchers.IO) { Api(context = context!!).getTvShowLiteC(it.second.id) }.await()
-                    val ep = async(Dispatchers.IO) { Api(context = context!!).getTvShowEpC(it.second.id, it.first.seasonNumber, it.first.episodeNumber) }.await()
-                    val ultima = MutablePair(ep, serie)
-                    launch(Dispatchers.Main) {
+                    val serie = async(Dispatchers.IO) { Api(context = context!!).getTvShowLiteC(it.second.id) }
+                    val ep = async(Dispatchers.IO) { Api(context = context!!).getTvShowEpC(it.second.id, it.first.seasonNumber, it.first.episodeNumber) }
+                    val ultima = async {  MutablePair(ep.await(), serie.await()) }.await()
+                    launch {
                         adapterProximo?.addAtual(ultima)
                     }
                 }

@@ -27,8 +27,8 @@ android {
         applicationId "br.com.icaro.filme"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 65
-        versionName "6.4"
+        versionCode 66
+        versionName "6.5"
 
         multiDexEnabled true
 

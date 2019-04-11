@@ -49,7 +49,7 @@ class ProximosAdapter(private val context: FragmentActivity)
         if (new != null) {
             val epVistos = epNubmber(new)
             view.title.text = new.right.name
-            view.proximo.text = "S${new.left.seasonNumber}/E${new.left.episodeNumber}"
+            view.proximo.text = "S${new.left?.seasonNumber}/E${new.left?.episodeNumber}"
             view.ep_title.text = new.left.name
             view.faltando.text = "$epVistos/${new.right.numberOfEpisodes}"
             view.progressBar.isIndeterminate = false
@@ -66,7 +66,7 @@ class ProximosAdapter(private val context: FragmentActivity)
 
                 isEplancado(new.left.airDate) -> {
                     view.new_seguindo.visibility = View.VISIBLE
-                    new.right.lastAirDate
+                    new.left.airDate
                 }
 
                 new.right.lastAirDate.equals(new.left.airDate) -> {

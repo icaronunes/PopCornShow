@@ -102,7 +102,7 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
         setStatus()
 	    setAdMob()
         
-        imdb_site?.setOnClickListener {
+        imdb_site.setOnClickListener {
             val intent = Intent(activity, Site::class.java)
             intent.putExtra(Constantes.SITE,
                     "https:www.imdb.com/title/" + movieDb?.imdbId + "/")
