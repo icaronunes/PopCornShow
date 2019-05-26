@@ -112,7 +112,6 @@ android {
                 // but continue the build even when errors are found:
                 abortOnError false
             }
-
         }
     }
 
@@ -120,7 +119,6 @@ android {
         jumboMode true
         javaMaxHeapSize "4g"
     }
-
 
 }
 dependencies {
@@ -157,7 +155,7 @@ dependencies {
     implementation 'com.github.clans:fab:1.6.4'
     implementation 'fr.avianey.com.viewpagerindicator:library:2.4.1.1@aar'
     implementation 'me.relex:circleindicator:1.2.2@aar'
-    implementation 'com.squareup.okhttp3:okhttp:3.14.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.0.0-alpha02'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.onesignal:OneSignal:[3.9.1, 3.99.99]'
     implementation 'com.facebook.android:facebook-android-sdk:4.16.1'
@@ -174,7 +172,7 @@ dependencies {
     //Kotlin
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1'
     implementation 'com.google.android.gms:play-services-ads:17.2.1'
-
 }
+
 apply plugin: 'com.google.gms.google-services'
 
