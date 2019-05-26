@@ -1,9 +1,9 @@
 buildscript {
     repositories {
-        maven { url 'https://plugins.gradle.org/m2/'}
+        maven { url 'https://plugins.gradle.org/m2/' }
     }
     dependencies {
-        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.11.0, 0.99.99]'
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.12.2'
     }
 }
 apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
@@ -31,7 +31,6 @@ android {
         versionName "6.5"
 
         multiDexEnabled true
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -52,7 +51,6 @@ android {
                 debug {
                     debuggable true
                     ext.enableCrashlytics = false
-
                 }
 
                 release {
@@ -63,7 +61,6 @@ android {
                     zipAlignEnabled true
                     //proguard com restrição ao log.ver
                     debuggable false
-
                 }
 
             }
@@ -73,7 +70,6 @@ android {
                     storePassword ""
                     keyAlias ""
                     keyPassword ""
-
                 }
             }
             packagingOptions {
@@ -89,11 +85,6 @@ android {
                 flavor21 {
                     minSdkVersion 14
                     targetSdkVersion 27
-                    dimension "color"
-                }
-                flavor19 {
-                    minSdkVersion 14
-                    targetSdkVersion 19
                     dimension "color"
                 }
             }
@@ -152,7 +143,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
     //Terceiros
-    implementation group: 'info.movito', name: 'themoviedbapi', version:'1.9'
+    implementation group: 'info.movito', name: 'themoviedbapi', version: '1.9'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.squareup:otto:1.3.8'
     implementation 'com.github.clans:fab:1.6.4'
@@ -171,8 +162,7 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.1') {
         transitive = true
     }
-    implementation 'com.github.sharish:ShimmerRecyclerView:v1.3' // ????????????? sem funcionar em Seguindo
-    //Kotlin
+    implementation 'com.github.sharish:ShimmerRecyclerView:v1.3'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1'
     implementation 'com.google.android.gms:play-services-ads:17.2.1'
 }
