@@ -44,10 +44,10 @@ class PersonPopularAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-            delegateAdapters.get(viewType).onCreateViewHolder(parent)
+            delegateAdapters.get(viewType)!!.onCreateViewHolder(parent)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
-            delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder!!, personResultsPage[position], context = null)
+            delegateAdapters.get(getItemViewType(position))!!.onBindViewHolder(holder, personResultsPage[position], context = null)
 
     override fun getItemViewType(position: Int): Int = personResultsPage[position].getViewType()
 

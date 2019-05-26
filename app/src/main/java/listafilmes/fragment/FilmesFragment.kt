@@ -95,8 +95,8 @@ class FilmesFragment : FragmentBase() {
 							
 								UtilsKt.getAnuncio(context!!, 2) {
 									if (recycle_listas != null &&
-											recycle_listas.adapter.itemCount > 0 &&
-											recycle_listas.adapter.getItemViewType(recycle_listas.adapter.itemCount - 1) != Constantes.BuscaConstants.AD)
+											(recycle_listas.adapter as ListaFilmesAdapter).itemCount > 0 &&
+											(recycle_listas.adapter as ListaFilmesAdapter).getItemViewType((recycle_listas.adapter as ListaFilmesAdapter).itemCount - 1) != Constantes.BuscaConstants.AD)
 									(recycle_listas.adapter as ListaFilmesAdapter).addAd(it, totalPagina)
 								}
 						}

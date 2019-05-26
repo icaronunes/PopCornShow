@@ -97,7 +97,7 @@ class TvShowsFragment : FragmentBase() {
     
                             
                             UtilsKt.getAnuncio(context!!, 2) {
-                                if (recycle_listas != null && recycle_listas.adapter.getItemViewType(recycle_listas.adapter.itemCount - 1) != Constantes.BuscaConstants.AD)
+                                if (recycle_listas != null && (recycle_listas.adapter as ListaSeriesAdapter).getItemViewType((recycle_listas.adapter as ListaSeriesAdapter).itemCount - 1) != Constantes.BuscaConstants.AD)
                                 (recycle_listas.adapter as ListaSeriesAdapter).addAd(it, totalPagina)
                             }
                         }

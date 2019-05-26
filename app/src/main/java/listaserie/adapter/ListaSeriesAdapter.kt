@@ -26,10 +26,10 @@ class ListaSeriesAdapter(private val context: Context) : RecyclerView.Adapter<Re
 	}
 	
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-			delegateAdapters.get(viewType).onCreateViewHolder(parent)
+			delegateAdapters.get(viewType)!!.onCreateViewHolder(parent)
 	
 	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-		delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder, listaResult[position], context)
+		delegateAdapters.get(getItemViewType(position))?.onBindViewHolder(holder, listaResult[position], context)
 	}
 	
 	override fun getItemViewType(position: Int): Int = listaResult[position].getViewType()

@@ -28,7 +28,7 @@ class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-       return delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder!!, ProdutoraResultsPage[position], context = null)
+       return delegateAdapters.get(getItemViewType(position))!!.onBindViewHolder(holder, ProdutoraResultsPage[position], context = null)
     }
 
     fun addprodutoraMovie(personResults: List<ListaItemFilme?>?) {
@@ -42,14 +42,14 @@ class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 this.ProdutoraResultsPage.add(person!!)
             }
 
-            notifyItemRangeChanged(initPosition, this.ProdutoraResultsPage?.size + 1 /* plus loading item */)
+            notifyItemRangeChanged(initPosition, this.ProdutoraResultsPage.size + 1 /* plus loading item */)
             ProdutoraResultsPage.add(loadingItem)
         }
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return delegateAdapters.get(viewType).onCreateViewHolder(parent)
+        return delegateAdapters.get(viewType)!!.onCreateViewHolder(parent)
     }
 
     override fun getItemViewType(position: Int): Int = ProdutoraResultsPage[position].getViewType()

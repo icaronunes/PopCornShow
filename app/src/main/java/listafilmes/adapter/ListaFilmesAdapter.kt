@@ -22,14 +22,13 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
 		delegateAdapters.put(Constantes.BuscaConstants.NEWS, ListasFilmesDelegateAdapter())
 		delegateAdapters.put(Constantes.BuscaConstants.AD, AdDelegateAdapter())
 		//listaResult.add(loading)
-		
 	}
 	
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-			delegateAdapters.get(viewType).onCreateViewHolder(parent)
+			delegateAdapters.get(viewType)!!.onCreateViewHolder(parent)
 	
 	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-		delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder, listaResult[position], context)
+		delegateAdapters.get(getItemViewType(position))?.onBindViewHolder(holder, listaResult[position], context)
 	}
 	
 	override fun getItemViewType(position: Int): Int = listaResult[position].getViewType()
