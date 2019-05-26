@@ -39,7 +39,7 @@ class FilmesFragment : FragmentBase() {
 			if (activity?.intent?.action == null) {
 				this.abaEscolhida = arguments?.getInt(Constantes.NAV_DRAW_ESCOLIDO)!!
 			} else {
-				this.abaEscolhida = Integer.parseInt(arguments?.getString(Constantes.NAV_DRAW_ESCOLIDO))
+				this.abaEscolhida = Integer.parseInt(arguments?.getString(Constantes.NAV_DRAW_ESCOLIDO)!!)
 			}
 		}
 		
@@ -70,7 +70,7 @@ class FilmesFragment : FragmentBase() {
 		
 		if (!UtilsApp.isNetWorkAvailable(context)) {
 			txt_listas?.visibility = View.VISIBLE
-			txt_listas?.text = "SEM INTERNET"
+			txt_listas?.text = getString(R.string.no_internet)
 			snack()
 			
 		} else {
@@ -92,10 +92,11 @@ class FilmesFragment : FragmentBase() {
 							pagina = listaFilmes.page
 							totalPagina = listaFilmes.totalPages
 							++pagina
-							//TODO por anuncio aqui
 							
 								UtilsKt.getAnuncio(context!!, 2) {
-									if (recycle_listas != null && recycle_listas.adapter.getItemViewType(recycle_listas.adapter.itemCount - 1) != Constantes.BuscaConstants.AD)
+									if (recycle_listas != null &&
+											recycle_listas.adapter.itemCount > 0 &&
+											recycle_listas.adapter.getItemViewType(recycle_listas.adapter.itemCount - 1) != Constantes.BuscaConstants.AD)
 									(recycle_listas.adapter as ListaFilmesAdapter).addAd(it, totalPagina)
 								}
 						}
