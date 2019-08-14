@@ -3,6 +3,7 @@ package adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.google.firebase.analytics.FirebaseAnalytics;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -46,7 +49,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     }
 
     @Override
-    public void onBindViewHolder(TrailerAdapter.TrailerViewHolder holder, final int position) {
+    public void onBindViewHolder(@NotNull TrailerAdapter.TrailerViewHolder holder, final int position) {
         final String youtube_key = videos.get(position).getKey();
         try {
             holder.thumbnailView.initialize(Config.YOUTUBE_API_KEY, OnInitializedListener(youtube_key));
@@ -73,7 +76,6 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
             Toast.makeText(context, R.string.ops, Toast.LENGTH_SHORT).show();
         }
     }
-
 
     @Override
     public int getItemCount() {
