@@ -62,12 +62,12 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val person = gson.fromJson(json, PersonPopular::class.java)
                 subscriber.onNext(person)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
     }
@@ -82,12 +82,12 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val lista = gson.fromJson(json, ListaFilmes::class.java)
                 subscriber.onNext(lista)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
     }
@@ -102,40 +102,12 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val imdb = gson.fromJson(json, Imdb::class.java)
                 subscriber.onNext(imdb)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
-            }
-        }
-    }
-
-    fun buscaNetFlix(query: String = "", days: Int = 14, andor: String = "and", audio: String = "Any",
-                     countrylist: String = "all", endImdbRate: Int = 10, EndNetfRate: Int = 10, genreid: Int = 0,
-                     imdbvotes: Int = 0, page: Int = 1, startImdbRate: Int = 0, startNetRate: Int = 0,
-                     sortby: String = "Relevance", subtitle: String = "Any", startYear: Int = 1900, typeVideo: String = "Any"): Observable<PersonPopular> {
-        return rx.Observable.create { subscriber ->
-            val year = Calendar.getInstance()[Calendar.YEAR]
-            val client = OkHttpClient()
-            val gson = Gson()
-
-            val request = Request.Builder()
-                    .url("https://unogs-unogs-v1.p.mashape.com/aaapi.cgi?" +
-                            "q=$query-!$startYear,$year-!$startNetRate,$EndNetfRate-!$startImdbRate," +
-                            "$endImdbRate-!$genreid-!$typeVideo-!$audio-!$subtitle-!" +
-                            "$imdbvotes-!{downloadable}&t=ns&cl=client&st=adv&ob=$sortby&p=$page&sa=$andor")
-                    .get()
-                    .build()
-            val response = client.newCall(request).execute()
-            if (response.isSuccessful) {
-                val json = response.body()?.string()
-                val person = gson.fromJson(json, PersonPopular::class.java)
-                subscriber.onNext(person)
-                subscriber.onCompleted()
-            } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
     }
@@ -150,12 +122,12 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val company = gson.fromJson(json, Company::class.java)
                 subscriber.onNext(company)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
     }
@@ -170,12 +142,12 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val companyFilmes = gson.fromJson(json, CompanyFilmes::class.java)
                 subscriber.onNext(companyFilmes)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
 
@@ -205,12 +177,12 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val lista = gson.fromJson(json, ListaFilmes::class.java)
                 subscriber.onNext(lista)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
     }
@@ -226,13 +198,13 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val lista = gson.fromJson(json, ListaSeries::class.java)
                 lista.results
                 subscriber.onNext(lista)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
     }
@@ -248,12 +220,12 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val lista = gson.fromJson(json, Movie::class.java)
                 subscriber.onNext(lista)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
     }
@@ -268,13 +240,13 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val videos = gson.fromJson(json, Videos::class.java)
 
                 subscriber.onNext(videos)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
     }
@@ -289,13 +261,13 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val videos = gson.fromJson(json, Videos::class.java)
 
                 subscriber.onNext(videos)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
     }
@@ -311,12 +283,12 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val tvshow = gson.fromJson(json, Tvshow::class.java)
                 subscriber.onNext(tvshow)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
     }
@@ -332,12 +304,12 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val tvshow = gson.fromJson(json, Tvshow::class.java)
                 subscriber.onNext(tvshow)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
     }
@@ -357,7 +329,7 @@ class Api(val context: Context) {
 
                 override fun onResponse(call: Call, response: Response) {
                     try {
-                        val json = response.body()?.string()
+                        val json = response.body?.string()
                         val tvshow = Gson().fromJson(json, Tvshow::class.java)
                         cont.resume(tvshow)
                     } catch (ex: Exception) {
@@ -382,7 +354,7 @@ class Api(val context: Context) {
 
                 override fun onResponse(call: Call, response: Response) {
                     try {
-                        val json = response.body()?.string()
+                        val json = response.body?.string()
                         val ep = Gson().fromJson(json, EpisodesItem::class.java)
                         cont.resume(ep)
                     } catch (ex: Exception) {
@@ -405,13 +377,13 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val colecao = gson.fromJson(json, Colecao::class.java)
 
                 subscriber.onNext(colecao)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
     }
@@ -480,12 +452,12 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val lista = gson.fromJson(json, TvSeasons::class.java)
                 subscriber.onNext(lista)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
     }
@@ -504,7 +476,7 @@ class Api(val context: Context) {
 
                 override fun onResponse(call: Call, response: Response) {
                     try {
-                        val json = response.body()?.string()
+                        val json = response.body?.string()
                         val tvshow = Gson().fromJson(json, TvSeasons::class.java)
                         cont.resume(tvshow)
                     } catch (ex: Exception) {
@@ -526,12 +498,12 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val lista = gson.fromJson(json, Credits::class.java)
                 subscriber.onNext(lista)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
     }
@@ -547,12 +519,12 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val person = gson.fromJson(json, Person::class.java)
                 subscriber.onNext(person)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
     }
@@ -568,12 +540,12 @@ class Api(val context: Context) {
                     .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 val reviews = gson.fromJson(json, ReviewsUflixit::class.java)
                 subscriber.onNext(reviews)
                 subscriber.onCompleted()
             } else {
-                subscriber.onError(Throwable(response.message()))
+                subscriber.onError(Throwable(response.message))
             }
         }
     }
@@ -590,12 +562,12 @@ class Api(val context: Context) {
                             .build()
                     val response = client.newCall(request).execute()
                     if (response.isSuccessful) {
-                        val json = response.body()?.string()
+                        val json = response.body?.string()
                         val multi = gson.fromJson(json, MultiSearch::class.java)
                         subscriber.onNext(multi)
                         subscriber.onCompleted()
                     } else {
-                        subscriber.onError(Throwable(response.message()))
+                        subscriber.onError(Throwable(response.message))
                     }
 
                 }
@@ -615,7 +587,7 @@ class Api(val context: Context) {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val json = response.body()?.string()
+                    val json = response.body?.string()
                     try {
                         val gson = Gson()
                         val listaFilmes = gson.fromJson(json, ListaFilmes::class.java)
@@ -641,7 +613,7 @@ class Api(val context: Context) {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val json = response.body()?.string()
+                    val json = response.body?.string()
                     try {
                         val listaTv = Gson().fromJson(json, ListaFilmes::class.java)
                         continuation.resume(listaTv)
@@ -666,7 +638,7 @@ class Api(val context: Context) {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val json = response.body()?.string()
+                    val json = response.body?.string()
                     try {
                         val listaTv = Gson().fromJson(json, ListaFilmes::class.java)
                         continuation.resume(listaTv)
@@ -691,7 +663,7 @@ class Api(val context: Context) {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val json = response.body()?.string()
+                    val json = response.body?.string()
                     try {
                         val listaTv = Gson().fromJson(json, ListaSeries::class.java)
                         continuation.resume(listaTv)
@@ -717,7 +689,7 @@ class Api(val context: Context) {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val json = response.body()?.string()
+                    val json = response.body?.string()
                     try {
                         val listaTv = Gson().fromJson(json, ListaSeries::class.java)
                         continuation.resume(listaTv)
@@ -743,7 +715,7 @@ class Api(val context: Context) {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val json = response.body()?.string()
+                    val json = response.body?.string()
                     val lista = gson.fromJson(json, TvSeasons::class.java)
                     cont.resume(lista)
                 }

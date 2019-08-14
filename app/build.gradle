@@ -51,6 +51,8 @@ android {
                 debug {
                     debuggable true
                     ext.enableCrashlytics = false
+                    ext.alwaysUpdateBuildId = false
+                    crunchPngs false
                 }
 
                 release {
@@ -83,9 +85,10 @@ android {
             flavorDimensions "color"
             productFlavors {
                 flavor21 {
-                    minSdkVersion 14
-                    targetSdkVersion 27
-                    dimension "color"
+                    minSdkVersion 21
+                 //   targetSdkVersion 27
+                   // dimension "color"
+                    resConfigs('pt', 'hdpi')
                 }
             }
             repositories {
@@ -149,7 +152,7 @@ dependencies {
     implementation 'com.github.clans:fab:1.6.4'
     implementation 'fr.avianey.com.viewpagerindicator:library:2.4.1.1@aar'
     implementation 'me.relex:circleindicator:1.2.2@aar'
-    implementation 'com.squareup.okhttp3:okhttp:4.0.0-alpha02'
+    implementation 'com.squareup.okhttp3:okhttp:4.1.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.onesignal:OneSignal:3.10.8'
     implementation 'com.facebook.android:facebook-android-sdk:4.16.1'
