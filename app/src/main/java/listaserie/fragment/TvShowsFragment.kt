@@ -1,15 +1,15 @@
 package listaserie.fragment
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import br.com.icaro.filme.R
 import com.google.android.gms.ads.AdRequest
+import com.google.android.material.snackbar.Snackbar
 import domain.Api
 import fragment.FragmentBase
 import kotlinx.android.synthetic.main.fragment_list_medias.*

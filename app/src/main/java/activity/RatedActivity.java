@@ -2,14 +2,15 @@ package activity;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,14 +53,6 @@ public class RatedActivity extends BaseActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpage_usuario);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         progressBar = (ProgressBar) findViewById(R.id.progress);
-
-//        AdView adview = (AdView) findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder()
-//                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-//                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-//                .build();
-//        adview.loadAd(adRequest);
-
 
         if (UtilsApp.isNetWorkAvailable(this)){
 

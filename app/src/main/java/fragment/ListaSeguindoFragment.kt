@@ -3,15 +3,11 @@ package fragment
 import adapter.ProximosAdapter
 import adapter.SeguindoRecycleAdapter
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import br.com.icaro.filme.R
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import domain.Api
@@ -30,8 +26,8 @@ class ListaSeguindoFragment : Fragment() {
 
     private var userTvshows: MutableList<UserTvshow>? = null
     private var tipo: Int = 0
-    private var recyclerViewMissing: RecyclerView? = null
-    private var recyclerViewSeguindo: RecyclerView? = null
+    private var recyclerViewMissing: ShimmerRecyclerView? = null
+    private var recyclerViewSeguindo: ShimmerRecyclerView? = null
     private var rotina: Job? = null
     private var adapterProximo: ProximosAdapter? = null
     private var adapterSeguindo: SeguindoRecycleAdapter? = null
@@ -109,7 +105,7 @@ class ListaSeguindoFragment : Fragment() {
                 Log.d(this.javaClass.name, ex.toString())
             }
         }
-        (recyclerViewMissing as ShimmerRecyclerView).hideShimmerAdapter()
+        //(recyclerViewMissing as ShimmerRecyclerView).hideShimmerAdapter()
     }
 
     fun verificarSerieCoroutine() {
@@ -139,24 +135,24 @@ class ListaSeguindoFragment : Fragment() {
         val view = inflater.inflate(R.layout.temporadas, container, false) // Criar novo layout
         view.findViewById<View>(R.id.progressBarTemporadas).visibility = View.GONE
         adapterProximo = ProximosAdapter(requireActivity())
-        recyclerViewMissing = view.findViewById<ShimmerRecyclerView>(R.id.temporadas_recycle) as ShimmerRecyclerView
-        (recyclerViewMissing as ShimmerRecyclerView).showShimmerAdapter()
-        recyclerViewMissing?.setHasFixedSize(true)
-        recyclerViewMissing?.itemAnimator = DefaultItemAnimator()
-        recyclerViewMissing?.layoutManager = LinearLayoutManager(context)
-        recyclerViewMissing?.adapter = adapterProximo
+       // recyclerViewMissing = view.findViewById<ShimmerRecyclerView>(R.id.temporadas_recycle)
+       // (recyclerViewMissing as ShimmerRecyclerView).showShimmerAdapter()
+//        recyclerViewMissing?.setHasFixedSize(true)
+//        recyclerViewMissing?.itemAnimator = DefaultItemAnimator()
+//        recyclerViewMissing?.layoutManager = LinearLayoutManager(context)
+//        recyclerViewMissing?.adapter = adapterProximo
         return view
     }
 
     private fun getViewSeguindo(inflater: LayoutInflater, container: ViewGroup?): View {
         val view = inflater.inflate(R.layout.seguindo, container, false) // Criar novo layout
         view.findViewById<View>(R.id.progressBarTemporadas).visibility = View.GONE
-        recyclerViewSeguindo = view.findViewById<View>(R.id.seguindo_recycle) as RecyclerView
-        adapterSeguindo = SeguindoRecycleAdapter(activity, mutableListOf<UserTvshow>())
-        recyclerViewSeguindo?.setHasFixedSize(true)
-        recyclerViewSeguindo?.itemAnimator = DefaultItemAnimator()
-        recyclerViewSeguindo?.layoutManager = GridLayoutManager(context, 4)
-        recyclerViewSeguindo?.adapter = adapterSeguindo
+        //recyclerViewSeguindo = view.findViewById<View>(R.id.seguindo_recycle) as RecyclerView
+      //  adapterSeguindo = SeguindoRecycleAdapter(activity, mutableListOf<UserTvshow>())
+//        recyclerViewSeguindo?.setHasFixedSize(true)
+//        recyclerViewSeguindo?.itemAnimator = DefaultItemAnimator()
+//        recyclerViewSeguindo?.layoutManager = GridLayoutManager(context, 4)
+//        recyclerViewSeguindo?.adapter = adapterSeguindo
         return view
     }
 

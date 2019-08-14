@@ -1,10 +1,10 @@
 package listafilmes.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.gms.ads.formats.UnifiedNativeAdView
@@ -15,7 +15,8 @@ import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 
 
 class AdDelegateAdapter : ViewTypeDelegateAdapter {
-	
+
+
 	lateinit var context: Context
 	
 	override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {

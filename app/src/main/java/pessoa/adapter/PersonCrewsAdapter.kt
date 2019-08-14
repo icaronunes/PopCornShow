@@ -2,13 +2,13 @@ package pessoa.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import com.squareup.picasso.Callback
 import com.squareup.picasso.NetworkPolicy
@@ -18,19 +18,19 @@ import filme.activity.FilmeActivity
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
-import java.lang.Exception
 
 /**
  * Created by icaro on 18/08/16.
  */
-class PersonCrewsAdapter(private val context: Context, private val personCredits: List<CrewItem?>?) : RecyclerView.Adapter<PersonCrewsAdapter.PersonCrewsViewHolder>() {
+class PersonCrewsAdapter(private val context: Context, private val personCredits: List<CrewItem?>?) :
+        RecyclerView.Adapter<PersonCrewsAdapter.PersonCrewsViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonCrewsAdapter.PersonCrewsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonCrewsViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.crews_filmes_layout, parent, false)
         return PersonCrewsViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: PersonCrewsAdapter.PersonCrewsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PersonCrewsViewHolder, position: Int) {
 
         val item = personCredits?.get(position)
 

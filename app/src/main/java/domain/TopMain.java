@@ -1,6 +1,6 @@
 package domain;
 
-import android.support.annotation.Keep;
+import androidx.annotation.Keep;
 
 import java.io.Serializable;
 

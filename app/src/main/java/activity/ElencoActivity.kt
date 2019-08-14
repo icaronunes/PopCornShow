@@ -3,14 +3,14 @@ package activity
 import adapter.ElencoAdapter
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.icaro.filme.R
+import com.google.android.material.snackbar.Snackbar
 import domain.Api
 import domain.CastItem
 import kotlinx.android.synthetic.main.activity_elenco.*

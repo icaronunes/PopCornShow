@@ -3,10 +3,10 @@ package pessoaspopulares.adapter
 import pessoa.activity.PersonActivity
 import android.content.Context
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import com.squareup.picasso.Picasso
 import domain.PersonItem
@@ -36,12 +36,12 @@ class PersonDelegateAdapter : ViewTypeDelegateAdapter {
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.profilePath).into(img_popular_person)
             text_person_name.text = item.name
             progress.visibility = View.GONE
-            itemView.setOnClickListener({
+            itemView.setOnClickListener {
                 val intent = Intent(context, PersonActivity::class.java )
                 intent.putExtra(Constantes.NOME_PERSON, item.name)
                 intent.putExtra(Constantes.PERSON_ID, item.id)
                 context.startActivity(intent)
-            })
+            }
         }
     }
 }

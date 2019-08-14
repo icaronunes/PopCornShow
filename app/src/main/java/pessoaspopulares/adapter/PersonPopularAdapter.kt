@@ -1,8 +1,8 @@
 package pessoaspopulares.adapter
 
-import android.support.v4.util.SparseArrayCompat
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.collection.SparseArrayCompat
+import androidx.recyclerview.widget.RecyclerView
 import domain.PersonItem
 import domain.ViewType
 import utils.Constantes
@@ -29,8 +29,8 @@ class PersonPopularAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     fun addPersonPopular(personResults: List<PersonItem?>?) {
 
-        val initPosition = personResultsPage?.size!! - 1
-        this.personResultsPage?.removeAt(initPosition)
+        val initPosition = personResultsPage.size - 1
+        this.personResultsPage.removeAt(initPosition)
         notifyItemRemoved(initPosition)
 
         // insert news and the loading at the end of the list
@@ -38,7 +38,7 @@ class PersonPopularAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
             this.personResultsPage.add(person!!)
         }
 
-        notifyItemRangeChanged(initPosition, this.personResultsPage?.size!! + 1 /* plus loading item */)
+        notifyItemRangeChanged(initPosition, this.personResultsPage.size + 1 /* plus loading item */)
         personResultsPage.add(loadingItem)
 
     }

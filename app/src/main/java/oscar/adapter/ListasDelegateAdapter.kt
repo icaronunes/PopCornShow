@@ -2,10 +2,10 @@ package oscar.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import com.squareup.picasso.Picasso
 import domain.movie.ListaItemFilme
@@ -47,7 +47,7 @@ class ListasDelegateAdapter : ViewTypeDelegateAdapter {
             }
 
             progress.visibility = View.GONE
-            itemView.setOnClickListener({
+            itemView.setOnClickListener {
                 when(item.mediaType) {
                     "tv" -> {
                         val intent = Intent(context, TvShowActivity::class.java)
@@ -62,7 +62,7 @@ class ListasDelegateAdapter : ViewTypeDelegateAdapter {
                         context.startActivity(intent)
                     }
                 }
-            })
+            }
         }
     }
 }

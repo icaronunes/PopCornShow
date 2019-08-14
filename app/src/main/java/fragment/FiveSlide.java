@@ -1,7 +1,8 @@
 package fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,6 @@ public class FiveSlide extends Fragment {
 
         ImageView imageView = (ImageView) v.findViewById(R.id.intro_img);
         imageView.setImageResource(R.drawable.intro_icon);
-        //imageView.setBackground(getResources().getDrawable(R.drawable.icon_movie_now));
         return v;
 
     }

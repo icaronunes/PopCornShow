@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="@dimen/trade_size_dp_50">
 
-    <android.support.v7.widget.SearchView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/layout_search_multi_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         app:iconifiedByDefault="true"
         app:showAsAction="always" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/layout_search_multi_recycler"
         android:layout_width="match_parent"
         android:layout_height="@dimen/trade_size_dp_250"

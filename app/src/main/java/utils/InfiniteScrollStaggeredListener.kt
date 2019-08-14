@@ -1,8 +1,8 @@
 package utils
 
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 
 class InfiniteScrollStaggeredListener(val anuncio: () -> Unit = {}, val getMedia: () -> Unit = {}, private val gridLayout: StaggeredGridLayoutManager)

@@ -68,6 +68,7 @@
   public static final android.support.v7.widget.RecyclerView *;
 }
 
+
 -keep class domain.* {
   *;
 }

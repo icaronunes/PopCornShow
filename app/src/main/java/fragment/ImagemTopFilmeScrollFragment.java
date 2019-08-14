@@ -3,8 +3,9 @@ package fragment;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +52,6 @@ public class ImagemTopFilmeScrollFragment extends Fragment {
         ObjectAnimator alphaStar = ObjectAnimator.ofFloat(imageView, "y", -100, 0)
                 .setDuration(8000);
         animatorSet.playTogether(alphaStar);
-        // animatorSet.start();
-        // Log.d("PosterScrollFragment", "onCreateView: -> " + UtilsApp.getBaseUrlImagem(4) + endereco);
         return view;
     }
 

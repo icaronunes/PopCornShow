@@ -3,15 +3,15 @@ package adapter
 import activity.CrewsActivity
 import activity.ElencoActivity
 import android.content.Intent
-import android.support.v4.app.FragmentActivity
-import android.support.v7.widget.PopupMenu
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.PopupMenu
+import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import com.squareup.picasso.Picasso
 import domain.UserTvshow
@@ -25,7 +25,7 @@ import utils.UtilsApp
 
 
 class TemporadasAdapter(val context: FragmentActivity, private val series: Tvshow?,
-     private val onClickListener: TemporadasOnClickListener, private val color: Int, private val userTvshow: UserTvshow?)
+                        private val onClickListener: TemporadasOnClickListener, private val color: Int, private val userTvshow: UserTvshow?)
     : RecyclerView.Adapter<TemporadasAdapter.HoldeTemporada>() {
 
     interface TemporadasOnClickListener {

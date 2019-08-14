@@ -3,7 +3,8 @@ package domain;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.annotation.Keep;
+
+import androidx.annotation.Keep;
 
 import com.crashlytics.android.Crashlytics;
 import com.fasterxml.jackson.databind.ObjectMapper;

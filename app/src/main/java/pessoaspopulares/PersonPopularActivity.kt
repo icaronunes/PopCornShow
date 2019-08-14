@@ -3,14 +3,14 @@ package pessoaspopulares
 import activity.BaseActivity
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.GridLayoutManager
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
 import br.com.icaro.filme.R
+import com.google.android.material.snackbar.Snackbar
 import domain.Api
 import kotlinx.android.synthetic.main.activity_person_popular.*
 import pessoaspopulares.adapter.PersonPopularAdapter

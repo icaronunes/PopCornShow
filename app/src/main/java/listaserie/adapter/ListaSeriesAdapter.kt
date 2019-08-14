@@ -1,9 +1,9 @@
 package listaserie.adapter
 
 import android.content.Context
-import android.support.v4.util.SparseArrayCompat
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.collection.SparseArrayCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import domain.ListaItemSerie
 import domain.ViewType

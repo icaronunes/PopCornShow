@@ -33,7 +33,7 @@
         android:textStyle="normal|bold"
         android:typeface="serif" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_movie_popular_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -52,7 +52,7 @@
         android:textSize="@dimen/trade_txt_size_sp_16"
         android:typeface="serif" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_movieontheair_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -61,4 +61,3 @@
         android:minHeight="@dimen/trade_size_dp_100" />
 
 </LinearLayout>
-<!--</ScrollView>-->

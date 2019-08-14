@@ -8,7 +8,7 @@
 
     <include layout="@layout/include_toolbar" />
 
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v4.view.ViewPager
+        <androidx.core.view.ViewPager
             android:layout_width="match_parent"
             android:id="@+id/viewpage_usuario"
             android:layout_height="match_parent"/>

@@ -2,11 +2,11 @@ package listaserie.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -55,13 +55,13 @@ class ListasSeriesDelegateAdapter : ViewTypeDelegateAdapter {
                         }
                     })
 
-            itemView.setOnClickListener({
+            itemView.setOnClickListener {
                 val intent = Intent(context, TvShowActivity::class.java)
                 intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(imgFilmes))
                 intent.putExtra(Constantes.TVSHOW_ID, item?.id)
                 intent.putExtra(Constantes.NOME_TVSHOW, item?.name)
                 context.startActivity(intent)
-            })
+            }
         }
 
         private fun putdata(context: Context, item: ListaItemSerie?, title_filmes_lista: TextView) {

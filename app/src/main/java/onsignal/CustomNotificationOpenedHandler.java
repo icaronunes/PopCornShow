@@ -2,7 +2,7 @@ package onsignal;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.TaskStackBuilder;
+import androidx.core.app.TaskStackBuilder;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,7 +19,6 @@ import activity.CrewsActivity;
 import activity.ElencoActivity;
 import activity.ListaGenericaActivity;
 import activity.MainActivity;
-import activity.ReviewsActivity;
 import activity.SimilaresActivity;
 import activity.Site;
 import activity.TemporadaActivity;
@@ -168,21 +167,6 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                         intent.putExtra(Constantes.INSTANCE.getYOU_TUBE_KEY(), object.getString("youtube_key"));
                         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                         stackBuilder.addParentStack(TrailerActivity.class);
-                        stackBuilder.addNextIntent(intent);
-                        stackBuilder.startActivities();
-                    }
-                }
-
-                if (action.equals("ReviewsActivity")) {
-                    Intent intent = new Intent(context, ReviewsActivity.class);
-
-                    if (object.has("nome"))
-                        intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), object.getString("nome"));
-
-                    if (object.has("id")) {
-                        intent.putExtra(Constantes.INSTANCE.getFILME_ID(), object.getInt("id"));
-                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-                        stackBuilder.addParentStack(ReviewsActivity.class);
                         stackBuilder.addNextIntent(intent);
                         stackBuilder.startActivities();
                     }

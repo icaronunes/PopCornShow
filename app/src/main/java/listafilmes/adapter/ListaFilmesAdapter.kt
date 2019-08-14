@@ -1,9 +1,9 @@
 package listafilmes.adapter
 
 import android.content.Context
-import android.support.v4.util.SparseArrayCompat
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.collection.SparseArrayCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import domain.ViewType
 import domain.movie.ListAd
@@ -21,7 +21,6 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
 		delegateAdapters.put(Constantes.BuscaConstants.LOADING, LoadingDelegateAdapter())
 		delegateAdapters.put(Constantes.BuscaConstants.NEWS, ListasFilmesDelegateAdapter())
 		delegateAdapters.put(Constantes.BuscaConstants.AD, AdDelegateAdapter())
-		//listaResult.add(loading)
 	}
 	
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =

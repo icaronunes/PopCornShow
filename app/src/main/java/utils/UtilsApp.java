@@ -1,6 +1,5 @@
 package utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -11,12 +10,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.support.v4.content.FileProvider;
-import android.support.v7.graphics.Palette;
+import androidx.core.content.FileProvider;
+import androidx.palette.graphics.Palette;
+
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import com.crashlytics.android.Crashlytics;
@@ -26,7 +25,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -49,7 +47,6 @@ import domain.tvshow.Tvshow;
 import info.movito.themoviedbapi.model.config.Timezone;
 import info.movito.themoviedbapi.model.tv.TvEpisode;
 import info.movito.themoviedbapi.model.tv.TvSeason;
-import rx.schedulers.Schedulers;
 import utils.enums.EnumTypeMedia;
 
 

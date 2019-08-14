@@ -1,10 +1,10 @@
 package adapter
 
 import activity.TemporadaActivity
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import com.ramotion.foldingcell.FoldingCell
 import com.squareup.picasso.Picasso
@@ -23,7 +23,9 @@ import utils.UtilsApp
  */
 
 class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSeason: TvSeasons,
-                             val seasons: UserSeasons?, val seguindo: Boolean, val temporadaOnClickListener: TemporadaAdapter.TemporadaOnClickListener) : RecyclerView.Adapter<TemporadaFoldinAdapter.HoldeTemporada>() {
+                             val seasons: UserSeasons?, val seguindo: Boolean,
+                             val temporadaOnClickListener: TemporadaAdapter.TemporadaOnClickListener)
+    : RecyclerView.Adapter<TemporadaFoldinAdapter.HoldeTemporada>() {
 
     private var unfoldedIndexes = HashSet<Int>()
 

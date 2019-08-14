@@ -1,8 +1,8 @@
 package produtora.adapter
 
-import android.support.v4.util.SparseArrayCompat
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.collection.SparseArrayCompat
+import androidx.recyclerview.widget.RecyclerView
 import domain.ViewType
 import domain.movie.ListaItemFilme
 import pessoaspopulares.adapter.LoadingDelegateAdapter

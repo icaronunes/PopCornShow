@@ -13,19 +13,20 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.ViewPager
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import br.com.icaro.filme.R
 import com.google.android.gms.ads.AdRequest
 import com.squareup.picasso.Picasso
@@ -50,7 +51,7 @@ import java.util.*
  * Created by icaro on 03/07/16.
  */
 
-class FilmeInfoFragment : android.support.v4.app.Fragment() {
+class FilmeInfoFragment : Fragment() {
 
     private var movieDb: Movie? = null
     private var imdbDd: Imdb? = null
@@ -591,13 +592,13 @@ class FilmeInfoFragment : android.support.v4.app.Fragment() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     when (newState) {
                         0 -> {
-                            activity?.fab_menu_filme?.visibility = View.VISIBLE
+                            fab_menu_filme?.visibility = View.VISIBLE
                         }
                         1 -> {
-                            activity?.fab_menu_filme?.visibility = View.INVISIBLE
+                            fab_menu_filme?.visibility = View.INVISIBLE
                         }
                         2 -> {
-                            activity?.fab_menu_filme?.visibility = View.INVISIBLE
+                            fab_menu_filme?.visibility = View.INVISIBLE
                         }
                     }
 

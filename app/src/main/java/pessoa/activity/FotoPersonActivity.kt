@@ -4,10 +4,11 @@ import activity.BaseActivity
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
 import android.view.Window
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import br.com.icaro.filme.R
 import domain.person.ProfilesItem
 import fragment.PosterScrollFragment
@@ -35,7 +36,7 @@ class FotoPersonActivity : BaseActivity() {
         getExtras()
 
         pager?.adapter = PosterFragment(supportFragmentManager)
-        indicator?.setViewPager(pager)
+        indicator?.setViewPager(pager as ViewPager)
         indicator?.setCurrentItem(position!!)
 
     }
@@ -55,7 +56,6 @@ class FotoPersonActivity : BaseActivity() {
     private inner class PosterFragment internal constructor(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
-
             return PosterScrollFragment.newInstance(artworks[position].filePath, nome)
         }
 

@@ -4,12 +4,12 @@ import activity.BaseActivity
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.design.widget.TabLayout
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import br.com.icaro.filme.R
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
 import domain.Api
 import domain.person.Person
 import kotlinx.android.synthetic.main.activity_person.*

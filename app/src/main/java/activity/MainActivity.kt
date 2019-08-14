@@ -7,15 +7,15 @@ import android.app.Activity
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.support.design.widget.Snackbar
-import android.support.design.widget.TabLayout
-import android.support.v4.view.ViewPager
-import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.viewpager.widget.ViewPager
 import br.com.icaro.filme.BuildConfig
 import br.com.icaro.filme.R
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
 import com.viewpagerindicator.CirclePageIndicator
 import domain.Api
 import domain.ListaSeries
@@ -125,7 +125,7 @@ class MainActivity : BaseActivity() {
         viewpage_top_main!!.offscreenPageLimit = 3
         viewpage_top_main!!.adapter = ViewPageMainTopFragment(supportFragmentManager, multi)
         val circlePageIndicator = findViewById<View>(R.id.indication_main) as CirclePageIndicator
-        circlePageIndicator.setViewPager(viewpage_top_main)
+        circlePageIndicator.setViewPager(viewpage_top_main as ViewPager)
     }
 
     private fun setupViewBotton() {

@@ -34,7 +34,7 @@
         android:typeface="serif" />
 
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tvshow_popular_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -51,7 +51,7 @@
         android:textStyle="normal|bold"
         android:typeface="serif" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_tvshowtoday_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"

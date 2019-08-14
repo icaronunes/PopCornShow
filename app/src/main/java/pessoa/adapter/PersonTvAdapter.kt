@@ -2,13 +2,13 @@ package pessoa.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import com.squareup.picasso.Callback
 import com.squareup.picasso.NetworkPolicy
@@ -22,14 +22,15 @@ import java.lang.Exception
 /**
  * Created by icaro on 18/08/16.
  */
-class PersonTvAdapter(private val context: Context, private val personCredits: List<CastItem?>) : RecyclerView.Adapter<PersonTvAdapter.PersonTvViewHolder>() {
+class PersonTvAdapter(private val context: Context, private val personCredits: List<CastItem?>) :
+        RecyclerView.Adapter<PersonTvAdapter.PersonTvViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonTvViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.person_movie_filmes_layout, parent, false)
         return PersonTvViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: PersonTvAdapter.PersonTvViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PersonTvViewHolder, position: Int) {
 
         val credit = personCredits[position]
 

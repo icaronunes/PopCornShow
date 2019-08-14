@@ -2,14 +2,14 @@ package activity
 
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.icaro.filme.R
+import com.google.android.material.snackbar.Snackbar
 import domain.ResultsSimilarItem
 import domain.tvshow.ResultsItem
 import filme.adapter.SimilaresListaFilmeAdapter

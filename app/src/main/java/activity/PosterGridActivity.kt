@@ -4,9 +4,9 @@ import adapter.PosterGridAdapter
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.GridLayoutManager
 import android.view.Window
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
 import br.com.icaro.filme.R
 import domain.PostersItem
 import kotlinx.android.synthetic.main.poster_grid.*

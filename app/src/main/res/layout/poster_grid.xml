@@ -14,7 +14,7 @@
         app:adSize="SMART_BANNER"
         app:adUnitId="@string/admob" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView_poster_grid"
         android:layout_width="match_parent"
         android:layout_weight="1"

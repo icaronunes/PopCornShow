@@ -2,15 +2,14 @@ package pessoa.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ProgressBar
+import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import com.squareup.picasso.Callback
-import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import domain.person.ProfilesItem
 import pessoa.activity.FotoPersonActivity
@@ -24,13 +23,13 @@ import java.lang.Exception
  */
 class PersonImagemAdapter(private val context: Context, private val artworks: List<ProfilesItem?>?, private val nome: String?) : RecyclerView.Adapter<PersonImagemAdapter.PersonImageViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonImagemAdapter.PersonImageViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonImageViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.poster_grid_image, parent, false)
 
         return PersonImageViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: PersonImagemAdapter.PersonImageViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PersonImageViewHolder, position: Int) {
         val item = artworks!![position]
 
         Picasso.get().load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3)) + item?.filePath)

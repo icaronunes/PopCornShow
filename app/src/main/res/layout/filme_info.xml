@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -90,7 +90,7 @@
         app:layout_constraintTop_toTopOf="@+id/produtora"
         tools:text="2019-01-03 BR" />
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_poster"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
             tools:layout_height="180dp"
             tools:srcCompat="@drawable/person" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
     <FrameLayout
@@ -172,7 +172,7 @@
         app:layout_constraintTop_toTopOf="@+id/icon_site"
         tools:src="@drawable/collection_on" />
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -188,7 +188,7 @@
         app:layout_constraintStart_toEndOf="@+id/card_poster"
         app:layout_constraintTop_toBottomOf="@+id/frame_nota">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/trade_size_dp_4"
             android:layout_height="match_parent"
@@ -308,10 +308,10 @@
                 tools:text="Released" />
 
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
     <TextView
@@ -324,7 +324,7 @@
         app:layout_constraintTop_toBottomOf="@+id/card_poster"
         tools:text="A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground fight clubs forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion." />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_filme_trailer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -333,7 +333,7 @@
         android:layout_marginTop="@dimen/trade_size_dp_2"
         android:layout_marginEnd="@dimen/trade_size_dp_8"
         android:layout_marginRight="@dimen/trade_size_dp_8"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descricao"
@@ -359,7 +359,7 @@
         app:layout_constraintTop_toBottomOf="@+id/recycle_filme_trailer"
         tools:visibility="visible" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_filme_elenco"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -389,7 +389,7 @@
         app:layout_constraintTop_toBottomOf="@+id/recycle_filme_elenco"
         tools:visibility="visible" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_filme_producao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -467,7 +467,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tmdb_site"
         tools:visibility="visible" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_filme_similares"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -477,7 +477,7 @@
         android:layout_marginEnd="@dimen/trade_size_dp_8"
         android:layout_marginRight="@dimen/trade_size_dp_8"
         android:layout_marginBottom="@dimen/trade_size_dp_4"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview_similares"
@@ -485,4 +485,4 @@
         tools:listitem="@layout/scroll_similares"
         tools:orientation="horizontal" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.ConstraintLayout>
