@@ -23,9 +23,7 @@
     <string name="canceled">Canceled</string>
     <string name="classificar">To Rank</string>
     <string name="classificar_visto" translatable="false">✔</string>
-    <string name="collecion_off">No collection</string>
     <string name="compartilhar_filme">Share Tvshow</string>
-    <string name="compartilhar_tvshow">Sharing Tvshows</string>
     <string name="configuracoes">Settings</string>
     <string name="criado">Created by:</string>
     <string name="criar_login_popcorn">Create login PopCorn</string>
@@ -37,7 +35,6 @@
     <string name="erro_na_gravacao_imagem">Error in the recording of the image in memory. Try again.</string>
     <string name="excluir_filme">Delete Movie ?</string>
     <string name="excluir_tvshow">Delete Tvshow ?</string>
-    <string name="falha_rated">Failure classification</string>
     <string name="favorite">Favorites</string>
     <string name="fazer_login">Login</string>
     <string name="filme">Movies</string>
@@ -63,7 +60,6 @@
     <string name="no">No</string>
     <string name="no_budget">There is no budget information</string>
     <string name="no_internet">Without Internet</string>
-    <string name="no_message">No comments</string>
     <string name="no_site">No Official site</string>
     <string name="no_vote">No Vote</string>
     <string name="nota">Note:</string>
@@ -74,8 +70,6 @@
     <string name="oscar">Oscar Winners</string>
     <string name="password">Password</string>
     <string name="person_rated">Popular people</string>
-    <string name="person_vote">People voted</string>
-    <string name="pesquisar_internet">On the Google Play</string>
     <string name="popularity">Popularity:</string>
     <string name="por_tras_camera_filme">Film Production</string>
     <string name="por_tras_camera_tvshow">Tvshow Production</string>
@@ -85,7 +79,6 @@
     <string name="produtora">Developer:</string>
     <string name="quero_assistir">I want to watch</string>
     <string name="rated_googleplay">Review on Google Play.</string>
-    <string name="recomendacao">Recommendation</string>
     <string name="retry">Repeat</string>
     <string name="returnin_series">Renewed</string>
     <string name="sair">Leave</string>
@@ -101,8 +94,6 @@
     <string name="sem_tvshow">No Tvshow</string>
     <string name="similares">Similar</string>
     <string name="spoken_languages">Idioma Original:</string>
-    <string name="status">Status:</string>
-    <string name="suas_listas">Your Lists</string>
     <string name="tempo_nao_informado">Time N/A</string>
     <string name="temporada">Season: </string>
     <string name="temporadas">Seasons:</string>
@@ -114,12 +105,9 @@
     <string name="tvshow">TvShows</string>
     <string name="tvshow_add_favorite">Tvshow added to Favorites</string>
     <string name="tvshow_nao_lancado">Tvshow not yet released</string>
-    <string name="tvshow_ep_rated">Epsodio Rated</string>
     <string name="tvshow_remove_favorite">Tvshow removed from the Favorites list</string>
     <string name="upcoming">Coming soon</string>
-    <string name="usuario">User\'s TMDB</string>
     <string name="ver_imdb">See IMDB</string>
-    <string name="ver_no_app">See PopCorn</string>
     <string name="ver_tmdb">See TMDB</string>
     <string name="vote_average">Vote Average</string>
     <string name="writer">Written</string>
@@ -133,7 +121,6 @@
     <string name="marcado_nao_assistido">Marked as unassisted.</string>
     <string name="marcado_assistido_temporada">Marked as watched.</string>
     <string name="marcado_nao_assistido_temporada">Marked as unassisted.</string>
-    <string name="salvando">Saving…</string>
     <string name="tvshow_watch_remove">Tvshow removed from watchlist</string>
     <string name="tvshow_remove_rated">Removed note from Tvshow</string>
     <string name="adicionar_favorite">Add to Favorites</string>
@@ -145,7 +132,6 @@
     <string name="sem_login">User not logged</string>
     <string name="title_intro_1">PopCorn Show</string>
     <string name="subtitle_intro_1">Welcome to the PopCorn Show.\n\nCheck out the latest news</string>
-    <string name="title_intro_2">News</string>
     <string name="subtitle_intro_2">Several links to sites around the world talking about the movie / tvshow</string>
     <string name="title_intro_3">Following</string>
     <string name="subtitle_intro_3">Our system can now track whether the movie, tvshow or artist is in the Netflix catalog</string>
@@ -171,28 +157,20 @@
     <string name="conta_deletada">Deleted account</string>
     <string name="falha_delete_conta">Error while trying to delete account. You must have logged in to this process recently.</string>
     <string name="id_oscar" translatable="false">28</string>
-    <string name="calendar">Calendar</string>
-    <string name="no_epsodio">Nameless</string>
     <string name="proximos">Upcoming</string>
     <string name="new_segiundo">New</string>
     <string name="msg_parar_seguir">If you stop following, you lose all the progress of the Tvshow</string>
     <string name="title_delete">Stop following the Tvshow?</string>
     <string name="erro_seguir">Error, please try again</string>
     <string name="subtitle_intro_5">Create your login and enjoy</string>
-    <string name="procurar">Search</string>
     <string name="ops">Oops. something wrong</string>
-    <string name="app_code" translatable="false">q2p5q/</string>
     <string name="notificacao">Notification</string>
     <string name="notificacao_summary">Get notification</string>
     <string name="ajuda_desenvolvimento">Development</string>
     <string name="twitter_text" translatable="false">Twitter</string>
     <string name="novidades_title">News</string>
     <string name="novidades_text">** Your reviews are now sent to TMDB. \n\n (With great powers comes great responsibilities) \n\n ** Search now brings image in search **</string>
-    <string name="star_avaliados">Evaluation</string>
-    <string name="budget">Budget</string>
     <string name="homepage" translatable="false">Homepager</string>
-    <string name="ver_netflix">See Netflix</string>
-    <string name="procurar_netflix">Netflix</string>
     <string name="alerta_spoiler">Warning</string>
     <string name="msg_spoiler">These links may contain SPOILERS</string>
     <string name="empty_favorites">No Favorites</string>
@@ -208,14 +186,11 @@
     <string name="corn" translatable="false">Corn</string>
     <string name="pop" translatable="false">Pop</string>
     <string name="nao_visto">Not seen</string>
-    <string name="numero_de_episodios">Number of episodes</string>
-    <string name="show" translatable="false">Show</string>
     <string name="atualizar">New</string>
     <string name="sem_informacao_company">No Company Information</string>
     <string name="tvshow_rated">Tvshow Rated</string>
     <string name="permitir_acesso_armazenamento">Para salvar imagem  é necessario permitir acesso a meoria interna.</string>
     <string name="empty_data" translatable="false">--/--/--</string>
-    <string name="circulo" translatable="false">&#xf101;</string>
     <string name="site" translatable="false">site</string>
     <string name="proximo_ep">Next Ep:</string>
     <string name="ultimo_ep">Last Ep:</string>

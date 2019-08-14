@@ -32,25 +32,18 @@
     <string name="por_tras_camera_tvshow">Produção da Série</string>
 
     <string name="milhoes_budget">Milhões</string>
-    <string name="no_message">Sem Comentarios</string>
-    <string name="person_vote">Pessoas Votaram</string>
     <string name="orcamento_budget">Orçamento</string>
 
     <string name="no_vote">Não houve votos</string>
     <string name="no_budget">Não há informação orçamentaria</string>
-    <string name="collecion_off">Sem coleção</string>
     <string name="no_site">Sem site Oficial</string>
-    <string name="pesquisar_internet">No Google Play</string>
-    <string name="ver_no_app">Ver no PopCorn</string>
     <string name="similares">Similares</string>
     <string name="compartilhar_filme">Compartilhar Filme</string>
     <string name="erro_na_gravacao_imagem">Erro na gravação da imagem na memoria. Tente novamente.</string>
     <string name="login">Login:</string>
     <string name="fazer_login">Fazer Login</string>
-    <string name="usuario">Usuário do TMDB</string>
     <string name="password">Senha</string>
     <string name="favorite">Favoritos</string>
-    <string name="recomendacao">Recomendação</string>
     <string name="quero_assistir">Quero Assistir</string>
 
     <string name="excluir_filme">Excluir Filme ?</string>
@@ -58,7 +51,6 @@
     <string name="no">Não</string>
     <string name="filme_rated">Filme Classificado</string>
     <string name="tvshow_rated">Série Classificada</string>
-    <string name="falha_rated">Falha na classificação</string>
     <string name="filme_add_favorite">Filme Adicionado ao Favoritos</string>
 
 
@@ -74,7 +66,6 @@
     <string name="sem_fotos">Sem Fotos</string>
     <string name="temporadas">Temporadas:</string>
     <string name="informacoes">Informações</string>
-    <string name="status">Status:</string>
     <string name="temporada">"Temporada: "</string>
     <string name="nota">Nota:</string>
     <string name="epsodio">Epsódio</string>
@@ -86,7 +77,6 @@
     <string name="air_date">Passando na TV</string>
     <string name="vote_average">Votos</string>
 
-    <string name="tvshow_ep_rated">Epsodio Classificado</string>
     <string name="classificar">Classificar</string>
     <string name="returnin_series">Renovada</string>
     <string name="ended">Finalizada</string>
@@ -95,7 +85,6 @@
     <string name="filme">Filmes</string>
     <string name="tvshow">Séries</string>
     <string name="excluir_tvshow">Excluir Série ?</string>
-    <string name="compartilhar_tvshow">Compartilhando Séries</string>
     <string name="idioma_padrao">Idioma do Android</string>
     <string name="idioma_padrao_subtitle">Idioma Inglês contem mais informações no TMDB. Caso não use o padrão do Android, este será usado.</string>
 
@@ -119,7 +108,6 @@
     <string name="infor_app">Informaçãoes sobre o App</string>
     <string name="criado">Criado por:</string>
     <string name="rated_googleplay">Avaliar no Google Play.</string>
-    <string name="suas_listas">Suas listas</string>
     <string name="person_rated">Pessoas Populares</string>
     <string name="oscar">Vencedores de Oscar</string>
     <string name="criar_login_popcorn">Criar login PopCorn</string>
@@ -130,7 +118,6 @@
     <string name="marcado_nao_assistido">Marcado como não assistido.</string>
     <string name="marcado_assistido_temporada">Marcado como assistido.</string>
     <string name="marcado_nao_assistido_temporada">Marcado como não assistido.</string>
-    <string name="salvando">Salvando...</string>
     <string name="tvshow_watch_remove">Tvshow retirada da Ver depois.</string>
     <string name="tvshow_remove_rated">Removida nota da  Série</string>
     <string name="adicionar_favorite">Adicionar aos favoritos</string>
@@ -142,7 +129,6 @@
     <string name="sem_login">Usuario não logado</string>
     <string name="title_intro_1">PopCorn Show</string>
     <string name="subtitle_intro_1">Bem-vindo ao PopCorn Show.\n\nConfira as ultimas novidades</string>
-    <string name="title_intro_2">Mudanças</string>
     <string name="subtitle_intro_2">Diversos links para sites do mundo todo falando sobre o filme ou tvshow</string>
     <string name="subtitle_intro_3">Nosso sistema agora pode rastrear se o filme, tvshow ou artista está no catalogo da Netflix</string>
     <string name="title_intro_3">Seguindo</string>
@@ -165,8 +151,6 @@
     <string name="deletar_conta">Deletar Conta?</string>
     <string name="deletar_conta_txt">Você gostaria de deletar sua conta? Perdera todas as informações da conta.  Não será possível recuperar.</string>
     <string name="falha_delete_conta">Erro ao tentar deletar conta. Necessario ter logado recentemente para esse processo.</string>
-    <string name="calendar">Calendário</string>
-    <string name="no_epsodio">Sem nome</string>
     <string name="proximos">Próximos</string>
     <string name="new_segiundo">Novo</string>
     <string name="conta_deletada">Conta deletada</string>
@@ -174,19 +158,14 @@
     <string name="title_delete">Para de seguir a Série?</string>
     <string name="erro_seguir">Erro, tente novamente</string>
     <string name="subtitle_intro_5">Crie seu login e aproveite</string>
-    <string name="procurar">Procurar</string>
     <string name="ops">Oops… Algo deu errado</string>
     <string name="notificacao">Notificação</string>
     <string name="notificacao_summary">Receber Notificação</string>
     <string name="ajuda_desenvolvimento">Desenvolvimento</string>
     <string name="novidades_title">Novidades</string>
     <string name="novidades_text">** Suas avaliações agora são enviadas ao TMDB. \n\n (Com grandes poderes vem grandes responsabilidades)\n\n ** Pesquisa agora traz imagem na busca ** </string>
-    <string name="star_avaliados">Avaliação</string>
-    <string name="budget">Orçamento</string>
     <string name="person">Perfil</string>
     <string name="populares">Populares</string>
-    <string name="ver_netflix">Ver no Netflix</string>
-    <string name="procurar_netflix">Netflix</string>
     <string name="alerta_spoiler">Atenção</string>
     <string name="msg_spoiler">Esses links podem conter SPOILERS</string>
     <string name="empty_favorites">Sem Favoritos</string>
@@ -199,7 +178,6 @@
     <string name="ops_seguir_novamente">Oops. Algo deu errado. Se persistir, tente seguir a série novamente.</string>
     <string name="title_marcar_ep_anteriores">Marcar episódios anteriores como assistidos?</string>
     <string name="msg_marcar_ep_anteriores">Todos os episódios anteriores serão marcados como vistos.</string>
-    <string name="numero_de_episodios">Número de episodios</string>
     <string name="nao_visto">Não Visto</string>
     <string name="atualizar" >Nova</string>
     <string name="sem_informacao_company">Sem informações da Companhia</string>

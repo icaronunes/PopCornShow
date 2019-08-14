@@ -31,25 +31,9 @@
     <style name="AppTheme.NoActionBar.NavDrawer">
 
     </style>
-
-    <!-- Temas para a Toolbar, ver include_toolbar.xml -->
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-
     <style name="CustomRatingBar" parent="Widget.AppCompat.RatingBar.Small">
         <item name="android:progressDrawable">@drawable/ratingbar_filme</item>
         <item name="android:minHeight">@dimen/trade_size_dp_40</item>
         <item name="android:maxHeight">@dimen/trade_size_dp_40</item>
     </style>
-
-
-        <!-- Tema de PosterActivity -->
-    <style name="Theme.AppCompat.Light.Dialog.MinWidth.NoActionBar" parent="@style/Theme.AppCompat.NoActionBar">
-        <item name="android:windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@color/transparent2</item>
-    </style>
-
 </resources>

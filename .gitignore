@@ -3,6 +3,8 @@ app/src/main/java/utils/Config.java
 app/config.txt
 app/keystore.jks
 filme.iml
+.gradle/wrapper/gradle-wrapper.properties
+.idea/misc.xml
 
 
 /build
@@ -24,7 +26,7 @@ gen/
 out/
 
 # Gradle files
-.gradle/
+.gradle/*
 build/
 app/app.iml
 local.properties

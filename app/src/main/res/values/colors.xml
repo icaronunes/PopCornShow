@@ -18,26 +18,16 @@
     <color name="red2">#b90a0c</color>
     <color name="green">#0f0</color>
     <color name="yellow">#fff000</color>
-    <color name="gray">#cccccc</color>
     <color name="gray_reviews">#74260e</color>
 
-    <!-- SwipeRefreshLayout -->
-    <color name="refresh_progress_1">#33B5E5</color>
-    <!-- azul -->
-    <color name="refresh_progress_2">#99CC00</color>
-    <!-- verde -->
-    <color name="refresh_progress_3">#CC0000</color>
     <color name="black">#000000</color>
-    <color name="black_button">#fe6c6666</color>
     <color name="black_transparente">#32767676</color>
     <color name="play_video">#86767676</color>
     <color name="colorFAB">#2196F3</color>
     <color name="yellow_transparente">#a9ffea00</color>
     <color name="tmdb_site">#34a34e</color>
     <color name="imdb">#d9ac09</color>
-    <color name="netflixColor">#b90a0c</color>
     <color name="blue_main">#ef0f0ffc</color>
-    <color name="transparente">#12000000</color>
     <color name="color_botton_main">#df531812</color>
 
 </resources>
