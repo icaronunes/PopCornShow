@@ -57,17 +57,17 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
                 this.temporadaOnClickListener.onClickVerTemporada(it, position)
             }
 
-            holder.visto_detelhe.setBackgroundColor(if (epUser?.isAssistido) temporadaActivity.resources.getColor(R.color.green) else {
+            holder.vistoDetelhe.setBackgroundColor(if (epUser.isAssistido) temporadaActivity.resources.getColor(R.color.green) else {
                 this.temporadaActivity.resources.getColor(R.color.gray_reviews)
             })
 
-            holder.visto_detelhe.setOnClickListener {
+            holder.vistoDetelhe.setOnClickListener {
                 this.temporadaOnClickListener.onClickVerTemporada(it, position)
             }
 
         } else {
-            holder.visto_detelhe.visibility = View.GONE
-            holder.ver_mais.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+            holder.vistoDetelhe.visibility = View.GONE
+            holder.verMais.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
         }
 
         holder.resumo.text = ep?.overview
@@ -77,20 +77,20 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 4)) + ep?.stillPath)
                 .error(R.drawable.empty_popcorn)
                 .into(holder.img)
-        holder.resumo_detalhe.text = ep?.overview
+        holder.resumoDetalhe.text = ep?.overview
 
         if (ep?.voteAverage?.toString()?.length!! >= 2) {
-            holder.detalhes_nota.text = ep.voteAverage.toString().slice(0..2)
+            holder.detalhesNota.text = ep.voteAverage.toString().slice(0..2)
             holder.nota.text = ep.voteAverage.toString().slice(0..2)
         }
-        holder.detalhes_votos.text = ep.voteCount.toString()
+        holder.detalhesVotos.text = ep.voteCount.toString()
         ep.voteAverage.let {
-            holder.detalhes_nota.text = ep.voteAverage?.toString()
+            holder.detalhesNota.text = ep.voteAverage.toString()
         }
 
         if (epUser != null && seguindo) {
-            holder.nota_user.text = epUser.nota.toString()
-            holder.progress_detalhe.rating = epUser.nota
+            holder.notaUser.text = epUser.nota.toString()
+            holder.progressDetalhe.rating = epUser.nota
         }
 
         if (holder.cell.isUnfolded) {
@@ -106,16 +106,16 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         var diretorName: String? = "null"
         var escritorName: String? = "null"
 
-        val diretor: CrewItem? =  ep.crew?.firstOrNull ({
+        val diretor: CrewItem? =  ep.crew?.firstOrNull {
             it?.job == "Director"
-        })
+        }
 
         if (diretor != null) {
             diretorName = diretor.name
             Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 2)) + diretor.profilePath)
                     .error(R.drawable.person)
-                    .into(holder.diretor_img)
+                    .into(holder.diretorImg)
         }
 
         val escritor: CrewItem? = ep.crew?.firstOrNull {
@@ -127,15 +127,15 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
             Picasso.get()
                     .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 2)) + escritor.profilePath)
                     .error(R.drawable.person)
-                    .into(holder.escritor_img)
+                    .into(holder.escritorImg)
         }
 
-        holder.name_diretor.text = if (diretorName.equals("null", true)) {
+        holder.nameDiretor.text = if (diretorName.equals("null", true)) {
             " ? "
         } else {
             diretorName
         }
-        holder.nome_escritor.text = if (escritorName.equals("null", true)) {
+        holder.nomeEscritor.text = if (escritorName.equals("null", true)) {
             " ? "
         } else {
             escritorName
@@ -146,12 +146,12 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
             registerToggle(position)
         }
 
-        holder.ver_mais.setOnClickListener {
+        holder.verMais.setOnClickListener {
             this.temporadaOnClickListener.onClickTemporada(it, position)
         }
 
         holder.linear.setOnClickListener {
-            this.temporadaOnClickListener.onClickTemporadaNota(holder.progress_detalhe, ep, position, epUser)
+            this.temporadaOnClickListener.onClickTemporadaNota(holder.progressDetalhe, ep, position, epUser)
         }
 
     }
@@ -206,19 +206,19 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         //epsodio_detalhes
 
         val img = itemView.epsodio_detalhes_img
-        val resumo_detalhe = itemView.epsodio_detalhes_resumo
-        val detalhes_nota = itemView.epsodio_detalhes_nota
-        val detalhes_votos = itemView.epsodio_detalhes_votos
-        val nota_user = itemView.epsodio_detalhes_nota_user
-        val progress_detalhe = itemView.epsodio_detalhes_progress
-        val ver_mais = itemView.epsodio_detalhes_ler_mais
+        val resumoDetalhe = itemView.epsodio_detalhes_resumo
+        val detalhesNota = itemView.epsodio_detalhes_nota
+        val detalhesVotos = itemView.epsodio_detalhes_votos
+        val notaUser = itemView.epsodio_detalhes_nota_user
+        val progressDetalhe = itemView.epsodio_detalhes_progress
+        val verMais = itemView.epsodio_detalhes_ler_mais
         //layout_diretor
 
-        val visto_detelhe = itemView.layout_diretor_nome_visto
-        val escritor_img = itemView.layout_diretor_nome_escritor_img
-        val diretor_img = itemView.layout_diretor_nome_diretor_img
-        val name_diretor = itemView.layout_diretor_nome_diretor
-        val nome_escritor = itemView.layout_diretor_nome_escritor
+        val vistoDetelhe = itemView.layout_diretor_nome_visto
+        val escritorImg = itemView.layout_diretor_nome_escritor_img
+        val diretorImg = itemView.layout_diretor_nome_diretor_img
+        val nameDiretor = itemView.layout_diretor_nome_diretor
+        val nomeEscritor = itemView.layout_diretor_nome_escritor
         val linear = itemView.epsodio_detalhes_linear
 
     }

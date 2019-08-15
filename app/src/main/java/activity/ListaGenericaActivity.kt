@@ -86,7 +86,7 @@ class ListaGenericaActivity : BaseActivity() {
                         pagina = it.page
                         totalPagina = it.totalPages
                         ++pagina
-                    }, { erro ->
+                    }, {
                         Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
                     })
             subscriptions.add(inscricao)

@@ -52,8 +52,8 @@ class Api(val context: Context) {
         return if (Random(2).nextInt() % 2 == 0) Config.TMDB_API_KEY else  Config.TMDB_API_KEY2
     }
 
-    fun PersonPopular(pagina: Int): Observable<PersonPopular> {
-        return rx.Observable.create { subscriber ->
+    fun personPopular(pagina: Int): Observable<PersonPopular> {
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -73,7 +73,7 @@ class Api(val context: Context) {
     }
 
     fun getLista(id: String, pagina: Int = 1): Observable<ListaFilmes> {
-        return rx.Observable.create { subscriber ->
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -93,7 +93,7 @@ class Api(val context: Context) {
     }
 
     fun getOmdbpi(id: String?): Observable<Imdb> {
-        return rx.Observable.create { subscriber ->
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -113,7 +113,7 @@ class Api(val context: Context) {
     }
 
     fun getCompany(id_produtora: Int): Observable<Company> {
-        return rx.Observable.create { subscriber ->
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -133,7 +133,7 @@ class Api(val context: Context) {
     }
 
     fun getCompanyFilmes(company_id: Int, pagina: Int = 1): Observable<CompanyFilmes> {
-        return rx.Observable.create { subscriber ->
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -157,7 +157,7 @@ class Api(val context: Context) {
 
     fun buscaDeFilmes(tipoDeBusca: String? = TIPOBUSCA.FILME.agora, pagina: Int = 1, local: String = "US"): Observable<ListaFilmes> {
         // tipos de buscas - "now_playing", "upcoming", "top_rated", "popular" - Mude o tipo, para mudar busca
-        return rx.Observable.create { subscriber ->
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             Log.d("Api", "pagina $pagina")
@@ -189,7 +189,7 @@ class Api(val context: Context) {
 
     fun buscaDeSeries(tipoDeBusca: String? = TIPOBUSCA.SERIE.popular, pagina: Int = 1, local: String = "US"): Observable<ListaSeries> {
         // tipos de buscas - "now_playing", "upcoming", "top_rated", "popular" - Mude o tipo, para mudar busca
-        return rx.Observable.create { subscriber ->
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -210,7 +210,7 @@ class Api(val context: Context) {
     }
 
     private fun getMovie(id: Int): Observable<Movie> {
-        return rx.Observable.create { subscriber ->
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -231,7 +231,7 @@ class Api(val context: Context) {
     }
 
     fun getMovieVideos(id: Int): Observable<Videos> {
-        return rx.Observable.create { subscriber ->
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -252,7 +252,7 @@ class Api(val context: Context) {
     }
 
     fun getTvshowVideos(id: Int): Observable<Videos> {
-        return rx.Observable.create { subscriber ->
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -273,7 +273,7 @@ class Api(val context: Context) {
     }
 
     fun getTvShow(id: Int): Observable<Tvshow> {
-        return rx.Observable.create { subscriber ->
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -294,7 +294,7 @@ class Api(val context: Context) {
     }
 
     fun getTvShowLite(id: Int): Observable<Tvshow> { // Usado em "Seguindo"
-        return rx.Observable.create { subscriber ->
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -342,7 +342,7 @@ class Api(val context: Context) {
     }
 
     suspend fun getTvShowEpC(id: Int, idTemp: Int, idEp: Int): EpisodesItem { // Usado em "Seguindo"
-        return suspendCoroutine { cont -> 2
+        return suspendCoroutine { cont ->
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$id/season/$idTemp/episode/$idEp?api_key=${getKey()}" + "&language=$timeZone")
                     .get()
@@ -368,7 +368,7 @@ class Api(val context: Context) {
 
 
     fun getColecao(id: Int): Observable<Colecao> {
-        return rx.Observable.create { subscriber ->
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -443,7 +443,7 @@ class Api(val context: Context) {
     }
 
     fun getTvSeasons(id: Int, id_season: Int, pagina: Int = 1): Observable<TvSeasons> {
-        return rx.Observable.create { subscriber ->
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -489,7 +489,7 @@ class Api(val context: Context) {
     }
 
     fun getTvCreditosTemporada(id: Int, id_season: Int): Observable<Credits> {
-        return rx.Observable.create { subscriber ->
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -510,7 +510,7 @@ class Api(val context: Context) {
 
     fun personDetalhes(id: Int): Observable<Person> {
 
-        return rx.Observable.create { subscriber ->
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -530,7 +530,7 @@ class Api(val context: Context) {
     }
 
     fun reviewsFilme(idImdb: String?): Observable<ReviewsUflixit> {
-        return rx.Observable.create { subscriber ->
+        return Observable.create { subscriber ->
             val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
@@ -551,7 +551,7 @@ class Api(val context: Context) {
     }
 
     fun procuraMulti(query: String?): Observable<MultiSearch> {
-        return rx.Observable
+        return Observable
                 .create { subscriber ->
                     if (query.equals("search_suggest_query")) Throwable("")
                     val client = OkHttpClient()

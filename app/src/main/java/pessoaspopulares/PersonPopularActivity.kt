@@ -70,7 +70,7 @@ class PersonPopularActivity : BaseActivity() {
 
     fun getPerson() {
         if (pagina <= totalPagina) {
-            val inscricao = Api(this).PersonPopular(pagina)
+            val inscricao = Api(this).personPopular(pagina)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

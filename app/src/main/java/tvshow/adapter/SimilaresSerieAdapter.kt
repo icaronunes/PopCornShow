@@ -41,7 +41,7 @@ class SimilaresSerieAdapter(val activity: FragmentActivity?, val similarItems: L
                         }
                     })
 
-            holder.imgPagerSimilares.setOnClickListener { view ->
+            holder.imgPagerSimilares.setOnClickListener {
                 val intent = Intent(activity, TvShowActivity::class.java)
                 intent.putExtra(Constantes.COLOR_TOP, color_top)
                 intent.putExtra(Constantes.NOME_TVSHOW, tvshow.name)

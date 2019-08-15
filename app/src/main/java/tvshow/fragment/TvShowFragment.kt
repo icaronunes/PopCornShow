@@ -184,8 +184,7 @@ class TvShowFragment : FragmentBase() {
 			startActivity(intent)
 		}
 		
-		img_star?.setOnClickListener { view ->
-			
+		img_star?.setOnClickListener {
 			if (mediaNotas > 0) {
 				val builder = AlertDialog.Builder(activity!!)
 				val inflater = activity?.layoutInflater
@@ -551,7 +550,7 @@ class TvShowFragment : FragmentBase() {
 						.setMessage(R.string.msg_parar_seguir)
 						.setNegativeButton(R.string.no, null)
 						.setOnDismissListener { progressBarTemporada?.visibility = View.GONE }
-						.setPositiveButton(R.string.ok) { _, i ->
+						.setPositiveButton(R.string.ok) { _, _ ->
 							myRef?.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid!! else "")
 									?.child("seguindo")
 									?.child(series?.id.toString())
@@ -884,7 +883,7 @@ class TvShowFragment : FragmentBase() {
 						}
 					})
 			
-			subscriptions?.add(inscricaoImdb)
+			subscriptions.add(inscricaoImdb)
 		}
 		
 		return null

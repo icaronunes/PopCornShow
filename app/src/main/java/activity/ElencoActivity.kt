@@ -60,7 +60,7 @@ class ElencoActivity : BaseActivity() {
                         .subscribe({
                             elenco_recycleview.adapter = ElencoAdapter(this@ElencoActivity, it.cast)
                             progress_horizontal.visibility = View.GONE
-                        }, { erro ->
+                        }, { _ ->
                             Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
                         })
 
@@ -113,7 +113,7 @@ class ElencoActivity : BaseActivity() {
                                     .subscribe({
                                         elenco_recycleview.adapter = ElencoAdapter(this@ElencoActivity, it.cast)
                                         progress_horizontal.visibility = View.GONE
-                                    }, { erro ->
+                                    }, { _ ->
                                         Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
                                     })
 

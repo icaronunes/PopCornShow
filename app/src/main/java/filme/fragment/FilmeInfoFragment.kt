@@ -162,7 +162,7 @@ class FilmeInfoFragment : Fragment() {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
                             getCollection(it?.parts?.sortedBy { it?.releaseDate })
-                        }, { erro ->
+                        }, { _ ->
                             Toast.makeText(activity, getString(R.string.ops), Toast.LENGTH_LONG).show()
                         })
         
@@ -425,7 +425,7 @@ class FilmeInfoFragment : Fragment() {
                             imdbDd = it
                             setVotoMedia()
                         }
-                    }, { erro ->
+                    }, { _ ->
                         if (view != null) {
                             Toast.makeText(activity, getString(R.string.ops), Toast.LENGTH_LONG).show()
                         }
@@ -474,7 +474,7 @@ class FilmeInfoFragment : Fragment() {
 
             while (tempo > 60) {
                 horas++
-                tempo = tempo - 60
+                tempo -= 60
             }
             minutos = tempo
             time_filme?.text = (horas.toString() + " " + getString(if (horas > 1) R.string.horas else R.string.hora)
@@ -624,7 +624,7 @@ class FilmeInfoFragment : Fragment() {
                 if (date?.iso31661 == Locale.getDefault().country) {
                     date?.releaseDates?.forEach { it ->
                         if (it?.type == 1 || it?.type == 2 || it?.type == 3) {
-                            lancamento.text = if (it?.releaseDate?.length!! > 9) "${movieDb?.releaseDate?.subSequence(0, 10)} ${Locale.getDefault().country}" else "N/A"
+                            lancamento.text = if (it.releaseDate?.length!! > 9) "${movieDb?.releaseDate?.subSequence(0, 10)} ${Locale.getDefault().country}" else "N/A"
                         }
                     }
                 }
@@ -646,7 +646,7 @@ class FilmeInfoFragment : Fragment() {
             val videos = movieDb?.videos?.results
             recycle_filme_trailer.adapter = TrailerAdapter(activity, videos, movieDb?.overview ?: "")
         } else {
-            recycle_filme_trailer.setVisibility(View.GONE);
+            recycle_filme_trailer.visibility = View.GONE;
         }
     }
 
@@ -694,8 +694,10 @@ class FilmeInfoFragment : Fragment() {
                 if (imdbDd?.imdbRating != null) {
                     if (!imdbDd?.imdbRating!!.isEmpty()) {
                         try {
-                            imdb = java.lang.Float.parseFloat(imdbDd?.imdbRating)
-                            tamanho++
+                            imdbDd?.let {
+                                imdb = java.lang.Float.parseFloat(it.imdbRating)
+                                tamanho++
+                            }
                         } catch (e: Exception) {
                         }
 
@@ -705,10 +707,12 @@ class FilmeInfoFragment : Fragment() {
                 if (imdbDd?.metascore != null) {
                     if (!imdbDd?.metascore!!.isEmpty()) {
                         try {
-                            val meta = java.lang.Float.parseFloat(imdbDd?.metascore)
-                            val nota = meta / 10
-                            metascore = nota
-                            tamanho++
+                            imdbDd?.let {
+                                val meta = java.lang.Float.parseFloat(it.metascore)
+                                val nota = meta / 10
+                                metascore = nota
+                                tamanho++
+                            }
                         } catch (e: Exception) {
                         }
 
@@ -718,8 +722,10 @@ class FilmeInfoFragment : Fragment() {
                 if (imdbDd?.tomatoRating != null) {
                     if (!imdbDd?.tomatoRating!!.isEmpty()) {
                         try {
-                            tomato = java.lang.Float.parseFloat(imdbDd?.tomatoRating)
-                            tamanho++
+                            imdbDd?.let {
+                                tomato = java.lang.Float.parseFloat(it.tomatoRating)
+                                tamanho++
+                            }
                         } catch (e: Exception) {
                         }
 

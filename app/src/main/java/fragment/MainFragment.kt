@@ -83,7 +83,7 @@ class MainFragment : Fragment() {
             val button = view.findViewById<View>(R.id.button_main) as Button
             button.text = buttonFilme!![i]
 
-            button.setOnClickListener { view1 ->
+            button.setOnClickListener {
                 when (i) {
 
                     0 -> {

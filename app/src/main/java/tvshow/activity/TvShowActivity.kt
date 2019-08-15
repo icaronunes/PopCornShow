@@ -289,7 +289,7 @@ class TvShowActivity : BaseActivity() {
     }
 
     private fun addOrRemoveWatch(): View.OnClickListener {
-        return View.OnClickListener { view ->
+        return View.OnClickListener {
 
             val anim1 = PropertyValuesHolder.ofFloat("scaleX", 1.0f, 0.2f)
             val anim2 = PropertyValuesHolder.ofFloat("scaley", 1.0f, 0.0f)
@@ -312,11 +312,9 @@ class TvShowActivity : BaseActivity() {
             } else {
 
                 val tvshowDB = TvshowDB()
-                //  tvshowDB.externalIds = series?.external_ids
                 tvshowDB.title = series?.name
                 tvshowDB.id = series?.id!!
                 tvshowDB.poster = series?.posterPath
-                //tvshowDB.getExternalIds().setId(series.getId());
 
                 myWatch?.child(series?.id.toString())?.setValue(tvshowDB)
                         ?.addOnCompleteListener {
@@ -367,7 +365,6 @@ class TvShowActivity : BaseActivity() {
                 } else {
 
                     val tvshowDB = TvshowDB()
-                    // tvshowDB.externalIds = series?.external_ids
                     tvshowDB.title = series?.name
                     tvshowDB.id = series?.id!!
                     tvshowDB.poster = series?.posterPath

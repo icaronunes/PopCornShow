@@ -102,7 +102,7 @@ class TvShowsFragment : FragmentBase() {
                             }
                         }
                     }
-                }, { erro ->
+                }, {
                     if (view != null) {
                         Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
                     }
