@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
 import com.facebook.*
@@ -27,6 +28,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
 
 /**
@@ -34,12 +36,10 @@ import java.util.*
  */
 
 
-class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener {
+class LoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener {
     private val TAG = this.javaClass.name
     private var mAuth: FirebaseAuth? = null
     private var stateListener: FirebaseAuth.AuthStateListener? = null
-    private var email: EditText? = null
-    private var pass: EditText? = null
     private var mAuthProgressDialog: ProgressDialog? = null
     private var mCallbackManager: CallbackManager? = null
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
@@ -65,15 +65,11 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
         mAuth = FirebaseAuth.getInstance()
         FacebookSdk.sdkInitialize(baseContext)
         setContentView(R.layout.activity_login)
-
-        email = findViewById<View>(R.id.login) as EditText
-        pass = findViewById<View>(R.id.pass) as EditText
         val recuperar = findViewById<View>(R.id.recuperar_senha) as TextView
 
         stateListener = authStateListener
 
         hideSoftKeyboard()
-
         setFacebook()
 
         mAuthProgressDialog = ProgressDialog(this)
@@ -204,8 +200,8 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
     }
 
     private fun logarComEmail() {
-        if (pass?.text.toString().length > 4 && email?.text.toString().length > 4) {
-            mAuth?.signInWithEmailAndPassword(email?.text.toString(), pass?.text.toString())
+        if (pass?.text.toString().length > 4 && login.text.toString().length > 4) {
+            mAuth?.signInWithEmailAndPassword(login.text.toString(), pass?.text.toString())
                     ?.addOnCompleteListener(this) { task ->
                         //  Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
                         //   Log.d(TAG, "signInWithEmail:onComplete: " + email.getText().toString() + " " + pass.getText().toString());
@@ -217,7 +213,7 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
                                     Toast.LENGTH_SHORT).show()
                         }
                     }?.addOnFailureListener {
-                        //  Log.w(TAG, "signInWithEmail:failed " + e.getMessage());
+                          Log.w(TAG, "signInWithEmail:failed " + it.message)
                     }
         } else {
             Toast.makeText(this@LoginActivity, R.string.ops,
@@ -254,7 +250,7 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
                     //Removido acesso ao Google
                     accessGoogle(account!!.idToken)
                 } else {
-                    // Log.d(TAG, "Falha no login Google");
+                     Log.d(TAG, "Falha no login Google");
                 }
             } else {
                 mCallbackManager?.onActivityResult(requestCode, resultCode, data)
@@ -303,8 +299,7 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
 
     private fun criarLoginEmail(email: String, pass: String) {
         mAuthProgressDialog?.show()
-        mAuth?.createUserWithEmailAndPassword(email, pass)
-                ?.addOnCompleteListener(this) { task ->
+        mAuth!!.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(this) { task ->
                     //   Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
                     // If sign in fails, display a message to the user. If sign in succeeds
@@ -320,7 +315,7 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
                     } else {
                         Toast.makeText(this@LoginActivity, R.string.ops, Toast.LENGTH_SHORT).show()
                     }
-                }?.addOnFailureListener { e -> Toast.makeText(this@LoginActivity, e.message, Toast.LENGTH_SHORT).show() }
+                }.addOnFailureListener { e -> Toast.makeText(this@LoginActivity, e.message, Toast.LENGTH_SHORT).show() }
         mAuthProgressDialog?.hide()
     }
 
@@ -340,8 +335,8 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
     override fun onConnectionFailed(connectionResult: ConnectionResult) {}
 
     fun logarAnonimous() {
-        mAuth?.signInAnonymously()
-                ?.addOnCompleteListener(this) { task ->
+        mAuth!!.signInAnonymously()
+                .addOnCompleteListener(this) { task ->
                     //  Log.d(TAG, "signInAnonymously:onComplete:" + task.isSuccessful());
                     // If sign in fails, display a message to the user. If sign in succeeds
                     // the auth state listener will be notified and logic to handle the
