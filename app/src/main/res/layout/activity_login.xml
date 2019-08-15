@@ -20,7 +20,7 @@
         <ImageView
             android:id="@+id/logo_login"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/trade_size_dp_150"
+            android:layout_height="@dimen/trade_size_dp_120"
             android:layout_gravity="center"
             android:contentDescription="@string/app_name"
             android:padding="@dimen/trade_size_dp_5"
@@ -41,7 +41,6 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/blue"
             android:textSize="@dimen/trade_txt_size_sp_40"
-            app:layout_constraintEnd_toStartOf="@+id/txt_corn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logo_login" />
 
@@ -69,6 +68,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/blue"
             android:textSize="@dimen/trade_txt_size_sp_40"
+            android:layout_marginStart="@dimen/trade_size_dp_8"
             app:layout_constraintTop_toTopOf="@+id/txt_corn"
             app:layout_constraintStart_toEndOf="@+id/txt_corn"
             app:layout_constraintEnd_toEndOf="parent" />
