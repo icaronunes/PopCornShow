@@ -68,7 +68,7 @@ class IntroActivity : AppIntro() {
     }
 
     companion object {
-        val INTRO = "intro"
-        val VISTO = "visto"
+        const val INTRO = "intro"
+        const val VISTO = "visto"
     }
 }
