@@ -42,12 +42,9 @@ public class IntroActivity extends AppIntro {
 
             addSlide(new FirstSlide());
             addSlide(new SecondSlide());
-           // addSlide(new ThirdSlide()); netflix
             addSlide(new FiveSlide());
         }
 
-        // OPTIONAL METHODS
-        // Override bar/separator color
         setBarColor(Color.parseColor("#3F51B5"));
         setSeparatorColor(Color.parseColor("#2196F3"));
 
@@ -60,10 +57,7 @@ public class IntroActivity extends AppIntro {
         setVibrateIntensity(30);
     }
 
-    @Override
-    public void onSkipPressed(Fragment currentFragment) {
-        // Do something when users tap on Skip button.
-        super.onSkipPressed(currentFragment);
+    public void finishIntro(){
         SharedPreferences pref = getSharedPreferences(INTRO, 0);
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(VISTO, true);
@@ -73,14 +67,16 @@ public class IntroActivity extends AppIntro {
     }
 
     @Override
+    public void onSkipPressed(Fragment currentFragment) {
+        // Do something when users tap on Skip button.
+        super.onSkipPressed(currentFragment);
+        finishIntro();
+    }
+
+    @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         // Do something when users tap on Done button.
-        SharedPreferences pref = getSharedPreferences(INTRO, 0);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean(VISTO, true);
-        editor.apply();
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
+        finishIntro();
     }
 }
