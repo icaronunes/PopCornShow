@@ -43,7 +43,7 @@ class MainActivity : BaseActivity() {
         setupNavDrawer()
         setDefaultKeyMode(Activity.DEFAULT_KEYS_SEARCH_LOCAL)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setTitle(" ")
+        supportActionBar!!.title = " "
 
         viewpage_top_main = findViewById<View>(R.id.viewpage_top_main) as ViewPager
 

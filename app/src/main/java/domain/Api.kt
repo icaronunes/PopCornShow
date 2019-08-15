@@ -583,7 +583,7 @@ class Api(val context: Context) {
                     .build()
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    continuation.resumeWithException(Throwable(e.message))
+                    continuation.resumeWithException(e)
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -609,7 +609,7 @@ class Api(val context: Context) {
                     .build()
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    continuation.resumeWithException(Throwable(e.message))
+                    continuation.resumeWithException(e)
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -618,7 +618,7 @@ class Api(val context: Context) {
                         val listaTv = Gson().fromJson(json, ListaFilmes::class.java)
                         continuation.resume(listaTv)
                     } catch (ex: Exception) {
-                        continuation.resumeWithException(Throwable(ex.message))
+                        continuation.resumeWithException(ex)
                     }
                 }
             })
@@ -634,7 +634,7 @@ class Api(val context: Context) {
                     .build()
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    continuation.resumeWithException(Throwable(e.message))
+                    continuation.resumeWithException(e)
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -643,7 +643,7 @@ class Api(val context: Context) {
                         val listaTv = Gson().fromJson(json, ListaFilmes::class.java)
                         continuation.resume(listaTv)
                     } catch (ex: Exception) {
-                        continuation.resumeWithException(Throwable(ex.message))
+                        continuation.resumeWithException(ex)
                     }
                 }
             })
@@ -659,7 +659,7 @@ class Api(val context: Context) {
                     .build()
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    continuation.resumeWithException(Throwable(e.message))
+                    continuation.resumeWithException(e)
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -668,7 +668,7 @@ class Api(val context: Context) {
                         val listaTv = Gson().fromJson(json, ListaSeries::class.java)
                         continuation.resume(listaTv)
                     } catch (ex: Exception) {
-                        continuation.resumeWithException(Throwable(ex.message))
+                        continuation.resumeWithException(ex)
                     }
                 }
             })
@@ -685,7 +685,7 @@ class Api(val context: Context) {
                     .build()
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    continuation.resumeWithException(Throwable(e.message))
+                    continuation.resumeWithException(e)
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -694,7 +694,7 @@ class Api(val context: Context) {
                         val listaTv = Gson().fromJson(json, ListaSeries::class.java)
                         continuation.resume(listaTv)
                     } catch (ex: Exception) {
-                        continuation.resumeWithException(Throwable(ex.message))
+                        continuation.resumeWithException(ex)
                     }
                 }
             })
@@ -711,7 +711,7 @@ class Api(val context: Context) {
                     .build()
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    cont.resumeWithException(Throwable(e.message))
+                    cont.resumeWithException(e)
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -720,9 +720,6 @@ class Api(val context: Context) {
                     cont.resume(lista)
                 }
             })
-
         }
     }
-
-
 }

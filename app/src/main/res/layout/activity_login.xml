@@ -56,7 +56,7 @@
 
         </LinearLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/trade_size_dp_5">
@@ -72,9 +72,9 @@
                 android:ems="10"
                 android:hint="@string/email_tx"
                 android:inputType="textEmailAddress" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/trade_size_dp_3">
@@ -90,7 +90,7 @@
                 android:ems="10"
                 android:hint="@string/password"
                 android:inputType="textPassword" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/logar"
@@ -114,17 +114,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:clickable="true"
                 android:gravity="start"
                 android:text="@string/reset_password"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:focusable="true" />
 
             <TextView
                 android:id="@+id/vincular_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:clickable="true"
                 android:gravity="right"
                 android:onClick="onclick"
                 android:text="@string/criar_login_popcorn"
@@ -133,13 +132,6 @@
 
 
         </LinearLayout>
-
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/sign_in_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/trade_size_dp_12"
-            android:visibility="gone" />
 
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/facebook"
