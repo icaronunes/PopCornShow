@@ -9,14 +9,18 @@ import domain.movie.ListaFilmes
 import domain.person.Person
 import domain.tvshow.Tvshow
 import okhttp3.*
+import okhttp3.internal.http2.Http2Reader.Companion.logger
 import rx.Observable
 import utils.Config
 import utils.getIdiomaEscolhido
 import java.io.IOException
+import java.net.SocketTimeoutException
 import java.util.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
+
+
 
 
 class Api(val context: Context) {
@@ -24,6 +28,25 @@ class Api(val context: Context) {
     private var timeZone: String = "US"
     val baseUrl3 = "https://api.themoviedb.org/3/"
     val baseUrl4 = "https://api.themoviedb.org/4/"
+
+    internal inner class LoggingInterceptor : Interceptor {
+        @Throws(IOException::class)
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val request = chain.request()
+
+            val t1 = System.nanoTime()
+            logger.info(String.format("Sending request %s on %s%n%s",
+                    request.url, chain.connection(), request.headers))
+
+            val response = chain.proceed(request)
+
+            val t2 = System.nanoTime()
+            logger.info(String.format("Received response for %s in %.1fms%n%s",
+                    response.request.url, (t2 - t1) / 1e6, response.headers))
+
+            return response
+        }
+    }
 
 
     object TIPOBUSCA {
@@ -48,8 +71,8 @@ class Api(val context: Context) {
         timeZone = getIdiomaEscolhido(context)
     }
 
-    private fun getKey(): String{
-        return if (Random(2).nextInt() % 2 == 0) Config.TMDB_API_KEY else  Config.TMDB_API_KEY2
+    private fun getKey(): String {
+        return if (Random(2).nextInt() % 2 == 0) Config.TMDB_API_KEY else Config.TMDB_API_KEY2
     }
 
     fun PersonPopular(pagina: Int): Observable<PersonPopular> {
@@ -162,7 +185,7 @@ class Api(val context: Context) {
             val gson = Gson()
             Log.d("Api", "pagina $pagina")
             val url = when (tipoDeBusca) {
-               
+
                 "upcoming", "now_playing" -> {
                     "${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=${timeZone.replaceBefore("-", "").removeRange(0, 1)}"
                 }
@@ -342,7 +365,8 @@ class Api(val context: Context) {
     }
 
     suspend fun getTvShowEpC(id: Int, idTemp: Int, idEp: Int): EpisodesItem { // Usado em "Seguindo"
-        return suspendCoroutine { cont -> 2
+        return suspendCoroutine { cont ->
+            2
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$id/season/$idTemp/episode/$idEp?api_key=${getKey()}" + "&language=$timeZone")
                     .get()
@@ -575,7 +599,7 @@ class Api(val context: Context) {
 
     suspend fun getNowPlayingMovies(): ListaFilmes {
         return suspendCoroutine { continuation ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val idioma = getIdiomaEscolhido(context)
             val request = Request.Builder()
                     .url("${baseUrl3}movie/now_playing?api_key=${Config.TMDB_API_KEY}&language=$idioma&page=1")
@@ -587,13 +611,15 @@ class Api(val context: Context) {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val json = response.body?.string()
                     try {
+                        val json = response.body?.string()
                         val gson = Gson()
                         val listaFilmes = gson.fromJson(json, ListaFilmes::class.java)
                         continuation.resume(listaFilmes)
                     } catch (Ex: Exception) {
                         continuation.resumeWithException(Ex)
+                    } catch (ex: SocketTimeoutException) {
+                        continuation.resumeWithException(ex)
                     }
                 }
             })
@@ -602,7 +628,7 @@ class Api(val context: Context) {
 
     suspend fun getMoviePopular(): ListaFilmes {
         return suspendCoroutine { continuation ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
                     .url("${baseUrl3}movie/popular?api_key=${Config.TMDB_API_KEY}&language=${getIdiomaEscolhido(context)}&page=1")
                     .get()
@@ -613,11 +639,13 @@ class Api(val context: Context) {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val json = response.body?.string()
                     try {
+                        val json = response.body?.string()
                         val listaTv = Gson().fromJson(json, ListaFilmes::class.java)
                         continuation.resume(listaTv)
                     } catch (ex: Exception) {
+                        continuation.resumeWithException(ex)
+                    } catch (ex: SocketTimeoutException) {
                         continuation.resumeWithException(ex)
                     }
                 }
@@ -627,7 +655,7 @@ class Api(val context: Context) {
 
     suspend fun getUpcoming(): ListaFilmes {
         return suspendCoroutine { continuation ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
                     .url("${baseUrl3}movie/upcoming?api_key=${Config.TMDB_API_KEY}&language=${getIdiomaEscolhido(context)}&page=1")
                     .get()
@@ -638,11 +666,13 @@ class Api(val context: Context) {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val json = response.body?.string()
                     try {
+                        val json = response.body?.string()
                         val listaTv = Gson().fromJson(json, ListaFilmes::class.java)
                         continuation.resume(listaTv)
                     } catch (ex: Exception) {
+                        continuation.resumeWithException(ex)
+                    } catch (ex: SocketTimeoutException) {
                         continuation.resumeWithException(ex)
                     }
                 }
@@ -652,7 +682,7 @@ class Api(val context: Context) {
 
     suspend fun getAiringToday(): ListaSeries {
         return suspendCoroutine { continuation ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/airing_today?api_key=${Config.TMDB_API_KEY}&language=${getIdiomaEscolhido(context)}&page=1")
                     .get()
@@ -663,11 +693,13 @@ class Api(val context: Context) {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val json = response.body?.string()
                     try {
+                        val json = response.body?.string()
                         val listaTv = Gson().fromJson(json, ListaSeries::class.java)
                         continuation.resume(listaTv)
                     } catch (ex: Exception) {
+                        continuation.resumeWithException(ex)
+                    } catch (ex: SocketTimeoutException) {
                         continuation.resumeWithException(ex)
                     }
                 }
@@ -678,22 +710,27 @@ class Api(val context: Context) {
 
     suspend fun getPopularTv(): ListaSeries {
         return suspendCoroutine { continuation ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
+
             val request = Request.Builder()
                     .url("${baseUrl3}tv/popular?api_key=${Config.TMDB_API_KEY}&language=${getIdiomaEscolhido(context)}&page=1")
                     .get()
                     .build()
+
+
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     continuation.resumeWithException(e)
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val json = response.body?.string()
                     try {
+                        val json = response.body?.string()
                         val listaTv = Gson().fromJson(json, ListaSeries::class.java)
                         continuation.resume(listaTv)
                     } catch (ex: Exception) {
+                        continuation.resumeWithException(ex)
+                    } catch (ex: SocketTimeoutException) {
                         continuation.resumeWithException(ex)
                     }
                 }
@@ -703,7 +740,7 @@ class Api(val context: Context) {
 
     suspend fun getTvSeasonsC(id: Int, id_season: Int): TvSeasons {
         return suspendCoroutine { cont ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$id/season/$id_season?api_key=${Config.TMDB_API_KEY}&language=$timeZone,en")
@@ -715,9 +752,13 @@ class Api(val context: Context) {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val json = response.body?.string()
-                    val lista = gson.fromJson(json, TvSeasons::class.java)
-                    cont.resume(lista)
+                    try {
+                        val json = response.body?.string()
+                        val lista = gson.fromJson(json, TvSeasons::class.java)
+                        cont.resume(lista)
+                    } catch (ex: Exception) {
+                        cont.resumeWithException(ex)
+                    }
                 }
             })
         }
