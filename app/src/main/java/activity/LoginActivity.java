@@ -88,7 +88,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         hideSoftKeyboard();
 
-       // setGoogle();
         setFacebook();
 
         mAuthProgressDialog = new ProgressDialog(this);

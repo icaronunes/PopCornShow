@@ -22,7 +22,6 @@ public class SettingsActivity extends BaseActivity {
         setUpToolBar();
         getSupportActionBar().setTitle(R.string.configuracoes);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //  Display the fragment as the main content.
         getFragmentManager().beginTransaction()
                 .replace(R.id.fragment_settings, new SettingsFragment(), "TRE")
                 .commit();

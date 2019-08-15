@@ -49,7 +49,6 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
 
 
     private static final int RC_SIGN_IN = 1;
-    private final String TAG = VincularLoginActivity.class.getName();
     private FirebaseAuth mAuth;
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mAuthProgressDialog;
@@ -68,8 +67,6 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
         setContentView(R.layout.activity_login);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mAuth = FirebaseAuth.getInstance();
-
-        //stateListener = getAuthStateListener();
 
         setGoogle();
         setFacebook();

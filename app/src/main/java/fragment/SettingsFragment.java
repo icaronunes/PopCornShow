@@ -18,7 +18,6 @@ import utils.LogoffDialog;
  * Created by icaro on 07/09/16.
  */
 public class SettingsFragment extends PreferenceFragment {
-    private final String TAG = this.getClass().getName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,12 +34,9 @@ public class SettingsFragment extends PreferenceFragment {
 
         if (user != null) {
             LogoffDialog emailPrefs = (LogoffDialog) findPreference("pref_logoff");
-           // Log.d("SettingsFragment", "true" );
             emailPrefs.setEnabled(true);
-           // boxPreference.setChecked(true);
         } else {
             LogoffDialog emailPrefs = (LogoffDialog) findPreference("pref_logoff");
-           // Log.d("SettingsFragment", "false");
             emailPrefs.setEnabled(false);
             box_notificacao.setEnabled(false);
         }
@@ -54,12 +50,9 @@ public class SettingsFragment extends PreferenceFragment {
         boolean notificacao = sharedPref.getBoolean(SettingsActivity.PREF_NOTIFICACAO, true);
 
         if (notificacao){
-            //Log.d(TAG, "True");
             OneSignal.setSubscription(true);
         } else {
             OneSignal.setSubscription(false);
-            //Log.d(TAG, "False");
         }
-
     }
 }
