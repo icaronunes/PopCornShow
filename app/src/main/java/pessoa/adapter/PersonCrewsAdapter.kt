@@ -47,7 +47,7 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
                             }
                         }
                         if (item?.mediaType == "tv") {
-                            holder.title.text = item?.name + data
+                            holder.title.text = item.name + data
                         } else {
                             holder.title.text = item?.title + data
                         }
@@ -91,16 +91,10 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
 
     inner class PersonCrewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val progressBar: ProgressBar
-        val poster: ImageView
-        val title: TextView
+        val progressBar: ProgressBar = itemView.findViewById<View>(R.id.progress_poster_grid) as ProgressBar
+        val poster: ImageView = itemView.findViewById<View>(R.id.img_poster_grid) as ImageView
+        val title: TextView = itemView.findViewById<View>(R.id.text_title_crew) as TextView
 
-        init {
-            poster = itemView.findViewById<View>(R.id.img_poster_grid) as ImageView
-            title = itemView.findViewById<View>(R.id.text_title_crew) as TextView
-            progressBar = itemView.findViewById<View>(R.id.progress_poster_grid) as ProgressBar
-
-        }
     }
 
 }

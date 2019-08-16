@@ -109,7 +109,7 @@ class FilmeActivity : BaseActivity() {
                     progress_horizontal?.visibility = View.GONE
                     setFAB()
                     setFragmentInfo()
-                }, { erro ->
+                }, {
                     Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
                 })
 

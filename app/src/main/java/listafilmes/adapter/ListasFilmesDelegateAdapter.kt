@@ -43,8 +43,8 @@ class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
                     .into(imgFilmes, object: Callback {
                         override fun onError(e: Exception?) {
                             progress_filmes_lista.visibility = View.GONE
-                            val dataLancamento = if (!item.releaseDate.isNullOrEmpty() && item.releaseDate?.length!! > 3) item.releaseDate.subSequence(0,4) else "-"
-                            title_filmes_lista.text = "${item?.title} - $dataLancamento"
+                            val dataLancamento = if (!item.releaseDate.isNullOrEmpty() && item.releaseDate.length > 3) item.releaseDate.subSequence(0,4) else "-"
+                            title_filmes_lista.text = "${item.title} - $dataLancamento"
                             title_filmes_lista.visibility = View.VISIBLE
                         }
 

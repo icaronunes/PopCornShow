@@ -44,8 +44,8 @@ public class PosterActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         artworks = (List<PostersItem>) getIntent().getBundleExtra(Constantes.INSTANCE.getBUNDLE()).getSerializable(Constantes.INSTANCE.getARTWORKS());
         nome = getIntent().getStringExtra(Constantes.INSTANCE.getNOME());
-        ViewPager viewPager = (ViewPager) findViewById(pager);
-        LinePageIndicator titlePageIndicator = (LinePageIndicator) findViewById(R.id.indicator);
+        ViewPager viewPager = findViewById(pager);
+        LinePageIndicator titlePageIndicator = findViewById(R.id.indicator);
         viewPager.setAdapter(new PosterFragment(getSupportFragmentManager()));
         titlePageIndicator.setViewPager(viewPager);
         titlePageIndicator.setCurrentItem(getIntent().getExtras().getInt(Constantes.INSTANCE.getPOSICAO()));

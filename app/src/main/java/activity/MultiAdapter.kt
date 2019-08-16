@@ -32,7 +32,7 @@ import utils.enums.EnumTypeMedia
 						.load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(application, 1))!! + item.posterPath)
 						.into(holder.poster)
 
-				holder.itemView?.setOnClickListener { view: View ->
+				holder.itemView.setOnClickListener {
 					val intent = Intent(application, FilmeActivity::class.java)
 					intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
 					intent.putExtra(Constantes.FILME_ID, item.id)
@@ -41,11 +41,11 @@ import utils.enums.EnumTypeMedia
 					icon?.alpha = 255
 				}
 
-				holder.search_title_original.text = item.originalTitle
+				holder.searchTitleOriginal.text = item.originalTitle
 
-				holder.search_nome.text = item.title
+				holder.searchNome.text = item.title
 
-				holder.search_data_lancamento.text = if (item.releaseDate != null && item.releaseDate.length >= 4) item.releaseDate.substring(0, 4) else application.getString(R.string.empty_data)
+				holder.searchDataLancamento.text = if (item.releaseDate != null && item.releaseDate.length >= 4) item.releaseDate.substring(0, 4) else application.getString(R.string.empty_data)
 				return
 			}
 
@@ -54,7 +54,7 @@ import utils.enums.EnumTypeMedia
 						.load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(application, 1))!! + item.posterPath)
 						.into(holder.poster)
 
-				holder.itemView?.setOnClickListener { view: View ->
+				holder.itemView.setOnClickListener {
 					val intent = Intent(application, TvShowActivity::class.java)
 					intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
 					intent.putExtra(Constantes.TVSHOW_ID, item.id)
@@ -63,11 +63,11 @@ import utils.enums.EnumTypeMedia
 					icon?.alpha = 255
 				}
 
-				if (item.originalTitle.isNullOrEmpty()) holder.search_title_original.visibility = View.GONE else holder.search_title_original.text = item.originalName
+				if (item.originalTitle.isNullOrEmpty()) holder.searchTitleOriginal.visibility = View.GONE else holder.searchTitleOriginal.text = item.originalName
 
-				holder.search_nome.text = item.name
+				holder.searchNome.text = item.name
 
-				holder.search_data_lancamento.text = if (item.firstAirDate != null && item.firstAirDate.length >= 4) item.firstAirDate.substring(0, 4) else application.getString(R.string.empty_data)
+				holder.searchDataLancamento.text = if (item.firstAirDate != null && item.firstAirDate.length >= 4) item.firstAirDate.substring(0, 4) else application.getString(R.string.empty_data)
 				return
 			}
 
@@ -77,7 +77,7 @@ import utils.enums.EnumTypeMedia
 						.load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(application, 1))!! + item.profile_path)
 						.into(holder.poster)
 
-				holder.itemView.setOnClickListener { view: View ->
+				holder.itemView.setOnClickListener {
 					val intent = Intent(application, PersonActivity::class.java)
 					intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
 					intent.putExtra(Constantes.PERSON_ID, item.id)
@@ -85,11 +85,11 @@ import utils.enums.EnumTypeMedia
 					application.startActivity(intent)
 					icon?.alpha = 255
 				}
-				holder.search_title_original.visibility = View.GONE
+				holder.searchTitleOriginal.visibility = View.GONE
 
-				holder.search_nome.text = item.name
+				holder.searchNome.text = item.name
 
-				holder.search_data_lancamento.visibility = View.GONE
+				holder.searchDataLancamento.visibility = View.GONE
 				return
 			}
 		}
@@ -97,7 +97,7 @@ import utils.enums.EnumTypeMedia
 	}
 
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MultiAdapter.HolderView {
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HolderView {
 		val view = LayoutInflater.from(application).inflate(R.layout.search_list_multi_adapter, parent, false)
 		return HolderView(view)
 	}
@@ -107,19 +107,9 @@ import utils.enums.EnumTypeMedia
 
 	inner class HolderView(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-		var poster: ImageView
-		var search_nome: TextView
-		var search_data_lancamento: TextView
-		var search_title_original: TextView
-
-		init {
-
-			poster = itemView?.findViewById<View>(R.id.img_muitl_search) as ImageView
-			search_nome = itemView.findViewById<View>(R.id.search_muitl_nome) as TextView
-			search_title_original = itemView.findViewById<View>(R.id.search_muitl_title_original) as TextView
-			search_data_lancamento = itemView.findViewById<View>(R.id.search_muitl_data_lancamento) as TextView
-
-		}
-
+		var poster: ImageView = itemView.findViewById<View>(R.id.img_muitl_search) as ImageView
+		var searchNome: TextView = itemView.findViewById<View>(R.id.search_muitl_nome) as TextView
+		var searchDataLancamento: TextView = itemView.findViewById<View>(R.id.search_muitl_data_lancamento) as TextView
+		var searchTitleOriginal: TextView = itemView.findViewById<View>(R.id.search_muitl_title_original) as TextView
 	}
 }

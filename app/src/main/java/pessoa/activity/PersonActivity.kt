@@ -100,7 +100,7 @@ class PersonActivity : BaseActivity() {
                     setTitleActionBar(it.name)
                     setupViewPagerTabs(it)
                     progress_horizontal.visibility = View.GONE
-                }, { erro ->
+                }, {
                     Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
 
                 })

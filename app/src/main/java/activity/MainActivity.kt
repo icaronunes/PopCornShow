@@ -69,7 +69,7 @@ class MainActivity : BaseActivity() {
                     .setIcon(R.drawable.ic_popcorn2)
                     .setTitle(R.string.novidades_title)
                     .setMessage(R.string.novidades_text)
-                    .setPositiveButton(R.string.ok) { dialogInterface, i ->
+                    .setPositiveButton(R.string.ok) { _, _ ->
                         val editor = sharedPref.edit()
                         editor.putBoolean(BuildConfig.VERSION_CODE.toString(), false)
                         editor.remove((BuildConfig.VERSION_CODE - 1).toString())
@@ -186,7 +186,7 @@ class MainActivity : BaseActivity() {
                 }
             } else {
                 if (index <= listaTv.size) {
-                    val tv = listaTv[index]!!
+                    val tv = listaTv[index]
                     topMain.id = tv.id!!
                     topMain.nome = tv.name
                     topMain.mediaType = "tv"

@@ -58,7 +58,7 @@ class CrewsActivity : BaseActivity() {
                         .subscribe({
                             crews_recyclerview?.adapter = CrewsAdapter(this@CrewsActivity, it.crew)
                             progress_horizontal.visibility = View.GONE
-                        }, { erro ->
+                        }, { _ ->
                             Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
                         })
 
@@ -68,7 +68,6 @@ class CrewsActivity : BaseActivity() {
         } else {
             snack()
         }
-
     }
 
 
@@ -99,7 +98,7 @@ class CrewsActivity : BaseActivity() {
                                     .subscribe({
                                         crews_recyclerview?.adapter = CrewsAdapter(this@CrewsActivity, it.crew)
                                         progress_horizontal.visibility = View.GONE
-                                    }, { erro ->
+                                    }, { _ ->
                                         Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
                                     })
 

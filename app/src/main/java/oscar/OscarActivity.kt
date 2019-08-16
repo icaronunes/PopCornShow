@@ -24,7 +24,7 @@ import utils.UtilsApp
  */
 class OscarActivity : BaseActivity() {
 
-    private val list_id = "28" // Id da lista com Ganhadores do Oscar 28
+    private val listId = "28" // Id da lista com Ganhadores do Oscar 28
     private var pagina = 1
     private var totalPagina = 1
 
@@ -90,20 +90,19 @@ class OscarActivity : BaseActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                    it.id
-
-                }, { erro ->
+                }, { error ->
                     Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                    Log.d(javaClass.simpleName, "Erro " + erro.message)
+                    Log.d(javaClass.simpleName, "Erro " + error.message)
                 })
 
         if (totalPagina >= pagina) {
-            val inscricao = Api(context = this).getLista(id = list_id, pagina = pagina)
+            val inscricao = Api(context = this).getLista(id = listId, pagina = pagina)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         (recycleView_favorite.adapter as ListUserAdapter).addItens(it.results, it?.totalResults!!)
-                        pagina = it?.page!!
-                        totalPagina = it?.totalPages!!
+                        pagina = it.page
+                        totalPagina = it.totalPages
                         ++pagina
                     }, { erro ->
                         Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()

@@ -46,13 +46,11 @@ import utils.UtilsApp;
  */
 public class ListaRatedFragment extends Fragment {
 
-    final String TAG = TvShowFragment.class.getName();
     private int tipo;
     private List<FilmeDB> movies;
     private List<TvshowDB> tvSeries;
     private RecyclerView recyclerViewFilme;
     private RecyclerView recyclerViewTvShow;
-    private FirebaseAnalytics firebaseAnalytics;
 
     public static Fragment newInstanceMovie(int tipo, List<FilmeDB> filmeDBs) {
         ListaRatedFragment fragment = new ListaRatedFragment();
@@ -82,7 +80,6 @@ public class ListaRatedFragment extends Fragment {
             movies = (List<FilmeDB>) getArguments().getSerializable(Constantes.INSTANCE.getFILME());
             tvSeries = (List<TvshowDB>) getArguments().getSerializable(Constantes.INSTANCE.getSERIE());
         }
-        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
 
 
@@ -90,7 +87,6 @@ public class ListaRatedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-       // Log.d(TAG, "onCreateView");
         switch (tipo) {
 
             case R.string.filme: {
@@ -108,15 +104,12 @@ public class ListaRatedFragment extends Fragment {
             @Override
             public void onClick(final View view, final int position) {
                 Intent intent = new Intent(getActivity(), FilmeActivity.class);
-              //  Log.d("ListaFilmeAdapter", "ListaFilmeAdapter");
                 ImageView imageView = (ImageView) view;
                 int color = UtilsApp.loadPalette(imageView);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                 intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movies.get(position).getId());
                 intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movies.get(position).getTitle());
                 startActivity(intent);
-
-
             }
 
             @Override
@@ -126,70 +119,51 @@ public class ListaRatedFragment extends Fragment {
                 alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 alertDialog.setContentView(R.layout.adialog_custom_rated);
 
-                Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
-                Button no = (Button) alertDialog.findViewById(R.id.cancel_rated);
-                final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
-                int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
+                Button ok = alertDialog.findViewById(R.id.ok_rated);
+                Button no = alertDialog.findViewById(R.id.cancel_rated);
+                final RatingBar ratingBar = alertDialog.findViewById(R.id.ratingBar_rated);
+                int width = getResources().getDimensionPixelSize(R.dimen.popup_width);
                 int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
 
                 ratingBar.setRating(movies.get(position).getNota() / 2);
 
 
-                no.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                       // Log.d(TAG, "Apagou Rated");
+                no.setOnClickListener(view1 -> {
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRated = database.getReference("users").child(mAuth.getCurrentUser()
+                            .getUid()).child("rated")
+                            .child("movie").child(String.valueOf(movies.get(position).getId()));
 
-                        DatabaseReference myRated = database.getReference("users").child(mAuth.getCurrentUser()
-                                .getUid()).child("rated")
-                                .child("movie").child(String.valueOf(movies.get(position).getId()));
-
-                        myRated.setValue(null)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        movies.remove(movies.get(position));
-                                        recyclerViewFilme.getAdapter().notifyItemRemoved(position);
-                                        recyclerViewFilme.getAdapter().notifyItemChanged(position);
-                                    }
-                                });
-                        alertDialog.dismiss();
-                    }
+                    myRated.setValue(null)
+                            .addOnCompleteListener(task -> {
+                                movies.remove(movies.get(position));
+                                recyclerViewFilme.getAdapter().notifyItemRemoved(position);
+                                recyclerViewFilme.getAdapter().notifyItemChanged(position);
+                            });
+                    alertDialog.dismiss();
                 });
 
                 alertDialog.getWindow().setLayout(width, height);
 
-                ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                ok.setOnClickListener(view12 -> {
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-                        DatabaseReference myRated = database.getReference("users").child(mAuth.getCurrentUser()
-                                .getUid()).child("rated")
-                                .child("movie").child(String.valueOf(movies.get(position).getId()));
+                    DatabaseReference myRated = database.getReference("users").child(mAuth.getCurrentUser()
+                            .getUid()).child("rated")
+                            .child("movie").child(String.valueOf(movies.get(position).getId()));
 
-                        if (ratingBar.getRating() > 0) {
+                    if (ratingBar.getRating() > 0) {
 
-                            movies.get(position).setNota(ratingBar.getRating() * 2);
+                        movies.get(position).setNota(ratingBar.getRating() * 2);
 
-                            myRated.setValue(movies.get(position))
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-
-                                            recyclerViewFilme.getAdapter().notifyItemChanged(position);
-
-                                        }
-                                    });
-                        }
-
-                        alertDialog.dismiss();
+                        myRated.setValue(movies.get(position))
+                                .addOnCompleteListener(task -> recyclerViewFilme.getAdapter().notifyItemChanged(position));
                     }
 
+                    alertDialog.dismiss();
                 });
                 alertDialog.show();
             }
@@ -202,7 +176,6 @@ public class ListaRatedFragment extends Fragment {
             @Override
             public void onClick(final View view, final int position) {
                 Intent intent = new Intent(getActivity(), TvShowActivity.class);
-               // Log.d("OnClick", "Onclick");
                 ImageView imageView = (ImageView) view;
                 int color = UtilsApp.loadPalette(imageView);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
@@ -219,67 +192,50 @@ public class ListaRatedFragment extends Fragment {
                 alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 alertDialog.setContentView(R.layout.adialog_custom_rated);
 
-                Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
-                Button no = (Button) alertDialog.findViewById(R.id.cancel_rated);
-                final RatingBar ratingBar = (RatingBar) alertDialog.findViewById(R.id.ratingBar_rated);
-                int width = getResources().getDimensionPixelSize(R.dimen.popup_width); //Criar os Dimen do layout do login - 300dp - 300dp ??
+                Button ok = alertDialog.findViewById(R.id.ok_rated);
+                Button no = alertDialog.findViewById(R.id.cancel_rated);
+                final RatingBar ratingBar = alertDialog.findViewById(R.id.ratingBar_rated);
+                int width = getResources().getDimensionPixelSize(R.dimen.popup_width);
                 int height = getResources().getDimensionPixelSize(R.dimen.popup_height_rated);
                 ratingBar.setRating(tvSeries.get(position).getNota() / 2);
                 alertDialog.getWindow().setLayout(width, height);
 
-                no.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                no.setOnClickListener(view1 -> {
 
-                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-                        DatabaseReference myRated = database.getReference("users").child(mAuth.getCurrentUser()
-                                .getUid()).child("rated")
-                                .child("tvshow").child(String.valueOf(tvSeries.get(position).getId()));
+                    DatabaseReference myRated = database.getReference("users").child(mAuth.getCurrentUser()
+                            .getUid()).child("rated")
+                            .child("tvshow").child(String.valueOf(tvSeries.get(position).getId()));
 
-                        myRated.setValue(null)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        tvSeries.remove(tvSeries.get(position));
-                                        recyclerViewTvShow.getAdapter().notifyItemRemoved(position);
-                                        recyclerViewTvShow.getAdapter().notifyItemChanged(position);
-                                    }
-                                });
-                        alertDialog.dismiss();
-                    }
+                    myRated.setValue(null)
+                            .addOnCompleteListener(task -> {
+                                tvSeries.remove(tvSeries.get(position));
+                                recyclerViewTvShow.getAdapter().notifyItemRemoved(position);
+                                recyclerViewTvShow.getAdapter().notifyItemChanged(position);
+                            });
+                    alertDialog.dismiss();
                 });
 
-                ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                ok.setOnClickListener(view12 -> {
 
-                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-                        DatabaseReference myRated = database.getReference("users").child(mAuth.getCurrentUser()
-                                .getUid()).child("rated")
-                                .child("tvshow").child(String.valueOf(tvSeries.get(position).getId()));
+                    DatabaseReference myRated = database.getReference("users").child(mAuth.getCurrentUser()
+                            .getUid()).child("rated")
+                            .child("tvshow").child(String.valueOf(tvSeries.get(position).getId()));
 
-                        if (ratingBar.getRating() > 0) {
+                    if (ratingBar.getRating() > 0) {
 
-                            tvSeries.get(position).setNota( ratingBar.getRating() * 2);
+                        tvSeries.get(position).setNota( ratingBar.getRating() * 2);
 
-                            myRated.setValue(tvSeries.get(position))
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-
-                                            recyclerViewTvShow.getAdapter().notifyItemChanged(position);
-
-                                        }
-                                    });
-                        }
-
-                        alertDialog.dismiss();
+                        myRated.setValue(tvSeries.get(position))
+                                .addOnCompleteListener(task -> recyclerViewTvShow.getAdapter().notifyItemChanged(position));
                     }
 
+                    alertDialog.dismiss();
                 });
                 alertDialog.show();
             }
@@ -306,9 +262,9 @@ public class ListaRatedFragment extends Fragment {
     }
 
     private View getViewTvShow(LayoutInflater inflater, ViewGroup container) {
-        View view = inflater.inflate(R.layout.temporadas, container, false);// Criar novo layout
+        View view = inflater.inflate(R.layout.temporadas, container, false);
         view.findViewById(R.id.progressBarTemporadas).setVisibility(View.GONE);
-        recyclerViewTvShow = (RecyclerView) view.findViewById(R.id.temporadas_recycle);
+        recyclerViewTvShow = view.findViewById(R.id.temporadas_recycle);
         recyclerViewTvShow.setHasFixedSize(true);
         recyclerViewTvShow.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTvShow.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -319,7 +275,6 @@ public class ListaRatedFragment extends Fragment {
             view.findViewById(R.id.text_search_empty).setVisibility(View.VISIBLE);
             ((TextView) view.findViewById(R.id.text_search_empty)).setText(R.string.empty_rated);
         }
-
         return view;
     }
 }

@@ -210,33 +210,7 @@ class SeguindoActivity : BaseActivity() {
             val tvSeasons = async { Api(this@SeguindoActivity).getTvSeasonsC(id = userTvshow.id, id_season = userTvshow.numberOfSeasons) }.await()
             userTvshowNovo?.seasons?.get(indexSeason)?.userEps = UtilsApp.setEp2(tvSeasons)
             atulizarDataBase(indexSerie, indexSeason)
-
         }
-
-/*        var tvseasonRetorno: TvSeasons? = null
-//        val subscriber = Api(this)
-//                .getTvSeasons(userTvshow.id, userTvshow.numberOfSeasons)
-//                .debounce(5000, TimeUnit.MILLISECONDS)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(Schedulers.immediate())
-//                .subscribe(object : Observer<TvSeasons> {
-//                    override fun onCompleted() {
-//                        userTvshowNovo?.seasons?.get(indexSeason)?.userEps = UtilsApp.setEp2(tvseasonRetorno)
-//                        atulizarDataBase(indexSerie, indexSeason)
-//                    }
-//
-//                    override fun onError(e: Throwable) {
-//                        //Toast.makeText(this@SeguindoActivity, R.string.ops, Toast.LENGTH_SHORT).show()
-//                        Log.d("TAG", e.message)
-//                    }
-//
-//                    override fun onNext(tvseason: TvSeasons) {
-//                        tvseasonRetorno = tvseason
-//                    }
-//                })
-//
-//        compositeSubscription?.add(subscriber)
-*/
     }
 
     private fun atulizarDataBase(indexSerie: Int, indexSeason: Int) {

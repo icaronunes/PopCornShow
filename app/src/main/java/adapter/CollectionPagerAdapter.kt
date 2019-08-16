@@ -30,7 +30,7 @@ class CollectionPagerAdapter(private val info: List<PartsItem?>?, private val co
     private lateinit var nome: TextView
 
     override fun getCount(): Int {
-        return if (info?.isNotEmpty()!!) info?.size else 0
+        return if (info?.isNotEmpty()!!) info.size else 0
     }
 
     override fun isViewFromObject(view: View, obj: Any): Boolean {
@@ -41,9 +41,9 @@ class CollectionPagerAdapter(private val info: List<PartsItem?>?, private val co
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val item = info?.get(position)
         val view = LayoutInflater.from(context).inflate(R.layout.collection, container, false)
-        nome = view.findViewById<TextView>(R.id.dateCollection)
-        linearLayout = view.findViewById<LinearLayout>(R.id.collection_linear)
-        imageView = view.findViewById<ImageView>(R.id.img_collection)
+        nome = view.findViewById(R.id.dateCollection)
+        linearLayout = view.findViewById(R.id.collection_linear)
+        imageView = view.findViewById(R.id.img_collection)
         Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 5)) + item?.posterPath)
                 .error(R.drawable.poster_empty)

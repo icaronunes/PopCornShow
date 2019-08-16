@@ -29,13 +29,13 @@ class CrewsAdapter(private val context: CrewsActivity, private val crews: List<C
 
     override fun onBindViewHolder(holder: CrewsViewHolder, position: Int) {
         val crew = crews?.get(position)
-        holder?.crew_character.text = crew?.department + " " + crew?.job
+        holder.crewCharacter.text = "${crew?.department}  ${crew?.job}"
 
-        holder.crew_nome.text = crew?.name
+        holder.crewNome.text = crew?.name
         Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + crew?.profilePath)
                 .error(R.drawable.person)
-                .into(holder.img_crew)
+                .into(holder.imgCrew)
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, PersonActivity::class.java)
@@ -53,16 +53,10 @@ class CrewsAdapter(private val context: CrewsActivity, private val crews: List<C
 
     inner class CrewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-         val crew_nome: TextView
-         val crew_character: TextView
-         val img_crew: ImageView
+         val crewNome: TextView = itemView.findViewById<View>(R.id.crew_nome) as TextView
+        val crewCharacter: TextView = itemView.findViewById<View>(R.id.crew_character) as TextView
+        val imgCrew: ImageView = itemView.findViewById<View>(R.id.img_crew) as ImageView
 
-        init {
-            crew_nome = itemView.findViewById<View>(R.id.crew_nome) as TextView
-            crew_character = itemView.findViewById<View>(R.id.crew_character) as TextView
-            img_crew = itemView.findViewById<View>(R.id.img_crew) as ImageView
-
-        }
     }
 }
 

@@ -32,7 +32,7 @@ import java.util.*
 class ProximosAdapter(private val context: FragmentActivity)
     : RecyclerView.Adapter<CalendarViewHolder>() {
 
-    private var color_top: Int = 0
+    private var colorTop: Int = 0
     private val userTvshows: MutableList<
             MutablePair<
                     Pair<UserEp, UserTvshow>,
@@ -50,7 +50,7 @@ class ProximosAdapter(private val context: FragmentActivity)
             val epVistos = epNubmber(new)
             view.title.text = new.right.name
             view.proximo.text = "S${new.left?.seasonNumber}/E${new.left?.episodeNumber}"
-            view.ep_title.text = new.left.name
+            view.epTitle.text = new.left.name
             view.faltando.text = "$epVistos/${new.right.numberOfEpisodes}"
             view.progressBar.isIndeterminate = false
 
@@ -60,29 +60,29 @@ class ProximosAdapter(private val context: FragmentActivity)
             view.progressBar.max = totalSemSeasonZero(new)
             view.date.text = when {
                 epNubmber(new)?.let { totalSemSeasonZero(new).minus(it) } == 0 -> {
-                    view.new_seguindo.visibility = View.GONE
+                    view.newSeguindo.visibility = View.GONE
                     new.right.lastAirDate
                 }
 
                 isEplancado(new.left.airDate) -> {
-                    view.new_seguindo.visibility = View.VISIBLE
+                    view.newSeguindo.visibility = View.VISIBLE
                     new.left.airDate
                 }
 
                 new.right.lastAirDate.equals(new.left.airDate) -> {
-                    view.new_seguindo.visibility = View.VISIBLE
+                    view.newSeguindo.visibility = View.VISIBLE
                     new.right.lastAirDate
                 }
 
                 else -> {
-                    view.new_seguindo.visibility = View.GONE
+                    view.newSeguindo.visibility = View.GONE
                     new.right.lastAirDate
                     //Todo contagem errada. quando falta um, monstra que falta 0
                 }
             }
 
-            view.eps_faltantes.text = if ((epVistos?.let { new.right.numberOfEpisodes?.minus(it) }) == 0) {
-                view.eps_faltantes.visibility = View.GONE
+            view.epsFaltantes.text = if ((epVistos?.let { new.right.numberOfEpisodes?.minus(it) }) == 0) {
+                view.epsFaltantes.visibility = View.GONE
                 ""
             } else {
                 "${(epVistos?.let { new.right.numberOfEpisodes?.minus(it) })}"
@@ -93,7 +93,7 @@ class ProximosAdapter(private val context: FragmentActivity)
         } else {
             view.title.text = old.second.nome
             view.proximo.text = ""//"S${new.left.seasonNumber}/E${new.left.episodeNumber}"
-            view.ep_title.text = old.second.nome
+            view.epTitle.text = old.second.nome
             view.faltando.text = "${old.first.episodeNumber}/${old.second.numberOfEpisodes}"
             view.progressBar.isIndeterminate = true
             view.date.text = old.first.dataEstreia
@@ -107,13 +107,13 @@ class ProximosAdapter(private val context: FragmentActivity)
             intent.putExtra(Constantes.TEMPORADA_ID, old.first.seasonNumber)
             intent.putExtra(Constantes.TEMPORADA_POSITION, temporadaZero(old?.second?.seasons?.get(0)?.seasonNumber, old.first.seasonNumber)) //old.first.episodeNumber)
             intent.putExtra(Constantes.NOME, new?.right?.name)
-            intent.putExtra(Constantes.COLOR_TOP, color_top)
+            intent.putExtra(Constantes.COLOR_TOP, colorTop)
             context.startActivity(intent)
         }
 
         view.poster.setOnClickListener {
             val intent = Intent(context, TvShowActivity::class.java)
-            intent.putExtra(Constantes.COLOR_TOP, color_top)
+            intent.putExtra(Constantes.COLOR_TOP, colorTop)
             intent.putExtra(Constantes.TVSHOW_ID, old.second.id)
             intent.putExtra(Constantes.NOME_TVSHOW, old.second.nome)
             context.startActivity(intent)
@@ -167,11 +167,10 @@ class ProximosAdapter(private val context: FragmentActivity)
                 .placeholder(R.drawable.poster_empty)
                 .into(viewImage, object : Callback {
                     override fun onError(e: Exception?) {
-                        // holder.progressBarSimilares.visibility = View.GONE
                     }
 
                     override fun onSuccess() {
-                        color_top = UtilsApp.loadPalette(viewImage)
+                        colorTop = UtilsApp.loadPalette(viewImage)
                     }
                 })
     }
@@ -196,7 +195,7 @@ class ProximosAdapter(private val context: FragmentActivity)
     }
 
     fun addAtual(ultima: MutablePair<EpisodesItem, Tvshow>) {
-        val t = userTvshows.find {
+        userTvshows.find {
             it.left.second.id == ultima.right.id
         }
 
@@ -215,10 +214,10 @@ class ProximosAdapter(private val context: FragmentActivity)
         internal val proximo: TextView = itemView.findViewById(R.id.proximo_ver) as TextView
         internal val title: TextView = itemView.findViewById(R.id.title) as TextView
         internal val faltando: TextView = itemView.findViewById(R.id.faltante) as TextView
-        internal val ep_title: TextView = itemView.findViewById(R.id.ep_title) as TextView
+        internal val epTitle: TextView = itemView.findViewById(R.id.ep_title) as TextView
         internal val date: TextView = itemView.findViewById(R.id.date) as TextView
-        internal val eps_faltantes: TextView = itemView.findViewById(R.id.eps_faltantes) as TextView
-        internal val new_seguindo: TextView = itemView.findViewById(R.id.new_seguindo) as TextView
+        internal val epsFaltantes: TextView = itemView.findViewById(R.id.eps_faltantes) as TextView
+        internal val newSeguindo: TextView = itemView.findViewById(R.id.new_seguindo) as TextView
         internal val progressBar: ProgressBar = itemView.findViewById(R.id.calendar_progress) as ProgressBar
 
     }

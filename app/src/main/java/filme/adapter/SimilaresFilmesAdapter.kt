@@ -56,7 +56,7 @@ class SimilaresFilmesAdapter(activity: FragmentActivity, val similarItems: List<
 
                     })
 
-            holder.imgPagerSimilares.setOnClickListener { view ->
+            holder.imgPagerSimilares.setOnClickListener { _ ->
                 val intent = Intent(context, FilmeActivity::class.java)
                 intent.putExtra(Constantes.COLOR_TOP, color_top)
                 intent.putExtra(Constantes.NOME_FILME, it.title)

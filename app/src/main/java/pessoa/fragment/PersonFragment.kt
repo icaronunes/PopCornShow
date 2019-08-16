@@ -134,7 +134,7 @@ class PersonFragment : Fragment() {
     private fun getViewPersonCrews(inflater: LayoutInflater?, container: ViewGroup?): View {
         val view = inflater?.inflate(R.layout.activity_person_crews, container, false)
         recyclerViewCrews = view?.findViewById<View>(R.id.recycleView_person_crews) as RecyclerView
-        sem_crews = view?.findViewById<View>(R.id.sem_crews) as TextView
+        sem_crews = view.findViewById<View>(R.id.sem_crews) as TextView
         progressBar = view.findViewById<View>(R.id.progress) as ProgressBar
         recyclerViewCrews?.itemAnimator = DefaultItemAnimator()
         recyclerViewCrews?.layoutManager = GridLayoutManager(context, 2)
@@ -223,7 +223,7 @@ class PersonFragment : Fragment() {
             homepage?.text = site
             homepage?.visibility = View.VISIBLE
 
-            homepage?.setOnClickListener { view ->
+            homepage?.setOnClickListener {
                 val intent = Intent(context, Site::class.java)
                 intent.putExtra(Constantes.SITE, information.homepage)
                 startActivity(intent)
@@ -248,12 +248,12 @@ class PersonFragment : Fragment() {
         if (information.name != null) {
             imageButtonWiki?.visibility = View.VISIBLE
 
-            imageButtonWiki?.setOnClickListener { view ->
-                val BASEWIKI = "https://pt.wikipedia.org/wiki/"
+            imageButtonWiki?.setOnClickListener {
+                val basewiki = "https://pt.wikipedia.org/wiki/"
                 val site: String
                 val intent = Intent(context, Site::class.java)
                 val nome = information.name
-                site = BASEWIKI + nome.replace(" ", "_")
+                site = basewiki + nome.replace(" ", "_")
 
                 intent.putExtra(Constantes.SITE, site)
                 startActivity(intent)

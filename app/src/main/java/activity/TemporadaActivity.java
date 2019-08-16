@@ -146,7 +146,6 @@ public class TemporadaActivity extends BaseActivity {
         } else {
             temporada_id = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getTEMPORADA_ID()));
             temporada_position = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getTEMPORADA_POSITION()));
-            //Criar campo no signal
             serie_id = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getTVSHOW_ID()));
             nome_temporada = getIntent().getStringExtra(Constantes.INSTANCE.getNOME());
             color = Integer.parseInt(getIntent().getStringExtra(Constantes.INSTANCE.getCOLOR_TOP()));
