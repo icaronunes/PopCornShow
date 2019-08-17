@@ -16,7 +16,7 @@
     </style>
 
     <!-- Tema base + NoActionBar -->
-    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <!-- Variação escura da cor primária para a status bar e contextual app bars -->
         <item name="colorPrimaryDark">@color/primary_dark</item>

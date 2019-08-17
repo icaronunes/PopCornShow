@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/accent2"
     android:orientation="vertical">
 
@@ -14,11 +15,58 @@
         android:minHeight="@dimen/trade_size_dp_30"
         android:scrollbars="none">
 
-        <LinearLayout
-            android:id="@+id/scroll_tvshow_button_main"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_tvshow"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" />
+            android:layout_height="wrap_content"
+            app:chipSpacingHorizontal="8dp"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_air_data"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/blue_main"
+                app:rippleColor="@color/color_botton_main"
+                android:textColor="@color/white"
+                android:text="@string/air_date" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_today"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/blue_main"
+                app:rippleColor="@color/color_botton_main"
+                android:textColor="@color/white"
+                android:text="@string/today" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_populares_tvshow"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/blue_main"
+                app:rippleColor="@color/color_botton_main"
+                android:textColor="@color/white"
+                android:text="@string/populares" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_top_rated_tvshow"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/blue_main"
+                app:rippleColor="@color/color_botton_main"
+                android:textColor="@color/white"
+                android:text="@string/top_rated" />
+
+        </com.google.android.material.chip.ChipGroup>
 
     </HorizontalScrollView>
 

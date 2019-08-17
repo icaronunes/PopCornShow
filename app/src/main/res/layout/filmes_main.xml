@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/accent2"
@@ -14,21 +15,79 @@
         android:minHeight="@dimen/trade_size_dp_30"
         android:scrollbars="none">
 
-        <LinearLayout
-            android:id="@+id/scroll_filme_button_main"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_movie"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" />
+            android:layout_height="wrap_content"
+            app:chipSpacingHorizontal="8dp"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_now_playing"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/red2"
+                app:rippleColor="@color/color_botton_main"
+                android:textColor="@color/white"
+                android:text="@string/now_playing" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_upcoming"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/red2"
+                app:rippleColor="@color/color_botton_main"
+                android:textColor="@color/white"
+                android:text="@string/upcoming" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_populares"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/red2"
+                app:rippleColor="@color/color_botton_main"
+                android:textColor="@color/white"
+                android:text="@string/populares" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_top_rated"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/red2"
+                app:rippleColor="@color/color_botton_main"
+                android:textColor="@color/white"
+                android:text="@string/top_rated" />
+
+        </com.google.android.material.chip.ChipGroup>
 
     </HorizontalScrollView>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/trade_size_dp_6"
         android:layout_marginStart="@dimen/trade_size_dp_6"
+        android:layout_marginLeft="@dimen/trade_size_dp_6"
         android:text="@string/populares"
         android:textColor="@color/red"
+        android:textSize="@dimen/trade_txt_size_sp_16"
+        android:textStyle="normal|bold"
+        android:typeface="serif" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/trade_size_dp_6"
+        android:layout_marginLeft="@dimen/trade_size_dp_6"
+        android:text="@string/em_breve"
+        android:textColor="@color/blue"
         android:textSize="@dimen/trade_txt_size_sp_16"
         android:textStyle="normal|bold"
         android:typeface="serif" />
@@ -40,17 +99,6 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:minHeight="@dimen/trade_size_dp_100" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/trade_size_dp_6"
-        android:layout_marginStart="@dimen/trade_size_dp_6"
-        android:text="@string/em_breve"
-        android:textColor="@color/blue"
-        android:textStyle="normal|bold"
-        android:textSize="@dimen/trade_txt_size_sp_16"
-        android:typeface="serif" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_movieontheair_main"

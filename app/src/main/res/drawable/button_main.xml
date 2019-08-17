@@ -6,8 +6,9 @@
         <!--</shape>-->
     <!--</item>-->
     <item android:state_pressed="true">
-        <shape android:shape="rectangle"  >
-            <corners android:radius="3dip" />
+        <shape android:shape="rectangle" >
+            <stroke android:dashGap="6dp"/>
+            <corners android:radius="5dip" />
             <stroke android:width="10dip" android:color="@color/red2" />
             <solid
                 android:color="@color/red"/>
@@ -15,6 +16,7 @@
     </item>
     <item >
         <shape android:shape="rectangle" >
+            <stroke android:dashGap="6dp"/>
             <corners android:radius="15dip" />
             <solid  android:color="@color/color_botton_main"
                 android:width="10dip"/>

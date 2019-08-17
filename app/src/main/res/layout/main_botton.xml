@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_main_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -7,15 +9,15 @@
     android:layout_marginRight="@dimen/trade_size_dp_2"
     android:orientation="vertical">
 
-    <Button
+    <com.google.android.material.chip.Chip
         android:id="@+id/button_main"
+        style="@style/Widget.MaterialComponents.Chip.Action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/trade_size_dp_6"
-        android:background="@drawable/button_main"
         android:minWidth="@dimen/trade_size_dp_90"
         android:minHeight="@dimen/trade_size_dp_35"
-        android:padding="@dimen/trade_size_dp_2"
+        android:padding="@dimen/trade_size_dp_6"
         android:textColor="@color/white" />
 
 </LinearLayout>
