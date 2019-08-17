@@ -627,8 +627,8 @@ class Api(val context: Context) {
     }
 
     suspend fun getMoviePopular(): ListaFilmes {
-        return suspendCoroutine { continuation ->
-            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
+        return suspendCancellableCoroutine { continuation ->
+            val client = OkHttpClient()
             val request = Request.Builder()
                     .url("${baseUrl3}movie/popular?api_key=${Config.TMDB_API_KEY}&language=${getIdiomaEscolhido(context)}&page=1")
                     .get()
