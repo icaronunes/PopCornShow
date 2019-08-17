@@ -310,8 +310,8 @@ class LoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLis
                     bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "email")
                     mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
 
-                    if (!task.isSuccessful) {
-                        Toast.makeText(this@LoginActivity, R.string.ops, Toast.LENGTH_SHORT).show()
+                    if (task.isSuccessful) {
+                        Toast.makeText(this@LoginActivity, R.string.success, Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(this@LoginActivity, R.string.ops, Toast.LENGTH_SHORT).show()
                     }

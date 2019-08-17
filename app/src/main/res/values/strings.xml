@@ -195,4 +195,5 @@
     <string name="proximo_ep">Next Ep:</string>
     <string name="ultimo_ep">Last Ep:</string>
     <string name="show" translatable="false">Show</string>
+    <string name="success">SUCESSO!</string>
 </resources>

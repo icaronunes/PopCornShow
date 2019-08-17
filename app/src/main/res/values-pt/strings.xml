@@ -126,7 +126,7 @@
     <string name="remover_watch">Remover do Ver depois</string>
     <string name="adicionar_rated">Adicionar aos Classificados</string>
     <string name="remover_rated">Remover dos Classificados</string>
-    <string name="sem_login">Usuario não logado</string>
+    <string name="sem_login">Usuário não logado</string>
     <string name="title_intro_1">PopCorn Show</string>
     <string name="subtitle_intro_1">Bem-vindo ao PopCorn Show.\n\nConfira as ultimas novidades</string>
     <string name="subtitle_intro_2">Diversos links para sites do mundo todo falando sobre o filme ou tvshow</string>
@@ -184,4 +184,5 @@
     <string name="permitir_acesso_armazenamento">Para salvar imagem  é necessario permitir acesso a meoria interna.</string>
     <string name="proximo_ep">Próximo Ep:</string>
     <string name="ultimo_ep">Último Ep:</string>
+    <string name="success">SUCCESS!</string>
 </resources>

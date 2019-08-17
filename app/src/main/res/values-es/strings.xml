@@ -168,4 +168,5 @@
     <string name="permitir_acesso_armazenamento">Para salvar imagem  é necessario permitir acesso a memoria interna.</string>
     <string name="proximo_ep">Proximo Ep:</string>
     <string name="ultimo_ep">Último Ep:</string>
+    <string name="success">EXITO!</string>
 </resources>
