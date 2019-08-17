@@ -8,6 +8,7 @@ import domain.colecao.Colecao
 import domain.movie.ListaFilmes
 import domain.person.Person
 import domain.tvshow.Tvshow
+import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.*
 import okhttp3.internal.http2.Http2Reader.Companion.logger
 import rx.Observable
@@ -680,8 +681,8 @@ class Api(val context: Context) {
     }
 
     suspend fun getAiringToday(): ListaSeries {
-        return suspendCoroutine { continuation ->
-            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
+        return suspendCancellableCoroutine { continuation ->
+            val client = OkHttpClient()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/airing_today?api_key=${Config.TMDB_API_KEY}&language=${getIdiomaEscolhido(context)}&page=1")
                     .get()
@@ -708,9 +709,8 @@ class Api(val context: Context) {
 
 
     suspend fun getPopularTv(): ListaSeries {
-        return suspendCoroutine { continuation ->
-            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-
+        return suspendCancellableCoroutine { continuation ->
+            val client = OkHttpClient()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/popular?api_key=${Config.TMDB_API_KEY}&language=${getIdiomaEscolhido(context)}&page=1")
                     .get()
@@ -738,8 +738,8 @@ class Api(val context: Context) {
     }
 
     suspend fun getTvSeasonsC(id: Int, id_season: Int): TvSeasons {
-        return suspendCoroutine { cont ->
-            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
+        return suspendCancellableCoroutine { cont ->
+            val client = OkHttpClient()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$id/season/$id_season?api_key=${Config.TMDB_API_KEY}&language=$timeZone,en")

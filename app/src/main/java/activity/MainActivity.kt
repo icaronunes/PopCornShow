@@ -4,9 +4,9 @@ import adapter.MainAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.app.Activity
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -15,40 +15,33 @@ import androidx.viewpager.widget.ViewPager
 import br.com.icaro.filme.BuildConfig
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.tabs.TabLayout
 import com.viewpagerindicator.CirclePageIndicator
 import domain.Api
 import domain.ListaSeries
 import domain.TopMain
 import domain.movie.ListaFilmes
 import fragment.ViewPageMainTopFragment
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import utils.UtilsApp
+import java.net.ConnectException
 
 
 class MainActivity : BaseActivity() {
 
-    private var viewPager_main: ViewPager? = null
-    private var viewpage_top_main: ViewPager? = null
     private var img: ImageView? = null
-    private var tabLayout: TabLayout? = null
     private val multi = mutableListOf<TopMain>()
     private lateinit var rotina: Job
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpToolBar()
         setupNavDrawer()
         setDefaultKeyMode(Activity.DEFAULT_KEYS_SEARCH_LOCAL)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.title = " "
-
-        viewpage_top_main = findViewById<View>(R.id.viewpage_top_main) as ViewPager
 
         img = findViewById(R.id.activity_main_img)
-
 
         if (UtilsApp.isNetWorkAvailable(this)) {
             getTopoLista()
@@ -80,14 +73,20 @@ class MainActivity : BaseActivity() {
     }
 
     private fun getTopoLista() {
-       rotina =  GlobalScope.launch(Dispatchers.Main) {
+        rotina = GlobalScope.launch(Dispatchers.Main) {
             try {
                 val movies = async(Dispatchers.Default) { Api(this@MainActivity).getNowPlayingMovies() }
                 val tvshow = async(Dispatchers.Default) { Api(this@MainActivity).getAiringToday() }
-
+                if (movies.isActive && tvshow.isActive)
                 mescla(tmdbMovies = movies.await(), tmdbTv = tvshow.await())
             } catch (ex: Exception) {
+                Log.d(this.javaClass.name, "ERRO - Excption Main ${ex.message}")
                 Toast.makeText(this@MainActivity, getString(R.string.ops), Toast.LENGTH_LONG).show()
+                rotina.cancelAndJoin()
+            } catch (ex: ConnectException) {
+                Toast.makeText(this@MainActivity, getString(R.string.ops), Toast.LENGTH_LONG).show()
+                Log.d(this.javaClass.name, "ERRO - Connect Main ${ex.message}")
+                rotina.cancelAndJoin()
             }
         }
     }
@@ -108,7 +107,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun snack() {
-        Snackbar.make(viewpage_top_main!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(viewpage_top_main, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
                     if (UtilsApp.isNetWorkAvailable(baseContext)) {
                         getTopoLista()
@@ -120,25 +119,21 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setupViewPagerTabs() {
-
-        viewpage_top_main = findViewById<View>(R.id.viewpage_top_main) as ViewPager
-        viewpage_top_main!!.offscreenPageLimit = 3
-        viewpage_top_main!!.adapter = ViewPageMainTopFragment(supportFragmentManager, multi)
+        viewpage_top_main.offscreenPageLimit = 3
+        viewpage_top_main.adapter = ViewPageMainTopFragment(supportFragmentManager, multi)
         val circlePageIndicator = findViewById<View>(R.id.indication_main) as CirclePageIndicator
         circlePageIndicator.setViewPager(viewpage_top_main as ViewPager)
     }
 
     private fun setupViewBotton() {
 
-        viewPager_main = findViewById<View>(R.id.viewPager_main) as ViewPager
-        tabLayout = findViewById<View>(R.id.tabLayout) as TabLayout
-        viewPager_main!!.offscreenPageLimit = 2
-        viewPager_main!!.currentItem = 0
-        viewPager_main!!.adapter = MainAdapter(this, supportFragmentManager)
-        tabLayout!!.setupWithViewPager(viewPager_main)
+        viewPager_main.offscreenPageLimit = 2
+        viewPager_main.currentItem = 0
+        viewPager_main.adapter = MainAdapter(this, supportFragmentManager)
+        tabLayout.setupWithViewPager(viewPager_main)
 
-        tabLayout!!.setSelectedTabIndicatorColor(resources.getColor(R.color.blue_main))
-        tabLayout!!.setTabTextColors(resources.getColor(R.color.red), resources.getColor(R.color.white))
+        tabLayout.setSelectedTabIndicatorColor(resources.getColor(R.color.blue_main))
+        tabLayout.setTabTextColors(resources.getColor(R.color.red), resources.getColor(R.color.white))
 
         viewPager_main!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
