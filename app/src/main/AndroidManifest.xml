@@ -37,7 +37,7 @@
             android:value="ca-app-pub-7639270198633263~5648600833"/>
 
         <activity
-            android:name="activity.MainActivity"
+            android:name="main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar.NavDrawer">
 
             <meta-data
@@ -52,7 +52,7 @@
 
         </activity>
 
-        <activity android:name="activity.IntroActivity">
+        <activity android:name="intro.IntroActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,7 +63,7 @@
 
         <activity
             android:name="tvshow.activity.TvShowActivity"
-            android:parentActivityName="activity.MainActivity"
+            android:parentActivityName="main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar.NavDrawer">
             <meta-data
                 android:name="android.app.searchable"
@@ -74,17 +74,17 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
 
         </activity>
 
         <activity
             android:name="listafilmes.activity.FilmesActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="main.MainActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
 
             <meta-data
                 android:name="android.app.searchable"
@@ -122,12 +122,12 @@
 
         <activity
             android:name="filme.activity.FilmeActivity"
-            android:parentActivityName="activity.MainActivity"
+            android:parentActivityName="main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar.NavDrawer">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
 
             <meta-data
                 android:name="android.app.searchable"
@@ -139,11 +139,11 @@
 
         <activity
             android:name="activity.ListaGenericaActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="main.MainActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
 
         </activity>
 
@@ -158,11 +158,11 @@
 
         <activity
             android:name="activity.TemporadaActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="main.MainActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
 
         </activity>
 
@@ -171,57 +171,57 @@
 
         <activity
             android:name="activity.TrailerActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="main.MainActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
 
         </activity>
 
         <activity
             android:name="activity.PosterActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="main.MainActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
 
         </activity>
 
 
         <activity
             android:name="activity.ElencoActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="main.MainActivity">
 
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
 
         </activity>
 
 
         <activity
             android:name="activity.CrewsActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="main.MainActivity">
 
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
 
         </activity>
 
 
         <activity
             android:name="activity.PosterGridActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="main.MainActivity">
 
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
         </activity>
 
         <activity
@@ -247,25 +247,25 @@
 
         <activity
             android:name="produtora.activity.ProdutoraActivity"
-            android:parentActivityName="activity.MainActivity"
+            android:parentActivityName="main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
 
         </activity>
 
         <activity
             android:name="activity.SimilaresActivity"
-            android:parentActivityName="activity.MainActivity"
+            android:parentActivityName="main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
         </activity>
 
 
@@ -273,7 +273,7 @@
 
         <activity
             android:name="pessoa.activity.PersonActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="main.MainActivity">
 
             <meta-data
                 android:name="android.app.searchable"
@@ -285,28 +285,28 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
         </activity>
 
         <activity
             android:name="pessoa.activity.FotoPersonActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="main.MainActivity">
 
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
         </activity>
 
         <activity android:name="activity.SettingsActivity" />
 
         <activity
             android:name="listaserie.activity.TvShowsActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="main.MainActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
 
             <meta-data
                 android:name="android.app.searchable"
@@ -318,20 +318,20 @@
 
         <activity
             android:name="activity.Site"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="main.MainActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
         </activity>
 
         <activity
             android:name="seguindo.SeguindoActivity"
-            android:parentActivityName="activity.MainActivity">
+            android:parentActivityName="main.MainActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activity.MainActivity" />
+                android:value="main.MainActivity" />
 
             <meta-data
                 android:name="android.app.searchable"

@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import activity.MainActivity;
+import main.MainActivity;
 import br.com.icaro.filme.R;
 
 /**

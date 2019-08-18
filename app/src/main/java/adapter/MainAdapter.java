@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import br.com.icaro.filme.R;
-import fragment.MainFragment;
+import main.MainFragment;
 
 /**
  * Created by icaro on 23/08/16.

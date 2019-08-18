@@ -17,6 +17,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import filme.activity.FilmeActivity;
+import main.MainActivity;
 import tvshow.activity.TvShowActivity;
 import utils.Constantes;
 

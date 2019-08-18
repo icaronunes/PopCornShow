@@ -1,5 +1,6 @@
-package activity
+package main
 
+import activity.BaseActivity
 import adapter.MainAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -8,47 +9,61 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
+import applicaton.FilmeApplication
 import br.com.icaro.filme.BuildConfig
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
 import com.viewpagerindicator.CirclePageIndicator
-import domain.Api
 import domain.ListaSeries
 import domain.TopMain
 import domain.movie.ListaFilmes
 import fragment.ViewPageMainTopFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.*
 import utils.UtilsApp
-import java.net.ConnectException
 
 
 class MainActivity : BaseActivity() {
 
-    private val multi = mutableListOf<TopMain>()
-    private lateinit var rotina: Job
+    private lateinit var model: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        model = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+                .get(MainViewModel::class.java)
         setUpToolBar()
         setupNavDrawer()
         setDefaultKeyMode(Activity.DEFAULT_KEYS_SEARCH_LOCAL)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (UtilsApp.isNetWorkAvailable(this)) {
-            getTopoLista()
-            setupViewBotton()
+            model.getTopoLista(application = applicationContext as FilmeApplication)
         } else {
             snack()
         }
-
+        setupViewBotton()
         animacao()
         novidades()
+        setObservers()
+    }
+
+    private fun setObservers() {
+        model.data.observe(this, Observer {
+            when(it) {
+                is MainViewModel.MainModel.Data -> {
+                    it.data
+                    mescla(it.data.first, it.data.second)
+                    Log.d(this.javaClass.name, "Sentiu - ${it.toString()}")
+                }
+            }
+
+            Log.d(this.javaClass.name, "- ${it.toString()}")
+        })
     }
 
     private fun novidades() {
@@ -68,26 +83,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun getTopoLista() {
-        rotina = GlobalScope.launch(Dispatchers.Main) {
-            try {
-                val movies = async(Dispatchers.Default) { Api(this@MainActivity).getNowPlayingMovies() }
-                val tvshow = async(Dispatchers.Default) { Api(this@MainActivity).getAiringToday() }
-                if (movies.isActive && tvshow.isActive)
-                    mescla(tmdbMovies = movies.await(), tmdbTv = tvshow.await())
-            } catch (ex: Exception) {
-                Log.d(this.javaClass.name, "ERRO - Excption Main ${ex.message}")
-                Toast.makeText(this@MainActivity, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                rotina.cancelAndJoin()
-            } catch (ex: ConnectException) {
-                Toast.makeText(this@MainActivity, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                Log.d(this.javaClass.name, "ERRO - Connect Main ${ex.message}")
-                rotina.cancelAndJoin()
-            }
-        }
-    }
-
-
     private fun animacao() {
         val set = AnimatorSet()
         val animator = ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 0.1f, 1f)
@@ -98,15 +93,13 @@ class MainActivity : BaseActivity() {
         animator.duration = 5000
         set.playSequentially(animator, animator2, animator3)
         set.start()
-
-
     }
 
     private fun snack() {
         Snackbar.make(viewpage_top_main, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
                     if (UtilsApp.isNetWorkAvailable(baseContext)) {
-                        getTopoLista()
+                        model.getTopoLista(application = applicationContext as FilmeApplication)
                         setupViewBotton()
                     } else {
                         snack()
@@ -114,11 +107,12 @@ class MainActivity : BaseActivity() {
                 }.show()
     }
 
-    private fun setupViewPagerTabs() {
+    private fun setupViewPagerTabs(multi: MutableList<TopMain>) {
         viewpage_top_main.offscreenPageLimit = 3
         viewpage_top_main.adapter = ViewPageMainTopFragment(supportFragmentManager, multi)
         findViewById<CirclePageIndicator>(R.id.indication_main)
                 .setViewPager(viewpage_top_main)
+        activity_main_img?.visibility = View.GONE
     }
 
     private fun setupViewBotton() {
@@ -128,8 +122,8 @@ class MainActivity : BaseActivity() {
         viewPager_main.adapter = MainAdapter(this, supportFragmentManager)
         tabLayout.setupWithViewPager(viewPager_main)
 
-        tabLayout.setSelectedTabIndicatorColor(resources.getColor(R.color.blue_main))
-        tabLayout.setTabTextColors(resources.getColor(R.color.red), resources.getColor(R.color.white))
+        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.blue_main))
+        tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.red), ContextCompat.getColor(this, R.color.white))
 
         viewPager_main.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -137,11 +131,11 @@ class MainActivity : BaseActivity() {
 
             override fun onPageSelected(position: Int) {
                 if (position == 0) {
-                    tabLayout!!.setSelectedTabIndicatorColor(resources.getColor(R.color.blue_main))
-                    tabLayout!!.setTabTextColors(resources.getColor(R.color.red), resources.getColor(R.color.white))
+                    tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(baseContext, R.color.blue_main))
+                    tabLayout.setTabTextColors(ContextCompat.getColor(baseContext, R.color.red), ContextCompat.getColor(baseContext, R.color.white))
                 } else {
-                    tabLayout!!.setSelectedTabIndicatorColor(resources.getColor(R.color.red))
-                    tabLayout!!.setTabTextColors(resources.getColor(R.color.blue_main), resources.getColor(R.color.white))
+                    tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(baseContext, R.color.red))
+                    tabLayout.setTabTextColors(ContextCompat.getColor(baseContext, R.color.blue_main), ContextCompat.getColor(baseContext, R.color.white))
                 }
             }
 
@@ -164,36 +158,30 @@ class MainActivity : BaseActivity() {
             !it.backdropPath.isNullOrBlank()
         }.toList()
 
-        for (index in 0..15) {
-            val topMain = TopMain()// criar class utilitaria
-            if (index % 2 == 0) {
-                if (index <= listaFilmes.size) {
-                    val movieDb = listaFilmes[index]!!
-                    topMain.id = movieDb.id
-                    topMain.nome = movieDb.title
-                    topMain.mediaType = "movie"
-                    topMain.imagem = movieDb.backdropPath
-                    multi.add(topMain)
-                }
-            } else {
-                if (index <= listaTv.size) {
-                    val tv = listaTv[index]
-                    topMain.id = tv.id!!
-                    topMain.nome = tv.name
-                    topMain.mediaType = "tv"
-                    topMain.imagem = tv.backdropPath
-                    multi.add(topMain)
+        val multi = mutableListOf<TopMain>().apply {
+            for (index in 0..15) {
+                val topMain = TopMain()// criar class utilitaria
+                if (index % 2 == 0) {
+                    if (index <= listaFilmes.size) {
+                        val movieDb = listaFilmes[index]!!
+                        topMain.id = movieDb.id
+                        topMain.nome = movieDb.title
+                        topMain.mediaType = "movie"
+                        topMain.imagem = movieDb.backdropPath
+                        add(topMain)
+                    }
+                } else {
+                    if (index <= listaTv.size) {
+                        val tv = listaTv[index]
+                        topMain.id = tv.id!!
+                        topMain.nome = tv.name
+                        topMain.mediaType = "tv"
+                        topMain.imagem = tv.backdropPath
+                        add(topMain)
+                    }
                 }
             }
         }
-
-        setupViewPagerTabs()
-        activity_main_img?.visibility = View.GONE
+        setupViewPagerTabs(multi)
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        rotina.cancel()
-    }
-
 }

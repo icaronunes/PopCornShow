@@ -40,6 +40,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import java.util.Arrays;
 
 import br.com.icaro.filme.R;
+import main.MainActivity;
 
 /**
  * Created by icaro on 24/11/16.

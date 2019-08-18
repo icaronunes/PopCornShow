@@ -18,7 +18,7 @@ import org.json.JSONObject;
 import activity.CrewsActivity;
 import activity.ElencoActivity;
 import activity.ListaGenericaActivity;
-import activity.MainActivity;
+import main.MainActivity;
 import activity.SimilaresActivity;
 import activity.Site;
 import activity.TemporadaActivity;

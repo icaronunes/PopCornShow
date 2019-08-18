@@ -1,4 +1,4 @@
-package fragment
+package main
 
 import adapter.MovieMainAdapter
 import adapter.TvShowMainAdapter
@@ -62,6 +62,19 @@ class MainFragment : Fragment() {
         }
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        when (tipo) {
+            filmes_main -> {
+                return getViewMovie(inflater, container)
+            }
+            R.string.tvshow_main -> {
+                return getViewTvshow(inflater, container)
+            }
+        }
+        return null
+    }
+
     private fun setScrollFilmeButton() {
         chip_group_movie.setOnCheckedChangeListener { chipGroup, id ->
             when (id) {
@@ -123,19 +136,6 @@ class MainFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        when (tipo) {
-            filmes_main -> {
-                return getViewMovie(inflater, container)
-            }
-            R.string.tvshow_main -> {
-                return getViewTvshow(inflater, container)
-            }
-        }
-        return null
     }
 
     private fun getViewMovie(inflater: LayoutInflater, container: ViewGroup?): View {

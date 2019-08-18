@@ -169,8 +169,9 @@ dependencies {
     implementation 'com.github.sharish:ShimmerRecyclerView:v1.3'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1'
     implementation 'androidx.fragment:fragment-ktx:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
-   // configurations.all {exclude group: 'com.android.support', module: 'support-v13'}
+    // configurations.all {exclude group: 'com.android.support', module: 'support-v13'}
 }
 
 apply plugin: 'com.google.gms.google-services'

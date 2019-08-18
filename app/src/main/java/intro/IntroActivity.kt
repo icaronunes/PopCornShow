@@ -1,5 +1,6 @@
-package activity
+package intro
 
+import activity.LoginActivity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -7,9 +8,6 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.github.paolorotolo.appintro.AppIntro
-import fragment.FirstSlide
-import fragment.FiveSlide
-import fragment.SecondSlide
 
 /**
  * Created by icaro on 21/11/16.

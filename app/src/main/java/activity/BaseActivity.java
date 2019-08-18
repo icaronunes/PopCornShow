@@ -63,6 +63,7 @@ import br.com.icaro.filme.BuildConfig;
 import br.com.icaro.filme.R;
 import domain.Api;
 import domain.busca.MultiSearch;
+import main.MainActivity;
 import oscar.OscarActivity;
 import pessoaspopulares.PersonPopularActivity;
 import rx.Observer;

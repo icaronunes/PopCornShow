@@ -15,7 +15,7 @@
         android:paddingLeft="@dimen/trade_size_dp_40"
         android:paddingRight="@dimen/trade_size_dp_40"
         android:paddingTop="@dimen/trade_size_dp_16"
-        tools:context="activity.MainActivity">
+        tools:context="main.MainActivity">
 
         <ImageView
             android:id="@+id/logo_login"
