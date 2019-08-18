@@ -29,7 +29,6 @@ import java.net.ConnectException
 
 class MainActivity : BaseActivity() {
 
-    private var img: ImageView? = null
     private val multi = mutableListOf<TopMain>()
     private lateinit var rotina: Job
 
@@ -41,8 +40,6 @@ class MainActivity : BaseActivity() {
         setDefaultKeyMode(Activity.DEFAULT_KEYS_SEARCH_LOCAL)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        img = findViewById(R.id.activity_main_img)
-
         if (UtilsApp.isNetWorkAvailable(this)) {
             getTopoLista()
             setupViewBotton()
@@ -52,7 +49,6 @@ class MainActivity : BaseActivity() {
 
         animacao()
         novidades()
-
     }
 
     private fun novidades() {
@@ -78,7 +74,7 @@ class MainActivity : BaseActivity() {
                 val movies = async(Dispatchers.Default) { Api(this@MainActivity).getNowPlayingMovies() }
                 val tvshow = async(Dispatchers.Default) { Api(this@MainActivity).getAiringToday() }
                 if (movies.isActive && tvshow.isActive)
-                mescla(tmdbMovies = movies.await(), tmdbTv = tvshow.await())
+                    mescla(tmdbMovies = movies.await(), tmdbTv = tvshow.await())
             } catch (ex: Exception) {
                 Log.d(this.javaClass.name, "ERRO - Excption Main ${ex.message}")
                 Toast.makeText(this@MainActivity, getString(R.string.ops), Toast.LENGTH_LONG).show()
@@ -94,11 +90,11 @@ class MainActivity : BaseActivity() {
 
     private fun animacao() {
         val set = AnimatorSet()
-        val animator = ObjectAnimator.ofFloat(img, View.ALPHA, 0.1f, 1f)
+        val animator = ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 0.1f, 1f)
         animator.duration = 5000
-        val animator2 = ObjectAnimator.ofFloat(img, View.ALPHA, 1f, 0.1f)
+        val animator2 = ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 1f, 0.1f)
         animator.duration = 5000
-        val animator3 = ObjectAnimator.ofFloat(img, View.ALPHA, 0.1f, 1f)
+        val animator3 = ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 0.1f, 1f)
         animator.duration = 5000
         set.playSequentially(animator, animator2, animator3)
         set.start()
@@ -121,8 +117,8 @@ class MainActivity : BaseActivity() {
     private fun setupViewPagerTabs() {
         viewpage_top_main.offscreenPageLimit = 3
         viewpage_top_main.adapter = ViewPageMainTopFragment(supportFragmentManager, multi)
-        val circlePageIndicator = findViewById<View>(R.id.indication_main) as CirclePageIndicator
-        circlePageIndicator.setViewPager(viewpage_top_main as ViewPager)
+        findViewById<CirclePageIndicator>(R.id.indication_main)
+                .setViewPager(viewpage_top_main)
     }
 
     private fun setupViewBotton() {
@@ -135,7 +131,7 @@ class MainActivity : BaseActivity() {
         tabLayout.setSelectedTabIndicatorColor(resources.getColor(R.color.blue_main))
         tabLayout.setTabTextColors(resources.getColor(R.color.red), resources.getColor(R.color.white))
 
-        viewPager_main!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        viewPager_main.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             }
 
@@ -192,7 +188,7 @@ class MainActivity : BaseActivity() {
         }
 
         setupViewPagerTabs()
-        img?.visibility = View.GONE
+        activity_main_img?.visibility = View.GONE
     }
 
     override fun onDestroy() {

@@ -36,6 +36,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom"
                 android:fitsSystemWindows="false"
+                app:titleEnabled="false"
                 app:contentScrim="@android:drawable/screen_background_light_transparent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -47,7 +48,6 @@
                     android:layout_gravity="bottom|center_horizontal"
                     android:adjustViewBounds="false"
                     android:background="@color/transparent"
-                    android:contentDescription="@string/foto_principal"
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="1.0" />
@@ -58,6 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
+                    app:title=" "
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
@@ -66,6 +67,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/trade_size_dp_40"
+                    android:background="@color/transparent"
+                    app:tabTextColor="@color/white"
                     app:layout_scrollFlags="scroll|enterAlways" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>

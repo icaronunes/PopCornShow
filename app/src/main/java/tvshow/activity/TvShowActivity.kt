@@ -7,7 +7,6 @@ import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.app.Dialog
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -67,12 +66,11 @@ class TvShowActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tvserie_activity)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpToolBar()
         setupNavDrawer()
         getExtras()
         collapsing_toolbar?.setBackgroundColor(color_top)
-        collapsing_toolbar?.title = " "
+        collapsing_toolbar.title = " "
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -462,7 +460,6 @@ class TvShowActivity : BaseActivity() {
     private fun setupViewPagerTabs() {
         viewPager_tvshow?.offscreenPageLimit = 1
         viewPager_tvshow?.adapter = TvShowAdapter(this, supportFragmentManager, series, color_top, seguindo)
-        val tabLayout = findViewById<View>(R.id.tabLayout) as TabLayout
         viewPager_tvshow?.currentItem = 0
         tabLayout.setupWithViewPager(viewPager_tvshow)
         tabLayout.setSelectedTabIndicatorColor(color_top)

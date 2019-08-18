@@ -57,14 +57,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <android.support.v4.view.ViewPager
-                        android:id="@+id/viewpage_top_main"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/trade_size_dp_202"
-                        android:layout_gravity="top|center_horizontal|start"
-                        android:background="@color/transparent"
-                        android:contentDescription="@string/foto_principal"
-                        android:scaleType="centerCrop" />
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewpage_top_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/trade_size_dp_202"
+                    android:layout_gravity="top|center_horizontal|start"
+                    android:background="@color/transparent"
+                    android:contentDescription="@string/foto_principal"
+                    android:scaleType="centerCrop" />
 
                     <ImageView
                         android:id="@+id/activity_main_img"
