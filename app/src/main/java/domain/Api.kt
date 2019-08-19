@@ -21,9 +21,6 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-
-
-
 class Api(val context: Context) {
 
     private var timeZone: String = "US"
@@ -38,13 +35,11 @@ class Api(val context: Context) {
             val t1 = System.nanoTime()
             logger.info(String.format("Sending request %s on %s%n%s",
                     request.url, chain.connection(), request.headers))
-
             val response = chain.proceed(request)
 
             val t2 = System.nanoTime()
             logger.info(String.format("Received response for %s in %.1fms%n%s",
                     response.request.url, (t2 - t1) / 1e6, response.headers))
-
             return response
         }
     }
@@ -64,7 +59,6 @@ class Api(val context: Context) {
             val semana: String = "on_the_air"
             val popular: String = "popular"
             val melhores: String = "top_rated"
-
         }
     }
 
@@ -78,7 +72,7 @@ class Api(val context: Context) {
 
     fun personPopular(pagina: Int): Observable<PersonPopular> {
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}person/popular?page=" + pagina + "&language=en-US&api_key=" + Config.TMDB_API_KEY)
@@ -98,7 +92,7 @@ class Api(val context: Context) {
 
     fun getLista(id: String, pagina: Int = 1): Observable<ListaFilmes> {
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl4}list/" + id + "?page=" + pagina + "&api_key=" + Config.TMDB_API_KEY)
@@ -118,7 +112,7 @@ class Api(val context: Context) {
 
     fun getOmdbpi(id: String?): Observable<Imdb> {
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("http://www.omdbapi.com/?i=$id&tomatoes=true&r=json&apikey=${Config.OMDBAPI_API_KEY}") //Api de alguem)
@@ -138,7 +132,7 @@ class Api(val context: Context) {
 
     fun getCompany(id_produtora: Int): Observable<Company> {
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}company/$id_produtora?api_key=" + Config.TMDB_API_KEY)
@@ -158,7 +152,7 @@ class Api(val context: Context) {
 
     fun getCompanyFilmes(company_id: Int, pagina: Int = 1): Observable<CompanyFilmes> {
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}company/$company_id/movies?page=$pagina&api_key=${Config.TMDB_API_KEY}&language=$timeZone")
@@ -182,11 +176,9 @@ class Api(val context: Context) {
     fun buscaDeFilmes(tipoDeBusca: String? = TIPOBUSCA.FILME.agora, pagina: Int = 1, local: String = "US"): Observable<ListaFilmes> {
         // tipos de buscas - "now_playing", "upcoming", "top_rated", "popular" - Mude o tipo, para mudar busca
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
-            Log.d("Api", "pagina $pagina")
             val url = when (tipoDeBusca) {
-
                 "upcoming", "now_playing" -> {
                     "${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=${timeZone.replaceBefore("-", "").removeRange(0, 1)}"
                 }
@@ -214,7 +206,7 @@ class Api(val context: Context) {
     fun buscaDeSeries(tipoDeBusca: String? = TIPOBUSCA.SERIE.popular, pagina: Int = 1, local: String = "US"): Observable<ListaSeries> {
         // tipos de buscas - "now_playing", "upcoming", "top_rated", "popular" - Mude o tipo, para mudar busca
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=$timeZone")
@@ -235,7 +227,7 @@ class Api(val context: Context) {
 
     private fun getMovie(id: Int): Observable<Movie> {
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}movie/$id?api_key=${Config.TMDB_API_KEY}" + "&language=$timeZone" +
@@ -256,7 +248,7 @@ class Api(val context: Context) {
 
     fun getMovieVideos(id: Int): Observable<Videos> {
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}movie/$id/videos?api_key=${Config.TMDB_API_KEY}&language=en-US,null")
@@ -277,7 +269,7 @@ class Api(val context: Context) {
 
     fun getTvshowVideos(id: Int): Observable<Videos> {
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$id/videos?api_key=${Config.TMDB_API_KEY}&language=en-US,null")
@@ -298,7 +290,7 @@ class Api(val context: Context) {
 
     fun getTvShow(id: Int): Observable<Tvshow> {
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$id?api_key=${Config.TMDB_API_KEY}" + "&language=$timeZone" +
@@ -319,7 +311,7 @@ class Api(val context: Context) {
 
     fun getTvShowLite(id: Int): Observable<Tvshow> { // Usado em "Seguindo"
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$id?api_key=${Config.TMDB_API_KEY}" + "&language=$timeZone" +
@@ -341,12 +333,14 @@ class Api(val context: Context) {
 
     suspend fun getTvShowLiteC(id: Int): Tvshow { // Usado em "Seguindo"
         return suspendCoroutine { cont ->
+            val client =  OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$id?api_key=${Config.TMDB_API_KEY}" + "&language=$timeZone" +
                             "&append_to_response=release_dates,external_ids&include_image_language=en,null")
                     .get()
                     .build()
-            OkHttpClient().newCall(request).enqueue(object : Callback {
+
+            client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     cont.resumeWithException(Throwable(e.message))
                 }
@@ -367,11 +361,12 @@ class Api(val context: Context) {
 
     suspend fun getTvShowEpC(id: Int, idTemp: Int, idEp: Int): EpisodesItem { // Usado em "Seguindo"
         return suspendCoroutine { cont ->
+            val client =  OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$id/season/$idTemp/episode/$idEp?api_key=${getKey()}" + "&language=$timeZone")
                     .get()
                     .build()
-            OkHttpClient().newCall(request).enqueue(object : Callback {
+            client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     cont.resumeWithException(Throwable(e.message))
                 }
@@ -393,7 +388,7 @@ class Api(val context: Context) {
 
     fun getColecao(id: Int): Observable<Colecao> {
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}collection/$id?api_key=${Config.TMDB_API_KEY}&language=$timeZone,en")
@@ -468,7 +463,7 @@ class Api(val context: Context) {
 
     fun getTvSeasons(id: Int, id_season: Int, pagina: Int = 1): Observable<TvSeasons> {
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$id/season/$id_season?api_key=${Config.TMDB_API_KEY}&language=$timeZone,en")
@@ -488,12 +483,13 @@ class Api(val context: Context) {
 
     suspend fun getTvSeasons(id: Int, id_season: Int): TvSeasons {
         return suspendCoroutine { cont ->
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$id/season/$id_season?api_key=${Config.TMDB_API_KEY}&language=$timeZone,en")
                     .get()
                     .build()
 
-            OkHttpClient().newCall(request).enqueue(object : Callback {
+            client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     cont.resumeWithException(Throwable(e.message))
                 }
@@ -514,7 +510,7 @@ class Api(val context: Context) {
 
     fun getTvCreditosTemporada(id: Int, id_season: Int): Observable<Credits> {
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$id/season/$id_season/credits?api_key=${Config.TMDB_API_KEY}&language=en-US")
@@ -533,9 +529,8 @@ class Api(val context: Context) {
     }
 
     fun personDetalhes(id: Int): Observable<Person> {
-
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}person/$id?api_key=${Config.TMDB_API_KEY}&language=en-US+" + "&append_to_response=combined_credits,images")
@@ -555,7 +550,7 @@ class Api(val context: Context) {
 
     fun reviewsFilme(idImdb: String?): Observable<ReviewsUflixit> {
         return Observable.create { subscriber ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("https://uflixit.p.mashape.com/movie/reviews/$idImdb")
@@ -578,7 +573,7 @@ class Api(val context: Context) {
         return Observable
                 .create { subscriber ->
                     if (query.equals("search_suggest_query")) Throwable("")
-                    val client = OkHttpClient()
+                    val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
                     val gson = Gson()
                     val request = Request.Builder()
                             .url("${baseUrl3}search/multi?api_key=${Config.TMDB_API_KEY}&language=$timeZone&query=$query&page=1&include_adult=false")
@@ -628,7 +623,7 @@ class Api(val context: Context) {
 
     suspend fun getMoviePopular(): ListaFilmes {
         return suspendCancellableCoroutine { continuation ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
                     .url("${baseUrl3}movie/popular?api_key=${Config.TMDB_API_KEY}&language=${getIdiomaEscolhido(context)}&page=1")
                     .get()
@@ -682,7 +677,7 @@ class Api(val context: Context) {
 
     suspend fun getAiringToday(): ListaSeries {
         return suspendCancellableCoroutine { continuation ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/airing_today?api_key=${Config.TMDB_API_KEY}&language=${getIdiomaEscolhido(context)}&page=1")
                     .get()
@@ -710,7 +705,7 @@ class Api(val context: Context) {
 
     suspend fun getPopularTv(): ListaSeries {
         return suspendCancellableCoroutine { continuation ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/popular?api_key=${Config.TMDB_API_KEY}&language=${getIdiomaEscolhido(context)}&page=1")
                     .get()
@@ -739,7 +734,7 @@ class Api(val context: Context) {
 
     suspend fun getTvSeasonsC(id: Int, id_season: Int): TvSeasons {
         return suspendCancellableCoroutine { cont ->
-            val client = OkHttpClient()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$id/season/$id_season?api_key=${Config.TMDB_API_KEY}&language=$timeZone,en")
