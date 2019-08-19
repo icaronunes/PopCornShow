@@ -6,8 +6,12 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.github.paolorotolo.appintro.AppIntro
+import com.github.paolorotolo.appintro.R
 
 /**
  * Created by icaro on 21/11/16.
@@ -27,6 +31,10 @@ class IntroActivity : AppIntro() {
             finish()
             return
         } else {
+            findViewById<View>(R.id.next).setBackgroundColor(Color.parseColor("#3F51B5"))
+            findViewById<View>(R.id.done).setBackgroundColor(Color.parseColor("#3F51B5"))
+            findViewById<View>(R.id.skip).setBackgroundColor(Color.parseColor("#3F51B5"))
+            findViewById<View>(R.id.back).setBackgroundColor(Color.parseColor("#3F51B5"))
             addSlide(FirstSlide())
             addSlide(SecondSlide())
             addSlide(FiveSlide())
@@ -36,7 +44,7 @@ class IntroActivity : AppIntro() {
         setSeparatorColor(Color.parseColor("#2196F3"))
 
         // Hide Skip button
-        showSkipButton(true)
+        showSkipButton(false)
 
         // Turn vibration on and set intensity
         // NOTE: you will probably need to ask VIBRATE permesssion in Manifest

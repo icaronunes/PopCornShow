@@ -176,7 +176,6 @@ class Api(val context: Context) {
     fun buscaDeFilmes(tipoDeBusca: String? = TIPOBUSCA.FILME.agora, pagina: Int = 1, local: String = "US"): Observable<ListaFilmes> {
         return Observable.create { subscriber ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-            val gson = Gson()
             val url = when (tipoDeBusca) {
                 "upcoming", "now_playing" -> {
                     "${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=${timeZone.replaceBefore("-", "").removeRange(0, 1)}"
@@ -197,14 +196,14 @@ class Api(val context: Context) {
                 val lista = Gson().fromJson(json, ListaFilmes::class.java)
                 subscriber.onNext(lista)
                 subscriber.onCompleted()
-            } else {
                 subscriber.onError(Throwable(response.message))
             }
         }
     }
 
     fun buscaDeSeries(tipoDeBusca: String? = TIPOBUSCA.SERIE.popular, pagina: Int = 1, local: String = "US"): Observable<ListaSeries> {
-        // tipos de buscas - "now_playing", "upcoming", "top_rated", "popular" - Mude o tipo, para mudar busca
+        // tipos de buscas - "now_playing", "upcoming", "top_rated", "popular" - Mude o tipo, para mudar
+        //            } else { busca
         return Observable.create { subscriber ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
