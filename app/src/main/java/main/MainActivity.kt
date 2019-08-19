@@ -11,10 +11,11 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import androidx.viewpager.widget.ViewPager
+import applicaton.BaseViewModel
 import applicaton.FilmeApplication
+import applicaton.PopCornViewModelFactory
 import br.com.icaro.filme.BuildConfig
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
@@ -25,6 +26,7 @@ import domain.movie.ListaFilmes
 import fragment.ViewPageMainTopFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import utils.UtilsApp
+import kotlin.reflect.KProperty1
 
 
 class MainActivity : BaseActivity() {
@@ -34,41 +36,42 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        model = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
-                .get(MainViewModel::class.java)
+        model = createViewModel(MainViewModel::class.java)
         setUpToolBar()
         setupNavDrawer()
         setDefaultKeyMode(Activity.DEFAULT_KEYS_SEARCH_LOCAL)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        animacao()
         if (UtilsApp.isNetWorkAvailable(this)) {
-            model.getTopoLista(application = applicationContext as FilmeApplication)
+            model.getTopoLista()
         } else {
             snack()
         }
         setupViewBotton()
-        animacao()
-        novidades()
         setObservers()
     }
 
     private fun setObservers() {
         model.data.observe(this, Observer {
             when(it) {
-                is MainViewModel.MainModel.Data -> {
-                    it.data
-                    mescla(it.data.first, it.data.second)
-                    Log.d(this.javaClass.name, "Sentiu - ${it.toString()}")
-                }
+                is MainViewModel.MainModel.Data ->  mescla(it.data.first, it.data.second)
+                is MainViewModel.MainModel.isNovidade -> novidades()
+                is MainViewModel.MainModel.VisibleAnimed -> visibleAnimed(it)
             }
-
-            Log.d(this.javaClass.name, "- ${it.toString()}")
         })
     }
 
+    private fun visibleAnimed(it: MainViewModel.MainModel.VisibleAnimed) {
+        if (it.visible) {
+            activity_main_img?.visibility = View.VISIBLE
+        } else {
+            activity_main_img?.visibility = View.GONE
+        }
+    }
+
     private fun novidades() {
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-        if (sharedPref.getBoolean(BuildConfig.VERSION_CODE.toString(), true)) {
+            val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
             val dialog = AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_popcorn2)
                     .setTitle(R.string.novidades_title)
@@ -80,10 +83,10 @@ class MainActivity : BaseActivity() {
                         editor.apply()
                     }.create()
             dialog.show()
-        }
     }
 
     private fun animacao() {
+        //TODO atualizar animação
         val set = AnimatorSet()
         val animator = ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 0.1f, 1f)
         animator.duration = 5000
@@ -99,7 +102,7 @@ class MainActivity : BaseActivity() {
         Snackbar.make(viewpage_top_main, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
                     if (UtilsApp.isNetWorkAvailable(baseContext)) {
-                        model.getTopoLista(application = applicationContext as FilmeApplication)
+                        model.getTopoLista()
                         setupViewBotton()
                     } else {
                         snack()
@@ -108,11 +111,11 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setupViewPagerTabs(multi: MutableList<TopMain>) {
-        viewpage_top_main.offscreenPageLimit = 3
+        viewpage_top_main.offscreenPageLimit = 2
         viewpage_top_main.adapter = ViewPageMainTopFragment(supportFragmentManager, multi)
         findViewById<CirclePageIndicator>(R.id.indication_main)
                 .setViewPager(viewpage_top_main)
-        activity_main_img?.visibility = View.GONE
+        model.animation(false)
     }
 
     private fun setupViewBotton() {

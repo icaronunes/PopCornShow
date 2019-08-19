@@ -1,14 +1,19 @@
+package applicaton
+
+import android.app.Application
 import android.widget.Toast
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import applicaton.FilmeApplication
 import br.com.icaro.filme.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlin.coroutines.CoroutineContext
 
-open class BaseViewModel : ViewModel() {
+open class BaseViewModel(open val app: Application) : AndroidViewModel(app), LifecycleObserver {
+
     private val job: Job = Job()
     val coroutineContext: CoroutineContext
         get() =  Dispatchers.Main + job
@@ -17,8 +22,8 @@ open class BaseViewModel : ViewModel() {
     val success = MutableLiveData<BaseView.Success>()
 
 
-    fun ops(application: FilmeApplication){
-        Toast.makeText(application, application.getString(R.string.ops), Toast.LENGTH_LONG).show()
+    fun ops(){
+        Toast.makeText(app.baseContext, app.getString(R.string.ops), Toast.LENGTH_LONG).show()
     }
 
     override fun onCleared() {

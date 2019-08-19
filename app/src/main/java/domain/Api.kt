@@ -174,7 +174,6 @@ class Api(val context: Context) {
 
 
     fun buscaDeFilmes(tipoDeBusca: String? = TIPOBUSCA.FILME.agora, pagina: Int = 1, local: String = "US"): Observable<ListaFilmes> {
-        // tipos de buscas - "now_playing", "upcoming", "top_rated", "popular" - Mude o tipo, para mudar busca
         return Observable.create { subscriber ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
@@ -183,6 +182,7 @@ class Api(val context: Context) {
                     "${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=${timeZone.replaceBefore("-", "").removeRange(0, 1)}"
                 }
                 else -> {
+                    //TODO validar retorno da api que nao manda em PT-BR
                     "${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=$timeZone"
                 }
             }
@@ -194,7 +194,7 @@ class Api(val context: Context) {
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
                 val json = response.body?.string()
-                val lista = gson.fromJson(json, ListaFilmes::class.java)
+                val lista = Gson().fromJson(json, ListaFilmes::class.java)
                 subscriber.onNext(lista)
                 subscriber.onCompleted()
             } else {

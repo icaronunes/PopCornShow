@@ -15,7 +15,6 @@ object Constantes {
     val SINOPSE = "sinopse"
 
     val COLOR_TOP = "color_top"
-    val PRODUTORA = "produta"
     val PRODUTORA_ID = "produtora_id"
     val LISTA_ID = "lista_id"
     val LISTA_NOME = "lista_nome"
@@ -45,8 +44,6 @@ object Constantes {
     val USER = "user"
     val SEGUINDO = "seguindo"
     val TEMPORADA_POSITION = "temporada_position"
-    val NETFLIX = "netflix"
-    val IMDB = "imdb"
     val TWITTER_URL = "@appopcorn"
     val PREF_ID_GUEST = "pref_guest"
     val GUEST = "guest"
@@ -62,10 +59,5 @@ object Constantes {
         val AD = 3
 	
     }
-
-    object PermissaoAndroid {
-        val REQUEST_PERMISSIONS_CODE_STORE = 1
-    }
-
 }
 

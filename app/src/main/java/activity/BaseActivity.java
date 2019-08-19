@@ -33,6 +33,10 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,11 +63,13 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import applicaton.PopCornViewModelFactory;
 import br.com.icaro.filme.BuildConfig;
 import br.com.icaro.filme.R;
 import domain.Api;
 import domain.busca.MultiSearch;
 import main.MainActivity;
+import main.MainViewModel;
 import oscar.OscarActivity;
 import pessoaspopulares.PersonPopularActivity;
 import rx.Observer;
@@ -81,7 +87,7 @@ import utils.UtilsApp;
  */
 @SuppressLint("Registered")
 @Keep
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
 
 	protected DrawerLayout drawerLayout;
 	protected NavigationView navigationView;
@@ -94,14 +100,19 @@ public class BaseActivity extends AppCompatActivity {
 	private Dialog dialog;
 	private CompositeSubscription subscriptions = new CompositeSubscription();
 	
+	@SuppressLint("SourceLockedOrientationActivity")
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
-	
-	public static void SnackBar(final View view, String msg) {
 
+	protected <T extends AndroidViewModel> T createViewModel(Class<T> classViewModel) {
+		PopCornViewModelFactory model = new PopCornViewModelFactory(this.getApplication(), null);
+		return ViewModelProviders.of(this, model).get(classViewModel);
+	}
+
+	public static void SnackBar(final View view, String msg) {
 		Snackbar.make(view, msg
 				, Snackbar.LENGTH_SHORT).setCallback(new Snackbar.Callback() {
 			@Override

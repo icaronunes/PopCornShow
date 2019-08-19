@@ -18,7 +18,6 @@ class TvShowsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_main) // ???
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpToolBar()
         setupNavDrawer()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

@@ -10,9 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import applicaton.FilmeApplication
+import applicaton.PopCornViewModelFactory
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.string.filmes_main
 import domain.Api
@@ -60,6 +63,8 @@ class MainFragment : Fragment() {
         } else {
             setScrollFilmeButton()
         }
+        val model = createViewModel(MainFragViewModel::class.java)
+       // Log.d(this.javaClass.name, "Funcional caralho ${model.toString()}")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -73,6 +78,11 @@ class MainFragment : Fragment() {
             }
         }
         return null
+    }
+
+    fun createViewModel(java: Class<MainFragViewModel>): MainFragViewModel {
+        val factory = PopCornViewModelFactory(application = this.activity?.application as FilmeApplication)
+        return ViewModelProviders.of(this, factory).get(java)
     }
 
     private fun setScrollFilmeButton() {
@@ -243,11 +253,9 @@ class MainFragment : Fragment() {
                 setScrollTvShowPopulares(popular.await())
             } catch (ex: ConnectException) {
                 rotina.cancelAndJoin()
-                Log.d(this.javaClass.name, "ERRO - ConnectException FRAG${ex.message}")
                 Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
             } catch (ex: java.lang.Exception) {
                 Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                Log.d(this.javaClass.name, "ERRO - Exception FRAG${ex.message}")
                 rotina.cancelAndJoin()
             }
         }
