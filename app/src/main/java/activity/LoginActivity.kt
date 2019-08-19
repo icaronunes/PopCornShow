@@ -40,7 +40,6 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
     private var mCallbackManager: CallbackManager? = null
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
-
     private val authStateListener: FirebaseAuth.AuthStateListener
         get() = FirebaseAuth.AuthStateListener {
             val user = FirebaseAuth.getInstance().currentUser

@@ -1,6 +1,5 @@
 package activity;
 
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.SearchManager;
@@ -80,7 +79,6 @@ import rx.subscriptions.CompositeSubscription;
 import seguindo.SeguindoActivity;
 import utils.Constantes;
 import utils.UtilsApp;
-
 
 /**
  * Created by icaro on 24/06/16.

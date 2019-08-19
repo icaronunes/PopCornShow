@@ -45,19 +45,13 @@ import main.MainActivity;
 /**
  * Created by icaro on 24/11/16.
  */
-public class VincularLoginActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener{
-
+public class VincularLoginActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final int RC_SIGN_IN = 1;
     private FirebaseAuth mAuth;
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mAuthProgressDialog;
     private CallbackManager mCallbackManager;
-
-    public VincularLoginActivity() {
-
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +96,7 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
                     @Override
                     public void onClick(View view) {
                         if (validarParametros(login, senha, repetirSenha)) {
-                            criarLoginEmail(login.getEditText().getText().toString(), senha.getEditText().getText().toString() );
+                            criarLoginEmail(login.getEditText().getText().toString(), senha.getEditText().getText().toString());
                             dialog.dismiss();
                         }
                     }
@@ -118,8 +112,8 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
         Ssenha = senha.getEditText().getText().toString();
         Srepetir = repetirSenha.getEditText().getText().toString();
 
-        if (Slogin.contains("@") && Slogin.contains(".")){
-            if (Ssenha.equals(Srepetir)){
+        if (Slogin.contains("@") && Slogin.contains(".")) {
+            if (Ssenha.equals(Srepetir)) {
                 return true;
             }
         }
@@ -160,18 +154,18 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
         LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-              //  Log.d(TAG, "facebook:onSuccess: " + loginResult.getAccessToken());
+                //  Log.d(TAG, "facebook:onSuccess: " + loginResult.getAccessToken());
                 accessFacebook(loginResult.getAccessToken());
             }
 
             @Override
             public void onCancel() {
-               // Log.d(TAG, "facebook:onCancel ");
+                // Log.d(TAG, "facebook:onCancel ");
             }
 
             @Override
             public void onError(FacebookException error) {
-               // Log.d(TAG, "facebook:onError ", error);
+                // Log.d(TAG, "facebook:onError ", error);
             }
         });
     }
@@ -184,7 +178,7 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
         switch (view.getId()) {
 
             case R.id.facebook: {
-               // Log.d(TAG, "Facebook");
+                // Log.d(TAG, "Facebook");
                 LogarFacebook();
                 break;
             }
@@ -215,7 +209,7 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
                     //startActivity(new Intent(VincularLoginActivity.this, MainActivity.class));
                     //finish();
                 } else {
-                 //   Log.d(TAG, "não logou... ");
+                    //   Log.d(TAG, "não logou... ");
                 }
             }
         };
@@ -237,10 +231,10 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
-               // Log.d(TAG, account.getDisplayName());
+                // Log.d(TAG, account.getDisplayName());
                 accessGoogle(account.getIdToken());
             } else {
-               // Log.d(TAG, "Falha no login Google");
+                // Log.d(TAG, "Falha no login Google");
             }
         } else {
             mCallbackManager.onActivityResult(requestCode, resultCode, data);
@@ -264,9 +258,9 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                          //  Log.d(TAG, "linkWithCredential:onComplete:" + task.isSuccessful());
+                            //  Log.d(TAG, "linkWithCredential:onComplete:" + task.isSuccessful());
                             if (task.isSuccessful()) {
-                          //      Log.d(TAG, "linkWithCredential:onComplete: " + "Logins vinculados");
+                                //      Log.d(TAG, "linkWithCredential:onComplete: " + "Logins vinculados");
                                 finish();
                                 startActivity(new Intent(VincularLoginActivity.this, MainActivity.class));
                                 mAuthProgressDialog.dismiss();
@@ -289,28 +283,27 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
 
 
     public void criarLoginEmail(String email, String pass) {
-      //  Log.d(TAG, "createUserWithEmail:Email: " + email);
+        //  Log.d(TAG, "createUserWithEmail:Email: " + email);
         mAuthProgressDialog.show();
         mAuth.createUserWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                       // Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                        // Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Toast.makeText(VincularLoginActivity.this, "Login Falhou", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                        } else {
                             Toast.makeText(VincularLoginActivity.this, "Login", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-              //  Log.d(TAG, "getMessage : " + e.getMessage());
+                //  Log.d(TAG, "getMessage : " + e.getMessage());
                 Toast.makeText(VincularLoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
@@ -322,20 +315,20 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
     @Override
     protected void onStart() {
         super.onStart();
-       // mAuth.addAuthStateListener(stateListener);
+        // mAuth.addAuthStateListener(stateListener);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         if (mAuth != null) {
-          //  mAuth.removeAuthStateListener(stateListener);
+            //  mAuth.removeAuthStateListener(stateListener);
         }
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-       // Log.d(TAG, "falhou:" + connectionResult.getErrorMessage());
+        // Log.d(TAG, "falhou:" + connectionResult.getErrorMessage());
     }
 
     public void onclickMain(View view) {
@@ -343,14 +336,14 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                       // Log.d(TAG, "signInAnonymously:onComplete:" + task.isSuccessful());
+                        // Log.d(TAG, "signInAnonymously:onComplete:" + task.isSuccessful());
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         Toast.makeText(VincularLoginActivity.this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
                         if (!task.isSuccessful()) {
-                          //  Log.w(TAG, "signInAnonymously", task.getException());
+                            //  Log.w(TAG, "signInAnonymously", task.getException());
                             Toast.makeText(VincularLoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
