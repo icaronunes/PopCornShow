@@ -192,11 +192,12 @@ class Api(val context: Context) {
     fun buscaDeSeries(tipoDeBusca: String? = TIPOBUSCA.SERIE.popular, pagina: Int = 1, local: String = "US"): Observable<ListaSeries> {
         // tipos de buscas - "now_playing", "upcoming", "top_rated", "popular" - Mude o tipo, para mudar
         //            } else { busca
+        //Todo Erro na busca da paginacao
         return Observable.create { subscriber ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
-                    .url("${baseUrl3}tv/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=$region")
+                    .url("${baseUrl3}tv/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina")
                     .get()
                     .build()
             val response = client.newCall(request).execute()
