@@ -23,7 +23,8 @@ import kotlin.coroutines.suspendCoroutine
 
 class Api(val context: Context) {
 
-    private var timeZone: String = "US"
+    private var timeZone: String = getIdiomaEscolhido(context)
+    private var region: String = Locale.getDefault().country
     val baseUrl3 = "https://api.themoviedb.org/3/"
     val baseUrl4 = "https://api.themoviedb.org/4/"
 
@@ -60,10 +61,6 @@ class Api(val context: Context) {
             val popular: String = "popular"
             val melhores: String = "top_rated"
         }
-    }
-
-    init {
-        timeZone = getIdiomaEscolhido(context)
     }
 
     private fun getKey(): String {
@@ -176,16 +173,7 @@ class Api(val context: Context) {
     fun buscaDeFilmes(tipoDeBusca: String? = TIPOBUSCA.FILME.agora, pagina: Int = 1, local: String = "US"): Observable<ListaFilmes> {
         return Observable.create { subscriber ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-            val url = when (tipoDeBusca) {
-                "upcoming", "now_playing" -> {
-                    "${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=${timeZone.replaceBefore("-", "").removeRange(0, 1)}"
-                }
-                else -> {
-                    //TODO validar retorno da api que nao manda em PT-BR
-                    "${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=$timeZone"
-                }
-            }
-
+            val url = "${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=$region"
             val request = Request.Builder()
                     .url(url)
                     .get()
@@ -208,7 +196,7 @@ class Api(val context: Context) {
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
-                    .url("${baseUrl3}tv/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=$timeZone")
+                    .url("${baseUrl3}tv/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=$region")
                     .get()
                     .build()
             val response = client.newCall(request).execute()
