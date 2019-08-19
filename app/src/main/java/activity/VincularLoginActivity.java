@@ -81,7 +81,7 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
             @Override
             public void onClick(View view) {
                 final AlertDialog dialog = new AlertDialog.Builder(VincularLoginActivity.this)
-                        .setView(R.layout.criar_login)
+                        .setView(R.layout.create_login)
                         .create();
                 dialog.show();
 

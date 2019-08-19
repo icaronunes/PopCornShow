@@ -84,10 +84,11 @@
                 android:id="@+id/login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/txt_listas"
+                android:layout_alignParentStart="true"
                 android:layout_marginTop="@dimen/trade_size_dp_21"
                 android:ems="10"
+                android:fitsSystemWindows="true"
                 android:hint="@string/email_tx"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -103,23 +104,26 @@
                 android:id="@+id/pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/login"
+                android:layout_alignParentStart="true"
                 android:layout_marginTop="@dimen/trade_size_dp_17"
                 android:ems="10"
+                android:fitsSystemWindows="true"
                 android:hint="@string/password"
+                android:imeOptions="actionSend"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/logar"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_visto"
             android:onClick="onclick"
+            android:layout_marginTop="@dimen/trade_size_dp_14"
+            android:textColor="@color/red2"
             android:text="@string/bt_signin"
-            app:layout_constraintTop_toBottomOf="@+id/textinput_pass"
-            android:textCursorDrawable="@drawable/button_visto" />
+            app:layout_constraintTop_toBottomOf="@+id/textinput_pass" />
 
             <TextView
                 android:id="@+id/recuperar_senha"
@@ -130,6 +134,7 @@
                 android:text="@string/reset_password"
                 android:textStyle="bold"
                 android:focusable="true"
+                android:layout_marginTop="@dimen/trade_size_dp_14"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/logar"
                 />
@@ -144,6 +149,7 @@
                 android:text="@string/criar_login_popcorn"
                 android:textStyle="normal|bold|italic"
                 tools:ignore="RtlHardcoded"
+                android:layout_marginTop="@dimen/trade_size_dp_14"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/logar"
                 />
@@ -152,7 +158,7 @@
             android:id="@+id/facebook"
             android:layout_width="match_parent"
             android:layout_height="@dimen/trade_size_dp_40"
-            android:layout_marginTop="@dimen/trade_size_dp_8"
+            android:layout_marginTop="@dimen/trade_size_dp_14"
             android:onClick="onclick"
             android:paddingLeft="@dimen/trade_size_dp_10"
             android:paddingRight="@dimen/trade_size_dp_10"

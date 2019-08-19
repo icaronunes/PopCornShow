@@ -158,6 +158,10 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
 		adview.loadAd(adRequest);
 	}
 
+	 void hideSoftKeyboard() {
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+	}
+
 	protected void setupNavDrawer() {
 
 		final ActionBar actionBar = getSupportActionBar();
@@ -514,8 +518,8 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
 
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();
 		subscriptions.unsubscribe();
+		super.onDestroy();
 	}
 
 	protected void salvaImagemMemoriaCache(final Context context, final String endereco, final SalvarImageShare callback) {

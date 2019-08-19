@@ -35,7 +35,7 @@ import java.net.ConnectException
  * Created by icaro on 23/08/16.
  */
 class MainFragment : Fragment() {
-    private lateinit var rotina: Job
+    private var rotina: Job = Job()
     private var tipo: Int = 0
 
     companion object {
@@ -64,7 +64,6 @@ class MainFragment : Fragment() {
             setScrollFilmeButton()
         }
         val model = createViewModel(MainFragViewModel::class.java)
-       // Log.d(this.javaClass.name, "Funcional caralho ${model.toString()}")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -176,7 +175,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setUpComing() {
-        GlobalScope.launch(Dispatchers.Main) {
+       rotina = GlobalScope.launch(Dispatchers.Main) {
             try {
                 val upComing = async(Dispatchers.Default) {
                     Api(context!!).getUpcoming()
@@ -195,7 +194,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setMoviePopular() {
-        GlobalScope.launch(Dispatchers.Main) {
+       rotina = GlobalScope.launch(Dispatchers.Main) {
             try {
                 val popular = async(Dispatchers.IO) {
                     Api(context!!).getMoviePopular()
@@ -226,7 +225,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setAiringToday() {
-        GlobalScope.launch(Dispatchers.Main) {
+       rotina =  GlobalScope.launch(Dispatchers.Main) {
             try {
                 val airTv = async(Dispatchers.IO) {
                     Api(context!!).getAiringToday()
@@ -245,7 +244,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setPopularTv() {
-        GlobalScope.launch(Dispatchers.Main) {
+      rotina = GlobalScope.launch(Dispatchers.Main) {
             try {
                 val popular = async(Dispatchers.Default) {
                     Api(context!!).getPopularTv()
@@ -292,7 +291,7 @@ class MainFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        rotina.cancel()
+        if (rotina.isActive) rotina.cancel()
         super.onDestroy()
     }
 }
