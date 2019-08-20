@@ -170,7 +170,7 @@ public class PosterScrollFragment extends Fragment {
     }
 
     private File salvaImagemMemoriaCache(Context context, ImageView imageView) {
-        //USar metodo do BaseActivity
+        //USar metodo do activity.BaseActivity
         File file = new File(context.getExternalCacheDir(), context.getPackageName());
 
         if (!file.exists()) {

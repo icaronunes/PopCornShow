@@ -5,7 +5,6 @@ package listaserie.activity
  */
 
 import activity.BaseActivity
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import br.com.icaro.filme.R

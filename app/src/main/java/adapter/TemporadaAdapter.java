@@ -15,7 +15,7 @@ import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
 import activity.TemporadaActivity;
-import applicaton.FilmeApplication;
+import applicaton.PopCornApplication;
 import br.com.icaro.filme.R;
 import domain.EpisodesItem;
 import domain.UserEp;
@@ -51,7 +51,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         this.seasons = seasons;
         this.seguindo = seguindo;
         this.temporadaOnClickListener = temporadaOnClickListener;
-          FilmeApplication.getInstance().getBus().register(this);
+          PopCornApplication.getInstance().getBus().register(this);
     }
 
 
@@ -72,7 +72,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
     @Override
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
-        FilmeApplication.getInstance().getBus().unregister(this);
+        PopCornApplication.getInstance().getBus().unregister(this);
     }
 
     @Override

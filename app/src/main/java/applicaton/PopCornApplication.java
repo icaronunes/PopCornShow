@@ -21,13 +21,13 @@ import utils.Config;
  * Created by icaro on 01/08/16.
  */
 
-public class FilmeApplication extends MultiDexApplication {
+public class PopCornApplication extends MultiDexApplication {
 
-	private static final String TAG = FilmeApplication.class.getName();
-	private static FilmeApplication instance = null;
+	private static final String TAG = PopCornApplication.class.getName();
+	private static PopCornApplication instance = null;
 	private Bus bus = new Bus();
 
-	public static FilmeApplication getInstance() {
+	public static PopCornApplication getInstance() {
 		return instance;
 	}
 

@@ -6,7 +6,7 @@ import rx.subscriptions.CompositeSubscription
 /**
  * Created by icaro on 27/08/17.
  */
-open class BaseActivity : AppCompatActivity() {
+class BaseActivityKt : AppCompatActivity() {
 
     protected var subscriptions = CompositeSubscription()
 

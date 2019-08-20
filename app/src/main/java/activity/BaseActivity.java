@@ -34,7 +34,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,7 +67,6 @@ import br.com.icaro.filme.R;
 import domain.Api;
 import domain.busca.MultiSearch;
 import main.MainActivity;
-import main.MainViewModel;
 import oscar.OscarActivity;
 import pessoaspopulares.PersonPopularActivity;
 import rx.Observer;
@@ -156,7 +154,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
 		adview.loadAd(adRequest);
 	}
 
-	 void hideSoftKeyboard() {
+	 public void hideSoftKeyboard() {
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	}
 

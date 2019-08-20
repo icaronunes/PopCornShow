@@ -1,5 +1,6 @@
 package main
 
+import BaseFragment
 import adapter.MovieMainAdapter
 import adapter.TvShowMainAdapter
 import android.content.Intent
@@ -10,12 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import applicaton.FilmeApplication
-import applicaton.PopCornViewModelFactory
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.string.filmes_main
 import domain.Api
@@ -34,7 +32,7 @@ import java.net.ConnectException
 /**
  * Created by icaro on 23/08/16.
  */
-class MainFragment : Fragment() {
+class MainFragment : BaseFragment() {
     private var rotina: Job = Job()
     private var tipo: Int = 0
 
@@ -66,6 +64,7 @@ class MainFragment : Fragment() {
         val model = createViewModel(MainFragViewModel::class.java)
     }
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         when (tipo) {
@@ -77,11 +76,6 @@ class MainFragment : Fragment() {
             }
         }
         return null
-    }
-
-    fun createViewModel(java: Class<MainFragViewModel>): MainFragViewModel {
-        val factory = PopCornViewModelFactory(application = this.activity?.application as FilmeApplication)
-        return ViewModelProviders.of(this, factory).get(java)
     }
 
     private fun setScrollFilmeButton() {
@@ -161,13 +155,20 @@ class MainFragment : Fragment() {
     }
 
     private fun inflaterRecyclerMovie(view: View) {
-        view.findViewById<RecyclerView>(R.id.recycle_movie_popular_main).apply {
+        inflaterMoviePopular(view)
+        inflaterOnTheAirMovie(view)
+    }
+
+    private fun inflaterOnTheAirMovie(view: View) {
+        view.findViewById<RecyclerView>(R.id.recycle_movieontheair_main).apply {
             setHasFixedSize(true)
             itemAnimator = DefaultItemAnimator()
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         }
+    }
 
-        view.findViewById<RecyclerView>(R.id.recycle_movieontheair_main).apply {
+    private fun inflaterMoviePopular(view: View) {
+        view.findViewById<RecyclerView>(R.id.recycle_movie_popular_main).apply {
             setHasFixedSize(true)
             itemAnimator = DefaultItemAnimator()
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -261,12 +262,19 @@ class MainFragment : Fragment() {
     }
 
     private fun inflaterRecyclerTv(view: View) {
+        inflaterTvPopular(view)
+        inflaterTvToday(view)
+    }
+
+    private fun inflaterTvPopular(view: View) {
         view.findViewById<RecyclerView>(R.id.tvshow_popular_main).apply {
             setHasFixedSize(true)
             itemAnimator = DefaultItemAnimator()
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         }
+    }
 
+    private fun inflaterTvToday(view: View) {
         view.findViewById<RecyclerView>(R.id.recycle_tvshowtoday_main).apply {
             setHasFixedSize(true)
             itemAnimator = DefaultItemAnimator()

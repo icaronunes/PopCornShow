@@ -228,7 +228,7 @@ public class UtilsApp {
 	}
 
 	public static File salvaImagemMemoriaCache(Context context, ImageView imageView, String endereco) {
-		//Usar metodo do BaseActivity
+		//Usar metodo do activity.BaseActivity
 		File file = context.getExternalCacheDir();
 
 		if (!file.exists()) {

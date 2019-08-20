@@ -23,7 +23,7 @@ import activity.SimilaresActivity;
 import activity.Site;
 import activity.TemporadaActivity;
 import activity.TrailerActivity;
-import applicaton.FilmeApplication;
+import applicaton.PopCornApplication;
 import domain.FilmeDB;
 import domain.FilmeService;
 import filme.activity.FilmeActivity;
@@ -57,7 +57,7 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
     // This fires when a notification is opened by tapping on it.
     @Override
     public void notificationOpened(OSNotificationOpenResult result) {
-        Context context = FilmeApplication.getInstance().getBaseContext();
+        Context context = PopCornApplication.getInstance().getBaseContext();
         jsonData = result.notification.payload.additionalData;
         OSNotificationAction.ActionType actionType = result.action.type;
 

@@ -7,15 +7,11 @@ import android.animation.ObjectAnimator
 import android.app.Activity
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
 import androidx.viewpager.widget.ViewPager
-import applicaton.BaseViewModel
-import applicaton.FilmeApplication
-import applicaton.PopCornViewModelFactory
 import br.com.icaro.filme.BuildConfig
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
@@ -26,7 +22,6 @@ import domain.movie.ListaFilmes
 import fragment.ViewPageMainTopFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import utils.UtilsApp
-import kotlin.reflect.KProperty1
 
 
 class MainActivity : BaseActivity() {

@@ -44,7 +44,7 @@ import java.util.Map;
 
 import adapter.TemporadaAdapter;
 import adapter.TemporadaFoldinAdapter;
-import applicaton.FilmeApplication;
+import applicaton.PopCornApplication;
 import br.com.icaro.filme.R;
 import domain.Api;
 import domain.EpisodesItem;
@@ -577,7 +577,7 @@ public class TemporadaActivity extends BaseActivity {
 //                                        onClickListener()));
 //                    }
 
-                    FilmeApplication.getInstance().getBus().post(seasons);
+                    PopCornApplication.getInstance().getBus().post(seasons);
                     recyclerView.getAdapter().notifyDataSetChanged();
 
                 } else {
