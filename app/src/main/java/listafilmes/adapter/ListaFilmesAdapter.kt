@@ -36,12 +36,11 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
 	fun addFilmes(listaMedia: List<ListaItemFilme?>?, totalPagina: Int) {
 		if (listaMedia?.isNotEmpty()!!) {
 			val initPosition = listaResult.size - 1
-			if(!listaResult.isEmpty() && listaResult[listaResult.size - 1].getViewType() == Constantes.BuscaConstants.LOADING) {
+			if(listaResult.isNotEmpty() && listaResult[listaResult.size - 1].getViewType() == Constantes.BuscaConstants.LOADING) {
 				this.listaResult.removeAt(listaResult.size - 1)
 			}
-			for (result in listaMedia) {
-				this.listaResult.add(result!!)
-			}
+
+			this.listaResult.addAll(listaMedia as List<ViewType>)
 			this.listaResult.sortedBy {
 				if (it is ListaItemFilme) it.releaseDate
 				true

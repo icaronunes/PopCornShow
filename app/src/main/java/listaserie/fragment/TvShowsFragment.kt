@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import br.com.icaro.filme.R
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.material.snackbar.Snackbar
 import domain.Api
 import fragment.FragmentBase
@@ -26,8 +27,6 @@ class TvShowsFragment : FragmentBase() {
 
     private var abaEscolhida: Int? = null
     private var pagina = 1
-    private var totalPagina: Int = 0
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +41,9 @@ class TvShowsFragment : FragmentBase() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        
+
         val adRequest = AdRequest.Builder()
-               // .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+                // .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
                 .build()
         adView.loadAd(adRequest)
 
@@ -52,7 +51,7 @@ class TvShowsFragment : FragmentBase() {
             val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             this.layoutManager = layoutManager
             itemAnimator = DefaultItemAnimator()
-            addOnScrollListener(InfiniteScrollStaggeredListener({}, {getListaSereies()} , layoutManager))
+            addOnScrollListener(InfiniteScrollStaggeredListener({}, { getListaSereies() }, layoutManager))
             setHasFixedSize(true)
             adapter = ListaSeriesAdapter(context)
         }
@@ -90,16 +89,18 @@ class TvShowsFragment : FragmentBase() {
                 .subscribe({
                     if (view != null) {
                         if (pagina == it.page) {
-                            (recycle_listas.adapter as ListaSeriesAdapter).addSeries(it.results, it?.totalResults!!)
+                            (recycle_listas.adapter as ListaSeriesAdapter).addSeries(it.results)
                             pagina = it.page
-                            totalPagina = it.totalPages!!
                             ++pagina
-    
-                            
-                            UtilsKt.getAnuncio(context!!, 2) {
-                                if (recycle_listas != null && (recycle_listas.adapter as ListaSeriesAdapter)
-                                                .getItemViewType((recycle_listas.adapter as ListaSeriesAdapter).itemCount - 1) != Constantes.BuscaConstants.AD)
-                                (recycle_listas.adapter as ListaSeriesAdapter).addAd(it, totalPagina)
+
+                            UtilsKt.getAnuncio(context!!, 2) { nativeAd: UnifiedNativeAd ->
+                                if (recycle_listas != null
+                                        && (recycle_listas.adapter as ListaSeriesAdapter)
+                                                .getItemViewType((recycle_listas.adapter as ListaSeriesAdapter).itemCount - 1)
+                                        != Constantes.BuscaConstants.AD) {
+                                    (recycle_listas.adapter as ListaSeriesAdapter).addAd(nativeAd)
+                                    (recycle_listas.adapter as ListaSeriesAdapter).addLoading(totalResults = it.totalResults)
+                                }
                             }
                         }
                     }
@@ -116,13 +117,13 @@ class TvShowsFragment : FragmentBase() {
 
         when (abaEscolhida) {
 
-            R.string.air_date -> return Api.TIPOBUSCA.SERIE.semana
+            R.string.air_date -> return Api.TYPESEARCH.SERIE.semana
 
-            R.string.today -> return Api.TIPOBUSCA.SERIE.hoje
+            R.string.today -> return Api.TYPESEARCH.SERIE.hoje
 
-            R.string.populares -> return Api.TIPOBUSCA.SERIE.popular
+            R.string.populares -> return Api.TYPESEARCH.SERIE.popular
 
-            R.string.top_rated -> return Api.TIPOBUSCA.SERIE.melhores
+            R.string.top_rated -> return Api.TYPESEARCH.SERIE.melhores
         }
         return null
     }

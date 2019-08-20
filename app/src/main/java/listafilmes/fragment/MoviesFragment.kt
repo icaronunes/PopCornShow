@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit
 /**
  * A simple [Fragment] subclass.
  */
-class FilmesFragment : FragmentBase() {
+class MoviesFragment : FragmentBase() {
 
     private var abaEscolhida: Int = 0
     private var pagina = 1
@@ -54,7 +54,6 @@ class FilmesFragment : FragmentBase() {
         super.onActivityCreated(savedInstanceState)
 
         val adRequest = AdRequest.Builder()
-                //.addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
                 .build()
         adView.loadAd(adRequest)
 
@@ -124,13 +123,13 @@ class FilmesFragment : FragmentBase() {
 
         when (abaEscolhida) {
 
-            R.string.now_playing -> return Api.TIPOBUSCA.FILME.agora
+            R.string.now_playing -> return Api.TYPESEARCH.FILME.agora
 
-            R.string.upcoming -> return Api.TIPOBUSCA.FILME.chegando
+            R.string.upcoming -> return Api.TYPESEARCH.FILME.chegando
 
-            R.string.populares -> return Api.TIPOBUSCA.FILME.popular
+            R.string.populares -> return Api.TYPESEARCH.FILME.popular
 
-            R.string.top_rated -> return Api.TIPOBUSCA.FILME.melhores
+            R.string.top_rated -> return Api.TYPESEARCH.FILME.melhores
 
         }
         return ""

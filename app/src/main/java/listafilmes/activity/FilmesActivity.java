@@ -1,11 +1,10 @@
 package listafilmes.activity;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import activity.BaseActivity;
 import br.com.icaro.filme.R;
-import listafilmes.fragment.FilmesFragment;
+import listafilmes.fragment.MoviesFragment;
 import utils.Constantes;
 
 public class FilmesActivity extends BaseActivity {
@@ -19,7 +18,7 @@ public class FilmesActivity extends BaseActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		if (savedInstanceState == null) {
-			FilmesFragment filmesFragment = new FilmesFragment();
+			MoviesFragment filmesFragment = new MoviesFragment();
 			filmesFragment.setArguments(getIntent().getExtras());
 			getSupportFragmentManager()
 					.beginTransaction()
