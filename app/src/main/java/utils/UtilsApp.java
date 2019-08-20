@@ -277,17 +277,10 @@ public class UtilsApp {
 	}
 
 	public static boolean isNetWorkAvailable(Context context) {
-		boolean conectado;
 		ConnectivityManager conectivtyManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		if (conectivtyManager.getActiveNetworkInfo() != null
+		return conectivtyManager.getActiveNetworkInfo() != null
 				&& conectivtyManager.getActiveNetworkInfo().isAvailable()
-				&& conectivtyManager.getActiveNetworkInfo().isConnected()) {
-
-			conectado = true;
-		} else {
-			conectado = false;
-		}
-		return conectado;
+				&& conectivtyManager.getActiveNetworkInfo().isConnected();
 	}
 
 

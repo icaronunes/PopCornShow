@@ -4,7 +4,6 @@ import activity.SettingsActivity
 import android.content.Context
 import android.os.Build
 import android.preference.PreferenceManager
-import com.crashlytics.android.Crashlytics
 import java.util.*
 
 /**
@@ -13,11 +12,9 @@ import java.util.*
 fun getIdiomaEscolhido(context: Context?): String {
 
     val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-    val idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true)
-    return if (idioma_padrao) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Locale.getDefault().toLanguageTag()
-        } else Locale.getDefault().language + "-" + Locale.getDefault().country
+    val idioma = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true)
+    return if (idioma) {
+        UtilsApp.getLocale()
     } else {
         "en"
     }

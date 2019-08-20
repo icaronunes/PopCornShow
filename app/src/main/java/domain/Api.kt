@@ -1,7 +1,6 @@
 package domain
 
 import android.content.Context
-import android.util.Log
 import com.google.gson.Gson
 import domain.busca.MultiSearch
 import domain.colecao.Colecao
@@ -25,8 +24,8 @@ class Api(val context: Context) {
 
     private var timeZone: String = getIdiomaEscolhido(context)
     private var region: String = Locale.getDefault().country
-    val baseUrl3 = "https://api.themoviedb.org/3/"
-    val baseUrl4 = "https://api.themoviedb.org/4/"
+    private val baseUrl3 = "https://api.themoviedb.org/3/"
+    private val baseUrl4 = "https://api.themoviedb.org/4/"
 
     internal inner class LoggingInterceptor : Interceptor {
         @Throws(IOException::class)
@@ -46,7 +45,7 @@ class Api(val context: Context) {
     }
 
 
-    object TIPOBUSCA {
+    object TYPESEARCH {
 
         object FILME {
             val popular: String = "popular"
@@ -170,7 +169,7 @@ class Api(val context: Context) {
     }
 
 
-    fun buscaDeFilmes(tipoDeBusca: String? = TIPOBUSCA.FILME.agora, pagina: Int = 1, local: String = "US"): Observable<ListaFilmes> {
+    fun buscaDeFilmes(tipoDeBusca: String? = TYPESEARCH.FILME.agora, pagina: Int = 1, local: String = "US"): Observable<ListaFilmes> {
         return Observable.create { subscriber ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val url = "${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=$region"
@@ -189,13 +188,10 @@ class Api(val context: Context) {
         }
     }
 
-    fun buscaDeSeries(tipoDeBusca: String? = TIPOBUSCA.SERIE.popular, pagina: Int = 1, local: String = "US"): Observable<ListaSeries> {
-        // tipos de buscas - "now_playing", "upcoming", "top_rated", "popular" - Mude o tipo, para mudar
-        //            } else { busca
+    fun buscaDeSeries(tipoDeBusca: String? = TYPESEARCH.SERIE.popular, pagina: Int = 1, local: String = "US"): Observable<ListaSeries> {
         //Todo Erro na busca da paginacao
         return Observable.create { subscriber ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-            val gson = Gson()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina")
                     .get()
@@ -203,7 +199,7 @@ class Api(val context: Context) {
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
                 val json = response.body?.string()
-                val lista = gson.fromJson(json, ListaSeries::class.java)
+                val lista = Gson().fromJson(json, ListaSeries::class.java)
                 lista.results
                 subscriber.onNext(lista)
                 subscriber.onCompleted()
@@ -537,6 +533,7 @@ class Api(val context: Context) {
     }
 
     fun reviewsFilme(idImdb: String?): Observable<ReviewsUflixit> {
+        //TODO usar para buscar reviews no the movie
         return Observable.create { subscriber ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
