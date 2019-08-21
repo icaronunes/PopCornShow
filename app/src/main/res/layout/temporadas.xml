@@ -2,24 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/temporadas_recycle"
         android:layout_width="match_parent"
-        app:shimmer_demo_layout_manager_type="linear_vertical"
-        app:shimmer_demo_angle="1"
-        app:shimmer_demo_reverse_animation="true"
         android:layout_height="match_parent" />
-
-    <ProgressBar
-        android:id="@+id/progressBarTemporadas"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/trade_size_dp_50"
-        android:indeterminate="false" />
 
     <TextView
         android:id="@+id/text_search_empty"
@@ -28,6 +17,16 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/trade_size_dp_2"
         android:gravity="center"
+        tools:visibility="visible"
+        tools:text="Empty"
         android:visibility="gone" />
+    <ProgressBar
+        android:id="@+id/progressBarTemporadas"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/trade_size_dp_50"
+        android:indeterminate="false" />
+
 
 </FrameLayout>
