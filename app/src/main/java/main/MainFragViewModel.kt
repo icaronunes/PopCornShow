@@ -1,7 +1,6 @@
 package main
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -36,11 +35,9 @@ class MainFragViewModel(application: Application) : BaseViewModel(application), 
                 _data.value = MainFragModel.ModelUpComing(upComing.await())
             } catch (ex: ConnectException) {
                 ops()
-                Log.d(this.javaClass.name, ex.message)
                 job.cancelAndJoin()
             } catch (ex: java.lang.Exception) {
                 ops()
-                Log.d(this.javaClass.name, ex.message)
                 job.cancelAndJoin()
             }
         }
@@ -64,10 +61,8 @@ class MainFragViewModel(application: Application) : BaseViewModel(application), 
             } catch (ex: ConnectException) {
                 ops()
                 job.cancelAndJoin()
-                Log.d(this.javaClass.name, ex.message)
             } catch (ex: java.lang.Exception) {
-               ops()
-                Log.d(this.javaClass.name, ex.message)
+                ops()
                 job.cancelAndJoin()
             }
         }
@@ -82,7 +77,7 @@ class MainFragViewModel(application: Application) : BaseViewModel(application), 
     }
 
     private fun getAiringToday() {
-        job =  GlobalScope.launch(Dispatchers.Main) {
+        job = GlobalScope.launch(Dispatchers.Main) {
             try {
                 val airTv = async(Dispatchers.IO) {
                     Api(app).getAiringToday()
@@ -91,10 +86,9 @@ class MainFragViewModel(application: Application) : BaseViewModel(application), 
             } catch (ex: ConnectException) {
                 ops()
                 job.cancelAndJoin()
-                Log.d(this.javaClass.name, ex.message)
+
             } catch (ex: java.lang.Exception) {
                 ops()
-                Log.d(this.javaClass.name, ex.message)
                 job.cancelAndJoin()
             }
         }
@@ -118,10 +112,9 @@ class MainFragViewModel(application: Application) : BaseViewModel(application), 
             } catch (ex: ConnectException) {
                 ops()
                 job.cancelAndJoin()
-                Log.d(this.javaClass.name, ex.message)
+
             } catch (ex: java.lang.Exception) {
                 ops()
-                Log.d(this.javaClass.name, ex.message)
                 job.cancelAndJoin()
             }
         }

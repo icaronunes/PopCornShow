@@ -6,6 +6,9 @@ package utils
 
 object Constantes {
 
+    val BASEMOVIEDB_TV = "https://www.themoviedb.org/tv/"
+    val BASEMOVIEDB_MOVIE = "https://www.themoviedb.org/movie/"
+    val IMDB = "https:www.imdb.com/title/"
     val NAV_DRAW_ESCOLIDO = "check"
     val ABA = "aba"
     val FILME_ID = "filme_id"

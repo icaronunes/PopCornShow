@@ -106,17 +106,15 @@ class FilmeInfoFragment : Fragment() {
         imdb_site.setOnClickListener {
             val intent = Intent(activity, Site::class.java)
             intent.putExtra(Constantes.SITE,
-                    "https:www.imdb.com/title/" + movieDb?.imdbId + "/")
+                    "${Constantes.IMDB}${movieDb?.imdbId}/")
             startActivity(intent)
-
         }
 
         tmdb_site?.setOnClickListener {
             val intent = Intent(activity, Site::class.java)
             intent.putExtra(Constantes.SITE,
-                    "https://www.themoviedb.org/movie/" + movieDb?.id + "/")
+                    "${Constantes.BASEMOVIEDB_MOVIE}${movieDb?.id}/")
             startActivity(intent)
-
         }
 
         img_budget?.setOnClickListener {
