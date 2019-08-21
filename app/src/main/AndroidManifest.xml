@@ -48,7 +48,9 @@
                 android:value="activity.SearchMultiActivity" />
         </activity>
 
-        <activity android:name="activity.LoginActivity">
+        <activity android:name="activity.LoginActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:fitsSystemWindows="true">
 
         </activity>
 
