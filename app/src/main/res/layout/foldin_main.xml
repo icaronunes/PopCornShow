@@ -16,7 +16,6 @@
 
         ​<include layout="@layout/epsodio_detalhes" />
 
-
         <include layout="@layout/item_epsodio" />
 
         ​

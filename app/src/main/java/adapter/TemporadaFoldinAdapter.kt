@@ -4,6 +4,7 @@ import activity.TemporadaActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import com.ramotion.foldingcell.FoldingCell
@@ -29,12 +30,12 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
 
     private var unfoldedIndexes = HashSet<Int>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TemporadaFoldinAdapter.HoldeTemporada {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HoldeTemporada {
         val view = LayoutInflater.from(temporadaActivity).inflate(R.layout.foldin_main, parent, false)
         return HoldeTemporada(view)
     }
 
-    override fun onBindViewHolder(holder: TemporadaFoldinAdapter.HoldeTemporada, position: Int) {
+    override fun onBindViewHolder(holder: HoldeTemporada, position: Int) {
 
         val ep = tvSeason.episodes?.get(position)
         val epUser = seasons?.userEps?.get(position)
@@ -206,7 +207,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         //epsodio_detalhes
 
         val img = itemView.epsodio_detalhes_img
-        val resumoDetalhe = itemView.epsodio_detalhes_resumo
+        val resumoDetalhe: TextView = itemView.epsodio_detalhes_resumo
         val detalhesNota = itemView.epsodio_detalhes_nota
         val detalhesVotos = itemView.epsodio_detalhes_votos
         val notaUser = itemView.epsodio_detalhes_nota_user

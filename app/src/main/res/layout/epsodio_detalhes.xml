@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,10 +10,9 @@
     app:cardUseCompatPadding="true"
     tools:visibility="visible">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:visibility="visible">
 
         <ImageView
@@ -25,111 +23,112 @@
             android:adjustViewBounds="true"
             android:cropToPadding="false"
             android:scaleType="centerCrop"
-            android:src="@drawable/poster_empty" />
+            android:src="@drawable/poster_empty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <View
+            android:id="@+id/layout_diretor_nome_visto"
+            android:layout_width="18dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/epsodio_detalhes_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/epsodio_detalhes_img"
+            app:layout_constraintTop_toTopOf="@+id/epsodio_detalhes_img"
+            tools:background="@color/green" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+        <include
+            android:id="@+id/layout_creaters"
+            layout="@layout/layout_diretor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/epsodio_detalhes_img" />
 
-                <include layout="@layout/layout_diretor" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@android:color/background_dark"
-                    android:orientation="vertical" />
-
-                <TextView
-                    android:id="@+id/epsodio_detalhes_resumo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:text="Our API is available for everyone to use. A TMDb user account is required to request an API key. Professional users are approved on a per application basis."
-                    android:textAlignment="center" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_weight="0.5"
-                            android:gravity="center"
-                            android:text="NOTA: "
-                            android:textAllCaps="false" />
-
-                        <TextView
-                            android:id="@+id/epsodio_detalhes_nota"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="start"
-                            android:text="9.0" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_weight="0.5"
-                            android:gravity="center"
-                            android:text="VOTOS: "
-                            android:textAllCaps="false" />
-
-                        <TextView
-                            android:id="@+id/epsodio_detalhes_votos"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="start"
-                            android:text="21" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
+        <View
+            android:id="@+id/divisor_one"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="2dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
             android:layout_marginTop="2dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="2dp"
             android:background="@android:color/background_dark"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="@+id/layout_creaters" />
+
+        <TextView
+            android:id="@+id/epsodio_detalhes_resumo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divisor_one"
+            tools:text="Our API is available for everyone to use. A TMDb user account is required to request an API key. Professional users are approved on a per application basis." />
+
+
+        <TextView
+            android:id="@+id/label_nota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/epsodio_detalhes_resumo"
+            tools:text="NOTA:" />
+
+        <TextView
+            android:id="@+id/epsodio_detalhes_nota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start"
+            app:layout_constraintStart_toEndOf="@+id/label_nota"
+            app:layout_constraintTop_toTopOf="@+id/label_nota"
+            tools:text="9.0" />
+
+
+        <TextView
+            android:id="@+id/label_votes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toStartOf="@+id/epsodio_detalhes_votos"
+            app:layout_constraintTop_toTopOf="@+id/label_nota"
+            tools:text="VOTOS: " />
+
+        <TextView
+            android:id="@+id/epsodio_detalhes_votos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/label_votes"
+            tools:text="21" />
+
+
+        <LinearLayout
+            android:id="@+id/divisor_two"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="2dp"
+            android:background="@android:color/background_dark"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/label_votes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
         <TextView
             android:id="@+id/epsodio_detalhes_nota_user"
@@ -139,21 +138,27 @@
             android:fontFamily="serif"
             android:text="-"
             android:textSize="12sp"
-            android:typeface="serif" />
+            android:typeface="serif"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divisor_two" />
 
         <RelativeLayout
+            app:layout_constraintTop_toBottomOf="@+id/epsodio_detalhes_nota_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/epsodio_detalhes_linear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal">
 
@@ -171,15 +176,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:background="@drawable/button_nao_visto"
                 android:layout_gravity="right|end"
-                android:layout_marginLeft="18dp"
                 android:layout_marginStart="18dp"
+                android:layout_marginLeft="18dp"
                 android:layout_toEndOf="@+id/epsodio_detalhes_linear"
                 android:layout_toRightOf="@+id/epsodio_detalhes_linear"
+                android:background="@drawable/button_nao_visto"
                 android:text="VER MAIS" />
 
         </RelativeLayout>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

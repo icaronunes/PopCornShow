@@ -47,7 +47,7 @@
             android:layout_weight="1"
             android:fontFamily="monospace"
             android:gravity="start"
-            android:text="J.J. Abram"
+            tools:text="J.J. Abram"
             android:textStyle="italic" />
 
         <TextView
@@ -59,7 +59,7 @@
             android:layout_weight="1"
             android:fontFamily="monospace"
             android:gravity="bottom|end"
-            android:text="J.J. Abram"
+            tools:text="J.J. Abram"
             android:textStyle="italic" />
 
     </LinearLayout>
@@ -87,14 +87,5 @@
             android:textStyle="bold" />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_diretor_nome_visto"
-        android:layout_width="18dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="2dp"
-        android:layout_marginStart="2dp"
-        android:orientation="vertical"
-        tools:background="@color/green" />
 
 </LinearLayout>
