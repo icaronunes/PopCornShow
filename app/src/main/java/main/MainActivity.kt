@@ -45,6 +45,7 @@ class MainActivity : BaseActivity() {
         }
         setupViewBotton()
         setObservers()
+        model.novidade()
     }
 
     private fun setObservers() {

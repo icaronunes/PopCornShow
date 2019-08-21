@@ -1,20 +1,21 @@
 package applicaton
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.icaro.filme.R
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
+import domain.Api
+import kotlinx.coroutines.*
+import java.net.ConnectException
 import kotlin.coroutines.CoroutineContext
 
 open class BaseViewModel(open val app: Application) : AndroidViewModel(app), LifecycleObserver {
 
-    private val job: Job = Job()
+    protected var job: Job = Job()
     val coroutineContext: CoroutineContext
         get() =  Dispatchers.Main + job
 
@@ -24,6 +25,10 @@ open class BaseViewModel(open val app: Application) : AndroidViewModel(app), Lif
 
     fun ops(){
         Toast.makeText(app.baseContext, app.getString(R.string.ops), Toast.LENGTH_LONG).show()
+    }
+
+    fun noInternet(){
+        Toast.makeText(app.baseContext, R.string.no_internet, Toast.LENGTH_LONG).show()
     }
 
     override fun onCleared() {

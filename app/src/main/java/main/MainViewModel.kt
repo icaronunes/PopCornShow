@@ -4,6 +4,7 @@ import android.app.Application
 import android.preference.PreferenceManager
 import android.util.Log
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import applicaton.BaseViewModel
@@ -11,6 +12,7 @@ import br.com.icaro.filme.BuildConfig
 import domain.Api
 import domain.ListaSeries
 import domain.movie.ListaFilmes
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -18,15 +20,17 @@ import java.net.ConnectException
 
 class MainViewModel(override val app: Application) : BaseViewModel(app) {
 
-    val data = MutableLiveData<MainModel>()
+    private val _data = MutableLiveData<MainModel>()
+    val data: LiveData<MainModel>
+        get() = _data
 
     fun getTopoLista() {
         GlobalScope.launch(coroutineContext) {
             try {
-                val movies = async(coroutineContext) { Api(context = app).getNowPlayingMovies() }
-                val tvshow = async(coroutineContext) { Api(context = app).getAiringToday() }
+                val movies = async(Dispatchers.IO) { Api(context = app).getNowPlayingMovies() }
+                val tvshow = async(Dispatchers.IO) { Api(context = app).getAiringToday() }
                 if (movies.isActive && tvshow.isActive)
-                    data.value = MainModel.Data(Pair(movies.await(), tvshow.await()))
+                    _data.value = MainModel.Data(Pair(movies.await(), tvshow.await()))
             } catch (ex: Exception) {
                 ops()
             } catch (ex: ConnectException) {
@@ -35,18 +39,17 @@ class MainViewModel(override val app: Application) : BaseViewModel(app) {
         }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    private fun novidade() {
-        Log.d(this.javaClass.name, "novidades")
+    @OnLifecycleEvent(Lifecycle.Event.ON_START) // Funciona não!
+    fun novidade() {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(app)
         if (sharedPref.getBoolean(BuildConfig.VERSION_CODE.toString(), true)) {
-            data.value = MainModel.isNovidade
+            _data.value = MainModel.isNovidade
         }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun animation(visible: Boolean = true) {
-        data.value = MainModel.VisibleAnimed(visible)
+        _data.value = MainModel.VisibleAnimed(visible)
     }
 
     sealed class MainModel {

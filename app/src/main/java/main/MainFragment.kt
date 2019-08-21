@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,15 +36,13 @@ import java.net.ConnectException
 class MainFragment : BaseFragment() {
     private var rotina: Job = Job()
     private var tipo: Int = 0
+    private lateinit var model: MainFragViewModel
 
     companion object {
-
-        fun newInstance(informacoes: Int): Fragment {
-            val fragment = MainFragment()
-            val bundle = Bundle()
-            bundle.putInt(Constantes.ABA, informacoes)
-            fragment.arguments = bundle
-            return fragment
+        fun newInstance(info: Int): Fragment {
+            return MainFragment().apply {
+                arguments = Bundle().apply { putInt(Constantes.ABA, info) }
+            }
         }
     }
 
@@ -52,6 +51,8 @@ class MainFragment : BaseFragment() {
         if (arguments != null) {
             tipo = arguments!!.getInt(Constantes.ABA)
         }
+        model = createViewModel(MainFragViewModel::class.java)
+        setObservers()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -61,9 +62,28 @@ class MainFragment : BaseFragment() {
         } else {
             setScrollFilmeButton()
         }
-        val model = createViewModel(MainFragViewModel::class.java)
     }
 
+    private fun setTvShowList() {
+        model.setAiringToday()
+        model.getPopularTv()
+    }
+
+    private fun setMoviesList() {
+        model.setMoviesUpComing()
+        model.setMoviesPopular()
+    }
+
+    private fun setObservers() {
+        model.data.observe(this, Observer {
+            when(it) {
+                is MainFragViewModel.MainFragModel.ModelUpComing -> setScrollUpComing(it.movies)
+                is MainFragViewModel.MainFragModel.ModelPopularMovie -> setScrollMoviePopular(it.movies)
+                is MainFragViewModel.MainFragModel.ModelPopularTvshow -> setScrollTvShowPopulares(it.tvshows)
+                is MainFragViewModel.MainFragModel.ModelAiringToday -> setScrollTvShowToDay(it.tvshows)
+            }
+        })
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -78,8 +98,64 @@ class MainFragment : BaseFragment() {
         return null
     }
 
+    private fun getViewMovie(inflater: LayoutInflater, container: ViewGroup?): View {
+        val view = inflater.inflate(R.layout.filmes_main, container, false)
+        inflaterRecyclerMovie(view)
+        setMoviesList()
+        return view
+    }
+
+    private fun inflaterRecyclerMovie(view: View) {
+        inflaterMoviePopular(view)
+        inflaterUpcomingMovie(view)
+    }
+
+    private fun inflaterUpcomingMovie(view: View) {
+        view.findViewById<RecyclerView>(R.id.recycle_upcoming_movie_main).apply {
+            setHasFixedSize(true)
+            itemAnimator = DefaultItemAnimator()
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
+    private fun inflaterMoviePopular(view: View) {
+        view.findViewById<RecyclerView>(R.id.recycle_movie_popular_main).apply {
+            setHasFixedSize(true)
+            itemAnimator = DefaultItemAnimator()
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
+    private fun inflaterRecyclerTv(view: View) {
+        inflaterTvPopular(view)
+        inflaterTvToday(view)
+    }
+
+    private fun inflaterTvPopular(view: View) {
+        view.findViewById<RecyclerView>(R.id.tvshow_popular_main).apply {
+            setHasFixedSize(true)
+            itemAnimator = DefaultItemAnimator()
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
+    private fun inflaterTvToday(view: View) {
+        view.findViewById<RecyclerView>(R.id.recycle_tvshowtoday_main).apply {
+            setHasFixedSize(true)
+            itemAnimator = DefaultItemAnimator()
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
+    private fun getViewTvshow(inflater: LayoutInflater, container: ViewGroup?): View {
+        val view = inflater.inflate(R.layout.tvshow_main, container, false)
+        inflaterRecyclerTv(view)
+        setTvShowList()
+        return view
+    }
+
     private fun setScrollFilmeButton() {
-        chip_group_movie.setOnCheckedChangeListener { chipGroup, id ->
+        chip_group_movie.setOnCheckedChangeListener { _, id ->
             when (id) {
                 R.id.chip_now_playing -> {
                     startActivity(Intent(activity, FilmesActivity::class.java).apply {
@@ -141,147 +217,6 @@ class MainFragment : BaseFragment() {
         }
     }
 
-    private fun getViewMovie(inflater: LayoutInflater, container: ViewGroup?): View {
-        val view = inflater.inflate(R.layout.filmes_main, container, false)
-        inflaterRecyclerMovie(view)
-
-        if (UtilsApp.isNetWorkAvailable(context!!)) {
-            setMoviePopular()
-            setUpComing()
-        } else {
-            Toast.makeText(context, R.string.no_internet, Toast.LENGTH_LONG).show()
-        }
-        return view
-    }
-
-    private fun inflaterRecyclerMovie(view: View) {
-        inflaterMoviePopular(view)
-        inflaterOnTheAirMovie(view)
-    }
-
-    private fun inflaterOnTheAirMovie(view: View) {
-        view.findViewById<RecyclerView>(R.id.recycle_movieontheair_main).apply {
-            setHasFixedSize(true)
-            itemAnimator = DefaultItemAnimator()
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        }
-    }
-
-    private fun inflaterMoviePopular(view: View) {
-        view.findViewById<RecyclerView>(R.id.recycle_movie_popular_main).apply {
-            setHasFixedSize(true)
-            itemAnimator = DefaultItemAnimator()
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        }
-    }
-
-    private fun setUpComing() {
-       rotina = GlobalScope.launch(Dispatchers.Main) {
-            try {
-                val upComing = async(Dispatchers.Default) {
-                    Api(context!!).getUpcoming()
-                }
-                setScrollMovieOntheAir(upComing.await())
-            } catch (ex: ConnectException) {
-                Log.d(this.javaClass.name, "ERRO - ConnectException FRAG ${ex.message}")
-                Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                rotina.cancelAndJoin()
-            } catch (ex: java.lang.Exception) {
-                Log.d(this.javaClass.name, "ERRO - Exception FRAG ${ex.message}")
-                Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                rotina.cancelAndJoin()
-            }
-        }
-    }
-
-    private fun setMoviePopular() {
-       rotina = GlobalScope.launch(Dispatchers.Main) {
-            try {
-                val popular = async(Dispatchers.IO) {
-                    Api(context!!).getMoviePopular()
-                }
-                setScrollMoviePopular(popular.await())
-            } catch (ex: ConnectException) {
-                Log.d(this.javaClass.name, "ERRO - ConnectException FRAG ${ex.message}")
-                Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                rotina.cancelAndJoin()
-            } catch (ex: java.lang.Exception) {
-                Log.d(this.javaClass.name, "ERRO - Exception FRAG ${ex.message}")
-                Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                rotina.cancelAndJoin()
-            }
-        }
-    }
-
-    private fun getViewTvshow(inflater: LayoutInflater, container: ViewGroup?): View {
-        val view = inflater.inflate(R.layout.tvshow_main, container, false)
-        inflaterRecyclerTv(view)
-        if (UtilsApp.isNetWorkAvailable(context!!)) {
-            setPopularTv()
-            setAiringToday()
-        } else {
-            Toast.makeText(context, R.string.no_internet, Toast.LENGTH_LONG).show()
-        }
-        return view
-    }
-
-    private fun setAiringToday() {
-       rotina =  GlobalScope.launch(Dispatchers.Main) {
-            try {
-                val airTv = async(Dispatchers.IO) {
-                    Api(context!!).getAiringToday()
-                }
-                setScrollTvShowToDay(airTv.await())
-            } catch (ex: ConnectException) {
-                rotina.cancelAndJoin()
-                Log.d(this.javaClass.name, "ERRO - ConnectException FRAG${ex.message}")
-                Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
-            } catch (ex: java.lang.Exception) {
-                Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                Log.d(this.javaClass.name, "ERRO - Exception FRAG${ex.message}")
-                rotina.cancelAndJoin()
-            }
-        }
-    }
-
-    private fun setPopularTv() {
-      rotina = GlobalScope.launch(Dispatchers.Main) {
-            try {
-                val popular = async(Dispatchers.Default) {
-                    Api(context!!).getPopularTv()
-                }
-                setScrollTvShowPopulares(popular.await())
-            } catch (ex: ConnectException) {
-                rotina.cancelAndJoin()
-                Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
-            } catch (ex: java.lang.Exception) {
-                Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                rotina.cancelAndJoin()
-            }
-        }
-    }
-
-    private fun inflaterRecyclerTv(view: View) {
-        inflaterTvPopular(view)
-        inflaterTvToday(view)
-    }
-
-    private fun inflaterTvPopular(view: View) {
-        view.findViewById<RecyclerView>(R.id.tvshow_popular_main).apply {
-            setHasFixedSize(true)
-            itemAnimator = DefaultItemAnimator()
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        }
-    }
-
-    private fun inflaterTvToday(view: View) {
-        view.findViewById<RecyclerView>(R.id.recycle_tvshowtoday_main).apply {
-            setHasFixedSize(true)
-            itemAnimator = DefaultItemAnimator()
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        }
-    }
-
     private fun setScrollTvShowToDay(toDay: ListaSeries) {
         recycle_tvshowtoday_main.adapter = TvShowMainAdapter(activity, toDay)
     }
@@ -291,11 +226,11 @@ class MainFragment : BaseFragment() {
     }
 
     private fun setScrollMoviePopular(popular: ListaFilmes) {
-        recycle_movieontheair_main.adapter = MovieMainAdapter(activity, popular)
+        recycle_movie_popular_main.adapter = MovieMainAdapter(activity, popular)
     }
 
-    private fun setScrollMovieOntheAir(airDay: ListaFilmes) {
-        recycle_movie_popular_main.adapter = MovieMainAdapter(activity, airDay)
+    private fun setScrollUpComing(airDay: ListaFilmes) {
+        recycle_upcoming_movie_main.adapter = MovieMainAdapter(activity, airDay)
     }
 
     override fun onDestroy() {

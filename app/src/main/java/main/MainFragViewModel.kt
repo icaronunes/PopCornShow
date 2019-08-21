@@ -1,12 +1,136 @@
 package main
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.util.Log
 import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import applicaton.BaseViewModel
+import domain.Api
+import domain.ListaSeries
+import domain.movie.ListaFilmes
+import kotlinx.coroutines.*
+import utils.UtilsApp
+import java.net.ConnectException
 
-class MainFragViewModel(application: Application) : AndroidViewModel(application), LifecycleObserver {
+class MainFragViewModel(application: Application) : BaseViewModel(application), LifecycleObserver {
 
+    private val _data = MutableLiveData<MainFragModel>()
+    val data: LiveData<MainFragModel>
+        get() = _data
 
+    fun setMoviesUpComing() {
+        if (UtilsApp.isNetWorkAvailable(getApplication())) {
+            getUpComing()
+        } else {
+            noInternet()
+        }
+    }
 
+    private fun getUpComing() {
+        job = GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val upComing = async(Dispatchers.IO) {
+                    Api(app).getUpcoming()
+                }
+                _data.value = MainFragModel.ModelUpComing(upComing.await())
+            } catch (ex: ConnectException) {
+                ops()
+                Log.d(this.javaClass.name, ex.message)
+                job.cancelAndJoin()
+            } catch (ex: java.lang.Exception) {
+                ops()
+                Log.d(this.javaClass.name, ex.message)
+                job.cancelAndJoin()
+            }
+        }
+    }
 
+    fun setMoviesPopular() {
+        if (UtilsApp.isNetWorkAvailable(getApplication())) {
+            getMoviePopular()
+        } else {
+            noInternet()
+        }
+    }
+
+    private fun getMoviePopular() {
+        job = GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val popular = async(Dispatchers.IO) {
+                    Api(app).getMoviePopular()
+                }
+                _data.value = MainFragModel.ModelPopularMovie(popular.await())
+            } catch (ex: ConnectException) {
+                ops()
+                job.cancelAndJoin()
+                Log.d(this.javaClass.name, ex.message)
+            } catch (ex: java.lang.Exception) {
+               ops()
+                Log.d(this.javaClass.name, ex.message)
+                job.cancelAndJoin()
+            }
+        }
+    }
+
+    fun setAiringToday() {
+        if (UtilsApp.isNetWorkAvailable(getApplication())) {
+            getAiringToday()
+        } else {
+            noInternet()
+        }
+    }
+
+    private fun getAiringToday() {
+        job =  GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val airTv = async(Dispatchers.IO) {
+                    Api(app).getAiringToday()
+                }
+                _data.value = MainFragModel.ModelAiringToday(airTv.await())
+            } catch (ex: ConnectException) {
+                ops()
+                job.cancelAndJoin()
+                Log.d(this.javaClass.name, ex.message)
+            } catch (ex: java.lang.Exception) {
+                ops()
+                Log.d(this.javaClass.name, ex.message)
+                job.cancelAndJoin()
+            }
+        }
+    }
+
+    fun getPopularTv() {
+        if (UtilsApp.isNetWorkAvailable(getApplication())) {
+            setPopularTv()
+        } else {
+            noInternet()
+        }
+    }
+
+    private fun setPopularTv() {
+        job = GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val popular = async(Dispatchers.IO) {
+                    Api(app).getPopularTv()
+                }
+                _data.value = MainFragModel.ModelPopularTvshow(popular.await())
+            } catch (ex: ConnectException) {
+                ops()
+                job.cancelAndJoin()
+                Log.d(this.javaClass.name, ex.message)
+            } catch (ex: java.lang.Exception) {
+                ops()
+                Log.d(this.javaClass.name, ex.message)
+                job.cancelAndJoin()
+            }
+        }
+    }
+
+    sealed class MainFragModel {
+        class ModelPopularMovie(val movies: ListaFilmes) : MainFragModel()
+        class ModelUpComing(val movies: ListaFilmes) : MainFragModel()
+        class ModelAiringToday(val tvshows: ListaSeries) : MainFragModel()
+        class ModelPopularTvshow(val tvshows: ListaSeries) : MainFragModel()
+    }
 }
