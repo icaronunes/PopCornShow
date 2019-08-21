@@ -1,9 +1,7 @@
 package main
 
 import android.app.Application
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import applicaton.BaseViewModel
 import domain.Api
 import domain.ListaSeries
@@ -12,7 +10,7 @@ import kotlinx.coroutines.*
 import utils.UtilsApp
 import java.net.ConnectException
 
-class MainFragViewModel(application: Application) : BaseViewModel(application), LifecycleObserver {
+class MainFragViewModel(application: Application) : BaseViewModel(application) {
 
     private val _data = MutableLiveData<MainFragModel>()
     val data: LiveData<MainFragModel>
@@ -67,7 +65,7 @@ class MainFragViewModel(application: Application) : BaseViewModel(application), 
             }
         }
     }
-
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun setAiringToday() {
         if (UtilsApp.isNetWorkAvailable(getApplication())) {
             getAiringToday()

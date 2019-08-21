@@ -9,31 +9,29 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.string.filmes_main
-import domain.Api
 import domain.ListaSeries
 import domain.movie.ListaFilmes
 import kotlinx.android.synthetic.main.filmes_main.*
 import kotlinx.android.synthetic.main.tvshow_main.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Job
 import listafilmes.activity.FilmesActivity
 import listaserie.activity.TvShowsActivity
 import utils.Constantes
-import utils.UtilsApp
-import java.net.ConnectException
 
 
 /**
  * Created by icaro on 23/08/16.
  */
 class MainFragment : BaseFragment() {
+
+
     private var rotina: Job = Job()
     private var tipo: Int = 0
     private lateinit var model: MainFragViewModel

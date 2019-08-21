@@ -53,7 +53,7 @@ class MainActivity : BaseActivity() {
         model.data.observe(this, Observer {
             when(it) {
                 is MainViewModel.MainModel.Data ->  mescla(it.data.first, it.data.second)
-                is MainViewModel.MainModel.isNovidade -> novidades()
+                is MainViewModel.MainModel.isNovidade -> News()
                 is MainViewModel.MainModel.VisibleAnimed -> visibleAnimed(it)
             }
         })
@@ -67,7 +67,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun novidades() {
+    private fun News() {
             val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
             val dialog = AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_popcorn2)
