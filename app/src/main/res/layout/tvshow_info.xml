@@ -514,7 +514,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recycle_tvshow_producao" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:id="@+id/imdb_site"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -533,13 +534,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/adView" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:id="@+id/tmdb_site"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/trade_size_dp_2"
                 android:layout_marginEnd="@dimen/trade_size_dp_8"
-                android:layout_marginRight="@dimen/trade_size_dp_8"
                 android:layout_weight="1"
                 android:text="@string/ver_tmdb"
                 android:textAlignment="center"
