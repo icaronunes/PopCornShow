@@ -8,6 +8,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
@@ -37,7 +38,7 @@ class MainActivity : BaseActivity() {
         setDefaultKeyMode(Activity.DEFAULT_KEYS_SEARCH_LOCAL)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        animacao()
+        animation()
         if (UtilsApp.isNetWorkAvailable(this)) {
             model.getTopoLista()
         } else {
@@ -81,17 +82,16 @@ class MainActivity : BaseActivity() {
             dialog.show()
     }
 
-    private fun animacao() {
-        //TODO atualizar animação
-        val set = AnimatorSet()
-        val animator = ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 0.1f, 1f)
-        animator.duration = 5000
-        val animator2 = ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 1f, 0.1f)
-        animator.duration = 5000
-        val animator3 = ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 0.1f, 1f)
-        animator.duration = 5000
-        set.playSequentially(animator, animator2, animator3)
-        set.start()
+    private fun animation() {
+        AnimatorSet().apply {
+            play(ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 0.1f, 1f)).apply {
+                with(ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 1f, 0.1f))
+                with(ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 0.1f, 1f))
+            }
+            duration = 500
+            interpolator = AccelerateDecelerateInterpolator()
+            start()
+        }
     }
 
     private fun snack() {
