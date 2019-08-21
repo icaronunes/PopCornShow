@@ -28,6 +28,11 @@
             android:layout_marginBottom="@dimen/trade_size_dp_50"
             android:background="@android:color/transparent">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/crews_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
             <TextView
                 android:id="@+id/text_elenco_no_internet"
                 android:layout_width="match_parent"
@@ -36,11 +41,6 @@
                 android:gravity="center"
                 android:text="@string/no_internet"
                 android:visibility="gone" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/crews_recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
 
             <include layout="@layout/include_progress_horizontal" />
 
