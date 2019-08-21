@@ -1,29 +1,29 @@
 package adapter;
 
 import android.content.Context;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.List;
 
-import seguindo.SeguindoActivity;
 import br.com.icaro.filme.R;
 import domain.UserTvshow;
 import fragment.ListaSeguindoFragment;
+import seguindo.SeguindoActivity;
 
 /**
  * Created by icaro on 25/11/16.
  */
 
-public class SeguindoAdapater extends FragmentPagerAdapter {
+public class FollowingAdapater extends FragmentPagerAdapter {
 
     private Context context;
     private List<UserTvshow> userTvshows;
 
-
-    public SeguindoAdapater(SeguindoActivity seguindoActivity,
-                            FragmentManager supportFragmentManager, List<UserTvshow> userTvshows) {
+    public FollowingAdapater(SeguindoActivity seguindoActivity,
+                             FragmentManager supportFragmentManager, List<UserTvshow> userTvshows) {
         super(supportFragmentManager);
         this.context = seguindoActivity;
         this.userTvshows = userTvshows;
@@ -33,29 +33,22 @@ public class SeguindoAdapater extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if (position == 0) {
             return ListaSeguindoFragment.Companion.newInstance(position, userTvshows);
-        }
-
-        if (position == 1) {
+        } else {
             return ListaSeguindoFragment.Companion.newInstance(position, userTvshows);
         }
-
-        return null;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
             return context.getString(R.string.proximos);
-        }
-        if (position == 1) {
+        } else {
             return context.getString(R.string.seguindo);
         }
-        return null;
     }
 
     @Override
     public int getCount() {
         return 2;
     }
-
 }

@@ -63,11 +63,9 @@ class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
 
         private fun putdata(context: Context, item: ListaItemFilme?, title_filmes_lista: TextView){
             when(context.javaClass.simpleName) {
-
                 "FilmesActivity" -> {title_filmes_lista.visibility = View.GONE}
                 else -> {title_filmes_lista.text = if (!item?.releaseDate.isNullOrEmpty() && item?.releaseDate?.length!! > 3) item.releaseDate .subSequence(0,4) else "-"}
             }
         }
-
     }
 }

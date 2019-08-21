@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardView"
@@ -37,4 +38,4 @@
         android:textAlignment="center"
         android:visibility="gone" />
 
-</androidx.recyclerview.widget.RecyclerView>
+</androidx.cardview.widget.CardView>

@@ -22,12 +22,12 @@ import utils.UtilsApp
 class SeguindoRecycleAdapter(private val context: FragmentActivity?, private val userTvshows: MutableList<UserTvshow>?) :
         RecyclerView.Adapter<SeguindoRecycleAdapter.SeguindoViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeguindoRecycleAdapter.SeguindoViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeguindoViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.seguindo_tvshow, parent, false)
         return SeguindoViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: SeguindoRecycleAdapter.SeguindoViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SeguindoViewHolder, position: Int) {
         val (nome, id, _, _, poster, _, _, desatualizada) = userTvshows!![position]
         Picasso.get().load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + poster!!)
                 .into(holder.poster, object : Callback {

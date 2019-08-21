@@ -1,7 +1,7 @@
 package seguindo
 
 import activity.BaseActivity
-import adapter.SeguindoAdapater
+import adapter.FollowingAdapater
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
@@ -105,7 +105,7 @@ class SeguindoActivity : BaseActivity() {
         viewPager?.currentItem = 2
         tabLayout?.setupWithViewPager(viewPager)
         tabLayout?.setSelectedTabIndicatorColor(resources.getColor(R.color.accent))
-        viewPager?.adapter = SeguindoAdapater(this@SeguindoActivity, supportFragmentManager,
+        viewPager?.adapter = FollowingAdapater(this@SeguindoActivity, supportFragmentManager,
                 userTvshowFire)
     }
 

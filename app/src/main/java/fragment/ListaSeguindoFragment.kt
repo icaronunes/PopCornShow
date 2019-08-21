@@ -8,8 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
-import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import domain.Api
 import domain.UserEp
 import domain.UserTvshow
@@ -26,8 +29,6 @@ class ListaSeguindoFragment : Fragment() {
 
     private var userTvshows: MutableList<UserTvshow>? = null
     private var tipo: Int = 0
-    private var recyclerViewMissing: ShimmerRecyclerView? = null
-    private var recyclerViewSeguindo: ShimmerRecyclerView? = null
     private var rotina: Job? = null
     private var adapterProximo: ProximosAdapter? = null
     private var adapterSeguindo: SeguindoRecycleAdapter? = null
@@ -46,7 +47,6 @@ class ListaSeguindoFragment : Fragment() {
 
             0 -> {
                 return getViewMissing(inflater, container)
-
             }
             1 -> {
                 return getViewSeguindo(inflater, container)
@@ -57,7 +57,6 @@ class ListaSeguindoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("Icaro", "onViewCreated")
         when (tipo) {
             0 -> {
                 verificarProximoEp()
@@ -96,7 +95,7 @@ class ListaSeguindoFragment : Fragment() {
                     //Pegar serie atualizada do Server. Enviar para o metodo para atualizar baseado nela
                     val serie = async(Dispatchers.IO) { Api(context = context!!).getTvShowLiteC(it.second.id) }
                     val ep = async(Dispatchers.IO) { Api(context = context!!).getTvShowEpC(it.second.id, it.first.seasonNumber, it.first.episodeNumber) }
-                    val ultima = async {  MutablePair(ep.await(), serie.await()) }.await()
+                    val ultima = async { MutablePair(ep.await(), serie.await()) }.await()
                     launch {
                         adapterProximo?.addAtual(ultima)
                     }
@@ -105,7 +104,6 @@ class ListaSeguindoFragment : Fragment() {
                 Log.d(this.javaClass.name, ex.toString())
             }
         }
-        //(recyclerViewMissing as ShimmerRecyclerView).hideShimmerAdapter()
     }
 
     fun verificarSerieCoroutine() {
@@ -135,24 +133,25 @@ class ListaSeguindoFragment : Fragment() {
         val view = inflater.inflate(R.layout.temporadas, container, false) // Criar novo layout
         view.findViewById<View>(R.id.progressBarTemporadas).visibility = View.GONE
         adapterProximo = ProximosAdapter(requireActivity())
-       // recyclerViewMissing = view.findViewById<ShimmerRecyclerView>(R.id.temporadas_recycle)
-       // (recyclerViewMissing as ShimmerRecyclerView).showShimmerAdapter()
-//        recyclerViewMissing?.setHasFixedSize(true)
-//        recyclerViewMissing?.itemAnimator = DefaultItemAnimator()
-//        recyclerViewMissing?.layoutManager = LinearLayoutManager(context)
-//        recyclerViewMissing?.adapter = adapterProximo
+        view.findViewById<RecyclerView>(R.id.temporadas_recycle).apply {
+            setHasFixedSize(true)
+            itemAnimator = DefaultItemAnimator()
+            layoutManager = LinearLayoutManager(context)
+            adapter = adapterProximo
+        }
         return view
     }
 
     private fun getViewSeguindo(inflater: LayoutInflater, container: ViewGroup?): View {
         val view = inflater.inflate(R.layout.seguindo, container, false) // Criar novo layout
         view.findViewById<View>(R.id.progressBarTemporadas).visibility = View.GONE
-        //recyclerViewSeguindo = view.findViewById<View>(R.id.seguindo_recycle) as RecyclerView
-      //  adapterSeguindo = SeguindoRecycleAdapter(activity, mutableListOf<UserTvshow>())
-//        recyclerViewSeguindo?.setHasFixedSize(true)
-//        recyclerViewSeguindo?.itemAnimator = DefaultItemAnimator()
-//        recyclerViewSeguindo?.layoutManager = GridLayoutManager(context, 4)
-//        recyclerViewSeguindo?.adapter = adapterSeguindo
+        adapterSeguindo = SeguindoRecycleAdapter(activity, mutableListOf())
+        view.findViewById<RecyclerView>(R.id.seguindo_recycle).apply {
+            setHasFixedSize(true)
+            itemAnimator = DefaultItemAnimator()
+            layoutManager = GridLayoutManager(context, 4)
+            adapter = adapterSeguindo
+        }
         return view
     }
 
@@ -166,13 +165,12 @@ class ListaSeguindoFragment : Fragment() {
     companion object {
 
         fun newInstance(tipo: Int, userTvshows: List<UserTvshow>): Fragment {
-            val fragment = ListaSeguindoFragment()
-            val bundle = Bundle()
-            bundle.putSerializable(Constantes.SEGUINDO, userTvshows as Serializable)
-            bundle.putInt(Constantes.ABA, tipo)
-            fragment.arguments = bundle
-
-            return fragment
+            return ListaSeguindoFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable(Constantes.SEGUINDO, userTvshows as Serializable)
+                    putInt(Constantes.ABA, tipo)
+                }
+            }
         }
     }
 }
