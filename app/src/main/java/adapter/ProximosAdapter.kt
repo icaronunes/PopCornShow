@@ -64,7 +64,7 @@ class ProximosAdapter(private val context: FragmentActivity)
                     new.right.lastAirDate
                 }
 
-                isEplancado(new.left.airDate) -> {
+                isEpLancado(new.left.airDate) -> {
                     view.newSeguindo.visibility = View.VISIBLE
                     new.left.airDate
                 }
@@ -102,32 +102,29 @@ class ProximosAdapter(private val context: FragmentActivity)
         }
 
         view.itemView.setOnClickListener { _ ->
-            val intent = Intent(context, TemporadaActivity::class.java)
-            intent.putExtra(Constantes.TVSHOW_ID, old.second.id)
-            intent.putExtra(Constantes.TEMPORADA_ID, old.first.seasonNumber)
-            intent.putExtra(Constantes.TEMPORADA_POSITION, temporadaZero(old?.second?.seasons?.get(0)?.seasonNumber, old.first.seasonNumber)) //old.first.episodeNumber)
-            intent.putExtra(Constantes.NOME, new?.right?.name)
-            intent.putExtra(Constantes.COLOR_TOP, colorTop)
-            context.startActivity(intent)
+            context.startActivity(Intent(context, TemporadaActivity::class.java).apply {
+                putExtra(Constantes.TVSHOW_ID, old.second.id)
+                putExtra(Constantes.TEMPORADA_ID, old.first.seasonNumber)
+                putExtra(Constantes.TEMPORADA_POSITION, temporadaZero(old?.second?.seasons?.get(0)?.seasonNumber, old.first.seasonNumber)) //old.first.episodeNumber)
+                putExtra(Constantes.NOME, new?.right?.name)
+                putExtra(Constantes.COLOR_TOP, colorTop)
+            })
         }
 
         view.poster.setOnClickListener {
-            val intent = Intent(context, TvShowActivity::class.java)
-            intent.putExtra(Constantes.COLOR_TOP, colorTop)
-            intent.putExtra(Constantes.TVSHOW_ID, old.second.id)
-            intent.putExtra(Constantes.NOME_TVSHOW, old.second.nome)
-            context.startActivity(intent)
+            context.startActivity(Intent(context, TvShowActivity::class.java).apply {
+                putExtra(Constantes.COLOR_TOP, colorTop)
+                putExtra(Constantes.TVSHOW_ID, old.second.id)
+                putExtra(Constantes.NOME_TVSHOW, old.second.nome)
+            })
         }
     }
 
     private fun temporadaZero(new: Int?, episodeNumber: Int): Int {
-        if (new == 0) {
-            return episodeNumber
-        }
-        return episodeNumber - 1
+        return if (new == 0)  episodeNumber else episodeNumber - 1
     }
 
-    private fun isEplancado(airDate: String?): Boolean {
+    private fun isEpLancado(airDate: String?): Boolean {
         try {
             val sdf = SimpleDateFormat("yyyy-MM-dd")
             val dateEpNew = sdf.parse(airDate)
@@ -140,7 +137,6 @@ class ProximosAdapter(private val context: FragmentActivity)
     }
 
     private fun totalSemSeasonZero(new: MutablePair<EpisodesItem, Tvshow>?): Int {
-
         return if (new?.right?.seasons?.get(0)?.seasonNumber == 0) {
             new.right?.numberOfEpisodes?.minus(new.right?.seasons!![0]?.episodeCount!!)!!
         } else {
@@ -177,7 +173,6 @@ class ProximosAdapter(private val context: FragmentActivity)
 
     override fun getItemCount(): Int {
         return userTvshows.size
-
     }
 
 
