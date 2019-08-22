@@ -86,7 +86,7 @@
     <string name="person">Perfil</string>
     <string name="person_rated">Gente Popular</string>
     <string name="popularity">Popularidad:</string>
-    <string name="por_tras_camera_filme">Produccion de pelicula</string>
+    <string name="por_tras_camera_filme">Produccion de película</string>
     <string name="por_tras_camera_tvshow">Producción Tvshow</string>
     <string name="poster_filme">Cartel de la película</string>
     <string name="producao">Producción</string>
@@ -122,7 +122,6 @@
     <string name="spoken_languages">Idioma original:</string>
     <string name="subtitle_intro_1">Bienvenido a las palomitas Mostrar.\n\nEcha un vistazo a las últimas noticias</string>
     <string name="subtitle_intro_2">Varios enlaces a sitios de todo el mundo hablando de la película / tvshow</string>
-    <string name="subtitle_intro_3">Nuestro sistema ahora puede realizar un seguimiento de la tvshow película o artista en este catálogo de Netflix</string>
     <string name="subtitle_intro_5">Crea tu login y disfruta</string>
     <string name="tempo_nao_informado">Tiempo N / A</string>
     <string name="temporada">"Temporada: "</string>
@@ -169,4 +168,7 @@
     <string name="proximo_ep">Proximo Ep:</string>
     <string name="ultimo_ep">Último Ep:</string>
     <string name="success">EXITO!</string>
+    <string name="view_more">VER MÁS</string>
+    <string name="score">"NOTA: "</string>
+    <string name="vote">"VOTOS: "</string>
 </resources>

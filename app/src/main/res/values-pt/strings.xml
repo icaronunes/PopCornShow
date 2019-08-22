@@ -97,7 +97,7 @@
     <string name="sair">Sair</string>
     <string name="title_logoff_dialog">Deslogar do PopCorn Show?</string>
     <string name="cancel">Cancelar</string>
-    <string name="text_logoff_dialog">Apos deslogar, não será possivel interagir com o aplicativo.</string>
+    <string name="text_logoff_dialog">Apos deslogar, não será possível interagir com o aplicativo.</string>
 
     <string name="tvshow_add_favorite">Série adicionada aos Favoritos</string>
     <string name="filme_nao_lancado">Filme ainda não foi lançado</string>
@@ -130,7 +130,6 @@
     <string name="title_intro_1">PopCorn Show</string>
     <string name="subtitle_intro_1">Bem-vindo ao PopCorn Show.\n\nConfira as ultimas novidades</string>
     <string name="subtitle_intro_2">Diversos links para sites do mundo todo falando sobre o filme ou tvshow</string>
-    <string name="subtitle_intro_3">Nosso sistema agora pode rastrear se o filme, tvshow ou artista está no catalogo da Netflix</string>
     <string name="title_intro_3">Seguindo</string>
     <string name="seguir">Seguir</string>
     <string name="seguindo">Seguindo</string>
@@ -185,4 +184,7 @@
     <string name="proximo_ep">Próximo Ep:</string>
     <string name="ultimo_ep">Último Ep:</string>
     <string name="success">SUCCESS!</string>
+    <string name="view_more">VER MAIS</string>
+    <string name="score">"NOTA: "</string>
+    <string name="vote">"VOTOS: "</string>
 </resources>

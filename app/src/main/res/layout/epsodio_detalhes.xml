@@ -15,6 +15,8 @@
         android:layout_height="wrap_content"
         android:visibility="visible">
 
+
+
         <ImageView
             android:id="@+id/epsodio_detalhes_img"
             android:layout_width="match_parent"
@@ -27,35 +29,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/layout_diretor_nome_visto"
-            android:layout_width="18dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="@+id/epsodio_detalhes_img"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/epsodio_detalhes_img"
-            app:layout_constraintTop_toTopOf="@+id/epsodio_detalhes_img"
-            tools:background="@color/green" />
-
-        <include
-            android:id="@+id/layout_creaters"
-            layout="@layout/layout_diretor"
+        <LinearLayout
+            android:id="@+id/wraper_direct"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/epsodio_detalhes_img" />
+            app:layout_constraintTop_toBottomOf="@+id/epsodio_detalhes_img">
 
-        <View
-            android:id="@+id/divisor_one"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginBottom="2dp"
-            android:background="@android:color/background_dark"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="@+id/layout_creaters" />
+            <include layout="@layout/layout_diretor" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/epsodio_detalhes_resumo"
@@ -68,18 +52,18 @@
             app:layout_constraintTop_toBottomOf="@+id/divisor_one"
             tools:text="Our API is available for everyone to use. A TMDb user account is required to request an API key. Professional users are approved on a per application basis." />
 
-
         <TextView
             android:id="@+id/label_nota"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_weight="0.5"
             android:gravity="center"
             android:textAllCaps="false"
+            android:text="@string/score"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="4dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/epsodio_detalhes_resumo"
-            tools:text="NOTA:" />
+            app:layout_constraintTop_toBottomOf="@+id/epsodio_detalhes_resumo" />
 
         <TextView
             android:id="@+id/epsodio_detalhes_nota"
@@ -100,9 +84,10 @@
             android:layout_weight="0.5"
             android:gravity="center"
             android:textAllCaps="false"
+            android:text="@string/vote"
+            android:layout_marginEnd="4dp"
             app:layout_constraintEnd_toStartOf="@+id/epsodio_detalhes_votos"
-            app:layout_constraintTop_toTopOf="@+id/label_nota"
-            tools:text="VOTOS: " />
+            app:layout_constraintTop_toTopOf="@+id/label_nota" />
 
         <TextView
             android:id="@+id/epsodio_detalhes_votos"
@@ -110,12 +95,36 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="start"
+            android:layout_marginEnd="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/label_votes"
             tools:text="21" />
 
+        <View
+            android:id="@+id/layout_diretor_nome_visto"
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/epsodio_detalhes_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/epsodio_detalhes_img"
+            app:layout_constraintTop_toTopOf="@+id/epsodio_detalhes_img"
+            tools:background="@color/green" />
 
-        <LinearLayout
+
+        <View
+            android:id="@+id/divisor_one"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="2dp"
+            android:background="@android:color/background_dark"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/wraper_direct" />
+
+
+        <View
             android:id="@+id/divisor_two"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -125,10 +134,9 @@
             android:layout_marginBottom="2dp"
             android:background="@android:color/background_dark"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/label_votes"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_nota" />
 
         <TextView
             android:id="@+id/epsodio_detalhes_nota_user"
@@ -142,48 +150,33 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divisor_two"
+            tools:text="78"
+            tools:visibility="visible" />
+
+
+        <RatingBar
+            android:id="@+id/epsodio_detalhes_progress"
+            style="@style/CustomRatingBar"
+            android:layout_width="166dp"
+            android:layout_height="0dp"
+            android:numStars="5"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/epsodio_detalhes_ler_mais"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divisor_two" />
 
-        <RelativeLayout
-            app:layout_constraintTop_toBottomOf="@+id/epsodio_detalhes_nota_user"
-            android:layout_width="match_parent"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/epsodio_detalhes_ler_mais"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:layout_alignParentTop="true"
+            android:textColor="@color/primary_dark"
+            android:text="@string/view_more"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/epsodio_detalhes_progress"
+            app:layout_constraintTop_toTopOf="@+id/epsodio_detalhes_progress" />
 
-            <LinearLayout
-                android:id="@+id/epsodio_detalhes_linear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal">
-
-                <RatingBar
-                    android:id="@+id/epsodio_detalhes_progress"
-                    style="@style/CustomRatingBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:numStars="5" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/epsodio_detalhes_ler_mais"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_gravity="right|end"
-                android:layout_marginStart="18dp"
-                android:layout_marginLeft="18dp"
-                android:layout_toEndOf="@+id/epsodio_detalhes_linear"
-                android:layout_toRightOf="@+id/epsodio_detalhes_linear"
-                android:background="@drawable/button_nao_visto"
-                android:text="VER MAIS" />
-
-        </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

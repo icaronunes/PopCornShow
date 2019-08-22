@@ -40,7 +40,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         val ep = tvSeason.episodes?.get(position)
         val epUser = seasons?.userEps?.get(position)
 
-        holder.linear.visibility = if (seguindo) {
+        holder.progressDetalhe.visibility = if (seguindo) {
             View.VISIBLE
         } else {
             View.GONE
@@ -151,7 +151,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
             this.temporadaOnClickListener.onClickTemporada(it, position)
         }
 
-        holder.linear.setOnClickListener {
+        holder.progressDetalhe.setOnClickListener {
             this.temporadaOnClickListener.onClickTemporadaNota(holder.progressDetalhe, ep, position, epUser)
         }
 
@@ -220,7 +220,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         val diretorImg = itemView.layout_diretor_nome_diretor_img
         val nameDiretor = itemView.layout_diretor_nome_diretor
         val nomeEscritor = itemView.layout_diretor_nome_escritor
-        val linear = itemView.epsodio_detalhes_linear
+        //val linear = itemView.RatingBar
 
     }
 }

@@ -134,7 +134,6 @@
     <string name="subtitle_intro_1">Welcome to the PopCorn Show.\n\nCheck out the latest news</string>
     <string name="subtitle_intro_2">Several links to sites around the world talking about the movie / tvshow</string>
     <string name="title_intro_3">Following</string>
-    <string name="subtitle_intro_3">Our system can now track whether the movie, tvshow or artist is in the Netflix catalog</string>
     <string name="reset_password">Forgot Password?</string>
     <string name="bt_signin">Sign In</string>
     <string name="anonymous">Anonymous</string>
@@ -196,4 +195,7 @@
     <string name="ultimo_ep">Last Ep:</string>
     <string name="show" translatable="false">Show</string>
     <string name="success">SUCESSO!</string>
+    <string name="view_more">View More</string>
+    <string name="score">SCORE: </string>
+    <string name="vote">VOTES: </string>
 </resources>
