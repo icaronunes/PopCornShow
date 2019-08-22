@@ -34,7 +34,6 @@ public class EpsodioActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_epsodios);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager_epsodio);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout_epsodio);
@@ -65,7 +64,6 @@ public class EpsodioActivity extends BaseActivity {
             tvSeason = (TvSeasons) getIntent().getSerializableExtra(Constantes.INSTANCE.getTVSEASONS());
             nome_temporada = getIntent().getStringExtra(Constantes.INSTANCE.getNOME());
             temporada_position = getIntent().getIntExtra(Constantes.INSTANCE.getTEMPORADA_POSITION(), 0);
-            //colocar no Signal
             seasons = (UserSeasons) getIntent().getSerializableExtra(Constantes.INSTANCE.getUSER());
             seguindo = getIntent().getBooleanExtra(Constantes.INSTANCE.getSEGUINDO(), false);
             getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada );

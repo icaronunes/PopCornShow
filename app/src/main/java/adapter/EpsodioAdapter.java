@@ -49,9 +49,9 @@ public class EpsodioAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
 
         if (tvSeason.getEpisodes().get(position).getEpisodeNumber() <= 9) {
-            return "E0" + String.valueOf(tvSeason.getEpisodes().get(position).getEpisodeNumber());
+            return "E0" + tvSeason.getEpisodes().get(position).getEpisodeNumber();
         } else {
-            return "E" + String.valueOf(tvSeason.getEpisodes().get(position).getEpisodeNumber());
+            return "E" + tvSeason.getEpisodes().get(position).getEpisodeNumber();
         }
     }
 }

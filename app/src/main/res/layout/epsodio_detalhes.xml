@@ -156,7 +156,6 @@
             tools:text="78"
             tools:visibility="visible" />
 
-
         <RatingBar
             android:id="@+id/epsodio_detalhes_progress"
             style="@style/CustomRatingBar"

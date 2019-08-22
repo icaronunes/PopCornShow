@@ -1,6 +1,6 @@
 package main
 
-import BaseFragment
+import applicaton.BaseFragment
 import adapter.MovieMainAdapter
 import adapter.TvShowMainAdapter
 import android.content.Intent

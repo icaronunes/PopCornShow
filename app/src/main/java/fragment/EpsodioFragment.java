@@ -5,11 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.material.snackbar.Snackbar;
@@ -43,6 +42,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import applicaton.BaseFragment;
 import br.com.icaro.filme.R;
 import domain.EpisodesItem;
 import domain.FilmeService;
@@ -60,9 +60,7 @@ import static java.lang.String.valueOf;
 /**
  * Created by icaro on 27/08/16.
  */
-public class EpsodioFragment extends Fragment {
-
-    final String TAG = this.getClass().getName();
+public class EpsodioFragment extends BaseFragment {
 
     private int tvshow_id, color, position, temporada_position;
     private Credits credits;
@@ -91,7 +89,6 @@ public class EpsodioFragment extends Fragment {
 
         EpsodioFragment fragment = new EpsodioFragment();
         Bundle bundle = new Bundle();
-       // Log.d("TvShowFragment", "Series " + tvEpisode.getName());
         bundle.putSerializable(Constantes.INSTANCE.getEPSODIO(), tvEpisode);
         bundle.putInt(Constantes.INSTANCE.getTVSHOW_ID(), tvshow_id);
         bundle.putInt(Constantes.INSTANCE.getCOLOR_TOP(), color);
@@ -172,13 +169,8 @@ public class EpsodioFragment extends Fragment {
         ep_rating_button = (Button) view.findViewById(R.id.ep_rating_button);
         ep_rating_button.setTextColor(color);
 
-//        AdView adview = (AdView) view.findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder()
-//                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-//                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-//                .build();
-//        adview.loadAd(adRequest);
 
+        setAdMob(view.findViewById(R.id.adView));
         return view;
     }
 
@@ -548,7 +540,6 @@ public class EpsodioFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-          //  Log.d(TAG, "" + tvshow_id + " " + episode.getSeasonNumber() + " " + episode.getEpisodeNumber());
             try {
                 credits = FilmeService.getTmdbTvEpisodes()
                         .getCredits(tvshow_id, episode.getSeasonNumber(), episode.getEpisodeNumber(), "en");
