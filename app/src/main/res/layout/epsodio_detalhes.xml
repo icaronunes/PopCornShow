@@ -71,6 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="start"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/label_nota"
             app:layout_constraintTop_toTopOf="@+id/label_nota"
             tools:text="9.0" />
@@ -95,6 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="start"
+            android:textStyle="bold"
             android:layout_marginEnd="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/label_votes"
@@ -104,12 +106,12 @@
             android:id="@+id/layout_diretor_nome_visto"
             android:layout_width="20dp"
             android:layout_height="0dp"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@+id/epsodio_detalhes_img"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/epsodio_detalhes_img"
             app:layout_constraintTop_toTopOf="@+id/epsodio_detalhes_img"
             tools:background="@color/green" />
-
 
         <View
             android:id="@+id/divisor_one"
@@ -158,10 +160,10 @@
         <RatingBar
             android:id="@+id/epsodio_detalhes_progress"
             style="@style/CustomRatingBar"
-            android:layout_width="166dp"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:numStars="5"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="22dp"
             app:layout_constraintEnd_toStartOf="@+id/epsodio_detalhes_ler_mais"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divisor_two" />
@@ -173,10 +175,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:textColor="@color/primary_dark"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginTop="22dp"
             android:text="@string/view_more"
+            app:layout_constraintBottom_toBottomOf="@+id/epsodio_detalhes_progress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/epsodio_detalhes_progress"
-            app:layout_constraintTop_toTopOf="@+id/epsodio_detalhes_progress" />
+            app:layout_constraintTop_toBottomOf="@+id/divisor_two" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

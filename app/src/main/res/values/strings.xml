@@ -198,4 +198,5 @@
     <string name="view_more">View More</string>
     <string name="score">SCORE: </string>
     <string name="vote">VOTES: </string>
+    <string name="directo_label">Director</string>
 </resources>

@@ -9,124 +9,114 @@
     app:cardCornerRadius="3dp"
     app:cardUseCompatPadding="true">
 
-    <LinearLayout
-        android:id="@+id/item_epsodio_linear"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/item_epsodio_titulo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:elegantTextHeight="true"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:paddingStart="14dp"
+            android:paddingEnd="@dimen/trade_size_dp_14"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/item_epsodio_numero"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="O inverno está chegando O inverno está chegando O inverno está chegando O inverno está chegando" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/item_epsodio_titulo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text=" O inverno está chegando"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/item_epsodio_numero"
-                    android:layout_width="15dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="3dp"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginRight="3dp"
-                    android:layout_marginStart="3dp"
-                    android:gravity="center"
-                    android:text="3 "
-                    android:textStyle="bold|italic" />
-
-            </LinearLayout>
+        <TextView
+            android:id="@+id/item_epsodio_numero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:gravity="center"
+            android:textStyle="bold|italic"
+            app:layout_constraintEnd_toStartOf="@+id/item_epsodio_visto"
+            app:layout_constraintTop_toTopOf="@+id/item_epsodio_visto"
+            tools:text="1004" />
 
 
-            <TextView
-                android:id="@+id/item_epsodio_titulo_resumo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:ellipsize="end"
-                android:maxLines="3"
-                android:textAlignment="center"
-                tools:text="/search - Text based search is the most common way.
+        <TextView
+            android:id="@+id/item_epsodio_titulo_resumo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/item_epsodio_visto"
+            app:layout_constraintTop_toBottomOf="@+id/item_epsodio_titulo"
+            tools:text="/search - Text based search is the most common way.
                 You provide a query string and we provide the closest match. Searching by text takes into account all original, translated, alternative names and titles." />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+        <TextView
+            android:id="@+id/label_nota"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/nota"
+            android:textAllCaps="true"
+            android:layout_marginStart="6dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_epsodio_titulo_resumo" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/nota"
-                        android:textAllCaps="false" />
-
-                    <TextView
-                        android:id="@+id/item_epsodio_nota"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="9.0" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="VOTOS: "
-                        android:textAllCaps="false" />
-
-                    <TextView
-                        android:id="@+id/item_epsodio_votos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="21" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+        <TextView
+            android:id="@+id/item_epsodio_nota"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/label_nota"
+            app:layout_constraintTop_toTopOf="@+id/label_nota"
+            tools:text="9.0" />
 
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/label_votes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/vote"
+            android:textAllCaps="true"
+            app:layout_constraintEnd_toStartOf="@+id/item_epsodio_votos"
+            app:layout_constraintTop_toTopOf="@+id/item_epsodio_nota" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/item_epsodio_votos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/item_epsodio_visto"
+            app:layout_constraintTop_toTopOf="@+id/label_nota"
+            tools:text="2122" />
+
+        <View
             android:id="@+id/item_epsodio_visto"
             android:layout_width="20dp"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:orientation="vertical"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:background="@color/primary" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.cardview.widget.CardView>

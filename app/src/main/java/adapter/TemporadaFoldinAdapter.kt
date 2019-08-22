@@ -69,10 +69,12 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         } else {
             holder.vistoDetelhe.visibility = View.GONE
             holder.verMais.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+            holder.visto.visibility = View.GONE
         }
 
         holder.resumo.text = ep?.overview
         holder.votos.text = ep?.voteCount.toString()
+        holder.detalhesVotos.text = ep?.voteCount.toString()
 
         Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 4)) + ep?.stillPath)
@@ -84,7 +86,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
             holder.detalhesNota.text = ep.voteAverage.toString().slice(0..2)
             holder.nota.text = ep.voteAverage.toString().slice(0..2)
         }
-        holder.detalhesVotos.text = ep.voteCount.toString()
+
         ep.voteAverage.let {
             holder.detalhesNota.text = ep.voteAverage.toString()
         }
@@ -104,32 +106,20 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
             }
         }
 
-        var diretorName: String? = "null"
-        var escritorName: String? = "null"
+        val diretor: CrewItem? = ep.crew?.firstOrNull { it?.job == "Director" }
+        val diretorName: String? = diretor?.name
+        Picasso.get()
+                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 2)) + diretor?.profilePath)
+                .error(R.drawable.person)
+                .into(holder.diretorImg)
 
-        val diretor: CrewItem? =  ep.crew?.firstOrNull {
-            it?.job == "Director"
-        }
 
-        if (diretor != null) {
-            diretorName = diretor.name
-            Picasso.get()
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 2)) + diretor.profilePath)
-                    .error(R.drawable.person)
-                    .into(holder.diretorImg)
-        }
-
-        val escritor: CrewItem? = ep.crew?.firstOrNull {
-            it?.job == "Writer"
-        }
-
-        if (escritor != null) {
-            escritorName = escritor.name
-            Picasso.get()
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 2)) + escritor.profilePath)
-                    .error(R.drawable.person)
-                    .into(holder.escritorImg)
-        }
+        val escritor: CrewItem? = ep.crew?.firstOrNull { it?.job == "Writer" }
+        val escritorName: String? = escritor?.name
+        Picasso.get()
+                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 2)) + escritor?.profilePath)
+                .error(R.drawable.person)
+                .into(holder.escritorImg)
 
         holder.nameDiretor.text = if (diretorName.equals("null", true)) {
             " ? "
@@ -163,7 +153,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
                 return seasons.userEps!!.size!!
             }
         } else {
-            if (tvSeason.episodes?.isNotEmpty()!!){
+            if (tvSeason.episodes?.isNotEmpty()!!) {
                 return tvSeason.episodes.size
             }
         }
@@ -186,7 +176,6 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
     }
 
     fun notificarMudanca(ep: UserEp?, position: Int) {
-
         seasons?.userEps?.set(position, ep!!)
         notifyItemChanged(position)
 

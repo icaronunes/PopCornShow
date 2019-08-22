@@ -187,4 +187,5 @@
     <string name="view_more">VER MAIS</string>
     <string name="score">"NOTA: "</string>
     <string name="vote">"VOTOS: "</string>
+    <string name="directo_label">Diretor</string>
 </resources>

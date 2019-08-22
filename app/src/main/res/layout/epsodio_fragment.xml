@@ -6,9 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:id="@+id/scroll_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -152,7 +150,7 @@
                 android:padding="@dimen/trade_size_dp_3"
                 android:text="@string/classificar" />
 
-            <android.support.v7.widget.AppCompatRatingBar
+            <RatingBar
                 android:id="@+id/ep_rating"
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
@@ -160,6 +158,7 @@
                 android:layout_gravity="center"
                 android:numStars="10"
                 android:rating="7"
+                tools:visibility="visible"
                 android:visibility="gone" />
 
             <TextView
@@ -276,7 +275,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="bottom"
-        android:visibility="gone"
+        android:visibility="visible"
         app:adSize="SMART_BANNER"
         app:adUnitId="@string/admob" />
 

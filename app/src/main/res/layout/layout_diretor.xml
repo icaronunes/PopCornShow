@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/trade_size_dp_3"
     android:layout_marginTop="@dimen/trade_size_dp_3"
+    android:layout_marginBottom="@dimen/trade_size_dp_3"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -18,8 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:gravity="center"
-            android:text="Diretor"
-            android:textStyle="bold" />
+            android:text="@string/director"
+            android:textStyle="italic" />
 
         <ImageView
             android:id="@+id/layout_diretor_nome_diretor_img"
@@ -47,8 +47,8 @@
             android:layout_weight="1"
             android:fontFamily="monospace"
             android:gravity="start"
-            tools:text="J.J. Abram"
-            android:textStyle="italic" />
+            android:textStyle="italic|bold"
+            tools:text="J.J. Abram" />
 
         <TextView
             android:id="@+id/layout_diretor_nome_escritor"
@@ -59,8 +59,8 @@
             android:layout_weight="1"
             android:fontFamily="monospace"
             android:gravity="bottom|end"
-            tools:text="J.J. Abram"
-            android:textStyle="italic" />
+            android:textStyle="italic|bold"
+            tools:text="J.J. Abram" />
 
     </LinearLayout>
 
@@ -83,9 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:gravity="center"
-            android:text="@string/director"
-            android:textStyle="bold" />
-
+            android:text="@string/writer"
+            android:textStyle="italic" />
     </LinearLayout>
-
 </LinearLayout>
