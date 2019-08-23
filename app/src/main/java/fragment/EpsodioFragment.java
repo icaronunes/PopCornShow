@@ -170,7 +170,7 @@ public class EpsodioFragment extends BaseFragment {
         ep_rating_button.setTextColor(color);
 
 
-        setAdMob(view.findViewById(R.id.adView));
+       // setAdMob(view.findViewById(R.id.adView));
         return view;
     }
 
@@ -314,7 +314,7 @@ public class EpsodioFragment extends BaseFragment {
 
                     final Dialog alertDialog = new Dialog(getContext());
                     alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    alertDialog.setContentView(R.layout.adialog_custom_rated);
+                    alertDialog.setContentView(R.layout.dialog_custom_rated);
 
                     Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
                     Button nao_visto = (Button) alertDialog.findViewById(R.id.cancel_rated);

@@ -141,7 +141,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
             this.temporadaOnClickListener.onClickTemporada(it, position)
         }
 
-        holder.progressDetalhe.setOnClickListener {
+        holder.wrapperRating.setOnClickListener {
             this.temporadaOnClickListener.onClickTemporadaNota(holder.progressDetalhe, ep, position, epUser)
         }
 
@@ -209,7 +209,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         val diretorImg = itemView.layout_diretor_nome_diretor_img
         val nameDiretor = itemView.layout_diretor_nome_diretor
         val nomeEscritor = itemView.layout_diretor_nome_escritor
-        //val linear = itemView.RatingBar
+        val wrapperRating = itemView.wrapper_rating
 
     }
 }

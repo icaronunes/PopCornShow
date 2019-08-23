@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -19,9 +18,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -36,7 +32,6 @@ import domain.FilmeDB;
 import domain.TvshowDB;
 import filme.activity.FilmeActivity;
 import tvshow.activity.TvShowActivity;
-import tvshow.fragment.TvShowFragment;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -117,7 +112,7 @@ public class ListaRatedFragment extends Fragment {
 
                 final Dialog alertDialog = new Dialog(getContext());
                 alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                alertDialog.setContentView(R.layout.adialog_custom_rated);
+                alertDialog.setContentView(R.layout.dialog_custom_rated);
 
                 Button ok = alertDialog.findViewById(R.id.ok_rated);
                 Button no = alertDialog.findViewById(R.id.cancel_rated);
@@ -190,7 +185,7 @@ public class ListaRatedFragment extends Fragment {
 
                 final Dialog alertDialog = new Dialog(getActivity());
                 alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                alertDialog.setContentView(R.layout.adialog_custom_rated);
+                alertDialog.setContentView(R.layout.dialog_custom_rated);
 
                 Button ok = alertDialog.findViewById(R.id.ok_rated);
                 Button no = alertDialog.findViewById(R.id.cancel_rated);

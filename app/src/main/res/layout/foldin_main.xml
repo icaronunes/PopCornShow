@@ -11,7 +11,7 @@
         android:clipChildren="true"
         android:clipToPadding="false"
         folding-cell:animationDuration="1000"
-        folding-cell:backSideColor="@color/accent2"
+        folding-cell:backSideColor="@color/red"
         folding-cell:cameraHeight="30">
 
         ​<include layout="@layout/epsodio_detalhes" />

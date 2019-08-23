@@ -335,7 +335,7 @@ class FilmeActivity : BaseActivity() {
             } else {
                 val alertDialog = Dialog(this@FilmeActivity)
                 alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                alertDialog.setContentView(R.layout.adialog_custom_rated)
+                alertDialog.setContentView(R.layout.dialog_custom_rated)
 
                 val ok = alertDialog.findViewById<View>(R.id.ok_rated) as Button
                 val no = alertDialog.findViewById<View>(R.id.cancel_rated) as Button

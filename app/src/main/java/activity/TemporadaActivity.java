@@ -403,7 +403,7 @@ public class TemporadaActivity extends BaseActivity {
 
                     final Dialog alertDialog = new Dialog(TemporadaActivity.this);
                     alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    alertDialog.setContentView(R.layout.adialog_custom_rated);
+                    alertDialog.setContentView(R.layout.dialog_custom_rated);
 
                     Button ok = (Button) alertDialog.findViewById(R.id.ok_rated);
                     Button nao_visto = (Button) alertDialog.findViewById(R.id.cancel_rated);
