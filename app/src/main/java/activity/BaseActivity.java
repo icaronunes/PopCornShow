@@ -136,15 +136,6 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
 		}
 	}
 
-
-	protected void setAdMob(AdView adView) {
-		adView.loadAd(new AdRequest.Builder()
-				.addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-				.addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-				.build());
-	}
-
-
 	@SuppressWarnings("deprecation")
 	protected void setUpToolBar() {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -160,6 +151,13 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
 									  //.addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
 								.build();
 		adview.loadAd(adRequest);
+	}
+
+	protected void setAdMob(AdView adView) {
+		adView.loadAd(new AdRequest.Builder()
+				.addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+				.addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+				.build());
 	}
 
 	 public void hideSoftKeyboard() {

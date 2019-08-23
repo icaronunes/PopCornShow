@@ -67,8 +67,6 @@ import static java.lang.String.valueOf;
 @Keep
 public class TemporadaActivity extends BaseActivity {
 
-    private final String TAG = TemporadaActivity.class.getName();
-
     private int temporada_id, temporada_position;
     private String nome_temporada;
     private int serie_id, color;
@@ -86,7 +84,6 @@ public class TemporadaActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.temporada_layout);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getExtras();
@@ -96,20 +93,12 @@ public class TemporadaActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        AdView adview = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-                .build();
-        adview.loadAd(adRequest);
-
         mAuth = FirebaseAuth.getInstance();
         myRef = FirebaseDatabase.getInstance().getReference("users");
         subscription = new CompositeSubscription();
 
 
         if (UtilsApp.isNetWorkAvailable(this)) {
-            //new TMDVAsync().execute();
             getDados();
         } else {
             snack();
@@ -124,7 +113,6 @@ public class TemporadaActivity extends BaseActivity {
                     @Override
                     public void onClick(View view) {
                         if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
-                            //new TMDVAsync().execute();
                             getDados();
                         } else {
                             snack();
@@ -161,7 +149,6 @@ public class TemporadaActivity extends BaseActivity {
 
                 if (seasons != null) {
                     if (seasons.getUserEps().get(position).isAssistido()) {
-                        //  Log.d(TAG, "FALSE");
                         String id = String.valueOf(serie_id);
 
                         Toast.makeText(TemporadaActivity.this, R.string.marcado_nao_assistido, Toast.LENGTH_SHORT).show();
@@ -365,14 +352,10 @@ public class TemporadaActivity extends BaseActivity {
                 Intent intent = new Intent(TemporadaActivity.this, EpsodioActivity.class);
 
                 intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), serie_id);
-                intent.putExtra(Constantes.INSTANCE.getTVSEASON_ID(), tvSeason.getId());
-                intent.putExtra(Constantes.INSTANCE.getEPSODIO_ID(), tvSeason.getEpisodes().get(position).getId());
                 intent.putExtra(Constantes.INSTANCE.getPOSICAO(), position);
                 intent.putExtra(Constantes.INSTANCE.getTEMPORADA_POSITION(), temporada_position);
                 intent.putExtra(Constantes.INSTANCE.getTVSEASONS(), tvSeason);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
-                intent.putExtra(Constantes.INSTANCE.getNOME(), nome_temporada);
-                intent.putExtra(Constantes.INSTANCE.getUSER(), seasons);
                 intent.putExtra(Constantes.INSTANCE.getSEGUINDO(), seguindo);
                 startActivity(intent);
 
@@ -703,99 +686,5 @@ public class TemporadaActivity extends BaseActivity {
                     }
                 });
 
-    }
-
-
-    private class TMDVAsync extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            boolean idioma_padrao = false;
-            try {
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(TemporadaActivity.this);
-                idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-            } catch (Exception e) {
-                Crashlytics.logException(e);
-            }
-            try {
-                if (idioma_padrao) {
-                  //  tvSeason = FilmeService.getTmdbTvSeasons()
-                 //           .getSeason(serie_id, temporada_id, getLocale(), TmdbTvSeasons.SeasonMethod.credits);
-
-                    return null;
-                } else {
-                //    tvSeason = FilmeService.getTmdbTvSeasons()
-                //            .getSeason(serie_id, temporada_id, "en", TmdbTvSeasons.SeasonMethod.credits);
-                    return null;
-                }
-            } catch (Exception e) {
-
-                Crashlytics.logException(e);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(TemporadaActivity.this, R.string.ops, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            if (tvSeason == null) {
-                return;
-            }
-
-            getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada);
-
-            if (mAuth.getCurrentUser() != null) {
-                myRef.child(mAuth.getCurrentUser().getUid())
-                        .child("seguindo")
-                        .child(String.valueOf(serie_id))
-                        .child("seasons")
-                        .child(String.valueOf(temporada_position))
-                        .addListenerForSingleValueEvent(
-                                new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        // Get user value
-                                        if (dataSnapshot.exists()) {
-                                            seguindo = true;
-                                            //  Log.w(TAG, "seguindo - true");
-                                            seasons = dataSnapshot.getValue(UserSeasons.class);
-                                            recyclerView
-                                                    .setAdapter(new TemporadaFoldinAdapter(TemporadaActivity.this, tvSeason, seasons, seguindo, onClickListener()));
-//                                                    .setAdapter(new TemporadaAdapter(TemporadaActivity.this,
-//                                                            tvSeason, seasons, seguindo,
-//                                                            onClickListener()));
-                                        } else {
-                                            //   Log.d(TAG, "onDataChange " + "Não seguindo.");
-                                            seguindo = false;
-                                            recyclerView
-                                                    .setAdapter(new TemporadaFoldinAdapter(TemporadaActivity.this, tvSeason, null, seguindo, onClickListener()));
-                                            //.setAdapter(new TemporadaAdapter(TemporadaActivity.this,
-                                            //        tvSeason, seasons, seguindo,
-                                            //        onClickListener()));
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-                                        //  Log.w(TAG, "getUser:onCancelled", databaseError.toException());
-                                    }
-                                });
-                setListener();
-            } else {
-                recyclerView
-                        .setAdapter(new TemporadaFoldinAdapter(TemporadaActivity.this,
-                                tvSeason, seasons, seguindo,
-                                onClickListener()));
-            }
-
-        }
     }
 }

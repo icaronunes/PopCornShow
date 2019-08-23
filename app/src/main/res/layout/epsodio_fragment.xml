@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,10 +9,12 @@
     <ScrollView
         android:id="@+id/scroll_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/adView"
+        app:layout_constraintTop_toTopOf="parent">
 
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/epsodio_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,132 +25,117 @@
                 android:id="@+id/ep_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/trade_size_dp_3"
                 android:layout_marginStart="@dimen/trade_size_dp_3"
-                android:layout_marginLeft="@dimen/trade_size_dp_3"
-                android:layout_marginRight="@dimen/trade_size_dp_3"
+                android:layout_marginEnd="@dimen/trade_size_dp_3"
                 android:gravity="center"
+                android:padding="4dp"
                 android:textSize="@dimen/trade_txt_size_sp_24"
-                android:textStyle="normal|italic" />
+                android:textStyle="normal|italic"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/divisor_one"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/trade_size_dp_2"
+                android:background="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ep_title" />
 
             <TextView
-                android:id="@+id/ep_tvshow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/trade_size_dp_3"
-                android:layout_marginStart="@dimen/trade_size_dp_3"
-                android:layout_marginLeft="@dimen/trade_size_dp_3"
-                android:layout_marginRight="@dimen/trade_size_dp_3"
-                android:gravity="center"
-                android:textSize="@dimen/trade_txt_size_sp_12" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/trade_size_dp_1"
-                android:background="@color/black" />
-
-            <LinearLayout
-                android:id="@+id/linear_director"
-                android:layout_width="match_parent"
+                android:id="@+id/director_label"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/trade_size_dp_30"
+                android:layout_gravity="center"
                 android:background="@color/black_transparente"
-                android:orientation="horizontal">
+                android:text="@string/director"
+                android:textStyle="normal|bold"
+                app:layout_constraintEnd_toStartOf="@+id/ep_director"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divisor_one" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/trade_size_dp_10"
-                    android:layout_marginStart="@dimen/trade_size_dp_10"
-                    android:layout_weight="1"
-                    android:text="@string/director"
-                    android:textStyle="normal|bold" />
-
-                <TextView
-                    android:id="@+id/ep_director"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/trade_size_dp_10"
-                    android:layout_marginRight="@dimen/trade_size_dp_10"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:textColor="@color/primary"
-                    android:textStyle="normal|italic" />
-
-            </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/linear_meio_ep_cima"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/accent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/trade_size_dp_1"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/trade_size_dp_10"
-                    android:layout_marginLeft="@dimen/trade_size_dp_10"
-                    android:layout_marginRight="@dimen/trade_size_dp_10"
-                    android:layout_marginStart="@dimen/trade_size_dp_10"
-                    android:background="@color/black"
-                    android:orientation="horizontal" />
-            </FrameLayout>
-
-            <LinearLayout
-                android:id="@+id/linear_air_date"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/ep_director"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/trade_size_dp_30"
+                android:layout_gravity="center"
                 android:background="@color/black_transparente"
-                android:orientation="horizontal">
+                android:textColor="@color/primary"
+                android:textStyle="normal|italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/director_label"
+                app:layout_constraintTop_toTopOf="@+id/director_label" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/trade_size_dp_10"
-                    android:layout_marginStart="@dimen/trade_size_dp_10"
-                    android:layout_weight="1"
-                    android:text="@string/air_date"
-                    android:textStyle="normal|bold" />
-
-                <TextView
-                    android:id="@+id/air_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/trade_size_dp_10"
-                    android:layout_marginRight="@dimen/trade_size_dp_10"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:textStyle="normal|italic" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <View
+                android:id="@+id/divisor_two"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/trade_size_dp_1"
                 android:layout_gravity="center"
-                android:background="@color/black" />
+                android:background="@color/black"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/director_label" />
+
+            <TextView
+                android:id="@+id/writrer_label"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@color/black_transparente"
+                android:text="@string/writer"
+                android:textStyle="normal|bold"
+                app:layout_constraintEnd_toEndOf="@+id/ep_write"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divisor_two" />
+
+            <TextView
+                android:id="@+id/ep_write"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@color/black_transparente"
+                android:gravity="right"
+                android:textColor="@color/primary"
+                android:textStyle="normal|italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/writrer_label"
+                app:layout_constraintTop_toTopOf="@+id/writrer_label"
+                tools:ignore="RtlHardcoded" />
+
+            <View
+                android:id="@+id/divisor_three"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/trade_size_dp_1"
+                android:layout_gravity="center"
+                android:background="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/writrer_label" />
+
 
             <ImageView
                 android:id="@+id/ep_image"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/trade_size_dp_4"
-                android:minHeight="@dimen/trade_size_dp_157"
-                android:minWidth="@dimen/trade_size_dp_250" />
+                android:adjustViewBounds="true"
+                android:src="@drawable/person"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divisor_three" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/ep_rating_button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/trade_size_dp_30"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/trade_size_dp_4"
                 android:layout_gravity="center"
-                android:background="@drawable/button_nao_visto"
-                android:padding="@dimen/trade_size_dp_3"
-                android:text="@string/classificar" />
+                android:text="@string/classificar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ep_image" />
 
             <RatingBar
                 android:id="@+id/ep_rating"
@@ -156,113 +144,96 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:numStars="10"
-                android:rating="7"
-                tools:visibility="visible"
-                android:visibility="gone" />
+                android:visibility="visible"
+                android:layout_marginTop="@dimen/trade_size_dp_4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ep_rating_button"
+                tools:rating="7"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/ep_sinopse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/trade_size_dp_4"
+                android:layout_marginTop="@dimen/trade_size_dp_30"
+                android:padding="@dimen/trade_size_dp_4"
                 android:textAlignment="center"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ep_rating" />
 
-            <LinearLayout
+            <View
+                android:id="@+id/divisor_four"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/trade_size_dp_1"
                 android:layout_gravity="center"
-                android:background="@color/black" />
+                android:background="@color/black"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ep_sinopse" />
 
-            <LinearLayout
-                android:id="@+id/linear_write"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/trade_size_dp_30"
+            <TextView
+                android:id="@+id/air_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:background="@color/black_transparente"
-                android:orientation="horizontal">
+                android:text="@string/air_date"
+                android:textStyle="normal|bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divisor_four" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/trade_size_dp_10"
-                    android:layout_marginStart="@dimen/trade_size_dp_10"
-                    android:layout_weight="1"
-                    android:text="@string/writer"
+            <TextView
+                android:id="@+id/air_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/trade_size_dp_10"
+                android:background="@color/black_transparente"
+                android:gravity="end"
+                android:textStyle="normal|italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/air_label" />
 
-                    android:textStyle="normal|bold" />
-
-                <TextView
-                    android:id="@+id/ep_write"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/trade_size_dp_10"
-                    android:layout_marginRight="@dimen/trade_size_dp_10"
-                    android:layout_weight="1"
-                    android:gravity="right"
-
-                    android:textColor="@color/primary"
-                    android:textStyle="normal|italic"
-                    tools:ignore="RtlHardcoded" />
-
-            </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/linear_meio_ep_baixo"
+            <TextView
+                android:id="@+id/ep_votos_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/accent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/trade_size_dp_1"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/trade_size_dp_10"
-                    android:layout_marginLeft="@dimen/trade_size_dp_10"
-                    android:layout_marginRight="@dimen/trade_size_dp_10"
-                    android:layout_marginStart="@dimen/trade_size_dp_10"
-                    android:background="@color/black"
-                    android:orientation="horizontal" />
-            </FrameLayout>
-
-            <LinearLayout
-                android:id="@+id/linear_vote"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/trade_size_dp_30"
-                android:background="@color/black_transparente"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/trade_size_dp_10"
-                    android:layout_marginStart="@dimen/trade_size_dp_10"
-                    android:layout_weight="1"
-                    android:text="@string/vote_average"
-                    android:textStyle="normal|bold" />
-
-                <TextView
-                    android:id="@+id/ep_votos"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/trade_size_dp_10"
-                    android:layout_marginRight="@dimen/trade_size_dp_10"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:textStyle="normal|italic" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/trade_size_dp_1"
                 android:layout_gravity="center"
-                android:background="@color/black" />
+                android:layout_weight="1"
+                android:background="@color/black_transparente"
+                android:text="@string/vote_average"
+                android:textStyle="normal|bold"
+                app:layout_constraintEnd_toEndOf="@+id/ep_votos"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/air_label" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/ep_votos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/black_transparente"
+                android:gravity="end"
+                android:textStyle="normal|italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ep_votos_label"
+                app:layout_constraintTop_toTopOf="@+id/ep_votos_label" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-</RelativeLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scroll_id"
+        tools:adSize="SMART_BANNER"
+        tools:adUnitId="@string/admob" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
