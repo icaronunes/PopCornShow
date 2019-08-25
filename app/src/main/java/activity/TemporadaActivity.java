@@ -35,6 +35,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -468,14 +470,14 @@ public class TemporadaActivity extends BaseActivity {
                             childUpdates.put("/userEps/" + position + "/nota", ratingBar.getRating());
                             databaseReference.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
                                 @Override
-                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                public void onComplete(DatabaseError databaseError, @NotNull DatabaseReference databaseReference) {
                                     if (databaseError == null) {
                                         databaseReference
                                                 .child("userEps")
                                                 .child(String.valueOf(position))
                                                 .addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
-                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                                                         UserEp userEp = dataSnapshot.getValue(UserEp.class);
                                                         if (userEp != null) {
                                                             ((TemporadaFoldinAdapter) recyclerView.getAdapter()).notificarMudanca(userEp, position);
@@ -488,7 +490,7 @@ public class TemporadaActivity extends BaseActivity {
                                                     }
 
                                                     @Override
-                                                    public void onCancelled(DatabaseError databaseError) {
+                                                    public void onCancelled(@NotNull DatabaseError databaseError) {
 
                                                     }
                                                 });
@@ -513,7 +515,7 @@ public class TemporadaActivity extends BaseActivity {
             public void run() {
                 FilmeService
                         .ratedTvshowEpsodioGuest(serie_id, seasons
-                                .getSeasonNumber(), position, ratingBar, getApplicationContext());
+                                .getSeasonNumber(), seasons.getUserEps().get(position).getEpisodeNumber() , ratingBar, getApplicationContext());
             }
         }).start();
     }

@@ -3,9 +3,7 @@ package adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-
 import domain.TvSeasons
-import domain.UserSeasons
 import fragment.EpsodioFragment
 
 /**
@@ -17,7 +15,7 @@ class EpsodioAdapter(supportFragmentManager: FragmentManager,
                      private val temporadaPosition: Int) : FragmentPagerAdapter(supportFragmentManager) {
 
     override fun getItem(position: Int): Fragment {
-        return EpsodioFragment.newInstance(tvSeason.episodes!![position],
+        return EpsodioFragment.newInstance(tvSeason.episodes!![position]!!,
                 tvshowId, color, seguindo, position, temporadaPosition)
     }
 

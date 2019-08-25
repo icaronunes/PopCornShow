@@ -72,10 +72,12 @@
     <string name="sem_data">Sem Data</string>
     <string name="sem_nome">Sem informação</string>
     <string name="sem_nota">Sem Nota</string>
-    <string name="director">Direção</string>
-    <string name="writer">Escrito</string>
-    <string name="air_date">Passando na TV</string>
-    <string name="vote_average">Votos</string>
+    <string name="director">Direção:</string>
+
+    <string name="writer">Escrito:</string>
+    <string name="writer_reverse">:Escrito</string>
+    <string name="air_date">Passando na TV:</string>
+    <string name="vote_average">Votos:</string>
 
     <string name="classificar">Classificar</string>
     <string name="returnin_series">Renovada</string>

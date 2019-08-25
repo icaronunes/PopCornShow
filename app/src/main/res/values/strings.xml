@@ -15,7 +15,7 @@
     <string name="infor_tmdb" translatable="false">"This product uses the TMDb API but is not endorsed or certified by TMDb."</string>
     <string name="app_name" translatable="false">PopCorn Show</string>
     <string name="about">About</string>
-    <string name="air_date">On the Air</string>
+    <string name="air_date">On the Air: </string>
     <string name="apelido">Nickname:</string>
     <string name="author">Author:</string>
     <string name="avaliados">Evaluated</string>
@@ -27,7 +27,7 @@
     <string name="configuracoes">Settings</string>
     <string name="criado">Created by:</string>
     <string name="criar_login_popcorn">Create login PopCorn</string>
-    <string name="director">Directed</string>
+    <string name="director">Directed: </string>
     <string name="elenco">Cast</string>
     <string name="em_breve">Coming Soon</string>
     <string name="ended">Finished</string>
@@ -109,8 +109,9 @@
     <string name="upcoming">Coming soon</string>
     <string name="ver_imdb">See IMDB</string>
     <string name="ver_tmdb">See TMDB</string>
-    <string name="vote_average">Vote Average</string>
-    <string name="writer">Written</string>
+    <string name="vote_average">Vote Average:</string>
+    <string name="writer">Written:</string>
+    <string name="writer_reverse">:Written</string>
     <string name="sem_informacao_colletion">No information about the collection</string>
     <string name="erro_ainda_sem_imagem">Still no image, try again.</string>
     <string name="random" translatable="false">Random</string>
@@ -199,4 +200,5 @@
     <string name="score">SCORE: </string>
     <string name="vote">VOTES: </string>
     <string name="directo_label">Director</string>
+
 </resources>

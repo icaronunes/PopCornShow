@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/colorButtonNormal"
+    android:visibility="gone"
+    tools:visibility="visible"
     app:cardCornerRadius="3dp"
     app:cardUseCompatPadding="true">
 
@@ -15,15 +17,14 @@
 
         <ImageView
             android:id="@+id/epsodio_detalhes_img"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:adjustViewBounds="true"
-            android:cropToPadding="false"
+            android:cropToPadding="true"
             android:scaleType="centerCrop"
             android:src="@drawable/poster_empty"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/layout_diretor_nome_visto"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout

@@ -1,13 +1,10 @@
 package applicaton
 
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import applicaton.PopCornApplication
-import applicaton.PopCornViewModelFactory
-import br.com.icaro.filme.R
-import com.google.ads.AdRequest
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import kotlinx.android.synthetic.main.fragment_list_medias.*
 import main.MainFragViewModel
 
 open class BaseFragment : Fragment() {
@@ -18,10 +15,12 @@ open class BaseFragment : Fragment() {
     }
 
     fun setAdMob(adView: AdView) {
-        adView.loadAd(com.google.android.gms.ads.AdRequest.Builder()
-                .addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+        val adRequest = AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
                 .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-                .build())
+                .build()
+        adView.loadAd(adRequest)
     }
+
 
 }

@@ -1,89 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/trade_size_dp_3"
-    android:layout_marginBottom="@dimen/trade_size_dp_3"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="3dp">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/img_director"
+        android:layout_width="@dimen/trade_size_dp_60"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:adjustViewBounds="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/direct_name_label"
+        tools:src="@drawable/person" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:gravity="center"
-            android:text="@string/director"
-            android:textStyle="italic" />
-
-        <ImageView
-            android:id="@+id/layout_diretor_nome_diretor_img"
-            android:layout_width="@dimen/trade_size_dp_60"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            tools:src="@drawable/person" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/direct_name_label"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_margin="3dp"
-        android:layout_weight="1"
-        android:gravity="top"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/layout_diretor_nome_diretor"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="top"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:fontFamily="monospace"
-            android:gravity="start"
-            android:textStyle="italic|bold"
-            tools:text="J.J. Abram" />
-
-        <TextView
-            android:id="@+id/layout_diretor_nome_escritor"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="bottom"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:fontFamily="monospace"
-            android:gravity="bottom|end"
-            android:textStyle="italic|bold"
-            tools:text="J.J. Abram" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical">
+        android:text="@string/director"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@+id/img_director"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/layout_diretor_nome_escritor_img"
-            android:layout_width="@dimen/trade_size_dp_60"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            tools:src="@drawable/person" />
+    <TextView
+        android:id="@+id/director_name"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="top"
+        android:layout_weight="1"
+        android:fontFamily="monospace"
+        android:gravity="start"
+        android:maxLines="1"
+        android:paddingStart="4dp"
+        android:textStyle="italic|bold"
+        android:visibility="gone"
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:gravity="center"
-            android:text="@string/writer"
-            android:textStyle="italic" />
-    </LinearLayout>
-</LinearLayout>
+        app:layout_constraintStart_toEndOf="@+id/direct_name_label"
+        app:layout_constraintTop_toTopOf="@+id/direct_name_label"
+        tools:text="J.J. Abram"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/writer_img"
+        android:layout_width="@dimen/trade_size_dp_60"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/person" />
+
+    <TextView
+        android:id="@+id/writer_name_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/writer_reverse"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/writer_img" />
+
+    <TextView
+        android:id="@+id/writer_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:fontFamily="monospace"
+        android:gravity="bottom|end"
+        android:maxLines="1"
+        android:paddingEnd="4dp"
+        android:textStyle="italic|bold"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@+id/writer_name_label"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/writer_name_label"
+        tools:text="J.J. Abram"
+        tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/grup_writer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:constraint_referenced_ids="writer_name, writer_img, writer_name_label " />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/grup_director"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:constraint_referenced_ids="direct_name_label, img_director, director_name" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

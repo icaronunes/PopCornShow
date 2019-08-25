@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import com.ramotion.foldingcell.FoldingCell
 import com.squareup.picasso.Picasso
-import domain.CrewItem
 import domain.TvSeasons
 import domain.UserEp
 import domain.UserSeasons
@@ -106,30 +105,25 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
             }
         }
 
-        val diretor: CrewItem? = ep.crew?.firstOrNull { it?.job == "Director" }
-        val diretorName: String? = diretor?.name
-        Picasso.get()
-                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 2)) + diretor?.profilePath)
-                .error(R.drawable.person)
-                .into(holder.diretorImg)
+        ep.crew?.firstOrNull { it?.job == "Director" }?.let {
+            holder.grupWriter.visibility = View.VISIBLE
+            holder.nameDiretor.visibility = View.VISIBLE
+            holder.nameDiretor.text = it.name
+            Picasso.get()
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 2)) + it.profilePath)
+                    .error(R.drawable.person)
+                    .into(holder.diretorImg)
 
-
-        val escritor: CrewItem? = ep.crew?.firstOrNull { it?.job == "Writer" }
-        val escritorName: String? = escritor?.name
-        Picasso.get()
-                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 2)) + escritor?.profilePath)
-                .error(R.drawable.person)
-                .into(holder.escritorImg)
-
-        holder.nameDiretor.text = if (diretorName.equals("null", true)) {
-            " ? "
-        } else {
-            diretorName
         }
-        holder.nomeEscritor.text = if (escritorName.equals("null", true)) {
-            " ? "
-        } else {
-            escritorName
+
+        ep.crew?.firstOrNull { it?.job == "Writer" }?.let {
+            holder.grupDirector.visibility = View.VISIBLE
+            holder.nomeEscritor.visibility = View.VISIBLE
+            holder.nomeEscritor.text = it.name
+            Picasso.get()
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 2)) + it.profilePath)
+                    .error(R.drawable.person)
+                    .into(holder.escritorImg)
         }
 
         holder.cell.setOnClickListener {
@@ -205,11 +199,14 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         //layout_diretor
 
         val vistoDetelhe = itemView.layout_diretor_nome_visto
-        val escritorImg = itemView.layout_diretor_nome_escritor_img
-        val diretorImg = itemView.layout_diretor_nome_diretor_img
-        val nameDiretor = itemView.layout_diretor_nome_diretor
-        val nomeEscritor = itemView.layout_diretor_nome_escritor
+        val escritorImg = itemView.writer_img
+        val diretorImg = itemView.img_director
+        val nameDiretor = itemView.director_name
+        val nomeEscritor = itemView.writer_name
         val wrapperRating = itemView.wrapper_rating
+        val grupDirector = itemView.grup_director
+        val grupWriter = itemView.grup_writer
+
 
     }
 }

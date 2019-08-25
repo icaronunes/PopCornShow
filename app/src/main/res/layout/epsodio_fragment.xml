@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:id="@+id/scroll_id"
@@ -18,7 +17,6 @@
             android:id="@+id/epsodio_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
             android:orientation="vertical">
 
             <TextView
@@ -36,7 +34,7 @@
             <View
                 android:id="@+id/divisor_one"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/trade_size_dp_2"
+                android:layout_height="2dp"
                 android:background="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,24 +42,30 @@
 
             <TextView
                 android:id="@+id/director_label"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/trade_size_dp_30"
                 android:layout_gravity="center"
                 android:background="@color/black_transparente"
                 android:text="@string/director"
-                android:textStyle="normal|bold"
+                android:paddingStart="4dp"
+                android:gravity="start|center_vertical"
+                android:textStyle="normal"
                 app:layout_constraintEnd_toStartOf="@+id/ep_director"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divisor_one" />
 
             <TextView
                 android:id="@+id/ep_director"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/trade_size_dp_30"
                 android:layout_gravity="center"
+                android:gravity="start|center_vertical"
                 android:background="@color/black_transparente"
                 android:textColor="@color/primary"
-                android:textStyle="normal|italic"
+                android:textStyle="bold|italic"
+                android:paddingStart="4dp"
+                tools:text="Quentin Tarantino"
+                android:text="-"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/director_label"
                 app:layout_constraintTop_toTopOf="@+id/director_label" />
@@ -69,7 +73,7 @@
             <View
                 android:id="@+id/divisor_two"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/trade_size_dp_1"
+                android:layout_height="1dp"
                 android:layout_gravity="center"
                 android:background="@color/black"
                 android:orientation="horizontal"
@@ -79,13 +83,14 @@
 
             <TextView
                 android:id="@+id/writrer_label"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
+                android:gravity="start|center_vertical"
                 android:background="@color/black_transparente"
                 android:text="@string/writer"
-                android:textStyle="normal|bold"
-                app:layout_constraintEnd_toEndOf="@+id/ep_write"
+                android:paddingStart="4dp"
+                android:textStyle="normal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divisor_two" />
 
@@ -95,9 +100,12 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:background="@color/black_transparente"
-                android:gravity="right"
+                tools:text="Quentin Tarantino"
+                android:text="-"
                 android:textColor="@color/primary"
-                android:textStyle="normal|italic"
+                android:textStyle="bold|italic"
+                android:paddingStart="4dp"
+                android:gravity="start|center_vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/writrer_label"
                 app:layout_constraintTop_toTopOf="@+id/writrer_label"
@@ -113,11 +121,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/writrer_label" />
 
-
             <ImageView
                 android:id="@+id/ep_image"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                tools:layout_height="48dp"
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
                 android:src="@drawable/person"
@@ -130,39 +138,48 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/trade_size_dp_4"
+                android:layout_marginTop="6dp"
                 android:layout_gravity="center"
                 android:text="@string/classificar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ep_image" />
 
+            <LinearLayout
+                android:id="@+id/wrapper_rating_ep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ep_rating_button">
+
             <RatingBar
                 android:id="@+id/ep_rating"
-                style="@style/Widget.AppCompat.RatingBar.Small"
+                style="@style/CustomRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:numStars="10"
                 android:visibility="visible"
-                android:layout_marginTop="@dimen/trade_size_dp_4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ep_rating_button"
                 tools:rating="7"
                 tools:visibility="visible" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/ep_sinopse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/trade_size_dp_30"
+                android:layout_marginTop="@dimen/trade_size_dp_20"
+                android:layout_marginBottom="4dp"
                 android:padding="@dimen/trade_size_dp_4"
                 android:textAlignment="center"
                 android:textAllCaps="false"
+                tools:text="@string/erro_na_gravacao_imagem"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ep_rating" />
+                app:layout_constraintTop_toBottomOf="@+id/wrapper_rating_ep" />
 
             <View
                 android:id="@+id/divisor_four"
@@ -177,12 +194,12 @@
 
             <TextView
                 android:id="@+id/air_label"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/black_transparente"
                 android:text="@string/air_date"
-                android:textStyle="normal|bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textStyle="normal"
+                android:paddingStart="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divisor_four" />
 
@@ -190,39 +207,49 @@
                 android:id="@+id/air_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/trade_size_dp_10"
                 android:background="@color/black_transparente"
-                android:gravity="end"
-                android:textStyle="normal|italic"
+                android:paddingStart="4dp"
+                android:textStyle="bold|italic"
+                tools:text="12/12/1986"
+                android:text="-"
+                android:textColor="@color/primary"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/air_label" />
+                app:layout_constraintStart_toEndOf="@+id/air_label"
+                app:layout_constraintTop_toTopOf="@+id/air_label" />
 
             <TextView
                 android:id="@+id/ep_votos_label"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
                 android:background="@color/black_transparente"
                 android:text="@string/vote_average"
-                android:textStyle="normal|bold"
-                app:layout_constraintEnd_toEndOf="@+id/ep_votos"
+                android:paddingStart="4dp"
+                android:textStyle="normal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/air_label" />
 
             <TextView
                 android:id="@+id/ep_votos"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
                 android:background="@color/black_transparente"
-                android:gravity="end"
-                android:textStyle="normal|italic"
+                android:textStyle="bold|italic"
+                android:text="-"
+                android:textColor="@color/primary"
+                android:paddingStart="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ep_votos_label"
                 app:layout_constraintTop_toTopOf="@+id/ep_votos_label" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ep_votos" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
@@ -230,10 +257,12 @@
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        app:adSize="BANNER"
+        app:adUnitId="@string/admob"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scroll_id"
-        tools:adSize="SMART_BANNER"
-        tools:adUnitId="@string/admob" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scroll_id" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
