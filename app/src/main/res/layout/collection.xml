@@ -1,30 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/collection_linear"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="bottom"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/img_collection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_margin="@dimen/trade_size_dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/trade_size_dp_6"
         android:adjustViewBounds="true"
-        android:contentDescription="@string/imagem_filme"
         android:cropToPadding="true"
-        android:scaleType="centerInside" />
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/dateCollection"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/person" />
 
     <TextView
         android:id="@+id/dateCollection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="@dimen/trade_size_dp_10"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="14dp"
         android:gravity="center_horizontal"
-        android:maxLines="2"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_collection"
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="Nome do Filme " />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

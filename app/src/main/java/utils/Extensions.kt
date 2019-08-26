@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso
  * Created by icaro on 03/09/17.
  */
 
-fun ImageView.setPicasso(stillPath: String, patten: Int = 4,  sucesso: () -> Unit, error: () -> Unit) {
+fun ImageView.setPicasso(stillPath: String?, patten: Int = 4,  sucesso: () -> Unit, error: () -> Unit) {
     Picasso.get()
             .load(UtilsApp
                     .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, patten)) + stillPath)
