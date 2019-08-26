@@ -113,7 +113,7 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
     }
 
     private fun setWriter() {
-        episode?.crew?.firstOrNull() { it?.department?.equals("Writing")!! }?.let { written ->
+        episode?.crew?.firstOrNull { it?.department?.equals("Writing")!! }?.let { written ->
             ep_write.text = written.name
             ep_write.setOnClickListener {
                 nextPersonActivity(written)
@@ -261,7 +261,8 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
     private fun setRatedTvShowGuest(ratingBar: RatingBar) {
         val job = GlobalScope.launch(Dispatchers.IO) {
             try {
-                FilmeService.ratedTvshowEpsodioGuest(tvshow_id, seasons?.seasonNumber!!, episode?.episodeNumber!!, ratingBar.rating.toInt(), context)
+                FilmeService.ratedTvshowEpsodioGuest(tvshow_id, seasons?.seasonNumber!!,
+                        episode?.episodeNumber!!, ratingBar.rating.toInt(), context)
             } catch (ex: Exception) {
 
             }

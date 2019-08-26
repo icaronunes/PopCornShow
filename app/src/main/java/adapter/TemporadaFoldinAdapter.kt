@@ -77,7 +77,8 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         holder.detalhesVotos.text = ep?.voteCount.toString()
 
         Picasso.get()
-                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 4)) + ep?.stillPath)
+                .load(UtilsApp.getBaseUrlImagem(UtilsApp
+                        .getTamanhoDaImagem(temporadaActivity, 4)) + ep?.stillPath)
                 .error(R.drawable.empty_popcorn)
                 .into(holder.img)
         holder.resumoDetalhe.text = ep?.overview
@@ -111,7 +112,8 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
             holder.nameDiretor.visibility = View.VISIBLE
             holder.nameDiretor.text = it.name
             Picasso.get()
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 2)) + it.profilePath)
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp
+                            .getTamanhoDaImagem(temporadaActivity, 2)) + it.profilePath)
                     .error(R.drawable.person)
                     .into(holder.diretorImg)
 
@@ -122,7 +124,8 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
             holder.nomeEscritor.visibility = View.VISIBLE
             holder.nomeEscritor.text = it.name
             Picasso.get()
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(temporadaActivity, 2)) + it.profilePath)
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp
+                            .getTamanhoDaImagem(temporadaActivity, 2)) + it.profilePath)
                     .error(R.drawable.person)
                     .into(holder.escritorImg)
         }

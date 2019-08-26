@@ -573,7 +573,6 @@ class Api(val context: Context) {
                     } else {
                         subscriber.onError(Throwable(response.message))
                     }
-
                 }
     }
 

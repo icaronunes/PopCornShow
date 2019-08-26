@@ -61,7 +61,7 @@ class PersonActivity : BaseActivity() {
         }
     }
 
-    protected fun snack() {
+    private fun snack() {
         Snackbar.make(viewPager_person!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
                     if (UtilsApp.isNetWorkAvailable(context)) {
