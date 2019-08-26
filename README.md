@@ -13,7 +13,7 @@ Tem login vinculado ao Firebase e seus serviços.
 
 Se quiser enviar um PR fique a vontade.
 
-O app usa dados do <a href="https://www.themoviedb.org">TMDB</a>, <a href="http://www.omdbapi.com/">OMDB</a>, <a href="https://market.mashape.com/codixor/uflixit">UFlix</a> e <a href="https://developers.google.com/youtube/v3/">YouTube Api</a>.
+O app usa dados do <a href="https://www.themoviedb.org">TMDB</a>, <a href="http://www.omdbapi.com/">OMDB</a> e <a href="https://developers.google.com/youtube/v3/">YouTube Api</a>.
 
 <img src="https://firebasestorage.googleapis.com/v0/b/livro-android-1327.appspot.com/o/Screenshot_2018-07-17-21-56-05-314_br.com.icaro.filme.png?alt=media&token=5fe07ffb-27bc-4277-b62d-8b9bc0d06e5e" width="200"><img src="https://firebasestorage.googleapis.com/v0/b/livro-android-1327.appspot.com/o/Screenshot_2018-07-17-21-56-29-516_br.com.icaro.filme.png?alt=media&token=75dcaee0-9677-43b8-a80e-39d005bebe40" width="200"><img src="https://firebasestorage.googleapis.com/v0/b/livro-android-1327.appspot.com/o/Screenshot_2018-07-17-21-58-17-706_br.com.icaro.filme.png?alt=media&token=8c678089-197b-496b-ab77-4436b4554ffb" width="200">
 
