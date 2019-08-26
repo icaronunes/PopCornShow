@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import com.ramotion.foldingcell.FoldingCell
@@ -89,7 +88,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         }
 
         ep.voteAverage.let {
-            holder.detalhesNota.text = ep.voteAverage.toString()
+            holder.detalhesNota.text = it.toString()
         }
 
         if (epUser != null && seguindo) {
@@ -177,7 +176,6 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
     fun notificarMudanca(ep: UserEp?, position: Int) {
         seasons?.userEps?.set(position, ep!!)
         notifyItemChanged(position)
-
     }
 
     inner class HoldeTemporada(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -185,7 +183,6 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         //Foldin
         val cell: FoldingCell = itemView.folding_cell
         //item_epsodio
-
         val titulo = itemView.item_epsodio_titulo
         val resumo = itemView.item_epsodio_titulo_resumo
         val numero = itemView.item_epsodio_numero
@@ -211,7 +208,5 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         val wrapperRating = itemView.wrapper_rating
         val grupDirector = itemView.grup_director
         val grupWriter = itemView.grup_writer
-
-
     }
 }

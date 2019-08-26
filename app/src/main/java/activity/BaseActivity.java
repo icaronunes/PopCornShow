@@ -525,7 +525,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
 	}
 
 	protected void salvaImagemMemoriaCache(final Context context, final String endereco, final SalvarImageShare callback) {
-
+		//TODO refator
 		final ImageView imageView = new ImageView(context);
 		Picasso.get().load(UtilsApp.getBaseUrlImagem(4) + endereco).into(imageView, new Callback() {
 			@Override

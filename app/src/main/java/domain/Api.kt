@@ -12,7 +12,7 @@ import okhttp3.*
 import okhttp3.internal.http2.Http2Reader.Companion.logger
 import rx.Observable
 import utils.Config
-import utils.getIdiomaEscolhido
+import utils.UtilsKt.Companion.getIdiomaEscolhido
 import java.io.IOException
 import java.net.SocketTimeoutException
 import java.util.*

@@ -7,15 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
-import android.widget.RatingBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import applicaton.BaseFragment
 import br.com.icaro.filme.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
@@ -27,6 +25,7 @@ import kotlinx.coroutines.launch
 import pessoa.activity.PersonActivity
 import utils.Constantes
 import utils.UtilsApp
+import utils.setPicasso
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -264,7 +263,6 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
                 FilmeService.ratedTvshowEpsodioGuest(tvshow_id, seasons?.seasonNumber!!,
                         episode?.episodeNumber!!, ratingBar.rating.toInt(), context)
             } catch (ex: Exception) {
-
             }
         }
         job.cancel()
@@ -292,13 +290,7 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
     }
 
     private fun setImage() {
-        Picasso.get()
-                .load(UtilsApp
-                        .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 4)) + episode?.stillPath!!)
-                .error(R.drawable.top_empty)
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-                .into(ep_image)
+        ep_image.setPicasso(episode?.stillPath!!, sucesso =  {}, error =  {})
     }
 
     private fun setVote() {

@@ -18,6 +18,7 @@ import listaserie.adapter.ListaSeriesAdapter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import utils.*
+import utils.UtilsKt.Companion.getIdiomaEscolhido
 import java.util.concurrent.TimeUnit
 
 /**

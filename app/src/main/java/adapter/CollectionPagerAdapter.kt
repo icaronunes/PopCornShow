@@ -58,6 +58,8 @@ class CollectionPagerAdapter(private val info: List<PartsItem?>?, private val co
 
                 })
 
+
+
         imageView.setOnClickListener({
             val intent = Intent(context, FilmeActivity::class.java)
             intent.putExtra(Constantes.FILME_ID, item?.id)
