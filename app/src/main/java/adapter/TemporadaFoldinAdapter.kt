@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import com.ramotion.foldingcell.FoldingCell
@@ -127,16 +128,17 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
         }
 
         holder.cell.setOnClickListener {
+            temporadaOnClickListener.onClickScrool(position)
             holder.cell.toggle(false)
             registerToggle(position)
         }
 
         holder.verMais.setOnClickListener {
-            this.temporadaOnClickListener.onClickTemporada(it, position)
+            temporadaOnClickListener.onClickTemporada(it, position)
         }
 
         holder.wrapperRating.setOnClickListener {
-            this.temporadaOnClickListener.onClickTemporadaNota(holder.progressDetalhe, ep, position, epUser)
+            temporadaOnClickListener.onClickTemporadaNota(holder.progressDetalhe, ep, position, epUser)
         }
 
     }
@@ -144,7 +146,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
     override fun getItemCount(): Int {
         if (seguindo) {
             if (seasons?.userEps?.isNotEmpty()!!) {
-                return seasons.userEps!!.size!!
+                return seasons.userEps!!.size
             }
         } else {
             if (tvSeason.episodes?.isNotEmpty()!!) {

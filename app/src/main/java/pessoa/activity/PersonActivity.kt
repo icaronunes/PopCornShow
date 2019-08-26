@@ -26,7 +26,6 @@ class PersonActivity : BaseActivity() {
     private var id_person: Int = 0
     private var nome: String? = null
     private val subscription: CompositeSubscription? = null
-    //private lateinit var person: Person
 
     private val context: Context
         get() = this

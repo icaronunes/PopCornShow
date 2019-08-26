@@ -41,6 +41,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         void onClickVerTemporada(View view, int position);
         void onClickTemporada(View view, int position);
         void onClickTemporadaNota(View view, EpisodesItem ep, int position, UserEp userEp);
+        void onClickScrool(int position);
     }
 
     public TemporadaAdapter(TemporadaActivity temporadaActivity, TvSeason tvSeason,

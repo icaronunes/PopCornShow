@@ -73,7 +73,7 @@ public class TemporadaActivity extends BaseActivity {
     private String nome_temporada;
     private int serie_id, color;
     private TvSeasons tvSeason;
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView;
     private boolean seguindo;
     private UserSeasons seasons;
     private FirebaseAuth mAuth;
@@ -106,6 +106,10 @@ public class TemporadaActivity extends BaseActivity {
             snack();
         }
 
+    }
+
+    public RecyclerView getRecyclerView() {
+        return this.recyclerView;
     }
 
 
@@ -145,7 +149,6 @@ public class TemporadaActivity extends BaseActivity {
 
     private TemporadaAdapter.TemporadaOnClickListener onClickListener() {
         return new TemporadaAdapter.TemporadaOnClickListener() {
-
             @Override
             public void onClickVerTemporada(View view, final int position) {
 
@@ -506,8 +509,22 @@ public class TemporadaActivity extends BaseActivity {
 
                 }
             }
+
+            @Override
+            public void onClickScrool(int view) {
+                scrollToTop(view);
+            }
         };
     }
+
+
+    private void scrollToTop(int currentCard) {
+//        int position = recyclerView.getChildAdapterPosition(currentCard);
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        if(layoutManager != null)
+        layoutManager.scrollToPositionWithOffset(currentCard, 0);
+    }
+
 
     private void setNotaIMDB(int position, int ratingBar) {
         new Thread(new Runnable() {
@@ -627,7 +644,6 @@ public class TemporadaActivity extends BaseActivity {
                         if (tvSeason == null) {
                             return;
                         }
-
                         getSupportActionBar().setTitle(!tvSeason.getName().isEmpty() ? tvSeason.getName() : nome_temporada);
 
                         if (mAuth.getCurrentUser() != null) {

@@ -1,6 +1,7 @@
 package fragment
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,11 +21,10 @@ import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import domain.*
 import kotlinx.android.synthetic.main.epsodio_fragment.*
-import kotlinx.android.synthetic.main.layout_diretor.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.launch
+import pessoa.activity.PersonActivity
 import utils.Constantes
 import utils.UtilsApp
 import java.text.ParseException
@@ -103,16 +103,29 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
         setAdMob(adView)
     }
 
-    private fun setWriter() {
-        episode?.crew?.firstOrNull { it?.department?.equals("Directing")!! }?.let {
-            ep_director.text = it.name
+    private fun setDirect() {
+        episode?.crew?.firstOrNull { it?.department?.equals("Directing")!! }?.let { director ->
+            ep_director.text = director.name
+            ep_director.setOnClickListener {
+                nextPersonActivity(director)
+            }
         }
     }
 
-    private fun setDirect() {
-        episode?.crew?.firstOrNull() { it?.department?.equals("Writing")!! }?.let {
-            ep_write.text = it.name
+    private fun setWriter() {
+        episode?.crew?.firstOrNull() { it?.department?.equals("Writing")!! }?.let { written ->
+            ep_write.text = written.name
+            ep_write.setOnClickListener {
+                nextPersonActivity(written)
+            }
         }
+    }
+
+    private fun nextPersonActivity(it: CrewItem) {
+        startActivity(Intent(context, PersonActivity::class.java).apply {
+            putExtra(Constantes.NOME_PERSON, it.name)
+            putExtra(Constantes.PERSON_ID, it.id)
+        })
     }
 
     private fun setListener() {
