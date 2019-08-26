@@ -320,7 +320,6 @@ public class FilmeService {
 
     public static boolean ratedTvshowEpsodioGuest(int tvshowId, int temporada, int ep, int nota, Context context) {
         /// id 297762 - mulher maravilha
-        Log.d("FilmeService", "Ep " + ep);
         try {
 
             GuestSession guestSession = getGuestSession(context);

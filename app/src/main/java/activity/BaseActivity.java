@@ -84,7 +84,7 @@ import utils.UtilsApp;
 @SuppressLint("Registered")
 @Keep
 public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
-
+	//todo  Refatorar para criar o metodo snack() para enviar uma funcao com o getDados no hight ordem
 	protected DrawerLayout drawerLayout;
 	protected NavigationView navigationView;
 	private ImageView imgUserPhoto;
