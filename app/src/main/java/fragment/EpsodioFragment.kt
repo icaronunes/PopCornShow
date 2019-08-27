@@ -290,7 +290,7 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
     }
 
     private fun setImage() {
-        ep_image.setPicasso(episode?.stillPath!!, sucesso =  {}, error =  {})
+        ep_image.setPicasso(episode?.stillPath!!)
     }
 
     private fun setVote() {

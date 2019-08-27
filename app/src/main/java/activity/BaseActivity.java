@@ -13,6 +13,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -494,7 +496,6 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
 
 									@Override
 									public void onNext(MultiSearch multiRetorno) {
-
 										RecyclerView recyclerView = dialog.findViewById(R.id.layout_search_multi_recycler);
 										recyclerView.setHasFixedSize(true);
 										recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));

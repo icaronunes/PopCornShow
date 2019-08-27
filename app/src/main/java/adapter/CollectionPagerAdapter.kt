@@ -49,22 +49,8 @@ class CollectionPagerAdapter(private val info: List<PartsItem?>?, private val co
                 })
             }
 
-            setPicasso(item?.posterPath, 5, {loadPaletteCollection()}, {})
+            setPicasso(item?.posterPath, 5, { loadPaletteCollection(this.drawable as BitmapDrawable) })
         }
-//        Picasso.get()
-//                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 5)) + item?.posterPath)
-//                .error(R.drawable.poster_empty)
-//                .into(imageView, object : Callback {
-//                    override fun onError(e: Exception?) {
-//
-//                    }
-//
-//                    override fun onSuccess() {
-//                        loadPaletteCollection()
-//                    }
-//
-//                })
-//        }
 
         var ano = "xxxx"
 
@@ -85,16 +71,13 @@ class CollectionPagerAdapter(private val info: List<PartsItem?>?, private val co
 
     }
 
-    private fun loadPaletteCollection() {
-        if (imageView.drawable != null) {
-            val drawable = imageView.drawable as BitmapDrawable
-            val bitmap = drawable.bitmap
-            val builder = Palette.Builder(bitmap)
-            val swatch = builder.generate().vibrantSwatch
-            if (swatch != null) {
-                constraintLayout.setBackgroundColor(swatch.rgb)
-                nome.setTextColor(swatch.bodyTextColor)
-            }
+    private fun loadPaletteCollection(drawable: BitmapDrawable) {
+        val bitmap = drawable.bitmap
+        val builder = Palette.Builder(bitmap)
+        val swatch = builder.generate().vibrantSwatch
+        if (swatch != null) {
+            constraintLayout.setBackgroundColor(swatch.rgb)
+            nome.setTextColor(swatch.bodyTextColor)
         }
     }
 
