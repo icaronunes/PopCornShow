@@ -166,7 +166,8 @@
                 card_view:layout_constraintTop_toBottomOf="@+id/ad_stars"
                 tools:text="15 caracteres 15 caracteres" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:id="@+id/ad_call_to_action"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

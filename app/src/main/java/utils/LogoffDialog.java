@@ -24,12 +24,12 @@ public class LogoffDialog extends DialogPreference {
         super(context, attrs);
         setPersistent(false);
         mAuth = FirebaseAuth.getInstance();
-    }
+    } //TODO usando botao antigo. Migar para usar MaterialButton
 
     @Override
     protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
         builder.setTitle(getContext().getResources().getString(R.string.title_logoff_dialog));
-        builder.setNegativeButton(getContext().getResources().getString(R.string.cancel), null);
+        builder.setNegativeButton( getContext().getResources().getString(R.string.cancel), null);
         builder.setMessage(getContext().getResources().getString(R.string.text_logoff_dialog));
         builder.setPositiveButton(getContext()
                 .getResources().getString(R.string.sair), new DialogInterface.OnClickListener() {

@@ -121,7 +121,6 @@ public class ListaFavoriteFragment extends Fragment {
             @Override
             public void onClickLong(View view, final int position) {
                 final int id = movieDbs.get(position).getId();
-               // Log.d("OnClick", "Onclick");
                 new AlertDialog.Builder(getActivity())
                         .setIcon(R.drawable.icon_agenda)
                         .setTitle(movieDbs.get(position).getTitle())

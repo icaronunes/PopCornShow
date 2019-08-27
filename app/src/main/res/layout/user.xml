@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="4dp"
     android:layout_marginRight="4dp">
@@ -27,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/text_user_login"
-            android:layout_marginLeft="@dimen/trade_size_dp_3"
             android:layout_marginStart="@dimen/trade_size_dp_3"
             android:textStyle="normal|bold" />
 
@@ -82,18 +83,22 @@
         android:layout_height="wrap_content"
         android:gravity="center">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:text="@string/bt_desativar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
             android:id="@+id/bt_desativar"
             android:textSize="@dimen/trade_txt_size_sp_10"
-            style="@style/Widget.AppCompat.Button" />
+            />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:text="@string/bt_reset_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="2dp"
             android:id="@+id/bt_reset"
             android:layout_weight="1" />
 
@@ -106,8 +111,8 @@
         android:layout_height="0dp"
         android:id="@+id/vincular_login"
         android:visibility="gone"
+        tools:visibility="visible"
         android:layout_weight="1"
-        android:background="@drawable/button_visto"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
