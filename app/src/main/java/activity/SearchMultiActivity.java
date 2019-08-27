@@ -70,7 +70,7 @@ public class SearchMultiActivity extends BaseActivity {
 		query = getIntent().getStringExtra(SearchManager.QUERY);
 		getSupportActionBar().setTitle(query);
 
-		/*
+		/*TODO
 		 *
 		 * Arrumar! Gambiara. Funcionando.
 		 *

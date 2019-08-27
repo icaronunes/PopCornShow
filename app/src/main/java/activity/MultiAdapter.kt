@@ -18,6 +18,7 @@ import utils.Constantes
 import utils.UtilsApp
 import utils.enums.EnumTypeMedia
 import utils.setPicasso
+import utils.setPicassoWithCache
 
 class MultiAdapter(val application: Context, private val multiReturn: MultiSearch, private val icon: Drawable?) : RecyclerView.Adapter<MultiAdapter.HolderView>() {
 
@@ -27,8 +28,7 @@ class MultiAdapter(val application: Context, private val multiReturn: MultiSearc
         when (item.mediaType) {
             EnumTypeMedia.MOVIE.type -> {
 
-                holder.poster.setPicasso(item.posterPath, 1)
-
+                holder.poster.setPicassoWithCache(item.posterPath, 1)
                 holder.itemView.setOnClickListener {
                     application.startActivity(Intent(application, FilmeActivity::class.java).apply {
                         putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
@@ -38,15 +38,20 @@ class MultiAdapter(val application: Context, private val multiReturn: MultiSearc
                     icon?.alpha = 255
                 }
 
-                holder.searchTitleOriginal.text = item.originalTitle
-                holder.searchNome.text = item.title
-                holder.searchDataLancamento.text = if (item.releaseDate != null && item.releaseDate.length >= 4) item.releaseDate.substring(0, 4) else application.getString(R.string.empty_data)
-                return
+                item.originalTitle?.let {
+                    holder.searchTitleOriginal.text = it
+                }
+                item.title?.let {
+                    holder.searchNome.text = it
+                }
+
+                item.releaseDate?.let {
+                    holder.searchDataLancamento.text = if (it.length >= 4) it.substring(0, 4) else "--"
+                }
             }
 
             EnumTypeMedia.TV.type -> {
-
-                holder.poster.setPicasso(item.posterPath, 1)
+                holder.poster.setPicassoWithCache(item.posterPath, 1)
 
                 holder.itemView.setOnClickListener {
                     application.startActivity(Intent(application, TvShowActivity::class.java).apply {
@@ -57,15 +62,21 @@ class MultiAdapter(val application: Context, private val multiReturn: MultiSearc
                     icon?.alpha = 255
                 }
 
-                if (item.originalTitle.isNullOrEmpty()) holder.searchTitleOriginal.visibility = View.GONE else holder.searchTitleOriginal.text = item.originalName
+                if (item.originalTitle.isNullOrEmpty()) holder.searchTitleOriginal.visibility = View.GONE
+                else holder.searchTitleOriginal.text = item.originalName
 
-                holder.searchNome.text = item.name
-                holder.searchDataLancamento.text = if (item.firstAirDate != null && item.firstAirDate.length >= 4) item.firstAirDate.substring(0, 4) else application.getString(R.string.empty_data)
-                return
+                item.name?.let {
+                    holder.searchNome.text = it
+                }
+
+                item.firstAirDate?.let {
+                    holder.searchDataLancamento.text = if (it.length >= 4) it.substring(0, 4)
+                    else "--"
+                }
             }
 
             EnumTypeMedia.PERSON.type -> {
-                holder.poster.setPicasso(item.profile_path, 1)
+                holder.poster.setPicassoWithCache(item.profile_path, 1)
                 holder.itemView.setOnClickListener {
                     application.startActivity(Intent(application, PersonActivity::class.java).apply {
                         putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
@@ -74,13 +85,15 @@ class MultiAdapter(val application: Context, private val multiReturn: MultiSearc
                     })
                     icon?.alpha = 255
                 }
+
+                item.name.let {
+                    holder.searchNome.text = it
+                }
+
                 holder.searchTitleOriginal.visibility = View.GONE
-                holder.searchNome.text = item.name
                 holder.searchDataLancamento.visibility = View.GONE
-                return
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HolderView {
@@ -92,9 +105,9 @@ class MultiAdapter(val application: Context, private val multiReturn: MultiSearc
 
     inner class HolderView(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        var poster: ImageView = itemView.findViewById<View>(R.id.img_muitl_search) as ImageView
-        var searchNome: TextView = itemView.findViewById<View>(R.id.search_muitl_nome) as TextView
-        var searchDataLancamento: TextView = itemView.findViewById<View>(R.id.search_muitl_data_lancamento) as TextView
-        var searchTitleOriginal: TextView = itemView.findViewById<View>(R.id.search_muitl_title_original) as TextView
+        var poster: ImageView = itemView.findViewById(R.id.img_muitl_search)
+        var searchNome: TextView = itemView.findViewById(R.id.search_muitl_nome)
+        var searchDataLancamento: TextView = itemView.findViewById(R.id.search_muitl_data_lancamento)
+        var searchTitleOriginal: TextView = itemView.findViewById(R.id.search_muitl_title_original)
     }
 }

@@ -2,19 +2,19 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginTop="2dp"
+    android:layout_marginTop="1dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/trade_size_dp_4">
+        android:layout_margin="@dimen/trade_size_dp_2">
 
         <ImageView
             android:id="@+id/img_muitl_search"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
