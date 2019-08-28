@@ -6,8 +6,8 @@ import android.animation.ObjectAnimator
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.icaro.filme.R
@@ -33,16 +33,15 @@ class ProdutoraActivity : BaseActivity() {
     private var totalPagina = 1
     private var subscriptions = CompositeSubscription()
 
-
+ //TODO adicionar propaganda na lista
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.produtora_layout)
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        collapsing_toolbar.title = " "
         setExtras()
         setRecycler()
-        getDadosCompany()
+        setImageTop()
         getCompanyFilmes()
     }
 
@@ -63,9 +62,12 @@ class ProdutoraActivity : BaseActivity() {
         logo = intent.getStringExtra(Constantes.ENDERECO)
     }
 
-    private fun getDadosCompany() {
-        collapsing_toolbar.title = name
-        setImageTop()
+    private fun setTitle() {
+        toolbar?.title = name
+        collapsing_toolbar?.title = name
+        top_img_produtora.scaleType = ImageView.ScaleType.CENTER_CROP
+        toolbar.titleMarginTop  = 15
+        toolbar.titleMarginStart = 25
     }
 
     private fun getCompanyFilmes() {
@@ -76,9 +78,10 @@ class ProdutoraActivity : BaseActivity() {
                     .subscribe({ companyFilmes ->
                         pagina = companyFilmes?.page!!
                         totalPagina = companyFilmes.totalPages!!
+
                         (produtora_filmes_recycler.adapter as ProdutoraAdapter).addprodutoraMovie(companyFilmes.results
                                 ?.sortedBy { it?.releaseDate }
-                                ?.reversed())
+                                ?.reversed(), companyFilmes.totalResults!!)
                         ++pagina
                     }, {
                         Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
@@ -98,7 +101,6 @@ class ProdutoraActivity : BaseActivity() {
         subscriptions.clear()
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()
@@ -108,18 +110,18 @@ class ProdutoraActivity : BaseActivity() {
     }
 
     private fun setImageTop() {
-        val animacao = {
+        val setupTop = {
             AnimatorSet().apply {
                     play(ObjectAnimator.ofFloat(top_img_produtora, "x", -100f, 0f)
-                            .setDuration(700))
+                            .setDuration(400))
             }.start()
+            toolbar?.title = " "
+            collapsing_toolbar?.title = " "
         }
 
-        logo?.let {
-            top_img_produtora.setPicasso(it, 4, img_erro = R.drawable.empty_produtora2, sucesso = animacao )
+        logo.let {
+            top_img_produtora.setPicasso(it, 4, img_erro = R.drawable.empty_produtora2, sucesso = setupTop, error = { setTitle() })
         }
-        top_img_produtora.setColorFilter(ContextCompat.getColor(this, R.color.black_transparente_produtora), PorterDuff.Mode.DARKEN)
     }
-
 }
 

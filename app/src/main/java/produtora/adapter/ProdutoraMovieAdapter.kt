@@ -35,20 +35,28 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
 
         fun bind(item: ListaItemFilme) = with(itemView) {
             progress_bar?.visibility = View.VISIBLE
-            item.title?.let { titleTextView_produtora.text = it }
+            item.releaseDate?.let { year_or_title.text = it }
 
-            imgFilme_produtora.setPicassoWithCache(item.posterPath, 2,
+            val failer = {
+                progress_bar?.visibility = View.GONE
+                item.title?.let {
+                    year_or_title.text = it
+                }
+            }
+
+            img_movie.setPicassoWithCache(item.posterPath, 2,
                     img_erro = R.drawable.poster_empty,
-                    error = { progress_bar?.visibility = View.GONE },
+                    error = { failer() },
                     sucesso = { progress_bar?.visibility = View.GONE })
 
             itemView.setOnClickListener {
                 itemView.context.startActivity(Intent(itemView.context, FilmeActivity::class.java).apply {
-                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(imgFilme_produtora))
+                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(img_movie))
                     putExtra(Constantes.FILME_ID, item.id)
                     putExtra(Constantes.NOME_FILME, item.title)
                 })
             }
+
         }
     }
 }

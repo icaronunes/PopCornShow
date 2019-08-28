@@ -13,7 +13,7 @@ import java.util.*
 class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
-    private var ProdutoraResultsPage = ArrayList<ViewType>()
+    private var produtoraResultsPage = ArrayList<ViewType>()
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     private val loadingItem = object : ViewType {
@@ -23,27 +23,27 @@ class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     init {
         delegateAdapters.put(Constantes.BuscaConstants.LOADING, LoadingDelegateAdapter())
         delegateAdapters.put(Constantes.BuscaConstants.NEWS, ProdutoraMovieAdapter())
-        ProdutoraResultsPage = ArrayList()
-        ProdutoraResultsPage.add(loadingItem)
+        produtoraResultsPage = ArrayList()
+        produtoraResultsPage.add(loadingItem)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-       return delegateAdapters.get(getItemViewType(position))!!.onBindViewHolder(holder, ProdutoraResultsPage[position], context = null)
+       return delegateAdapters.get(getItemViewType(position))!!.onBindViewHolder(holder, produtoraResultsPage[position], context = null)
     }
 
-    fun addprodutoraMovie(personResults: List<ListaItemFilme?>?) {
+    fun addprodutoraMovie(personResults: List<ListaItemFilme?>?, totalResult: Int) {
         if(personResults?.isNotEmpty()!!) {
-            val initPosition = ProdutoraResultsPage.size- 1
-            this.ProdutoraResultsPage.removeAt(initPosition)
+            val initPosition = produtoraResultsPage.size- 1
+            this.produtoraResultsPage.removeAt(initPosition)
             notifyItemRemoved(initPosition)
 
 
             for (person in personResults) {
-                this.ProdutoraResultsPage.add(person!!)
+                this.produtoraResultsPage.add(person!!)
             }
 
-            notifyItemRangeChanged(initPosition, this.ProdutoraResultsPage.size + 1 /* plus loading item */)
-            ProdutoraResultsPage.add(loadingItem)
+            notifyItemRangeChanged(initPosition, this.produtoraResultsPage.size + 1 /* plus loading item */)
+            if (totalResult < produtoraResultsPage.size) produtoraResultsPage.add(loadingItem)
         }
     }
 
@@ -52,9 +52,9 @@ class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return delegateAdapters.get(viewType)!!.onCreateViewHolder(parent)
     }
 
-    override fun getItemViewType(position: Int): Int = ProdutoraResultsPage[position].getViewType()
+    override fun getItemViewType(position: Int): Int = produtoraResultsPage[position].getViewType()
 
-    override fun getItemCount(): Int = ProdutoraResultsPage.size
+    override fun getItemCount(): Int = produtoraResultsPage.size
 
 
 }

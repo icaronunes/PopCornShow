@@ -430,7 +430,7 @@ class FilmeInfoFragment : Fragment() {
                             imdbDd = it
                             setVotoMedia()
                         }
-                    }, { _ ->
+                    }, {
                         if (view != null) {
                             Toast.makeText(activity, getString(R.string.ops), Toast.LENGTH_LONG).show()
                         }
