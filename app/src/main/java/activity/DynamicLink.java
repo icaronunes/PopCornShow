@@ -26,7 +26,7 @@ import utils.Constantes;
  */
 
 public class DynamicLink extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
-
+    //TODO refazer - Desatualizado
     public static final String TAG = DynamicLink.class.getName();
     private FirebaseAnalytics mFirebaseAnalytics;
 
