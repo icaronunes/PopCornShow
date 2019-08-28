@@ -1,6 +1,6 @@
-package activity
+package producao
 
-import adapter.CrewsAdapter
+import activity.BaseActivity
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
@@ -58,7 +58,7 @@ class CrewsActivity : BaseActivity() {
                         .subscribe({
                             crews_recyclerview?.adapter = CrewsAdapter(this@CrewsActivity, it.crew)
                             progress_horizontal.visibility = View.GONE
-                        }, { _ ->
+                        }, {
                             Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
                         })
 
@@ -72,7 +72,6 @@ class CrewsActivity : BaseActivity() {
 
 
     private fun getExtras() {
-
         title = intent.getStringExtra(Constantes.NOME)
         lista = intent.getSerializableExtra(Constantes.PRODUCAO) as List<CrewItem?>?
         id = intent.getIntExtra(Constantes.ID, 0)
@@ -98,7 +97,7 @@ class CrewsActivity : BaseActivity() {
                                     .subscribe({
                                         crews_recyclerview?.adapter = CrewsAdapter(this@CrewsActivity, it.crew)
                                         progress_horizontal.visibility = View.GONE
-                                    }, { _ ->
+                                    }, {
                                         Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
                                     })
 

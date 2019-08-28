@@ -193,7 +193,7 @@
 
 
         <activity
-            android:name="activity.ElencoActivity"
+            android:name="elenco.ElencoActivity"
             android:parentActivityName="main.MainActivity">
 
 
@@ -205,7 +205,7 @@
 
 
         <activity
-            android:name="activity.CrewsActivity"
+            android:name="producao.CrewsActivity"
             android:parentActivityName="main.MainActivity">
 
 

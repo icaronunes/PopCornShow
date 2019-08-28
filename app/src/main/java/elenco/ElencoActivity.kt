@@ -1,6 +1,6 @@
-package activity
+package elenco
 
-import adapter.ElencoAdapter
+import activity.BaseActivity
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
@@ -60,7 +60,7 @@ class ElencoActivity : BaseActivity() {
                         .subscribe({
                             elenco_recycleview.adapter = ElencoAdapter(this@ElencoActivity, it.cast)
                             progress_horizontal.visibility = View.GONE
-                        }, { _ ->
+                        }, {
                             Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
                         })
 
@@ -113,7 +113,7 @@ class ElencoActivity : BaseActivity() {
                                     .subscribe({
                                         elenco_recycleview.adapter = ElencoAdapter(this@ElencoActivity, it.cast)
                                         progress_horizontal.visibility = View.GONE
-                                    }, { _ ->
+                                    }, {
                                         Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
                                     })
 
