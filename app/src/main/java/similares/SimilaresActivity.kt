@@ -1,6 +1,6 @@
-package activity
+package similares
 
-import android.content.pm.ActivityInfo
+import activity.BaseActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -12,7 +12,6 @@ import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
 import domain.ResultsSimilarItem
 import domain.tvshow.ResultsItem
-import filme.adapter.SimilaresListaFilmeAdapter
 import kotlinx.android.synthetic.main.activity_similares.*
 import kotlinx.android.synthetic.main.include_progress_horizontal.*
 import tvshow.adapter.SimilaresListaSerieAdapter
@@ -33,7 +32,6 @@ class SimilaresActivity : BaseActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_similares)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         getExtras()

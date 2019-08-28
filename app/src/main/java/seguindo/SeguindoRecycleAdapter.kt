@@ -1,4 +1,4 @@
-package adapter
+package seguindo
 
 import android.content.Intent
 import android.view.LayoutInflater

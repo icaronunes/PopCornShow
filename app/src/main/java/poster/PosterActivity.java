@@ -1,6 +1,5 @@
-package activity;
+package poster;
 
-import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
@@ -17,7 +16,6 @@ import java.util.List;
 
 import br.com.icaro.filme.R;
 import domain.PostersItem;
-import fragment.PosterScrollFragment;
 import utils.Constantes;
 
 import static br.com.icaro.filme.R.id.pager;
@@ -41,7 +39,6 @@ public class PosterActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scroll_poster);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         artworks = (List<PostersItem>) getIntent().getBundleExtra(Constantes.INSTANCE.getBUNDLE()).getSerializable(Constantes.INSTANCE.getARTWORKS());
         nome = getIntent().getStringExtra(Constantes.INSTANCE.getNOME());
         ViewPager viewPager = findViewById(pager);

@@ -1,9 +1,8 @@
-package activity;
+package busca;
 
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -23,7 +22,8 @@ import com.google.android.gms.ads.AdView;
 
 import java.util.List;
 
-import adapter.SearchAdapter;
+import activity.BaseActivity;
+import configuracao.SettingsActivity;
 import br.com.icaro.filme.R;
 import domain.FilmeService;
 import filme.activity.FilmeActivity;
@@ -55,7 +55,6 @@ public class SearchMultiActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_layout);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setUpToolBar();
 		setupNavDrawer();
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -126,6 +125,7 @@ public class SearchMultiActivity extends BaseActivity {
 	private SwipeRefreshLayout.OnRefreshListener OnRefreshListener() {
 		return () -> {
 			progressBar.setVisibility(View.INVISIBLE);
+			//TODO adicionar infinityScroll
 			if (UtilsApp.isNetWorkAvailable(SearchMultiActivity.this)) {
 				TMDVAsync tmdvAsync = new TMDVAsync();
 				tmdvAsync.execute();

@@ -32,6 +32,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
+import configuracao.SettingsActivity
 import domain.Api
 import domain.Imdb
 import domain.UserTvshow
@@ -45,11 +46,13 @@ import info.movito.themoviedbapi.TmdbTvSeasons
 import info.movito.themoviedbapi.model.tv.TvSeason
 import kotlinx.android.synthetic.main.fab_float.*
 import kotlinx.android.synthetic.main.tvshow_info.*
+import poster.PosterGridActivity
 import produtora.activity.ProdutoraActivity
 import rx.Observer
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import similares.SimilaresActivity
 import tvshow.adapter.SimilaresSerieAdapter
 import utils.Config
 import utils.Constantes

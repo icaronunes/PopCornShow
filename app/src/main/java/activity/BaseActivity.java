@@ -13,8 +13,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,8 +62,11 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import applicaton.PopCornViewModelFactory;
+import avaliado.RatedActivity;
 import br.com.icaro.filme.BuildConfig;
 import br.com.icaro.filme.R;
+import busca.SearchMultiActivity;
+import configuracao.SettingsActivity;
 import domain.Api;
 import domain.busca.MultiSearch;
 import main.MainActivity;
@@ -499,7 +500,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
 										RecyclerView recyclerView = dialog.findViewById(R.id.layout_search_multi_recycler);
 										recyclerView.setHasFixedSize(true);
 										recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
-										recyclerView.setAdapter(new MultiAdapter(BaseActivity.this, multiRetorno, item.getIcon()));
+										recyclerView.setAdapter(new MultiSearchAdapter(BaseActivity.this, multiRetorno, item.getIcon()));
 									}
 								});
 

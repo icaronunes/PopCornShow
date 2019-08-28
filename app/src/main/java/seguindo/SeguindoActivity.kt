@@ -1,7 +1,6 @@
 package seguindo
 
 import activity.BaseActivity
-import adapter.FollowingAdapater
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
@@ -106,7 +105,7 @@ class SeguindoActivity : BaseActivity() {
         tabLayout?.setupWithViewPager(viewPager)
         tabLayout?.setSelectedTabIndicatorColor(resources.getColor(R.color.accent))
         viewPager?.adapter = FollowingAdapater(this@SeguindoActivity, supportFragmentManager,
-                userTvshowFire)
+                userTvshowFire!!)
     }
 
     private fun setEventListenerSeguindo() {

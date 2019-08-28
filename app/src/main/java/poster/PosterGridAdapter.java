@@ -1,4 +1,4 @@
-package adapter;
+package poster;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,7 +22,6 @@ import com.squareup.picasso.Picasso;
 import java.io.Serializable;
 import java.util.List;
 
-import activity.PosterActivity;
 import br.com.icaro.filme.R;
 import domain.PostersItem;
 import utils.Constantes;

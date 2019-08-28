@@ -6,7 +6,6 @@ import androidx.collection.SparseArrayCompat
 import androidx.recyclerview.widget.RecyclerView
 import domain.ViewType
 import domain.movie.ListaItemFilme
-import oscar.adapter.ListasDelegateAdapter
 import pessoaspopulares.adapter.LoadingDelegateAdapter
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes

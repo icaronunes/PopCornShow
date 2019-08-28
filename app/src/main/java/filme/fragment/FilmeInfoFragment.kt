@@ -39,10 +39,12 @@ import elenco.ElencoActivity
 import filme.adapter.SimilaresFilmesAdapter
 import kotlinx.android.synthetic.main.fab_float.*
 import kotlinx.android.synthetic.main.filme_info.*
+import poster.PosterGridActivity
 import produtora.activity.ProdutoraActivity
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import similares.SimilaresActivity
 import utils.Constantes
 import utils.UtilsApp
 import java.io.Serializable

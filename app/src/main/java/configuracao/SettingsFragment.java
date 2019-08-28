@@ -1,4 +1,4 @@
-package fragment;
+package configuracao;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.onesignal.OneSignal;
 
-import activity.SettingsActivity;
 import br.com.icaro.filme.R;
 import utils.LogoffDialog;
 

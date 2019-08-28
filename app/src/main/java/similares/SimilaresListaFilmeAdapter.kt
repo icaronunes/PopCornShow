@@ -1,6 +1,5 @@
-package filme.adapter
+package similares
 
-import activity.SimilaresActivity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View

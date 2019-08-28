@@ -1,4 +1,4 @@
-package fragment;
+package poster;
 
 import android.Manifest;
 import android.content.Context;
@@ -36,7 +36,7 @@ import utils.UtilsApp;
  */
 
 public class PosterScrollFragment extends Fragment {
-
+    //TODO refatorar
     private String endereco, nome;
     private ImageView imageView;
     private LinearLayout linear_poster_grid;

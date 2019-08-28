@@ -1,6 +1,6 @@
-package activity
+package poster
 
-import adapter.PosterGridAdapter
+import activity.BaseActivity
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle

@@ -1,7 +1,5 @@
-package adapter
+package busca
 
-import activity.SearchMultiActivity
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -39,7 +37,7 @@ class SearchAdapter(val context: SearchMultiActivity, private val multis: List<M
             Multi.MediaType.MOVIE -> {
                 val movieDb = multis[position] as MovieDb
 
-                holder.poster.setPicasso(movieDb.posterPath, 2)
+                holder.poster.setPicassoWithCache(movieDb.posterPath, 2)
 
                 holder.itemView.setOnClickListener {
                     context.startActivity(Intent(context, FilmeActivity::class.java).apply {

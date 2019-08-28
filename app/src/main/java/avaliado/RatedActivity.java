@@ -1,6 +1,5 @@
-package activity;
+package avaliado;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,15 +20,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.RatedAdapater;
+import activity.BaseActivity;
 import br.com.icaro.filme.R;
 import domain.FilmeDB;
 import domain.TvshowDB;
 import utils.UtilsApp;
 
 public class RatedActivity extends BaseActivity {
-
-    private final String TAG = RatedActivity.class.getName();
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -46,13 +43,13 @@ public class RatedActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuario_list);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getSupportActionBar().setTitle(R.string.avaliados);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        viewPager = (ViewPager) findViewById(R.id.viewpage_usuario);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        progressBar = (ProgressBar) findViewById(R.id.progress);
+        viewPager = findViewById(R.id.viewpage_usuario);
+        tabLayout = findViewById(R.id.tabLayout);
+        progressBar = findViewById(R.id.progress);
+        linearLayout = findViewById(R.id.linear_usuario_list);
 
         if (UtilsApp.isNetWorkAvailable(this)){
 
@@ -84,7 +81,6 @@ public class RatedActivity extends BaseActivity {
                     @Override
                     public void onClick(View view) {
                         if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
-                            //text_elenco_no_internet.setVisibility(View.GONE);
                             setEventListenerFavorite();
                         } else {
                             snack();

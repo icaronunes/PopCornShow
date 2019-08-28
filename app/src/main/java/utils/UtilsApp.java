@@ -33,7 +33,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import activity.SettingsActivity;
+import configuracao.SettingsActivity;
 import domain.EpisodesItem;
 import domain.FilmeService;
 import domain.TvSeasons;

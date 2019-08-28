@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import br.com.icaro.filme.R
 import domain.person.ProfilesItem
-import fragment.PosterScrollFragment
+import poster.PosterScrollFragment
 import kotlinx.android.synthetic.main.activity_scroll_poster.*
 import utils.Constantes
 

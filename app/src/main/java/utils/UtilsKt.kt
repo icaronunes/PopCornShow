@@ -1,6 +1,6 @@
 package utils
 
-import activity.SettingsActivity
+import configuracao.SettingsActivity
 import android.content.Context
 import android.preference.PreferenceManager
 import android.widget.Toast

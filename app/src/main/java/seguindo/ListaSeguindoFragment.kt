@@ -1,7 +1,5 @@
-package fragment
+package seguindo
 
-import adapter.ProximosAdapter
-import adapter.SeguindoRecycleAdapter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater

@@ -50,7 +50,7 @@ class ListaGenericaActivity : BaseActivity() {
     
     private fun createRecyler() {
         recycleView_favorite.apply {
-            val gridlayout = GridLayoutManager(this@ListaGenericaActivity, 3);
+            val gridlayout = GridLayoutManager(this@ListaGenericaActivity, 3)
             layoutManager = gridlayout
             itemAnimator = DefaultItemAnimator()
             setHasFixedSize(true)
@@ -72,19 +72,18 @@ class ListaGenericaActivity : BaseActivity() {
         subscriptions.clear()
     }
 
-
     private fun getLista() {
         if (totalPagina >= pagina) {
             val inscricao = Api(context = this).getLista(id = list_id, pagina = pagina)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        val itens = it.results.sortedBy { it?.releaseDate }
+                    .subscribe({ listaFilmes ->
+                        val itens = listaFilmes.results.sortedBy { it?.releaseDate }
                                 .reversed()
-
-                        (recycleView_favorite.adapter as ListUserAdapter).addItens(itens, it?.totalResults!!)
-                        pagina = it.page
-                        totalPagina = it.totalPages
+                        (recycleView_favorite.adapter as ListUserAdapter)
+                                .addItens(itens, listaFilmes?.totalResults!!)
+                        pagina = listaFilmes.page
+                        totalPagina = listaFilmes.totalPages
                         ++pagina
                     }, {
                         Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
@@ -94,7 +93,6 @@ class ListaGenericaActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         when (item.itemId) {
             android.R.id.home -> {
                 finish()
@@ -118,6 +116,11 @@ class ListaGenericaActivity : BaseActivity() {
             menuInflater.inflate(R.menu.menu_random_lista, menu)
 
         return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if(subscriptions.hasSubscriptions()) subscriptions.clear()
     }
 
 }

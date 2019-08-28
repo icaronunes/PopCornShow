@@ -1,7 +1,6 @@
 package main
 
 import activity.BaseActivity
-import adapter.MainAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.app.Activity

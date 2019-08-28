@@ -1,7 +1,7 @@
-package adapter
+package seguindo
 
 import activity.TemporadaActivity
-import adapter.ProximosAdapter.CalendarViewHolder
+import seguindo.ProximosAdapter.CalendarViewHolder
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View

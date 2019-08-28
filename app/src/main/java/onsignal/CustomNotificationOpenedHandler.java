@@ -19,7 +19,7 @@ import producao.CrewsActivity;
 import elenco.ElencoActivity;
 import activity.ListaGenericaActivity;
 import main.MainActivity;
-import activity.SimilaresActivity;
+import similares.SimilaresActivity;
 import activity.Site;
 import activity.TemporadaActivity;
 import activity.TrailerActivity;

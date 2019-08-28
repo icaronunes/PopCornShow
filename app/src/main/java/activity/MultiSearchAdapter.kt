@@ -17,10 +17,9 @@ import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
 import utils.enums.EnumTypeMedia
-import utils.setPicasso
 import utils.setPicassoWithCache
 
-class MultiAdapter(val application: Context, private val multiReturn: MultiSearch, private val icon: Drawable?) : RecyclerView.Adapter<MultiAdapter.HolderView>() {
+class MultiSearchAdapter(val application: Context, private val multiReturn: MultiSearch, private val icon: Drawable?) : RecyclerView.Adapter<MultiSearchAdapter.HolderView>() {
 
     override fun onBindViewHolder(holder: HolderView, position: Int) {
         val item = multiReturn.results?.get(position)!!

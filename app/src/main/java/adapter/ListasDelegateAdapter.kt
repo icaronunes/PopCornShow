@@ -1,4 +1,4 @@
-package oscar.adapter
+package adapter
 
 import android.content.Context
 import android.content.Intent
@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
-import com.squareup.picasso.Picasso
 import domain.movie.ListaItemFilme
 import domain.ViewType
 import filme.activity.FilmeActivity
@@ -16,6 +15,7 @@ import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
+import utils.setPicassoWithCache
 
 /**
  * Created by icaro on 28/08/17.
@@ -26,7 +26,6 @@ class ListasDelegateAdapter : ViewTypeDelegateAdapter {
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
             ListViewHolder(parent)
 
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType, context: Context?) {
         (holder as ListViewHolder).bind(item as ListaItemFilme)
     }
@@ -36,9 +35,7 @@ class ListasDelegateAdapter : ViewTypeDelegateAdapter {
 
         fun bind(item: ListaItemFilme) = with(itemView) {
 
-            Picasso.get().load(UtilsApp
-                    .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.posterPath)
-                    .into(img_lista)
+            img_lista.setPicassoWithCache(item.posterPath, 2)
             when(item.mediaType) {
                 "tv" -> date_oscar.text = if (!item.first_air_date.isNullOrEmpty() && item.first_air_date.length > 3)
                     item.first_air_date.subSequence(0,4) else "-"

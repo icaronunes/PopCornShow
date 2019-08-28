@@ -105,7 +105,7 @@
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
         </activity>
-        <activity android:name="activity.RatedActivity">
+        <activity android:name="avaliado.RatedActivity">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -182,7 +182,7 @@
         </activity>
 
         <activity
-            android:name="activity.PosterActivity"
+            android:name="poster.PosterActivity"
             android:parentActivityName="main.MainActivity">
 
             <meta-data
@@ -217,7 +217,7 @@
 
 
         <activity
-            android:name="activity.PosterGridActivity"
+            android:name="poster.PosterGridActivity"
             android:parentActivityName="main.MainActivity">
 
 
@@ -227,7 +227,7 @@
         </activity>
 
         <activity
-            android:name="activity.SearchMultiActivity"
+            android:name="busca.SearchMultiActivity"
             android:theme="@style/AppTheme.NoActionBar.NavDrawer">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -260,7 +260,7 @@
         </activity>
 
         <activity
-            android:name="activity.SimilaresActivity"
+            android:name="similares.SimilaresActivity"
             android:parentActivityName="main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -270,8 +270,6 @@
                 android:value="main.MainActivity" />
         </activity>
 
-
-        <activity android:name="activity.ListaUserActivity" />
 
         <activity
             android:name="pessoa.activity.PersonActivity"
@@ -300,7 +298,7 @@
                 android:value="main.MainActivity" />
         </activity>
 
-        <activity android:name="activity.SettingsActivity" />
+        <activity android:name="configuracao.SettingsActivity" />
 
         <activity
             android:name="listaserie.activity.TvShowsActivity"

@@ -1,6 +1,6 @@
 package tvshow.adapter
 
-import activity.SimilaresActivity
+import similares.SimilaresActivity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
