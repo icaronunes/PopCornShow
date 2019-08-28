@@ -93,6 +93,7 @@
                 android:layout_marginRight="@dimen/trade_size_dp_4"
                 android:maxLength="30"
                 android:maxLines="1"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/status"
                 app:layout_constraintStart_toEndOf="@+id/textView"
                 app:layout_constraintTop_toTopOf="@+id/textView"

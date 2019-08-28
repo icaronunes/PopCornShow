@@ -403,14 +403,17 @@ class FilmeInfoFragment : Fragment() {
     }
 
     private fun setProdutora() {
-        if (!movieDb?.productionCompanies?.isEmpty()!!) {
-
+        if (movieDb?.productionCompanies?.isNotEmpty()!!) {
             produtora.text = movieDb?.productionCompanies?.get(0)?.name
             produtora.setTextColor(ContextCompat.getColor(context!!, R.color.primary))
             produtora.setOnClickListener {
-                val intent = Intent(context, ProdutoraActivity::class.java)
-                intent.putExtra(Constantes.PRODUTORA_ID, movieDb?.productionCompanies!![0]?.id)
-                startActivity(intent)
+                movieDb?.productionCompanies?.get(0)?.let { production ->
+                    startActivity(Intent(context, ProdutoraActivity::class.java).apply {
+                        putExtra(Constantes.PRODUTORA_ID, production.id)
+                        putExtra(Constantes.ENDERECO, production.logoPath)
+                        putExtra(Constantes.NOME, production.name)
+                    })
+                }
             }
         } else {
             label_produtora.visibility = View.GONE
