@@ -1,7 +1,5 @@
-package adapter
+package producao
 
-import activity.CrewsActivity
-import pessoa.activity.PersonActivity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -10,41 +8,34 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
-import com.squareup.picasso.Picasso
 import domain.CrewItem
+import pessoa.activity.PersonActivity
 import utils.Constantes
-import utils.UtilsApp
+import utils.setPicassoWithCache
 
 /**
  * Created by icaro on 24/07/16.
  */
 class CrewsAdapter(private val context: CrewsActivity, private val crews: List<CrewItem?>?) : RecyclerView.Adapter<CrewsAdapter.CrewsViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CrewsViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.crews_list_adapter, parent, false)
         return CrewsViewHolder(view)
     }
-
 
     override fun onBindViewHolder(holder: CrewsViewHolder, position: Int) {
         val crew = crews?.get(position)
         holder.crewCharacter.text = "${crew?.department}  ${crew?.job}"
 
         holder.crewNome.text = crew?.name
-        Picasso.get()
-                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + crew?.profilePath)
-                .error(R.drawable.person)
-                .into(holder.imgCrew)
+        holder.imgCrew.setPicassoWithCache(crew?.profilePath, 2, img_erro = R.drawable.person)
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, PersonActivity::class.java)
-            intent.putExtra(Constantes.PERSON_ID, crew?.id)
-            intent.putExtra(Constantes.NOME_PERSON, crew?.name)
-            context.startActivity(intent)
-
+            context.startActivity(Intent(context, PersonActivity::class.java).apply {
+                putExtra(Constantes.PERSON_ID, crew?.id)
+                putExtra(Constantes.NOME_PERSON, crew?.name)
+            })
         }
-
     }
 
     override fun getItemCount(): Int {

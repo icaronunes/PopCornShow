@@ -15,8 +15,8 @@ import com.onesignal.OneSignal;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import activity.CrewsActivity;
-import activity.ElencoActivity;
+import producao.CrewsActivity;
+import elenco.ElencoActivity;
 import activity.ListaGenericaActivity;
 import main.MainActivity;
 import activity.SimilaresActivity;

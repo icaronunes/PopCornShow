@@ -1,7 +1,7 @@
 package adapter
 
-import activity.CrewsActivity
-import activity.ElencoActivity
+import producao.CrewsActivity
+import elenco.ElencoActivity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View

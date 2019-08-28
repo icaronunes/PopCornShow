@@ -34,6 +34,8 @@ import domain.Api
 import domain.Imdb
 import domain.Movie
 import domain.colecao.PartsItem
+import producao.CrewsActivity
+import elenco.ElencoActivity
 import filme.adapter.SimilaresFilmesAdapter
 import kotlinx.android.synthetic.main.fab_float.*
 import kotlinx.android.synthetic.main.filme_info.*

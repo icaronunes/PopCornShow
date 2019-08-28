@@ -37,6 +37,8 @@ import domain.Imdb
 import domain.UserTvshow
 import domain.tvshow.SeasonsItem
 import domain.tvshow.Tvshow
+import producao.CrewsActivity
+import elenco.ElencoActivity
 import fragment.FragmentBase
 import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbTvSeasons
