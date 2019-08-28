@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.icaro.filme.R
@@ -22,9 +21,8 @@ import utils.UtilsApp
 /**
  * Created by icaro on 12/08/16.
  */
-class SimilaresActivity : BaseActivity() {
+open class SimilaresActivity : BaseActivity() {
 
-    private var text_similares_no_internet: TextView? = null
     private var listaFilme: List<ResultsSimilarItem?>? = null
     private var listaTvshow: List<ResultsItem?>? = null
     private var title: String? = null
@@ -35,26 +33,29 @@ class SimilaresActivity : BaseActivity() {
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         getExtras()
-        
         setAdmob()
 
         supportActionBar?.title = title
 
-        similares_recyckeview.apply {
+        similares_recyclerview.apply {
             layoutManager = LinearLayoutManager(this@SimilaresActivity)
             setHasFixedSize(true)
             itemAnimator = DefaultItemAnimator()
         }
+        setDataRecycler()
+    }
 
+    private fun setDataRecycler() {
         if (UtilsApp.isNetWorkAvailable(this)) {
-            if (listaFilme != null) {
-                similares_recyckeview.adapter = SimilaresListaFilmeAdapter(this@SimilaresActivity, listaFilme)
-            } else if (listaTvshow != null) {
-                similares_recyckeview.adapter = SimilaresListaSerieAdapter(this@SimilaresActivity, listaTvshow!!)
+            listaFilme?.let {
+                similares_recyclerview.adapter = SimilaresListaFilmeAdapter(this@SimilaresActivity, listaFilme)
+            }
+            listaTvshow?.let {
+                similares_recyclerview.adapter = SimilaresListaSerieAdapter(this@SimilaresActivity, listaTvshow)
             }
             progress_horizontal.visibility = View.GONE
         } else {
-            text_similares_no_internet?.visibility = View.VISIBLE
+            text_similares_no_internet.visibility = View.VISIBLE
             snack()
         }
     }
@@ -69,23 +70,12 @@ class SimilaresActivity : BaseActivity() {
 
     }
 
-    protected fun snack() {
-        Snackbar.make(similares_recyckeview, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+    private fun snack() {
+        Snackbar.make(similares_recyclerview, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
-                    if (UtilsApp.isNetWorkAvailable(this)) {
-
-                        if (listaFilme?.isEmpty()!!) {
-                            similares_recyckeview.adapter = SimilaresListaFilmeAdapter(this@SimilaresActivity, listaFilme)
-                        } else if (listaTvshow?.isEmpty()!!) {
-                            similares_recyckeview.adapter = SimilaresListaSerieAdapter(this@SimilaresActivity, listaTvshow)
-                        }
-                        progress_horizontal.visibility = View.GONE
-                    } else {
-                        snack()
-                    }
+                   setDataRecycler()
                 }.show()
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         return true
@@ -95,7 +85,6 @@ class SimilaresActivity : BaseActivity() {
         if (item.itemId == android.R.id.home) {
             finish()
         }
-
         return true
     }
 
