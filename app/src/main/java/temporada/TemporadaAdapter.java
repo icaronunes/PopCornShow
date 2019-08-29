@@ -1,4 +1,4 @@
-package adapter;
+package temporada;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,7 +14,6 @@ import com.crashlytics.android.Crashlytics;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
-import activity.TemporadaActivity;
 import applicaton.PopCornApplication;
 import br.com.icaro.filme.R;
 import domain.EpisodesItem;

@@ -1,4 +1,4 @@
-package adapter
+package tvshow
 
 import producao.CrewsActivity
 import elenco.ElencoActivity
@@ -33,10 +33,8 @@ class TemporadasAdapter(val context: FragmentActivity, private val series: Tvsho
         fun onClickCheckTemporada(view: View, position: Int)
     }
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TemporadasAdapter.HoldeTemporada {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HoldeTemporada {
         val view = LayoutInflater.from(context).inflate(R.layout.season_layout, parent, false)
-
         return HoldeTemporada(view)
     }
 
@@ -71,7 +69,7 @@ class TemporadasAdapter(val context: FragmentActivity, private val series: Tvsho
     }
 
 
-    override fun onBindViewHolder(holder: TemporadasAdapter.HoldeTemporada, position: Int) {
+    override fun onBindViewHolder(holder: HoldeTemporada, position: Int) {
 
         holder.temporada.text = "${context.getString(R.string.temporada)} ${series?.seasons!![position]?.seasonNumber!!}"
         Picasso.get().load(UtilsApp.getBaseUrlImagem(2) + series.seasons[position]?.posterPath)

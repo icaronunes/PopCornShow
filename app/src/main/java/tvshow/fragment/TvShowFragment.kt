@@ -2,10 +2,10 @@ package tvshow.fragment
 
 import activity.BaseActivity
 import activity.Site
-import activity.TemporadaActivity
+import temporada.TemporadaActivity
 import adapter.CastAdapter
 import adapter.CrewAdapter
-import adapter.TemporadasAdapter
+import tvshow.TemporadasAdapter
 import adapter.TrailerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator

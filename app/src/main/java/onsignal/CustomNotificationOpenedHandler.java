@@ -21,7 +21,7 @@ import activity.ListaGenericaActivity;
 import main.MainActivity;
 import similares.SimilaresActivity;
 import activity.Site;
-import activity.TemporadaActivity;
+import temporada.TemporadaActivity;
 import activity.TrailerActivity;
 import applicaton.PopCornApplication;
 import domain.FilmeDB;

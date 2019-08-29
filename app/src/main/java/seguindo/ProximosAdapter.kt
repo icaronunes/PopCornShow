@@ -1,6 +1,6 @@
 package seguindo
 
-import activity.TemporadaActivity
+import temporada.TemporadaActivity
 import seguindo.ProximosAdapter.CalendarViewHolder
 import android.content.Intent
 import android.view.LayoutInflater
