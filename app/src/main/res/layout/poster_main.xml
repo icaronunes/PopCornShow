@@ -17,11 +17,12 @@
     <ImageView
         android:id="@+id/img_poster_grid"
         android:layout_width="wrap_content"
+        android:minWidth="90dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_margin="@dimen/trade_size_dp_2"
         android:adjustViewBounds="true"
-        android:background="@color/accent2"
+        android:background="@color/accent"
         android:cropToPadding="true"
         android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/avatars" />
