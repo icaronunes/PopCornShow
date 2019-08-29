@@ -25,7 +25,7 @@ import java.util.*
 class ListaGenericaActivity : BaseActivity() {
 
 
-    private lateinit var list_id: String
+    private lateinit var listId: String
     private var totalPagina: Int = 1
     private var pagina = 1
     private lateinit var map: Map<String, String>
@@ -39,7 +39,7 @@ class ListaGenericaActivity : BaseActivity() {
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = intent.getStringExtra(Constantes.LISTA_GENERICA)
-        list_id = intent.getStringExtra(Constantes.LISTA_ID)
+        listId = intent.getStringExtra(Constantes.LISTA_ID)
         
         if (intent.hasExtra(Constantes.BUNDLE)) {
             map = HashMap()
@@ -74,7 +74,7 @@ class ListaGenericaActivity : BaseActivity() {
 
     private fun getLista() {
         if (totalPagina >= pagina) {
-            val inscricao = Api(context = this).getLista(id = list_id, pagina = pagina)
+            val inscricao = Api(context = this).getLista(id = listId, pagina = pagina)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ listaFilmes ->
@@ -102,7 +102,7 @@ class ListaGenericaActivity : BaseActivity() {
                 createRecyler()
                 val numero = Random().nextInt(10).toString()
                 supportActionBar?.title = map["title$numero"]
-                list_id = map["id$numero"].toString()
+                listId = map["id$numero"].toString()
                 pagina = 1
                 totalPagina = 1
                 getLista()
