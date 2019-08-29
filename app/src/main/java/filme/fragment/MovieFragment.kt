@@ -1,7 +1,8 @@
 package filme.fragment
 
 
-import activity.*
+import activity.BaseActivity
+import activity.Site
 import adapter.CastAdapter
 import adapter.CollectionPagerAdapter
 import adapter.CrewAdapter
@@ -13,34 +14,32 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import br.com.icaro.filme.R
-import com.google.android.gms.ads.AdRequest
 import com.squareup.picasso.Picasso
 import domain.Api
 import domain.Imdb
 import domain.Movie
 import domain.colecao.PartsItem
-import producao.CrewsActivity
 import elenco.ElencoActivity
 import filme.adapter.SimilaresFilmesAdapter
 import fragment.FragmentBase
 import kotlinx.android.synthetic.main.fab_float.*
 import kotlinx.android.synthetic.main.filme_info.*
 import poster.PosterGridActivity
+import producao.CrewsActivity
 import produtora.activity.ProdutoraActivity
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -56,12 +55,12 @@ import java.util.*
  * Created by icaro on 03/07/16.
  */
 
-class FilmeInfoFragment : FragmentBase() {
+class MovieFragment : FragmentBase() {
 
     private var movieDb: Movie? = null
     private var imdbDd: Imdb? = null
     private var color: Int = 0
-  //  private lateinit var subscriptions: CompositeSubscription
+    //  private lateinit var subscriptions: CompositeSubscription
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,8 +105,8 @@ class FilmeInfoFragment : FragmentBase() {
         setSimilares()
         setAnimacao()
         setStatus()
-	    setAdMob(adView)
-        
+        setAdMob(adView)
+
         imdb_site.setOnClickListener {
             val intent = Intent(activity, Site::class.java)
             intent.putExtra(Constantes.SITE,
@@ -168,17 +167,17 @@ class FilmeInfoFragment : FragmentBase() {
                         }, { _ ->
                             Toast.makeText(activity, getString(R.string.ops), Toast.LENGTH_LONG).show()
                         })
-        
+
                 subscriptions.add(inscricaoMovie)
             } else {
                 BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
                         getString(R.string.sem_informacao_colletion))
             }
         }
-    
+
         textview_elenco.setOnClickListener {
             val intent = Intent(context, ElencoActivity::class.java)
-            intent.putExtra(Constantes.ELENCO, movieDb?.credits?.cast as  Serializable )
+            intent.putExtra(Constantes.ELENCO, movieDb?.credits?.cast as Serializable)
             intent.putExtra(Constantes.NOME, movieDb?.title)
             startActivity(intent)
 
@@ -186,7 +185,7 @@ class FilmeInfoFragment : FragmentBase() {
 
         textview_crews.setOnClickListener {
             val intent = Intent(context, CrewsActivity::class.java)
-            intent.putExtra(Constantes.PRODUCAO, movieDb?.credits?.crew  as Serializable)
+            intent.putExtra(Constantes.PRODUCAO, movieDb?.credits?.crew as Serializable)
             intent.putExtra(Constantes.NOME, movieDb?.title)
             startActivity(intent)
 
@@ -200,14 +199,14 @@ class FilmeInfoFragment : FragmentBase() {
 
         }
     }
-	
-	private fun setStatus() {
+
+    private fun setStatus() {
         movieDb?.status.let {
             status.text = it
             status.setTextColor(color)
         }
     }
-    
+
     private fun onClickImageStar(): View.OnClickListener? {
         return object : View.OnClickListener {
             override fun onClick(p0: View?) {
@@ -279,20 +278,20 @@ class FilmeInfoFragment : FragmentBase() {
                             })
 
                     layout.findViewById<ImageView>(R.id.image_imdb)
-                            .setOnClickListener OnClickListener@ {
+                            .setOnClickListener OnClickListener@{
                                 if (imdbDd == null) {
                                     return@OnClickListener
                                 }
-    
+
                                 if (imdbDd?.imdbID != null) {
-        
+
                                     val url = "http://www.imdb.com/title/" + imdbDd?.imdbID
                                     val intent = Intent(activity, Site::class.java)
                                     intent.putExtra(Constantes.SITE, url)
                                     startActivity(intent)
                                 }
                             }
-    
+
                     layout.findViewById<ImageView>(R.id.image_tmdb)
                             .setOnClickListener(View.OnClickListener {
                                 if (movieDb == null) {
@@ -555,12 +554,12 @@ class FilmeInfoFragment : FragmentBase() {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                adapter = CastAdapter(activity, movieDb?.credits?.cast)
             }
 
             textview_elenco?.visibility = View.VISIBLE
-            recycle_filme_elenco.adapter = CastAdapter(activity, movieDb?.credits?.cast)
         } else {
-            recycle_filme_elenco.visibility = View.GONE
+            recycle_filme_elenco.layoutParams.height = 1
         }
     }
 
@@ -572,12 +571,11 @@ class FilmeInfoFragment : FragmentBase() {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                adapter = CrewAdapter(activity, movieDb?.credits?.crew)
             }
-
             textview_crews.visibility = View.VISIBLE
-            recycle_filme_producao.adapter = CrewAdapter(activity, movieDb?.credits?.crew)
         } else {
-            recycle_filme_producao.visibility = View.GONE
+            recycle_filme_producao.layoutParams.height = 1
         }
     }
 
@@ -589,6 +587,7 @@ class FilmeInfoFragment : FragmentBase() {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                adapter = SimilaresFilmesAdapter(activity!!, movieDb?.similar?.resultsSimilar)
             }
 
             recycle_filme_similares.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -610,12 +609,10 @@ class FilmeInfoFragment : FragmentBase() {
             })
 
             textview_similares.visibility = View.VISIBLE
-            recycle_filme_similares.adapter = SimilaresFilmesAdapter(activity!!, movieDb?.similar?.resultsSimilar)
         } else {
             textview_similares.visibility = View.GONE
-            recycle_filme_similares.visibility = View.GONE;
+            recycle_filme_similares.layoutParams.height = 1
         }
-
     }
 
     private fun setLancamento() {
@@ -623,7 +620,7 @@ class FilmeInfoFragment : FragmentBase() {
         if (movieDb?.releaseDates?.resultsReleaseDates?.isNotEmpty()!!) {
 
             val releases = movieDb?.releaseDates?.resultsReleaseDates
-            lancamento.text = if (movieDb?.releaseDate?.length!! > 9) "${movieDb?.releaseDate?.subSequence(0,10)} ${Locale.getDefault().country}" else "N/A"
+            lancamento.text = if (movieDb?.releaseDate?.length!! > 9) "${movieDb?.releaseDate?.subSequence(0, 10)} ${Locale.getDefault().country}" else "N/A"
             releases?.forEach { date ->
                 if (date?.iso31661 == Locale.getDefault().country) {
                     date?.releaseDates?.forEach { it ->
@@ -633,24 +630,21 @@ class FilmeInfoFragment : FragmentBase() {
                     }
                 }
             }
-
         }
-
     }
 
     private fun setTrailer() {
 
-        recycle_filme_trailer?.apply {
-            setHasFixedSize(true)
-            itemAnimator = DefaultItemAnimator()
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-
-        }
         if (movieDb?.videos?.results?.isNotEmpty()!!) {
-            val videos = movieDb?.videos?.results
-            recycle_filme_trailer.adapter = TrailerAdapter(activity, videos, movieDb?.overview ?: "")
+            recycle_filme_trailer?.apply {
+                setHasFixedSize(true)
+                itemAnimator = DefaultItemAnimator()
+                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                adapter = TrailerAdapter(activity, movieDb?.videos?.results, movieDb?.overview
+                        ?: "")
+            }
         } else {
-            recycle_filme_trailer.visibility = View.GONE;
+            recycle_filme_trailer.layoutParams.height = 1
         }
     }
 

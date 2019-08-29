@@ -25,7 +25,7 @@ import domain.Api
 import domain.FilmeDB
 import domain.FilmeService
 import domain.Movie
-import filme.fragment.FilmeInfoFragment
+import filme.fragment.MovieFragment
 import fragment.ImagemTopFilmeScrollFragment
 import kotlinx.android.synthetic.main.activity_filme.*
 import kotlinx.android.synthetic.main.fab_float.*
@@ -507,7 +507,7 @@ class FilmeActivity : BaseActivity() {
 
     private fun setFragmentInfo() {
 
-        val filmeFrag = FilmeInfoFragment()
+        val filmeFrag = MovieFragment()
         val bundle = Bundle()
         bundle.putSerializable(Constantes.FILME, movieDb)
         bundle.putInt(Constantes.COLOR_TOP, color_fundo)
