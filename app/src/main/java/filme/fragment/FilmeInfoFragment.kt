@@ -37,6 +37,7 @@ import domain.colecao.PartsItem
 import producao.CrewsActivity
 import elenco.ElencoActivity
 import filme.adapter.SimilaresFilmesAdapter
+import fragment.FragmentBase
 import kotlinx.android.synthetic.main.fab_float.*
 import kotlinx.android.synthetic.main.filme_info.*
 import poster.PosterGridActivity
@@ -55,12 +56,12 @@ import java.util.*
  * Created by icaro on 03/07/16.
  */
 
-class FilmeInfoFragment : Fragment() {
+class FilmeInfoFragment : FragmentBase() {
 
     private var movieDb: Movie? = null
     private var imdbDd: Imdb? = null
     private var color: Int = 0
-    private lateinit var subscriptions: CompositeSubscription
+  //  private lateinit var subscriptions: CompositeSubscription
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,7 +106,7 @@ class FilmeInfoFragment : Fragment() {
         setSimilares()
         setAnimacao()
         setStatus()
-	    setAdMob()
+	    setAdMob(adView)
         
         imdb_site.setOnClickListener {
             val intent = Intent(activity, Site::class.java)
@@ -199,8 +200,6 @@ class FilmeInfoFragment : Fragment() {
 
         }
     }
-	
-	private fun setAdMob() =  adView.loadAd(AdRequest.Builder().build())
 	
 	private fun setStatus() {
         movieDb?.status.let {

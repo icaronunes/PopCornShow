@@ -104,8 +104,8 @@ class PersonFragment : Fragment() {
 
         val adview = view.findViewById<View>(R.id.adView) as AdView
         val adRequest = AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+               // .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
                 .build()
         adview.loadAd(adRequest)
 
@@ -142,8 +142,8 @@ class PersonFragment : Fragment() {
 
         val adview = view.findViewById<AdView>(R.id.adView)
         val adRequest = AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+               // .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
                 .build()
         adview.loadAd(adRequest)
 
@@ -189,8 +189,8 @@ class PersonFragment : Fragment() {
 
         val adview = view.findViewById<AdView>(R.id.adView)
         val adRequest = AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
                 .build()
         adview.loadAd(adRequest)
 

@@ -10,7 +10,7 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.*
+import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
 import br.com.icaro.filme.BuildConfig
 import br.com.icaro.filme.R
@@ -52,7 +52,7 @@ class MainActivity : BaseActivity() {
         model.data.observe(this, Observer {
             when(it) {
                 is MainViewModel.MainModel.Data ->  mescla(it.data.first, it.data.second)
-                is MainViewModel.MainModel.isNovidade -> News()
+                is MainViewModel.MainModel.isNovidade -> news()
                 is MainViewModel.MainModel.VisibleAnimed -> visibleAnimed(it)
             }
         })
@@ -66,7 +66,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun News() {
+    private fun news() {
             val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
             val dialog = AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_popcorn2)

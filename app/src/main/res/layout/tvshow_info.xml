@@ -507,7 +507,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/trade_size_dp_4"
-                app:adSize="SMART_BANNER"
+                app:adSize="BANNER"
                 app:adUnitId="@string/admob"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -169,7 +169,7 @@
     <string name="ajuda_desenvolvimento">Development</string>
     <string name="twitter_text" translatable="false">Twitter</string>
     <string name="novidades_title">News</string>
-    <string name="novidades_text">** Your reviews are now sent to TMDB. \n\n (With great powers comes great responsibilities) \n\n ** Search now brings image in search **</string>
+    <string name="novidades_text">** New look \n\n Updated components **</string>
     <string name="homepage" translatable="false">Homepager</string>
     <string name="alerta_spoiler">Warning</string>
     <string name="msg_spoiler">These links may contain SPOILERS</string>

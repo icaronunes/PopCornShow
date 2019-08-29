@@ -24,8 +24,8 @@ class BaseActivityKt : AppCompatActivity() {
 
     fun setAdMob(adView: AdView) {
         adView.loadAd(com.google.android.gms.ads.AdRequest.Builder()
-                .addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+               // .addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
                 .build())
     }
 }

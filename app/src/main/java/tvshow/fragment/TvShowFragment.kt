@@ -139,7 +139,9 @@ class TvShowFragment : FragmentBase() {
             setListeners()
             setNomeUltimoEp()
             setUltimoEpDate()
-            setAdmob()
+            setAdMob(adView)
+
+            //Todo FAzer Gone nas listas vazias
         }
     }
 
@@ -155,8 +157,6 @@ class TvShowFragment : FragmentBase() {
             ultimo_ep_name.text = it?.name
         }
     }
-
-    private fun setAdmob() = adView.loadAd(AdRequest.Builder().build())
 
     private fun setListeners() {
         icon_site?.setOnClickListener {

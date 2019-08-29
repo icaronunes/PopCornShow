@@ -1,6 +1,5 @@
 package listafilmes.fragment
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -53,10 +52,7 @@ class MoviesFragment : FragmentBase() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        val adRequest = AdRequest.Builder()
-                .build()
-        adView.loadAd(adRequest)
+        setAdMob(adView)
 
         recycle_listas.apply {
             val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
