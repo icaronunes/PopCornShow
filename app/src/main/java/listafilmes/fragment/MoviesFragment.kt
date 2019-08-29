@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import br.com.icaro.filme.R
-import com.google.android.gms.ads.AdRequest
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import domain.Api
@@ -17,7 +16,10 @@ import kotlinx.android.synthetic.main.fragment_list_medias.*
 import listafilmes.adapter.ListaFilmesAdapter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import utils.*
+import utils.Constantes
+import utils.InfiniteScrollStaggeredListener
+import utils.UtilsApp
+import utils.UtilsKt
 import utils.UtilsKt.Companion.getIdiomaEscolhido
 import java.util.concurrent.TimeUnit
 
@@ -91,7 +93,8 @@ class MoviesFragment : FragmentBase() {
                             UtilsKt.getAnuncio(context!!, 2) {
                                 if (recycle_listas != null &&
                                         (recycle_listas.adapter as ListaFilmesAdapter).itemCount > 0 &&
-                                        (recycle_listas.adapter as ListaFilmesAdapter).getItemViewType((recycle_listas.adapter as ListaFilmesAdapter).itemCount - 1) != Constantes.BuscaConstants.AD)
+                                        (recycle_listas.adapter as ListaFilmesAdapter)
+                                                .getItemViewType((recycle_listas.adapter as ListaFilmesAdapter).itemCount - 1) != Constantes.BuscaConstants.AD)
                                     (recycle_listas.adapter as ListaFilmesAdapter).addAd(it, totalPagina)
                             }
                         }
@@ -104,11 +107,12 @@ class MoviesFragment : FragmentBase() {
         subscriptions.add(inscricao)
     }
 
+
     private fun snack() {
         Snackbar.make(frame_list_filme!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
                     if (UtilsApp.isNetWorkAvailable(context)) {
-                        txt_listas?.visibility = View.INVISIBLE
+                        txt_listas?.visibility = View.GONE
                         getListaFilmes()
                     } else {
                         snack()

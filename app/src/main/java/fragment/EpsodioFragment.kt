@@ -99,7 +99,6 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
         setDirect()
         setWriter()
         setColorButton()
-        setAdMob(adView)
     }
 
     private fun setDirect() {

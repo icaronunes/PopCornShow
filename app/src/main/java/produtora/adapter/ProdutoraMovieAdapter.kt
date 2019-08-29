@@ -37,7 +37,7 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
             progress_bar?.visibility = View.VISIBLE
             item.releaseDate?.let { year_or_title.text = it }
 
-            val failer = {
+            val failure = {
                 progress_bar?.visibility = View.GONE
                 item.title?.let {
                     year_or_title.text = it
@@ -46,7 +46,7 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
 
             img_movie.setPicassoWithCache(item.posterPath, 2,
                     img_erro = R.drawable.poster_empty,
-                    error = { failer() },
+                    error = { failure() },
                     sucesso = { progress_bar?.visibility = View.GONE })
 
             itemView.setOnClickListener {
