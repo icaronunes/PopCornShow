@@ -1,6 +1,8 @@
 package tvshow.fragment
 
-import activity.*
+import activity.BaseActivity
+import activity.Site
+import activity.TemporadaActivity
 import adapter.CastAdapter
 import adapter.CrewAdapter
 import adapter.TemporadasAdapter
@@ -27,7 +29,6 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.string.in_production
 import br.com.icaro.filme.R.string.mil
-import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -38,7 +39,6 @@ import domain.Imdb
 import domain.UserTvshow
 import domain.tvshow.SeasonsItem
 import domain.tvshow.Tvshow
-import producao.CrewsActivity
 import elenco.ElencoActivity
 import fragment.FragmentBase
 import info.movito.themoviedbapi.TmdbApi
@@ -47,6 +47,7 @@ import info.movito.themoviedbapi.model.tv.TvSeason
 import kotlinx.android.synthetic.main.fab_float.*
 import kotlinx.android.synthetic.main.tvshow_info.*
 import poster.PosterGridActivity
+import producao.CrewsActivity
 import produtora.activity.ProdutoraActivity
 import rx.Observer
 import rx.android.schedulers.AndroidSchedulers
@@ -701,14 +702,12 @@ class TvShowFragment : FragmentBase() {
         } else {
             production_countries?.text = getString(R.string.não_informado)
         }
-
     }
 
     private fun setPopularity() {
 
         val animatorCompat = ValueAnimator.ofFloat(1.0f, series?.popularity!!.toFloat())
         if (series?.popularity!! > 0) {
-
 
             animatorCompat.addUpdateListener { valueAnimator ->
                 val valor = valueAnimator.animatedValue as Float
@@ -733,21 +732,20 @@ class TvShowFragment : FragmentBase() {
             }
 
             animatorCompat.duration = 900
-            //animatorCompat.setTarget(voto_quantidade);
             animatorCompat.setTarget(popularity)
             if (isAdded) {
                 animatorCompat.start()
             }
         }
-
     }
 
     private fun setElenco() {
 
         textview_elenco?.setOnClickListener {
-            val intent = Intent(context, ElencoActivity::class.java)
-            intent.putExtra(Constantes.ELENCO, series?.credits?.cast as Serializable)
-            intent.putExtra(Constantes.NOME, series?.name)
+            val intent = Intent(context, ElencoActivity::class.java).apply {
+                putExtra(Constantes.ELENCO, series?.credits?.cast as Serializable)
+                putExtra(Constantes.NOME, series?.name)
+            }
             startActivity(intent)
         }
 
@@ -758,18 +756,20 @@ class TvShowFragment : FragmentBase() {
             recycle_tvshow_elenco?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             recycle_tvshow_elenco.adapter =
                     CastAdapter(activity, series?.credits?.cast)
+        } else{
+            recycle_tvshow_elenco.layoutParams.height = 1
         }
     }
 
     private fun setProducao() {
 
         textview_crews?.setOnClickListener {
-            val intent = Intent(context, CrewsActivity::class.java)
-            intent.putExtra(Constantes.PRODUCAO, series?.credits?.crew as java.io.Serializable)
-            intent.putExtra(Constantes.NOME, series?.name)
+            val intent = Intent(context, CrewsActivity::class.java).apply {
+            putExtra(Constantes.PRODUCAO, series?.credits?.crew as Serializable)
+            putExtra(Constantes.NOME, series?.name)
+            }
             startActivity(intent)
         }
-
 
         if (series?.credits?.crew?.isNotEmpty()!!) {
             textview_crews?.visibility = View.VISIBLE
@@ -777,19 +777,20 @@ class TvShowFragment : FragmentBase() {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-
                 adapter = CrewAdapter(activity, series?.credits?.crew)
             }
-
+        } else{
+            recycle_tvshow_producao.layoutParams.height = 1
         }
     }
 
     private fun setSimilares() {
 
         text_similares.setOnClickListener {
-            val intent = Intent(context, SimilaresActivity::class.java)
-            intent.putExtra(Constantes.SIMILARES_TVSHOW, series?.similar?.results as Serializable)
-            intent.putExtra(Constantes.NOME, series?.name)
+            val intent = Intent(context, SimilaresActivity::class.java).apply {
+            putExtra(Constantes.SIMILARES_TVSHOW, series?.similar?.results as Serializable)
+            putExtra(Constantes.NOME, series?.name)
+            }
             activity?.startActivity(intent)
         }
 
@@ -799,13 +800,12 @@ class TvShowFragment : FragmentBase() {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                adapter = SimilaresSerieAdapter(activity, series?.similar?.results)
             }
 
             recycle_tvshow_similares.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     when (newState) {
-
                         0 -> {
                             activity?.fab_menu_filme?.visibility = View.VISIBLE
                         }
@@ -816,17 +816,15 @@ class TvShowFragment : FragmentBase() {
                             activity?.fab_menu_filme?.visibility = View.INVISIBLE
                         }
                     }
-
                 }
             })
 
             text_similares.visibility = View.VISIBLE
-            recycle_tvshow_similares.adapter = SimilaresSerieAdapter(activity, series?.similar?.results)
         } else {
             text_similares.visibility = View.GONE
-            recycle_tvshow_similares.visibility = View.GONE
+            //recycle_tvshow_similares.visibility = View.GONE
+            recycle_tvshow_similares.layoutParams.height = 1
         }
-
     }
 
     private fun setLancamento() {
@@ -839,7 +837,6 @@ class TvShowFragment : FragmentBase() {
         } else {
             lancamento?.text = inicio
         }
-
     }
 
     private fun setTrailer() {
@@ -909,7 +906,6 @@ class TvShowFragment : FragmentBase() {
                 } catch (e: Exception) {
 
                 }
-
             }
 
         if (imdbDd != null) {
