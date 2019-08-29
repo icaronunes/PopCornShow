@@ -48,7 +48,7 @@
                 android:value="activity.SearchMultiActivity" />
         </activity>
 
-        <activity android:name="activity.LoginActivity"
+        <activity android:name="login.LoginActivity"
             android:windowSoftInputMode="adjustPan"
             android:fitsSystemWindows="true">
 
@@ -97,7 +97,7 @@
         </activity>
 
 
-        <activity android:name="activity.FavoriteActivity">
+        <activity android:name="favorito.FavoriteActivity">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -168,11 +168,11 @@
 
         </activity>
 
-        <activity android:name="activity.EpsodioActivity" />
+        <activity android:name="episodio.EpsodioActivity" />
 
 
         <activity
-            android:name="activity.TrailerActivity"
+            android:name="trailer.TrailerActivity"
             android:parentActivityName="main.MainActivity">
 
             <meta-data
@@ -238,7 +238,7 @@
                 android:resource="@xml/searchable" />
         </activity>
 
-        <activity android:name="activity.WatchListActivity">
+        <activity android:name="queroassistir.WatchListActivity">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -317,7 +317,7 @@
         </activity>
 
         <activity
-            android:name="activity.Site"
+            android:name="site.Site"
             android:parentActivityName="main.MainActivity">
 
             <meta-data
@@ -342,7 +342,7 @@
 
         </activity>
 
-        <activity android:name="activity.VincularLoginActivity" />
+        <activity android:name="login.VincularLoginActivity" />
 
         <activity android:name="activity.DynamicLink">
 

@@ -1,7 +1,7 @@
 package tvshow.fragment
 
 import activity.BaseActivity
-import activity.Site
+import site.Site
 import temporada.TemporadaActivity
 import adapter.CastAdapter
 import adapter.CrewAdapter

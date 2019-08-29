@@ -55,13 +55,11 @@ class PersonTvAdapter(private val context: Context, private val personCredits: L
                         }
                     })
 
-            holder.poster.setOnClickListener { view ->
-                val intent = Intent(context, TvShowActivity::class.java)
-                val imageView = view as ImageView
-                val color = UtilsApp.loadPalette(imageView)
-                intent.putExtra(Constantes.COLOR_TOP, color)
-                intent.putExtra(Constantes.TVSHOW_ID, credit?.id)
-                intent.putExtra(Constantes.NOME_TVSHOW, credit?.title)
+            holder.poster.setOnClickListener {
+                val intent = Intent(context, TvShowActivity::class.java).apply {
+                putExtra(Constantes.TVSHOW_ID, credit?.id)
+                putExtra(Constantes.NOME_TVSHOW, credit?.title)
+                }
                 context.startActivity(intent)
             }
     }

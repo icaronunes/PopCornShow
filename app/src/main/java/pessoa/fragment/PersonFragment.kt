@@ -1,6 +1,6 @@
 package pessoa.fragment
 
-import activity.Site
+import site.Site
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater

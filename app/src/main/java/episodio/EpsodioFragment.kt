@@ -1,4 +1,4 @@
-package fragment
+package episodio
 
 import android.app.Dialog
 import android.content.Intent
@@ -7,16 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.*
+import android.widget.Button
+import android.widget.RatingBar
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import applicaton.BaseFragment
 import br.com.icaro.filme.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.squareup.picasso.Callback
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.NetworkPolicy
-import com.squareup.picasso.Picasso
 import domain.*
 import kotlinx.android.synthetic.main.epsodio_fragment.*
 import kotlinx.coroutines.Dispatchers
@@ -36,11 +35,11 @@ import java.util.*
  */
 class EpsodioFragment : BaseFragment(), ValueEventListener {
 
-    private var tvshow_id: Int = 0
+    private var tvshowId: Int = 0
     private var color: Int = 0
     private var position: Int = 0
-    private var temporada_position: Int = 0
-    private var numero_rated: Float = 0.toFloat()
+    private var temporadaPosition: Int = 0
+    private var numeroRated: Float = 0.toFloat()
 
     private var episode: EpisodesItem? = null
     private var userEp: UserEp? = null
@@ -55,11 +54,11 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             episode = arguments?.getSerializable(Constantes.EPSODIO) as EpisodesItem
-            tvshow_id = arguments?.getInt(Constantes.TVSHOW_ID)!!
+            tvshowId = arguments?.getInt(Constantes.TVSHOW_ID)!!
             color = arguments?.getInt(Constantes.COLOR_TOP)!!
             seguindo = arguments?.getBoolean(Constantes.SEGUINDO)!!
             position = arguments?.getInt(Constantes.POSICAO)!!
-            temporada_position = arguments?.getInt(Constantes.TEMPORADA_POSITION)!!
+            temporadaPosition = arguments?.getInt(Constantes.TEMPORADA_POSITION)!!
         }
 
         if (seguindo) {
@@ -68,9 +67,9 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
                     .getReference("users")
                     .child(mAuth!!.currentUser!!.uid)
                     .child("seguindo")
-                    .child(tvshow_id.toString())
+                    .child(tvshowId.toString())
                     .child("seasons")
-                    .child(temporada_position.toString())
+                    .child(temporadaPosition.toString())
                     .child("userEps")
                     .child(position.toString())
 
@@ -78,9 +77,9 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
                     .getReference("users")
                     .child(mAuth!!.currentUser!!.uid)
                     .child("seguindo")
-                    .child(tvshow_id.toString())
+                    .child(tvshowId.toString())
                     .child("seasons")
-                    .child(temporada_position.toString())
+                    .child(temporadaPosition.toString())
         }
     }
 
@@ -167,7 +166,7 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
     override fun onDataChange(dataSnapshot: DataSnapshot) {
         seasons = dataSnapshot.getValue(UserSeasons::class.java)
         seasons?.userEps?.get(position)?.nota?.let {
-            numero_rated = it
+            numeroRated = it
         }
     }
 
@@ -223,7 +222,7 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
         }
 
         val ratingBar = alertDialog.findViewById<View>(R.id.ratingBar_rated) as RatingBar
-        ratingBar.rating = numero_rated
+        ratingBar.rating = numeroRated
         val width = resources.getDimensionPixelSize(R.dimen.popup_width)
         val height = resources.getDimensionPixelSize(R.dimen.popup_height_rated)
 
@@ -259,7 +258,7 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
     private fun setRatedTvShowGuest(ratingBar: RatingBar) {
         val job = GlobalScope.launch(Dispatchers.IO) {
             try {
-                FilmeService.ratedTvshowEpsodioGuest(tvshow_id, seasons?.seasonNumber!!,
+                FilmeService.ratedTvshowEpsodioGuest(tvshowId, seasons?.seasonNumber!!,
                         episode?.episodeNumber!!, ratingBar.rating.toInt(), context)
             } catch (ex: Exception) {
             }

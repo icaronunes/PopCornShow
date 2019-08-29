@@ -1,4 +1,4 @@
-package activity;
+package login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -39,6 +39,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.Arrays;
 
+import activity.BaseActivity;
 import br.com.icaro.filme.R;
 import main.MainActivity;
 

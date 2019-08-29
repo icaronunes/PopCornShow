@@ -1,7 +1,7 @@
 package main
 
 import applicaton.BaseFragment
-import adapter.TvShowMainAdapter
+import tvshow.TvShowMainAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log

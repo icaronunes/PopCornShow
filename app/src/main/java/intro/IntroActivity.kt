@@ -1,6 +1,6 @@
 package intro
 
-import activity.LoginActivity
+import login.LoginActivity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo

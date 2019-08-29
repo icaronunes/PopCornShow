@@ -1,6 +1,5 @@
-package adapter
+package temporada
 
-import temporada.TemporadaActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import kotlinx.android.synthetic.main.epsodio_detalhes.view.*
 import kotlinx.android.synthetic.main.foldin_main.view.*
 import kotlinx.android.synthetic.main.item_epsodio.view.*
 import kotlinx.android.synthetic.main.layout_diretor.view.*
-import temporada.TemporadaAdapter
 import utils.UtilsApp
 
 /**

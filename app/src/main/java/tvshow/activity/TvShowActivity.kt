@@ -1,7 +1,7 @@
 package tvshow.activity
 
 import activity.BaseActivity
-import adapter.TvShowAdapter
+import tvshow.TvShowAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder

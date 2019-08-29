@@ -2,9 +2,9 @@ package filme.fragment
 
 
 import activity.BaseActivity
-import activity.Site
+import site.Site
 import adapter.CastAdapter
-import adapter.CollectionPagerAdapter
+import filme.adapter.CollectionPagerAdapter
 import adapter.CrewAdapter
 import adapter.TrailerAdapter
 import android.animation.AnimatorSet

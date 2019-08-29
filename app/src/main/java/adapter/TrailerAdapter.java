@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import activity.TrailerActivity;
+import trailer.TrailerActivity;
 import br.com.icaro.filme.R;
 import domain.ResultsVideosItem;
 import utils.Config;

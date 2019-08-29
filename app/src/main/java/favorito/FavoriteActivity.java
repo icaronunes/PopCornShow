@@ -1,4 +1,4 @@
-package activity;
+package favorito;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -21,23 +21,25 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.WatchListAdapter;
+import activity.BaseActivity;
 import br.com.icaro.filme.R;
 import domain.FilmeDB;
 import domain.TvshowDB;
 import utils.UtilsApp;
 
-public class WatchListActivity extends BaseActivity {
+public class FavoriteActivity extends BaseActivity {
 
-    private final String TAG = WatchListActivity.class.getName();
+    private static final String TAG = FavoriteActivity.class.getName();
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private LinearLayout linearLayout;
-    private ProgressBar progressBar;
     private List<FilmeDB> movieDbs = new ArrayList<>();
     private List<TvshowDB> tvSeries = new ArrayList<>();
-    private DatabaseReference favoriteMovie, favoriteTv;
+    private ProgressBar progressBar;
+    private LinearLayout linearLayout;
 
+    private DatabaseReference favoriteMovie, favoriteTv;
+    private ValueEventListener valueEventFavoriteMovie;
+    private ValueEventListener valueEventFavoriteTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,7 @@ public class WatchListActivity extends BaseActivity {
         setContentView(R.layout.activity_usuario_list);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
-        getSupportActionBar().setTitle(R.string.quero_assistir);
+        getSupportActionBar().setTitle(R.string.favorite);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         viewPager = (ViewPager) findViewById(R.id.viewpage_usuario);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -68,12 +70,27 @@ public class WatchListActivity extends BaseActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         favoriteMovie = database.getReference("users").child(mAuth.getCurrentUser()
-                .getUid()).child("watch")
+                .getUid()).child("favorites")
                 .child("movie");
 
         favoriteTv = database.getReference("users").child(mAuth.getCurrentUser()
-                .getUid()).child("watch")
+                .getUid()).child("favorites")
                 .child("tvshow");
+    }
+
+    protected void snack() {
+        Snackbar.make(linearLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
+                            //text_elenco_no_internet.setVisibility(View.GONE);
+                            setEventListenerFavorite();
+                        } else {
+                            snack();
+                        }
+                    }
+                }).show();
     }
 
     @Override
@@ -93,19 +110,19 @@ public class WatchListActivity extends BaseActivity {
         viewPager.setCurrentItem(0);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.accent));
-        viewPager.setAdapter(new WatchListAdapter(WatchListActivity.this, getSupportFragmentManager(),
-                tvSeries, movieDbs));
+        viewPager.setAdapter(new FavoriteAdapater(FavoriteActivity.this, getSupportFragmentManager(),
+                movieDbs, tvSeries));
     }
 
     private void setEventListenerFavorite() {
-        ValueEventListener valueEventFavoriteMovie = new ValueEventListener() {
+        valueEventFavoriteMovie = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         movieDbs.add(snapshot.getValue(FilmeDB.class));
-                        // Log.d(TAG, snapshot.getValue(FilmeDB.class).getTitle());
+                       // Log.d(TAG, snapshot.getValue(FilmeDB.class).getTitle());
                     }
                 }
                 setEventListenerFavoriteTv();
@@ -120,30 +137,15 @@ public class WatchListActivity extends BaseActivity {
         //Chamando apenas uma vez, necessario? não poderia deixar o firebases atualizar?
     }
 
-    protected void snack() {
-        Snackbar.make(linearLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
-                            //text_elenco_no_internet.setVisibility(View.GONE);
-                            setEventListenerFavorite();
-                        } else {
-                            snack();
-                        }
-                    }
-                }).show();
-    }
-
     private void setEventListenerFavoriteTv() {
-        ValueEventListener valueEventFavoriteTv = new ValueEventListener() {
+        valueEventFavoriteTv = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         tvSeries.add(snapshot.getValue(TvshowDB.class));
-                        // Log.d(TAG, snapshot.getValue(TvshowDB.class).getTitle());
+                     //   Log.d(TAG, snapshot.getValue(TvshowDB.class).getTitle());
                     }
                 }
 
@@ -160,5 +162,16 @@ public class WatchListActivity extends BaseActivity {
         //Chamando apenas uma vez, necessario? não poderia deixar o firebases atualizar?
     }
 
-}
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (valueEventFavoriteMovie != null){
+            favoriteMovie.removeEventListener(valueEventFavoriteMovie);
+        }
+        if (valueEventFavoriteTv != null) {
+            favoriteTv.removeEventListener(valueEventFavoriteTv);
+        }
+    }
+
+}

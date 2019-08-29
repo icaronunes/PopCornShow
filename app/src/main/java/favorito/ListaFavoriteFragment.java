@@ -1,4 +1,4 @@
-package fragment;
+package favorito;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,48 +38,47 @@ import tvshow.fragment.TvShowFragment;
 import utils.Constantes;
 import utils.UtilsApp;
 
+import static android.R.attr.id;
+
 
 /**
  * Created by icaro on 23/08/16.
  */
-public class ListaWatchlistFragment extends Fragment {
+public class ListaFavoriteFragment extends Fragment {
 
     final String TAG = TvShowFragment.class.getName();
 
-    private   int tipo;
-    private List<FilmeDB> movies;
+    private int tipo;
     private List<TvshowDB> tvSeries;
+    private List<FilmeDB> movieDbs;
     private RecyclerView recyclerViewFilme;
     private RecyclerView recyclerViewTvShow;
     private FirebaseAnalytics firebaseAnalytics;
 
-    public static Fragment newInstanceMovie(int tipo, List<FilmeDB> filme) {
-        ListaWatchlistFragment fragment = new ListaWatchlistFragment();
+    public static Fragment newInstanceMovie(int tipo, List<FilmeDB> movie) {
+        ListaFavoriteFragment fragment = new ListaFavoriteFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.INSTANCE.getFILME(), (Serializable) filme);
+        bundle.putSerializable(Constantes.INSTANCE.getFILME(), (Serializable) movie);
         bundle.putInt(Constantes.INSTANCE.getABA(), tipo);
         fragment.setArguments(bundle);
-
         return fragment;
     }
 
-    public static Fragment newInstanceTvShow(int tvshow, List<TvshowDB> tvshowDBs ) {
-        ListaWatchlistFragment fragment = new ListaWatchlistFragment();
+    public static Fragment newInstanceTvShow(int tvshow, List<TvshowDB> tvshows) {
+        ListaFavoriteFragment fragment = new ListaFavoriteFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.INSTANCE.getSERIE(), (Serializable) tvshowDBs);
+        bundle.putSerializable(Constantes.INSTANCE.getSERIE(), (Serializable) tvshows);
         bundle.putInt(Constantes.INSTANCE.getABA(), tvshow);
         fragment.setArguments(bundle);
-
         return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
         if (getArguments() != null) {
             tipo = getArguments().getInt(Constantes.INSTANCE.getABA());
-            movies = (List<FilmeDB>) getArguments().getSerializable(Constantes.INSTANCE.getFILME());
+            movieDbs = (List<FilmeDB>) getArguments().getSerializable(Constantes.INSTANCE.getFILME());
             tvSeries = (List<TvshowDB>) getArguments().getSerializable(Constantes.INSTANCE.getSERIE());
         }
         firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
@@ -90,7 +89,7 @@ public class ListaWatchlistFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-       // Log.d(TAG, "onCreateView");
+      //  Log.d(TAG, "onCreateView");
         switch (tipo) {
 
             case R.string.filme: {
@@ -100,6 +99,7 @@ public class ListaWatchlistFragment extends Fragment {
                 return getViewTvShow(inflater, container);
             }
         }
+
         return null;
     }
 
@@ -108,40 +108,27 @@ public class ListaWatchlistFragment extends Fragment {
             @Override
             public void onClick(final View view, final int position) {
                 Intent intent = new Intent(getActivity(), FilmeActivity.class);
-
+              //  Log.d("ListaFilmeAdapter", "ListaFilmeAdapter");
                 ImageView imageView = (ImageView) view;
                 int color = UtilsApp.loadPalette(imageView);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
-                intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movies.get(position).getId());
-                intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movies.get(position).getTitle());
+                intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movieDbs.get(position).getId());
+                intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movieDbs.get(position).getTitle());
                 startActivity(intent);
-
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaWatchlistFragment:ListaFilmeAdapter.ListaOnClickListener:onclick");
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movies.get(position).getTitle());
-                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movies.get(position).getId());
-                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
             }
 
             @Override
             public void onClickLong(View view, final int position) {
-                final int id = movies.get(position).getId();
-               // Log.d("OnClick", "Onclick");
+                final int id = movieDbs.get(position).getId();
                 new AlertDialog.Builder(getActivity())
                         .setIcon(R.drawable.icon_agenda)
-                        .setTitle(movies.get(position).getTitle())
+                        .setTitle(movieDbs.get(position).getTitle())
                         .setMessage(getResources().getString(R.string.excluir_filme))
                         .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Bundle bundle = new Bundle();
-                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaWatchlistFragment:ListaFilmeAdapter.ListaOnClickListener:onClickLong");
-                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movies.get(position).getTitle());
-                                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Movie");
-                                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
-                                bundle.putString("WatchList", "Não excluiu");
-                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                             }
                         })
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -150,26 +137,17 @@ public class ListaWatchlistFragment extends Fragment {
                                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-                                DatabaseReference favoriteTv = database.getReference("users").child(mAuth.getCurrentUser()
-                                        .getUid()).child("watch")
-                                        .child("movie").child(String.valueOf(movies.get(position).getId()));
-
-                                favoriteTv.setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                DatabaseReference filmeTv = database.getReference("users").child(mAuth.getCurrentUser()
+                                        .getUid()).child("favorites")
+                                        .child("movie").child(String.valueOf(id));
+                                filmeTv.setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        movies.remove(movies.get(position));
+                                        movieDbs.remove(movieDbs.get(position));
                                         recyclerViewFilme.getAdapter().notifyItemRemoved(position);
                                         recyclerViewFilme.getAdapter().notifyItemChanged(position);
                                     }
                                 });
-
-                                Bundle bundle = new Bundle();
-                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaWatchlistFragment:ListaFilmeAdapter.ListaOnClickListener:onClickLong");
-                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movies.get(position).getTitle());
-                                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Movie");
-                                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
-                                bundle.putString("WatchList", "Excluiu Filme");
-                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             }
                         }).show();
             }
@@ -182,40 +160,26 @@ public class ListaWatchlistFragment extends Fragment {
             @Override
             public void onClick(final View view, final int position) {
                 Intent intent = new Intent(getActivity(), TvShowActivity.class);
-               // Log.d("OnClick", "Onclick");
                 ImageView imageView = (ImageView) view;
                 int color = UtilsApp.loadPalette(imageView);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
-                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), tvSeries.get(position).getId());
+                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(),  tvSeries.get(position).getId());
                 intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), tvSeries.get(position).getTitle());
                 startActivity(intent);
-
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaWatchlistFragment:ListaTvShowAdapter.ListaOnClickListener:onClick");
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getTitle());
-                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tvshow");
-                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, tvSeries.get(position).getId());
-                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             }
 
             @Override
             public void onClickLong(View view, final int position) {
-                final int id = tvSeries.get(position).getId();
-               // Log.d("OnClick", "onClickLong");
+
+                final TvshowDB tvshowDB = tvSeries.get(position);
                 new AlertDialog.Builder(getActivity())
                         .setIcon(R.drawable.icon_agenda)
-                        .setTitle(tvSeries.get(position).getTitle())
-                        .setMessage(getResources().getString(R.string.excluir_filme))
+                        .setTitle(tvshowDB.getTitle())
+                        .setMessage(getResources().getString(R.string.excluir_tvshow))
                         .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Bundle bundle = new Bundle();
-                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaWatchlistFragment:ListaTvShowAdapter.ListaOnClickListener:onClickLong");
-                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getTitle());
-                                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tvshow");
-                                bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
-                                bundle.putString("WatchList", "Não excluiu");
-                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                             }
                         })
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -225,8 +189,8 @@ public class ListaWatchlistFragment extends Fragment {
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
 
                                 DatabaseReference favoriteTv = database.getReference("users").child(mAuth.getCurrentUser()
-                                        .getUid()).child("watch")
-                                        .child("tvshow").child(String.valueOf(tvSeries.get(position).getId()));
+                                        .getUid()).child("favorites")
+                                        .child("tvshow").child(String.valueOf( 1 )); //tvshowDB.getExternalIds().getId()));
 
                                 favoriteTv.setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
@@ -238,12 +202,13 @@ public class ListaWatchlistFragment extends Fragment {
                                 });
 
                                 Bundle bundle = new Bundle();
-                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaWatchlistFragment:ListaTvShowAdapter.ListaOnClickListenerr:onClickLong");
+                                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "ListaFavoriteFragment:ListaTvShowAdapter.ListaOnClickListener:onClickLong");
                                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, tvSeries.get(position).getTitle());
-                                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tvshow");
+                                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Tv");
                                 bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, id);
-                                bundle.putString("WatchList", "Excluiu Tvshow");
+                                bundle.putString("Favorite", "Excluiu TvShow");
                                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                             }
                         }).show();
             }
@@ -258,11 +223,11 @@ public class ListaWatchlistFragment extends Fragment {
         recyclerViewFilme.setHasFixedSize(true);
         recyclerViewFilme.setItemAnimator(new DefaultItemAnimator());
         recyclerViewFilme.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        if (movies.size() > 0) {
-            recyclerViewFilme.setAdapter(new ListaFilmeAdapter(getActivity(), movies, onclickListerne(), false));
+        if (movieDbs.size() > 0) {
+            recyclerViewFilme.setAdapter(new ListaFilmeAdapter(getActivity(), movieDbs, onclickListerne(), false));
         } else {
             view.findViewById(R.id.text_search_empty).setVisibility(View.VISIBLE);
-            ((TextView) view.findViewById(R.id.text_search_empty)).setText(R.string.empty);
+            ((TextView) view.findViewById(R.id.text_search_empty)).setText(R.string.empty_favorites);
         }
 
         return view;
@@ -279,8 +244,9 @@ public class ListaWatchlistFragment extends Fragment {
             recyclerViewTvShow.setAdapter(new ListaTvShowAdapter(getActivity(), tvSeries, onclickTvShowListerne(), false));
         } else {
             view.findViewById(R.id.text_search_empty).setVisibility(View.VISIBLE);
-            ((TextView) view.findViewById(R.id.text_search_empty)).setText(R.string.empty);
+            ((TextView) view.findViewById(R.id.text_search_empty)).setText(R.string.empty_favorites);
         }
+
         return view;
     }
 }

@@ -1,4 +1,4 @@
-package activity;
+package trailer;
 
 import android.os.Bundle;
 import android.widget.TextView;

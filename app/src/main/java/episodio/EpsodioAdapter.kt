@@ -1,10 +1,9 @@
-package adapter
+package episodio
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import domain.TvSeasons
-import fragment.EpsodioFragment
 
 /**
  * Created by icaro on 27/08/16.

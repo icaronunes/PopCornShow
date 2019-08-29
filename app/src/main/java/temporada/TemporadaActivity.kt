@@ -1,8 +1,7 @@
 package temporada
 
 import activity.BaseActivity
-import activity.EpsodioActivity
-import adapter.TemporadaFoldinAdapter
+import episodio.EpsodioActivity
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle

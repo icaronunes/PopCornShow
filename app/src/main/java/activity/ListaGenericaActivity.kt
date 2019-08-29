@@ -35,7 +35,6 @@ class ListaGenericaActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = intent.getStringExtra(Constantes.LISTA_GENERICA)

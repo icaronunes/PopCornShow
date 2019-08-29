@@ -1,6 +1,6 @@
-package activity
+package episodio
 
-import adapter.EpsodioAdapter
+import activity.BaseActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem

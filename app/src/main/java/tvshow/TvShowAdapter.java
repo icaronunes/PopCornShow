@@ -1,42 +1,42 @@
-package adapter;
+package tvshow;
 
 import android.content.Context;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import java.util.List;
-
 import br.com.icaro.filme.R;
-import domain.FilmeDB;
-import domain.TvshowDB;
-import fragment.ListaFavoriteFragment;
+import domain.tvshow.Tvshow;
+import tvshow.fragment.TvShowFragment;
 
 /**
  * Created by icaro on 23/08/16.
  */
-public class FavoriteAdapater extends FragmentPagerAdapter {
+public class TvShowAdapter extends FragmentPagerAdapter {
 
     private Context context;
-    private List<FilmeDB> movies;
-    private List<TvshowDB> series;
+    private Tvshow series;
+    private int color;
+    private boolean seguindo;
 
-
-    public FavoriteAdapater(Context context, FragmentManager supportFragmentManager,
-                            List<FilmeDB> movies, List<TvshowDB> series) {
+    public TvShowAdapter(Context context, FragmentManager supportFragmentManager,
+                         Tvshow series, int color_top, boolean seguindo) {
         super(supportFragmentManager);
         this.context = context;
         this.series = series;
-        this.movies = movies;
+        this.color = color_top;
+        this.seguindo = seguindo;
+
     }
 
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return ListaFavoriteFragment.newInstanceMovie(R.string.filme, movies);
+
+            return TvShowFragment.Companion.newInstance(R.string.informacoes,  series, color, seguindo);
         }
         if (position == 1) {
-            return ListaFavoriteFragment.newInstanceTvShow(R.string.tvshow, series);
+            return TvShowFragment.Companion.newInstance(R.string.temporadas, series, color, seguindo);
         }
         return null;
     }
@@ -44,10 +44,10 @@ public class FavoriteAdapater extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
-            return context.getString(R.string.filme);
+            return context.getString(R.string.informacoes);
         }
         if (position == 1) {
-            return context.getString(R.string.tvshow);
+            return context.getString(R.string.temporadas);
         }
         return null;
     }

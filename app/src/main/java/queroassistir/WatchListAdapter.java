@@ -1,4 +1,4 @@
-package adapter;
+package queroassistir;
 
 import android.content.Context;
 import androidx.fragment.app.Fragment;
@@ -10,7 +10,6 @@ import java.util.List;
 import br.com.icaro.filme.R;
 import domain.FilmeDB;
 import domain.TvshowDB;
-import fragment.ListaWatchlistFragment;
 
 /**
  * Created by icaro on 23/08/16.

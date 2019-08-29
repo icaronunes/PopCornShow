@@ -1,4 +1,4 @@
-package adapter
+package filme.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -32,7 +32,6 @@ class CollectionPagerAdapter(private val info: List<PartsItem?>?, private val co
 
     override fun isViewFromObject(view: View, obj: Any): Boolean {
         return view === obj
-
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
