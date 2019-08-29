@@ -61,7 +61,6 @@ class PersonFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retainInstance = true
         if (arguments != null) {
             tipo = arguments?.getInt(Constantes.ABA)!!
             if (person == null) {
@@ -71,6 +70,7 @@ class PersonFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         when (tipo) {
 
             R.string.filme -> {
@@ -261,7 +261,6 @@ class PersonFragment : Fragment() {
             }
         }
 
-
         Picasso.get().load(UtilsApp.getBaseUrlImagem(2) + information.profilePath)
                 .placeholder(R.drawable.person)
                 .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
@@ -288,7 +287,6 @@ class PersonFragment : Fragment() {
         } else {
             progressBar?.visibility = View.GONE
             recyclerViewMovie?.adapter = PersonMovieAdapter(context!!, personMovies)
-            progressBar?.visibility = View.GONE
         }
     }
 

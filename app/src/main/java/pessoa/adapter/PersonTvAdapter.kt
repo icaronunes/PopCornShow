@@ -10,14 +10,11 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
-import com.squareup.picasso.Callback
-import com.squareup.picasso.NetworkPolicy
-import com.squareup.picasso.Picasso
 import domain.person.CastItem
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
-import java.lang.Exception
+import utils.setPicasso
 
 /**
  * Created by icaro on 18/08/16.
@@ -32,36 +29,30 @@ class PersonTvAdapter(private val context: Context, private val personCredits: L
 
     override fun onBindViewHolder(holder: PersonTvViewHolder, position: Int) {
 
-        val credit = personCredits[position]
+        val credit = personCredits[position]!!
+        holder.poster.setPicasso(credit.posterPath, 2,
+                error = {
+                    holder.progressBar.visibility = View.INVISIBLE
+                    if(credit.releaseDate != null) {
+                        val data = if (credit.releaseDate.length >= 4) " - " + credit.releaseDate.substring(0, 4) else ""
+                        holder.title.text = "${credit.name} $data"
+                    } else {
+                        holder.title.text = "${credit.name}"
+                    }
+                    holder.title.visibility = View.VISIBLE
+                }, sucesso = {
+            holder.progressBar.visibility = View.INVISIBLE
+            holder.title.visibility = View.GONE
+        })
 
-            Picasso.get()
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3)) + credit?.posterPath)
-                    .error(R.drawable.poster_empty)
-                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-                    .into(holder.poster, object : Callback {
-                        override fun onError(e: Exception?) {
-                            holder.progressBar.visibility = View.INVISIBLE
-                            val data = StringBuilder()
-                            if (!credit?.releaseDate.isNullOrBlank()) {
-                                data.append(if (credit?.releaseDate?.length!! >= 4) " - " + credit.releaseDate.substring(0, 4) else "")
-                            }
-                            holder.title.text = credit?.name + data
-                            holder.title.visibility = View.VISIBLE
-                        }
-
-                        override fun onSuccess() {
-                            holder.progressBar.visibility = View.INVISIBLE
-                            holder.title.visibility = View.GONE
-                        }
-                    })
-
-            holder.poster.setOnClickListener {
-                val intent = Intent(context, TvShowActivity::class.java).apply {
-                putExtra(Constantes.TVSHOW_ID, credit?.id)
-                putExtra(Constantes.NOME_TVSHOW, credit?.title)
-                }
-                context.startActivity(intent)
+        holder.poster.setOnClickListener {
+            val intent = Intent(context, TvShowActivity::class.java).apply {
+                putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
+                putExtra(Constantes.TVSHOW_ID, credit.id)
+                putExtra(Constantes.NOME_TVSHOW, credit.title)
             }
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {

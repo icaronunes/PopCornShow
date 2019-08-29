@@ -1,6 +1,11 @@
 package pessoa.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -21,7 +26,6 @@ public class PersonAdapter extends FragmentPagerAdapter {
         this.context = context;
         this.person = person;
     }
-
 
     @Override
     public Fragment getItem(int position) {
