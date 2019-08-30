@@ -29,15 +29,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:visibility="gone"
-            app:adSize="SMART_BANNER"
-            app:adUnitId="@string/admob" />
-
     </FrameLayout>
 
 </LinearLayout>
