@@ -52,7 +52,7 @@ class MainActivity : BaseActivity() {
         model.data.observe(this, Observer {
             when(it) {
                 is MainViewModel.MainModel.Data ->  mescla(it.data.first, it.data.second)
-                is MainViewModel.MainModel.isNovidade -> news()
+                is MainViewModel.MainModel.News -> news()
                 is MainViewModel.MainModel.VisibleAnimed -> visibleAnimed(it)
             }
         })
@@ -67,12 +67,12 @@ class MainActivity : BaseActivity() {
     }
 
     private fun news() {
-            val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
             val dialog = AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_popcorn2)
                     .setTitle(R.string.novidades_title)
                     .setMessage(R.string.novidades_text)
                     .setPositiveButton(R.string.ok) { _, _ ->
+                        val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
                         val editor = sharedPref.edit()
                         editor.putBoolean(BuildConfig.VERSION_CODE.toString(), false)
                         editor.remove((BuildConfig.VERSION_CODE - 1).toString())

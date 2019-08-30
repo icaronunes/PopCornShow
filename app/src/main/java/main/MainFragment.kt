@@ -48,7 +48,7 @@ class MainFragment : BaseFragment() {
         if (arguments != null) {
             tipo = arguments!!.getInt(Constantes.ABA)
         }
-        model = createViewModel(MainFragViewModel::class.java)
+        model = createViewModel(MainFragViewModel::class.java) as MainFragViewModel
         setObservers()
     }
 
