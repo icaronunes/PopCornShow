@@ -1,13 +1,9 @@
 package main
 
 import android.app.Application
-import android.preference.PreferenceManager
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.OnLifecycleEvent
 import applicaton.BaseViewModel
-import br.com.icaro.filme.BuildConfig
 import domain.ListaSeries
 import domain.movie.ListaFilmes
 
