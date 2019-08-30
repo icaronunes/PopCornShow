@@ -392,7 +392,7 @@
         android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="32dp"
+        android:minHeight="40dp"
         android:layout_marginTop="@dimen/trade_size_dp_4"
         app:adSize="SMART_BANNER"
         app:adUnitId="@string/admob"

@@ -477,7 +477,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textview_crews"
-                android:focusable="true"
                 tools:itemCount="3"
                 tools:listitem="@layout/scroll_crews"
                 tools:orientation="horizontal" />
@@ -485,9 +484,10 @@
             <com.google.android.gms.ads.AdView
                 android:id="@+id/adView"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
                 android:layout_marginTop="@dimen/trade_size_dp_4"
-                app:adSize="BANNER"
+                app:adSize="SMART_BANNER"
                 app:adUnitId="@string/admob"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
