@@ -1,7 +1,5 @@
 package main
 
-import applicaton.BaseFragment
-import tvshow.TvShowMainAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,10 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.*
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import applicaton.BaseFragment
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.string.filmes_main
 import domain.ListaSeries
@@ -22,6 +21,7 @@ import kotlinx.android.synthetic.main.tvshow_main.*
 import kotlinx.coroutines.Job
 import listafilmes.activity.FilmesActivity
 import listaserie.activity.TvShowsActivity
+import tvshow.TvShowMainAdapter
 import utils.Constantes
 
 
