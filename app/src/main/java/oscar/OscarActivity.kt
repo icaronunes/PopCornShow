@@ -33,7 +33,6 @@ class OscarActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle(R.string.oscar)
@@ -90,9 +89,8 @@ class OscarActivity : BaseActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                    it.id
-                }, { error ->
+                }, {
                     Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                    Log.d(javaClass.simpleName, "Erro " + error.message)
                 })
 
         if (totalPagina >= pagina) {
@@ -104,9 +102,8 @@ class OscarActivity : BaseActivity() {
                         pagina = it.page
                         totalPagina = it.totalPages
                         ++pagina
-                    }, { erro ->
+                    }, {
                         Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                        Log.d(javaClass.simpleName, "Erro " + erro.message)
                     })
             subscriptions.add(inscricao)
             subscriptions.add(teste)

@@ -58,7 +58,6 @@ public class RatedActivity extends BaseActivity {
         } else {
             snack();
         }
-
     }
 
     private void iniciarFirebases() {
