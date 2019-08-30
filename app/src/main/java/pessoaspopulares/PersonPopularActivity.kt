@@ -53,13 +53,6 @@ class PersonPopularActivity : BaseActivity() {
             recycleView_person_popular.adapter = PersonPopularAdapter()
         }
 
-        /*     AdView adView = (AdView) findViewById(R.id.adView);
-             AdRequest adRequest = new AdRequest.Builder()
-                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                     .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
-                     .build();
-             adView.loadAd(adRequest);*/
-
         if (UtilsApp.isNetWorkAvailable(this)) {
             getPerson()
 

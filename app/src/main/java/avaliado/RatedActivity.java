@@ -119,7 +119,6 @@ public class RatedActivity extends BaseActivity {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         tvSeries.add(snapshot.getValue(TvshowDB.class));
-                       // Log.d(TAG, snapshot.getValue(TvshowDB.class).getTitle());
                     }
                 }
 

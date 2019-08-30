@@ -13,24 +13,40 @@
           "package_name": "br.com.icaro.filme"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "101446616560-7hc2i11iaj28bsfu1dumnktudljkeeur.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.icaro.filme",
+            "certificate_hash": "0b82d545a66aed35780ae11d7d2127f888804c65"
+          }
+        },
+        {
+          "client_id": "101446616560-u2lv0pdg7m8pud6h6a0l43at8eh3anfo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.icaro.filme",
+            "certificate_hash": "18929fd6f60db5e44efc03db1ef78e0e73cacacd"
+          }
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB-ICQDOMCh8UXzSmaylf9Xp4Hs9847OCA"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "101446616560-rec8kefndv29urdkbgtatdd4o0jlk3g4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-7639270198633263~5648600833"
     }
   ],
   "configuration_version": "1"

@@ -155,7 +155,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
     protected void setAdmob() {
         AdView adview = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+                //.addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
                 .build();
         adview.loadAd(adRequest);
     }
@@ -163,7 +163,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
     protected void setAdMob(AdView adView) {
         adView.loadAd(new AdRequest.Builder()
                 //.addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+                //.addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
                 .build());
     }
 

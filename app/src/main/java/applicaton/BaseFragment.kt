@@ -15,7 +15,7 @@ open class BaseFragment : Fragment() {
     fun setAdMob(adView: AdView) {
         val adRequest = AdRequest.Builder()
                 // .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+                //.addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
                 .build()
         adView.loadAd(adRequest)
     }

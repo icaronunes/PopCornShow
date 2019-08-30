@@ -2,6 +2,7 @@
 app/src/main/java/utils/Config.java
 app/config.txt
 app/keystore.jks
+app/google-services.json
 filme.iml
 .gradle/wrapper/gradle-wrapper.properties
 .idea/misc.xml
