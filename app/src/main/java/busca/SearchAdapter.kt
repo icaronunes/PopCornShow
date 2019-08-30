@@ -81,7 +81,7 @@ class SearchAdapter(val context: SearchMultiActivity, private val multis: List<M
                     })
                 }
 
-                series.originalName.let {
+                series.originalName?.let {
                     holder.searchTitleOriginal.text = it
                 }
 
@@ -90,11 +90,11 @@ class SearchAdapter(val context: SearchMultiActivity, private val multis: List<M
                     holder.groupStar.visibility = View.VISIBLE
                 }
 
-                series.name.let {
+                series.name?.let {
                     holder.searchNome.text = it
                 }
 
-                series.firstAirDate.let {
+                series.firstAirDate?.let {
                     holder.searchDataLancamento.text =
                             if (it.length >= 4) it.substring(0, 4)
                             else it
@@ -113,7 +113,7 @@ class SearchAdapter(val context: SearchMultiActivity, private val multis: List<M
                     })
                 }
 
-                person.name.let {
+                person.name?.let {
                     holder.searchNome.text = it
                 }
 
