@@ -25,7 +25,6 @@ public class FilmesActivity extends BaseActivity {
 					.add(R.id.container_list_main, filmesFragment)
 					.commit();
 		}
-
 	}
 
 	private void getExtras() {
@@ -37,5 +36,4 @@ public class FilmesActivity extends BaseActivity {
 					.getStringExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO()))));
 		}
 	}
-
 }

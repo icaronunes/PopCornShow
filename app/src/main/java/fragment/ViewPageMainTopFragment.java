@@ -21,7 +21,6 @@ public class ViewPageMainTopFragment extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-       // Log.d("ViewPageMainTopFragment", multis.get(position).toString());
         return new ImagemTopScrollFragment().newInstance(multis.get(position));
     }
 
