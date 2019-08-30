@@ -145,7 +145,7 @@ public class SearchMultiActivity extends BaseActivity {
 		AdView adview = (AdView) findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest.Builder()
 				//.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-				.addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+				//.addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
 				.build();
 		adview.loadAd(adRequest);
 	}

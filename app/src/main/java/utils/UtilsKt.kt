@@ -3,6 +3,7 @@ package utils
 import configuracao.SettingsActivity
 import android.content.Context
 import android.preference.PreferenceManager
+import android.util.Log
 import android.widget.Toast
 import br.com.icaro.filme.R
 import com.google.android.gms.ads.AdListener
@@ -52,7 +53,8 @@ class UtilsKt {
 
         fun getAnuncio(context: Context, quant: Int = 1, listener: (UnifiedNativeAd) -> Unit = {}) {
 
-            val adLoader = AdLoader.Builder(context, "ca-app-pub-3940256099942544/2247696110") //TODO AdMob Cadastrado
+            val adLoader = AdLoader.Builder(context, "ca-app-pub-7639270198633263/2223415498")
+                    //TODO AdMob Cadastrado
                     .forUnifiedNativeAd { ad: UnifiedNativeAd ->
                         // Show the ad.
                         //Retornando Ad para ser usado
@@ -60,6 +62,7 @@ class UtilsKt {
                     }
                     .withAdListener(object : AdListener() {
                         override fun onAdFailedToLoad(errorCode: Int) {
+                            Log.d(this.javaClass.name, errorCode.toString())
                             // Handle the failure by logging, altering the UI, and so on.
                             //	Toast.makeText(context, context.getString(R.string.ops), Toast.LENGTH_LONG).show()
                         }

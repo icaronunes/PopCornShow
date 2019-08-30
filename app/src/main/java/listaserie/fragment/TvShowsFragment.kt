@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import br.com.icaro.filme.R
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.material.snackbar.Snackbar
 import domain.Api
@@ -44,7 +45,7 @@ class TvShowsFragment : FragmentBase() {
         super.onActivityCreated(savedInstanceState)
 
         val adRequest = AdRequest.Builder()
-                 .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+                // .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
                 .build()
         adView.loadAd(adRequest)
 
