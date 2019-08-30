@@ -876,6 +876,7 @@ class TvShowFragment : FragmentBase() {
                         }
 
                         override fun onError(e: Throwable) {
+                            if (context != null && view != null)
                             Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
                         }
 
