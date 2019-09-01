@@ -35,13 +35,12 @@ class ElencoActivity : BaseActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_elenco)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         getExtras()
 
         supportActionBar?.title = title
-        setAdmob()
+        setAdMob(adView)
         
         elenco_recycleview.apply {
             layoutManager = LinearLayoutManager(context)

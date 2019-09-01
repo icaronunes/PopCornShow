@@ -39,7 +39,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -84,6 +83,7 @@ import rx.subscriptions.CompositeSubscription;
 import seguindo.SeguindoActivity;
 import utils.Constantes;
 import utils.UtilsApp;
+import utils.UtilsKt;
 
 /**
  * Created by icaro on 24/06/16.
@@ -152,19 +152,8 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
         }
     }
 
-    protected void setAdmob() {
-        AdView adview = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                //.addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
-                .build();
-        adview.loadAd(adRequest);
-    }
-
     protected void setAdMob(AdView adView) {
-        adView.loadAd(new AdRequest.Builder()
-                //.addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                //.addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
-                .build());
+        UtilsKt.Companion.setAdMob(adView);
     }
 
     public void hideSoftKeyboard() {
@@ -238,7 +227,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
                // imgUserPhoto.setOnClickListener(onClickListenerlogado());
             } else {
                 if (user.getProviders() != null)
-                    // Log.d(TAG, user.getProviders().get(0));
+
                     switch (user.getProviders().get(0)) {
 
                         case "google.com": {

@@ -2,11 +2,11 @@ package fragment
 
 import androidx.fragment.app.Fragment
 import br.com.icaro.filme.R
-import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_list_medias.*
 import rx.subscriptions.CompositeSubscription
+import utils.UtilsKt
 
 open class FragmentBase: Fragment() {
     
@@ -25,10 +25,7 @@ open class FragmentBase: Fragment() {
     }
 
     protected fun setAdMob(adView: AdView) {
-        adView.loadAd(AdRequest.Builder()
-                //.addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                //.addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
-                .build())
+        UtilsKt.setAdMob(adView)
     }
 
      private fun snack(block: () -> Unit) {

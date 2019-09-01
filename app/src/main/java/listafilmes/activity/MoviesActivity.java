@@ -7,7 +7,7 @@ import br.com.icaro.filme.R;
 import listafilmes.fragment.MoviesFragment;
 import utils.Constantes;
 
-public class FilmesActivity extends BaseActivity {
+public class MoviesActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

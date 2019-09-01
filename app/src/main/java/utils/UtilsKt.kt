@@ -9,6 +9,7 @@ import br.com.icaro.filme.R
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.formats.NativeAdOptions
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import domain.Api
@@ -53,7 +54,7 @@ class UtilsKt {
 
         fun getAnuncio(context: Context, quant: Int = 1, listener: (UnifiedNativeAd) -> Unit = {}) {
 
-            val adLoader = AdLoader.Builder(context, "ca-app-pub-7639270198633263/2223415498")
+            val adLoader = AdLoader.Builder(context, "ca-app-pub-3940256099942544/2247696110")
                     //TODO AdMob Cadastrado
                     .forUnifiedNativeAd { ad: UnifiedNativeAd ->
                         // Show the ad.
@@ -78,7 +79,12 @@ class UtilsKt {
             adLoader.loadAds(AdRequest.Builder().build(), quant)
         }
 
+        fun setAdMob(adView: AdView) {
+            adView.loadAd(AdRequest.Builder()
+                    //.addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                    .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+                    .build())
+        }
+
     }
-
-
 }

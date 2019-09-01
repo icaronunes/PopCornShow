@@ -23,15 +23,13 @@ class PosterGridActivity : BaseActivity() {
             window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
         }
         super.onCreate(savedInstanceState)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContentView(R.layout.poster_grid)
         recycleView_poster_grid.apply {
             setHasFixedSize(true)
             itemAnimator = DefaultItemAnimator()
             layoutManager = GridLayoutManager(baseContext, 2)
         }
-        
-        setAdmob()
+        setAdMob(adView)
         
         if (intent.hasExtra(Constantes.POSTER)) {
             val posters = intent.getSerializableExtra(Constantes.POSTER) as List<PostersItem>

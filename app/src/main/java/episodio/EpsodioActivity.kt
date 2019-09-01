@@ -30,7 +30,7 @@ class EpsodioActivity : BaseActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val fragmentManager = supportFragmentManager
         setViewPager(fragmentManager)
-        setAdmob()
+        setAdMob(adView)
     }
 
     private fun setViewPager(fragmentManager: FragmentManager) {

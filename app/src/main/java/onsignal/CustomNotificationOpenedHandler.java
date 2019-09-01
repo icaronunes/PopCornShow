@@ -15,6 +15,7 @@ import com.onesignal.OneSignal;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import listafilmes.activity.MoviesActivity;
 import producao.CrewsActivity;
 import elenco.ElencoActivity;
 import activity.ListaGenericaActivity;
@@ -29,7 +30,6 @@ import domain.FilmeService;
 import filme.activity.FilmeActivity;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.MovieDb;
-import listafilmes.activity.FilmesActivity;
 import listaserie.activity.TvShowsActivity;
 import pessoa.activity.FotoPersonActivity;
 import pessoa.activity.PersonActivity;
@@ -132,7 +132,7 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                 }
 
                 if (action.equals("FilmesActivity")) {
-                    Intent intent = new Intent(context, FilmesActivity.class);
+                    Intent intent = new Intent(context, MoviesActivity.class);
                     // if (object.has("aba")) {    só funciona para NO CINEMA - ARRUMAR
                     // intent.putExtra(Constantes.ABA, object.getInt("id"));
                     TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);

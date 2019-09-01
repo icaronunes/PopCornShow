@@ -33,7 +33,6 @@ class CrewsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crews)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         getExtras()
@@ -43,7 +42,7 @@ class CrewsActivity : BaseActivity() {
             itemAnimator = DefaultItemAnimator()
         }
         
-        setAdmob()
+        setAdMob(adView)
 
         supportActionBar?.title = title
 
