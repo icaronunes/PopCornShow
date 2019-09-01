@@ -226,46 +226,16 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
                 imgUserPhoto.setImageResource(R.drawable.add_user);
                // imgUserPhoto.setOnClickListener(onClickListenerlogado());
             } else {
-                if (user.getProviders() != null)
-
-                    switch (user.getProviders().get(0)) {
-
-                        case "google.com": {
-                            textLogin.setVisibility(View.VISIBLE);
-                            grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-                            tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
-                            tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
-                            Picasso.get().load(user.getPhotoUrl())
-                                    .placeholder(R.drawable.person)
-                                    .into(imgUserPhoto);
-                          //  imgUserPhoto.setOnClickListener(onClickListenerlogado());
-                            break;
-                        }
-
-                        case "facebook.com": {
-                            textLogin.setVisibility(View.VISIBLE);
-                            grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-                            tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
-                            tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
-                            Picasso.get().load(user.getPhotoUrl())
-                                    .placeholder(R.drawable.person)
-                                    .into(imgUserPhoto);
-                            imgUserPhoto.setOnClickListener(onClickListenerlogado());
-                            break;
-                        }
-
-                        case "password": {
-                            textLogin.setVisibility(View.GONE);
-                            grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
-                            tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
-                            tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
-                            Picasso.get().load(user.getPhotoUrl())
-                                    .placeholder(R.drawable.person)
-                                    .into(imgUserPhoto);
-                            imgUserPhoto.setOnClickListener(onClickListenerlogado());
-                            break;
-                        }
-                    }
+                if (!user.getProviderData().isEmpty()) {
+                    textLogin.setVisibility(View.VISIBLE);
+                    grupo_login.setGroupVisible(R.id.menu_drav_logado, true);
+                    tUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "");
+                    tLogin.setText(user.getEmail() != null ? user.getEmail() : "");
+                    Picasso.get().load(user.getPhotoUrl())
+                            .placeholder(R.drawable.person)
+                            .into(imgUserPhoto);
+                  //  imgUserPhoto.setOnClickListener(onClickListenerlogado());
+                }
             }
         }
     }
@@ -286,14 +256,8 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
             }
             case R.id.seguindo: {
                 this.navigationView.setCheckedItem(id);
-
             }
-//            case R.id.list: {
-//                this.navigationView.setCheckedItem(id);
-//            } //Metoda da Api não carrega filmes_main da list.
-
-        }//??????????? Cade os outros?
-
+        }
     }
 
     private void onNavDrawerItemSelected(MenuItem menuItem) {

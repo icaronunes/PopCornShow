@@ -82,9 +82,42 @@ class UtilsKt {
         fun setAdMob(adView: AdView) {
             adView.loadAd(AdRequest.Builder()
                     //.addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                    .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+                     .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
                     .build())
-        }
 
+            adView.adListener = object : AdListener() {
+                override fun onAdLoaded() {
+                    // Code to be executed when an ad finishes loading.
+                    Log.d(this.javaClass.name, "onAdLoaded")
+                }
+
+                override fun onAdFailedToLoad(errorCode: Int) {
+                    // Code to be executed when an ad request fails.
+                    Log.d(this.javaClass.name, "errorCode - $errorCode")
+                }
+
+                override fun onAdOpened() {
+                    // Code to be executed when an ad opens an overlay that
+                    // covers the screen.
+                    Log.d(this.javaClass.name, "onAdOpened")
+                }
+
+                override fun onAdClicked() {
+                    // Code to be executed when the user clicks on an ad.
+                    Log.d(this.javaClass.name, "onAdClicked")
+                }
+
+                override fun onAdLeftApplication() {
+                    // Code to be executed when the user has left the app.
+                    Log.d(this.javaClass.name, "onAdLeftApplication")
+                }
+
+                override fun onAdClosed() {
+                    // Code to be executed when the user is about to return
+                    // to the app after tapping on an ad.
+                    Log.d(this.javaClass.name, "onAdClosed")
+                }
+            }
+        }
     }
 }
