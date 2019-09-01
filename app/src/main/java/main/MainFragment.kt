@@ -19,7 +19,7 @@ import domain.movie.ListaFilmes
 import kotlinx.android.synthetic.main.filmes_main.*
 import kotlinx.android.synthetic.main.tvshow_main.*
 import kotlinx.coroutines.Job
-import listafilmes.activity.FilmesActivity
+import listafilmes.activity.MoviesActivity
 import listaserie.activity.TvShowsActivity
 import tvshow.TvShowMainAdapter
 import utils.Constantes
@@ -155,28 +155,28 @@ class MainFragment : BaseFragment() {
         chip_group_movie.setOnCheckedChangeListener { _, id ->
             when (id) {
                 R.id.chip_now_playing -> {
-                    startActivity(Intent(activity, FilmesActivity::class.java).apply {
+                    startActivity(Intent(activity, MoviesActivity::class.java).apply {
                         putExtra(Constantes.ABA, R.string.now_playing)
                         putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing)
                     })
                 }
 
                 R.id.chip_upcoming -> {
-                    startActivity(Intent(activity, FilmesActivity::class.java).apply {
+                    startActivity(Intent(activity, MoviesActivity::class.java).apply {
                         putExtra(Constantes.ABA, R.string.upcoming)
                         putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.upcoming)
                     })
                 }
 
                 R.id.chip_populares -> {
-                    startActivity(Intent(activity, FilmesActivity::class.java).apply {
+                    startActivity(Intent(activity, MoviesActivity::class.java).apply {
                         putExtra(Constantes.ABA, R.string.populares)
                         putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.populares)
                     })
                 }
 
                 R.id.chip_top_rated -> {
-                    startActivity(Intent(activity, FilmesActivity::class.java).apply {
+                    startActivity(Intent(activity, MoviesActivity::class.java).apply {
                         putExtra(Constantes.ABA, R.string.top_rated)
                         putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.top_rated)
                     })

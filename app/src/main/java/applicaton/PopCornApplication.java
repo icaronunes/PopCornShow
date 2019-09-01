@@ -12,6 +12,7 @@ import com.onesignal.OneSignal;
 import com.squareup.otto.Bus;
 
 import br.com.icaro.filme.BuildConfig;
+import br.com.icaro.filme.R;
 import io.fabric.sdk.android.Fabric;
 import onsignal.CustomNotificationOpenedHandler;
 import onsignal.CustomNotificationReceivedHandler;
@@ -48,7 +49,7 @@ public class PopCornApplication extends MultiDexApplication {
 				.build();
 		Fabric.with(this, crashlyticsKit);
 
-		MobileAds.initialize(this, Config.ADMOB);
+		MobileAds.initialize(this, getString(R.string.adMobNotive));
 
 		try {
 			if (getExternalCacheDir().exists()) {

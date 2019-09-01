@@ -81,7 +81,7 @@
         </activity>
 
         <activity
-            android:name="listafilmes.activity.FilmesActivity"
+            android:name="listafilmes.activity.MoviesActivity"
             android:parentActivityName="main.MainActivity">
 
             <meta-data

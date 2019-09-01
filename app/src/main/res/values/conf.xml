@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="admob" translatable="false">ca-app-pub-7639270198633263/7125334030</string>
+<!--    <string name="admob" translatable="false">ca-app-pub-7639270198633263/7125334030</string>-->
+    <string name="admob" translatable="false">ca-app-pub-7639270198633263/4698972386</string>
+    <string name="admob_id_app" translatable="false">ca-app-pub-7639270198633263~5648600833</string>
     <string name="adMobNotive" translatable="false">ca-app-pub-7639270198633263/2223415498</string>
     <string name="facebook_application_id" translatable="false">880015148798069</string>
     <string name="web_client_id" translatable="false">1040550353675-u6lupdp1hc16iri5gslqnt2vdpv49mff.apps.googleusercontent.com</string>

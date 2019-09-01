@@ -32,7 +32,6 @@ class MoviesFragment : FragmentBase() {
     private var abaEscolhida: Int = 0
     private var pagina = 1
     private var totalPagina: Int = 0
-    private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +42,6 @@ class MoviesFragment : FragmentBase() {
                 this.abaEscolhida = Integer.parseInt(arguments?.getString(Constantes.NAV_DRAW_ESCOLIDO)!!)
             }
         }
-
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

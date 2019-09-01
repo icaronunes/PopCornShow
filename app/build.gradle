@@ -128,11 +128,11 @@ dependencies {
     //implementation platform('com.google.firebase:firebase-bom:18.1.0')
     //Atualiza firebase automaticametne. Falhando
 
-    implementation 'com.google.firebase:firebase-ads:17.2.0'
+    implementation 'com.google.firebase:firebase-ads:11.2.2'
     implementation 'com.google.firebase:firebase-config:16.4.1'
-    implementation 'com.google.firebase:firebase-auth:16.2.0'
+    implementation 'com.google.firebase:firebase-auth:16.2.1'
     implementation 'com.google.firebase:firebase-database:16.1.0'
-    implementation 'com.google.firebase:firebase-invites:16.1.1'
+    implementation 'com.google.firebase:firebase-invites:17.0.0'
     implementation 'com.google.firebase:firebase-perf:16.2.5'
     //Android
     implementation 'androidx.appcompat:appcompat:1.0.2'

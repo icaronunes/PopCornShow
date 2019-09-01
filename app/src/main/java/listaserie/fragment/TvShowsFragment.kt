@@ -8,8 +8,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import br.com.icaro.filme.R
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.material.snackbar.Snackbar
 import domain.Api
@@ -18,7 +16,10 @@ import kotlinx.android.synthetic.main.fragment_list_medias.*
 import listaserie.adapter.ListaSeriesAdapter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import utils.*
+import utils.Constantes
+import utils.InfiniteScrollStaggeredListener
+import utils.UtilsApp
+import utils.UtilsKt
 import utils.UtilsKt.Companion.getIdiomaEscolhido
 import java.util.concurrent.TimeUnit
 
@@ -44,11 +45,7 @@ class TvShowsFragment : FragmentBase() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val adRequest = AdRequest.Builder()
-                // .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
-                .build()
-        adView.loadAd(adRequest)
-
+        setAdMob(adView)
         recycle_listas.apply {
             val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             this.layoutManager = layoutManager
