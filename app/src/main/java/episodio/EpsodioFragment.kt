@@ -288,7 +288,11 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
     }
 
     private fun setImage() {
-        ep_image.setPicasso(episode?.stillPath!!)
+        if (episode?.stillPath.isNullOrBlank()) {
+            ep_image.setPicasso(episode?.stillPath, img_erro = R.drawable.top_empty)
+        } else {
+            ep_image.setPicasso("", img_erro = R.drawable.top_empty)
+        }
     }
 
     private fun setVote() {

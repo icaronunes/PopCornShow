@@ -61,7 +61,7 @@ class SearchAdapter(val context: SearchMultiActivity, private val multis: List<M
                     holder.searchNome.text = it
                 }
 
-                movieDb.releaseDate.let {
+                movieDb.releaseDate?.let {
                     holder.searchDataLancamento.text =
                             if (it.length >= 4) it.substring(0, 4)
                             else it

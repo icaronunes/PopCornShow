@@ -60,7 +60,6 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
         FirebaseApp.initializeApp(getBaseContext());
         FacebookSdk.sdkInitialize(getBaseContext());
         setContentView(R.layout.activity_login);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mAuth = FirebaseAuth.getInstance();
 
         setGoogle();
@@ -81,7 +80,7 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
                 dialog.show();
 
                 Button cancel = (Button) dialog.findViewById(R.id.bt_new_login_cancel);
-                final TextInputLayout login = (TextInputLayout) dialog.findViewById(R.id.vincular_login);
+                final TextInputLayout login = (TextInputLayout) dialog.findViewById(R.id.create_login);
                 final TextInputLayout senha = (TextInputLayout) dialog.findViewById(R.id.criar_pass);
                 final TextInputLayout repetirSenha = (TextInputLayout) dialog.findViewById(R.id.criar_repetir_pass);
 
@@ -179,12 +178,10 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
         switch (view.getId()) {
 
             case R.id.facebook: {
-                // Log.d(TAG, "Facebook");
                 LogarFacebook();
                 break;
             }
             case R.id.logar: {
-                //LogarComEmail();
                 break;
             }
         }
