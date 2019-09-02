@@ -235,7 +235,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
                 tLogin.setText(R.string.anonymous);
                 tUserName.setText(R.string.criar_login_popcorn);
                 imgUserPhoto.setImageResource(R.drawable.add_user);
-                imgUserPhoto.setOnClickListener(onClickListenerlogado());
+               // imgUserPhoto.setOnClickListener(onClickListenerlogado());
             } else {
                 if (user.getProviders() != null)
                     // Log.d(TAG, user.getProviders().get(0));
@@ -249,7 +249,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
                             Picasso.get().load(user.getPhotoUrl())
                                     .placeholder(R.drawable.person)
                                     .into(imgUserPhoto);
-                            imgUserPhoto.setOnClickListener(onClickListenerlogado());
+                          //  imgUserPhoto.setOnClickListener(onClickListenerlogado());
                             break;
                         }
 
