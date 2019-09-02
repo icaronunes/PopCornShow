@@ -49,7 +49,7 @@ public class PopCornApplication extends MultiDexApplication {
 				.build();
 		Fabric.with(this, crashlyticsKit);
 
-		MobileAds.initialize(this, getString(R.string.adMobNotive));
+		MobileAds.initialize(this, getString(R.string.admob_id_app));
 
 		try {
 			if (getExternalCacheDir().exists()) {

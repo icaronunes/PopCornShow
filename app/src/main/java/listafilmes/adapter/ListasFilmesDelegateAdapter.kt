@@ -50,6 +50,7 @@ class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
 
                         override fun onSuccess() {
                             progress_filmes_lista.visibility = View.GONE
+                            title_filmes_lista.visibility = View.GONE
                         }
                     } )
 

@@ -54,7 +54,7 @@ class UtilsKt {
 
         fun getAnuncio(context: Context, quant: Int = 1, listener: (UnifiedNativeAd) -> Unit = {}) {
 
-            val adLoader = AdLoader.Builder(context, "ca-app-pub-3940256099942544/2247696110")
+            val adLoader = AdLoader.Builder(context, "ca-app-pub-7639270198633263/2223415498")
                     //TODO AdMob Cadastrado
                     .forUnifiedNativeAd { ad: UnifiedNativeAd ->
                         // Show the ad.
@@ -63,7 +63,7 @@ class UtilsKt {
                     }
                     .withAdListener(object : AdListener() {
                         override fun onAdFailedToLoad(errorCode: Int) {
-                            Log.d(this.javaClass.name, errorCode.toString())
+                            Log.d(this.javaClass.name, "onAdFailedToLoad $errorCode")
                             // Handle the failure by logging, altering the UI, and so on.
                             //	Toast.makeText(context, context.getString(R.string.ops), Toast.LENGTH_LONG).show()
                         }
@@ -72,7 +72,8 @@ class UtilsKt {
                             // Methods in the NativeAdOptions.Builder class can be
                             // used here to specify individual options settings.
                             .setAdChoicesPlacement(NativeAdOptions.ADCHOICES_BOTTOM_LEFT)
-                            .setImageOrientation(NativeAdOptions.ORIENTATION_PORTRAIT)
+                            .setMediaAspectRatio(NativeAdOptions.NATIVE_MEDIA_ASPECT_RATIO_PORTRAIT)
+                            //.setImageOrientation(NativeAdOptions.ORIENTATION_PORTRAIT)
                             .build())
                     .build()
 

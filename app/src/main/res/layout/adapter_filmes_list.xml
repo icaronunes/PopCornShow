@@ -58,6 +58,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/trade_txt_size_sp_16"
                 android:typeface="serif"
+                android:visibility="gone"
                 tools:text="Nome do filme Nome do Filme Nome do Filme Nome do Filme" />
 
         </FrameLayout>

@@ -123,12 +123,13 @@ dependencies {
     //implementation 'com.google.android.gms:play-services-gcm:16.1.0'
     implementation 'com.google.android.gms:play-services-analytics:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.android.gms:play-services-ads:18.2.0'
     //Firebases
     //implementation platform('com.google.firebase:firebase-bom:18.1.0')
     //Atualiza firebase automaticametne. Falhando
 
     implementation 'com.google.firebase:firebase-ads:18.2.0'
-   // implementation 'com.google.firebase:firebase-config:19.0.0'
+    implementation 'com.google.firebase:firebase-config:19.0.0'
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.google.firebase:firebase-database:19.0.0'
     implementation 'com.google.firebase:firebase-invites:17.0.0'
