@@ -138,12 +138,12 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
 
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         try {
-            date = sdf.parse(ep.airDate)
+            ep.airDate?.let { date = sdf.parse(it) }
         } catch (e: ParseException) {
             e.printStackTrace()
         }
 
-        if (UtilsApp.verificaLancamento(date) && mAuth!!.currentUser != null && seguindo) {
+        if (UtilsApp.verificaLancamento(date) && mAuth?.currentUser != null && seguindo) {
             val databaseReference = FirebaseDatabase.getInstance()
                     .getReference("users")
                     .child(mAuth!!.currentUser!!.uid)

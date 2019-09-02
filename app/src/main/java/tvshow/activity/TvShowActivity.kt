@@ -338,7 +338,7 @@ class TvShowActivity : BaseActivity() {
             var date: Date? = null
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             try {
-                date = sdf.parse(series!!.firstAirDate)
+                series?.firstAirDate?.let { date = sdf.parse(it) }
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
@@ -383,7 +383,7 @@ class TvShowActivity : BaseActivity() {
             var date: Date? = null
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             try {
-                date = sdf.parse(series!!.firstAirDate)
+                series?.firstAirDate?.let { date = sdf.parse(it) }
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
@@ -624,7 +624,7 @@ class TvShowActivity : BaseActivity() {
             if (series?.firstAirDate != null) {
                 val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 try {
-                    date = sdf.parse(series?.firstAirDate)
+                    series?.firstAirDate.let { date = sdf.parse(it) }
                 } catch (e: ParseException) {
                     e.printStackTrace()
                 }

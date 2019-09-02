@@ -230,7 +230,7 @@ class FilmeActivity : BaseActivity() {
             fab_menu_filme?.alpha = 1.0f
             setColorFab(color_fundo)
             menu_item_favorite?.setOnClickListener(addOrRemoveFavorite())
-            menu_item_rated?.setOnClickListener(RatedFilme())
+            menu_item_rated?.setOnClickListener(ratedFilme())
             menu_item_watchlist?.setOnClickListener(addOrRemoveWatch())
 
         } else {
@@ -320,12 +320,12 @@ class FilmeActivity : BaseActivity() {
     }
 
 
-    fun RatedFilme(): View.OnClickListener {
+    fun ratedFilme(): View.OnClickListener {
         return View.OnClickListener {
             var date: Date? = null
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             try {
-                date = sdf.parse(movieDb?.releaseDate)
+                movieDb?.releaseDate?.let { date = sdf.parse(movieDb?.releaseDate) }
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
@@ -421,7 +421,7 @@ class FilmeActivity : BaseActivity() {
             var date: Date? = null
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             try {
-                date = sdf.parse(movieDb?.releaseDate)
+                movieDb?.releaseDate?.let { date = sdf.parse(movieDb?.releaseDate) }
             } catch (e: ParseException) {
                 e.printStackTrace()
             }

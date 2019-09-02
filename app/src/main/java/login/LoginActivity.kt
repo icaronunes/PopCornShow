@@ -199,15 +199,19 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
                             Toast.makeText(this@LoginActivity, R.string.ops,
                                     Toast.LENGTH_SHORT).show()
                         }
-                        mAuthProgressDialog.value.dismiss()
+                        if (!isDestroyed)
+                            mAuthProgressDialog.value.dismiss()
                     }?.addOnFailureListener {
                         Log.w(TAG, "signInWithEmail:failed " + it.message)
-                        mAuthProgressDialog.value.dismiss()
+                        if (!isDestroyed)
+                            mAuthProgressDialog.value.dismiss()
                     }
         } else {
-            Toast.makeText(this@LoginActivity, R.string.ops,
-                    Toast.LENGTH_SHORT).show()
-            mAuthProgressDialog.value.dismiss()
+            if (!isDestroyed) {
+                Toast.makeText(this@LoginActivity, R.string.ops,
+                        Toast.LENGTH_SHORT).show()
+                mAuthProgressDialog.value.dismiss()
+            }
         }
     }
 
@@ -245,17 +249,22 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
                         if (!task.isSuccessful) {
                             Toast.makeText(this@LoginActivity, R.string.ops, Toast.LENGTH_SHORT).show()
                         }
-                        mAuthProgressDialog.value.dismiss()
+                        if (!isDestroyed) {
+                            mAuthProgressDialog.value.dismiss()
+                        }
                     }
                     .addOnFailureListener { e ->
-                        Toast.makeText(this@LoginActivity, e.message, Toast.LENGTH_SHORT).show()
-                        mAuthProgressDialog.value.dismiss()
+                        if (!isDestroyed) {
+                            Toast.makeText(this@LoginActivity, e.message, Toast.LENGTH_SHORT).show()
+                            mAuthProgressDialog.value.dismiss()
+                        }
                     }
         } else {
             if (mAuth?.currentUser != null) {
                 mAuth?.signOut()
             }
-            mAuthProgressDialog.value.dismiss()
+            if (!isDestroyed)
+                mAuthProgressDialog.value.dismiss()
         }
     }
 
@@ -277,10 +286,13 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
             } else {
                 Toast.makeText(this@LoginActivity, R.string.ops, Toast.LENGTH_SHORT).show()
             }
-            mAuthProgressDialog.value.dismiss()
+            if (!isDestroyed)
+                mAuthProgressDialog.value.dismiss()
         }.addOnFailureListener { e ->
-            Toast.makeText(this@LoginActivity, e.message, Toast.LENGTH_SHORT).show()
-            mAuthProgressDialog.value.dismiss()
+            if (!isDestroyed) {
+                Toast.makeText(this@LoginActivity, e.message, Toast.LENGTH_SHORT).show()
+                mAuthProgressDialog.value.dismiss()
+            }
         }
 
     }
@@ -318,7 +330,8 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
                         Toast.makeText(this@LoginActivity, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show()
                     }
-                    mAuthProgressDialog.value.dismiss()
+                    if (!isDestroyed)
+                        mAuthProgressDialog.value.dismiss()
                 }
     }
 }

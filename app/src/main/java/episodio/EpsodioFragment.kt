@@ -177,11 +177,11 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
     }
 
     private fun setButtonRating(available: String?) {
-        var date: Date = Date()
+        var date: Date? = null
 
         try {
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            date = sdf.parse(available)
+            if (available != null) date = sdf.parse(available)
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -306,8 +306,8 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
     }
 
     private fun setAirDate() {
-        episode?.airDate.let {
-            air_date!!.text = episode!!.airDate
+        episode?.airDate?.let {
+            air_date.text = it
             setButtonRating(it)
         }
     }

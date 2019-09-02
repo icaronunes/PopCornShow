@@ -29,7 +29,6 @@ import utils.UtilsApp;
 
 public class WatchListActivity extends BaseActivity {
 
-    private final String TAG = WatchListActivity.class.getName();
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private LinearLayout linearLayout;
@@ -43,7 +42,6 @@ public class WatchListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuario_list);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setUpToolBar();
         getSupportActionBar().setTitle(R.string.quero_assistir);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -53,9 +51,8 @@ public class WatchListActivity extends BaseActivity {
         linearLayout = (LinearLayout) findViewById(R.id.linear_usuario_list);
 
         if (UtilsApp.isNetWorkAvailable(this)){
-
             iniciarFirebases();
-            setEventListenerFavorite();
+          //  setEventListenerFavorite();
         } else {
             snack();
         }
@@ -74,6 +71,8 @@ public class WatchListActivity extends BaseActivity {
         favoriteTv = database.getReference("users").child(mAuth.getCurrentUser()
                 .getUid()).child("watch")
                 .child("tvshow");
+
+        setEventListenerFavorite();
     }
 
     @Override
