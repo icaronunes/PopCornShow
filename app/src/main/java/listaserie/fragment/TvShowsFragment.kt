@@ -77,7 +77,6 @@ class TvShowsFragment : FragmentBase() {
                 }.show()
     }
 
-
     fun getListaSereies() {
 
         val inscricao = Api(context!!)

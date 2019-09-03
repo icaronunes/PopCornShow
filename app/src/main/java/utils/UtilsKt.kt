@@ -54,7 +54,7 @@ class UtilsKt {
 
         fun getAnuncio(context: Context, quant: Int = 1, listener: (UnifiedNativeAd) -> Unit = {}) {
 
-            val adLoader = AdLoader.Builder(context, "ca-app-pub-7639270198633263/2223415498")
+            val adLoader = AdLoader.Builder(context, "ca-app-pub-7639270198633263/3827462582")
 
                     //TODO AdMob Cadastrado
                     .forUnifiedNativeAd { ad: UnifiedNativeAd ->
@@ -84,7 +84,7 @@ class UtilsKt {
 
         fun setAdMob(adView: AdView) {
             adView.loadAd(AdRequest.Builder()
-                    //.addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                   // .addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)        // All emulators
                      .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
                     .build())
 
