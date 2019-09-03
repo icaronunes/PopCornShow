@@ -55,6 +55,7 @@ class UtilsKt {
         fun getAnuncio(context: Context, quant: Int = 1, listener: (UnifiedNativeAd) -> Unit = {}) {
 
             val adLoader = AdLoader.Builder(context, "ca-app-pub-7639270198633263/2223415498")
+
                     //TODO AdMob Cadastrado
                     .forUnifiedNativeAd { ad: UnifiedNativeAd ->
                         // Show the ad.
@@ -64,6 +65,7 @@ class UtilsKt {
                     .withAdListener(object : AdListener() {
                         override fun onAdFailedToLoad(errorCode: Int) {
                             Log.d(this.javaClass.name, "onAdFailedToLoad $errorCode")
+
                             // Handle the failure by logging, altering the UI, and so on.
                             //	Toast.makeText(context, context.getString(R.string.ops), Toast.LENGTH_LONG).show()
                         }
