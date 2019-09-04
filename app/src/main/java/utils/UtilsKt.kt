@@ -54,7 +54,7 @@ class UtilsKt {
 
         fun getAnuncio(context: Context, quant: Int = 1, listener: (UnifiedNativeAd) -> Unit = {}) {
 
-            val adLoader = AdLoader.Builder(context, "ca-app-pub-7639270198633263/3827462582")
+            val adLoader = AdLoader.Builder(context, "ca-app-pub-7639270198633263/2223415498")
 
                     //TODO AdMob Cadastrado
                     .forUnifiedNativeAd { ad: UnifiedNativeAd ->

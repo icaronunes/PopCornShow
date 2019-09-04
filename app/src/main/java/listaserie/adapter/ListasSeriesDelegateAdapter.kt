@@ -45,8 +45,11 @@ class ListasSeriesDelegateAdapter : ViewTypeDelegateAdapter {
                     .into(imgFilmes, object : Callback {
                         override fun onError(e: Exception?) {
                             progress_filmes_lista?.visibility = View.GONE
-                            if (item?.firstAirDate.isNullOrEmpty() && item?.firstAirDate?.length!! > 3)
+                            if (!item?.firstAirDate.isNullOrEmpty() && item?.firstAirDate?.length!! > 3) {
                                 title_filmes_lista.text = "${item.name} - ${item.firstAirDate.subSequence(0, 4)}"
+                            } else {
+
+                            }
                             title_filmes_lista.visibility = View.VISIBLE
                         }
 

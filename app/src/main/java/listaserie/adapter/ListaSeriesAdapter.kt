@@ -40,8 +40,9 @@ class ListaSeriesAdapter(private val context: Context) : RecyclerView.Adapter<Re
             this.listaResult.removeAt(itemCount - 1)
             notifyItemRemoved(itemCount)
         }
-
+        val before = listaResult.size
         this.listaResult.addAll(listaMedia as List<ViewType>)
+        notifyItemRangeInserted(before, this.listaResult.size - 1 /* plus loading item */)
     }
 
     fun addAd(ad: UnifiedNativeAd) {

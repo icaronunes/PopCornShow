@@ -1,7 +1,6 @@
 package elenco
 
 import activity.BaseActivity
-
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,7 +9,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.icaro.filme.R
-
 import com.google.android.material.snackbar.Snackbar
 import domain.Api
 import domain.CastItem
@@ -21,9 +19,6 @@ import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import utils.Constantes
 import utils.UtilsApp
-import com.google.android.gms.ads.doubleclick.PublisherAdRequest
-
-
 
 
 /**

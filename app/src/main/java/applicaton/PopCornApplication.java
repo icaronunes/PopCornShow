@@ -1,6 +1,7 @@
 package applicaton;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
@@ -8,6 +9,8 @@ import androidx.multidex.MultiDexApplication;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.onesignal.OneSignal;
 import com.squareup.otto.Bus;
 
@@ -49,7 +52,12 @@ public class PopCornApplication extends MultiDexApplication {
 				.build();
 		Fabric.with(this, crashlyticsKit);
 
-		MobileAds.initialize(this, getString(R.string.admob_id_app));
+		MobileAds.initialize(this, new OnInitializationCompleteListener() {
+			@Override
+			public void onInitializationComplete(InitializationStatus initializationStatus) {
+				Log.d(this.getClass().getName(), initializationStatus.toString());
+			}
+		});
 
 		try {
 			if (getExternalCacheDir().exists()) {
