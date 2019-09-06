@@ -13,13 +13,13 @@ import main.MainFragment
  */
 class MainAdapter(private val context: Context, supportFragmentManager: FragmentManager) : FragmentPagerAdapter(supportFragmentManager) {
 
-    override fun getItem(position: Int): Fragment? {
+    override fun getItem(position: Int): Fragment {
         if (position == 0) {
             return MainFragment.newInstance(R.string.tvshow_main)
         }
         return if (position == 1) {
             MainFragment.newInstance(R.string.filmes_main)
-        } else null
+        } else Fragment()
     }
 
     override fun getPageTitle(position: Int): CharSequence? {

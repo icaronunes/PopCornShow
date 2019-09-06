@@ -16,7 +16,6 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
@@ -58,7 +57,6 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(getBaseContext());
-        FacebookSdk.sdkInitialize(getBaseContext());
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
 

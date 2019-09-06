@@ -19,7 +19,6 @@ import br.com.icaro.filme.R;
 import io.fabric.sdk.android.Fabric;
 import onsignal.CustomNotificationOpenedHandler;
 import onsignal.CustomNotificationReceivedHandler;
-import utils.Config;
 
 /**
  * Created by icaro on 01/08/16.
@@ -51,13 +50,7 @@ public class PopCornApplication extends MultiDexApplication {
 				.core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
 				.build();
 		Fabric.with(this, crashlyticsKit);
-
-		MobileAds.initialize(this, new OnInitializationCompleteListener() {
-			@Override
-			public void onInitializationComplete(InitializationStatus initializationStatus) {
-				Log.d(this.getClass().getName(), initializationStatus.toString());
-			}
-		});
+		MobileAds.initialize(this, getString(R.string.admob_id_app));
 
 		try {
 			if (getExternalCacheDir().exists()) {

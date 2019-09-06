@@ -550,12 +550,12 @@ class FilmeActivity : BaseActivity() {
 
     private inner class ImagemTopFragment(supportFragmentManager: FragmentManager) : FragmentPagerAdapter(supportFragmentManager) {
 
-        override fun getItem(position: Int): Fragment? {
+        override fun getItem(position: Int): Fragment {
             return if (movieDb?.images?.backdrops != null) {
                 if (position == 0) {
                     ImagemTopFilmeScrollFragment.newInstance(movieDb?.backdropPath)
                 } else ImagemTopFilmeScrollFragment.newInstance(movieDb?.images?.backdrops!![position]?.filePath)
-            } else null
+            } else Fragment()
         }
 
         override fun getCount(): Int {

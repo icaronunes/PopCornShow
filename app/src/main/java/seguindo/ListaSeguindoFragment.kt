@@ -131,7 +131,7 @@ class ListaSeguindoFragment : Fragment() {
         val view = inflater.inflate(R.layout.temporadas, container, false) // Criar novo layout
         view.findViewById<View>(R.id.progressBarTemporadas).visibility = View.GONE
         adapterProximo = ProximosAdapter(requireActivity())
-        view.findViewById<RecyclerView>(R.id.temporadas_recycle).apply {
+        view.findViewById<RecyclerView>(R.id.temporadas_recycler).apply {
             setHasFixedSize(true)
             itemAnimator = DefaultItemAnimator()
             layoutManager = LinearLayoutManager(context)

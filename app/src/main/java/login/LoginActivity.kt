@@ -58,7 +58,6 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
         FirebaseApp.initializeApp(baseContext)
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         mAuth = FirebaseAuth.getInstance()
-        FacebookSdk.sdkInitialize(baseContext)
         setContentView(R.layout.activity_login)
 
         stateListener = authStateListener

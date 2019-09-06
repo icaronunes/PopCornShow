@@ -71,6 +71,7 @@ import java.text.DecimalFormat
 
 class TvShowFragment : FragmentBase() {
 
+    private lateinit var recyclerViewTemporada: RecyclerView
     private var tipo: Int = 0
     private var color: Int = 0
     private var mediaNotas: Float = 0f
@@ -321,7 +322,8 @@ class TvShowFragment : FragmentBase() {
                             userTvshow = dataSnapshot.getValue(UserTvshow::class.java)
 
                             if (getView() != null) {
-                                temporadas_recycle.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, userTvshow)
+                                recyclerViewTemporada = getView()?.rootView?.findViewById(R.id.temporadas_recycler) as RecyclerView
+                                recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, userTvshow)
                                 if (progressBarTemporada != null) {
                                     progressBarTemporada?.visibility = View.INVISIBLE
                                 }
@@ -333,7 +335,8 @@ class TvShowFragment : FragmentBase() {
                         }
                     } else {
                         if (getView() != null) {
-                            temporadas_recycle.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, null)
+                            recyclerViewTemporada = getView()?.rootView?.findViewById(R.id.temporadas_recycler) as RecyclerView
+                            recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, null)
                             if (progressBarTemporada != null) {
                                 progressBarTemporada?.visibility = View.INVISIBLE
                             }
@@ -406,17 +409,17 @@ class TvShowFragment : FragmentBase() {
     private fun getViewTemporadas(inflater: LayoutInflater?, container: ViewGroup?): View {
         val view = inflater?.inflate(R.layout.temporadas, container, false)
         progressBarTemporada = view?.findViewById<View>(R.id.progressBarTemporadas) as ProgressBar
-
-        temporadas_recycle.setHasFixedSize(true)
-        temporadas_recycle.itemAnimator = DefaultItemAnimator()
-        temporadas_recycle.layoutManager = LinearLayoutManager(context)
+        recyclerViewTemporada = view.findViewById<View>(R.id.temporadas_recycler) as RecyclerView
+        recyclerViewTemporada.setHasFixedSize(true)
+        recyclerViewTemporada.itemAnimator = DefaultItemAnimator()
+        recyclerViewTemporada.layoutManager = LinearLayoutManager(context)
         if (mAuth?.currentUser != null) {
-            temporadas_recycle.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, userTvshow)
+            recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, userTvshow)
             if (progressBarTemporada != null) {
                 progressBarTemporada?.visibility = View.INVISIBLE
             }
         } else {
-            temporadas_recycle.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, null)
+            recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, null)
             if (progressBarTemporada != null) {
                 progressBarTemporada?.visibility = View.INVISIBLE
             }
