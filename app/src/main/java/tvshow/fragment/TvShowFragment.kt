@@ -45,6 +45,7 @@ import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbTvSeasons
 import info.movito.themoviedbapi.model.tv.TvSeason
 import kotlinx.android.synthetic.main.fab_float.*
+import kotlinx.android.synthetic.main.temporadas.*
 import kotlinx.android.synthetic.main.tvshow_info.*
 import poster.PosterGridActivity
 import producao.CrewsActivity
@@ -74,14 +75,14 @@ class TvShowFragment : FragmentBase() {
     private var color: Int = 0
     private var mediaNotas: Float = 0f
     private var seguindo: Boolean = false
-    private var series: Tvshow? = null
+    private lateinit var series: Tvshow
     private var mAuth: FirebaseAuth? = null
     private var myRef: DatabaseReference? = null
     private var userTvshow: UserTvshow? = null
     private var postListener: ValueEventListener? = null
     private var progressBarTemporada: ProgressBar? = null
     private var imdbDd: Imdb? = null
-    private lateinit var recyclerViewTemporada: RecyclerView
+
 
     companion object {
 
@@ -148,22 +149,22 @@ class TvShowFragment : FragmentBase() {
 
     private fun setUltimoEpDate() {
         proximo_ep_date.let {
-            it.text = series?.lastEpisodeAir?.airDate
+            it.text = series.lastEpisodeAir?.airDate
 
         }
     }
 
     private fun setNomeUltimoEp() {
-        series?.lastEpisodeAir.let {
-            ultimo_ep_name.text = it?.name
+        series.lastEpisodeAir?.let {
+            ultimo_ep_name.text = it.name
         }
     }
 
     private fun setListeners() {
         icon_site?.setOnClickListener {
-            if (series?.homepage.isNullOrBlank()) {
+            if (series.homepage.isNullOrBlank()) {
                 val intent = Intent(context, Site::class.java)
-                intent.putExtra(Constantes.SITE, series?.homepage)
+                intent.putExtra(Constantes.SITE, series.homepage)
                 startActivity(intent)
 
             } else {
@@ -173,10 +174,10 @@ class TvShowFragment : FragmentBase() {
         }
 
         imdb_site?.setOnClickListener {
-            if (series?.external_ids?.imdbId != null) {
+            if (series.external_ids?.imdbId != null) {
                 val intent = Intent(activity, Site::class.java)
                 intent.putExtra(Constantes.SITE,
-                        "${Constantes.IMDB}${series?.external_ids?.imdbId}")
+                        "${Constantes.IMDB}${series.external_ids?.imdbId}")
                 startActivity(intent)
 
             }
@@ -185,7 +186,7 @@ class TvShowFragment : FragmentBase() {
         tmdb_site?.setOnClickListener {
             val intent = Intent(activity, Site::class.java)
             intent.putExtra(Constantes.SITE,
-                    "${Constantes.BASEMOVIEDB_TV}${series?.id}")
+                    "${Constantes.BASEMOVIEDB_TV}${series.id}")
             startActivity(intent)
         }
 
@@ -216,8 +217,8 @@ class TvShowFragment : FragmentBase() {
 
                 if (series != null)
                     (layout
-                            ?.findViewById<View>(R.id.nota_tmdb) as TextView).text = (if (series?.voteAverage != 0.0)
-                        series?.voteAverage?.toString() + "/10"
+                            ?.findViewById<View>(R.id.nota_tmdb) as TextView).text = (if (series.voteAverage != 0.0)
+                        series.voteAverage?.toString() + "/10"
                     else
                         "- -").toString()
 
@@ -320,8 +321,7 @@ class TvShowFragment : FragmentBase() {
                             userTvshow = dataSnapshot.getValue(UserTvshow::class.java)
 
                             if (getView() != null) {
-                                recyclerViewTemporada = getView()?.rootView?.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
-                                recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, userTvshow)
+                                temporadas_recycle.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, userTvshow)
                                 if (progressBarTemporada != null) {
                                     progressBarTemporada?.visibility = View.INVISIBLE
                                 }
@@ -333,8 +333,7 @@ class TvShowFragment : FragmentBase() {
                         }
                     } else {
                         if (getView() != null) {
-                            recyclerViewTemporada = getView()?.rootView?.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
-                            recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, null)
+                            temporadas_recycle.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, null)
                             if (progressBarTemporada != null) {
                                 progressBarTemporada?.visibility = View.INVISIBLE
                             }
@@ -407,17 +406,17 @@ class TvShowFragment : FragmentBase() {
     private fun getViewTemporadas(inflater: LayoutInflater?, container: ViewGroup?): View {
         val view = inflater?.inflate(R.layout.temporadas, container, false)
         progressBarTemporada = view?.findViewById<View>(R.id.progressBarTemporadas) as ProgressBar
-        recyclerViewTemporada = view.findViewById<View>(R.id.temporadas_recycle) as RecyclerView
-        recyclerViewTemporada.setHasFixedSize(true)
-        recyclerViewTemporada.itemAnimator = DefaultItemAnimator()
-        recyclerViewTemporada.layoutManager = LinearLayoutManager(context)
+
+        temporadas_recycle.setHasFixedSize(true)
+        temporadas_recycle.itemAnimator = DefaultItemAnimator()
+        temporadas_recycle.layoutManager = LinearLayoutManager(context)
         if (mAuth?.currentUser != null) {
-            recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, userTvshow)
+            temporadas_recycle.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, userTvshow)
             if (progressBarTemporada != null) {
                 progressBarTemporada?.visibility = View.INVISIBLE
             }
         } else {
-            recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, null)
+            temporadas_recycle.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, null)
             if (progressBarTemporada != null) {
                 progressBarTemporada?.visibility = View.INVISIBLE
             }
@@ -584,7 +583,7 @@ class TvShowFragment : FragmentBase() {
 
     private fun setSinopse() {
 
-        if (series?.overview.isNullOrBlank()) {
+        if (series != null && series?.overview.isNullOrBlank()) {
             getString(R.string.sem_sinopse)
         } else {
             descricao.text = series?.overview
@@ -829,10 +828,10 @@ class TvShowFragment : FragmentBase() {
 
     private fun setLancamento() {
         var inicio: String? = null
-        if (series?.firstAirDate != null) {
-            inicio = series?.firstAirDate?.subSequence(0, 4) as String
+        if (series.firstAirDate != null) {
+            inicio = series.firstAirDate?.subSequence(0, 4) as String
         }
-        if (series?.lastAirDate != null) {
+        if (series.lastAirDate != null) {
             lancamento?.text = inicio + " - " + series?.lastAirDate?.substring(0, 4)
         } else {
             lancamento?.text = inicio
@@ -853,8 +852,8 @@ class TvShowFragment : FragmentBase() {
     }
 
     private fun setHome() {
-        if (series?.homepage != null) {
-            if (series?.homepage?.length!! > 5) {
+        if (series.homepage != null) {
+            if (series.homepage?.length!! > 5) {
                 icon_site?.setImageResource(R.drawable.site_on)
             } else {
                 icon_site?.setImageResource(R.drawable.site_off)
@@ -866,7 +865,6 @@ class TvShowFragment : FragmentBase() {
 
     fun getImdb(): Imdb? {
 
-        if (series != null) {
             val inscricaoImdb = Api(context!!).getOmdbpi(series?.external_ids?.imdbId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -886,7 +884,6 @@ class TvShowFragment : FragmentBase() {
                     })
 
             subscriptions.add(inscricaoImdb)
-        }
 
         return null
     }
@@ -899,10 +896,10 @@ class TvShowFragment : FragmentBase() {
         var tomato = 0f
         var tamanho = 0
 
-        if (series?.voteAverage != null)
-            if (series?.voteAverage!! > 0) {
+        if (series.voteAverage != null)
+            if (series.voteAverage!! > 0) {
                 try {
-                    tmdb = series?.voteAverage!!.toFloat()
+                    tmdb = series.voteAverage!!.toFloat()
                     tamanho++
                 } catch (e: Exception) {
 

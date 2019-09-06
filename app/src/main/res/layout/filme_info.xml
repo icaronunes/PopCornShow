@@ -169,23 +169,22 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/trade_size_dp_2"
-        android:layout_marginBottom="@dimen/trade_size_dp_4"
         app:cardCornerRadius="@dimen/trade_size_dp_2"
         app:cardElevation="3dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
-        app:layout_constraintBottom_toBottomOf="@+id/card_poster"
+        app:layout_constraintBottom_toTopOf="@+id/descricao"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/card_poster"
-        app:layout_constraintTop_toBottomOf="@+id/frame_nota">
+        app:layout_constraintStart_toStartOf="@+id/frame_nota"
+        app:layout_constraintTop_toBottomOf="@+id/frame_nota"
+        app:layout_constraintVertical_bias="0.47000003">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/trade_size_dp_4"
             android:layout_height="match_parent"
-            >
+            android:layout_marginTop="@dimen/trade_size_dp_4">
 
             <TextView
                 android:id="@+id/original_title_label"
@@ -194,8 +193,7 @@
                 android:layout_marginStart="@dimen/trade_size_dp_2"
                 android:text="@string/original_title"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView
@@ -264,8 +262,8 @@
                 android:id="@+id/country_producer_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/production_countries"
                 android:layout_marginStart="@dimen/trade_size_dp_2"
+                android:text="@string/production_countries"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/popularity_label" />
 
@@ -308,7 +306,7 @@
         android:layout_margin="@dimen/trade_size_dp_4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_poster"
+        app:layout_constraintTop_toBottomOf="@+id/guideline"
         tools:text="A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground fight clubs forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion." />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -471,5 +469,12 @@
         tools:itemCount="4"
         tools:listitem="@layout/scroll_similares"
         tools:orientation="horizontal" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="272dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

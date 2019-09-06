@@ -57,7 +57,7 @@ import java.util.*
 
 class MovieFragment : FragmentBase() {
 
-    private var movieDb: Movie? = null
+    private lateinit var movieDb: Movie
     private var imdbDd: Imdb? = null
     private var color: Int = 0
     //  private lateinit var subscriptions: CompositeSubscription
@@ -123,10 +123,10 @@ class MovieFragment : FragmentBase() {
 
         img_budget?.setOnClickListener {
 
-            if (movieDb?.budget != null) {
-                if (movieDb?.budget!! > 0) {
+            if (movieDb.budget != null) {
+                if (movieDb.budget!! > 0) {
 
-                    var valor = movieDb!!.budget.toString()
+                    var valor = movieDb.budget.toString()
                     if (valor.length >= 6)
                         valor = valor.substring(0, valor.length - 6)
                     BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
@@ -143,9 +143,9 @@ class MovieFragment : FragmentBase() {
 
         icon_site?.setOnClickListener {
 
-            if (movieDb?.homepage !== "" && movieDb?.homepage != null) {
+            if (movieDb.homepage !== "" && movieDb.homepage != null) {
                 val intent = Intent(context, Site::class.java)
-                intent.putExtra(Constantes.SITE, movieDb!!.homepage)
+                intent.putExtra(Constantes.SITE, movieDb.homepage)
                 startActivity(intent)
 
             } else {
@@ -158,8 +158,8 @@ class MovieFragment : FragmentBase() {
         img_star.setOnClickListener(onClickImageStar())
 
         icon_collection.setOnClickListener {
-            if (movieDb?.belongsToCollection != null) {
-                val inscricaoMovie = Api(context = context!!).getColecao(movieDb?.belongsToCollection?.id!!)
+            if (movieDb.belongsToCollection != null) {
+                val inscricaoMovie = Api(context = context!!).getColecao(movieDb.belongsToCollection?.id!!)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
@@ -177,31 +177,31 @@ class MovieFragment : FragmentBase() {
 
         textview_elenco.setOnClickListener {
             val intent = Intent(context, ElencoActivity::class.java)
-            intent.putExtra(Constantes.ELENCO, movieDb?.credits?.cast as Serializable)
-            intent.putExtra(Constantes.NOME, movieDb?.title)
+            intent.putExtra(Constantes.ELENCO, movieDb.credits?.cast as Serializable)
+            intent.putExtra(Constantes.NOME, movieDb.title)
             startActivity(intent)
 
         }
 
         textview_crews.setOnClickListener {
             val intent = Intent(context, CrewsActivity::class.java)
-            intent.putExtra(Constantes.PRODUCAO, movieDb?.credits?.crew as Serializable)
-            intent.putExtra(Constantes.NOME, movieDb?.title)
+            intent.putExtra(Constantes.PRODUCAO, movieDb.credits?.crew as Serializable)
+            intent.putExtra(Constantes.NOME, movieDb.title)
             startActivity(intent)
 
         }
 
         textview_similares.setOnClickListener {
             val intent = Intent(context, SimilaresActivity::class.java)
-            intent.putExtra(Constantes.SIMILARES_FILME, movieDb?.similar?.resultsSimilar as Serializable)
-            intent.putExtra(Constantes.NOME, movieDb?.title)
+            intent.putExtra(Constantes.SIMILARES_FILME, movieDb.similar?.resultsSimilar as Serializable)
+            intent.putExtra(Constantes.NOME, movieDb.title)
             startActivity(intent)
 
         }
     }
 
     private fun setStatus() {
-        movieDb?.status.let {
+        movieDb.status.let {
             status.text = it
             status.setTextColor(color)
         }
@@ -236,8 +236,8 @@ class MovieFragment : FragmentBase() {
                     }
 
                     layout.findViewById<TextView>(R.id.nota_tmdb)
-                            .text = if (!movieDb?.voteAverage!!.equals(0.0))
-                        movieDb?.voteAverage!!.toString() + "/10"
+                            .text = if (!movieDb.voteAverage!!.equals(0.0))
+                        movieDb.voteAverage!!.toString() + "/10"
                     else
                         "- -"
 
@@ -294,16 +294,11 @@ class MovieFragment : FragmentBase() {
 
                     layout.findViewById<ImageView>(R.id.image_tmdb)
                             .setOnClickListener(View.OnClickListener {
-                                if (movieDb == null) {
-                                    return@OnClickListener
-                                }
-                                val url = "https://www.themoviedb.org/movie/" + movieDb?.id!!
+                                val url = "https://www.themoviedb.org/movie/" + movieDb.id!!
                                 val intent = Intent(activity, Site::class.java)
                                 intent.putExtra(Constantes.SITE, url)
                                 startActivity(intent)
                             })
-
-                    //REFAZER METODOS - MUITO GRANDE.
 
                     builder.setView(layout)
                     builder.show()
@@ -336,9 +331,8 @@ class MovieFragment : FragmentBase() {
 
     fun setSinopse() {
 
-        if (movieDb?.overview != null) {
-
-            descricao.text = movieDb?.overview
+        if (movieDb.overview != null) {
+            descricao.text = movieDb.overview
         } else {
             descricao.text = getString(R.string.sem_sinopse)
         }
@@ -353,7 +347,7 @@ class MovieFragment : FragmentBase() {
 
     fun setBuget() {
 
-        if (movieDb?.budget!! > 0) {
+        if (movieDb.budget!! > 0) {
             img_budget.setImageResource(R.drawable.orcamento)
         } else {
             img_budget.setImageResource(R.drawable.sem_orcamento)
@@ -380,16 +374,16 @@ class MovieFragment : FragmentBase() {
 
     private fun setPoster() {
 
-        if (movieDb?.posterPath != null) {
+        if (movieDb.posterPath != null) {
             Picasso.get()
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + movieDb?.posterPath)
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + movieDb.posterPath)
                     .into(img_poster)
 
             img_poster.setOnClickListener {
                 val intent = Intent(context, PosterGridActivity::class.java)
                 val transition = getString(R.string.poster_transition)
-                intent.putExtra(Constantes.POSTER, movieDb?.images?.posters as Serializable)
-                intent.putExtra(Constantes.NOME, movieDb?.title)
+                intent.putExtra(Constantes.POSTER, movieDb.images?.posters as Serializable)
+                intent.putExtra(Constantes.NOME, movieDb.title)
                 val compat = ActivityOptionsCompat
                         .makeSceneTransitionAnimation(activity!!, img_poster, transition)
                 ActivityCompat.startActivity(activity!!, intent, compat.toBundle())
@@ -401,11 +395,11 @@ class MovieFragment : FragmentBase() {
     }
 
     private fun setProdutora() {
-        if (movieDb?.productionCompanies?.isNotEmpty()!!) {
-            produtora.text = movieDb?.productionCompanies?.get(0)?.name
+        if (movieDb.productionCompanies?.isNotEmpty()!!) {
+            produtora.text = movieDb.productionCompanies?.get(0)?.name
             produtora.setTextColor(ContextCompat.getColor(context!!, R.color.primary))
             produtora.setOnClickListener {
-                movieDb?.productionCompanies?.get(0)?.let { production ->
+                movieDb.productionCompanies?.get(0)?.let { production ->
                     startActivity(Intent(context, ProdutoraActivity::class.java).apply {
                         putExtra(Constantes.PRODUTORA_ID, production.id)
                         putExtra(Constantes.ENDERECO, production.logoPath)
@@ -419,8 +413,8 @@ class MovieFragment : FragmentBase() {
     }
 
     private fun getImdb() {
-        if (movieDb?.imdbId != null) {
-            val inscircaoImdb = Api(context!!).getOmdbpi(movieDb?.imdbId)
+        if (movieDb.imdbId != null) {
+            val inscircaoImdb = Api(context!!).getOmdbpi(movieDb.imdbId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
@@ -455,7 +449,7 @@ class MovieFragment : FragmentBase() {
 
         val stringBuilder = StringBuilder("")
 
-        movieDb?.genres?.forEach { genero ->
+        movieDb.genres?.forEach { genero ->
             stringBuilder.append(" | " + genero?.name)
         }
 
@@ -463,19 +457,19 @@ class MovieFragment : FragmentBase() {
     }
 
     private fun setTitulo() {
-        if (movieDb?.title != null) {
-            titulo_text?.text = movieDb?.title
+        movieDb.title?.let {
+            titulo_text?.text = it
         }
     }
 
     private fun setTimeFilme() {
 
-        if (movieDb?.runtime != null) {
+        if (movieDb.runtime != null) {
             var horas = 0
             val minutos: Int
-            var tempo = movieDb!!.runtime!!
+            var tempo = movieDb.runtime
 
-            while (tempo > 60) {
+            while (tempo!! > 60) {
                 horas++
                 tempo -= 60
             }
@@ -488,8 +482,8 @@ class MovieFragment : FragmentBase() {
     }
 
     private fun setOriginalTitle() {
-        if (movieDb?.originalTitle != null) {
-            original_title?.text = movieDb!!.originalTitle
+        if (movieDb.originalTitle != null) {
+            original_title?.text = movieDb.originalTitle
         } else {
             original_title?.text = getString(R.string.original_title)
         }
@@ -497,25 +491,25 @@ class MovieFragment : FragmentBase() {
     }
 
     private fun setSpokenLanguages() {
-        if (movieDb?.spokenLanguages?.isNotEmpty()!!) {
-            val languages = movieDb?.spokenLanguages
+        if (movieDb.spokenLanguages?.isNotEmpty()!!) {
+            val languages = movieDb.spokenLanguages
             spoken_languages.text = languages?.get(0)?.name
         } else {
             spoken_languages.text = getString(R.string.não_informado)
         }
     }
 
-    private fun setProductionCountries() = if (movieDb?.productionCountries?.isNotEmpty()!!) {
+    private fun setProductionCountries() = if (movieDb.productionCountries?.isNotEmpty()!!) {
 
-        production_countries.text = movieDb?.productionCountries?.get(0)?.name
+        production_countries.text = movieDb.productionCountries?.get(0)?.name
     } else {
         production_countries.text = getString(R.string.não_informado);
     }
 
     private fun setPopularity() {
 
-        val animatorCompat = ValueAnimator.ofFloat(1.0f, movieDb?.popularity!!.toFloat())
-        if (movieDb?.popularity!! > 0) {
+        val animatorCompat = ValueAnimator.ofFloat(1.0f, movieDb.popularity!!.toFloat())
+        if (movieDb.popularity!! > 0) {
 
             animatorCompat.addUpdateListener { valueAnimator ->
                 val valor = valueAnimator.animatedValue as Float
@@ -548,13 +542,13 @@ class MovieFragment : FragmentBase() {
     }
 
     private fun setCast() {
-        if (movieDb?.credits?.cast!!.isNotEmpty() && isAdded) {
+        if (movieDb.credits?.cast!!.isNotEmpty() && isAdded) {
 
             recycle_filme_elenco?.apply {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                adapter = CastAdapter(activity, movieDb?.credits?.cast)
+                adapter = CastAdapter(activity, movieDb.credits?.cast)
             }
 
             textview_elenco?.visibility = View.VISIBLE
@@ -565,13 +559,13 @@ class MovieFragment : FragmentBase() {
 
     private fun setCrews() {
 
-        if (movieDb?.credits?.crew!!.isNotEmpty() && isAdded) {
+        if (movieDb.credits?.crew!!.isNotEmpty() && isAdded) {
 
             recycle_filme_producao?.apply {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                adapter = CrewAdapter(activity, movieDb?.credits?.crew)
+                adapter = CrewAdapter(activity, movieDb.credits?.crew)
             }
             textview_crews.visibility = View.VISIBLE
         } else {
@@ -581,13 +575,13 @@ class MovieFragment : FragmentBase() {
 
     private fun setSimilares() {
 
-        if (movieDb?.similar?.resultsSimilar?.isNotEmpty()!!) {
+        if (movieDb.similar?.resultsSimilar?.isNotEmpty()!!) {
 
             recycle_filme_similares?.apply {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                adapter = SimilaresFilmesAdapter(activity!!, movieDb?.similar?.resultsSimilar)
+                adapter = SimilaresFilmesAdapter(activity!!, movieDb.similar?.resultsSimilar)
             }
 
             recycle_filme_similares.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -617,15 +611,15 @@ class MovieFragment : FragmentBase() {
 
     private fun setLancamento() {
 
-        if (movieDb?.releaseDates?.resultsReleaseDates?.isNotEmpty()!!) {
+        if (movieDb.releaseDates?.resultsReleaseDates?.isNotEmpty()!!) {
 
-            val releases = movieDb?.releaseDates?.resultsReleaseDates
-            lancamento.text = if (movieDb?.releaseDate?.length!! > 9) "${movieDb?.releaseDate?.subSequence(0, 10)} ${Locale.getDefault().country}" else "N/A"
+            val releases = movieDb.releaseDates?.resultsReleaseDates
+            lancamento.text = if (movieDb.releaseDate?.length!! > 9) "${movieDb.releaseDate?.subSequence(0, 10)} ${Locale.getDefault().country}" else "N/A"
             releases?.forEach { date ->
                 if (date?.iso31661 == Locale.getDefault().country) {
                     date?.releaseDates?.forEach { it ->
                         if (it?.type == 1 || it?.type == 2 || it?.type == 3) {
-                            lancamento.text = if (it.releaseDate?.length!! > 9) "${movieDb?.releaseDate?.subSequence(0, 10)} ${Locale.getDefault().country}" else "N/A"
+                            lancamento.text = if (it.releaseDate?.length!! > 9) "${movieDb.releaseDate?.subSequence(0, 10)} ${Locale.getDefault().country}" else "N/A"
                         }
                     }
                 }
@@ -635,12 +629,12 @@ class MovieFragment : FragmentBase() {
 
     private fun setTrailer() {
 
-        if (movieDb?.videos?.results?.isNotEmpty()!!) {
+        if (movieDb.videos?.results?.isNotEmpty()!!) {
             recycle_filme_trailer?.apply {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                adapter = TrailerAdapter(activity, movieDb?.videos?.results, movieDb?.overview
+                adapter = TrailerAdapter(activity, movieDb.videos?.results, movieDb.overview
                         ?: "")
             }
         } else {
@@ -649,8 +643,8 @@ class MovieFragment : FragmentBase() {
     }
 
     private fun setHome() {
-        if (movieDb?.homepage != null) {
-            if (movieDb?.homepage?.length!! > 5) {
+        if (movieDb.homepage != null) {
+            if (movieDb.homepage?.length!! > 5) {
                 icon_site!!.setImageResource(R.drawable.site_on)
             } else {
                 icon_site!!.setImageResource(R.drawable.site_off)
@@ -661,7 +655,7 @@ class MovieFragment : FragmentBase() {
     }
 
     private fun setCollectoin() {
-        if (movieDb?.belongsToCollection != null) {
+        if (movieDb.belongsToCollection != null) {
 
             icon_collection?.setImageResource(R.drawable.collection_on)
         } else {
@@ -678,10 +672,10 @@ class MovieFragment : FragmentBase() {
             var tomato = 0.0f
             var tamanho = 0
 
-            if (movieDb != null)
-                if (movieDb?.voteAverage!! > 0) {
+
+                movieDb.voteAverage?.let {
                     try {
-                        tmdb = movieDb?.voteAverage!!
+                        tmdb = it
                         tamanho++
                     } catch (e: Exception) {
                     }
