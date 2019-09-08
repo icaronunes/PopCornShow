@@ -84,8 +84,8 @@ class UtilsKt {
 
         fun setAdMob(adView: AdView) {
             adView.loadAd(AdRequest.Builder()
-                    // .addTestDevice(com.google.androiçd.gms.ads.AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                     .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+                     //.addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)       // All emulators
+                     //.addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
                     .build())
 
             adView.adListener = object : AdListener() {

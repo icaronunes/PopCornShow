@@ -27,8 +27,8 @@ android {
         applicationId "br.com.icaro.filme"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 68
-        versionName "6.7"
+        versionCode 69
+        versionName "6.8"
 
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -53,6 +53,7 @@ android {
                     ext.enableCrashlytics = false
                     ext.alwaysUpdateBuildId = false
                     crunchPngs false
+                    manifestPlaceholders = [crashlyticsCollectionEnabled:"false"]
                 }
 
                 release {
@@ -63,6 +64,7 @@ android {
                     zipAlignEnabled true
                     //proguard com restrição ao log.ver
                     debuggable false
+                    manifestPlaceholders = [crashlyticsCollectionEnabled:"true"]
                 }
 
             }

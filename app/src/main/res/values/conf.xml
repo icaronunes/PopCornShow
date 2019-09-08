@@ -4,8 +4,8 @@
 <!--    <string name="admob" translatable="false">ca-app-pub-7639270198633263/7125334030</string>-->
     <!--    <string name="adMobNotive" translatable="false">ca-app-pub-7639270198633263/2223415498</string>-->
 
-    <string name="admob" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="adMobNotive" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="admob" translatable="false">ca-app-pub-7639270198633263/7125334030</string>
+    <string name="adMobNotive" translatable="false">ca-app-pub-7639270198633263/2223415498</string>
 
     <string name="admob_id_app" translatable="false">ca-app-pub-7639270198633263~5648600833</string>
 

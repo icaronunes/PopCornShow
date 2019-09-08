@@ -26,56 +26,59 @@ import onsignal.CustomNotificationReceivedHandler;
 
 public class PopCornApplication extends MultiDexApplication {
 
-	private static final String TAG = PopCornApplication.class.getName();
-	private static PopCornApplication instance = null;
-	private Bus bus = new Bus();
+    private static final String TAG = PopCornApplication.class.getName();
+    private static PopCornApplication instance = null;
+    private Bus bus = new Bus();
 
-	public static PopCornApplication getInstance() {
-		return instance;
-	}
+    public static PopCornApplication getInstance() {
+        return instance;
+    }
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-		instance = this;
-		
-		OneSignal.startInit(this)
-				.setNotificationOpenedHandler(new CustomNotificationOpenedHandler())
-				.setNotificationReceivedHandler(new CustomNotificationReceivedHandler())
-				.inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-				.init();
+        instance = this;
 
-		Crashlytics crashlyticsKit = new Crashlytics.Builder()
-				.core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-				.build();
-		Fabric.with(this, crashlyticsKit);
-		MobileAds.initialize(this, getString(R.string.admob_id_app));
+        OneSignal.startInit(this)
+                .setNotificationOpenedHandler(new CustomNotificationOpenedHandler())
+                .setNotificationReceivedHandler(new CustomNotificationReceivedHandler())
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .init();
 
-		try {
-			if (getExternalCacheDir().exists()) {
-				if (getExternalCacheDir().length() > 1000000 * 3) {
-					getExternalCacheDir().delete();
-				}
-			}
-		} catch (Exception e) {
-		}
+        if (!BuildConfig.DEBUG) {
+            Crashlytics crashlyticsKit = new Crashlytics.Builder()
+                    .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                    .build();
 
-	}
+            Fabric.with(this, crashlyticsKit);
+        }
+        MobileAds.initialize(this, getString(R.string.admob_id_app));
 
-	@Override
-	protected void attachBaseContext(Context base) {
-		super.attachBaseContext(base);
-		MultiDex.install(this);
-	}
+        try {
+            if (getExternalCacheDir().exists()) {
+                if (getExternalCacheDir().length() > 1000000 * 3) {
+                    getExternalCacheDir().delete();
+                }
+            }
+        } catch (Exception e) {
+        }
 
-	@Override
-	public void onTerminate() {
-		super.onTerminate();
-	}
+    }
 
-	public Bus getBus() {
-		return bus;
-	}
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+    }
+
+    public Bus getBus() {
+        return bus;
+    }
 
 }
