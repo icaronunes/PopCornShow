@@ -26,7 +26,6 @@ import onsignal.CustomNotificationReceivedHandler;
 
 public class PopCornApplication extends MultiDexApplication {
 
-    private static final String TAG = PopCornApplication.class.getName();
     private static PopCornApplication instance = null;
     private Bus bus = new Bus();
 

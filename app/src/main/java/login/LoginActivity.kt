@@ -9,6 +9,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.app.TaskStackBuilder
+import androidx.lifecycle.ViewModel
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
 import com.facebook.*
@@ -25,29 +28,30 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
 import main.MainActivity
+import main.MainViewModel
+import utils.makeToast
 import java.util.*
 
 /**
  * Created by icaro on 06/11/16.
  */
 
-class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener {
+class LoginActivity : BaseActivity() {
     private var mAuthProgressDialog: Lazy<ProgressDialog> = lazy {
         createDialog()
     }
     private val TAG = this.javaClass.name
     private var mAuth: FirebaseAuth? = null
-    private var stateListener: FirebaseAuth.AuthStateListener? = null
     private var mCallbackManager: CallbackManager? = null
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
+    private lateinit var model: LoginViewModel
 
     private val authStateListener: FirebaseAuth.AuthStateListener
         get() = FirebaseAuth.AuthStateListener {
-            val user = FirebaseAuth.getInstance().currentUser
+            val user = it.currentUser
             if (user != null) {
-                logUser()
                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                finish()
+                finishAffinity()
             } else {
                 Log.d(TAG, "não logou... ")
             }
@@ -56,19 +60,16 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(baseContext)
+        model = createViewModel(LoginViewModel::class.java)
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         mAuth = FirebaseAuth.getInstance()
         setContentView(R.layout.activity_login)
-
-        stateListener = authStateListener
-
         hideSoftKeyboard()
         setFacebook()
 
         vincular_login.setOnClickListener {
             createDialogNewUser()
         }
-
         recuperar_senha.setOnClickListener {
             createDialgoResetPass()
         }
@@ -86,11 +87,11 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
             val email = dialog.findViewById<TextInputLayout>(R.id.ed_email_recuperar)?.editText?.text.toString()
             if (email.contains("@") && email.contains(".")) {
                 mAuth!!.sendPasswordResetEmail(email).addOnCompleteListener {
-                    Toast.makeText(this@LoginActivity, resources.getString(R.string.email_recuperacao_enviado), Toast.LENGTH_SHORT).show()
+                    makeToast(R.string.email_recuperacao_enviado)
                     dialog.dismiss()
                 }
             } else {
-                Toast.makeText(this@LoginActivity, resources.getString(R.string.email_invalido), Toast.LENGTH_SHORT).show()
+                makeToast(R.string.email_invalido)
             }
         }
     }
@@ -108,12 +109,11 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
         dialog.findViewById<MaterialButton>(R.id.bt_new_login_cancel)?.setOnClickListener { dialog.dismiss() }
 
         dialog.findViewById<MaterialButton>(R.id.bt_new_login_ok)?.setOnClickListener {
-            if (validarParametros(login!!, senha!!, repetirSenha!!)) {
+            if (model.validarParametros(login!!, senha!!, repetirSenha!!)) {
                 criarLoginEmail(login.editText!!.text.toString(), senha.editText!!.text.toString())
                 dialog.dismiss()
             } else {
-                Toast.makeText(this@LoginActivity, R.string.ops,
-                        Toast.LENGTH_SHORT).show()
+                makeToast(R.string.ops)
             }
         }
     }
@@ -124,20 +124,6 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
             setMessage("Authenticating with PopCorn Show...")
             setCancelable(false)
         }
-    }
-
-    private fun validarParametros(login: TextInputLayout, senha: TextInputLayout, repetirSenha: TextInputLayout): Boolean {
-        val loginReceive: String = login.editText!!.text.toString()
-        val passReceive: String = senha.editText!!.text.toString()
-        val checkPass: String = repetirSenha.editText!!.text.toString()
-
-        if (loginReceive.contains("@") && loginReceive.contains(".")) {
-            if (passReceive === checkPass && passReceive.length > 6) {
-                return true
-            }
-        }
-
-        return false
     }
 
     private fun setFacebook() {
@@ -195,8 +181,7 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
                         // the auth state listener will be notified and logic to handle the
                          signed in user can be handled in the listener. */
                         if (!task.isSuccessful) {
-                            Toast.makeText(this@LoginActivity, R.string.ops,
-                                    Toast.LENGTH_SHORT).show()
+                            makeToast(R.string.ops)
                         }
                         if (!isDestroyed)
                             mAuthProgressDialog.value.dismiss()
@@ -207,20 +192,9 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
                     }
         } else {
             if (!isDestroyed) {
-                Toast.makeText(this@LoginActivity, R.string.ops,
-                        Toast.LENGTH_SHORT).show()
+                makeToast(R.string.ops)
                 mAuthProgressDialog.value.dismiss()
             }
-        }
-    }
-
-    private fun logUser() {
-        // TODO: Use the current user's information
-        // You can call any combination of these three methods
-        if (mAuth?.currentUser != null) {
-            Crashlytics.setUserIdentifier(if (mAuth?.currentUser != null) mAuth?.currentUser!!.uid else "")
-            Crashlytics.setUserEmail(mAuth?.currentUser?.email)
-            Crashlytics.setUserName(mAuth?.currentUser?.displayName)
         }
     }
 
@@ -229,11 +203,11 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
             super.onActivityResult(requestCode, resultCode, data)
             // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
             mCallbackManager?.onActivityResult(requestCode, resultCode, data)
-            val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "facebook")
-            mFirebaseAnalytics?.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
+            mFirebaseAnalytics?.logEvent(FirebaseAnalytics.Event.LOGIN, Bundle().apply {
+                putString(FirebaseAnalytics.Param.ITEM_NAME, "facebook")
+            })
         } catch (E: Exception) {
-            Toast.makeText(this, R.string.ops, Toast.LENGTH_SHORT).show()
+            makeToast(R.string.ops)
         }
     }
 
@@ -246,7 +220,7 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
             mAuth!!.signInWithCredential(credential)
                     .addOnCompleteListener { task ->
                         if (!task.isSuccessful) {
-                            Toast.makeText(this@LoginActivity, R.string.ops, Toast.LENGTH_SHORT).show()
+                            makeToast(R.string.ops)
                         }
                         if (!isDestroyed) {
                             mAuthProgressDialog.value.dismiss()
@@ -254,7 +228,7 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
                     }
                     .addOnFailureListener { e ->
                         if (!isDestroyed) {
-                            Toast.makeText(this@LoginActivity, e.message, Toast.LENGTH_SHORT).show()
+                            makeToast(e.message)
                             mAuthProgressDialog.value.dismiss()
                         }
                     }
@@ -270,64 +244,55 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
 
     private fun criarLoginEmail(email: String, pass: String) {
         mAuthProgressDialog.value.show()
-        mAuth!!.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(this) { task ->
+        mAuth?.createUserWithEmailAndPassword(email, pass)?.addOnCompleteListener(this) { task ->
 
             /* If sign in fails, display a message to the user. If sign in succeeds
             // the auth state listener will be notified and logic to handle the
             // signed in user can be handled in the listener.*/
-
-            val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "email")
-            mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
+            mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.LOGIN, Bundle().apply {
+                putString(FirebaseAnalytics.Param.ITEM_NAME, email)
+            })
 
             if (task.isSuccessful) {
-                Toast.makeText(this@LoginActivity, R.string.success, Toast.LENGTH_SHORT).show()
+                makeToast(R.string.success)
             } else {
-                Toast.makeText(this@LoginActivity, R.string.ops, Toast.LENGTH_SHORT).show()
+                makeToast(R.string.ops)
             }
             if (!isDestroyed)
                 mAuthProgressDialog.value.dismiss()
-        }.addOnFailureListener { e ->
+        }?.addOnFailureListener { e ->
             if (!isDestroyed) {
-                Toast.makeText(this@LoginActivity, e.message, Toast.LENGTH_SHORT).show()
+                makeToast(e.message)
                 mAuthProgressDialog.value.dismiss()
             }
         }
 
     }
 
-
     override fun onStart() {
         super.onStart()
-        mAuth?.addAuthStateListener(stateListener!!)
+        mAuth?.addAuthStateListener(authStateListener)
     }
 
     override fun onStop() {
         super.onStop()
-        if (stateListener != null) {
-            mAuth?.removeAuthStateListener(stateListener!!)
-        }
+        mAuth?.removeAuthStateListener(authStateListener)
     }
-
-    override fun onConnectionFailed(connectionResult: ConnectionResult) {}
 
     fun logarAnonimous() {
         mAuthProgressDialog.value.show()
-        mAuth!!.signInAnonymously()
-                .addOnCompleteListener(this) { task ->
+        mAuth?.signInAnonymously()
+                ?.addOnCompleteListener(this) { task ->
                     /*  Log.d(TAG, "signInAnonymously:onComplete:" + task.isSuccessful());
                     // If sign in fails, display a message to the user. If sign in succeeds
                     // the auth state listener will be notified and logic to handle the
                     // signed in user can be handled in the listener.*/
-                    val bundle = Bundle()
-                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "anonimo")
-                    mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
-                    Toast.makeText(this@LoginActivity, resources.getString(R.string.anonimo_alerta),
-                            Toast.LENGTH_LONG).show()
+                    mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.LOGIN, Bundle().apply {
+                        putString(FirebaseAnalytics.Param.ITEM_NAME, "anonimo") })
 
+                    this@LoginActivity.makeToast(R.string.anonimo_alerta)
                     if (!task.isSuccessful) {
-                        Toast.makeText(this@LoginActivity, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show()
+                        this.makeToast("Authentication failed.")
                     }
                     if (!isDestroyed)
                         mAuthProgressDialog.value.dismiss()

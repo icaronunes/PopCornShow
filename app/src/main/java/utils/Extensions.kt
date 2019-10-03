@@ -1,6 +1,8 @@
 package utils
 
+import android.app.Activity
 import android.widget.ImageView
+import android.widget.Toast
 import br.com.icaro.filme.R
 import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
@@ -43,4 +45,12 @@ fun ImageView.setPicassoWithCache(stillPath: String?, patten: Int = 4,  sucesso:
                     error()
                 }
             })
+}
+
+fun Activity.makeToast(restText: Int, time: Int = Toast.LENGTH_SHORT) {
+    this.makeToast(this.getString(restText), time)
+}
+
+fun Activity.makeToast(text: String?, time: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(this, text, time ).show()
 }

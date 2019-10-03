@@ -60,6 +60,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import applicaton.BaseViewModel;
 import applicaton.PopCornViewModelFactory;
 import avaliado.RatedActivity;
 import br.com.icaro.filme.BuildConfig;
@@ -72,6 +73,7 @@ import favorito.FavoriteActivity;
 import login.LoginActivity;
 import login.VincularLoginActivity;
 import main.MainActivity;
+import main.MainViewModel;
 import oscar.OscarActivity;
 import pessoaspopulares.PersonPopularActivity;
 import queroassistir.WatchListActivity;
