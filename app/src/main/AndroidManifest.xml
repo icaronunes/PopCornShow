@@ -345,13 +345,10 @@
         <activity android:name="login.VincularLoginActivity" />
 
         <activity android:name="activity.DynamicLink">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data
                     android:host="br.com.icaro.filme"
                     android:scheme="http" />
@@ -359,7 +356,6 @@
                     android:host="br.com.icaro.filme"
                     android:scheme="https" />
             </intent-filter>
-
         </activity>
 
         <activity android:name="desenvolvimento.Desenvolvimento" />

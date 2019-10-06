@@ -3,6 +3,7 @@ package filme.activity
 import activity.BaseActivity
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -67,6 +68,7 @@ class FilmeActivity : BaseActivity() {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filme)
@@ -94,8 +96,7 @@ class FilmeActivity : BaseActivity() {
         }
 
     }
-    
-    
+
 
     private fun getDados() {
 
@@ -266,7 +267,7 @@ class FilmeActivity : BaseActivity() {
                         intent.putExtra(Intent.EXTRA_TEXT, movieDb?.title + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL)
                         intent.type = "image/*"
                         intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.getUriDownloadImage(this@FilmeActivity, file))
-                        startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar_filme)))
+                        startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar) + " " + movieDb?.title))
                     }
 
                     override fun RetornoFalha() {
@@ -284,39 +285,7 @@ class FilmeActivity : BaseActivity() {
 
     fun buildDeepLink(): String {
         // Get the unique appcode for this app.
-
-        val link = "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3DFA%26id%3D${(movieDb?.id)}&apn=br.com.icaro.filme"
-
-        // If the deep link is used in an advertisement, this value must be set to 1.
-        val isAd = false
-        if (isAd) {
-            // builder.appendQueryParameter("ad", "1");
-        }
-
-        // Minimum version is optional.
-        //        int minVersion = ;
-        //        if (minVersion > 16) {
-        //            builder.appendQueryParameter("amv", Integer.toString(minVersion));
-        //        }
-
-        //        if (!TextUtils.isEmpty(androidLink)) {
-        //            builder.appendQueryParameter("al", androidLink);
-        //        }
-        //
-        //        if (!TextUtils.isEmpty(playStoreAppLink)) {
-        //            builder.appendQueryParameter("afl", playStoreAppLink);
-        //        }
-        //
-        //        if (!customParameters.isEmpty()) {
-        //            for (Map.Entry<String, String> parameter : customParameters.entrySet()) {
-        //                builder.appendQueryParameter(parameter.getKey(), parameter.getValue());
-        //            }
-        //        }
-
-        // Return the completed deep link.
-        //        Log.d(TAG, builder.build().toString());
-        //        return builder.build().toString();
-        return link
+        return "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3Dmovie%26id%3D${movieDb?.id}&apn=br.com.icaro.filme"
     }
 
 

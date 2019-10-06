@@ -38,8 +38,7 @@
     <string name="no_budget">Não há informação orçamentaria</string>
     <string name="no_site">Sem site Oficial</string>
     <string name="similares">Similares</string>
-    <string name="compartilhar_filme">Compartilhar Filme</string>
-    <string name="erro_na_gravacao_imagem">Erro na gravação da imagem na memoria. Tente novamente.</string>
+    <string name="erro_na_gravacao_imagem">Erro na gravação da imagem na memória. Tente novamente.</string>
     <string name="login">Login:</string>
     <string name="fazer_login">Fazer Login</string>
     <string name="password">Senha</string>

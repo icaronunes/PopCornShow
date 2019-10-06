@@ -55,7 +55,9 @@ public class PosterScrollFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        endereco = getArguments().getString(Constantes.INSTANCE.getENDERECO()); // nÃ£o usado!?!?!!
+        if (getArguments() != null) {
+            endereco = getArguments().getString(Constantes.INSTANCE.getENDERECO()); // nÃ£o usado!?!?!!
+        }
         nome = getArguments().getString(Constantes.INSTANCE.getNOME_FILME());
     }
 
@@ -146,9 +148,9 @@ public class PosterScrollFragment extends Fragment {
                 if (file != null) {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.putExtra(Intent.EXTRA_TEXT, nome + "  -  " + "https://q2p5q.app.goo.gl/3hX6" + " by: " + Constantes.INSTANCE.getTWITTER_URL());
-                    intent.setType("image/*"); // link dynamic - https://q2p5q.app.goo.gl/3hX6
+                    intent.setType("image/*");
                     intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.getUriDownloadImage(getContext(), file));
-                    startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar_filme)));
+                    startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar) + " " + nome));
                 } else {
                     Toast.makeText(getContext(), getResources().getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show();
                 }

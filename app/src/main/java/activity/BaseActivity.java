@@ -530,112 +530,6 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
 
     }
 
-    protected View.OnClickListener onClickListenerlogado() {
-        return view -> {
-            if (user != null) {
-                final AlertDialog alertDialog = new AlertDialog
-                        .Builder(BaseActivity.this)
-                        .setView(R.layout.user)
-                        .create();
-                alertDialog.show();
-
-                ImageView user_img = (ImageView) alertDialog.findViewById(R.id.userImage);
-                Picasso.get()
-                        .load(user.getPhotoUrl())
-                        .placeholder(R.drawable.user)
-                        .into(user_img);
-
-                TextView email = (TextView) alertDialog.findViewById(R.id.text_user_email);
-                email.setText(user.getEmail() != null ? user.getEmail() : "N/A");
-                TextView uid = (TextView) alertDialog.findViewById(R.id.text_user_uid);
-                uid.setText(user.getUid());
-                TextView login = (TextView) alertDialog.findViewById(R.id.text_user_login);
-                login.setText(user.getDisplayName() != null ? user.getDisplayName() : "N/A");
-                Button reset = (Button) alertDialog.findViewById(R.id.bt_reset);
-                Button desativar = (Button) alertDialog.findViewById(R.id.bt_desativar);
-                Button vincular_login = (Button) alertDialog.findViewById(R.id.vincular_login);
-
-                vincular_login.setOnClickListener(it -> startActivity(new Intent(BaseActivity.this, VincularLoginActivity.class)));
-
-                desativar.setOnClickListener(it -> {
-
-                    AlertDialog dialog = new AlertDialog.Builder(BaseActivity.this)
-                            .setTitle(getResources().getString(R.string.deletar_conta))
-                            .setMessage(getResources().getString(R.string.deletar_conta_txt))
-                            .setNegativeButton(getResources().getString(R.string.cancel), null)
-                            .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    user.delete()
-                                            .addOnCompleteListener(task -> {
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(BaseActivity.this, getResources().getString(R.string.conta_deletada), Toast.LENGTH_LONG)
-                                                            .show();
-                                                    FirebaseAuth.getInstance().signOut();
-                                                    finish();
-                                                    startActivity(new Intent(BaseActivity.this, LoginActivity.class));
-                                                } else {
-                                                    Toast.makeText(BaseActivity.this, getResources().getString(R.string.falha_delete_conta), Toast.LENGTH_LONG)
-                                                            .show();
-                                                }
-                                            });
-                                }
-
-                            }).create();
-                    dialog.show();
-                });
-
-                reset.setOnClickListener(it -> {
-                    final AlertDialog alertDialogReset = new AlertDialog
-                            .Builder(BaseActivity.this)
-                            .setView(R.layout.reset_senha)
-                            .create();
-                    alertDialogReset.show();
-
-                    final TextInputLayout senha = (TextInputLayout) alertDialogReset.findViewById(R.id.pass);
-                    final TextInputLayout repetir_senha = (TextInputLayout) alertDialogReset.findViewById(R.id.repetir_pass);
-
-                    Button cancel = (Button) alertDialogReset.findViewById(R.id.bt_cancel);
-
-                    cancel.setOnClickListener(cancel_it -> alertDialogReset.dismiss());
-
-                    Button ok = (Button) alertDialogReset.findViewById(R.id.bt_ok);
-                    ok.setOnClickListener(ok_it -> {
-                        String senhaString = senha.getEditText().getText().toString();
-                        String repetirSenha = repetir_senha.getEditText().getText().toString();
-
-                        boolean tamanhoSenha = validatePassword(repetirSenha);
-                        boolean tamanhoRetiriSenha = validatePassword(senhaString);
-
-                        if (tamanhoSenha && tamanhoRetiriSenha
-                                && senhaString.equals(repetirSenha)) {
-                            user.updatePassword(senhaString)
-                                    .addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
-                                            alertDialogReset.dismiss();
-                                            Toast.makeText(BaseActivity.this,
-                                                    getResources().getString(R.string.reset_senha_ok), Toast.LENGTH_LONG).show();
-                                        } else {
-                                            Toast.makeText(BaseActivity.this,
-                                                    getResources().getString(R.string.falha_reset_senha), Toast.LENGTH_LONG).show();
-                                        }
-                                    });
-                        } else {
-                            // Log.d(TAG, "Não entrou");
-                        }
-                    });
-                });
-
-                if (user.isAnonymous()) {
-                    reset.setVisibility(View.GONE);
-                    desativar.setVisibility(View.GONE);
-                    vincular_login.setVisibility(View.VISIBLE);
-                }
-
-            }
-        };
-    }
-
     public boolean validatePassword(String password) {
         return password.length() > 5;
     }
@@ -649,7 +543,6 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
             return false;
         }
     }
-
 
     public interface SalvarImageShare {
         void retornaFile(File file);

@@ -33,6 +33,7 @@ import rx.subscriptions.CompositeSubscription
 import utils.Constantes
 import utils.UtilsApp
 import utils.UtilsApp.setEp2
+import utils.makeToast
 import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -96,6 +97,7 @@ class TvShowActivity : BaseActivity() {
                         setDados()
                         setFab()
                     }
+
                     override fun onError(e: Throwable) {
                         Toast.makeText(this@TvShowActivity, R.string.ops, Toast.LENGTH_SHORT).show()
                     }
@@ -245,7 +247,7 @@ class TvShowActivity : BaseActivity() {
                         intent.putExtra(Intent.EXTRA_TEXT, series?.name + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL)
                         intent.type = "image/*"
                         intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.getUriDownloadImage(this@TvShowActivity, file))
-                        startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar_filme)))
+                        startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar) + " " + series?.name))
 
                     }
 
@@ -268,17 +270,7 @@ class TvShowActivity : BaseActivity() {
 
     fun buildDeepLink(): String {
         // Get the unique appcode for this app.
-
-        val link = "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3DTA%26id%3D" + series?.id + "&apn=br.com.icaro.filme"
-
-        // If the deep link is used in an advertisement, this value must be set to 1.
-        val isAd = false
-        if (isAd) {
-            // builder.appendQueryParameter("ad", "1");
-        }
-
-
-        return link
+        return "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3Dtvshow%26id%3D${series?.id}&apn=br.com.icaro.filme"
     }
 
     private fun setTitle() {
@@ -563,7 +555,7 @@ class TvShowActivity : BaseActivity() {
                         setupViewPagerTabs()
                         setTitle()
                         setImageTop()
-                        Toast.makeText(this@TvShowActivity, R.string.season_updated, Toast.LENGTH_SHORT).show();
+                        makeToast(R.string.season_updated)
                     }
                 }
     }
