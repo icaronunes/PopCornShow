@@ -30,11 +30,11 @@ public class Sobre extends DialogPreference {
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
-        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.play_rated);
-        LinearLayout desenvolvimento = (LinearLayout) view.findViewById(R.id.development);
-        LinearLayout twitter = (LinearLayout) view.findViewById(R.id.twitter);
-        ImageView tmdb = (ImageView) view.findViewById(R.id.img_tmdb);
-        ImageView popcorn = (ImageView) view.findViewById(R.id.img_popcorn);
+        LinearLayout linearLayout = view.findViewById(R.id.play_rated);
+        LinearLayout desenvolvimento = view.findViewById(R.id.development);
+        LinearLayout twitter = view.findViewById(R.id.twitter);
+        ImageView tmdb = view.findViewById(R.id.img_tmdb);
+        ImageView popcorn = view.findViewById(R.id.img_popcorn);
 
         popcorn.setOnClickListener(new View.OnClickListener() {
             @Override

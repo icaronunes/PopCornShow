@@ -134,12 +134,9 @@ public class UtilsApp {
 	/* Checks if external storage is available to at least read */
 	public static boolean isExternalStorageReadable() {
 		String state = Environment.getExternalStorageState();
-		if (Environment.MEDIA_MOUNTED.equals(state) ||
-				Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-			return true;
-		}
-		return false;
-	}
+        return Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
+    }
 
 	public static boolean verificaLancamento(Date air_date) {
 		boolean data;
@@ -148,10 +145,7 @@ public class UtilsApp {
 		Date myDate = Calendar.getInstance().getTime();
 		if (air_date.before(myDate)) {
 			data = true;
-		} else if (air_date.after(myDate))
-			data = false;
-		else
-			data = true;
+		} else data = !air_date.after(myDate);
 		return data;
 	}
 
@@ -168,9 +162,7 @@ public class UtilsApp {
 			return false;
 		} else {
 			if (calendar.get(Calendar.YEAR) == hoje.get(Calendar.YEAR)) {
-				if (calendar.get(Calendar.WEEK_OF_YEAR) == hoje.get(Calendar.WEEK_OF_YEAR)) {
-					return true;
-				}
+                return calendar.get(Calendar.WEEK_OF_YEAR) == hoje.get(Calendar.WEEK_OF_YEAR);
 			}
 			return false;
 		}
@@ -186,11 +178,7 @@ public class UtilsApp {
 			return false;
 		} else {
 			if (no_ar.get(Calendar.YEAR) == hoje.get(Calendar.YEAR)) {
-				if (no_ar.get(Calendar.DAY_OF_YEAR) < (hoje.get(Calendar.DAY_OF_YEAR) + 15)
-						) {
-
-					return true;
-				}
+                return no_ar.get(Calendar.DAY_OF_YEAR) < (hoje.get(Calendar.DAY_OF_YEAR) + 15);
 			}
 			return false;
 		}

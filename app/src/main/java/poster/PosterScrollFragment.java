@@ -65,7 +65,7 @@ public class PosterScrollFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.page_scroll_image, container, false);
-        imageView = (ImageView) view.findViewById(R.id.img_poster_scroll);
+        imageView = view.findViewById(R.id.img_poster_scroll);
         Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(getContext(), 5)) + endereco)
                 .into(imageView);
@@ -76,9 +76,9 @@ public class PosterScrollFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        linear_poster_grid = (LinearLayout) view.findViewById(R.id.linear_poster_grid);
-        ImageView compartilhar = (ImageView) view.findViewById(R.id.compartilhar);
-        ImageView salvar = (ImageView) view.findViewById(R.id.salvar);
+        linear_poster_grid = view.findViewById(R.id.linear_poster_grid);
+        ImageView compartilhar = view.findViewById(R.id.compartilhar);
+        ImageView salvar = view.findViewById(R.id.salvar);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

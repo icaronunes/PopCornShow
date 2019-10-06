@@ -150,13 +150,13 @@ class TvShowFragment : FragmentBase() {
 
     private fun setUltimoEpDate() {
         proximo_ep_date.let {
-            it.text = series.lastEpisodeAir?.airDate
+            it.text = series.lastEpisodeAir.airDate
 
         }
     }
 
     private fun setNomeUltimoEp() {
-        series.lastEpisodeAir?.let {
+        series.lastEpisodeAir.let {
             ultimo_ep_name.text = it.name
         }
     }
@@ -276,7 +276,7 @@ class TvShowFragment : FragmentBase() {
                     if (series == null) {
                         return@OnClickListener
                     }
-                    val url = "https://www.themoviedb.org/tv/" + series!!.id!!
+                    val url = "https://www.themoviedb.org/tv/" + series.id!!
                     val intent = Intent(activity, Site::class.java)
                     intent.putExtra(Constantes.SITE, url)
                     startActivity(intent)
@@ -350,13 +350,13 @@ class TvShowFragment : FragmentBase() {
             }
 
             myRef?.child(mAuth?.currentUser!!
-                    .uid)?.child("seguindo")?.child(series?.id.toString())
+                    .uid)?.child("seguindo")?.child(series.id.toString())
                     ?.addValueEventListener(postListener!!)
         }
     }
 
     private fun setStatus() {
-        if (series?.status != null) {
+        if (series.status != null) {
             status?.setTextColor(color)
 
             val sharedPref = PreferenceManager.getDefaultSharedPreferences(activity)
@@ -364,12 +364,12 @@ class TvShowFragment : FragmentBase() {
 
             if (idioma_padrao) {
 
-                when (series?.status) {
+                when (series.status) {
                     "Returning Series" -> status?.setText(R.string.returnin_series)
                     "Ended" -> status!!.setText(R.string.ended)
                     "Canceled" -> status?.setText(R.string.canceled)
                     "In Production" -> status?.setText(in_production)
-                    else -> status?.text = series?.status
+                    else -> status?.text = series.status
                 }
             }
         }
@@ -387,7 +387,7 @@ class TvShowFragment : FragmentBase() {
             seguir?.text = resources.getText(R.string.sem_login)
 
         } else {
-            seguir?.text = series?.status
+            seguir?.text = series.status
         }
 
     }
@@ -429,8 +429,8 @@ class TvShowFragment : FragmentBase() {
     }
 
     private fun setTemporada() {
-        if (series?.numberOfSeasons!! > 0) {
-            temporadas?.text = series?.numberOfSeasons.toString()
+        if (series.numberOfSeasons!! > 0) {
+            temporadas?.text = series.numberOfSeasons.toString()
         }
     }
 
@@ -439,10 +439,10 @@ class TvShowFragment : FragmentBase() {
             override fun onClickTemporada(view: View, position: Int, color: Int) {
 
                 val intent = Intent(context, TemporadaActivity::class.java)
-                intent.putExtra(Constantes.NOME, getString(R.string.temporada) + " " + series?.seasons?.get(position)?.seasonNumber)
-                intent.putExtra(Constantes.TEMPORADA_ID, series?.seasons?.get(position)?.seasonNumber)
+                intent.putExtra(Constantes.NOME, getString(R.string.temporada) + " " + series.seasons?.get(position)?.seasonNumber)
+                intent.putExtra(Constantes.TEMPORADA_ID, series.seasons?.get(position)?.seasonNumber)
                 intent.putExtra(Constantes.TEMPORADA_POSITION, position)
-                intent.putExtra(Constantes.TVSHOW_ID, series?.id)
+                intent.putExtra(Constantes.TVSHOW_ID, series.id)
                 intent.putExtra(Constantes.COLOR_TOP, color)
                 context?.startActivity(intent)
 
@@ -453,7 +453,7 @@ class TvShowFragment : FragmentBase() {
                 if (isVisto(position)) {
                     Toast.makeText(context, R.string.marcado_nao_assistido_temporada, Toast.LENGTH_SHORT).show()
                     val user = if (mAuth?.currentUser != null) mAuth?.currentUser?.uid else ""
-                    val id_serie = series?.id.toString()
+                    val id_serie = series.id.toString()
                     val childUpdates = HashMap<String, Any>()
 
                     childUpdates.put("/$user/seguindo/$id_serie/seasons/$position/visto", false)
@@ -529,15 +529,15 @@ class TvShowFragment : FragmentBase() {
 
                         userTvshow = setUserTvShow(series)
 
-                        for (i in 0 until series?.seasons?.size!!) {
-                            val tvS: SeasonsItem? = series?.seasons?.get(i)
-                            val tvSeason: TvSeason = tvSeasons.getSeason(series?.id!!, tvS?.seasonNumber!!, "en", TmdbTvSeasons.SeasonMethod.images)
+                        for (i in 0 until series.seasons?.size!!) {
+                            val tvS: SeasonsItem? = series.seasons?.get(i)
+                            val tvSeason: TvSeason = tvSeasons.getSeason(series.id!!, tvS?.seasonNumber!!, "en", TmdbTvSeasons.SeasonMethod.images)
                             userTvshow?.seasons?.get(i)?.userEps = setEp(tvSeason)
                         }
 
                         myRef?.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid!! else "")
                                 ?.child("seguindo")
-                                ?.child(series?.id.toString())
+                                ?.child(series.id.toString())
                                 ?.setValue(userTvshow)
                                 ?.addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
@@ -560,7 +560,7 @@ class TvShowFragment : FragmentBase() {
                         .setPositiveButton(R.string.ok) { _, _ ->
                             myRef?.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid!! else "")
                                     ?.child("seguindo")
-                                    ?.child(series?.id.toString())
+                                    ?.child(series.id.toString())
                                     ?.removeValue()
                                     ?.addOnCompleteListener(OnCompleteListener { task ->
                                         if (task.isSuccessful)
@@ -586,10 +586,10 @@ class TvShowFragment : FragmentBase() {
 
     private fun setSinopse() {
 
-        if (series != null && series?.overview.isNullOrBlank()) {
+        if (series != null && series.overview.isNullOrBlank()) {
             getString(R.string.sem_sinopse)
         } else {
-            descricao.text = series?.overview
+            descricao.text = series.overview
         }
     }
 
@@ -607,15 +607,15 @@ class TvShowFragment : FragmentBase() {
     }
 
     private fun setPoster() {
-        if (series?.posterPath != null) {
+        if (series.posterPath != null) {
             Picasso.get()
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + series!!.posterPath!!)
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + series.posterPath!!)
                     .into(img_poster)
 
             img_poster?.setOnClickListener {
                 val intent = Intent(context, PosterGridActivity::class.java)
-                intent.putExtra(Constantes.POSTER, series?.images?.posters as java.io.Serializable)
-                intent.putExtra(Constantes.NOME, series?.name)
+                intent.putExtra(Constantes.POSTER, series.images?.posters as java.io.Serializable)
+                intent.putExtra(Constantes.NOME, series.name)
                 val transition = getString(R.string.poster_transition)
                 val compat = ActivityOptionsCompat
                         .makeSceneTransitionAnimation(activity!!, img_poster, transition)
@@ -630,8 +630,8 @@ class TvShowFragment : FragmentBase() {
     }
 
     private fun setProdutora() {
-        if (series?.productionCompanies!!.isNotEmpty()) {
-            var primeiraProdutora = series?.productionCompanies!![0]?.name
+        if (series.productionCompanies!!.isNotEmpty()) {
+            var primeiraProdutora = series.productionCompanies!![0]?.name
             if (primeiraProdutora?.length!! >= 27) {
                 primeiraProdutora = primeiraProdutora.subSequence(0, 27) as String
                 primeiraProdutora += "..." //Todo fazer no XML
@@ -640,9 +640,9 @@ class TvShowFragment : FragmentBase() {
             produtora?.text = primeiraProdutora
 
             produtora?.setOnClickListener {
-                if (series?.productionCompanies?.isNotEmpty()!!) {
+                if (series.productionCompanies?.isNotEmpty()!!) {
                     val intent = Intent(context, ProdutoraActivity::class.java)
-                    intent.putExtra(Constantes.PRODUTORA_ID, series?.productionCompanies?.get(0)?.id)
+                    intent.putExtra(Constantes.PRODUTORA_ID, series.productionCompanies?.get(0)?.id)
                     context?.startActivity(intent)
                 } else {
                     Toast.makeText(context, getString(R.string.sem_informacao_company), Toast.LENGTH_SHORT).show()
@@ -653,7 +653,7 @@ class TvShowFragment : FragmentBase() {
 
     private fun setCategoria() {
 
-        val genres = series?.genres
+        val genres = series.genres
         val stringBuilder = StringBuilder("")
 
         if (genres!!.isNotEmpty()) {
@@ -682,14 +682,14 @@ class TvShowFragment : FragmentBase() {
     }
 
     private fun setTitulo() {
-        if (series?.name != null) {
-            titulo_tvshow?.text = series?.name
+        if (series.name != null) {
+            titulo_tvshow?.text = series.name
         }
     }
 
     private fun setOriginalTitle() {
-        if (series?.originalName != null) {
-            original_title?.text = series?.originalName
+        if (series.originalName != null) {
+            original_title?.text = series.originalName
         } else {
             original_title?.text = getString(R.string.original_title)
         }
@@ -698,8 +698,8 @@ class TvShowFragment : FragmentBase() {
 
     private fun setProductionCountries() {
 
-        if (series?.originCountry!!.isNotEmpty()) {
-            production_countries?.text = series?.originCountry!![0]
+        if (series.originCountry!!.isNotEmpty()) {
+            production_countries?.text = series.originCountry!![0]
 
         } else {
             production_countries?.text = getString(R.string.não_informado)
@@ -708,8 +708,8 @@ class TvShowFragment : FragmentBase() {
 
     private fun setPopularity() {
 
-        val animatorCompat = ValueAnimator.ofFloat(1.0f, series?.popularity!!.toFloat())
-        if (series?.popularity!! > 0) {
+        val animatorCompat = ValueAnimator.ofFloat(1.0f, series.popularity!!.toFloat())
+        if (series.popularity!! > 0) {
 
             animatorCompat.addUpdateListener { valueAnimator ->
                 val valor = valueAnimator.animatedValue as Float
@@ -745,19 +745,19 @@ class TvShowFragment : FragmentBase() {
 
         textview_elenco?.setOnClickListener {
             val intent = Intent(context, ElencoActivity::class.java).apply {
-                putExtra(Constantes.ELENCO, series?.credits?.cast as Serializable)
-                putExtra(Constantes.NOME, series?.name)
+                putExtra(Constantes.ELENCO, series.credits?.cast as Serializable)
+                putExtra(Constantes.NOME, series.name)
             }
             startActivity(intent)
         }
 
-        if (series?.credits?.cast?.isNotEmpty()!!) {
+        if (series.credits?.cast?.isNotEmpty()!!) {
             textview_elenco?.visibility = View.VISIBLE
             recycle_tvshow_elenco?.setHasFixedSize(true)
             recycle_tvshow_elenco?.itemAnimator = DefaultItemAnimator()
             recycle_tvshow_elenco?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             recycle_tvshow_elenco.adapter =
-                    CastAdapter(activity, series?.credits?.cast)
+                    CastAdapter(activity, series.credits?.cast)
         } else{
             recycle_tvshow_elenco.layoutParams.height = 1
         }
@@ -767,19 +767,19 @@ class TvShowFragment : FragmentBase() {
 
         textview_crews?.setOnClickListener {
             val intent = Intent(context, CrewsActivity::class.java).apply {
-            putExtra(Constantes.PRODUCAO, series?.credits?.crew as Serializable)
-            putExtra(Constantes.NOME, series?.name)
+            putExtra(Constantes.PRODUCAO, series.credits?.crew as Serializable)
+            putExtra(Constantes.NOME, series.name)
             }
             startActivity(intent)
         }
 
-        if (series?.credits?.crew?.isNotEmpty()!!) {
+        if (series.credits?.crew?.isNotEmpty()!!) {
             textview_crews?.visibility = View.VISIBLE
             recycle_tvshow_producao.apply {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                adapter = CrewAdapter(activity, series?.credits?.crew)
+                adapter = CrewAdapter(activity, series.credits?.crew)
             }
         } else{
             recycle_tvshow_producao.layoutParams.height = 1
@@ -790,19 +790,19 @@ class TvShowFragment : FragmentBase() {
 
         text_similares.setOnClickListener {
             val intent = Intent(context, SimilaresActivity::class.java).apply {
-            putExtra(Constantes.SIMILARES_TVSHOW, series?.similar?.results as Serializable)
-            putExtra(Constantes.NOME, series?.name)
+            putExtra(Constantes.SIMILARES_TVSHOW, series.similar?.results as Serializable)
+            putExtra(Constantes.NOME, series.name)
             }
             activity?.startActivity(intent)
         }
 
-        if (series?.similar?.results?.isNotEmpty()!!) {
+        if (series.similar?.results?.isNotEmpty()!!) {
 
             recycle_tvshow_similares?.apply {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                adapter = SimilaresSerieAdapter(activity, series?.similar?.results)
+                adapter = SimilaresSerieAdapter(activity, series.similar?.results)
             }
 
             recycle_tvshow_similares.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -835,20 +835,20 @@ class TvShowFragment : FragmentBase() {
             inicio = series.firstAirDate?.subSequence(0, 4) as String
         }
         if (series.lastAirDate != null) {
-            lancamento?.text = inicio + " - " + series?.lastAirDate?.substring(0, 4)
+            lancamento?.text = inicio + " - " + series.lastAirDate?.substring(0, 4)
         } else {
             lancamento?.text = inicio
         }
     }
 
     private fun setTrailer() {
-        if (series?.videos?.results?.isNotEmpty()!!) {
+        if (series.videos?.results?.isNotEmpty()!!) {
             recycle_tvshow_trailer.apply {
                 recycle_tvshow_trailer?.setHasFixedSize(true)
                 recycle_tvshow_trailer?.itemAnimator = DefaultItemAnimator()
                 recycle_tvshow_trailer?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
                 recycle_tvshow_trailer.adapter =
-                        TrailerAdapter(activity, series?.videos?.results, series?.overview)
+                        TrailerAdapter(activity, series.videos?.results, series.overview)
             }
         }
 
@@ -868,7 +868,7 @@ class TvShowFragment : FragmentBase() {
 
     fun getImdb(): Imdb? {
 
-            val inscricaoImdb = Api(context!!).getOmdbpi(series?.external_ids?.imdbId)
+            val inscricaoImdb = Api(context!!).getOmdbpi(series.external_ids?.imdbId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : Observer<Imdb> {

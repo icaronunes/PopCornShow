@@ -96,9 +96,9 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
 
         TvShowPopularesViewHolder(View itemView) {
             super(itemView);
-            title_main = (TextView) itemView.findViewById(R.id.title_main);
-            progress_poster_grid = (ProgressBar) itemView.findViewById(R.id.progress_poster_grid);
-            img_poster_grid = (ImageView) itemView.findViewById(R.id.img_poster_grid);
+            title_main = itemView.findViewById(R.id.title_main);
+            progress_poster_grid = itemView.findViewById(R.id.progress_poster_grid);
+            img_poster_grid = itemView.findViewById(R.id.img_poster_grid);
 
         }
     }

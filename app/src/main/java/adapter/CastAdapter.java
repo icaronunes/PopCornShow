@@ -105,10 +105,10 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
 
         CastViewHolder(View itemView) {
             super(itemView);
-            textCastNome = (TextView) itemView.findViewById(R.id.textCastNomes);
-            textCastPersonagem = (TextView) itemView.findViewById(R.id.textCastPersonagem);
-            imageView = (ImageView) itemView.findViewById(R.id.imgPager);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBarCast);
+            textCastNome = itemView.findViewById(R.id.textCastNomes);
+            textCastPersonagem = itemView.findViewById(R.id.textCastPersonagem);
+            imageView = itemView.findViewById(R.id.imgPager);
+            progressBar = itemView.findViewById(R.id.progressBarCast);
         }
     }
 }

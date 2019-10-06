@@ -49,10 +49,10 @@ public class FavoriteActivity extends BaseActivity {
         setUpToolBar();
         getSupportActionBar().setTitle(R.string.favorite);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        viewPager = (ViewPager) findViewById(R.id.viewpage_usuario);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        progressBar = (ProgressBar) findViewById(R.id.progress);
-        linearLayout = (LinearLayout) findViewById(R.id.linear_usuario_list);
+        viewPager = findViewById(R.id.viewpage_usuario);
+        tabLayout = findViewById(R.id.tabLayout);
+        progressBar = findViewById(R.id.progress);
+        linearLayout = findViewById(R.id.linear_usuario_list);
 
         if (UtilsApp.isNetWorkAvailable(this)){
 

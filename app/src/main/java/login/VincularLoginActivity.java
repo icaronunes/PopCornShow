@@ -68,7 +68,7 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
         mAuthProgressDialog.setMessage("Authenticating with PopCorn...");
         mAuthProgressDialog.setCancelable(false);
 
-        TextView criar_login = (TextView) findViewById(R.id.vincular_login);
+        TextView criar_login = findViewById(R.id.vincular_login);
         criar_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,10 +77,10 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
                         .create();
                 dialog.show();
 
-                Button cancel = (Button) dialog.findViewById(R.id.bt_new_login_cancel);
-                final TextInputLayout login = (TextInputLayout) dialog.findViewById(R.id.create_login);
-                final TextInputLayout senha = (TextInputLayout) dialog.findViewById(R.id.criar_pass);
-                final TextInputLayout repetirSenha = (TextInputLayout) dialog.findViewById(R.id.criar_repetir_pass);
+                Button cancel = dialog.findViewById(R.id.bt_new_login_cancel);
+                final TextInputLayout login = dialog.findViewById(R.id.create_login);
+                final TextInputLayout senha = dialog.findViewById(R.id.criar_pass);
+                final TextInputLayout repetirSenha = dialog.findViewById(R.id.criar_repetir_pass);
 
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -89,7 +89,7 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
                     }
                 });
 
-                Button ok = (Button) dialog.findViewById(R.id.bt_new_login_ok);
+                Button ok = dialog.findViewById(R.id.bt_new_login_ok);
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -111,9 +111,7 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
         Srepetir = repetirSenha.getEditText().getText().toString();
 
         if (Slogin.contains("@") && Slogin.contains(".")) {
-            if (Ssenha.equals(Srepetir)) {
-                return true;
-            }
+            return Ssenha.equals(Srepetir);
         }
 
         return false;

@@ -144,12 +144,12 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
 
         public HoldeTemporada(View itemView) {
             super(itemView);
-            nome = (TextView) itemView.findViewById(R.id.ep_name);
-            numero = (TextView) itemView.findViewById(R.id.ep_number);
-            nota = (TextView) itemView.findViewById(R.id.ep_nota);
-            data = (TextView) itemView.findViewById(R.id.ep_date);
-            poster = (ImageView) itemView.findViewById(R.id.image_temp_ep);
-            bt_visto = (ImageView) itemView.findViewById(R.id.bt_visto);
+            nome = itemView.findViewById(R.id.ep_name);
+            numero = itemView.findViewById(R.id.ep_number);
+            nota = itemView.findViewById(R.id.ep_nota);
+            data = itemView.findViewById(R.id.ep_date);
+            poster = itemView.findViewById(R.id.image_temp_ep);
+            bt_visto = itemView.findViewById(R.id.bt_visto);
         }
     }
 

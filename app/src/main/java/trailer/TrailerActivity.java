@@ -28,8 +28,8 @@ public class TrailerActivity extends YouTubeBaseActivity implements YouTubePlaye
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.youtube_layout);
-        YouTubePlayerView youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
-        TextView sinopse = (TextView) findViewById(R.id.trailer_sinopse);
+        YouTubePlayerView youTubeView = findViewById(R.id.youtube_view);
+        TextView sinopse = findViewById(R.id.trailer_sinopse);
         youtube_key = getIntent().getStringExtra(Constantes.INSTANCE.getYOU_TUBE_KEY());
         youTubeView.initialize(Config.YOUTUBE_API_KEY, this);
         sinopse.setText(getIntent().getStringExtra(Constantes.INSTANCE.getSINOPSE()));

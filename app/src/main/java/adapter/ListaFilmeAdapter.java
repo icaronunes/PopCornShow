@@ -119,9 +119,9 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
 
         FavoriteViewHolder(View itemView) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.img_filme_usuario);
-            rated = (TextView) itemView.findViewById(R.id.text_rated_user);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
+            imageView = itemView.findViewById(R.id.img_filme_usuario);
+            rated = itemView.findViewById(R.id.text_rated_user);
+            progressBar = itemView.findViewById(R.id.progress);
 
         }
     }

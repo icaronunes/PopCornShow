@@ -42,7 +42,7 @@ public class ImagemTopFilmeScrollFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.page_scroll_viewpage_top, container, false);
-        ImageView imageView = (ImageView) view.findViewById(R.id.img_top_scroll);
+        ImageView imageView = view.findViewById(R.id.img_top_scroll);
         Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(getContext(), 5)) + endereco)
                 .error(R.drawable.top_empty)

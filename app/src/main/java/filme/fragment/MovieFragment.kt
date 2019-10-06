@@ -110,14 +110,14 @@ class MovieFragment : FragmentBase() {
         imdb_site.setOnClickListener {
             val intent = Intent(activity, Site::class.java)
             intent.putExtra(Constantes.SITE,
-                    "${Constantes.IMDB}${movieDb?.imdbId}/")
+                    "${Constantes.IMDB}${movieDb.imdbId}/")
             startActivity(intent)
         }
 
         tmdb_site?.setOnClickListener {
             val intent = Intent(activity, Site::class.java)
             intent.putExtra(Constantes.SITE,
-                    "${Constantes.BASEMOVIEDB_MOVIE}${movieDb?.id}/")
+                    "${Constantes.BASEMOVIEDB_MOVIE}${movieDb.id}/")
             startActivity(intent)
         }
 
@@ -503,7 +503,7 @@ class MovieFragment : FragmentBase() {
 
         production_countries.text = movieDb.productionCountries?.get(0)?.name
     } else {
-        production_countries.text = getString(R.string.não_informado);
+        production_countries.text = getString(R.string.não_informado)
     }
 
     private fun setPopularity() {

@@ -147,7 +147,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
 
     @SuppressWarnings("deprecation")
     protected void setUpToolBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.setTitleTextColor(getResources().getColor(R.color.white));
             setSupportActionBar(toolbar);
@@ -168,8 +168,8 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layoyt);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        drawerLayout = findViewById(R.id.drawer_layoyt);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
 
 
@@ -178,11 +178,11 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
             View view = getLayoutInflater().inflate(R.layout.nav_drawer_header, navigationView);
             view.setVisibility(View.VISIBLE);
             view.findViewById(R.id.textLogin);
-            imgUserPhoto = (ImageView) view.findViewById(R.id.imgUserPhoto);
+            imgUserPhoto = view.findViewById(R.id.imgUserPhoto);
 
-            tUserName = (TextView) view.findViewById(R.id.tUserName);
-            tLogin = (TextView) view.findViewById(R.id.tLogin);
-            textLogin = (TextView) view.findViewById(R.id.textLogin);
+            tUserName = view.findViewById(R.id.tUserName);
+            tLogin = view.findViewById(R.id.tLogin);
+            textLogin = view.findViewById(R.id.textLogin);
 
 
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

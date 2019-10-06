@@ -29,7 +29,7 @@ public class Desenvolvimento extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.ajuda_desenvolvimento);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycleView_desenvolvimento);
+        RecyclerView recyclerView = findViewById(R.id.recycleView_desenvolvimento);
         recyclerView.setLayoutManager(new LinearLayoutManager(Desenvolvimento.this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);

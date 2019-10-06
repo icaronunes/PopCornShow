@@ -241,7 +241,7 @@ public class ListaRatedFragment extends Fragment {
     private View getViewMovie(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.temporadas, container, false); // Criar novo layout
         view.findViewById(R.id.progressBarTemporadas).setVisibility(View.GONE);
-        recyclerViewFilme = (RecyclerView) view.findViewById(R.id.temporadas_recycler);
+        recyclerViewFilme = view.findViewById(R.id.temporadas_recycler);
         recyclerViewFilme.setHasFixedSize(true);
         recyclerViewFilme.setItemAnimator(new DefaultItemAnimator());
         recyclerViewFilme.setLayoutManager(new GridLayoutManager(getContext(), 2));

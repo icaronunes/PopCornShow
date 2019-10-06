@@ -103,10 +103,10 @@ public class CrewAdapter extends RecyclerView.Adapter<CrewAdapter.CrewViewHolder
         CrewViewHolder(View itemView) {
             super(itemView);
 
-             textCrewJob = (TextView) itemView.findViewById(R.id.textCrewJob);
-             textCrewNome = (TextView) itemView.findViewById(R.id.textCrewNome);
-             imgPagerCrews = (ImageView) itemView.findViewById(R.id.imgPagerCrews);
-             progressBarCrew = (ProgressBar) itemView.findViewById(R.id.progressBarCrews);
+             textCrewJob = itemView.findViewById(R.id.textCrewJob);
+             textCrewNome = itemView.findViewById(R.id.textCrewNome);
+             imgPagerCrews = itemView.findViewById(R.id.imgPagerCrews);
+             progressBarCrew = itemView.findViewById(R.id.progressBarCrews);
         }
     }
 }

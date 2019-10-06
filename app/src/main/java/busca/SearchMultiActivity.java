@@ -59,10 +59,10 @@ public class SearchMultiActivity extends BaseActivity {
 		setupNavDrawer();
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		text_search_empty = (TextView) findViewById(R.id.text_search_empty);
-		swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
-		progressBar = (ProgressBar) findViewById(R.id.progress);
-		recyclerView = (RecyclerView) findViewById(R.id.recycleView_search);
+		text_search_empty = findViewById(R.id.text_search_empty);
+		swipeRefreshLayout = findViewById(R.id.swipeToRefresh);
+		progressBar = findViewById(R.id.progress);
+		recyclerView = findViewById(R.id.recycleView_search);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 		recyclerView.setHasFixedSize(true);
@@ -142,7 +142,7 @@ public class SearchMultiActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		AdView adview = (AdView) findViewById(R.id.adView);
+		AdView adview = findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest.Builder()
 				//.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
 				//.addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID

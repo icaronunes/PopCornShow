@@ -69,7 +69,7 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
                                 intent.putExtra(Constantes.INSTANCE.getNOME(), nome);
                                 ActivityOptionsCompat opts = ActivityOptionsCompat.makeCustomAnimation(context,
                                         android.R.anim.fade_in, android.R.anim.fade_out);
-                                ActivityCompat.startActivity((Activity) context, intent, opts.toBundle());
+                                ActivityCompat.startActivity(context, intent, opts.toBundle());
                                 FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
                                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                             });
@@ -94,8 +94,8 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
 
         PosterViewHolder(View itemView) {
             super(itemView);
-            img = (ImageView) itemView.findViewById(R.id.img_poster_grid);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.progress_poster_grid);
+            img = itemView.findViewById(R.id.img_poster_grid);
+            progressBar = itemView.findViewById(R.id.progress_poster_grid);
         }
     }
 }

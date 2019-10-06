@@ -54,7 +54,7 @@ public class DesenvolvimentoAdapater extends RecyclerView.Adapter<Desenvolviment
 
         HolderDesenvolvimento(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.textview_desenvolvimento);
+            textView = itemView.findViewById(R.id.textview_desenvolvimento);
         }
     }
 }
