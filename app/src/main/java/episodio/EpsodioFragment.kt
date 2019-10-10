@@ -22,6 +22,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import pessoa.activity.PersonActivity
+import utils.ConstFirebase.ASSISTIDO
+import utils.ConstFirebase.FOLLOW
+import utils.ConstFirebase.NOTA
+import utils.ConstFirebase.SEASONS
+import utils.ConstFirebase.USER
+import utils.ConstFirebase.USEREPS
+import utils.ConstFirebase.VISTO
 import utils.Constantes
 import utils.UtilsApp
 import utils.setPicasso
@@ -64,21 +71,21 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
         if (seguindo) {
             mAuth = FirebaseAuth.getInstance()
             myRef = FirebaseDatabase.getInstance()
-                    .getReference("users")
+                    .getReference(USER)
                     .child(mAuth!!.currentUser!!.uid)
-                    .child("seguindo")
+                    .child(FOLLOW)
                     .child(tvshowId.toString())
-                    .child("seasons")
+                    .child(SEASONS)
                     .child(temporadaPosition.toString())
-                    .child("userEps")
+                    .child(USEREPS)
                     .child(position.toString())
 
             databaseReference = FirebaseDatabase.getInstance()
-                    .getReference("users")
+                    .getReference(USER)
                     .child(mAuth!!.currentUser!!.uid)
-                    .child("seguindo")
+                    .child(FOLLOW)
                     .child(tvshowId.toString())
-                    .child("seasons")
+                    .child(SEASONS)
                     .child(temporadaPosition.toString())
         }
     }
@@ -233,9 +240,9 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
             if (seguindo) {
                 val childUpdates = HashMap<String, Any>()
 
-                childUpdates["/userEps/$position/assistido"] = false
-                childUpdates["/visto/"] = false
-                childUpdates["/userEps/$position/nota"] = 0
+                childUpdates["/$USEREPS/$position/$ASSISTIDO"] = false
+                childUpdates["/$VISTO/"] = false
+                childUpdates["/$USEREPS/$position/$NOTA"] = 0
                 databaseReference?.updateChildren(childUpdates)
             }
             alertDialog.dismiss()
@@ -244,9 +251,9 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
         ok.setOnClickListener {
             if (seguindo) {
                 val childUpdates = HashMap<String, Any>()
-                childUpdates["/userEps/$position/assistido"] = true
-                childUpdates["/visto"] = temporadaTodaAssistida()
-                childUpdates["/userEps/$position/nota"] = ratingBar.rating
+                childUpdates["/$USEREPS/$position/$ASSISTIDO"] = true
+                childUpdates["/$VISTO"] = temporadaTodaAssistida()
+                childUpdates["/$USEREPS/$position/$NOTA"] = ratingBar.rating
                 databaseReference?.updateChildren(childUpdates)
 
                 setRatedTvShowGuest(ratingBar)
