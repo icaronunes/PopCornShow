@@ -14,7 +14,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import domain.person.CastItem
-import filme.activity.FilmeActivity
+import filme.activity.MovieDetailsActivity
 import utils.Constantes
 import utils.UtilsApp
 import java.lang.Exception
@@ -57,7 +57,7 @@ class PersonMovieAdapter(private val context: Context, private val personCredits
                 })
 
         holder.poster.setOnClickListener {
-            context.startActivity(Intent(context, FilmeActivity::class.java).apply {
+            context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
             putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
             putExtra(Constantes.FILME_ID, credit?.id)
             putExtra(Constantes.NOME_FILME, credit?.title)

@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.TaskStackBuilder
 import br.com.icaro.filme.R
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
-import filme.activity.FilmeActivity
+import filme.activity.MovieDetailsActivity
 import main.MainActivity
 import tvshow.activity.TvShowActivity
 import utils.Constantes
@@ -76,7 +76,7 @@ class DynamicLink : AppCompatActivity() {
                     MOVIE -> {
                         val stackBuilder = TaskStackBuilder.create(this@DynamicLink)
                         stackBuilder.addParentStack(MainActivity::class.java)
-                        stackBuilder.addNextIntent(Intent(this@DynamicLink, FilmeActivity::class.java).apply {
+                        stackBuilder.addNextIntent(Intent(this@DynamicLink, MovieDetailsActivity::class.java).apply {
                             putExtra(Constantes.FILME_ID, id.toInt())
                         })
                         stackBuilder.startActivities()

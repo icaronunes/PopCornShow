@@ -42,7 +42,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class FilmeActivity : BaseActivity() {
+class MovieDetailsActivity : BaseActivity() {
     private var color_fundo: Int = 0
     private var id_filme: Int = 0
     private var movieDb: Movie? = null
@@ -260,23 +260,23 @@ class FilmeActivity : BaseActivity() {
         if (item.itemId == R.id.share) {
             if (movieDb != null) {
 
-                salvaImagemMemoriaCache(this@FilmeActivity, movieDb?.posterPath, object : SalvarImageShare {
+                salvaImagemMemoriaCache(this@MovieDetailsActivity, movieDb?.posterPath, object : SalvarImageShare {
                     override fun retornaFile(file: File) {
                         val intent = Intent(Intent.ACTION_SEND)
                         intent.type = "message/rfc822"
                         intent.putExtra(Intent.EXTRA_TEXT, movieDb?.title + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL)
                         intent.type = "image/*"
-                        intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.getUriDownloadImage(this@FilmeActivity, file))
+                        intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.getUriDownloadImage(this@MovieDetailsActivity, file))
                         startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar) + " " + movieDb?.title))
                     }
 
                     override fun RetornoFalha() {
-                        Toast.makeText(this@FilmeActivity, resources.getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MovieDetailsActivity, resources.getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show()
                     }
                 })
 
             } else {
-                Toast.makeText(this@FilmeActivity, resources.getString(R.string.erro_ainda_sem_imagem), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MovieDetailsActivity, resources.getString(R.string.erro_ainda_sem_imagem), Toast.LENGTH_SHORT).show()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -300,9 +300,9 @@ class FilmeActivity : BaseActivity() {
             }
 
             if (!UtilsApp.verificaLancamento(date)) {
-                Toast.makeText(this@FilmeActivity, getString(R.string.filme_nao_lancado), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_nao_lancado), Toast.LENGTH_SHORT).show()
             } else {
-                val alertDialog = Dialog(this@FilmeActivity)
+                val alertDialog = Dialog(this@MovieDetailsActivity)
                 alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 alertDialog.setContentView(R.layout.dialog_custom_rated)
 
@@ -328,7 +328,7 @@ class FilmeActivity : BaseActivity() {
 
                     myRated?.child(id_filme.toString())?.setValue(null)
                             ?.addOnCompleteListener {
-                                Toast.makeText(this@FilmeActivity,
+                                Toast.makeText(this@MovieDetailsActivity,
                                         resources.getText(R.string.remover_rated), Toast.LENGTH_SHORT).show()
                             }
                     alertDialog.dismiss()
@@ -338,7 +338,7 @@ class FilmeActivity : BaseActivity() {
                 ok.setOnClickListener(View.OnClickListener {
 
 
-                    if (UtilsApp.isNetWorkAvailable(this@FilmeActivity)) {
+                    if (UtilsApp.isNetWorkAvailable(this@MovieDetailsActivity)) {
 
                         if (ratingBar.rating == 0.0f) {
                             alertDialog.dismiss()
@@ -354,12 +354,12 @@ class FilmeActivity : BaseActivity() {
 
                         myRated?.child(id_filme.toString())?.setValue(filmeDB)
                                 ?.addOnCompleteListener {
-                                    Toast.makeText(this@FilmeActivity, resources.getString(R.string.filme_rated) + " - " + ratingBar.rating * 2, Toast.LENGTH_SHORT)
+                                    Toast.makeText(this@MovieDetailsActivity, resources.getString(R.string.filme_rated) + " - " + ratingBar.rating * 2, Toast.LENGTH_SHORT)
                                             .show()
 
                                     fab_menu_filme?.close(true)
                                 }
-                        Thread(Runnable { FilmeService.ratedMovieGuest(id_filme, (ratingBar.rating * 2).toInt(), this@FilmeActivity) }).start()
+                        Thread(Runnable { FilmeService.ratedMovieGuest(id_filme, (ratingBar.rating * 2).toInt(), this@MovieDetailsActivity) }).start()
                     }
                     alertDialog.dismiss()
                 })
@@ -396,7 +396,7 @@ class FilmeActivity : BaseActivity() {
             }
 
             if (!UtilsApp.verificaLancamento(date)) {
-                Toast.makeText(this@FilmeActivity, R.string.filme_nao_lancado, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MovieDetailsActivity, R.string.filme_nao_lancado, Toast.LENGTH_SHORT).show()
 
             } else {
 
@@ -404,7 +404,7 @@ class FilmeActivity : BaseActivity() {
                     //  Log.d(TAG, "Apagou Favorite");
                     myFavorite?.child(id_filme.toString())?.setValue(null)
                             ?.addOnCompleteListener {
-                                Toast.makeText(this@FilmeActivity, getString(R.string.filme_remove_favorite), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_remove_favorite), Toast.LENGTH_SHORT).show()
 
                                 fab_menu_filme?.close(true)
                             }
@@ -418,7 +418,7 @@ class FilmeActivity : BaseActivity() {
 
                     myFavorite?.child(id_filme.toString())?.setValue(filmeDB)
                             ?.addOnCompleteListener {
-                                Toast.makeText(this@FilmeActivity, getString(R.string.filme_add_favorite), Toast.LENGTH_SHORT)
+                                Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_add_favorite), Toast.LENGTH_SHORT)
                                         .show()
 
                                 fab_menu_filme?.close(true)
@@ -443,7 +443,7 @@ class FilmeActivity : BaseActivity() {
 
                 myWatch?.child(id_filme.toString())?.setValue(null)
                         ?.addOnCompleteListener {
-                            Toast.makeText(this@FilmeActivity, getString(R.string.filme_remove), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_remove), Toast.LENGTH_SHORT).show()
 
                             fab_menu_filme?.close(true)
                         }
@@ -459,7 +459,7 @@ class FilmeActivity : BaseActivity() {
 
                 myWatch?.child(id_filme.toString())?.setValue(filmeDB)
                         ?.addOnCompleteListener {
-                            Toast.makeText(this@FilmeActivity, getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
+                            Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
                                     .show()
 
                             fab_menu_filme?.close(true)

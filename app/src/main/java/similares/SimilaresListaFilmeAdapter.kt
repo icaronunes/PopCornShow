@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.ResultsSimilarItem
-import filme.activity.FilmeActivity
+import filme.activity.MovieDetailsActivity
 import kotlinx.android.synthetic.main.adapter_similares.view.*
 import utils.Constantes
 import utils.UtilsApp
@@ -44,7 +44,7 @@ class SimilaresListaFilmeAdapter(private val activity: SimilaresActivity,
             img_similares.setPicassoWithCache(item.posterPath, 2)
 
             itemView.setOnClickListener {
-                activity.startActivity(Intent(activity, FilmeActivity::class.java).apply {
+                activity.startActivity(Intent(activity, MovieDetailsActivity::class.java).apply {
                     putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(img_similares))
                     putExtra(Constantes.FILME_ID, item.id)
                     putExtra(Constantes.NOME_FILME, item.title)

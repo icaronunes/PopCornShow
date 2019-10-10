@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
-import filme.activity.FilmeActivity
+import filme.activity.MovieDetailsActivity
 import info.movito.themoviedbapi.model.MovieDb
 import info.movito.themoviedbapi.model.Multi
 import info.movito.themoviedbapi.model.people.Person
@@ -18,7 +18,6 @@ import pessoa.activity.PersonActivity
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
-import utils.setPicasso
 import utils.setPicassoWithCache
 
 /**
@@ -40,7 +39,7 @@ class SearchAdapter(val context: SearchMultiActivity, private val multis: List<M
                 holder.poster.setPicassoWithCache(movieDb.posterPath, 2)
 
                 holder.itemView.setOnClickListener {
-                    context.startActivity(Intent(context, FilmeActivity::class.java).apply {
+                    context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
                         putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
                         putExtra(Constantes.FILME_ID, movieDb.id)
                         putExtra(Constantes.NOME_FILME, movieDb.title)

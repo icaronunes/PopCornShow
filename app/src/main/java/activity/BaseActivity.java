@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -17,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +42,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
@@ -60,7 +57,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import applicaton.BaseViewModel;
 import applicaton.PopCornViewModelFactory;
 import avaliado.RatedActivity;
 import br.com.icaro.filme.BuildConfig;
@@ -71,9 +67,7 @@ import domain.Api;
 import domain.busca.MultiSearch;
 import favorito.FavoriteActivity;
 import login.LoginActivity;
-import login.VincularLoginActivity;
 import main.MainActivity;
-import main.MainViewModel;
 import oscar.OscarActivity;
 import pessoaspopulares.PersonPopularActivity;
 import queroassistir.WatchListActivity;
@@ -101,7 +95,6 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
     private TextView tLogin;
     private TextView textLogin;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
-    private FirebaseUser user;
     private Dialog dialog;
     private CompositeSubscription subscriptions = new CompositeSubscription();
 
@@ -145,7 +138,6 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
         }
     }
 
-    @SuppressWarnings("deprecation")
     protected void setUpToolBar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -218,7 +210,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
             imgUserPhoto.setOnClickListener(onClickListenerLogar());
 
         } else {
-            user = auth.getCurrentUser();
+            FirebaseUser user = auth.getCurrentUser();
 
             if (user.isAnonymous()) {
                 textLogin.setVisibility(View.VISIBLE);

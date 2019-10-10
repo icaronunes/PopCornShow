@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.ViewType
 import domain.movie.ListaItemFilme
-import filme.activity.FilmeActivity
+import filme.activity.MovieDetailsActivity
 import kotlinx.android.synthetic.main.adapter_produtora.view.*
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
@@ -50,7 +50,7 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
                     sucesso = { progress_bar?.visibility = View.GONE })
 
             itemView.setOnClickListener {
-                itemView.context.startActivity(Intent(itemView.context, FilmeActivity::class.java).apply {
+                itemView.context.startActivity(Intent(itemView.context, MovieDetailsActivity::class.java).apply {
                     putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(img_movie))
                     putExtra(Constantes.FILME_ID, item.id)
                     putExtra(Constantes.NOME_FILME, item.title)

@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 
 import domain.movie.ListaFilmes;
 import domain.movie.ListaItemFilme;
-import filme.activity.FilmeActivity;
+import filme.activity.MovieDetailsActivity;
 import br.com.icaro.filme.R;
 import utils.Constantes;
 import utils.UtilsApp;
@@ -68,7 +68,7 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(context, FilmeActivity.class);
+                Intent intent = new Intent(context, MovieDetailsActivity.class);
                 intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movieDb.getTitle());
                 intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movieDb.getId());
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(holder.img_poster_grid));

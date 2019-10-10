@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import filme.activity.FilmeActivity;
+import filme.activity.MovieDetailsActivity;
 import tvshow.activity.TvShowActivity;
 import br.com.icaro.filme.R;
 import domain.TopMain;
@@ -66,7 +66,7 @@ public class ImagemTopScrollFragment extends Fragment {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getContext(), FilmeActivity.class);
+                    Intent intent = new Intent(getContext(), MovieDetailsActivity.class);
                     intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), topMains.getNome());
                     intent.putExtra(Constantes.INSTANCE.getFILME_ID(), topMains.getId());
                     intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(imageView));

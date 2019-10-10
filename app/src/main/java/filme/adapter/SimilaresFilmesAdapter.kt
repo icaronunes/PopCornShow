@@ -14,7 +14,7 @@ import br.com.icaro.filme.R
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import domain.ResultsSimilarItem
-import filme.activity.FilmeActivity
+import filme.activity.MovieDetailsActivity
 import utils.Constantes
 import utils.UtilsApp
 import java.lang.Exception
@@ -57,7 +57,7 @@ class SimilaresFilmesAdapter(activity: FragmentActivity, val similarItems: List<
                     })
 
             holder.imgPagerSimilares.setOnClickListener { _ ->
-                val intent = Intent(context, FilmeActivity::class.java)
+                val intent = Intent(context, MovieDetailsActivity::class.java)
                 intent.putExtra(Constantes.COLOR_TOP, color_top)
                 intent.putExtra(Constantes.NOME_FILME, it.title)
                 intent.putExtra(Constantes.FILME_ID, it.id)

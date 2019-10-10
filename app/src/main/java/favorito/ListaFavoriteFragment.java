@@ -27,7 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.Serializable;
 import java.util.List;
 
-import filme.activity.FilmeActivity;
+import filme.activity.MovieDetailsActivity;
 import tvshow.activity.TvShowActivity;
 import adapter.ListaFilmeAdapter;
 import adapter.ListaTvShowAdapter;
@@ -107,7 +107,7 @@ public class ListaFavoriteFragment extends Fragment {
         return new ListaFilmeAdapter.ListaOnClickListener() {
             @Override
             public void onClick(final View view, final int position) {
-                Intent intent = new Intent(getActivity(), FilmeActivity.class);
+                Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
               //  Log.d("ListaFilmeAdapter", "ListaFilmeAdapter");
                 ImageView imageView = (ImageView) view;
                 int color = UtilsApp.loadPalette(imageView);

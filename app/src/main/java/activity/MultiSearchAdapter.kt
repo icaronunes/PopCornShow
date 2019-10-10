@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.busca.MultiSearch
-import filme.activity.FilmeActivity
+import filme.activity.MovieDetailsActivity
 import pessoa.activity.PersonActivity
 import tvshow.activity.TvShowActivity
 import utils.Constantes
@@ -29,7 +29,7 @@ class MultiSearchAdapter(val application: Context, private val multiReturn: Mult
 
                 holder.poster.setPicassoWithCache(item.posterPath, 1)
                 holder.itemView.setOnClickListener {
-                    application.startActivity(Intent(application, FilmeActivity::class.java).apply {
+                    application.startActivity(Intent(application, MovieDetailsActivity::class.java).apply {
                         putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
                         putExtra(Constantes.FILME_ID, item.id)
                         putExtra(Constantes.NOME_FILME, item.title)

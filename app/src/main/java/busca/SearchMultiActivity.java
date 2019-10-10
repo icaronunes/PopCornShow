@@ -26,7 +26,7 @@ import activity.BaseActivity;
 import configuracao.SettingsActivity;
 import br.com.icaro.filme.R;
 import domain.FilmeService;
-import filme.activity.FilmeActivity;
+import filme.activity.MovieDetailsActivity;
 import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.model.Multi;
 import pessoa.activity.PersonActivity;
@@ -80,7 +80,7 @@ public class SearchMultiActivity extends BaseActivity {
 			Intent intent;
 			if (getIntent().getData().getLastPathSegment().equalsIgnoreCase(EnumTypeMedia.MOVIE.getType())) {
 
-				intent = new Intent(this, FilmeActivity.class);
+				intent = new Intent(this, MovieDetailsActivity.class);
 				int id = Integer.parseInt(getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY));//ID
 				intent.putExtra(Constantes.INSTANCE.getFILME_ID(), id);
 				intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);

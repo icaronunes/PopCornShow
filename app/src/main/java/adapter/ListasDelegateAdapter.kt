@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.movie.ListaItemFilme
 import domain.ViewType
-import filme.activity.FilmeActivity
+import filme.activity.MovieDetailsActivity
 import kotlinx.android.synthetic.main.lista.view.*
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import tvshow.activity.TvShowActivity
@@ -53,7 +53,7 @@ class ListasDelegateAdapter : ViewTypeDelegateAdapter {
                         context.startActivity(intent)
                     }
                     "movie" ->{
-                        val intent = Intent(context, FilmeActivity::class.java)
+                        val intent = Intent(context, MovieDetailsActivity::class.java)
                         intent.putExtra(Constantes.FILME_ID, item.id)
                         intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(img_lista))
                         context.startActivity(intent)

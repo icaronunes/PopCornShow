@@ -30,7 +30,7 @@ import adapter.ListaTvShowAdapter;
 import br.com.icaro.filme.R;
 import domain.FilmeDB;
 import domain.TvshowDB;
-import filme.activity.FilmeActivity;
+import filme.activity.MovieDetailsActivity;
 import tvshow.activity.TvShowActivity;
 import utils.Constantes;
 import utils.UtilsApp;
@@ -98,7 +98,7 @@ public class ListaRatedFragment extends Fragment {
         return new ListaFilmeAdapter.ListaOnClickListener() {
             @Override
             public void onClick(final View view, final int position) {
-                Intent intent = new Intent(getActivity(), FilmeActivity.class);
+                Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
                 ImageView imageView = (ImageView) view;
                 int color = UtilsApp.loadPalette(imageView);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);

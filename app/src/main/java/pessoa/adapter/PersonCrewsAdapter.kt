@@ -10,11 +10,8 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
-import com.squareup.picasso.Callback
-import com.squareup.picasso.NetworkPolicy
-import com.squareup.picasso.Picasso
 import domain.person.CrewItem
-import filme.activity.FilmeActivity
+import filme.activity.MovieDetailsActivity
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
@@ -84,7 +81,7 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
         holder.poster.setOnClickListener {
 
             if (item?.mediaType == "movie") {
-                val intent = Intent(context, FilmeActivity::class.java)
+                val intent = Intent(context, MovieDetailsActivity::class.java)
                 intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
                 intent.putExtra(Constantes.FILME_ID, item.id)
                 intent.putExtra(Constantes.NOME_FILME, item.title)

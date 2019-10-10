@@ -27,7 +27,7 @@ import trailer.TrailerActivity;
 import applicaton.PopCornApplication;
 import domain.FilmeDB;
 import domain.FilmeService;
-import filme.activity.FilmeActivity;
+import filme.activity.MovieDetailsActivity;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.MovieDb;
 import listaserie.activity.TvShowsActivity;
@@ -84,8 +84,8 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                 JSONObject object = jsonData;
                 String action = (String) object.get("action");
                     /*Filme Activity */
-                if (action.equals("FilmeActivity")) {
-                    Intent intent = new Intent(context, FilmeActivity.class);
+                if (action.equals("MovieDetailsActivity") || action.equals("FilmeActivity")) {
+                    Intent intent = new Intent(context, MovieDetailsActivity.class);
 
                     if (object.has("color"))
                         intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), object.getInt("color"));
@@ -93,7 +93,7 @@ public class CustomNotificationOpenedHandler implements OneSignal.NotificationOp
                     if (object.has("id")) {
                         intent.putExtra(Constantes.INSTANCE.getFILME_ID(), object.getInt("id"));
                         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-                        stackBuilder.addParentStack(FilmeActivity.class);
+                        stackBuilder.addParentStack(MovieDetailsActivity.class);
                         stackBuilder.addNextIntent(intent);
                         stackBuilder.startActivities();
                     }

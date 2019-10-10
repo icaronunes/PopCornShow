@@ -12,7 +12,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import domain.ViewType
 import domain.movie.ListaItemFilme
-import filme.activity.FilmeActivity
+import filme.activity.MovieDetailsActivity
 import kotlinx.android.synthetic.main.adapter_filmes_list.view.*
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
@@ -55,7 +55,7 @@ class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
                     } )
 
             itemView.setOnClickListener {
-                val intent = Intent(context, FilmeActivity::class.java)
+                val intent = Intent(context, MovieDetailsActivity::class.java)
                 intent.putExtra(Constantes.FILME_ID, item.id)
                 intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(imgFilmes))
                 context.startActivity(intent)
