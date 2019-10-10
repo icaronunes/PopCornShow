@@ -11,7 +11,8 @@ import domain.TvSeasons
 class EpsodioAdapter(supportFragmentManager: FragmentManager,
                      private val tvSeason: TvSeasons, private val tvshowId: Int,
                      private val color: Int, private val seguindo: Boolean,
-                     private val temporadaPosition: Int) : FragmentPagerAdapter(supportFragmentManager) {
+                     private val temporadaPosition: Int) :
+        FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT ) {
 
     override fun getItem(position: Int): Fragment {
         return EpsodioFragment.newInstance(tvSeason.episodes!![position]!!,
