@@ -6,12 +6,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
 import br.com.icaro.filme.R
-import main.MainFragment
 
 /**
  * Created by icaro on 23/08/16.
  */
-class MainAdapter(private val context: Context, supportFragmentManager: FragmentManager) : FragmentPagerAdapter(supportFragmentManager) {
+class MainAdapter(private val context: Context, supportFragmentManager: FragmentManager)
+    : FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
         if (position == 0) {
