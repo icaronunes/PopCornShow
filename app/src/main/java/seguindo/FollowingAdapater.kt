@@ -15,7 +15,8 @@ import domain.UserTvshow
 
 class FollowingAdapater(seguindoActivity: SeguindoActivity,
                         supportFragmentManager: FragmentManager,
-                        private val userTvshows: MutableList<UserTvshow>) : FragmentPagerAdapter(supportFragmentManager) {
+                        private val userTvshows: MutableList<UserTvshow>)
+    : FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val context: Context
 
