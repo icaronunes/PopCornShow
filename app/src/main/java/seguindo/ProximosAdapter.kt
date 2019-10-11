@@ -1,7 +1,5 @@
 package seguindo
 
-import temporada.TemporadaActivity
-import seguindo.ProximosAdapter.CalendarViewHolder
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +17,8 @@ import domain.UserEp
 import domain.UserTvshow
 import domain.tvshow.Tvshow
 import org.apache.commons.lang3.tuple.MutablePair
+import seguindo.ProximosAdapter.CalendarViewHolder
+import temporada.TemporadaActivity
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
@@ -190,12 +190,7 @@ class ProximosAdapter(private val context: FragmentActivity)
     }
 
     fun addAtual(ultima: MutablePair<EpisodesItem, Tvshow>) {
-        userTvshows.find {
-            it.left.second.id == ultima.right.id
-        }
-
         userTvshows.forEachIndexed { index, it ->
-
             if (it.left.second.id == ultima.right.id) {
                 userTvshows[index].right = ultima
                 notifyItemChanged(index)

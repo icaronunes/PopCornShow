@@ -26,9 +26,9 @@ class FollowingAdapater(seguindoActivity: SeguindoActivity,
 
     override fun getItem(position: Int): Fragment {
         return if (position == 0) {
-            ListaSeguindoFragment.newInstance(position, userTvshows)
+            ListFollowFragment.newInstance(position, userTvshows)
         } else {
-            ListaSeguindoFragment.newInstance(position, userTvshows)
+            ListFollowFragment.newInstance(position, userTvshows)
         }
     }
 
@@ -36,7 +36,7 @@ class FollowingAdapater(seguindoActivity: SeguindoActivity,
         return if (position == 0) {
             context.getString(R.string.proximos)
         } else {
-            context.getString(R.string.seguindo)
+            context.getString(R.string.tvshow)
         }
     }
 

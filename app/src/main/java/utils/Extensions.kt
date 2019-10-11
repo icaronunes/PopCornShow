@@ -1,6 +1,7 @@
 package utils
 
 import android.app.Activity
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import br.com.icaro.filme.R
@@ -53,4 +54,17 @@ fun Activity.makeToast(restText: Int, time: Int = Toast.LENGTH_SHORT) {
 
 fun Activity.makeToast(text: String?, time: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, text, time ).show()
+}
+
+fun View.gone() {
+    this.visibility = View.GONE
+}
+
+
+fun View.visible() {
+    this.visibility = View.VISIBLE
+}
+
+fun View.invisible() {
+    this.visibility = View.INVISIBLE
 }

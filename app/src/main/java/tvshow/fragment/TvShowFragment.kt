@@ -1,11 +1,8 @@
 package tvshow.fragment
 
 import activity.BaseActivity
-import site.Site
-import temporada.TemporadaActivity
 import adapter.CastAdapter
 import adapter.CrewAdapter
-import tvshow.TemporadasAdapter
 import adapter.TrailerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -45,7 +42,6 @@ import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbTvSeasons
 import info.movito.themoviedbapi.model.tv.TvSeason
 import kotlinx.android.synthetic.main.fab_float.*
-import kotlinx.android.synthetic.main.temporadas.*
 import kotlinx.android.synthetic.main.tvshow_info.*
 import poster.PosterGridActivity
 import producao.CrewsActivity
@@ -55,6 +51,9 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import similares.SimilaresActivity
+import site.Site
+import temporada.TemporadaActivity
+import tvshow.TemporadasAdapter
 import tvshow.adapter.SimilaresSerieAdapter
 import utils.Config
 import utils.Constantes
@@ -824,7 +823,6 @@ class TvShowFragment : FragmentBase() {
             text_similares.visibility = View.VISIBLE
         } else {
             text_similares.visibility = View.GONE
-            //recycle_tvshow_similares.visibility = View.GONE
             recycle_tvshow_similares.layoutParams.height = 1
         }
     }

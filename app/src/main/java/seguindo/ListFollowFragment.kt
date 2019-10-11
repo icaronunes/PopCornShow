@@ -23,7 +23,7 @@ import java.io.Serializable
 /**
  * Created by icaro on 25/11/16.
  */
-class ListaSeguindoFragment : Fragment() {
+class ListFollowFragment : Fragment() {
 
     private var userTvshows: MutableList<UserTvshow>? = null
     private var tipo: Int = 0
@@ -104,7 +104,7 @@ class ListaSeguindoFragment : Fragment() {
         }
     }
 
-    fun verificarSerieCoroutine() {
+    private fun verificarSerieCoroutine() {
 
         userTvshows?.forEach { tvFire ->
             try {
@@ -161,9 +161,8 @@ class ListaSeguindoFragment : Fragment() {
     }
 
     companion object {
-
         fun newInstance(tipo: Int, userTvshows: List<UserTvshow>): Fragment {
-            return ListaSeguindoFragment().apply {
+            return ListFollowFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(Constantes.SEGUINDO, userTvshows as Serializable)
                     putInt(Constantes.ABA, tipo)

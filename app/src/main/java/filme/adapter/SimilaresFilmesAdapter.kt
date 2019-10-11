@@ -17,7 +17,6 @@ import domain.ResultsSimilarItem
 import filme.activity.MovieDetailsActivity
 import utils.Constantes
 import utils.UtilsApp
-import java.lang.Exception
 
 /**
  * Created by icaro on 22/02/17.
@@ -81,7 +80,7 @@ class SimilaresFilmesAdapter(activity: FragmentActivity, val similarItems: List<
 
         init {
             progressBarSimilares = itemView.findViewById<View>(R.id.progressBarSimilares) as ProgressBar
-            textSimilares = itemView.findViewById<View>(R.id.textSimilaresNome) as TextView
+            textSimilares = itemView.findViewById<View>(R.id.textSimilaresName) as TextView
             imgPagerSimilares = itemView.findViewById<View>(R.id.imgPagerSimilares) as ImageView
         }
     }

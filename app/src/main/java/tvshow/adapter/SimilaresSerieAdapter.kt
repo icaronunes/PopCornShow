@@ -2,78 +2,46 @@ package tvshow.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import domain.tvshow.ResultsItem
+import kotlinx.android.synthetic.main.scroll_similares.view.*
 import tvshow.activity.TvShowActivity
-import utils.Constantes
-import utils.UtilsApp
-import java.lang.Exception
+import utils.*
 
-class SimilaresSerieAdapter(val activity: FragmentActivity?, val similarItems: List<ResultsItem?>?) : RecyclerView.Adapter<SimilaresSerieAdapter.SimilaresSerieHolde>() {
+class SimilaresSerieAdapter(val activity: FragmentActivity?, private val similarItems: List<ResultsItem?>?)
+    : RecyclerView.Adapter<SimilaresSerieAdapter.SimilaresSerieHolde>() {
 
-    private var color_top: Int = 0
+    override fun onBindViewHolder(holder: SimilaresSerieHolde, position: Int) = holder.bind(similarItems?.get(position)!!)
 
-    override fun onBindViewHolder(holder: SimilaresSerieHolde, position: Int) {
-        val tvshow = similarItems?.get(position)
-        holder.progressBarSimilares.visibility = View.VISIBLE
-        if (tvshow?.posterPath != null) {
-            holder.textSimilares.visibility = View.GONE
-            Picasso.get()
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(activity, 2)) + tvshow.posterPath)
-                    .placeholder(R.drawable.poster_empty)
-                    .into(holder.imgPagerSimilares, object : Callback {
-                        override fun onError(e: Exception?) {
-                            holder.progressBarSimilares.visibility = View.GONE
-                        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimilaresSerieHolde = SimilaresSerieHolde(parent)
 
-                        override fun onSuccess() {
-                            color_top = UtilsApp.loadPalette(holder.imgPagerSimilares)
-                            holder.progressBarSimilares.visibility = View.GONE
-                        }
-                    })
+    override fun getItemCount() = similarItems?.size!!
 
-            holder.imgPagerSimilares.setOnClickListener {
-                val intent = Intent(activity, TvShowActivity::class.java)
-                intent.putExtra(Constantes.COLOR_TOP, color_top)
-                intent.putExtra(Constantes.NOME_TVSHOW, tvshow.name)
-                intent.putExtra(Constantes.TVSHOW_ID, tvshow.id)
-                activity?.startActivity(intent)
+    inner class SimilaresSerieHolde(parent: ViewGroup)
+        : RecyclerView.ViewHolder(LayoutInflater.from(activity).inflate(R.layout.scroll_similares, parent, false)) {
+        private var colorTop: Int = 0
 
+        fun bind(tvshow: ResultsItem) = with(itemView) {
+            progressBarSimilares.visible()
+            textSimilaresName.gone()
+
+            imgPagerSimilares.setPicassoWithCache(tvshow.posterPath, 2, sucesso = {
+                progressBarSimilares.gone()
+                colorTop = UtilsApp.loadPalette(imgPagerSimilares)
+            }, error = {
+                progressBarSimilares.gone()
+            }, img_erro = R.drawable.poster_empty)
+
+            imgPagerSimilares.setOnClickListener {
+                activity?.startActivity(Intent(activity, TvShowActivity::class.java).apply {
+                    putExtra(Constantes.COLOR_TOP, colorTop)
+                    putExtra(Constantes.NOME_TVSHOW, tvshow.name)
+                    putExtra(Constantes.TVSHOW_ID, tvshow.id)
+                })
             }
-
         }
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimilaresSerieHolde {
-        val view = LayoutInflater.from(activity).inflate(R.layout.scroll_similares, parent, false)
-        return SimilaresSerieHolde(view)
-    }
-
-    override fun getItemCount(): Int {
-        return similarItems?.size!!
-    }
-
-
-    inner class SimilaresSerieHolde(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        internal val progressBarSimilares: ProgressBar
-        internal val textSimilares: TextView
-        internal val imgPagerSimilares: ImageView
-
-        init {
-            progressBarSimilares = itemView.findViewById<View>(R.id.progressBarSimilares) as ProgressBar
-            textSimilares = itemView.findViewById<View>(R.id.textSimilaresNome) as TextView
-            imgPagerSimilares = itemView.findViewById<View>(R.id.imgPagerSimilares) as ImageView
-        }
-    }
-
 }

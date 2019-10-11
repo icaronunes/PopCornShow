@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scroll_similares_linear"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -34,7 +33,7 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/textSimilaresNome"
+        android:id="@+id/textSimilaresName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
