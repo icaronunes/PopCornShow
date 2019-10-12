@@ -31,11 +31,12 @@
                 android:minLines="1"
                 android:paddingStart="@dimen/trade_size_dp_4"
                 android:paddingEnd="@dimen/trade_size_dp_4"
-                tools:text="Nome da Serie"
                 android:textSize="@dimen/trade_txt_size_sp_20"
+                android:typeface="serif"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Nome da Serie" />
 
 
             <TextView
@@ -103,7 +104,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/trade_size_dp_4"
-                android:layout_marginRight="@dimen/trade_size_dp_4"
                 android:gravity="end"
                 android:textSize="@dimen/trade_txt_size_sp_18"
                 android:textStyle="normal|bold|italic"
@@ -111,277 +111,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/categoria_tvshow"
                 tools:text="Renovado" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_poster"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/trade_size_dp_2"
-                app:cardCornerRadius="@dimen/trade_size_dp_3"
-                app:cardElevation="@dimen/trade_size_dp_3"
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true"
-                app:contentPadding="@dimen/trade_size_dp_3"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView">
-
-                <ImageView
-                    android:id="@+id/img_poster"
-                    android:layout_width="@dimen/trade_size_dp_126"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/poster_filme"
-                    android:cropToPadding="true"
-                    android:scaleType="fitCenter"
-                    android:transitionName="poster"
-                    tools:layout_height="180dp"
-                    tools:srcCompat="@drawable/person" />
-
-            </androidx.cardview.widget.CardView>
-
-            <!-- Pontuação - Site - Botão Seguir -->
-
-            <FrameLayout
-                android:id="@+id/frame_nota"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:layout_margin="@dimen/trade_size_dp_1"
-                android:layout_marginStart="@dimen/trade_size_dp_16"
-                android:layout_marginTop="@dimen/trade_size_dp_8"
-                app:layout_constraintStart_toEndOf="@+id/card_poster"
-                app:layout_constraintTop_toTopOf="@+id/card_poster">
-
-                <ImageView
-                    android:id="@+id/img_star"
-                    android:layout_width="@dimen/trade_size_dp_42"
-                    android:layout_height="@dimen/trade_size_dp_42"
-                    android:adjustViewBounds="true"
-                    android:alpha="0"
-                    android:cropToPadding="true"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/icon_star"
-                    tools:alpha="1" />
-
-                <TextView
-                    android:id="@+id/voto_media"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:importantForAccessibility="no"
-                    android:textStyle="normal|bold"
-                    android:typeface="sans"
-                    tools:text="8.0" />
-
-            </FrameLayout>
-
-
-            <ImageView
-                android:id="@+id/icon_site"
-                android:layout_width="@dimen/trade_size_dp_42"
-                android:layout_height="@dimen/trade_size_dp_42"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:layout_margin="@dimen/trade_size_dp_1"
-                android:layout_marginStart="@dimen/trade_size_dp_8"
-                android:layout_marginTop="@dimen/trade_size_dp_8"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/site"
-                android:cropToPadding="true"
-                android:src="@drawable/site_on"
-                app:layout_constraintStart_toEndOf="@+id/frame_nota"
-                app:layout_constraintTop_toTopOf="@+id/frame_nota" />
-
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:id="@+id/seguir"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/trade_size_dp_42"
-                android:layout_marginStart="@dimen/trade_size_dp_8"
-                android:layout_marginEnd="@dimen/trade_size_dp_4"
-                android:layout_weight="1"
-                android:textSize="@dimen/trade_txt_size_sp_13"
-                android:visibility="visible"
-                tools:text="Seguindo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/icon_site"
-                app:layout_constraintTop_toTopOf="@+id/icon_site" />
-
-            <!-- Detalhes - titulo Original - Popularidade - Pais Produtor - Temporadas -->
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/trade_size_dp_2"
-                app:cardCornerRadius="@dimen/trade_size_dp_2"
-                app:cardElevation="@dimen/trade_size_dp_3"
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true"
-                app:layout_constraintBottom_toBottomOf="@+id/card_poster"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/card_poster"
-                app:layout_constraintTop_toBottomOf="@+id/seguir">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/original_title_label"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/trade_size_dp_2"
-                        android:layout_marginTop="@dimen/trade_size_dp_4"
-                        android:text="@string/original_title"
-                        android:textSize="@dimen/trade_txt_size_sp_14"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/original_title"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/trade_size_dp_2"
-                        android:layout_marginLeft="@dimen/trade_size_dp_2"
-                        android:layout_marginEnd="@dimen/trade_size_dp_2"
-                        android:layout_marginRight="@dimen/trade_size_dp_2"
-                        android:ellipsize="end"
-                        android:gravity="end"
-                        android:maxLines="2"
-                        android:textSize="@dimen/trade_txt_size_sp_14"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/original_title_label"
-                        app:layout_constraintTop_toTopOf="@+id/original_title_label"
-                        tools:text="Game of thrones" />
-
-                    <TextView
-                        android:id="@+id/popularity_label"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/trade_size_dp_2"
-                        android:layout_marginTop="@dimen/trade_size_dp_2"
-                        android:text="@string/popularity"
-                        android:textSize="@dimen/trade_txt_size_sp_14"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/original_title" />
-
-                    <TextView
-                        android:id="@+id/popularity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/trade_size_dp_8"
-                        android:layout_marginEnd="@dimen/trade_size_dp_2"
-                        android:gravity="end"
-                        android:textSize="@dimen/trade_txt_size_sp_14"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toEndOf="@+id/popularity_label"
-                        app:layout_constraintTop_toTopOf="@+id/popularity_label"
-                        tools:text="281.4 Mi" />
-
-
-                    <TextView
-                        android:id="@+id/country_producer_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/trade_size_dp_2"
-                        android:text="@string/production_countries"
-                        android:textSize="@dimen/trade_txt_size_sp_14"
-                        app:layout_constraintStart_toStartOf="@+id/popularity_label"
-                        app:layout_constraintTop_toBottomOf="@+id/popularity_label" />
-
-                    <TextView
-                        android:id="@+id/production_countries"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/trade_size_dp_8"
-                        android:layout_marginEnd="@dimen/trade_size_dp_2"
-                        android:gravity="end"
-                        android:maxLines="1"
-                        android:textSize="@dimen/trade_txt_size_sp_14"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toEndOf="@+id/country_producer_label"
-                        app:layout_constraintTop_toTopOf="@+id/country_producer_label"
-                        tools:text="US BR PT FR" />
-
-                    <TextView
-                        android:id="@+id/season_label"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/trade_size_dp_2"
-                        android:layout_marginTop="@dimen/trade_size_dp_2"
-                        android:text="@string/temporadas"
-                        android:textSize="@dimen/trade_txt_size_sp_14"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/country_producer_label" />
-
-                    <TextView
-                        android:id="@+id/temporadas"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="2dp"
-                        android:textSize="@dimen/trade_txt_size_sp_14"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/season_label"
-                        tools:text="8" />
-
-                    <TextView
-                        android:id="@+id/ultimoEp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/trade_size_dp_2"
-                        android:layout_marginTop="@dimen/trade_size_dp_2"
-                        android:text="@string/ultimo_ep"
-                        android:textSize="@dimen/trade_txt_size_sp_14"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/season_label" />
-
-
-                    <TextView
-                        android:id="@+id/ultimo_ep_name"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/trade_size_dp_8"
-                        android:layout_marginEnd="@dimen/trade_size_dp_2"
-                        android:ellipsize="end"
-                        android:gravity="end"
-                        android:maxLines="2"
-                        android:textSize="@dimen/trade_txt_size_sp_14"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/ultimoEp"
-                        app:layout_constraintTop_toTopOf="@+id/ultimoEp"
-                        tools:text="Bolinho de queijo" />
-
-                    <TextView
-                        android:id="@+id/proximoEp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/trade_size_dp_2"
-                        android:layout_marginTop="@dimen/trade_size_dp_2"
-                        android:layout_marginBottom="@dimen/trade_size_dp_4"
-                        android:text="@string/proximo_ep"
-                        android:textSize="@dimen/trade_txt_size_sp_14"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/ultimo_ep_name" />
-
-                    <TextView
-                        android:id="@+id/proximo_ep_date"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/trade_size_dp_2"
-                        android:ellipsize="end"
-                        android:maxLines="2"
-                        android:textSize="@dimen/trade_txt_size_sp_14"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/proximoEp"
-                        tools:text="01-12-098" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <!--Descrição da serie-->
 
             <TextView
                 android:id="@+id/descricao"
@@ -391,9 +120,261 @@
                 android:layout_marginEnd="@dimen/trade_size_dp_8"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/card_poster"
+                app:layout_constraintTop_toBottomOf="@+id/group_information"
                 tools:text="Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida " />
+            <!--Descrição da serie-->
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/group_information"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/status">
+
+                <FrameLayout
+                    android:id="@+id/frame_nota"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_margin="@dimen/trade_size_dp_1"
+                    android:layout_marginStart="@dimen/trade_size_dp_16"
+                    android:layout_marginTop="@dimen/trade_size_dp_8"
+                    app:layout_constraintStart_toEndOf="@+id/card_poster"
+                    app:layout_constraintTop_toTopOf="@+id/card_poster">
+
+                    <ImageView
+                        android:id="@+id/img_star"
+                        android:layout_width="@dimen/trade_size_dp_42"
+                        android:layout_height="@dimen/trade_size_dp_42"
+                        android:adjustViewBounds="true"
+                        android:alpha="0"
+                        android:cropToPadding="true"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/icon_star"
+                        tools:alpha="1" />
+
+                    <TextView
+                        android:id="@+id/voto_media"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:importantForAccessibility="no"
+                        android:textStyle="normal|bold"
+                        android:typeface="sans"
+                        tools:text="8.0" />
+
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/icon_site"
+                    android:layout_width="@dimen/trade_size_dp_42"
+                    android:layout_height="@dimen/trade_size_dp_42"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_margin="@dimen/trade_size_dp_1"
+                    android:layout_marginStart="@dimen/trade_size_dp_8"
+                    android:layout_marginTop="@dimen/trade_size_dp_8"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/site"
+                    android:cropToPadding="true"
+                    android:src="@drawable/site_on"
+                    app:layout_constraintStart_toEndOf="@+id/frame_nota"
+                    app:layout_constraintTop_toTopOf="@+id/frame_nota" />
+
+                <!-- Pontuação - Site - Botão Seguir -->
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView_informations"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/trade_size_dp_2"
+                    app:cardCornerRadius="@dimen/trade_size_dp_2"
+                    app:cardElevation="@dimen/trade_size_dp_3"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/card_poster"
+                    app:layout_constraintTop_toBottomOf="@+id/seguir">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/original_title_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/trade_size_dp_2"
+                            android:layout_marginTop="@dimen/trade_size_dp_4"
+                            android:text="@string/original_title"
+                            android:textSize="@dimen/trade_txt_size_sp_14"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/original_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/trade_size_dp_2"
+                            android:layout_marginLeft="@dimen/trade_size_dp_2"
+                            android:layout_marginEnd="@dimen/trade_size_dp_2"
+                            android:layout_marginRight="@dimen/trade_size_dp_2"
+                            android:ellipsize="end"
+                            android:gravity="end"
+                            android:maxLines="2"
+                            android:textSize="@dimen/trade_txt_size_sp_14"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/original_title_label"
+                            app:layout_constraintTop_toTopOf="@+id/original_title_label"
+                            tools:text="Game of thrones" />
+
+                        <TextView
+                            android:id="@+id/popularity_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/trade_size_dp_2"
+                            android:layout_marginTop="@dimen/trade_size_dp_2"
+                            android:text="@string/popularity"
+                            android:textSize="@dimen/trade_txt_size_sp_14"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/original_title" />
+
+                        <TextView
+                            android:id="@+id/popularity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/trade_size_dp_8"
+                            android:layout_marginEnd="@dimen/trade_size_dp_2"
+                            android:gravity="end"
+                            android:textSize="@dimen/trade_txt_size_sp_14"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toEndOf="@+id/popularity_label"
+                            app:layout_constraintTop_toTopOf="@+id/popularity_label"
+                            tools:text="281.4 Mi" />
+
+
+                        <TextView
+                            android:id="@+id/country_producer_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/trade_size_dp_2"
+                            android:text="@string/production_countries"
+                            android:textSize="@dimen/trade_txt_size_sp_14"
+                            app:layout_constraintStart_toStartOf="@+id/popularity_label"
+                            app:layout_constraintTop_toBottomOf="@+id/popularity_label" />
+
+                        <TextView
+                            android:id="@+id/production_countries"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/trade_size_dp_8"
+                            android:layout_marginEnd="@dimen/trade_size_dp_2"
+                            android:gravity="end"
+                            android:maxLines="1"
+                            android:textSize="@dimen/trade_txt_size_sp_14"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toEndOf="@+id/country_producer_label"
+                            app:layout_constraintTop_toTopOf="@+id/country_producer_label"
+                            tools:text="US BR PT FR" />
+
+                        <TextView
+                            android:id="@+id/season_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/trade_size_dp_2"
+                            android:layout_marginTop="@dimen/trade_size_dp_2"
+                            android:text="@string/temporadas"
+                            android:textSize="@dimen/trade_txt_size_sp_14"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/country_producer_label" />
+
+                        <TextView
+                            android:id="@+id/temporadas"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="2dp"
+                            android:textSize="@dimen/trade_txt_size_sp_14"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/season_label"
+                            tools:text="8" />
+
+                        <TextView
+                            android:id="@+id/ultimoEp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/trade_size_dp_2"
+                            android:layout_marginTop="@dimen/trade_size_dp_2"
+                            android:text="@string/ultimo_ep"
+                            android:textSize="@dimen/trade_txt_size_sp_14"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/season_label" />
+
+
+                        <TextView
+                            android:id="@+id/ultimo_ep_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/trade_size_dp_8"
+                            android:layout_marginEnd="@dimen/trade_size_dp_2"
+                            android:ellipsize="end"
+                            android:gravity="end"
+                            android:maxLines="2"
+                            android:textSize="@dimen/trade_txt_size_sp_14"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/ultimoEp"
+                            app:layout_constraintTop_toTopOf="@+id/ultimoEp"
+                            tools:text="Bolinho de queijo" />
+
+                        <TextView
+                            android:id="@+id/proximoEp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/trade_size_dp_2"
+                            android:layout_marginTop="@dimen/trade_size_dp_2"
+                            android:layout_marginBottom="@dimen/trade_size_dp_4"
+                            android:text="@string/proximo_ep"
+                            android:textSize="@dimen/trade_txt_size_sp_14"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ultimo_ep_name" />
+
+                        <TextView
+                            android:id="@+id/proximo_ep_date"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/trade_size_dp_2"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:textSize="@dimen/trade_txt_size_sp_14"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/proximoEp"
+                            tools:text="01-12-098" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/seguir"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/trade_size_dp_42"
+                    android:layout_marginStart="@dimen/trade_size_dp_8"
+                    android:layout_marginEnd="@dimen/trade_size_dp_4"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/trade_txt_size_sp_13"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/icon_site"
+                    app:layout_constraintTop_toTopOf="@+id/icon_site"
+                    tools:text="Seguindo" />
+
+                <!-- Detalhes - titulo Original - Popularidade - Pais Produtor - Temporadas -->
+
+                <include layout="@layout/poster_details_layout" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycle_tvshow_trailer"
