@@ -3,6 +3,11 @@ package queroassistir;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,11 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,13 +27,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.Serializable;
 import java.util.List;
 
-import filme.activity.MovieDetailsActivity;
-import tvshow.activity.TvShowActivity;
 import adapter.ListaFilmeAdapter;
 import adapter.ListaTvShowAdapter;
 import br.com.icaro.filme.R;
 import domain.FilmeDB;
 import domain.TvshowDB;
+import filme.activity.MovieDetailsActivity;
+import tvshow.activity.TvShowActivity;
 import tvshow.fragment.TvShowFragment;
 import utils.Constantes;
 import utils.UtilsApp;
@@ -110,7 +110,7 @@ public class ListaWatchlistFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
 
                 ImageView imageView = (ImageView) view;
-                int color = UtilsApp.loadPalette(imageView);
+                int color = UtilsApp.INSTANCE.loadPalette(imageView);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                 intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movies.get(position).getId());
                 intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movies.get(position).getTitle());
@@ -184,7 +184,7 @@ public class ListaWatchlistFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), TvShowActivity.class);
                // Log.d("OnClick", "Onclick");
                 ImageView imageView = (ImageView) view;
-                int color = UtilsApp.loadPalette(imageView);
+                int color = UtilsApp.INSTANCE.loadPalette(imageView);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                 intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), tvSeries.get(position).getId());
                 intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), tvSeries.get(position).getTitle());

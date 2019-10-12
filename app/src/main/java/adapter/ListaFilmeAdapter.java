@@ -1,14 +1,15 @@
 package adapter;
 
 import android.content.Context;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -65,8 +66,8 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
 
 
             Picasso.get()
-                    .load(UtilsApp
-                    .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + movie.getPoster())
+                    .load(UtilsApp.INSTANCE
+                    .getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(context, 2)) + movie.getPoster())
                     .into(holder.imageView, new Callback() {
                         @Override
                         public void onSuccess() {

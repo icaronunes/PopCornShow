@@ -21,9 +21,9 @@ import utils.UtilsApp
  * Created by root on 27/02/18.
  */
 
-class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSeason: TvSeasons,
+class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, private val tvSeason: TvSeasons,
                              val seasons: UserSeasons?, val seguindo: Boolean,
-                             val temporadaOnClickListener: TemporadaAdapter.TemporadaOnClickListener)
+                             private val temporadaOnClickListener: TemporadaAdapter.TemporadaOnClickListener)
     : RecyclerView.Adapter<TemporadaFoldinAdapter.HoldeTemporada>() {
 
     private var unfoldedIndexes = HashSet<Int>()
@@ -144,18 +144,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, val tvSea
 
     }
 
-    override fun getItemCount(): Int {
-        if (seguindo) {
-            if (!seasons?.userEps?.isNullOrEmpty()!!) {
-                return seasons.userEps!!.size
-            }
-        } else {
-            if (!tvSeason.episodes?.isNullOrEmpty()!!) {
-                return tvSeason.episodes.size
-            }
-        }
-        return 0
-    }
+    override fun getItemCount() = tvSeason.episodes?.size ?: 0
 
     private fun registerToggle(position: Int) {
         if (unfoldedIndexes.contains(position))

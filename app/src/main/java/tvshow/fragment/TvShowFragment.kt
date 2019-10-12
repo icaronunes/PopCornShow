@@ -42,6 +42,7 @@ import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbTvSeasons
 import info.movito.themoviedbapi.model.tv.TvSeason
 import kotlinx.android.synthetic.main.fab_float.*
+import kotlinx.android.synthetic.main.poster_details_layout.*
 import kotlinx.android.synthetic.main.tvshow_info.*
 import poster.PosterGridActivity
 import producao.CrewsActivity
@@ -55,9 +56,9 @@ import site.Site
 import temporada.TemporadaActivity
 import tvshow.TemporadasAdapter
 import tvshow.adapter.SimilaresSerieAdapter
-import utils.Config
-import utils.Constantes
-import utils.UtilsApp
+import utils.*
+import utils.Constantes.METACRITICTV
+import utils.Constantes.ROTTENTOMATOESTV
 import utils.UtilsApp.setEp
 import utils.UtilsApp.setUserTvShow
 import java.io.Serializable
@@ -102,7 +103,7 @@ class TvShowFragment : FragmentBase() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
+        arguments.let {
             tipo = arguments?.getInt(Constantes.ABA)!!
             series = arguments?.getSerializable(Constantes.SERIE) as Tvshow
             color = arguments?.getInt(Constantes.COLOR_TOP)!!
@@ -142,8 +143,6 @@ class TvShowFragment : FragmentBase() {
             setNomeUltimoEp()
             setUltimoEpDate()
             setAdMob(adView)
-
-            //Todo FAzer Gone nas listas vazias
         }
     }
 
@@ -215,45 +214,28 @@ class TvShowFragment : FragmentBase() {
                         "- -"
                 }
 
-                if (series != null)
                     (layout
                             ?.findViewById<View>(R.id.nota_tmdb) as TextView).text = (if (series.voteAverage != 0.0)
                         series.voteAverage?.toString() + "/10"
                     else
                         "- -").toString()
 
-                (layout?.findViewById<View>(R.id.image_metacritic) as ImageView).setOnClickListener(OnClickListener {
-                    if (imdbDd == null) {
-                        return@OnClickListener
-                    }
-
-                    if (imdbDd!!.type != null) {
-
-                        var nome = imdbDd!!.title.replace(" ", "-").toLowerCase()
-                        nome = UtilsApp.removerAcentos(nome)
-                        val url = "http://www.metacritic.com/tv/" + nome
-
-                        val intent = Intent(activity, Site::class.java)
-                        intent.putExtra(Constantes.SITE, url)
-                        startActivity(intent)
-
+                (layout.findViewById<View>(R.id.image_metacritic) as ImageView).setOnClickListener(OnClickListener {
+                    imdbDd?.let {
+                        val nome = it.title.replace(" ", "-").toLowerCase().removerAcentos()
+                        val url = "$METACRITICTV$nome"
+                        startActivity(Intent(activity, Site::class.java).apply {
+                            putExtra(Constantes.SITE, url)
+                        })
                     }
                 })
 
                 (layout.findViewById<View>(R.id.image_tomatoes) as ImageView).setOnClickListener(OnClickListener {
-                    if (imdbDd == null) {
-                        return@OnClickListener
-                    }
-
-                    if (imdbDd!!.type != null) {
-
-                        var nome = imdbDd!!.title.replace(" ", "_").toLowerCase()
-                        nome = UtilsApp.removerAcentos(nome)
-                        val url = "https://www.rottentomatoes.com/tv/" + nome
+                    imdbDd?.let {
+                        val nome = it.title.replace(" ", "_").toLowerCase().removerAcentos()
                         val intent = Intent(activity, Site::class.java)
-                        intent.putExtra(Constantes.SITE, url)
+                        intent.putExtra(Constantes.SITE, "$ROTTENTOMATOESTV$nome")
                         startActivity(intent)
-
                     }
                 })
 
@@ -523,7 +505,7 @@ class TvShowFragment : FragmentBase() {
                 seguindo = !seguindo
                 isSeguindo()
                 Thread(Runnable {
-                    if (UtilsApp.isNetWorkAvailable(activity)) {
+                    if (UtilsApp.isNetWorkAvailable(requireActivity())) {
                         val tvSeasons = TmdbApi(Config.TMDB_API_KEY).tvSeasons
 
                         userTvshow = setUserTvShow(series)
@@ -531,7 +513,7 @@ class TvShowFragment : FragmentBase() {
                         for (i in 0 until series.seasons?.size!!) {
                             val tvS: SeasonsItem? = series.seasons?.get(i)
                             val tvSeason: TvSeason = tvSeasons.getSeason(series.id!!, tvS?.seasonNumber!!, "en", TmdbTvSeasons.SeasonMethod.images)
-                            userTvshow?.seasons?.get(i)?.userEps = setEp(tvSeason)
+                            userTvshow?.seasons?.get(i)?.userEps = setEp(tvSeason).toMutableList()
                         }
 
                         myRef?.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid!! else "")
@@ -585,8 +567,8 @@ class TvShowFragment : FragmentBase() {
 
     private fun setSinopse() {
 
-        if (series != null && series.overview.isNullOrBlank()) {
-            getString(R.string.sem_sinopse)
+        if (series.overview.isNullOrBlank()) {
+            descricao.text = getString(R.string.sem_sinopse)
         } else {
             descricao.text = series.overview
         }
@@ -608,7 +590,7 @@ class TvShowFragment : FragmentBase() {
     private fun setPoster() {
         if (series.posterPath != null) {
             Picasso.get()
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + series.posterPath!!)
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(requireContext(), 2))!! + series.posterPath!!)
                     .into(img_poster)
 
             img_poster?.setOnClickListener {
@@ -757,7 +739,8 @@ class TvShowFragment : FragmentBase() {
             recycle_tvshow_elenco?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             recycle_tvshow_elenco.adapter =
                     CastAdapter(activity, series.credits?.cast)
-        } else{
+        } else {
+            textview_elenco.gone()
             recycle_tvshow_elenco.layoutParams.height = 1
         }
     }
@@ -766,8 +749,8 @@ class TvShowFragment : FragmentBase() {
 
         textview_crews?.setOnClickListener {
             val intent = Intent(context, CrewsActivity::class.java).apply {
-            putExtra(Constantes.PRODUCAO, series.credits?.crew as Serializable)
-            putExtra(Constantes.NOME, series.name)
+                putExtra(Constantes.PRODUCAO, series.credits?.crew as Serializable)
+                putExtra(Constantes.NOME, series.name)
             }
             startActivity(intent)
         }
@@ -780,7 +763,8 @@ class TvShowFragment : FragmentBase() {
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
                 adapter = CrewAdapter(activity, series.credits?.crew)
             }
-        } else{
+        } else {
+            textview_crews.gone()
             recycle_tvshow_producao.layoutParams.height = 1
         }
     }
@@ -789,8 +773,8 @@ class TvShowFragment : FragmentBase() {
 
         text_similares.setOnClickListener {
             val intent = Intent(context, SimilaresActivity::class.java).apply {
-            putExtra(Constantes.SIMILARES_TVSHOW, series.similar?.results as Serializable)
-            putExtra(Constantes.NOME, series.name)
+                putExtra(Constantes.SIMILARES_TVSHOW, series.similar?.results as Serializable)
+                putExtra(Constantes.NOME, series.name)
             }
             activity?.startActivity(intent)
         }
@@ -800,8 +784,8 @@ class TvShowFragment : FragmentBase() {
             recycle_tvshow_similares?.apply {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
-                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                adapter = SimilaresSerieAdapter(activity, series.similar?.results)
+                layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+                adapter = SimilaresSerieAdapter(requireActivity(), series.similar?.results)
             }
 
             recycle_tvshow_similares.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -821,8 +805,9 @@ class TvShowFragment : FragmentBase() {
             })
 
             text_similares.visibility = View.VISIBLE
+
         } else {
-            text_similares.visibility = View.GONE
+            text_similares.gone()
             recycle_tvshow_similares.layoutParams.height = 1
         }
     }
@@ -866,25 +851,25 @@ class TvShowFragment : FragmentBase() {
 
     fun getImdb(): Imdb? {
 
-            val inscricaoImdb = Api(context!!).getOmdbpi(series.external_ids?.imdbId)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(object : Observer<Imdb> {
-                        override fun onCompleted() {
+        val inscricaoImdb = Api(context!!).getOmdbpi(series.external_ids?.imdbId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Imdb> {
+                    override fun onCompleted() {
 
-                        }
+                    }
 
-                        override fun onError(e: Throwable) {
-                            if (context != null && view != null)
+                    override fun onError(e: Throwable) {
+                        if (context != null && view != null)
                             Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                        }
+                    }
 
-                        override fun onNext(imdb: Imdb) {
-                            imdbDd = imdb
-                        }
-                    })
+                    override fun onNext(imdb: Imdb) {
+                        imdbDd = imdb
+                    }
+                })
 
-            subscriptions.add(inscricaoImdb)
+        subscriptions.add(inscricaoImdb)
 
         return null
     }

@@ -1,6 +1,5 @@
 package utils
 
-import configuracao.SettingsActivity
 import android.content.Context
 import android.preference.PreferenceManager
 import android.util.Log
@@ -12,6 +11,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.formats.NativeAdOptions
 import com.google.android.gms.ads.formats.UnifiedNativeAd
+import configuracao.SettingsActivity
 import domain.Api
 import domain.UserTvshow
 import domain.tvshow.Tvshow
@@ -30,7 +30,7 @@ class UtilsKt {
                         val season = async(Dispatchers.IO) { Api(context = context!!).getTvSeasons(serie.id!!, seasonsItem?.seasonNumber!!) }.await()
                         val userEp = UtilsApp.setEp2(season)
                         if (userEp != null)
-                            userTvshow.seasons!![index].userEps = userEp
+                            userTvshow.seasons!![index].userEps = userEp.toMutableList()
 
                     }
                 } catch (ex: Exception) {
@@ -46,7 +46,7 @@ class UtilsKt {
             val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
             val idioma = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true)
             return if (idioma) {
-                UtilsApp.getLocale()
+                UtilsApp.locale
             } else {
                 "en"
             }

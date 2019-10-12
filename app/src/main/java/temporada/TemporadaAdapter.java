@@ -97,7 +97,7 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
             }
 
             Picasso.get()
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + episode.getStillPath())
+                    .load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(context, 2)) + episode.getStillPath())
                     .error(R.drawable.empty_popcorn)
                     .into(holder.poster);
 

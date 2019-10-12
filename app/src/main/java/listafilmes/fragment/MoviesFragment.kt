@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.analytics.FirebaseAnalytics
 import domain.Api
 import fragment.FragmentBase
 import kotlinx.android.synthetic.main.fragment_list_medias.*
@@ -62,7 +61,7 @@ class MoviesFragment : FragmentBase() {
             adapter = ListaFilmesAdapter(activity!!)
         }
 
-        if (!UtilsApp.isNetWorkAvailable(context)) {
+        if (!UtilsApp.isNetWorkAvailable(requireContext())) {
             txt_listas?.visibility = View.VISIBLE
             txt_listas?.text = getString(R.string.no_internet)
             snack()
@@ -74,7 +73,7 @@ class MoviesFragment : FragmentBase() {
 
     fun getListaFilmes() {
 
-        val inscricao = Api(context!!).buscaDeFilmes(getTipo(), pagina = pagina, local = getIdiomaEscolhido(context!!))
+        val inscricao = Api(requireContext()).buscaDeFilmes(getTipo(), pagina = pagina, local = getIdiomaEscolhido(requireContext()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .debounce(2, TimeUnit.SECONDS)
@@ -87,7 +86,7 @@ class MoviesFragment : FragmentBase() {
                             totalPagina = listaFilmes.totalPages
                             ++pagina
 
-                            UtilsKt.getAnuncio(context!!, 2) {
+                            UtilsKt.getAnuncio(requireContext(), 2) {
                                 if (recycle_listas != null &&
                                         (recycle_listas.adapter as ListaFilmesAdapter).itemCount > 0 &&
                                         (recycle_listas.adapter as ListaFilmesAdapter)
@@ -108,7 +107,7 @@ class MoviesFragment : FragmentBase() {
     private fun snack() {
         Snackbar.make(frame_list_filme!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
-                    if (UtilsApp.isNetWorkAvailable(context)) {
+                    if (UtilsApp.isNetWorkAvailable(requireContext())) {
                         txt_listas?.visibility = View.GONE
                         getListaFilmes()
                     } else {

@@ -1,6 +1,5 @@
 package queroassistir;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,7 +49,7 @@ public class WatchListActivity extends BaseActivity {
         progressBar = findViewById(R.id.progress);
         linearLayout = findViewById(R.id.linear_usuario_list);
 
-        if (UtilsApp.isNetWorkAvailable(this)){
+        if (UtilsApp.INSTANCE.isNetWorkAvailable(this)){
             iniciarFirebases();
           //  setEventListenerFavorite();
         } else {
@@ -124,7 +123,7 @@ public class WatchListActivity extends BaseActivity {
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
+                        if (UtilsApp.INSTANCE.isNetWorkAvailable(getBaseContext())) {
                             //text_elenco_no_internet.setVisibility(View.GONE);
                             setEventListenerFavorite();
                         } else {

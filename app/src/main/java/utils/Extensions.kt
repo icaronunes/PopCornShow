@@ -9,6 +9,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
+import java.text.Normalizer
 
 /**
  * Created by icaro on 03/09/17.
@@ -67,4 +68,15 @@ fun View.visible() {
 
 fun View.invisible() {
     this.visibility = View.INVISIBLE
+}
+
+/**
+ * STRING
+ */
+fun String.removerAcentos(): String {
+    this.replace(".", "")
+    this.replace(":", "")
+    this.replace("/", "")
+    this.replace(";", "")
+    return Normalizer.normalize(this, Normalizer.Form.NFD).replace("[^\\p{ASCII}]".toRegex(), "")
 }

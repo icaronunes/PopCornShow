@@ -23,8 +23,8 @@ import com.google.android.gms.ads.AdView;
 import java.util.List;
 
 import activity.BaseActivity;
-import configuracao.SettingsActivity;
 import br.com.icaro.filme.R;
+import configuracao.SettingsActivity;
 import domain.FilmeService;
 import filme.activity.MovieDetailsActivity;
 import info.movito.themoviedbapi.TmdbSearch;
@@ -108,7 +108,7 @@ public class SearchMultiActivity extends BaseActivity {
 			}
 		} else {
 
-			if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
+			if (UtilsApp.INSTANCE.isNetWorkAvailable(getBaseContext())) {
 				new TMDVAsync().execute();
 
 			} else {
@@ -126,7 +126,7 @@ public class SearchMultiActivity extends BaseActivity {
 		return () -> {
 			progressBar.setVisibility(View.INVISIBLE);
 			//TODO adicionar infinityScroll
-			if (UtilsApp.isNetWorkAvailable(SearchMultiActivity.this)) {
+			if (UtilsApp.INSTANCE.isNetWorkAvailable(SearchMultiActivity.this)) {
 				TMDVAsync tmdvAsync = new TMDVAsync();
 				tmdvAsync.execute();
 				text_search_empty.setVisibility(View.GONE);

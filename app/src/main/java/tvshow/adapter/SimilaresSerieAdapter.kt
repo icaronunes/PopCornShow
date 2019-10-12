@@ -3,6 +3,7 @@ package tvshow.adapter
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
@@ -11,7 +12,7 @@ import kotlinx.android.synthetic.main.scroll_similares.view.*
 import tvshow.activity.TvShowActivity
 import utils.*
 
-class SimilaresSerieAdapter(val activity: FragmentActivity?, private val similarItems: List<ResultsItem?>?)
+class SimilaresSerieAdapter(val activity: FragmentActivity, private val similarItems: List<ResultsItem?>?)
     : RecyclerView.Adapter<SimilaresSerieAdapter.SimilaresSerieHolde>() {
 
     override fun onBindViewHolder(holder: SimilaresSerieHolde, position: Int) = holder.bind(similarItems?.get(position)!!)
@@ -22,7 +23,7 @@ class SimilaresSerieAdapter(val activity: FragmentActivity?, private val similar
 
     inner class SimilaresSerieHolde(parent: ViewGroup)
         : RecyclerView.ViewHolder(LayoutInflater.from(activity).inflate(R.layout.scroll_similares, parent, false)) {
-        private var colorTop: Int = 0
+        private var colorTop: Int = ContextCompat.getColor(activity.baseContext, R.color.primary)
 
         fun bind(tvshow: ResultsItem) = with(itemView) {
             progressBarSimilares.visible()
@@ -30,14 +31,13 @@ class SimilaresSerieAdapter(val activity: FragmentActivity?, private val similar
 
             imgPagerSimilares.setPicassoWithCache(tvshow.posterPath, 2, sucesso = {
                 progressBarSimilares.gone()
-                colorTop = UtilsApp.loadPalette(imgPagerSimilares)
             }, error = {
                 progressBarSimilares.gone()
             }, img_erro = R.drawable.poster_empty)
 
             imgPagerSimilares.setOnClickListener {
-                activity?.startActivity(Intent(activity, TvShowActivity::class.java).apply {
-                    putExtra(Constantes.COLOR_TOP, colorTop)
+                activity.startActivity(Intent(activity, TvShowActivity::class.java).apply {
+                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(imgPagerSimilares))
                     putExtra(Constantes.NOME_TVSHOW, tvshow.name)
                     putExtra(Constantes.TVSHOW_ID, tvshow.id)
                 })

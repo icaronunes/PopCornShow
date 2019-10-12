@@ -2,10 +2,6 @@ package main;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.Keep;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +9,17 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.Keep;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import br.com.icaro.filme.R;
 import domain.movie.ListaFilmes;
 import domain.movie.ListaItemFilme;
 import filme.activity.MovieDetailsActivity;
-import br.com.icaro.filme.R;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -48,7 +48,7 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
         final ListaItemFilme movieDb = movieDbs.getResults().get(position);
 
         Picasso.get()
-                .load(UtilsApp.getBaseUrlImagem( UtilsApp.getTamanhoDaImagem(context, 2)) + movieDb.getPosterPath())
+                .load(UtilsApp.INSTANCE.getBaseUrlImagem( UtilsApp.INSTANCE.getTamanhoDaImagem(context, 2)) + movieDb.getPosterPath())
                 .error(R.drawable.poster_empty)
                 .into(holder.img_poster_grid, new Callback() {
                     @Override
@@ -71,7 +71,7 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
                 Intent intent = new Intent(context, MovieDetailsActivity.class);
                 intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movieDb.getTitle());
                 intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movieDb.getId());
-                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(holder.img_poster_grid));
+                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.INSTANCE.loadPalette(holder.img_poster_grid));
                 context.startActivity(intent);
             }
         });

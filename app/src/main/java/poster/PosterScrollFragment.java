@@ -8,19 +8,18 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.squareup.picasso.Picasso;
 
@@ -67,7 +66,7 @@ public class PosterScrollFragment extends Fragment {
         View view = inflater.inflate(R.layout.page_scroll_image, container, false);
         imageView = view.findViewById(R.id.img_poster_scroll);
         Picasso.get()
-                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(getContext(), 5)) + endereco)
+                .load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(getContext(), 5)) + endereco)
                 .into(imageView);
 
         return view;
@@ -129,7 +128,7 @@ public class PosterScrollFragment extends Fragment {
                         }
 
                     } else {
-                        if (UtilsApp.isExternalStorageWritable()) {
+                        if (UtilsApp.INSTANCE.isExternalStorageWritable()) {
                             salvarArquivoNaMemoriaInterna(getContext(), imageView);
                         } else {
                             Toast.makeText(getContext(), R.string.ops, Toast.LENGTH_LONG).show();
@@ -149,7 +148,7 @@ public class PosterScrollFragment extends Fragment {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.putExtra(Intent.EXTRA_TEXT, nome + "  -  " + "https://q2p5q.app.goo.gl/3hX6" + " by: " + Constantes.INSTANCE.getTWITTER_URL());
                     intent.setType("image/*");
-                    intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.getUriDownloadImage(getContext(), file));
+                    intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.INSTANCE.getUriDownloadImage(getContext(), file));
                     startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar) + " " + nome));
                 } else {
                     Toast.makeText(getContext(), getResources().getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show();
@@ -184,7 +183,7 @@ public class PosterScrollFragment extends Fragment {
         BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
         if (drawable != null) {
             Bitmap bitmap = drawable.getBitmap();
-            UtilsApp.writeBitmap(dir, bitmap);
+            UtilsApp.INSTANCE.writeBitmap(dir, bitmap);
         }
 
         return dir;
@@ -203,7 +202,7 @@ public class PosterScrollFragment extends Fragment {
         BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
         if (drawable != null) {
             Bitmap bitmap = drawable.getBitmap();
-            UtilsApp.writeBitmap(dir, bitmap);
+            UtilsApp.INSTANCE.writeBitmap(dir, bitmap);
             Toast.makeText(context, R.string.toast_salvar_imagem, Toast.LENGTH_LONG).show();
         }
         return dir;

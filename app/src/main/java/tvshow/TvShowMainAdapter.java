@@ -50,7 +50,7 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
         final ListaItemSerie series = popularTvshow.getResults().get(position);
 
         Picasso.get()
-                .load(UtilsApp.getBaseUrlImagem( UtilsApp.getTamanhoDaImagem(context, 2)) + series.getPosterPath())
+                .load(UtilsApp.INSTANCE.getBaseUrlImagem( UtilsApp.INSTANCE.getTamanhoDaImagem(context, 2)) + series.getPosterPath())
                 .error(R.drawable.poster_empty)
                 .into(holder.img_poster_grid, new Callback() {
                     @Override
@@ -72,7 +72,7 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
             Intent intent = new Intent(context, TvShowActivity.class);
             intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), series.getName());
             intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), series.getId());
-            intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(holder.img_poster_grid));
+            intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.INSTANCE.loadPalette(holder.img_poster_grid));
             context.startActivity(intent);
         });
 

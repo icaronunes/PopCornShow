@@ -48,7 +48,7 @@ public class SuggestionProvider extends ContentProvider {
 				.procuraMulti(query1)
 				.doOnNext(multiSearch -> {
 					for (ResultsItem resultsItem : multiSearch.getResults()) {
-						UtilsApp.gravarImg(getContext(), resultsItem);
+						UtilsApp.INSTANCE.gravarImg(getContext(), resultsItem);
 					}
 				})
 				.distinctUntilChanged()
@@ -129,7 +129,7 @@ public class SuggestionProvider extends ContentProvider {
 
 				if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
 					if (img != null && !img.isEmpty() && !img.equalsIgnoreCase("")) {
-						Uri uriImg = UtilsApp.getUriDownloadImage(getContext(), new File(getContext().getExternalCacheDir().toString() + "/" + img));
+						Uri uriImg = UtilsApp.INSTANCE.getUriDownloadImage(getContext(), new File(getContext().getExternalCacheDir().toString() + "/" + img));
 						cursor.addRow(new Object[]{position, nome, data, id, mediaType, uriImg});
 					} else {
 						cursor.addRow(new Object[]{position, nome, data, id, mediaType, null});

@@ -55,7 +55,7 @@ class TvShowsFragment : FragmentBase() {
             adapter = ListaSeriesAdapter(context)
         }
 
-        if (!UtilsApp.isNetWorkAvailable(context)) {
+        if (!UtilsApp.isNetWorkAvailable(requireContext())) {
             txt_listas.visibility = View.VISIBLE
             txt_listas.text = resources.getString(R.string.no_internet)
             snack()
@@ -68,7 +68,7 @@ class TvShowsFragment : FragmentBase() {
     private fun snack() {
         Snackbar.make(frame_list_filme, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
-                    if (UtilsApp.isNetWorkAvailable(context)) {
+                    if (UtilsApp.isNetWorkAvailable(requireContext())) {
                         txt_listas.visibility = View.INVISIBLE
                         getListaSereies()
                     } else {

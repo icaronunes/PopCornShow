@@ -51,7 +51,7 @@ public class RatedActivity extends BaseActivity {
         progressBar = findViewById(R.id.progress);
         linearLayout = findViewById(R.id.linear_usuario_list);
 
-        if (UtilsApp.isNetWorkAvailable(this)){
+        if (UtilsApp.INSTANCE.isNetWorkAvailable(this)){
 
             iniciarFirebases();
             setEventListenerFavorite();
@@ -79,7 +79,7 @@ public class RatedActivity extends BaseActivity {
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (UtilsApp.isNetWorkAvailable(getBaseContext())) {
+                        if (UtilsApp.INSTANCE.isNetWorkAvailable(getBaseContext())) {
                             setEventListenerFavorite();
                         } else {
                             snack();

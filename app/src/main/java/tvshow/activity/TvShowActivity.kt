@@ -1,7 +1,6 @@
 package tvshow.activity
 
 import activity.BaseActivity
-import tvshow.TvShowAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
@@ -30,6 +29,7 @@ import rx.Observer
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import tvshow.TvShowAdapter
 import utils.Constantes
 import utils.UtilsApp
 import utils.UtilsApp.setEp2
@@ -481,7 +481,7 @@ class TvShowActivity : BaseActivity() {
 
     fun atualizarRealDate() {
 
-        userTvshow = UtilsApp.setUserTvShow(series)
+        userTvshow = series?.let { UtilsApp.setUserTvShow(it) }
 
         series?.seasons?.forEachIndexed { index, seasonsItem ->
 
@@ -502,7 +502,7 @@ class TvShowActivity : BaseActivity() {
                         }
 
                         override fun onNext(tvshow: TvSeasons) {
-                            userTvshow?.seasons?.get(index)?.userEps = setEp2(tvshow)
+                            userTvshow?.seasons?.get(index)?.userEps = setEp2(tvshow)?.toMutableList()
                         }
                     })
 

@@ -100,7 +100,7 @@ public class ListaRatedFragment extends Fragment {
             public void onClick(final View view, final int position) {
                 Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
                 ImageView imageView = (ImageView) view;
-                int color = UtilsApp.loadPalette(imageView);
+                int color = UtilsApp.INSTANCE.loadPalette(imageView);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                 intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movies.get(position).getId());
                 intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movies.get(position).getTitle());
@@ -172,7 +172,7 @@ public class ListaRatedFragment extends Fragment {
             public void onClick(final View view, final int position) {
                 Intent intent = new Intent(getActivity(), TvShowActivity.class);
                 ImageView imageView = (ImageView) view;
-                int color = UtilsApp.loadPalette(imageView);
+                int color = UtilsApp.INSTANCE.loadPalette(imageView);
                 intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
                 intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), tvSeries.get(position).getId());
                 intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), tvSeries.get(position).getTitle());

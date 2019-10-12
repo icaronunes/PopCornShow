@@ -4,21 +4,22 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.squareup.picasso.Picasso;
 
-import filme.activity.MovieDetailsActivity;
-import tvshow.activity.TvShowActivity;
 import br.com.icaro.filme.R;
 import domain.TopMain;
+import filme.activity.MovieDetailsActivity;
 import info.movito.themoviedbapi.model.Multi;
+import tvshow.activity.TvShowActivity;
 import utils.Constantes;
 import utils.UtilsApp;
 
@@ -59,7 +60,7 @@ public class ImagemTopScrollFragment extends Fragment {
         if (topMains.getMediaType().equalsIgnoreCase(Multi.MediaType.MOVIE.name())) {
 
             Picasso.get()
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(getContext(), 5)) + topMains.getImagem())
+                    .load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(getContext(), 5)) + topMains.getImagem())
                     .error(R.drawable.top_empty)
                     .into(imageView);
 
@@ -69,14 +70,14 @@ public class ImagemTopScrollFragment extends Fragment {
                     Intent intent = new Intent(getContext(), MovieDetailsActivity.class);
                     intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), topMains.getNome());
                     intent.putExtra(Constantes.INSTANCE.getFILME_ID(), topMains.getId());
-                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(imageView));
+                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.INSTANCE.loadPalette(imageView));
                     startActivity(intent);
                 }
             });
             title.setText(topMains.getNome());
         } else {
 
-            Picasso.get().load(UtilsApp.getBaseUrlImagem(5) + topMains.getImagem())
+            Picasso.get().load(UtilsApp.INSTANCE.getBaseUrlImagem(5) + topMains.getImagem())
                     .error(R.drawable.top_empty)
                     .into(imageView);
             imageView.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +86,7 @@ public class ImagemTopScrollFragment extends Fragment {
                     Intent intent = new Intent(getContext(), TvShowActivity.class);
                     intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), topMains.getNome());
                     intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), topMains.getId());
-                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.loadPalette(imageView));
+                    intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.INSTANCE.loadPalette(imageView));
                     startActivity(intent);
                 }
             });

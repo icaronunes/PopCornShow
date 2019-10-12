@@ -3,13 +3,13 @@ package fragment;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.squareup.picasso.Picasso;
 
@@ -44,7 +44,7 @@ public class ImagemTopFilmeScrollFragment extends Fragment {
         View view = inflater.inflate(R.layout.page_scroll_viewpage_top, container, false);
         ImageView imageView = view.findViewById(R.id.img_top_scroll);
         Picasso.get()
-                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(getContext(), 5)) + endereco)
+                .load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(getContext(), 5)) + endereco)
                 .error(R.drawable.top_empty)
                 .into(imageView);
 

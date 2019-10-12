@@ -2,9 +2,7 @@ package filme.fragment
 
 
 import activity.BaseActivity
-import site.Site
 import adapter.CastAdapter
-import filme.adapter.CollectionPagerAdapter
 import adapter.CrewAdapter
 import adapter.TrailerAdapter
 import android.animation.AnimatorSet
@@ -34,6 +32,7 @@ import domain.Imdb
 import domain.Movie
 import domain.colecao.PartsItem
 import elenco.ElencoActivity
+import filme.adapter.CollectionPagerAdapter
 import filme.adapter.SimilaresFilmesAdapter
 import fragment.FragmentBase
 import kotlinx.android.synthetic.main.fab_float.*
@@ -45,8 +44,14 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import similares.SimilaresActivity
+import site.Site
 import utils.Constantes
+import utils.Constantes.BASEMOVIEDB_MOVIE
+import utils.Constantes.IMDB
+import utils.Constantes.METACRITICMOVIE
+import utils.Constantes.ROTTENTOMATOESMOVIE
 import utils.UtilsApp
+import utils.removerAcentos
 import java.io.Serializable
 import java.text.DecimalFormat
 import java.util.*
@@ -208,106 +213,88 @@ class MovieFragment : FragmentBase() {
     }
 
     private fun onClickImageStar(): View.OnClickListener? {
-        return object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                if (mediaNotas > 0) {
-                    val builder = AlertDialog.Builder(activity)
-                    val inflater = activity?.layoutInflater!!
-                    val layout = inflater.inflate(R.layout.layout_notas, null)
+        return View.OnClickListener {
+            if (mediaNotas > 0) {
+                val builder = AlertDialog.Builder(activity)
+                val inflater = activity?.layoutInflater!!
+                val layout = inflater.inflate(R.layout.layout_notas, null)
 
-                    if (imdbDd != null) {
-                        layout.findViewById<TextView>(R.id.nota_imdb)
-                                .text = if (imdbDd?.imdbRating != null)
-                            imdbDd?.imdbRating + "/10"
-                        else
-                            "- -"
-
-                        layout.findViewById<TextView>(R.id.nota_metacritic)
-                                .text = if (imdbDd?.metascore != null)
-                            imdbDd?.metascore + "/100"
-                        else
-                            "- -"
-
-                        layout.findViewById<TextView>(R.id.nota_tomatoes)
-                                .text = if (imdbDd?.tomatoRating != null)
-                            imdbDd?.tomatoRating + "/10"
-                        else
-                            "- -"
-                    }
-
-                    layout.findViewById<TextView>(R.id.nota_tmdb)
-                            .text = if (!movieDb.voteAverage!!.equals(0.0))
-                        movieDb.voteAverage!!.toString() + "/10"
+                if (imdbDd != null) {
+                    layout.findViewById<TextView>(R.id.nota_imdb)
+                            .text = if (imdbDd?.imdbRating != null)
+                        imdbDd?.imdbRating + "/10"
                     else
                         "- -"
 
+                    layout.findViewById<TextView>(R.id.nota_metacritic)
+                            .text = if (imdbDd?.metascore != null)
+                        imdbDd?.metascore + "/100"
+                    else
+                        "- -"
 
-                    layout.findViewById<ImageView>(R.id.image_metacritic)
-                            .setOnClickListener(View.OnClickListener {
-                                if (imdbDd == null) {
-                                    return@OnClickListener
-                                }
+                    layout.findViewById<TextView>(R.id.nota_tomatoes)
+                            .text = if (imdbDd?.tomatoRating != null)
+                        imdbDd?.tomatoRating + "/10"
+                    else
+                        "- -"
+                }
 
-                                if (imdbDd!!.type != null) {
+                layout.findViewById<TextView>(R.id.nota_tmdb)
+                        .text = if (!movieDb.voteAverage!!.equals(0.0))
+                    movieDb.voteAverage!!.toString() + "/10"
+                else
+                    "- -"
 
-                                    var nome = imdbDd!!.title.replace(" ", "-").toLowerCase()
-                                    nome = UtilsApp.removerAcentos(nome)
-                                    val url = "http://www.metacritic.com/movie/" + nome
 
-                                    val intent = Intent(activity, Site::class.java)
-                                    intent.putExtra(Constantes.SITE, url)
-                                    startActivity(intent)
-                                }
-                            })
-
-                    layout.findViewById<ImageView>(R.id.image_tomatoes)
-                            .setOnClickListener(View.OnClickListener {
-                                if (imdbDd == null) {
-                                    return@OnClickListener
-                                }
-
-                                if (imdbDd?.type != null) {
-
-                                    var nome = imdbDd?.title?.replace(" ", "_")?.toLowerCase()
-                                    nome = UtilsApp.removerAcentos(nome)
-                                    val url = "https://www.rottentomatoes.com/m/" + nome
-                                    val intent = Intent(activity, Site::class.java)
-                                    intent.putExtra(Constantes.SITE, url)
-                                    startActivity(intent)
-                                }
-                            })
-
-                    layout.findViewById<ImageView>(R.id.image_imdb)
-                            .setOnClickListener OnClickListener@{
-                                if (imdbDd == null) {
-                                    return@OnClickListener
-                                }
-
-                                if (imdbDd?.imdbID != null) {
-
-                                    val url = "http://www.imdb.com/title/" + imdbDd?.imdbID
-                                    val intent = Intent(activity, Site::class.java)
-                                    intent.putExtra(Constantes.SITE, url)
-                                    startActivity(intent)
+                layout.findViewById<ImageView>(R.id.image_metacritic)
+                        .setOnClickListener(View.OnClickListener {
+                            imdbDd?.let {
+                                imdbDd!!.title?.let {
+                                    val clenaName = it.replace(" ", "-").toLowerCase().removerAcentos()
+                                    val url = "$METACRITICMOVIE$clenaName"
+                                    startActivity(Intent(activity, Site::class.java).apply {
+                                        putExtra(Constantes.SITE, url)
+                                    })
                                 }
                             }
+                        })
 
-                    layout.findViewById<ImageView>(R.id.image_tmdb)
-                            .setOnClickListener(View.OnClickListener {
-                                val url = "https://www.themoviedb.org/movie/" + movieDb.id!!
-                                val intent = Intent(activity, Site::class.java)
-                                intent.putExtra(Constantes.SITE, url)
-                                startActivity(intent)
+                layout.findViewById<ImageView>(R.id.image_tomatoes)
+                        .setOnClickListener(View.OnClickListener {
+                            imdbDd?.let {
+                                imdbDd?.title?.let {
+                                    val cleanName = it.replace(" ", "_").toLowerCase().removerAcentos()
+                                    startActivity(Intent(activity, Site::class.java).apply {
+                                        putExtra(Constantes.SITE, "$ROTTENTOMATOESMOVIE$cleanName")
+                                    })
+                                }
+                            }
+                        })
+
+                layout.findViewById<ImageView>(R.id.image_imdb)
+                        .setOnClickListener OnClickListener@{
+                            imdbDd?.let {
+                                startActivity(Intent(activity, Site::class.java).apply {
+                                    putExtra(Constantes.SITE, "$IMDB${imdbDd?.imdbID}")
+                                })
+                            }
+                        }
+
+                layout.findViewById<ImageView>(R.id.image_tmdb)
+                        .setOnClickListener(View.OnClickListener {
+                            val url = "$BASEMOVIEDB_MOVIE${movieDb.id}"
+                            startActivity(Intent(activity, Site::class.java).apply {
+                                putExtra(Constantes.SITE, url)
                             })
+                        })
 
-                    builder.setView(layout)
-                    builder.show()
+                builder.setView(layout)
+                builder.show()
 
-                } else {
-                    BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
-                            getString(R.string.no_vote))
+            } else {
+                BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
+                        getString(R.string.no_vote))
 
-                }
             }
         }
 
@@ -376,7 +363,7 @@ class MovieFragment : FragmentBase() {
 
         if (movieDb.posterPath != null) {
             Picasso.get()
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + movieDb.posterPath)
+                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(requireContext(), 2)) + movieDb.posterPath)
                     .into(img_poster)
 
             img_poster.setOnClickListener {

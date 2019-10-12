@@ -1,18 +1,17 @@
 package poster;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
@@ -53,8 +52,8 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
     public void onBindViewHolder(final PosterViewHolder holder, final int position) {
         if (artworks.size() > 0) {
 
-            Picasso.get().load(UtilsApp
-                    .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 4)) + artworks.get(position).getFilePath())
+            Picasso.get().load(UtilsApp.INSTANCE
+                    .getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(context, 4)) + artworks.get(position).getFilePath())
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.img, new Callback() {
                         @Override
