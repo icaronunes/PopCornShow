@@ -215,19 +215,19 @@ class MainFragment : BaseFragment() {
     }
 
     private fun setScrollTvShowToDay(toDay: ListaSeries) {
-        recycle_tvshowtoday_main.adapter = TvShowMainAdapter(activity, toDay)
+        recycle_tvshowtoday_main.adapter = TvShowMainAdapter(requireActivity(), toDay)
     }
 
     private fun setScrollTvShowPopulares(popularTvShow: ListaSeries) {
-        tvshow_popular_main.adapter = TvShowMainAdapter(activity, popularTvShow)
+        tvshow_popular_main.adapter = TvShowMainAdapter(requireActivity(), popularTvShow)
     }
 
     private fun setScrollMoviePopular(popular: ListaFilmes) {
-        recycle_movie_popular_main.adapter = MovieMainAdapter(activity, popular)
+        recycle_movie_popular_main.adapter = MovieMainAdapter(requireActivity(), popular)
     }
 
     private fun setScrollUpComing(airDay: ListaFilmes) {
-        recycle_upcoming_movie_main.adapter = MovieMainAdapter(activity, airDay)
+        recycle_upcoming_movie_main.adapter = MovieMainAdapter(requireActivity(), airDay)
     }
 
     override fun onDestroy() {

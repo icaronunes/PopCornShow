@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,13 +31,15 @@ import utils.UtilsApp;
  * Created by icaro on 17/02/17.
  */
 @Keep
-public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.TvShowPopularesViewHolder>{
+public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.TvShowPopularesViewHolder> {
     private Context context;
     private ListaSeries popularTvshow;
+    private int color;
 
     public TvShowMainAdapter(FragmentActivity activity, ListaSeries popularTvshow) {
         context = activity;
         this.popularTvshow = popularTvshow;
+        this.color = ActivityCompat.getColor(context, R.color.white);
     }
 
     @Override
@@ -49,13 +53,17 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
     public void onBindViewHolder(@NonNull final TvShowMainAdapter.TvShowPopularesViewHolder holder, final int position) {
         final ListaItemSerie series = popularTvshow.getResults().get(position);
 
+        holder.img_poster_grid.setBackgroundColor(ActivityCompat.getColor(context, R.color.accent));
+
         Picasso.get()
-                .load(UtilsApp.INSTANCE.getBaseUrlImagem( UtilsApp.INSTANCE.getTamanhoDaImagem(context, 2)) + series.getPosterPath())
+                .load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(context, 2)) + series.getPosterPath())
                 .error(R.drawable.poster_empty)
                 .into(holder.img_poster_grid, new Callback() {
                     @Override
                     public void onSuccess() {
                         holder.progress_poster_grid.setVisibility(View.GONE);
+                        color = UtilsApp.INSTANCE.loadPalette(holder.img_poster_grid);
+                        holder.cardView.setCardBackgroundColor(color);
                     }
 
                     @Override
@@ -80,26 +88,26 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
 
     @Override
     public int getItemCount() {
-        if (popularTvshow != null){
-            return  popularTvshow.getResults().size() < 15 ? popularTvshow.getResults().size() : 15;
+        if (popularTvshow != null) {
+            return popularTvshow.getResults().size() < 15 ? popularTvshow.getResults().size() : 15;
         }
-        return  0;
+        return 0;
     }
 
     @Keep
     class TvShowPopularesViewHolder extends RecyclerView.ViewHolder {
 
-       private TextView title_main;
+        private TextView title_main;
         private ProgressBar progress_poster_grid;
         private ImageView img_poster_grid;
-
+        private CardView cardView;
 
         TvShowPopularesViewHolder(View itemView) {
             super(itemView);
             title_main = itemView.findViewById(R.id.title_main);
             progress_poster_grid = itemView.findViewById(R.id.progress_poster_grid);
             img_poster_grid = itemView.findViewById(R.id.img_poster_grid);
-
+            cardView = itemView.findViewById(R.id.layout_poster_main);
         }
     }
 
