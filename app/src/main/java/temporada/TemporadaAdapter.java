@@ -36,11 +36,53 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
     private boolean seguindo;
     private TemporadaOnClickListener temporadaOnClickListener;
 
-    public interface TemporadaOnClickListener {
-        void onClickVerTemporada(View view, int position);
-        void onClickTemporada(View view, int position);
-        void onClickTemporadaNota(View view, EpisodesItem ep, int position, UserEp userEp);
-        void onClickScrool(int position);
+    @Override
+    public void onBindViewHolder(HoldeTemporada holder, final int positions) {
+        try {
+            TvEpisode episode = tvSeason.getEpisodes().get(holder.getLayoutPosition());
+
+            holder.numero.setText(context.getString(R.string.epsodio) + " " + episode.getEpisodeNumber());
+
+            holder.data.setText(episode.getAirDate() != null ? episode.getAirDate() : context.getString(R.string.sem_data));
+            holder.nome.setText(episode.getName() != "" ? episode.getName() : context.getString(R.string.sem_nome));
+            if (episode.getVoteAverage() > 0) {
+                String votos = (String) String.valueOf(episode.getVoteAverage()).subSequence(0, 3);
+                if (episode.getVoteAverage() < 10) {
+                    holder.nota.setText(votos + "/" + episode.getVoteCount());
+                } else {
+                    votos = votos.replace(".", "");
+                    holder.nota.setText(votos + "/" + episode.getVoteCount());
+                }
+            } else {
+                holder.nota.setText(context.getString(R.string.sem_nota));
+            }
+
+            Picasso.get()
+                    .load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(context, 2)) + episode.getStillPath())
+                    .error(R.drawable.empty_popcorn)
+                    .into(holder.poster);
+
+            if (!seguindo) {
+                holder.bt_visto.setVisibility(View.GONE);
+            }
+
+            if (seasons != null && seguindo) {
+                if (seasons.getUserEps().get(holder.getLayoutPosition()).isAssistido()) {
+                    holder.bt_visto.setImageResource(R.drawable.icon_visto);
+                } else {
+                    holder.bt_visto.setImageResource(R.drawable.icon_movie_now);
+                }
+            }
+
+
+            holder.bt_visto.setOnClickListener(v -> temporadaOnClickListener.onClickVerTemporada(holder.getLayoutPosition()));
+
+            holder.itemView.setOnClickListener(view -> temporadaOnClickListener.onClickTemporada(holder.getLayoutPosition()));
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+            Toast.makeText(context, R.string.ops_seguir_novamente, Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public TemporadaAdapter(TemporadaActivity temporadaActivity, TvSeason tvSeason,
@@ -75,53 +117,11 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         PopCornApplication.getInstance().getBus().unregister(this);
     }
 
-    @Override
-    public void onBindViewHolder(HoldeTemporada holder, final int position) {
-        try {
-            TvEpisode episode = tvSeason.getEpisodes().get(position);
-
-            holder.numero.setText(context.getString(R.string.epsodio) + " " + episode.getEpisodeNumber());
-
-            holder.data.setText(episode.getAirDate() != null ? episode.getAirDate() : context.getString(R.string.sem_data));
-            holder.nome.setText(episode.getName() != "" ? episode.getName() : context.getString(R.string.sem_nome));
-            if (episode.getVoteAverage() > 0) {
-                String votos = (String) String.valueOf(episode.getVoteAverage()).subSequence(0, 3);
-                if (episode.getVoteAverage() < 10) {
-                    holder.nota.setText(votos + "/" + episode.getVoteCount());
-                } else {
-                    votos = votos.replace(".", "");
-                    holder.nota.setText(votos + "/" + episode.getVoteCount());
-                }
-            } else {
-                holder.nota.setText(context.getString(R.string.sem_nota));
-            }
-
-            Picasso.get()
-                    .load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(context, 2)) + episode.getStillPath())
-                    .error(R.drawable.empty_popcorn)
-                    .into(holder.poster);
-
-            if (!seguindo) {
-                holder.bt_visto.setVisibility(View.GONE);
-            }
-
-            if (seasons != null && seguindo) {
-                if (seasons.getUserEps().get(position).isAssistido()) {
-                    holder.bt_visto.setImageResource(R.drawable.icon_visto);
-                } else {
-                    holder.bt_visto.setImageResource(R.drawable.icon_movie_now);
-                }
-            }
-
-
-            holder.bt_visto.setOnClickListener(v -> temporadaOnClickListener.onClickVerTemporada(v, position));
-
-            holder.itemView.setOnClickListener(view -> temporadaOnClickListener.onClickTemporada(view, position));
-        } catch (Exception e) {
-            Crashlytics.logException(e);
-            Toast.makeText(context, R.string.ops_seguir_novamente, Toast.LENGTH_SHORT).show();
-        }
-
+    public interface TemporadaOnClickListener {
+        void onClickVerTemporada(int position);
+        void onClickTemporada(int position);
+        void onClickTemporadaNota(View view, EpisodesItem ep, int position, UserEp userEp);
+        void onClickScrool(int position);
     }
 
 

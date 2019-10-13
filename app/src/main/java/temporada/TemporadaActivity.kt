@@ -1,7 +1,6 @@
 package temporada
 
 import activity.BaseActivity
-import episodio.EpsodioActivity
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -24,6 +23,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import domain.*
+import episodio.EpsodioActivity
 import kotlinx.android.synthetic.main.temporada_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -110,7 +110,7 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
         }
     }
 
-    override fun onClickVerTemporada(view: View?, position: Int) {
+    override fun onClickVerTemporada(position: Int) {
         if (seasons != null && seasons!!.userEps!![position].isAssistido) {
             removeWatch(position)
         } else {
@@ -122,7 +122,7 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
         }
     }
 
-    override fun onClickTemporada(view: View?, position: Int) {
+    override fun onClickTemporada(position: Int) {
         startActivity(Intent(this@TemporadaActivity, EpsodioActivity::class.java).apply {
             putExtra(Constantes.TVSHOW_ID, serie_id)
             putExtra(Constantes.POSICAO, position)
