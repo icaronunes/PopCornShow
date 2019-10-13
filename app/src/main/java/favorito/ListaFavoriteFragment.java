@@ -58,8 +58,8 @@ public class ListaFavoriteFragment extends Fragment {
     public static Fragment newInstanceMovie(int tipo, List<FilmeDB> movie) {
         ListaFavoriteFragment fragment = new ListaFavoriteFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.INSTANCE.getFILME(), (Serializable) movie);
-        bundle.putInt(Constantes.INSTANCE.getABA(), tipo);
+        bundle.putSerializable(Constantes.FILME, (Serializable) movie);
+        bundle.putInt(Constantes.ABA, tipo);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -67,8 +67,8 @@ public class ListaFavoriteFragment extends Fragment {
     public static Fragment newInstanceTvShow(int tvshow, List<TvshowDB> tvshows) {
         ListaFavoriteFragment fragment = new ListaFavoriteFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.INSTANCE.getSERIE(), (Serializable) tvshows);
-        bundle.putInt(Constantes.INSTANCE.getABA(), tvshow);
+        bundle.putSerializable(Constantes.SERIE, (Serializable) tvshows);
+        bundle.putInt(Constantes.ABA, tvshow);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -77,9 +77,9 @@ public class ListaFavoriteFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            tipo = getArguments().getInt(Constantes.INSTANCE.getABA());
-            movieDbs = (List<FilmeDB>) getArguments().getSerializable(Constantes.INSTANCE.getFILME());
-            tvSeries = (List<TvshowDB>) getArguments().getSerializable(Constantes.INSTANCE.getSERIE());
+            tipo = getArguments().getInt(Constantes.ABA);
+            movieDbs = (List<FilmeDB>) getArguments().getSerializable(Constantes.FILME);
+            tvSeries = (List<TvshowDB>) getArguments().getSerializable(Constantes.SERIE);
         }
         firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
@@ -111,9 +111,9 @@ public class ListaFavoriteFragment extends Fragment {
               //  Log.d("ListaFilmeAdapter", "ListaFilmeAdapter");
                 ImageView imageView = (ImageView) view;
                 int color = UtilsApp.INSTANCE.loadPalette(imageView);
-                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
-                intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movieDbs.get(position).getId());
-                intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movieDbs.get(position).getTitle());
+                intent.putExtra(Constantes.COLOR_TOP, color);
+                intent.putExtra(Constantes.FILME_ID, movieDbs.get(position).getId());
+                intent.putExtra(Constantes.NOME_FILME, movieDbs.get(position).getTitle());
                 startActivity(intent);
 
             }
@@ -162,9 +162,9 @@ public class ListaFavoriteFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), TvShowActivity.class);
                 ImageView imageView = (ImageView) view;
                 int color = UtilsApp.INSTANCE.loadPalette(imageView);
-                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
-                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(),  tvSeries.get(position).getId());
-                intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), tvSeries.get(position).getTitle());
+                intent.putExtra(Constantes.COLOR_TOP, color);
+                intent.putExtra(Constantes.TVSHOW_ID,  tvSeries.get(position).getId());
+                intent.putExtra(Constantes.NOME_TVSHOW, tvSeries.get(position).getTitle());
                 startActivity(intent);
             }
 

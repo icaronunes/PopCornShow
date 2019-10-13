@@ -45,8 +45,8 @@ public class PosterScrollFragment extends Fragment {
 
         PosterScrollFragment posterScrollFragment = new PosterScrollFragment();
         Bundle args = new Bundle();
-        args.putString(Constantes.INSTANCE.getENDERECO(), endereco);
-        args.putString(Constantes.INSTANCE.getNOME_FILME(), nome);
+        args.putString(Constantes.ENDERECO, endereco);
+        args.putString(Constantes.NOME_FILME, nome);
         posterScrollFragment.setArguments(args);
         return posterScrollFragment;
     }
@@ -55,9 +55,9 @@ public class PosterScrollFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            endereco = getArguments().getString(Constantes.INSTANCE.getENDERECO()); // nÃ£o usado!?!?!!
+            endereco = getArguments().getString(Constantes.ENDERECO); // nÃ£o usado!?!?!!
         }
-        nome = getArguments().getString(Constantes.INSTANCE.getNOME_FILME());
+        nome = getArguments().getString(Constantes.NOME_FILME);
     }
 
     @Nullable
@@ -146,7 +146,7 @@ public class PosterScrollFragment extends Fragment {
                 File file = salvaImagemMemoriaCache(getContext(), imageView);
                 if (file != null) {
                     Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.putExtra(Intent.EXTRA_TEXT, nome + "  -  " + "https://q2p5q.app.goo.gl/3hX6" + " by: " + Constantes.INSTANCE.getTWITTER_URL());
+                    intent.putExtra(Intent.EXTRA_TEXT, nome + "  -  " + "https://q2p5q.app.goo.gl/3hX6" + " by: " + Constantes.TWITTER_URL);
                     intent.setType("image/*");
                     intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.INSTANCE.getUriDownloadImage(getContext(), file));
                     startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar) + " " + nome));

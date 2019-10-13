@@ -50,8 +50,8 @@ public class ListaRatedFragment extends Fragment {
     public static Fragment newInstanceMovie(int tipo, List<FilmeDB> filmeDBs) {
         ListaRatedFragment fragment = new ListaRatedFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.INSTANCE.getFILME(), (Serializable) filmeDBs);
-        bundle.putInt(Constantes.INSTANCE.getABA(), tipo);
+        bundle.putSerializable(Constantes.FILME, (Serializable) filmeDBs);
+        bundle.putInt(Constantes.ABA, tipo);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -60,8 +60,8 @@ public class ListaRatedFragment extends Fragment {
     public static Fragment newInstanceTvShow(int tvshow, List<TvshowDB> tvshowDBs) {
         ListaRatedFragment fragment = new ListaRatedFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.INSTANCE.getSERIE(), (Serializable) tvshowDBs);
-        bundle.putInt(Constantes.INSTANCE.getABA(), tvshow);
+        bundle.putSerializable(Constantes.SERIE, (Serializable) tvshowDBs);
+        bundle.putInt(Constantes.ABA, tvshow);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -71,9 +71,9 @@ public class ListaRatedFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            tipo = getArguments().getInt(Constantes.INSTANCE.getABA());
-            movies = (List<FilmeDB>) getArguments().getSerializable(Constantes.INSTANCE.getFILME());
-            tvSeries = (List<TvshowDB>) getArguments().getSerializable(Constantes.INSTANCE.getSERIE());
+            tipo = getArguments().getInt(Constantes.ABA);
+            movies = (List<FilmeDB>) getArguments().getSerializable(Constantes.FILME);
+            tvSeries = (List<TvshowDB>) getArguments().getSerializable(Constantes.SERIE);
         }
     }
 
@@ -101,9 +101,9 @@ public class ListaRatedFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
                 ImageView imageView = (ImageView) view;
                 int color = UtilsApp.INSTANCE.loadPalette(imageView);
-                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
-                intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movies.get(position).getId());
-                intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movies.get(position).getTitle());
+                intent.putExtra(Constantes.COLOR_TOP, color);
+                intent.putExtra(Constantes.FILME_ID, movies.get(position).getId());
+                intent.putExtra(Constantes.NOME_FILME, movies.get(position).getTitle());
                 startActivity(intent);
             }
 
@@ -173,9 +173,9 @@ public class ListaRatedFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), TvShowActivity.class);
                 ImageView imageView = (ImageView) view;
                 int color = UtilsApp.INSTANCE.loadPalette(imageView);
-                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
-                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), tvSeries.get(position).getId());
-                intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), tvSeries.get(position).getTitle());
+                intent.putExtra(Constantes.COLOR_TOP, color);
+                intent.putExtra(Constantes.TVSHOW_ID, tvSeries.get(position).getId());
+                intent.putExtra(Constantes.NOME_TVSHOW, tvSeries.get(position).getTitle());
                 startActivity(intent);
 
             }

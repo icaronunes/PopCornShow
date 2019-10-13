@@ -82,7 +82,7 @@ public class SearchMultiActivity extends BaseActivity {
 
 				intent = new Intent(this, MovieDetailsActivity.class);
 				int id = Integer.parseInt(getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY));//ID
-				intent.putExtra(Constantes.INSTANCE.getFILME_ID(), id);
+				intent.putExtra(Constantes.FILME_ID, id);
 				intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
 				startActivity(intent);
 				finish();
@@ -91,7 +91,7 @@ public class SearchMultiActivity extends BaseActivity {
 				final int id = Integer.parseInt(getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY));//ID
 
 				intent = new Intent(this, TvShowActivity.class);
-				intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), id);
+				intent.putExtra(Constantes.TVSHOW_ID, id);
 				intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
 				startActivity(intent);
 				finish();
@@ -100,7 +100,7 @@ public class SearchMultiActivity extends BaseActivity {
 
 				intent = new Intent(this, PersonActivity.class);
 				int id = Integer.parseInt(getIntent().getExtras().getString(SearchManager.EXTRA_DATA_KEY));//ID
-				intent.putExtra(Constantes.INSTANCE.getPERSON_ID(), id);
+				intent.putExtra(Constantes.PERSON_ID, id);
 				intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
 				startActivity(intent);
 				finish();

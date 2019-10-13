@@ -1,6 +1,7 @@
 package favorito;
 
 import android.content.Context;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -23,7 +24,7 @@ public class FavoriteAdapater extends FragmentPagerAdapter {
 
     public FavoriteAdapater(Context context, FragmentManager supportFragmentManager,
                             List<FilmeDB> movies, List<TvshowDB> series) {
-        super(supportFragmentManager);
+        super(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.context = context;
         this.series = series;
         this.movies = movies;

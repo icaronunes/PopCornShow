@@ -58,8 +58,8 @@ class Site : BaseActivityKt() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         webView.destroy()
+        super.onDestroy()
     }
 
     private fun setWebViewClient(webViewClient: WebView) {
@@ -76,7 +76,6 @@ class Site : BaseActivityKt() {
                 progress.visibility = View.INVISIBLE
                 swipeToRefresh.isRefreshing = false
             }
-
         }
     }
 }

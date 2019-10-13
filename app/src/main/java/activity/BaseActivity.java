@@ -261,7 +261,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
             case R.id.menu_drav_home:
 
                 intent = new Intent(this, MainActivity.class);
-                intent.putExtra(Constantes.INSTANCE.getABA(), R.id.menu_drav_home);
+                intent.putExtra(Constantes.ABA, R.id.menu_drav_home);
                 startActivity(intent);
                 break;
 
@@ -295,8 +295,8 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
             case R.id.menu_drav_oscar:
 
                 intent = new Intent(this, OscarActivity.class);
-                intent.putExtra(Constantes.INSTANCE.getLISTA_ID(), getResources().getString(R.string.id_oscar));
-                intent.putExtra(Constantes.INSTANCE.getLISTA_NOME(), R.string.oscar);
+                intent.putExtra(Constantes.LISTA_ID, getResources().getString(R.string.id_oscar));
+                intent.putExtra(Constantes.LISTA_NOME, R.string.oscar);
                 startActivity(intent);
                 break;
 
@@ -307,8 +307,8 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
             case R.id.seguindo:
 
                 intent = new Intent(this, SeguindoActivity.class);
-                intent.putExtra(Constantes.INSTANCE.getLISTA_ID(), "28");
-                intent.putExtra(Constantes.INSTANCE.getLISTA_NOME(), R.string.oscar);
+                intent.putExtra(Constantes.LISTA_ID, BuildConfig.VERSION_CODE - 1);
+                intent.putExtra(Constantes.LISTA_NOME, R.string.oscar);
                 startActivity(intent);
                 break;
 
@@ -345,9 +345,9 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
                         String numero = String.valueOf(new Random().nextInt(10));
                         //Log.d(TAG, "numero : " + numero);
                         //TODO mandar somente o Map e fazer a troca na outra activity
-                        intent.putExtra(Constantes.INSTANCE.getLISTA_ID(), map.get("id" + numero));
-                        intent.putExtra(Constantes.INSTANCE.getLISTA_GENERICA(), map.get("title" + numero));
-                        intent.putExtra(Constantes.INSTANCE.getBUNDLE(), (Serializable) map);
+                        intent.putExtra(Constantes.LISTA_ID, map.get("id" + numero));
+                        intent.putExtra(Constantes.LISTA_GENERICA, map.get("title" + numero));
+                        intent.putExtra(Constantes.BUNDLE, (Serializable) map);
 
                         startActivity(intent);
 

@@ -70,9 +70,9 @@ public class TvShowMainAdapter extends RecyclerView.Adapter<TvShowMainAdapter.Tv
         holder.img_poster_grid.setOnClickListener(view -> {
 
             Intent intent = new Intent(context, TvShowActivity.class);
-            intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), series.getName());
-            intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), series.getId());
-            intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.INSTANCE.loadPalette(holder.img_poster_grid));
+            intent.putExtra(Constantes.NOME_TVSHOW, series.getName());
+            intent.putExtra(Constantes.TVSHOW_ID, series.getId());
+            intent.putExtra(Constantes.COLOR_TOP, UtilsApp.INSTANCE.loadPalette(holder.img_poster_grid));
             context.startActivity(intent);
         });
 

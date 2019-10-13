@@ -27,7 +27,7 @@ public class ImagemTopFilmeScrollFragment extends Fragment {
     public static Fragment newInstance(String artwork) {
         ImagemTopFilmeScrollFragment topScrollFragment = new ImagemTopFilmeScrollFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(Constantes.INSTANCE.getENDERECO(), artwork);
+        bundle.putString(Constantes.ENDERECO, artwork);
         topScrollFragment.setArguments(bundle);
         return topScrollFragment;
     }
@@ -35,7 +35,7 @@ public class ImagemTopFilmeScrollFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        endereco = getArguments().getString(Constantes.INSTANCE.getENDERECO());
+        endereco = getArguments().getString(Constantes.ENDERECO);
     }
 
     @Nullable

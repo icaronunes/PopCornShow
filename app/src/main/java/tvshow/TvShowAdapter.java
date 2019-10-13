@@ -1,6 +1,7 @@
 package tvshow;
 
 import android.content.Context;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -21,7 +22,7 @@ public class TvShowAdapter extends FragmentPagerAdapter {
 
     public TvShowAdapter(Context context, FragmentManager supportFragmentManager,
                          Tvshow series, int color_top, boolean seguindo) {
-        super(supportFragmentManager);
+        super(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.context = context;
         this.series = series;
         this.color = color_top;

@@ -69,9 +69,9 @@ public class MovieMainAdapter extends RecyclerView.Adapter<MovieMainAdapter.Movi
             public void onClick(View view) {
 
                 Intent intent = new Intent(context, MovieDetailsActivity.class);
-                intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movieDb.getTitle());
-                intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movieDb.getId());
-                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), UtilsApp.INSTANCE.loadPalette(holder.img_poster_grid));
+                intent.putExtra(Constantes.NOME_FILME, movieDb.getTitle());
+                intent.putExtra(Constantes.FILME_ID, movieDb.getId());
+                intent.putExtra(Constantes.COLOR_TOP, UtilsApp.INSTANCE.loadPalette(holder.img_poster_grid));
                 context.startActivity(intent);
             }
         });

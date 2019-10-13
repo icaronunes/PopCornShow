@@ -14,14 +14,13 @@ import kotlinx.android.synthetic.main.epsodio_detalhes.view.*
 import kotlinx.android.synthetic.main.foldin_main.view.*
 import kotlinx.android.synthetic.main.item_epsodio.view.*
 import kotlinx.android.synthetic.main.layout_diretor.view.*
-import utils.gone
-import utils.makeToast
-import utils.setPicassoWithCache
-import utils.visible
+import utils.*
 
 /**
  * Created by root on 27/02/18.
  */
+
+
 
 class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, private val tvSeason: TvSeasons,
                              val seasons: UserSeasons?, val seguindo: Boolean,
@@ -78,13 +77,13 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, private v
                 registerToggle(layoutPosition)
             }
 
-            ep.crew?.firstOrNull { it?.job == "Director" }?.let {
+            ep.crew?.firstOrNull { it?.job == Constantes.DIRECTOR }?.let {
                 grup_director.visible()
                 director_name.text = it.name
                 img_director.setPicassoWithCache(it.profilePath, 2, img_erro = R.drawable.person)
             }
 
-            ep.crew?.firstOrNull { it?.job == "Writer" }?.let {
+            ep.crew?.firstOrNull { it?.job == Constantes.WRITER }?.let {
                 grup_writer.visible()
                 writer_name.text = it.name
                 writer_img.setPicassoWithCache(it.profilePath, 2, img_erro = R.drawable.person)

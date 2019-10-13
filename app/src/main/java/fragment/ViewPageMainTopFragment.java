@@ -13,7 +13,7 @@ public class ViewPageMainTopFragment extends FragmentPagerAdapter {
     private List<TopMain> multis;
 
     public ViewPageMainTopFragment(FragmentManager supportFragmentManager, List<TopMain> objects) {
-        super(supportFragmentManager);
+        super(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.multis = objects;
     }
 

@@ -21,9 +21,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import trailer.TrailerActivity;
 import br.com.icaro.filme.R;
 import domain.ResultsVideosItem;
+import trailer.TrailerActivity;
 import utils.Config;
 import utils.Constantes;
 
@@ -59,8 +59,8 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
 
                     Intent intent = new Intent(context, TrailerActivity.class);
                     //  Log.d("OnClick", youtube_key);
-                    intent.putExtra(Constantes.INSTANCE.getYOU_TUBE_KEY(), youtube_key);
-                    intent.putExtra(Constantes.INSTANCE.getSINOPSE(), sinopse);
+                    intent.putExtra(Constantes.YOU_TUBE_KEY, youtube_key);
+                    intent.putExtra(Constantes.SINOPSE, sinopse);
 
                     context.startActivity(intent);
 

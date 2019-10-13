@@ -1,11 +1,7 @@
 package pessoa.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -22,7 +18,7 @@ public class PersonAdapter extends FragmentPagerAdapter {
     private Context context;
 
     public PersonAdapter(Context context, FragmentManager supportFragmentManager, Person person) {
-        super(supportFragmentManager);
+        super(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.context = context;
         this.person = person;
     }

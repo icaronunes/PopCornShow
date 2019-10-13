@@ -1,11 +1,6 @@
 package listafilmes.activity;
 
 import android.os.Bundle;
-import android.util.Log;
-
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import activity.BaseActivity;
 import br.com.icaro.filme.R;
@@ -35,10 +30,10 @@ public class MoviesActivity extends BaseActivity {
 	private void getExtras() {
 		if (getIntent().getAction() == null) {
 			getSupportActionBar().setTitle(getString(getIntent()
-					.getIntExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO(), R.string.now_playing)));
+					.getIntExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing)));
 		} else {
 			getSupportActionBar().setTitle(getString(Integer.parseInt(getIntent()
-					.getStringExtra(Constantes.INSTANCE.getNAV_DRAW_ESCOLIDO()))));
+					.getStringExtra(Constantes.NAV_DRAW_ESCOLIDO))));
 		}
 	}
 }

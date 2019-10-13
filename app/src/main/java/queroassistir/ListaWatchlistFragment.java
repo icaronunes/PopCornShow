@@ -56,8 +56,8 @@ public class ListaWatchlistFragment extends Fragment {
     public static Fragment newInstanceMovie(int tipo, List<FilmeDB> filme) {
         ListaWatchlistFragment fragment = new ListaWatchlistFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.INSTANCE.getFILME(), (Serializable) filme);
-        bundle.putInt(Constantes.INSTANCE.getABA(), tipo);
+        bundle.putSerializable(Constantes.FILME, (Serializable) filme);
+        bundle.putInt(Constantes.ABA, tipo);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -66,8 +66,8 @@ public class ListaWatchlistFragment extends Fragment {
     public static Fragment newInstanceTvShow(int tvshow, List<TvshowDB> tvshowDBs ) {
         ListaWatchlistFragment fragment = new ListaWatchlistFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.INSTANCE.getSERIE(), (Serializable) tvshowDBs);
-        bundle.putInt(Constantes.INSTANCE.getABA(), tvshow);
+        bundle.putSerializable(Constantes.SERIE, (Serializable) tvshowDBs);
+        bundle.putInt(Constantes.ABA, tvshow);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -78,9 +78,9 @@ public class ListaWatchlistFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         if (getArguments() != null) {
-            tipo = getArguments().getInt(Constantes.INSTANCE.getABA());
-            movies = (List<FilmeDB>) getArguments().getSerializable(Constantes.INSTANCE.getFILME());
-            tvSeries = (List<TvshowDB>) getArguments().getSerializable(Constantes.INSTANCE.getSERIE());
+            tipo = getArguments().getInt(Constantes.ABA);
+            movies = (List<FilmeDB>) getArguments().getSerializable(Constantes.FILME);
+            tvSeries = (List<TvshowDB>) getArguments().getSerializable(Constantes.SERIE);
         }
         firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
@@ -111,9 +111,9 @@ public class ListaWatchlistFragment extends Fragment {
 
                 ImageView imageView = (ImageView) view;
                 int color = UtilsApp.INSTANCE.loadPalette(imageView);
-                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
-                intent.putExtra(Constantes.INSTANCE.getFILME_ID(), movies.get(position).getId());
-                intent.putExtra(Constantes.INSTANCE.getNOME_FILME(), movies.get(position).getTitle());
+                intent.putExtra(Constantes.COLOR_TOP, color);
+                intent.putExtra(Constantes.FILME_ID, movies.get(position).getId());
+                intent.putExtra(Constantes.NOME_FILME, movies.get(position).getTitle());
                 startActivity(intent);
 
                 Bundle bundle = new Bundle();
@@ -185,9 +185,9 @@ public class ListaWatchlistFragment extends Fragment {
                // Log.d("OnClick", "Onclick");
                 ImageView imageView = (ImageView) view;
                 int color = UtilsApp.INSTANCE.loadPalette(imageView);
-                intent.putExtra(Constantes.INSTANCE.getCOLOR_TOP(), color);
-                intent.putExtra(Constantes.INSTANCE.getTVSHOW_ID(), tvSeries.get(position).getId());
-                intent.putExtra(Constantes.INSTANCE.getNOME_TVSHOW(), tvSeries.get(position).getTitle());
+                intent.putExtra(Constantes.COLOR_TOP, color);
+                intent.putExtra(Constantes.TVSHOW_ID, tvSeries.get(position).getId());
+                intent.putExtra(Constantes.NOME_TVSHOW, tvSeries.get(position).getTitle());
                 startActivity(intent);
 
                 Bundle bundle = new Bundle();
