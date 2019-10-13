@@ -31,22 +31,20 @@ class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
        return delegateAdapters.get(getItemViewType(position))!!.onBindViewHolder(holder, produtoraResultsPage[position], context = null)
     }
 
-    fun addprodutoraMovie(personResults: List<ListaItemFilme?>?, totalResult: Int) {
-        if(personResults?.isNotEmpty()!!) {
+    fun addprodutoraMovie(list: List<ListaItemFilme?>?, totalResult: Int) {
+        if(list?.isNotEmpty()!!) {
             val initPosition = produtoraResultsPage.size- 1
             this.produtoraResultsPage.removeAt(initPosition)
             notifyItemRemoved(initPosition)
 
-
-            for (person in personResults) {
-                this.produtoraResultsPage.add(person!!)
+            for (item in list) {
+                this.produtoraResultsPage.add(item!!)
             }
 
             notifyItemRangeChanged(initPosition, this.produtoraResultsPage.size + 1 /* plus loading item */)
             if (totalResult < produtoraResultsPage.size) produtoraResultsPage.add(loadingItem)
         }
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return delegateAdapters.get(viewType)!!.onCreateViewHolder(parent)
