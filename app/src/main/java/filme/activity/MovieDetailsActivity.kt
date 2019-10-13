@@ -7,7 +7,6 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
@@ -482,22 +481,12 @@ class MovieDetailsActivity : BaseActivity() {
         bundle.putInt(Constantes.COLOR_TOP, color_fundo)
         filmeFrag.arguments = bundle
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            if (!isDestroyed && !isFinishing /*&& tmdvAsync != null*/) { //Isdestroyed valido apenas acima desta api
-                supportFragmentManager
-                        .beginTransaction()
-                        .add(R.id.filme_container, filmeFrag, null)
-                        .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                        .commitAllowingStateLoss()
-            }
-        } else {
-            if (!isFinishing) {
-                supportFragmentManager
-                        .beginTransaction()
-                        .add(R.id.filme_container, filmeFrag, null)
-                        .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                        .commitAllowingStateLoss()
-            }
+        if (!isDestroyed && !isFinishing ) {
+            supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.filme_container, filmeFrag, null)
+                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                    .commitAllowingStateLoss()
         }
     }
 
@@ -517,7 +506,7 @@ class MovieDetailsActivity : BaseActivity() {
         subscriptions.clear()
     }
 
-    private inner class ImagemTopFragment(supportFragmentManager: FragmentManager) : FragmentPagerAdapter(supportFragmentManager) {
+    private inner class ImagemTopFragment(supportFragmentManager: FragmentManager) : FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getItem(position: Int): Fragment {
             return if (movieDb?.images?.backdrops != null) {

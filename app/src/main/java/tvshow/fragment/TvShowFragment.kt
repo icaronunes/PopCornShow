@@ -42,7 +42,7 @@ import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbTvSeasons
 import info.movito.themoviedbapi.model.tv.TvSeason
 import kotlinx.android.synthetic.main.fab_float.*
-import kotlinx.android.synthetic.main.poster_details_layout.*
+import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.*
 import kotlinx.android.synthetic.main.tvshow_info.*
 import poster.PosterGridActivity
 import producao.CrewsActivity
@@ -63,6 +63,8 @@ import utils.UtilsApp.setEp
 import utils.UtilsApp.setUserTvShow
 import java.io.Serializable
 import java.text.DecimalFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 
 /**
@@ -220,24 +222,24 @@ class TvShowFragment : FragmentBase() {
                     else
                         "- -").toString()
 
-                (layout.findViewById<View>(R.id.image_metacritic) as ImageView).setOnClickListener(OnClickListener {
+                (layout.findViewById<View>(R.id.image_metacritic) as ImageView).setOnClickListener {
                     imdbDd?.let {
-                        val nome = it.title.replace(" ", "-").toLowerCase().removerAcentos()
+                        val nome = it.title.replace(" ", "-").toLowerCase(Locale.ROOT).removerAcentos()
                         val url = "$METACRITICTV$nome"
                         startActivity(Intent(activity, Site::class.java).apply {
                             putExtra(Constantes.SITE, url)
                         })
                     }
-                })
+                }
 
-                (layout.findViewById<View>(R.id.image_tomatoes) as ImageView).setOnClickListener(OnClickListener {
+                (layout.findViewById<View>(R.id.image_tomatoes) as ImageView).setOnClickListener {
                     imdbDd?.let {
-                        val nome = it.title.replace(" ", "_").toLowerCase().removerAcentos()
+                        val nome = it.title.replace(" ", "_").toLowerCase(Locale.ROOT).removerAcentos()
                         val intent = Intent(activity, Site::class.java)
                         intent.putExtra(Constantes.SITE, "$ROTTENTOMATOESTV$nome")
                         startActivity(intent)
                     }
-                })
+                }
 
                 (layout.findViewById<View>(R.id.image_imdb) as ImageView).setOnClickListener(OnClickListener {
                     if (imdbDd == null) {
@@ -543,10 +545,10 @@ class TvShowFragment : FragmentBase() {
                                     ?.child("seguindo")
                                     ?.child(series.id.toString())
                                     ?.removeValue()
-                                    ?.addOnCompleteListener(OnCompleteListener { task ->
+                                    ?.addOnCompleteListener { task ->
                                         if (task.isSuccessful)
                                             seguir?.setText(R.string.seguir)
-                                    })
+                                    }
                             seguindo = !seguindo
                             isSeguindo()
                             progressBarTemporada?.visibility = View.GONE
@@ -595,7 +597,7 @@ class TvShowFragment : FragmentBase() {
 
             img_poster?.setOnClickListener {
                 val intent = Intent(context, PosterGridActivity::class.java)
-                intent.putExtra(Constantes.POSTER, series.images?.posters as java.io.Serializable)
+                intent.putExtra(Constantes.POSTER, series.images?.posters as Serializable)
                 intent.putExtra(Constantes.NOME, series.name)
                 val transition = getString(R.string.poster_transition)
                 val compat = ActivityOptionsCompat

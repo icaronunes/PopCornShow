@@ -36,7 +36,6 @@
 
             </FrameLayout>
 
-
         </androidx.core.widget.NestedScrollView>
 
         <!-- Layout da app bar -->

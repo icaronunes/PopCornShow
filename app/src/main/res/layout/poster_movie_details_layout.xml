@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_poster"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/trade_size_dp_3"
+    app:cardElevation="3dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="@dimen/trade_size_dp_3"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/label_produtora"
+    tools:showIn="@layout/movie_details_info">
+
+    <ImageView
+        android:id="@+id/img_poster"
+        android:layout_width="@dimen/trade_size_dp_126"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/poster_filme"
+        android:cropToPadding="true"
+        android:scaleType="fitCenter"
+        android:transitionName="poster"
+        tools:layout_height="180dp"
+        tools:srcCompat="@drawable/person" />
+
+</androidx.cardview.widget.CardView>

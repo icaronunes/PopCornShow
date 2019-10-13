@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/movie_details_info">
+
+    <FrameLayout
+        android:id="@+id/frame_nota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/trade_size_dp_1"
+        android:layout_marginStart="@dimen/trade_size_dp_4"
+        app:layout_constraintStart_toEndOf="@+id/card_poster"
+        app:layout_constraintTop_toBottomOf="@+id/produtora">
+
+        <ImageView
+            android:id="@+id/img_star"
+            android:layout_width="@dimen/trade_size_dp_42"
+            android:layout_height="@dimen/trade_size_dp_42"
+            android:importantForAccessibility="no"
+            tools:src="@drawable/icon_star" />
+
+        <TextView
+            android:id="@+id/voto_media"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:textStyle="normal|bold"
+            android:typeface="sans"
+            tools:text="8.8" />
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/img_budget"
+        android:layout_width="@dimen/trade_size_dp_42"
+        android:layout_height="@dimen/trade_size_dp_42"
+        android:layout_gravity="center"
+        android:contentDescription="@string/orcamento_budget"
+        app:layout_constraintStart_toEndOf="@+id/frame_nota"
+        app:layout_constraintTop_toTopOf="@+id/frame_nota"
+        tools:src="@drawable/orcamento" />
+
+
+    <ImageView
+        android:id="@+id/icon_site"
+        android:layout_width="@dimen/trade_size_dp_42"
+        android:layout_height="@dimen/trade_size_dp_42"
+        android:layout_gravity="center"
+        android:contentDescription="@string/site"
+        app:layout_constraintStart_toEndOf="@+id/img_budget"
+        app:layout_constraintTop_toTopOf="@+id/img_budget"
+        tools:src="@drawable/site_on" />
+
+    <ImageView
+        android:id="@+id/icon_collection"
+        android:layout_width="@dimen/trade_size_dp_42"
+        android:layout_height="@dimen/trade_size_dp_42"
+        android:layout_gravity="center"
+        android:contentDescription="@string/sem_informacao_colletion"
+        app:layout_constraintStart_toEndOf="@+id/icon_site"
+        app:layout_constraintTop_toTopOf="@+id/icon_site"
+        tools:src="@drawable/collection_on" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/trade_size_dp_2"
+        app:cardCornerRadius="@dimen/trade_size_dp_2"
+        app:cardElevation="3dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toTopOf="@+id/descricao"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/frame_nota"
+        app:layout_constraintTop_toBottomOf="@+id/frame_nota"
+        app:layout_constraintVertical_bias="0.47000003">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/trade_size_dp_4">
+
+            <TextView
+                android:id="@+id/original_title_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/trade_size_dp_2"
+                android:text="@string/original_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/original_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/trade_size_dp_4"
+                android:layout_marginLeft="@dimen/trade_size_dp_4"
+                android:layout_marginEnd="@dimen/trade_size_dp_4"
+                android:layout_marginRight="@dimen/trade_size_dp_4"
+                android:ellipsize="end"
+                android:gravity="end"
+                android:maxLines="2"
+                android:textSize="@dimen/trade_txt_size_sp_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/original_title_label"
+                app:layout_constraintTop_toTopOf="@+id/original_title_label"
+                tools:text="City of God" />
+
+
+            <TextView
+                android:id="@+id/idioma_original_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/trade_size_dp_2"
+                android:text="@string/spoken_languages"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/original_title" />
+
+            <TextView
+                android:id="@+id/spoken_languages"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/trade_size_dp_4"
+                android:layout_marginLeft="@dimen/trade_size_dp_4"
+                android:layout_marginEnd="@dimen/trade_size_dp_4"
+                android:layout_marginRight="@dimen/trade_size_dp_4"
+                android:gravity="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/idioma_original_label"
+                app:layout_constraintTop_toTopOf="@+id/idioma_original_label"
+                tools:text="Portugûes" />
+
+            <TextView
+                android:id="@+id/popularity_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/trade_size_dp_2"
+                android:text="@string/popularity"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spoken_languages" />
+
+            <TextView
+                android:id="@+id/popularity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/trade_size_dp_4"
+                android:gravity="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/popularity_label"
+                app:layout_constraintTop_toTopOf="@+id/popularity_label"
+                tools:text="516.8 Mi" />
+
+
+            <TextView
+                android:id="@+id/country_producer_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/trade_size_dp_2"
+                android:text="@string/production_countries"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/popularity_label" />
+
+            <TextView
+                android:id="@+id/production_countries"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/trade_size_dp_4"
+                android:gravity="end"
+                android:maxLines="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/country_producer_label"
+                app:layout_constraintTop_toTopOf="@+id/country_producer_label"
+                tools:text="US" />
+
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="@dimen/trade_txt_size_sp_22"
+                android:textStyle="normal|bold|italic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/production_countries"
+                tools:text="Released" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</merge>

@@ -6,7 +6,6 @@
     android:id="@+id/card_poster"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/trade_size_dp_8"
     android:layout_marginTop="@dimen/trade_size_dp_2"
     app:cardCornerRadius="@dimen/trade_size_dp_3"
     app:cardElevation="@dimen/trade_size_dp_3"

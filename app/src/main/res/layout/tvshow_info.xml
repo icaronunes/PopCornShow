@@ -62,7 +62,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="@dimen/trade_size_dp_4"
                 android:gravity="end"
-                android:textStyle="normal|bold"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/categoria_tvshow"
                 tools:text="2011 - 2017" />
@@ -112,6 +112,8 @@
                 tools:text="Renovado" />
 
 
+            <!--Descrição da serie-->
+
             <TextView
                 android:id="@+id/descricao"
                 android:layout_width="0dp"
@@ -122,7 +124,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/group_information"
                 tools:text="Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida Em Uma terra desconhecida " />
-            <!--Descrição da serie-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/group_information"
@@ -371,9 +372,10 @@
                     app:layout_constraintTop_toTopOf="@+id/icon_site"
                     tools:text="Seguindo" />
 
-                <!-- Detalhes - titulo Original - Popularidade - Pais Produtor - Temporadas -->
-
-                <include layout="@layout/poster_details_layout" />
+                <include
+                    layout="@layout/poster_tvhsow_details_layout"
+                    app:layout_constraintStart_toStartOf="parent"
+                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView

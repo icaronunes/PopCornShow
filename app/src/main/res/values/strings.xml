@@ -190,7 +190,6 @@
     <string name="tvshow_rated">Tvshow Rated</string>
     <string name="permitir_acesso_armazenamento">Para salvar imagem  é necessario permitir acesso a meoria interna.</string>
     <string name="empty_data" translatable="false">--/--/--</string>
-    <string name="site" translatable="false">site</string>
     <string name="proximo_ep">Next Ep:</string>
     <string name="ultimo_ep">Last Ep:</string>
     <string name="show" translatable="false">Show</string>
@@ -199,5 +198,12 @@
     <string name="score">SCORE: </string>
     <string name="vote">VOTES: </string>
     <string name="directo_label">Director</string>
+
+    //////////
+    //// content Description
+    //////////
+
+    <string name="cd_collectons">See franchise movies</string>
+    <string name="site" translatable="false">site</string>
 
 </resources>

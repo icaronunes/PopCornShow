@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/titulo_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@color/black_transparente"
+        android:maxLines="2"
+        android:paddingStart="@dimen/trade_size_dp_4"
+        android:paddingEnd="@dimen/trade_size_dp_4"
+        android:textSize="@dimen/trade_txt_size_sp_20"
+        android:typeface="serif"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="DealPoll 2" />
+
+    <TextView
+        android:id="@+id/categoria_filme"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_weight="1"
+        android:maxLines="1"
+        app:layout_constraintEnd_toStartOf="@+id/time_filme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titulo_text"
+        tools:text="| Animação | Familia | Aventura" />
+
+    <TextView
+        android:id="@+id/time_filme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_weight="0.5"
+        android:gravity="end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titulo_text"
+        tools:text="1 hora 45 min" />
+
+    <TextView
+        android:id="@+id/label_produtora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/produtora"
+        android:textStyle="normal|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categoria_filme" />
+
+    <TextView
+        android:id="@+id/produtora"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:maxLines="1"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/lancamento"
+        app:layout_constraintStart_toEndOf="@+id/label_produtora"
+        app:layout_constraintTop_toBottomOf="@+id/categoria_filme"
+        tools:text="DreamWorks Animation" />
+
+    <TextView
+        android:id="@+id/lancamento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="4dp"
+        android:maxLines="1"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/produtora"
+        tools:text="2019-01-03 BR" />
+
+    <TextView
+        android:id="@+id/descricao"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/trade_size_dp_4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_information"
+        tools:text="A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground fight clubs forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion." />
+
+    <TextView
+        android:id="@+id/textview_elenco"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@color/black_transparente"
+        android:focusable="true"
+        android:gravity="center_horizontal"
+        android:text="@string/elenco"
+        android:textColor="@color/primary_dark"
+        android:textSize="@dimen/trade_txt_size_sp_18"
+        android:textStyle="normal|bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycle_filme_trailer"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textview_crews"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black_transparente"
+        android:focusable="true"
+        android:gravity="center_horizontal"
+        android:text="@string/por_tras_camera_filme"
+        android:textColor="@color/primary_dark"
+        android:textSize="@dimen/trade_txt_size_sp_18"
+        android:textStyle="normal|bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycle_filme_elenco"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textview_similares"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/trade_size_dp_3"
+        android:background="@color/black_transparente"
+        android:gravity="center_horizontal"
+        android:text="@string/similares"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/trade_txt_size_sp_18"
+        android:textStyle="normal|bold"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/tmdb_site"
+        tools:visibility="visible" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/group_information"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/label_produtora">
+
+        <include layout="@layout/poster_movie_details_layout" />
+        <include layout="@layout/info_details_movie_layout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_filme_trailer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="3dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descricao"
+        tools:itemCount="5"
+        tools:listitem="@layout/scroll_trailer"
+        tools:orientation="horizontal" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_filme_elenco"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/trade_size_dp_8"
+        android:layout_marginLeft="@dimen/trade_size_dp_8"
+        android:layout_marginTop="@dimen/trade_size_dp_2"
+        android:layout_marginEnd="@dimen/trade_size_dp_8"
+        android:layout_marginRight="@dimen/trade_size_dp_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_elenco" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_filme_producao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/trade_size_dp_8"
+        android:layout_marginTop="@dimen/trade_size_dp_2"
+        android:layout_marginEnd="@dimen/trade_size_dp_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_crews" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_filme_similares"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/trade_size_dp_8"
+        android:layout_marginLeft="@dimen/trade_size_dp_8"
+        android:layout_marginTop="@dimen/trade_size_dp_2"
+        android:layout_marginEnd="@dimen/trade_size_dp_8"
+        android:layout_marginRight="@dimen/trade_size_dp_8"
+        android:layout_marginBottom="@dimen/trade_size_dp_4"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_similares"
+        tools:itemCount="4"
+        tools:listitem="@layout/scroll_similares"
+        tools:orientation="horizontal" />
+
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/trade_size_dp_4"
+        android:minHeight="40dp"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="@string/admob"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycle_filme_producao" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/imdb_site"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/trade_size_dp_8"
+        android:layout_marginLeft="@dimen/trade_size_dp_8"
+        android:layout_marginTop="@dimen/trade_size_dp_2"
+        android:layout_marginEnd="@dimen/trade_size_dp_8"
+        android:layout_marginRight="@dimen/trade_size_dp_8"
+        android:layout_weight="1"
+        android:text="@string/ver_imdb"
+        android:textAlignment="center"
+        android:textColor="@color/imdb"
+        android:textSize="@dimen/trade_txt_size_sp_16"
+        app:layout_constraintEnd_toStartOf="@+id/tmdb_site"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adView" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/tmdb_site"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/trade_size_dp_2"
+        android:layout_marginEnd="@dimen/trade_size_dp_8"
+        android:layout_weight="1"
+        android:text="@string/ver_tmdb"
+        android:textAlignment="center"
+        android:textColor="@color/tmdb_site"
+        android:textSize="@dimen/trade_txt_size_sp_16"
+        app:layout_constraintBottom_toBottomOf="@+id/imdb_site"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imdb_site"
+        app:layout_constraintTop_toBottomOf="@+id/adView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

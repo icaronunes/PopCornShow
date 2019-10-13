@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="about">Acerca de</string>
     <string name="adicionar_favorite">Agregar a los favoritos</string>
     <string name="adicionar_rated">Añadir a los Anuncios</string>
@@ -139,7 +139,7 @@
     <string name="tvshow_remove_favorite">Tvshow eliminado de la lista de favoritos</string>
     <string name="tvshow_remove_rated">Nota eliminada de Tvshow</string>
     <string name="tvshow_watch_remove">Tvshow eliminado de la lista de seguimiento</string>
-    <string name="ver_imdb">Véase IMDB</string>
+    <string name="ver_imdb" tools:ignore="Typos">Véase IMDB</string>
     <string name="upcoming">Próximamente</string>
     <string name="ver_tmdb">Véase TMDB</string>
     <string name="vincular_login_popcorn">Enlace a otro inicio de sesión</string>
@@ -172,4 +172,5 @@
     <string name="score">"NOTA: "</string>
     <string name="vote">"VOTOS: "</string>
     <string name="directo_label">Director</string>
+    <string name="cd_collectons">Ver películas de franquicia</string>
 </resources>

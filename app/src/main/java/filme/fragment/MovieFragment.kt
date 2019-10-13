@@ -36,7 +36,9 @@ import filme.adapter.CollectionPagerAdapter
 import filme.adapter.SimilaresFilmesAdapter
 import fragment.FragmentBase
 import kotlinx.android.synthetic.main.fab_float.*
-import kotlinx.android.synthetic.main.filme_info.*
+import kotlinx.android.synthetic.main.info_details_movie_layout.*
+import kotlinx.android.synthetic.main.movie_details_info.*
+import kotlinx.android.synthetic.main.poster_movie_details_layout.*
 import poster.PosterGridActivity
 import producao.CrewsActivity
 import produtora.activity.ProdutoraActivity
@@ -84,7 +86,7 @@ class MovieFragment : FragmentBase() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        return inflater.inflate(R.layout.filme_info, container, false)
+        return inflater.inflate(R.layout.movie_details_info, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -240,36 +242,36 @@ class MovieFragment : FragmentBase() {
                 }
 
                 layout.findViewById<TextView>(R.id.nota_tmdb)
-                        .text = if (!movieDb.voteAverage!!.equals(0.0))
+                        .text = if (!movieDb.voteAverage!!.equals(0.0f))
                     movieDb.voteAverage!!.toString() + "/10"
                 else
                     "- -"
 
 
                 layout.findViewById<ImageView>(R.id.image_metacritic)
-                        .setOnClickListener(View.OnClickListener {
+                        .setOnClickListener {
                             imdbDd?.let {
                                 imdbDd!!.title?.let {
-                                    val clenaName = it.replace(" ", "-").toLowerCase().removerAcentos()
+                                    val clenaName = it.replace(" ", "-").toLowerCase(Locale.ROOT).removerAcentos()
                                     val url = "$METACRITICMOVIE$clenaName"
                                     startActivity(Intent(activity, Site::class.java).apply {
                                         putExtra(Constantes.SITE, url)
                                     })
                                 }
                             }
-                        })
+                        }
 
                 layout.findViewById<ImageView>(R.id.image_tomatoes)
-                        .setOnClickListener(View.OnClickListener {
+                        .setOnClickListener {
                             imdbDd?.let {
                                 imdbDd?.title?.let {
-                                    val cleanName = it.replace(" ", "_").toLowerCase().removerAcentos()
+                                    val cleanName = it.replace(" ", "_").toLowerCase(Locale.ROOT).removerAcentos()
                                     startActivity(Intent(activity, Site::class.java).apply {
                                         putExtra(Constantes.SITE, "$ROTTENTOMATOESMOVIE$cleanName")
                                     })
                                 }
                             }
-                        })
+                        }
 
                 layout.findViewById<ImageView>(R.id.image_imdb)
                         .setOnClickListener OnClickListener@{
@@ -281,12 +283,12 @@ class MovieFragment : FragmentBase() {
                         }
 
                 layout.findViewById<ImageView>(R.id.image_tmdb)
-                        .setOnClickListener(View.OnClickListener {
+                        .setOnClickListener {
                             val url = "$BASEMOVIEDB_MOVIE${movieDb.id}"
                             startActivity(Intent(activity, Site::class.java).apply {
                                 putExtra(Constantes.SITE, url)
                             })
-                        })
+                        }
 
                 builder.setView(layout)
                 builder.show()
@@ -304,10 +306,10 @@ class MovieFragment : FragmentBase() {
         if (colecao?.isNotEmpty()!!) {
             val builder = AlertDialog.Builder(activity)
             val inflater = activity?.layoutInflater
-            val dialog_collection = inflater?.inflate(R.layout.dialog_collection, null)
-            val pager = dialog_collection?.findViewById<ViewPager>(R.id.viewpager_collection)
+            val dialogCollection = inflater?.inflate(R.layout.dialog_collection, null)
+            val pager = dialogCollection?.findViewById<ViewPager>(R.id.viewpager_collection)
             pager?.adapter = CollectionPagerAdapter(colecao, context!!)
-            builder.setView(dialog_collection)
+            builder.setView(dialogCollection)
             builder.show()
 
         } else {
@@ -462,7 +464,7 @@ class MovieFragment : FragmentBase() {
             }
             minutos = tempo
             time_filme?.text = (horas.toString() + " " + getString(if (horas > 1) R.string.horas else R.string.hora)
-                    + " " + minutos + " " + getString(R.string.minutos)).toString()//
+                    + " " + minutos + " " + getString(R.string.minutos))
         } else {
             time_filme?.text = getString(R.string.tempo_nao_informado)
         }
@@ -537,7 +539,6 @@ class MovieFragment : FragmentBase() {
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
                 adapter = CastAdapter(activity, movieDb.credits?.cast)
             }
-
             textview_elenco?.visibility = View.VISIBLE
         } else {
             recycle_filme_elenco.layoutParams.height = 1
