@@ -12,12 +12,12 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import br.com.icaro.filme.R
-import com.squareup.picasso.Picasso
 import domain.Api
 import domain.Imdb
 import domain.Movie
@@ -47,15 +46,17 @@ import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import similares.SimilaresActivity
 import site.Site
-import utils.Constantes
+import utils.*
 import utils.Constantes.BASEMOVIEDB_MOVIE
 import utils.Constantes.IMDB
 import utils.Constantes.METACRITICMOVIE
 import utils.Constantes.ROTTENTOMATOESMOVIE
-import utils.UtilsApp
-import utils.removerAcentos
 import java.io.Serializable
+import java.text.DateFormat
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 /**
@@ -85,7 +86,6 @@ class MovieFragment : FragmentBase() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         return inflater.inflate(R.layout.movie_details_info, container, false)
     }
 
@@ -110,80 +110,70 @@ class MovieFragment : FragmentBase() {
         setCrews()
         setTrailer()
         setSimilares()
-        setAnimacao()
+        setAnimated()
         setStatus()
         setAdMob(adView)
 
         imdb_site.setOnClickListener {
-            val intent = Intent(activity, Site::class.java)
-            intent.putExtra(Constantes.SITE,
-                    "${Constantes.IMDB}${movieDb.imdbId}/")
-            startActivity(intent)
+            startActivity(Intent(requireActivity(), Site::class.java).apply {
+                putExtra(Constantes.SITE, "${Constantes.IMDB}${movieDb.imdbId}/")
+            })
         }
 
         tmdb_site?.setOnClickListener {
-            val intent = Intent(activity, Site::class.java)
-            intent.putExtra(Constantes.SITE,
-                    "${Constantes.BASEMOVIEDB_MOVIE}${movieDb.id}/")
-            startActivity(intent)
+            startActivity(Intent(requireActivity(), Site::class.java).apply {
+                putExtra(Constantes.SITE, "${Constantes.BASEMOVIEDB_MOVIE}${movieDb.id}/")
+            })
         }
 
         img_budget?.setOnClickListener {
-
-            if (movieDb.budget != null) {
-                if (movieDb.budget!! > 0) {
-
-                    var valor = movieDb.budget.toString()
+            movieDb.budget?.let {
+                if (it > 0) {
+                    var valor = it.toString()
                     if (valor.length >= 6)
                         valor = valor.substring(0, valor.length - 6)
-                    BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
-                            getString(R.string.orcamento_budget) + " " +
-                                    getString(R.string.dollar)
-                                    + " " + valor + " " + getString(R.string.milhoes_budget))
-
+                    BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu_filme),
+                            "${getString(R.string.orcamento_budget)} $$valor ${getString(R.string.milhoes_budget)}")
                 } else {
-                    BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
+                    BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu_filme),
                             getString(R.string.no_budget))
                 }
             }
         }
 
         icon_site?.setOnClickListener {
-
-            if (movieDb.homepage !== "" && movieDb.homepage != null) {
-                val intent = Intent(context, Site::class.java)
-                intent.putExtra(Constantes.SITE, movieDb.homepage)
-                startActivity(intent)
-
-            } else {
-                BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
-                        getString(R.string.no_site))
+            movieDb.homepage?.let {
+                if (it.isNotBlank()) {
+                    startActivity(Intent(requireActivity(), Site::class.java).apply {
+                        putExtra(Constantes.SITE, it)
+                    })
+                } else {
+                    BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu_filme),
+                            getString(R.string.no_site))
+                }
             }
         }
-
 
         img_star.setOnClickListener(onClickImageStar())
 
         icon_collection.setOnClickListener {
             if (movieDb.belongsToCollection != null) {
-                val inscricaoMovie = Api(context = context!!).getColecao(movieDb.belongsToCollection?.id!!)
+                subscriptions.add(Api(context = requireActivity()).getColecao(movieDb.belongsToCollection?.id!!)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
                             getCollection(it?.parts?.sortedBy { it?.releaseDate })
                         }, { _ ->
-                            Toast.makeText(activity, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                        })
-
-                subscriptions.add(inscricaoMovie)
+                            requireActivity().makeToast(R.string.ops)
+                        }))
             } else {
-                BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
+                BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu_filme),
                         getString(R.string.sem_informacao_colletion))
             }
         }
 
         textview_elenco.setOnClickListener {
-            val intent = Intent(context, ElencoActivity::class.java)
+            val intent = Intent(requireActivity(), ElencoActivity::class.java)
             intent.putExtra(Constantes.ELENCO, movieDb.credits?.cast as Serializable)
             intent.putExtra(Constantes.NOME, movieDb.title)
             startActivity(intent)
@@ -191,7 +181,7 @@ class MovieFragment : FragmentBase() {
         }
 
         textview_crews.setOnClickListener {
-            val intent = Intent(context, CrewsActivity::class.java)
+            val intent = Intent(requireActivity(), CrewsActivity::class.java)
             intent.putExtra(Constantes.PRODUCAO, movieDb.credits?.crew as Serializable)
             intent.putExtra(Constantes.NOME, movieDb.title)
             startActivity(intent)
@@ -199,7 +189,7 @@ class MovieFragment : FragmentBase() {
         }
 
         textview_similares.setOnClickListener {
-            val intent = Intent(context, SimilaresActivity::class.java)
+            val intent = Intent(requireActivity(), SimilaresActivity::class.java)
             intent.putExtra(Constantes.SIMILARES_FILME, movieDb.similar?.resultsSimilar as Serializable)
             intent.putExtra(Constantes.NOME, movieDb.title)
             startActivity(intent)
@@ -217,44 +207,42 @@ class MovieFragment : FragmentBase() {
     private fun onClickImageStar(): View.OnClickListener? {
         return View.OnClickListener {
             if (mediaNotas > 0) {
-                val builder = AlertDialog.Builder(activity)
-                val inflater = activity?.layoutInflater!!
+                val builder = AlertDialog.Builder(requireActivity())
+                val inflater = requireActivity().layoutInflater
                 val layout = inflater.inflate(R.layout.layout_notas, null)
 
-                if (imdbDd != null) {
+                imdbDd?.imdbRating?.let {
                     layout.findViewById<TextView>(R.id.nota_imdb)
-                            .text = if (imdbDd?.imdbRating != null)
-                        imdbDd?.imdbRating + "/10"
-                    else
-                        "- -"
-
-                    layout.findViewById<TextView>(R.id.nota_metacritic)
-                            .text = if (imdbDd?.metascore != null)
-                        imdbDd?.metascore + "/100"
-                    else
-                        "- -"
-
-                    layout.findViewById<TextView>(R.id.nota_tomatoes)
-                            .text = if (imdbDd?.tomatoRating != null)
-                        imdbDd?.tomatoRating + "/10"
-                    else
-                        "- -"
+                            .text = String.format(getString(R.string.bar_ten), it)
                 }
 
-                layout.findViewById<TextView>(R.id.nota_tmdb)
-                        .text = if (!movieDb.voteAverage!!.equals(0.0f))
-                    movieDb.voteAverage!!.toString() + "/10"
-                else
-                    "- -"
+                imdbDd?.tomatoRating?.let {
+                    layout.findViewById<TextView>(R.id.nota_tomatoes)
+                            .text = String.format(getString(R.string.bar_ten), it)
+                }
 
+                imdbDd?.imdbRating?.let {
+                    layout.findViewById<TextView>(R.id.nota_imdb)
+                            .text = String.format(getString(R.string.bar_ten), it)
+                }
+
+                imdbDd?.metascore?.let {
+                    layout.findViewById<TextView>(R.id.nota_metacritic)
+                            .text = String.format(getString(R.string.bar_hundred), it)
+                }
+
+                movieDb.voteAverage?.let {
+                    layout.findViewById<TextView>(R.id.nota_tmdb)
+                            .text = String.format(getString(R.string.bar_ten), it)
+                }
 
                 layout.findViewById<ImageView>(R.id.image_metacritic)
                         .setOnClickListener {
                             imdbDd?.let {
-                                imdbDd!!.title?.let {
+                                imdbDd?.title?.let {
                                     val clenaName = it.replace(" ", "-").toLowerCase(Locale.ROOT).removerAcentos()
                                     val url = "$METACRITICMOVIE$clenaName"
-                                    startActivity(Intent(activity, Site::class.java).apply {
+                                    startActivity(Intent(requireActivity(), Site::class.java).apply {
                                         putExtra(Constantes.SITE, url)
                                     })
                                 }
@@ -266,7 +254,7 @@ class MovieFragment : FragmentBase() {
                             imdbDd?.let {
                                 imdbDd?.title?.let {
                                     val cleanName = it.replace(" ", "_").toLowerCase(Locale.ROOT).removerAcentos()
-                                    startActivity(Intent(activity, Site::class.java).apply {
+                                    startActivity(Intent(requireActivity(), Site::class.java).apply {
                                         putExtra(Constantes.SITE, "$ROTTENTOMATOESMOVIE$cleanName")
                                     })
                                 }
@@ -276,7 +264,7 @@ class MovieFragment : FragmentBase() {
                 layout.findViewById<ImageView>(R.id.image_imdb)
                         .setOnClickListener OnClickListener@{
                             imdbDd?.let {
-                                startActivity(Intent(activity, Site::class.java).apply {
+                                startActivity(Intent(requireActivity(), Site::class.java).apply {
                                     putExtra(Constantes.SITE, "$IMDB${imdbDd?.imdbID}")
                                 })
                             }
@@ -285,7 +273,7 @@ class MovieFragment : FragmentBase() {
                 layout.findViewById<ImageView>(R.id.image_tmdb)
                         .setOnClickListener {
                             val url = "$BASEMOVIEDB_MOVIE${movieDb.id}"
-                            startActivity(Intent(activity, Site::class.java).apply {
+                            startActivity(Intent(requireActivity(), Site::class.java).apply {
                                 putExtra(Constantes.SITE, url)
                             })
                         }
@@ -294,154 +282,121 @@ class MovieFragment : FragmentBase() {
                 builder.show()
 
             } else {
-                BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
+                BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu_filme),
                         getString(R.string.no_vote))
-
             }
         }
-
     }
 
     private fun getCollection(colecao: List<PartsItem?>?) {
         if (colecao?.isNotEmpty()!!) {
-            val builder = AlertDialog.Builder(activity)
-            val inflater = activity?.layoutInflater
-            val dialogCollection = inflater?.inflate(R.layout.dialog_collection, null)
+            val builder = AlertDialog.Builder(requireActivity())
+            val inflater = requireActivity().layoutInflater
+            val dialogCollection = inflater.inflate(R.layout.dialog_collection, null)
             val pager = dialogCollection?.findViewById<ViewPager>(R.id.viewpager_collection)
-            pager?.adapter = CollectionPagerAdapter(colecao, context!!)
+            pager?.adapter = CollectionPagerAdapter(colecao, requireActivity())
             builder.setView(dialogCollection)
             builder.show()
-
         } else {
-            Toast.makeText(context, R.string.sem_informacao_colletion, Toast.LENGTH_SHORT).show()
+            requireActivity().makeToast(R.string.sem_informacao_colletion)
         }
-
     }
 
-    fun setSinopse() {
-
-        if (movieDb.overview != null) {
-            descricao.text = movieDb.overview
-        } else {
+    private fun setSinopse() {
+        if (movieDb.overview.isNullOrBlank()) {
             descricao.text = getString(R.string.sem_sinopse)
+        } else {
+            descricao.text = movieDb.overview
         }
     }
 
-    val locale: String
-        get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Locale.getDefault().toLanguageTag()
-        } else {
-            Locale.getDefault().language + "-" + Locale.getDefault().country
+    private fun setBuget() {
+        movieDb.budget?.let {
+            if (it > 0) img_budget.setImageResource(R.drawable.orcamento) else img_budget.setImageResource(R.drawable.sem_orcamento)
         }
-
-    fun setBuget() {
-
-        if (movieDb.budget!! > 0) {
-            img_budget.setImageResource(R.drawable.orcamento)
-        } else {
-            img_budget.setImageResource(R.drawable.sem_orcamento)
-
-        }
-
     }
 
-    fun setAnimacao() {
-        val animatorSet = AnimatorSet()
-        val alphaStar = ObjectAnimator.ofFloat(img_star, "alpha", 0.0f, 1.0f)
-                .setDuration(2000)
-        val alphaMedia = ObjectAnimator.ofFloat(voto_media, "alpha", 0f, 1f)
-                .setDuration(2300)
-        val alphaBuget = ObjectAnimator.ofFloat(img_budget, "alpha", 0f, 1f)
-                .setDuration(2500)
-        val alphaSite = ObjectAnimator.ofFloat(icon_site, "alpha", 0f, 1f)
-                .setDuration(3000)
-        val alphaCollecton = ObjectAnimator.ofFloat(icon_collection, "alpha", 0f, 1f)
-                .setDuration(3300)
-        animatorSet.playTogether(alphaStar, alphaBuget, alphaMedia, alphaSite, alphaCollecton)
-        animatorSet.start()
+    private fun setAnimated() {
+        AnimatorSet().apply {
+            playTogether(ObjectAnimator.ofFloat(img_star, View.ALPHA, 0.0f, 1.0f).setDuration(2000),
+                    ObjectAnimator.ofFloat(voto_media, View.ALPHA, 0f, 1f).setDuration(2300),
+                    ObjectAnimator.ofFloat(img_budget, View.ALPHA, 0f, 1f).setDuration(2500),
+                    ObjectAnimator.ofFloat(icon_site, View.ALPHA, 0f, 1f).setDuration(3000),
+                    ObjectAnimator.ofFloat(icon_collection, View.ALPHA, 0f, 1f).setDuration(3300))
+        }.start()
     }
 
     private fun setPoster() {
-
-        if (movieDb.posterPath != null) {
-            Picasso.get()
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(requireContext(), 2)) + movieDb.posterPath)
-                    .into(img_poster)
+        movieDb.posterPath?.let {
+            img_poster.setPicasso(movieDb.posterPath, 2, img_erro = R.drawable.poster_empty)
 
             img_poster.setOnClickListener {
-                val intent = Intent(context, PosterGridActivity::class.java)
-                val transition = getString(R.string.poster_transition)
-                intent.putExtra(Constantes.POSTER, movieDb.images?.posters as Serializable)
-                intent.putExtra(Constantes.NOME, movieDb.title)
+                val intent = Intent(requireActivity(), PosterGridActivity::class.java).apply {
+                    putExtra(Constantes.POSTER, movieDb.images?.posters as Serializable)
+                    putExtra(Constantes.NOME, movieDb.title)
+                }
                 val compat = ActivityOptionsCompat
-                        .makeSceneTransitionAnimation(activity!!, img_poster, transition)
-                ActivityCompat.startActivity(activity!!, intent, compat.toBundle())
-
+                        .makeSceneTransitionAnimation(requireActivity(), img_poster, getString(R.string.poster_transition))
+                ActivityCompat.startActivity(requireActivity(), intent, compat.toBundle())
             }
-        } else {
-            img_poster!!.setImageResource(R.drawable.poster_empty)
         }
+        card_poster.setCardBackgroundColor(color)
     }
 
     private fun setProdutora() {
-        if (movieDb.productionCompanies?.isNotEmpty()!!) {
-            produtora.text = movieDb.productionCompanies?.get(0)?.name
-            produtora.setTextColor(ContextCompat.getColor(context!!, R.color.primary))
-            produtora.setOnClickListener {
-                movieDb.productionCompanies?.get(0)?.let { production ->
-                    startActivity(Intent(context, ProdutoraActivity::class.java).apply {
-                        putExtra(Constantes.PRODUTORA_ID, production.id)
-                        putExtra(Constantes.ENDERECO, production.logoPath)
-                        putExtra(Constantes.NOME, production.name)
-                    })
+        movieDb.productionCompanies?.let {
+            val production = movieDb.productionCompanies?.getOrNull(0)
+            produtora.run {
+                text = production?.name
+                setTextColor(color)
+                setOnClickListener {
+                    production?.let {
+                        startActivity(Intent(requireActivity(), ProdutoraActivity::class.java).apply {
+                            putExtra(Constantes.PRODUTORA_ID, production.id)
+                            putExtra(Constantes.ENDERECO, production.logoPath)
+                            putExtra(Constantes.NOME, production.name)
+                        })
+                    }
                 }
             }
-        } else {
-            label_produtora.visibility = View.GONE
         }
     }
 
     private fun getImdb() {
-        if (movieDb.imdbId != null) {
-            val inscircaoImdb = Api(context!!).getOmdbpi(movieDb.imdbId)
+        movieDb.imdbId?.let { it ->
+            subscriptions.add(Api(requireActivity()).getOmdbpi(it)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
+                    .subscribe({ imdb ->
                         if (view != null) {
-                            imdbDd = it
+                            imdbDd = imdb
                             setVotoMedia()
                         }
                     }, {
                         if (view != null) {
-                            Toast.makeText(activity, getString(R.string.ops), Toast.LENGTH_LONG).show()
+                            requireActivity().makeToast(R.string.ops)
                         }
-                    })
-            subscriptions.add(inscircaoImdb)
+                    }))
         }
     }
 
     private fun setVotoMedia() {
-        val nota = mediaNotas
-        if (nota > 0) {
+        if (mediaNotas > 0) {
             img_star?.setImageResource(R.drawable.icon_star)
             val formatter = DecimalFormat("0.0")
-            voto_media?.text = formatter.format(nota.toDouble())
-
+            voto_media?.text = formatter.format(mediaNotas.toDouble())
         } else {
             img_star?.setImageResource(R.drawable.icon_star_off)
             voto_media?.setText(R.string.valor_zero)
-            voto_media?.setTextColor(ContextCompat.getColor(context!!, R.color.blue))
+            voto_media?.setTextColor(ContextCompat.getColor(requireActivity(), R.color.blue))
         }
     }
 
     private fun setCategoria() {
-
         val stringBuilder = StringBuilder("")
-
         movieDb.genres?.forEach { genero ->
             stringBuilder.append(" | " + genero?.name)
         }
-
         categoria_filme.text = stringBuilder.toString()
     }
 
@@ -480,19 +435,21 @@ class MovieFragment : FragmentBase() {
     }
 
     private fun setSpokenLanguages() {
-        if (movieDb.spokenLanguages?.isNotEmpty()!!) {
-            val languages = movieDb.spokenLanguages
-            spoken_languages.text = languages?.get(0)?.name
-        } else {
-            spoken_languages.text = getString(R.string.não_informado)
+        movieDb.spokenLanguages?.let {
+            if (it.isNotEmpty()) {
+                movieDb.spokenLanguages.let {
+                    spoken_languages.text = it?.get(0)?.name
+                }
+            } else {
+                spoken_languages.text = getString(R.string.nao_informado)
+            }
         }
     }
 
     private fun setProductionCountries() = if (movieDb.productionCountries?.isNotEmpty()!!) {
-
         production_countries.text = movieDb.productionCountries?.get(0)?.name
     } else {
-        production_countries.text = getString(R.string.não_informado)
+        production_countries.text = getString(R.string.nao_informado)
     }
 
     private fun setPopularity() {
@@ -521,7 +478,6 @@ class MovieFragment : FragmentBase() {
             }
 
             animatorCompat.duration = 900
-            //animatorCompat.setTarget(voto_quantidade);
             animatorCompat.setTarget(popularity)
             if (isAdded) {
                 animatorCompat.start()
@@ -532,15 +488,15 @@ class MovieFragment : FragmentBase() {
 
     private fun setCast() {
         if (movieDb.credits?.cast!!.isNotEmpty() && isAdded) {
-
             recycle_filme_elenco?.apply {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
-                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                adapter = CastAdapter(activity, movieDb.credits?.cast)
+                layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+                adapter = CastAdapter(requireActivity(), movieDb.credits?.cast)
             }
-            textview_elenco?.visibility = View.VISIBLE
+            textview_elenco?.visible()
         } else {
+            textview_elenco?.gone()
             recycle_filme_elenco.layoutParams.height = 1
         }
     }
@@ -555,8 +511,9 @@ class MovieFragment : FragmentBase() {
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
                 adapter = CrewAdapter(activity, movieDb.credits?.crew)
             }
-            textview_crews.visibility = View.VISIBLE
+            textview_crews.visible()
         } else {
+            textview_crews.gone()
             recycle_filme_producao.layoutParams.height = 1
         }
     }
@@ -590,9 +547,9 @@ class MovieFragment : FragmentBase() {
                 }
             })
 
-            textview_similares.visibility = View.VISIBLE
+            textview_similares.visible()
         } else {
-            textview_similares.visibility = View.GONE
+            textview_similares.gone()
             recycle_filme_similares.layoutParams.height = 1
         }
     }
@@ -600,18 +557,34 @@ class MovieFragment : FragmentBase() {
     private fun setLancamento() {
 
         if (movieDb.releaseDates?.resultsReleaseDates?.isNotEmpty()!!) {
-
-            val releases = movieDb.releaseDates?.resultsReleaseDates
-            lancamento.text = if (movieDb.releaseDate?.length!! > 9) "${movieDb.releaseDate?.subSequence(0, 10)} ${Locale.getDefault().country}" else "N/A"
-            releases?.forEach { date ->
-                if (date?.iso31661 == Locale.getDefault().country) {
-                    date?.releaseDates?.forEach { it ->
-                        if (it?.type == 1 || it?.type == 2 || it?.type == 3) {
-                            lancamento.text = if (it.releaseDate?.length!! > 9) "${movieDb.releaseDate?.subSequence(0, 10)} ${Locale.getDefault().country}" else "N/A"
-                        }
-                    }
+            val date = movieDb.releaseDates?.resultsReleaseDates?.let {
+                it.firstOrNull { releaseDateItem ->
+                    releaseDateItem?.iso31661.equals(Locale.getDefault().country, ignoreCase = true)
                 }
             }
+
+            if (date != null) {
+                date.releaseDates?.get(0)?.releaseDate?.let {
+                    lancamento.text = parseDateRelease(it)
+                }
+            } else {
+                lancamento.text = getString(R.string.nao_informado)
+            }
+        } else {
+            lancamento.text = getString(R.string.nao_informado)
+        }
+    }
+
+    private fun parseDateRelease(date: String): String {
+        //Todo mover para extensions
+        return try {
+            val df = SimpleDateFormat("yyyy-MM-dd").parse(date.substring(0, 10))
+            Calendar.getInstance().apply {
+                this.time = df
+                timeZone = TimeZone.getDefault()
+            }.time.toLocaleString().removeSuffix("00:00:00")
+        } catch (ex: Exception) {
+            getString(R.string.nao_informado)
         }
     }
 
@@ -661,14 +634,14 @@ class MovieFragment : FragmentBase() {
             var tamanho = 0
 
 
-                movieDb.voteAverage?.let {
-                    try {
-                        tmdb = it
-                        tamanho++
-                    } catch (e: Exception) {
-                    }
-
+            movieDb.voteAverage?.let {
+                try {
+                    tmdb = it
+                    tamanho++
+                } catch (e: Exception) {
                 }
+
+            }
 
             if (imdbDd != null) {
                 if (imdbDd?.imdbRating != null) {

@@ -8,7 +8,7 @@ object Constantes {
 
     const val BASEMOVIEDB_TV = "https://www.themoviedb.org/tv/"
     const val BASEMOVIEDB_MOVIE = "https://www.themoviedb.org/movie/"
-    const val IMDB = "https:www.imdb.com/title/"
+    const val IMDB = "https://www.imdb.com/title/"
     const val ROTTENTOMATOESMOVIE = "https://www.rottentomatoes.com/m/"
     const val ROTTENTOMATOESTV = "https://www.rottentomatoes.com/tv/"
     const val METACRITICMOVIE = "http://www.metacritic.com/movie/"

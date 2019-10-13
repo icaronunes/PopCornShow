@@ -4,8 +4,14 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.Generated;
+
+/**
+ * Rotten tomatoes nao esta vindo onde deveria.
+ * Vem dentro de uma lista agora, pegar?
+ */
 
 @Generated("com.robohorse.robopojogenerator")
 public class Imdb implements Serializable{

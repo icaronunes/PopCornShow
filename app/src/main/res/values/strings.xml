@@ -63,7 +63,7 @@
     <string name="no_vote">No Vote</string>
     <string name="nota">Note:</string>
     <string name="now_playing">Now Playing</string>
-    <string name="não_informado" translatable="false">N/A</string>
+    <string name="nao_informado" translatable="false">N/A</string>
     <string name="orcamento_budget">Budget</string>
     <string name="original_title">Original title:</string>
     <string name="oscar">Oscar Winners</string>
@@ -198,6 +198,7 @@
     <string name="score">SCORE: </string>
     <string name="vote">VOTES: </string>
     <string name="directo_label">Director</string>
+    <string name="two_minus" translatable="false">--</string>
 
     //////////
     //// content Description
@@ -205,5 +206,12 @@
 
     <string name="cd_collectons">See franchise movies</string>
     <string name="site" translatable="false">site</string>
+
+    //////////
+    /// templetes
+    //////////
+
+    <string name="bar_ten" translatable="false">%s/10</string>
+    <string name="bar_hundred" translatable="false">%s/100</string>
 
 </resources>
