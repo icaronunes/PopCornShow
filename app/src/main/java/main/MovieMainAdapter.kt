@@ -47,8 +47,10 @@ class MovieMainAdapter(context: FragmentActivity, private val movieDbs: ListaFil
                         layout_poster_main.setCardBackgroundColor(color)
                     }, {
                         progress_poster_grid.gone()
-                        title_main.text = item.title
-                        title_main.visible()
+                        title_main.apply {
+                            text = item.title
+                            title_main.visible()
+                        }
                     }, img_erro = R.drawable.poster_empty)
 
             img_poster_grid.setOnClickListener {
