@@ -3,6 +3,7 @@ package seguindo
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,6 +16,8 @@ import domain.UserTvshow
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
+import utils.gone
+import utils.visible
 
 /**
  * Created by icaro on 02/12/16.
@@ -40,10 +43,13 @@ class SeguindoRecycleAdapter(private val context: FragmentActivity?, private val
                     }
                 })
 
+        holder.itemView.contentDescription = nome
+        holder.itemView.importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_YES
+
         if (desatualizada) {
-            holder.circulo.visibility = View.VISIBLE
+            holder.circulo.visible()
         } else {
-            holder.circulo.visibility = View.GONE
+            holder.circulo.gone()
         }
 
         holder.itemView.setOnClickListener {

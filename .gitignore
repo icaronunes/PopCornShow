@@ -6,6 +6,7 @@ app/google-services.json
 filme.iml
 .gradle/wrapper/gradle-wrapper.properties
 .idea/misc.xml
+ktlint-report-in-checkstyle-format.xml
 
 
 /build
