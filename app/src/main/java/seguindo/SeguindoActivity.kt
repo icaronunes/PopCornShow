@@ -8,12 +8,19 @@ import androidx.core.app.ActivityCompat
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import domain.UserTvshow
-import kotlinx.android.synthetic.main.activity_usuario_list.*
+import java.util.ArrayList
+import kotlinx.android.synthetic.main.activity_usuario_list.linear_usuario_list
+import kotlinx.android.synthetic.main.activity_usuario_list.progress
+import kotlinx.android.synthetic.main.activity_usuario_list.tabLayout
+import kotlinx.android.synthetic.main.activity_usuario_list.viewpage_usuario
 import utils.ConstFirebase
 import utils.UtilsApp
-import java.util.*
 
 /**
  * Created by icaro on 25/11/16.
@@ -40,7 +47,7 @@ class SeguindoActivity : BaseActivity(), ValueEventListener {
         loadingVisibility()
         fallowDataRef = FirebaseDatabase.getInstance().getReference(ConstFirebase.USER)
         fallowDataRef.child(FirebaseAuth.getInstance().currentUser!!.uid).child(ConstFirebase.FOLLOW)
-                .addListenerForSingleValueEvent(this)
+            .addListenerForSingleValueEvent(this)
     }
 
     private fun loadingVisibility(visibility: Int = View.VISIBLE) {
@@ -49,13 +56,13 @@ class SeguindoActivity : BaseActivity(), ValueEventListener {
 
     private fun snack() {
         Snackbar.make(linear_usuario_list, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry) {
-                    if (UtilsApp.isNetWorkAvailable(baseContext)) {
-                        iniciarFirebases()
-                    } else {
-                        snack()
-                    }
-                }.show()
+            .setAction(R.string.retry) {
+                if (UtilsApp.isNetWorkAvailable(baseContext)) {
+                    iniciarFirebases()
+                } else {
+                    snack()
+                }
+            }.show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -73,7 +80,7 @@ class SeguindoActivity : BaseActivity(), ValueEventListener {
             tabLayout?.setupWithViewPager(viewpage_usuario)
             tabLayout?.setSelectedTabIndicatorColor(ActivityCompat.getColor(this@SeguindoActivity, R.color.accent))
             adapter = FollowingAdapater(this@SeguindoActivity, supportFragmentManager,
-                    userTvshowFire!!)
+                userTvshowFire!!)
         }
     }
 
@@ -85,13 +92,12 @@ class SeguindoActivity : BaseActivity(), ValueEventListener {
         if (dataSnapshot.exists()) {
             try {
                 dataSnapshot.children
-                        .asSequence()
-                        .map {
-                            it.getValue(UserTvshow::class.java)
-                        }
-                        .forEach { userTvshowFire.add(it!!) }
+                    .asSequence()
+                    .map {
+                        it.getValue(UserTvshow::class.java)
+                    }
+                    .forEach { userTvshowFire.add(it!!) }
             } catch (e: Exception) {
-
             }
         }
         setupViewPagerTabs(userTvshowFire)
@@ -102,5 +108,4 @@ class SeguindoActivity : BaseActivity(), ValueEventListener {
         super.onDestroy()
         fallowDataRef.removeEventListener(this)
     }
-
 }

@@ -44,10 +44,9 @@ class PersonActivity : BaseActivity() {
         } else {
             snack()
         }
-
     }
 
-    private fun setTitleActionBar(title: String?){
+    private fun setTitleActionBar(title: String?) {
         supportActionBar?.title = title
     }
 
@@ -88,7 +87,6 @@ class PersonActivity : BaseActivity() {
         viewPager_person?.currentItem = 2
         tabLayout.setupWithViewPager(viewPager_person)
         tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
-
     }
 
     private fun getDados() {
@@ -101,10 +99,8 @@ class PersonActivity : BaseActivity() {
                     progress_horizontal.visibility = View.GONE
                 }, {
                     Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
-
                 })
         subscription?.add(inscricao)
-
     }
 
     override fun onDestroy() {

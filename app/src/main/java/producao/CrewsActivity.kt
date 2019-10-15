@@ -1,7 +1,6 @@
 package producao
 
 import activity.BaseActivity
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -20,7 +19,6 @@ import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import utils.Constantes
 import utils.UtilsApp
-
 
 class CrewsActivity : BaseActivity() {
 
@@ -41,7 +39,7 @@ class CrewsActivity : BaseActivity() {
             setHasFixedSize(true)
             itemAnimator = DefaultItemAnimator()
         }
-        
+
         setAdMob(adView)
 
         supportActionBar?.title = title
@@ -63,12 +61,10 @@ class CrewsActivity : BaseActivity() {
 
                 subscriptions.add(inscricaoMovie)
             }
-
         } else {
             snack()
         }
     }
-
 
     private fun getExtras() {
         title = intent.getStringExtra(Constantes.NOME)
@@ -108,7 +104,6 @@ class CrewsActivity : BaseActivity() {
                 }.show()
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         return true
     }
@@ -119,5 +114,4 @@ class CrewsActivity : BaseActivity() {
         }
         return true
     }
-
 }

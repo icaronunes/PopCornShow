@@ -5,13 +5,13 @@ import androidx.collection.SparseArrayCompat
 import androidx.recyclerview.widget.RecyclerView
 import domain.PersonItem
 import domain.ViewType
+import java.util.ArrayList
 import utils.Constantes
-import java.util.*
 
 /**
  * Created by icaro on 04/10/16.
  */
-class PersonPopularAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class PersonPopularAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var personResultsPage = ArrayList<ViewType>()
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
@@ -40,19 +40,15 @@ class PersonPopularAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
         notifyItemRangeChanged(initPosition, this.personResultsPage.size + 1 /* plus loading item */)
         personResultsPage.add(loadingItem)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-            delegateAdapters.get(viewType)!!.onCreateViewHolder(parent)
+        delegateAdapters.get(viewType)!!.onCreateViewHolder(parent)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
-            delegateAdapters.get(getItemViewType(position))!!.onBindViewHolder(holder, personResultsPage[position], context = null)
+        delegateAdapters.get(getItemViewType(position))!!.onBindViewHolder(holder, personResultsPage[position], context = null)
 
     override fun getItemViewType(position: Int): Int = personResultsPage[position].getViewType()
 
     override fun getItemCount(): Int = personResultsPage.size
 }
-
-
-

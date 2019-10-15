@@ -1,11 +1,9 @@
 package seguindo
 
 import android.content.Context
-
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-
 import br.com.icaro.filme.R
 import domain.UserTvshow
 
@@ -13,10 +11,12 @@ import domain.UserTvshow
  * Created by icaro on 25/11/16.
  */
 
-class FollowingAdapater(seguindoActivity: SeguindoActivity,
-                        supportFragmentManager: FragmentManager,
-                        private val userTvshows: MutableList<UserTvshow>)
-    : FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class FollowingAdapater(
+    seguindoActivity: SeguindoActivity,
+    supportFragmentManager: FragmentManager,
+    private val userTvshows: MutableList<UserTvshow>
+) :
+    FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val context: Context
 

@@ -24,12 +24,10 @@ import listaserie.activity.TvShowsActivity
 import tvshow.TvShowMainAdapter
 import utils.Constantes
 
-
 /**
  * Created by icaro on 23/08/16.
  */
 class MainFragment : BaseFragment() {
-
 
     private var rotina: Job = Job()
     private var tipo: Int = 0
@@ -73,7 +71,7 @@ class MainFragment : BaseFragment() {
 
     private fun setObservers() {
         model.data.observe(this, Observer {
-            when(it) {
+            when (it) {
                 is MainFragViewModel.MainFragModel.ModelUpComing -> setScrollUpComing(it.movies)
                 is MainFragViewModel.MainFragModel.ModelPopularMovie -> setScrollMoviePopular(it.movies)
                 is MainFragViewModel.MainFragModel.ModelPopularTvshow -> setScrollTvShowPopulares(it.tvshows)

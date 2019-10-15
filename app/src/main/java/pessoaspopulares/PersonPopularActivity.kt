@@ -55,7 +55,6 @@ class PersonPopularActivity : BaseActivity() {
 
         if (UtilsApp.isNetWorkAvailable(this)) {
             getPerson()
-
         } else {
             snack()
         }
@@ -78,7 +77,6 @@ class PersonPopularActivity : BaseActivity() {
             subscriptions.add(inscricao)
         }
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -114,6 +112,4 @@ class PersonPopularActivity : BaseActivity() {
 
         return super.onOptionsItemSelected(item)
     }
-
 }
-

@@ -2,7 +2,6 @@ package domain
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-
 /**
  * Created by icaro on 29/08/17.
  */
@@ -23,5 +22,3 @@ data class Company(
     @JsonProperty("parent_company")
     var parentCompany: Company? = null
 )
-
-

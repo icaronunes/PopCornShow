@@ -5,13 +5,12 @@ import androidx.collection.SparseArrayCompat
 import androidx.recyclerview.widget.RecyclerView
 import domain.ViewType
 import domain.movie.ListaItemFilme
+import java.util.ArrayList
 import pessoaspopulares.adapter.LoadingDelegateAdapter
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
-import java.util.*
 
 class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
 
     private var produtoraResultsPage = ArrayList<ViewType>()
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
@@ -28,12 +27,12 @@ class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-       return delegateAdapters.get(getItemViewType(position))!!.onBindViewHolder(holder, produtoraResultsPage[position], context = null)
+        return delegateAdapters.get(getItemViewType(position))!!.onBindViewHolder(holder, produtoraResultsPage[position], context = null)
     }
 
     fun addprodutoraMovie(list: List<ListaItemFilme?>?, totalResult: Int) {
-        if(list?.isNotEmpty()!!) {
-            val initPosition = produtoraResultsPage.size- 1
+        if (list?.isNotEmpty()!!) {
+            val initPosition = produtoraResultsPage.size - 1
             this.produtoraResultsPage.removeAt(initPosition)
             notifyItemRemoved(initPosition)
 
@@ -53,7 +52,4 @@ class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemViewType(position: Int): Int = produtoraResultsPage[position].getViewType()
 
     override fun getItemCount(): Int = produtoraResultsPage.size
-
-
 }
-

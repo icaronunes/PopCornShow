@@ -44,7 +44,6 @@ class SearchAdapter(val context: SearchMultiActivity, private val multis: List<M
                         putExtra(Constantes.FILME_ID, movieDb.id)
                         putExtra(Constantes.NOME_FILME, movieDb.title)
                     })
-
                 }
 
                 movieDb.originalTitle?.let {
@@ -135,6 +134,5 @@ class SearchAdapter(val context: SearchMultiActivity, private val multis: List<M
         val searchVotoMedia: TextView = itemView.findViewById(R.id.search_voto_media)
         val searchTitleOriginal: TextView = itemView.findViewById(R.id.search_title_original)
         val groupStar = itemView.findViewById<Group>(R.id.group_star)
-
     }
 }

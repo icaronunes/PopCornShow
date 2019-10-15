@@ -9,21 +9,20 @@ import utils.Constantes
  */
 data class ListaFilmes(
 
-        @field:SerializedName("page")
-        val page: Int = 0,
+    @field:SerializedName("page")
+    val page: Int = 0,
 
-        @field:SerializedName("total_pages")
-        val totalPages: Int = 0,
+    @field:SerializedName("total_pages")
+    val totalPages: Int = 0,
 
-        @field:SerializedName("dates")
-        val dates: Date? = null,
+    @field:SerializedName("dates")
+    val dates: Date? = null,
 
-        @field:SerializedName("results")
-        val results: List<ListaItemFilme?> = mutableListOf<ListaItemFilme>(),
+    @field:SerializedName("results")
+    val results: List<ListaItemFilme?> = mutableListOf<ListaItemFilme>(),
 
-        @field:SerializedName("total_results")
-        val totalResults: Int = 0
-): ViewType {
+    @field:SerializedName("total_results")
+    val totalResults: Int = 0
+) : ViewType {
     override fun getViewType() = Constantes.BuscaConstants.NEWS
 }
-

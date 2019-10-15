@@ -1,6 +1,5 @@
 package pessoa.fragment
 
-import site.Site
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,9 +27,9 @@ import pessoa.adapter.PersonCrewsAdapter
 import pessoa.adapter.PersonImagemAdapter
 import pessoa.adapter.PersonMovieAdapter
 import pessoa.adapter.PersonTvAdapter
+import site.Site
 import utils.Constantes
 import utils.UtilsApp
-import java.lang.Exception
 
 /**
  * Created by icaro on 18/08/16.
@@ -104,15 +103,15 @@ class PersonFragment : Fragment() {
 
         val adview = view.findViewById<View>(R.id.adView) as AdView
         val adRequest = AdRequest.Builder()
-               // .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-               // .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
-                .build()
+            // .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+            // .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+            .build()
         adview.loadAd(adRequest)
 
         setPersonCreditsTvshow(person?.combinedCredits?.cast?.filter { it -> it?.mediaType.equals("tv") }
-                ?.distinctBy { it -> it?.id }
-                ?.sortedBy { it -> it?.releaseDate }
-                ?.reversed() )
+            ?.distinctBy { it -> it?.id }
+            ?.sortedBy { it -> it?.releaseDate }
+            ?.reversed())
 
         return view
     }
@@ -142,15 +141,15 @@ class PersonFragment : Fragment() {
 
         val adview = view.findViewById<AdView>(R.id.adView)
         val adRequest = AdRequest.Builder()
-               // .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                //.addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
-                .build()
+            // .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+            // .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+            .build()
         adview.loadAd(adRequest)
 
         setPersonCrews(person?.combinedCredits?.crew
-                ?.distinctBy { it -> it?.id }
-                ?.sortedBy { it -> it?.releaseDate }
-                ?.reversed())
+            ?.distinctBy { it -> it?.id }
+            ?.sortedBy { it -> it?.releaseDate }
+            ?.reversed())
 
         return view
     }
@@ -183,15 +182,15 @@ class PersonFragment : Fragment() {
         recyclerViewMovie?.setHasFixedSize(true)
 
         setPersonMovies(person?.combinedCredits?.cast?.filter { it -> it?.mediaType.equals("movie") }
-                ?.distinctBy { it -> it?.id }
-                ?.sortedBy { it -> it?.releaseDate }
-                ?.reversed())
+            ?.distinctBy { it -> it?.id }
+            ?.sortedBy { it -> it?.releaseDate }
+            ?.reversed())
 
         val adview = view.findViewById<AdView>(R.id.adView)
         val adRequest = AdRequest.Builder()
-                //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-               // .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
-                .build()
+            // .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+            // .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+            .build()
         adview.loadAd(adRequest)
 
         return view
@@ -227,9 +226,7 @@ class PersonFragment : Fragment() {
                 val intent = Intent(context, Site::class.java)
                 intent.putExtra(Constantes.SITE, information.homepage)
                 startActivity(intent)
-
             }
-
         } else {
             homepage?.visibility = View.GONE
         }
@@ -257,26 +254,23 @@ class PersonFragment : Fragment() {
 
                 intent.putExtra(Constantes.SITE, site)
                 startActivity(intent)
-
             }
         }
 
         Picasso.get().load(UtilsApp.getBaseUrlImagem(2) + information.profilePath)
-                .placeholder(R.drawable.person)
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-                .into(imageView, object : Callback {
-                    override fun onError(e: Exception?) {
-                        progressBar?.visibility = View.VISIBLE
-                    }
+            .placeholder(R.drawable.person)
+            .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+            .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
+            .into(imageView, object : Callback {
+                override fun onError(e: Exception?) {
+                    progressBar?.visibility = View.VISIBLE
+                }
 
-                    override fun onSuccess() {
-                        imageView?.visibility = View.VISIBLE
-                        progressBar?.visibility = View.GONE
-                    }
-
-                })
-
+                override fun onSuccess() {
+                    imageView?.visibility = View.VISIBLE
+                    progressBar?.visibility = View.GONE
+                }
+            })
     }
 
     private fun setPersonMovies(personMovies: List<CastItem?>?) {
@@ -299,8 +293,6 @@ class PersonFragment : Fragment() {
         }
         recyclerViewCrews?.adapter = PersonCrewsAdapter(context!!, personCredits)
         progressBar?.visibility = View.GONE
-
-
     }
 
     private fun setPersonImagem(artworks: List<ProfilesItem?>?) {
@@ -327,7 +319,6 @@ class PersonFragment : Fragment() {
 
         recyclerViewTvshow?.adapter = PersonTvAdapter(context!!, personCredits)
         progressBar?.visibility = View.GONE
-
     }
 
     companion object {
@@ -343,5 +334,3 @@ class PersonFragment : Fragment() {
         }
     }
 }
-
-

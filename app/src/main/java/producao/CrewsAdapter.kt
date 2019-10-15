@@ -44,10 +44,8 @@ class CrewsAdapter(private val context: CrewsActivity, private val crews: List<C
 
     inner class CrewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-         val crewNome: TextView = itemView.findViewById<View>(R.id.crew_nome) as TextView
+        val crewNome: TextView = itemView.findViewById<View>(R.id.crew_nome) as TextView
         val crewCharacter: TextView = itemView.findViewById<View>(R.id.crew_character) as TextView
         val imgCrew: ImageView = itemView.findViewById<View>(R.id.img_crew) as ImageView
-
     }
 }
-

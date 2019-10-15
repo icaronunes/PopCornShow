@@ -8,7 +8,11 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.RatingBar
 import android.widget.TextView
@@ -18,13 +22,34 @@ import com.crashlytics.android.Crashlytics
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
-import domain.*
+import domain.Api
+import domain.FilmeService
+import domain.TvSeasons
+import domain.TvshowDB
+import domain.UserEp
+import domain.UserSeasons
+import domain.UserTvshow
 import domain.tvshow.Tvshow
-import kotlinx.android.synthetic.main.fab_float.*
-import kotlinx.android.synthetic.main.include_progress_horizontal.*
-import kotlinx.android.synthetic.main.tvserie_activity.*
+import java.io.File
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import kotlinx.android.synthetic.main.fab_float.fab_menu_filme
+import kotlinx.android.synthetic.main.fab_float.menu_item_favorite
+import kotlinx.android.synthetic.main.fab_float.menu_item_rated
+import kotlinx.android.synthetic.main.fab_float.menu_item_watchlist
+import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal
+import kotlinx.android.synthetic.main.tvserie_activity.collapsing_toolbar
+import kotlinx.android.synthetic.main.tvserie_activity.img_top_tvshow
+import kotlinx.android.synthetic.main.tvserie_activity.tabLayout
+import kotlinx.android.synthetic.main.tvserie_activity.viewPager_tvshow
 import rx.Observer
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -34,11 +59,6 @@ import utils.Constantes
 import utils.UtilsApp
 import utils.UtilsApp.setEp2
 import utils.makeToast
-import java.io.File
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
-
 
 class TvShowActivity : BaseActivity() {
 
@@ -89,26 +109,25 @@ class TvShowActivity : BaseActivity() {
     private fun getDadosTvshow() {
 
         val subscriber = Api(this)
-                .loadTvshowComVideo(id_tvshow)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Tvshow> {
-                    override fun onCompleted() {
-                        setDados()
-                        setFab()
-                    }
+            .loadTvshowComVideo(id_tvshow)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<Tvshow> {
+                override fun onCompleted() {
+                    setDados()
+                    setFab()
+                }
 
-                    override fun onError(e: Throwable) {
-                        Toast.makeText(this@TvShowActivity, R.string.ops, Toast.LENGTH_SHORT).show()
-                    }
+                override fun onError(e: Throwable) {
+                    Toast.makeText(this@TvShowActivity, R.string.ops, Toast.LENGTH_SHORT).show()
+                }
 
-                    override fun onNext(tvshow: Tvshow) {
-                        series = tvshow
-                    }
-                })
+                override fun onNext(tvshow: Tvshow) {
+                    series = tvshow
+                }
+            })
 
         compositeSubscription?.add(subscriber)
-
     }
 
     private fun setEventListenerWatch() {
@@ -126,11 +145,9 @@ class TvShowActivity : BaseActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-
             }
         }
         myWatch?.addValueEventListener(valueEventWatch!!)
-
     }
 
     private fun setEventListenerRated() {
@@ -146,7 +163,6 @@ class TvShowActivity : BaseActivity() {
                             menu_item_rated?.labelText = resources.getString(R.string.adicionar_rated)
                         }
                     }
-
                 } else {
                     addRated = false
                     numero_rated = 0f
@@ -155,11 +171,9 @@ class TvShowActivity : BaseActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-
             }
         }
         myRated?.addValueEventListener(valueEventRated!!)
-
     }
 
     private fun setEventListenerFavorite() {
@@ -171,12 +185,10 @@ class TvShowActivity : BaseActivity() {
                 } else {
                     addFavorite = false
                     menu_item_favorite?.labelText = resources.getString(R.string.adicionar_favorite)
-
                 }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-
             }
         }
         myFavorite?.addValueEventListener(valueEventFavorite!!)
@@ -208,7 +220,6 @@ class TvShowActivity : BaseActivity() {
 
             myRated = database?.getReference("users")?.child(mAuth?.currentUser?.uid!!)?.child("rated")?.child("tvshow")
         }
-
     }
 
     private fun getExtras() {
@@ -216,25 +227,22 @@ class TvShowActivity : BaseActivity() {
         if (intent.action == null) {
             color_top = intent.getIntExtra(Constantes.COLOR_TOP, R.color.colorFAB)
             id_tvshow = intent.getIntExtra(Constantes.TVSHOW_ID, 0)
-
         } else {
             color_top = Integer.parseInt(intent.getStringExtra(Constantes.COLOR_TOP))
             id_tvshow = Integer.parseInt(intent.getStringExtra(Constantes.TVSHOW_ID))
-
         }
     }
 
     private fun snack() {
         Snackbar.make(viewPager_tvshow, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry) {
-                    if (UtilsApp.isNetWorkAvailable(baseContext)) {
-                        getDadosTvshow()
-                    } else {
-                        snack()
-                    }
-                }.show()
+            .setAction(R.string.retry) {
+                if (UtilsApp.isNetWorkAvailable(baseContext)) {
+                    getDadosTvshow()
+                } else {
+                    snack()
+                }
+            }.show()
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (series != null) {
@@ -248,14 +256,12 @@ class TvShowActivity : BaseActivity() {
                         intent.type = "image/*"
                         intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.getUriDownloadImage(this@TvShowActivity, file))
                         startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar) + " " + series?.name))
-
                     }
 
                     override fun RetornoFalha() {
                         Toast.makeText(this@TvShowActivity, resources.getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show()
                     }
                 })
-
             }
         } else {
             Toast.makeText(this@TvShowActivity, resources.getString(R.string.erro_ainda_sem_imagem), Toast.LENGTH_SHORT).show()
@@ -264,7 +270,7 @@ class TvShowActivity : BaseActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_share, menu)//
+        menuInflater.inflate(R.menu.menu_share, menu) //
         return true
     }
 
@@ -285,19 +291,17 @@ class TvShowActivity : BaseActivity() {
             val anim3 = PropertyValuesHolder.ofFloat("scaleX", 0.5f, 1.0f)
             val anim4 = PropertyValuesHolder.ofFloat("scaley", 0.5f, 1.0f)
             val animator = ObjectAnimator
-                    .ofPropertyValuesHolder(menu_item_watchlist, anim1, anim2, anim3, anim4)
+                .ofPropertyValuesHolder(menu_item_watchlist, anim1, anim2, anim3, anim4)
             animator.duration = 1700
             animator.start()
 
             if (addWatch) {
 
                 myWatch?.child(series?.id.toString())?.setValue(null)
-                        ?.addOnCompleteListener {
-                            Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_watch_remove), Toast.LENGTH_SHORT)
-                                    .show()
-
-                        }
-
+                    ?.addOnCompleteListener {
+                        Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_watch_remove), Toast.LENGTH_SHORT)
+                            .show()
+                    }
             } else {
 
                 val tvshowDB = TvshowDB()
@@ -306,11 +310,10 @@ class TvShowActivity : BaseActivity() {
                 tvshowDB.poster = series?.posterPath
 
                 myWatch?.child(series?.id.toString())?.setValue(tvshowDB)
-                        ?.addOnCompleteListener {
-                            Toast.makeText(this@TvShowActivity, getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
-                                    .show()
-
-                        }
+                    ?.addOnCompleteListener {
+                        Toast.makeText(this@TvShowActivity, getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
+                            .show()
+                    }
             }
             fab_menu_filme!!.close(true)
         }
@@ -323,7 +326,7 @@ class TvShowActivity : BaseActivity() {
             val anim3 = PropertyValuesHolder.ofFloat("scaleX", 0.0f, 1.0f)
             val anim4 = PropertyValuesHolder.ofFloat("scaley", 0.0f, 1.0f)
             val animator = ObjectAnimator
-                    .ofPropertyValuesHolder(menu_item_favorite, anim1, anim2, anim3, anim4)
+                .ofPropertyValuesHolder(menu_item_favorite, anim1, anim2, anim3, anim4)
             animator.duration = 1700
             animator.start()
 
@@ -344,13 +347,11 @@ class TvShowActivity : BaseActivity() {
                 if (addFavorite) {
                     try {
                         myFavorite?.child(id_tvshow.toString())?.setValue(null)
-                                ?.addOnCompleteListener {
-                                    Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_remove_favorite), Toast.LENGTH_SHORT).show()
-                                }
+                            ?.addOnCompleteListener {
+                                Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_remove_favorite), Toast.LENGTH_SHORT).show()
+                            }
                     } catch (e: Exception) {
-
                     }
-
                 } else {
 
                     val tvshowDB = TvshowDB()
@@ -359,10 +360,10 @@ class TvShowActivity : BaseActivity() {
                     tvshowDB.poster = series?.posterPath
 
                     myFavorite?.child(id_tvshow.toString())?.setValue(tvshowDB)
-                            ?.addOnCompleteListener {
-                                Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_add_favorite), Toast.LENGTH_SHORT)
-                                        .show()
-                            }
+                        ?.addOnCompleteListener {
+                            Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_add_favorite), Toast.LENGTH_SHORT)
+                                .show()
+                        }
                 }
 
                 fab_menu_filme?.close(true)
@@ -391,7 +392,6 @@ class TvShowActivity : BaseActivity() {
                 val ok = alertDialog.findViewById<View>(R.id.ok_rated) as Button
                 val no = alertDialog.findViewById<View>(R.id.cancel_rated) as Button
 
-
                 val title = alertDialog.findViewById<View>(R.id.rating_title) as TextView
                 title.text = series?.name
                 val ratingBar = alertDialog.findViewById<View>(R.id.ratingBar_rated) as RatingBar
@@ -407,10 +407,10 @@ class TvShowActivity : BaseActivity() {
 
                 no.setOnClickListener {
                     myRated?.child(id_tvshow.toString())?.setValue(null)
-                            ?.addOnCompleteListener {
-                                Toast.makeText(this@TvShowActivity,
-                                        resources.getText(R.string.tvshow_remove_rated), Toast.LENGTH_SHORT).show()
-                            }
+                        ?.addOnCompleteListener {
+                            Toast.makeText(this@TvShowActivity,
+                                resources.getText(R.string.tvshow_remove_rated), Toast.LENGTH_SHORT).show()
+                        }
                     alertDialog.dismiss()
                     fab_menu_filme?.close(true)
                 }
@@ -422,23 +422,21 @@ class TvShowActivity : BaseActivity() {
                         //  Log.d(TAG, "Gravou Rated");
 
                         val tvshowDB = TvshowDB()
-                        //tvshowDB.externalIds = series?.external_ids
+                        // tvshowDB.externalIds = series?.external_ids
                         tvshowDB.nota = ratingBar.rating * 2
                         tvshowDB.id = series?.id!!
                         tvshowDB.title = series?.name
                         tvshowDB.poster = series?.posterPath
 
                         myRated?.child(id_tvshow.toString())?.setValue(tvshowDB)
-                                ?.addOnCompleteListener {
-                                    Toast.makeText(this@TvShowActivity,
-                                            getString(R.string.tvshow_rated) + " - ${tvshowDB.nota}", Toast.LENGTH_SHORT)
-                                            .show()
-
-                                }
+                            ?.addOnCompleteListener {
+                                Toast.makeText(this@TvShowActivity,
+                                    getString(R.string.tvshow_rated) + " - ${tvshowDB.nota}", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
 
                         Thread(Runnable { FilmeService.ratedTvshowGuest(id_tvshow, (ratingBar.rating * 2).toInt(), this@TvShowActivity) })
-                                .start()
-
+                            .start()
                     }
                     alertDialog.dismiss()
                     fab_menu_filme?.close(true)
@@ -460,13 +458,13 @@ class TvShowActivity : BaseActivity() {
     private fun setImageTop() {
 
         Picasso.get()
-                .load(UtilsApp.getBaseUrlImagem(5) + series?.backdropPath)
-                .error(R.drawable.top_empty)
-                .into(img_top_tvshow)
+            .load(UtilsApp.getBaseUrlImagem(5) + series?.backdropPath)
+            .error(R.drawable.top_empty)
+            .into(img_top_tvshow)
 
         val animatorSet = AnimatorSet()
         val animator = ObjectAnimator.ofFloat(img_top_tvshow, "x", -100f, 0.0f)
-                .setDuration(1000)
+            .setDuration(1000)
         animatorSet.playTogether(animator)
         animatorSet.start()
     }
@@ -478,7 +476,6 @@ class TvShowActivity : BaseActivity() {
         menu_item_rated?.colorNormal = color
     }
 
-
     fun atualizarRealDate() {
 
         userTvshow = series?.let { UtilsApp.setUserTvShow(it) }
@@ -486,30 +483,28 @@ class TvShowActivity : BaseActivity() {
         series?.seasons?.forEachIndexed { index, seasonsItem ->
 
             val subscriber = Api(this)
-                    .getTvSeasons(id_tvshow, seasonsItem?.seasonNumber!!, 1)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.immediate())
-                    .onBackpressureBuffer(1000)
-                    .subscribe(object : Observer<TvSeasons> {
-                        override fun onCompleted() {
-                            atulizarDataBase()
-                            setDataBase()
-                        }
+                .getTvSeasons(id_tvshow, seasonsItem?.seasonNumber!!, 1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.immediate())
+                .onBackpressureBuffer(1000)
+                .subscribe(object : Observer<TvSeasons> {
+                    override fun onCompleted() {
+                        atulizarDataBase()
+                        setDataBase()
+                    }
 
-                        override fun onError(e: Throwable) {
-                            Toast.makeText(this@TvShowActivity, R.string.ops, Toast.LENGTH_SHORT).show()
-                            Log.d("TAG", e.message)
-                        }
+                    override fun onError(e: Throwable) {
+                        Toast.makeText(this@TvShowActivity, R.string.ops, Toast.LENGTH_SHORT).show()
+                        Log.d("TAG", e.message)
+                    }
 
-                        override fun onNext(tvshow: TvSeasons) {
-                            userTvshow?.seasons?.get(index)?.userEps = setEp2(tvshow)?.toMutableList()
-                        }
-                    })
+                    override fun onNext(tvshow: TvSeasons) {
+                        userTvshow?.seasons?.get(index)?.userEps = setEp2(tvshow)?.toMutableList()
+                    }
+                })
 
             compositeSubscription?.add(subscriber)
-
         }
-
     }
 
     private fun atulizarDataBase() {
@@ -533,7 +528,6 @@ class TvShowActivity : BaseActivity() {
                 userTvshow?.seasons?.get(index)?.isVisto = false
             }
         }
-
     }
 
     private fun atulizarDataBaseEps(indexSeason: Int) {
@@ -546,56 +540,56 @@ class TvShowActivity : BaseActivity() {
     private fun setDataBase() {
         val myRef = database?.getReference("users")
         myRef?.child(mAuth?.currentUser?.uid!!)
-                ?.child("seguindo")
-                ?.child(series?.id.toString())
-                ?.setValue(userTvshow)
-                ?.addOnCompleteListener { task ->
-                    if (task.isComplete) {
-                        seguindo = true
-                        setupViewPagerTabs()
-                        setTitle()
-                        setImageTop()
-                        makeToast(R.string.season_updated)
-                    }
+            ?.child("seguindo")
+            ?.child(series?.id.toString())
+            ?.setValue(userTvshow)
+            ?.addOnCompleteListener { task ->
+                if (task.isComplete) {
+                    seguindo = true
+                    setupViewPagerTabs()
+                    setTitle()
+                    setImageTop()
+                    makeToast(R.string.season_updated)
                 }
+            }
     }
 
     private fun setDados() {
         if (mAuth?.currentUser != null) {
             val myRef = database?.getReference("users")
             myRef?.child(mAuth?.currentUser?.uid!!)?.child("seguindo")?.child(series?.id.toString())
-                    ?.addListenerForSingleValueEvent(
-                            object : ValueEventListener {
-                                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                    if (dataSnapshot.exists()) {
-                                        try {
-                                            userTvshowOld = dataSnapshot.getValue(UserTvshow::class.java)
+                ?.addListenerForSingleValueEvent(
+                    object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                try {
+                                    userTvshowOld = dataSnapshot.getValue(UserTvshow::class.java)
 
-                                            if (userTvshowOld?.numberOfEpisodes == series?.numberOfEpisodes) {
-                                                seguindo = true
-                                                setupViewPagerTabs()
-                                                setTitle()
-                                                setImageTop()
-                                            } else {
-                                                atualizarRealDate()
-                                            }
-                                        } catch (e: Exception) {
-                                            setupViewPagerTabs()
-                                            setTitle()
-                                            setImageTop()
-                                            Toast.makeText(this@TvShowActivity, resources.getString(R.string
-                                                    .ops_seguir_novamente), Toast.LENGTH_LONG).show()
-                                            Crashlytics.logException(e)
-                                        }
-                                    } else {
+                                    if (userTvshowOld?.numberOfEpisodes == series?.numberOfEpisodes) {
+                                        seguindo = true
                                         setupViewPagerTabs()
                                         setTitle()
                                         setImageTop()
+                                    } else {
+                                        atualizarRealDate()
                                     }
+                                } catch (e: Exception) {
+                                    setupViewPagerTabs()
+                                    setTitle()
+                                    setImageTop()
+                                    Toast.makeText(this@TvShowActivity, resources.getString(R.string
+                                        .ops_seguir_novamente), Toast.LENGTH_LONG).show()
+                                    Crashlytics.logException(e)
                                 }
+                            } else {
+                                setupViewPagerTabs()
+                                setTitle()
+                                setImageTop()
+                            }
+                        }
 
-                                override fun onCancelled(databaseError: DatabaseError) {}
-                            })
+                        override fun onCancelled(databaseError: DatabaseError) {}
+                    })
         } else {
             seguindo = false
             setTitle()

@@ -7,18 +7,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
-import androidx.core.app.TaskStackBuilder
-import androidx.lifecycle.ViewModel
 import br.com.icaro.filme.R
-import com.crashlytics.android.Crashlytics
-import com.facebook.*
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.FirebaseApp
@@ -26,11 +22,13 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.android.synthetic.main.activity_login.*
+import java.util.Arrays
+import kotlinx.android.synthetic.main.activity_login.login
+import kotlinx.android.synthetic.main.activity_login.pass
+import kotlinx.android.synthetic.main.activity_login.recuperar_senha
+import kotlinx.android.synthetic.main.activity_login.vincular_login
 import main.MainActivity
-import main.MainViewModel
 import utils.makeToast
-import java.util.*
 
 /**
  * Created by icaro on 06/11/16.
@@ -140,7 +138,6 @@ class LoginActivity : BaseActivity() {
             override fun onError(error: FacebookException) {
             }
         })
-
     }
 
     private fun accessFacebook(accessToken: AccessToken) {
@@ -241,7 +238,6 @@ class LoginActivity : BaseActivity() {
         }
     }
 
-
     private fun criarLoginEmail(email: String, pass: String) {
         mAuthProgressDialog.value.show()
         mAuth?.createUserWithEmailAndPassword(email, pass)?.addOnCompleteListener(this) { task ->
@@ -266,7 +262,6 @@ class LoginActivity : BaseActivity() {
                 mAuthProgressDialog.value.dismiss()
             }
         }
-
     }
 
     override fun onStart() {

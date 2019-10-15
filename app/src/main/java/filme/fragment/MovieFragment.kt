@@ -1,6 +1,5 @@
 package filme.fragment
 
-
 import activity.BaseActivity
 import adapter.CastAdapter
 import adapter.CrewAdapter
@@ -10,9 +9,7 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.app.AlertDialog
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,10 +31,41 @@ import elenco.ElencoActivity
 import filme.adapter.CollectionPagerAdapter
 import filme.adapter.SimilaresFilmesAdapter
 import fragment.FragmentBase
-import kotlinx.android.synthetic.main.fab_float.*
-import kotlinx.android.synthetic.main.info_details_movie_layout.*
-import kotlinx.android.synthetic.main.movie_details_info.*
-import kotlinx.android.synthetic.main.poster_movie_details_layout.*
+import java.io.Serializable
+import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+import java.util.TimeZone
+import kotlinx.android.synthetic.main.fab_float.fab_menu_filme
+import kotlinx.android.synthetic.main.info_details_movie_layout.icon_collection
+import kotlinx.android.synthetic.main.info_details_movie_layout.icon_site
+import kotlinx.android.synthetic.main.info_details_movie_layout.img_budget
+import kotlinx.android.synthetic.main.info_details_movie_layout.img_star
+import kotlinx.android.synthetic.main.info_details_movie_layout.original_title
+import kotlinx.android.synthetic.main.info_details_movie_layout.popularity
+import kotlinx.android.synthetic.main.info_details_movie_layout.production_countries
+import kotlinx.android.synthetic.main.info_details_movie_layout.spoken_languages
+import kotlinx.android.synthetic.main.info_details_movie_layout.status
+import kotlinx.android.synthetic.main.info_details_movie_layout.voto_media
+import kotlinx.android.synthetic.main.movie_details_info.adView
+import kotlinx.android.synthetic.main.movie_details_info.categoria_filme
+import kotlinx.android.synthetic.main.movie_details_info.descricao
+import kotlinx.android.synthetic.main.movie_details_info.imdb_site
+import kotlinx.android.synthetic.main.movie_details_info.lancamento
+import kotlinx.android.synthetic.main.movie_details_info.produtora
+import kotlinx.android.synthetic.main.movie_details_info.recycle_filme_elenco
+import kotlinx.android.synthetic.main.movie_details_info.recycle_filme_producao
+import kotlinx.android.synthetic.main.movie_details_info.recycle_filme_similares
+import kotlinx.android.synthetic.main.movie_details_info.recycle_filme_trailer
+import kotlinx.android.synthetic.main.movie_details_info.textview_crews
+import kotlinx.android.synthetic.main.movie_details_info.textview_elenco
+import kotlinx.android.synthetic.main.movie_details_info.textview_similares
+import kotlinx.android.synthetic.main.movie_details_info.time_filme
+import kotlinx.android.synthetic.main.movie_details_info.titulo_text
+import kotlinx.android.synthetic.main.movie_details_info.tmdb_site
+import kotlinx.android.synthetic.main.poster_movie_details_layout.card_poster
+import kotlinx.android.synthetic.main.poster_movie_details_layout.img_poster
 import poster.PosterGridActivity
 import producao.CrewsActivity
 import produtora.activity.ProdutoraActivity
@@ -46,18 +74,16 @@ import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import similares.SimilaresActivity
 import site.Site
-import utils.*
+import utils.Constantes
 import utils.Constantes.BASEMOVIEDB_MOVIE
 import utils.Constantes.IMDB
 import utils.Constantes.METACRITICMOVIE
 import utils.Constantes.ROTTENTOMATOESMOVIE
-import java.io.Serializable
-import java.text.DateFormat
-import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
+import utils.gone
+import utils.makeToast
+import utils.removerAcentos
+import utils.setPicasso
+import utils.visible
 
 /**
  * Created by icaro on 03/07/16.
@@ -177,7 +203,6 @@ class MovieFragment : FragmentBase() {
             intent.putExtra(Constantes.ELENCO, movieDb.credits?.cast as Serializable)
             intent.putExtra(Constantes.NOME, movieDb.title)
             startActivity(intent)
-
         }
 
         textview_crews.setOnClickListener {
@@ -185,7 +210,6 @@ class MovieFragment : FragmentBase() {
             intent.putExtra(Constantes.PRODUCAO, movieDb.credits?.crew as Serializable)
             intent.putExtra(Constantes.NOME, movieDb.title)
             startActivity(intent)
-
         }
 
         textview_similares.setOnClickListener {
@@ -193,7 +217,6 @@ class MovieFragment : FragmentBase() {
             intent.putExtra(Constantes.SIMILARES_FILME, movieDb.similar?.resultsSimilar as Serializable)
             intent.putExtra(Constantes.NOME, movieDb.title)
             startActivity(intent)
-
         }
     }
 
@@ -280,7 +303,6 @@ class MovieFragment : FragmentBase() {
 
                 builder.setView(layout)
                 builder.show()
-
             } else {
                 BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu_filme),
                         getString(R.string.no_vote))
@@ -418,8 +440,8 @@ class MovieFragment : FragmentBase() {
                 tempo -= 60
             }
             minutos = tempo
-            time_filme?.text = (horas.toString() + " " + getString(if (horas > 1) R.string.horas else R.string.hora)
-                    + " " + minutos + " " + getString(R.string.minutos))
+            time_filme?.text = (horas.toString() + " " + getString(if (horas > 1) R.string.horas else R.string.hora) +
+                    " " + minutos + " " + getString(R.string.minutos))
         } else {
             time_filme?.text = getString(R.string.tempo_nao_informado)
         }
@@ -431,7 +453,6 @@ class MovieFragment : FragmentBase() {
         } else {
             original_title?.text = getString(R.string.original_title)
         }
-
     }
 
     private fun setSpokenLanguages() {
@@ -464,7 +485,6 @@ class MovieFragment : FragmentBase() {
                 if (popularidade[0] == '0' && isAdded) {
                     popularidade = popularidade.substring(2, popularidade.length)
                     popularity.text = "$popularidade  ${getString(R.string.mil)}"
-
                 } else {
                     val posicao = popularidade.indexOf(".") + 2
                     popularidade = popularidade.substring(0, posicao)
@@ -483,7 +503,6 @@ class MovieFragment : FragmentBase() {
                 animatorCompat.start()
             }
         }
-
     }
 
     private fun setCast() {
@@ -543,7 +562,6 @@ class MovieFragment : FragmentBase() {
                             fab_menu_filme?.visibility = View.INVISIBLE
                         }
                     }
-
                 }
             })
 
@@ -576,7 +594,7 @@ class MovieFragment : FragmentBase() {
     }
 
     private fun parseDateRelease(date: String): String {
-        //Todo mover para extensions
+        // Todo mover para extensions
         return try {
             val df = SimpleDateFormat("yyyy-MM-dd").parse(date.substring(0, 10))
             Calendar.getInstance().apply {
@@ -633,14 +651,12 @@ class MovieFragment : FragmentBase() {
             var tomato = 0.0f
             var tamanho = 0
 
-
             movieDb.voteAverage?.let {
                 try {
                     tmdb = it
                     tamanho++
                 } catch (e: Exception) {
                 }
-
             }
 
             if (imdbDd != null) {
@@ -653,7 +669,6 @@ class MovieFragment : FragmentBase() {
                             }
                         } catch (e: Exception) {
                         }
-
                     }
                 }
 
@@ -668,7 +683,6 @@ class MovieFragment : FragmentBase() {
                             }
                         } catch (e: Exception) {
                         }
-
                     }
                 }
 
@@ -681,7 +695,6 @@ class MovieFragment : FragmentBase() {
                             }
                         } catch (e: Exception) {
                         }
-
                     }
                 }
             }
@@ -689,11 +702,8 @@ class MovieFragment : FragmentBase() {
             return (tmdb + imdb + metascore + tomato) / tamanho
         }
 
-
     override fun onDestroy() {
         super.onDestroy()
         subscriptions.unsubscribe()
     }
-
-
 }

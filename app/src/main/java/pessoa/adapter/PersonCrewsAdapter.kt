@@ -77,7 +77,6 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
             holder.progressBar.visibility = View.INVISIBLE
         })
 
-
         holder.poster.setOnClickListener {
 
             if (item?.mediaType == "movie") {
@@ -86,7 +85,6 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
                 intent.putExtra(Constantes.FILME_ID, item.id)
                 intent.putExtra(Constantes.NOME_FILME, item.title)
                 context.startActivity(intent)
-
             } else if (item?.mediaType == "tv") {
                 val intent = Intent(context, TvShowActivity::class.java)
                 intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
@@ -95,7 +93,6 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
                 context.startActivity(intent)
             }
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -107,7 +104,5 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
         val progressBar: ProgressBar = itemView.findViewById<View>(R.id.progress_poster_grid) as ProgressBar
         val poster: ImageView = itemView.findViewById<View>(R.id.img_poster_grid) as ImageView
         val title: TextView = itemView.findViewById<View>(R.id.text_title_crew) as TextView
-
     }
-
 }

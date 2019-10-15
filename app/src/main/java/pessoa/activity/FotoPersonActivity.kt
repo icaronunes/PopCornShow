@@ -11,14 +11,13 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import br.com.icaro.filme.R
 import domain.person.ProfilesItem
-import poster.PosterScrollFragment
 import kotlinx.android.synthetic.main.activity_scroll_poster.*
+import poster.PosterScrollFragment
 import utils.Constantes
 
 /**
  * Created by icaro on 12/07/16.
  */
-
 
 class FotoPersonActivity : BaseActivity() {
     private var position: Int? = 0
@@ -38,7 +37,6 @@ class FotoPersonActivity : BaseActivity() {
         pager?.adapter = PosterFragment(supportFragmentManager)
         indicator?.setViewPager(pager as ViewPager)
         indicator?.setCurrentItem(position!!)
-
     }
 
     private fun getExtras() {

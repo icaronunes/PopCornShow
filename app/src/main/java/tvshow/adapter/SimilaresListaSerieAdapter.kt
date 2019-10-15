@@ -17,9 +17,11 @@ import utils.setPicassoWithCache
 /**
  * Created by root on 30/09/17.
  */
-class SimilaresListaSerieAdapter(private val activity: SimilaresActivity,
-                                 private val listaTvshow: List<ResultsItem?>?)
-    : RecyclerView.Adapter<SimilaresListaSerieAdapter.SimilareViewHolde>() {
+class SimilaresListaSerieAdapter(
+    private val activity: SimilaresActivity,
+    private val listaTvshow: List<ResultsItem?>?
+) :
+    RecyclerView.Adapter<SimilaresListaSerieAdapter.SimilareViewHolde>() {
 
     override fun onBindViewHolder(holder: SimilareViewHolde, position: Int) {
         holder.bind(listaTvshow?.get(position)!!)

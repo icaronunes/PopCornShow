@@ -8,11 +8,11 @@ import com.google.android.gms.ads.formats.UnifiedNativeAd
 import domain.ListaItemSerie
 import domain.ViewType
 import domain.movie.ListAd
+import java.util.ArrayList
 import listafilmes.adapter.AdDelegateAdapter
 import pessoaspopulares.adapter.LoadingDelegateAdapter
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
-import java.util.*
 
 class ListaSeriesAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val listaResult = ArrayList<ViewType>()
@@ -26,7 +26,7 @@ class ListaSeriesAdapter(private val context: Context) : RecyclerView.Adapter<Re
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-            delegateAdapters.get(viewType)!!.onCreateViewHolder(parent)
+        delegateAdapters.get(viewType)!!.onCreateViewHolder(parent)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         delegateAdapters.get(getItemViewType(position))?.onBindViewHolder(holder, listaResult[position], context)
@@ -35,7 +35,7 @@ class ListaSeriesAdapter(private val context: Context) : RecyclerView.Adapter<Re
     override fun getItemViewType(position: Int): Int = listaResult[position].getViewType()
 
     fun addSeries(listaMedia: List<ListaItemSerie?>?) {
-        //TODO fix metodo
+        // TODO fix metodo
         if (itemCount != 0 && listaResult[itemCount - 1].getViewType() == Constantes.BuscaConstants.LOADING) {
             this.listaResult.removeAt(itemCount - 1)
             notifyItemRemoved(itemCount)
@@ -70,6 +70,4 @@ class ListaSeriesAdapter(private val context: Context) : RecyclerView.Adapter<Re
             override fun getViewType(): Int = Constantes.BuscaConstants.LOADING
         }
     }
-
 }
-

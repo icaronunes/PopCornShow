@@ -14,7 +14,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
@@ -27,7 +30,11 @@ import br.com.icaro.filme.R
 import br.com.icaro.filme.R.string.in_production
 import br.com.icaro.filme.R.string.mil
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import configuracao.SettingsActivity
 import domain.Api
 import domain.Imdb
@@ -39,9 +46,39 @@ import fragment.FragmentBase
 import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbTvSeasons
 import info.movito.themoviedbapi.model.tv.TvSeason
-import kotlinx.android.synthetic.main.fab_float.*
-import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.*
-import kotlinx.android.synthetic.main.tvshow_info.*
+import java.io.Serializable
+import java.text.DecimalFormat
+import java.util.Locale
+import kotlinx.android.synthetic.main.fab_float.fab_menu_filme
+import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.card_poster
+import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.img_poster
+import kotlinx.android.synthetic.main.tvshow_info.adView
+import kotlinx.android.synthetic.main.tvshow_info.categoria_tvshow
+import kotlinx.android.synthetic.main.tvshow_info.descricao
+import kotlinx.android.synthetic.main.tvshow_info.frame_nota
+import kotlinx.android.synthetic.main.tvshow_info.icon_site
+import kotlinx.android.synthetic.main.tvshow_info.imdb_site
+import kotlinx.android.synthetic.main.tvshow_info.img_star
+import kotlinx.android.synthetic.main.tvshow_info.lancamento
+import kotlinx.android.synthetic.main.tvshow_info.original_title
+import kotlinx.android.synthetic.main.tvshow_info.popularity
+import kotlinx.android.synthetic.main.tvshow_info.production_countries
+import kotlinx.android.synthetic.main.tvshow_info.produtora
+import kotlinx.android.synthetic.main.tvshow_info.proximo_ep_date
+import kotlinx.android.synthetic.main.tvshow_info.recycle_tvshow_elenco
+import kotlinx.android.synthetic.main.tvshow_info.recycle_tvshow_producao
+import kotlinx.android.synthetic.main.tvshow_info.recycle_tvshow_similares
+import kotlinx.android.synthetic.main.tvshow_info.recycle_tvshow_trailer
+import kotlinx.android.synthetic.main.tvshow_info.seguir
+import kotlinx.android.synthetic.main.tvshow_info.status
+import kotlinx.android.synthetic.main.tvshow_info.temporadas
+import kotlinx.android.synthetic.main.tvshow_info.text_similares
+import kotlinx.android.synthetic.main.tvshow_info.textview_crews
+import kotlinx.android.synthetic.main.tvshow_info.textview_elenco
+import kotlinx.android.synthetic.main.tvshow_info.titulo_tvshow
+import kotlinx.android.synthetic.main.tvshow_info.tmdb_site
+import kotlinx.android.synthetic.main.tvshow_info.ultimo_ep_name
+import kotlinx.android.synthetic.main.tvshow_info.voto_media
 import poster.PosterGridActivity
 import producao.CrewsActivity
 import produtora.activity.ProdutoraActivity
@@ -54,23 +91,26 @@ import site.Site
 import temporada.TemporadaActivity
 import tvshow.TemporadasAdapter
 import tvshow.adapter.SimilaresSerieAdapter
-import utils.*
+import utils.Config
 import utils.ConstFirebase.ASSISTIDO
 import utils.ConstFirebase.SEASONS
 import utils.ConstFirebase.USEREPS
 import utils.ConstFirebase.VISTO
+import utils.Constantes
 import utils.Constantes.BASEMOVIEDB_TV
 import utils.Constantes.IMDB
 import utils.Constantes.METACRITICTV
 import utils.Constantes.ROTTENTOMATOESTV
 import utils.Constantes.SEGUINDO
+import utils.UtilsApp
 import utils.UtilsApp.setEp
 import utils.UtilsApp.setUserTvShow
-import java.io.Serializable
-import java.text.DecimalFormat
-import java.util.*
-import kotlin.collections.HashMap
-
+import utils.gone
+import utils.invisible
+import utils.makeToast
+import utils.removerAcentos
+import utils.setPicasso
+import utils.visible
 
 /**
  * Created by icaro on 23/08/16.
@@ -91,7 +131,6 @@ class TvShowFragment : FragmentBase() {
     private var progressBarTemporada: ProgressBar? = null
     private var imdbDd: Imdb? = null
 
-
     companion object {
 
         fun newInstance(tipo: Int, series: Tvshow, color: Int, seguindo: Boolean): Fragment {
@@ -107,7 +146,6 @@ class TvShowFragment : FragmentBase() {
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments.let {
@@ -116,12 +154,11 @@ class TvShowFragment : FragmentBase() {
             color = arguments?.getInt(Constantes.COLOR_TOP)!!
             seguindo = arguments?.getBoolean(Constantes.USER)!!
         }
-        //Validar se esta logado. Caso não, não precisa instanciar nada.
+        // Validar se esta logado. Caso não, não precisa instanciar nada.
         subscriptions = CompositeSubscription()
         mAuth = FirebaseAuth.getInstance()
         myRef = FirebaseDatabase.getInstance().getReference("users")
     }
-
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -171,10 +208,9 @@ class TvShowFragment : FragmentBase() {
                 startActivity(Intent(context, Site::class.java).apply {
                     putExtra(Constantes.SITE, series.homepage)
                 })
-
             } else {
                 BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
-                        getString(R.string.no_site))
+                    getString(R.string.no_site))
             }
         }
 
@@ -206,7 +242,7 @@ class TvShowFragment : FragmentBase() {
             imdbDd?.let { imdb ->
                 imdb.imdbRating?.let {
                     (layout
-                            ?.findViewById<View>(R.id.nota_imdb) as TextView).text = String.format(getString(R.string.bar_ten), it)
+                        ?.findViewById<View>(R.id.nota_imdb) as TextView).text = String.format(getString(R.string.bar_ten), it)
                 }
 
                 imdb.metascore?.let {
@@ -258,10 +294,9 @@ class TvShowFragment : FragmentBase() {
 
             builder.setView(layout)
             builder.show()
-
         } else {
             BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
-                    getString(R.string.no_vote))
+                getString(R.string.no_vote))
         }
     }
 
@@ -278,7 +313,6 @@ class TvShowFragment : FragmentBase() {
             setStatusButton()
         }
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -316,13 +350,12 @@ class TvShowFragment : FragmentBase() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-
                 }
             }
 
             myRef?.child(mAuth?.currentUser!!
-                    .uid)?.child("seguindo")?.child(series.id.toString())
-                    ?.addValueEventListener(postListener!!)
+                .uid)?.child("seguindo")?.child(series.id.toString())
+                ?.addValueEventListener(postListener!!)
         }
     }
 
@@ -357,7 +390,6 @@ class TvShowFragment : FragmentBase() {
         } else {
             seguir?.text = series.status
         }
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -422,31 +454,29 @@ class TvShowFragment : FragmentBase() {
                     val idSerie = series.id
                     val childUpdates = HashMap<String, Any>()
 
-                    childUpdates["/$user/${SEGUINDO}/$idSerie/${SEASONS}/$position/${VISTO}"] = false
+                    childUpdates["/$user/$SEGUINDO/$idSerie/$SEASONS/$position/$VISTO"] = false
                     setStatusEps(position, false)
                     userTvshow?.seasons?.get(position)?.userEps?.forEachIndexed { index, _ ->
-                        childUpdates["/$user/${SEGUINDO}/$idSerie/${SEASONS}/$position/${USEREPS}/$index/${ASSISTIDO}"] = false
+                        childUpdates["/$user/$SEGUINDO/$idSerie/$SEASONS/$position/$USEREPS/$index/$ASSISTIDO"] = false
                     }
 
                     myRef?.updateChildren(childUpdates)
-
                 } else {
                     requireActivity().makeToast(R.string.marcado_assistido_temporada)
                     val user = if (mAuth?.currentUser != null) mAuth?.currentUser?.uid else ""
                     val idSerie = userTvshow?.id
 
                     val childUpdates = HashMap<String, Any>()
-                    childUpdates["/$user/${SEGUINDO}/$idSerie/${SEASONS}/$position/${VISTO}"] = true
+                    childUpdates["/$user/$SEGUINDO/$idSerie/$SEASONS/$position/$VISTO"] = true
                     setStatusEps(position, true)
                     userTvshow?.seasons?.get(position)?.userEps?.forEachIndexed { index, _ ->
-                        childUpdates["/$user/${SEGUINDO}/$idSerie/${SEASONS}/$position/${USEREPS}/$index/${ASSISTIDO}"] = true
+                        childUpdates["/$user/$SEGUINDO/$idSerie/$SEASONS/$position/$USEREPS/$index/$ASSISTIDO"] = true
                     }
                     myRef?.updateChildren(childUpdates)
                 }
             }
         }
     }
-
 
     private fun isVisto(position: Int): Boolean {
         return if (userTvshow?.seasons != null) {
@@ -499,40 +529,38 @@ class TvShowFragment : FragmentBase() {
                         }
 
                         myRef?.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid!! else "")
-                                ?.child(SEGUINDO)
-                                ?.child(series.id.toString())
-                                ?.setValue(userTvshow)
-                                ?.addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        seguir?.setText(R.string.seguindo)
-                                    } else {
-                                        Toast.makeText(activity, R.string.erro_seguir, Toast.LENGTH_SHORT).show()
-                                    }
+                            ?.child(SEGUINDO)
+                            ?.child(series.id.toString())
+                            ?.setValue(userTvshow)
+                            ?.addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    seguir?.setText(R.string.seguindo)
+                                } else {
+                                    Toast.makeText(activity, R.string.erro_seguir, Toast.LENGTH_SHORT).show()
                                 }
-
+                            }
                     }
                 }).start()
-
             } else {
 
                 val dialog = AlertDialog.Builder(context!!)
-                        .setTitle(R.string.title_delete)
-                        .setMessage(R.string.msg_parar_seguir)
-                        .setNegativeButton(R.string.no, null)
-                        .setOnDismissListener { progressBarTemporada?.visibility = View.GONE }
-                        .setPositiveButton(R.string.ok) { _, _ ->
-                            myRef?.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid!! else "")
-                                    ?.child(SEGUINDO)
-                                    ?.child(series.id.toString())
-                                    ?.removeValue()
-                                    ?.addOnCompleteListener { task ->
-                                        if (task.isSuccessful)
-                                            seguir?.setText(R.string.seguir)
-                                    }
-                            seguindo = !seguindo
-                            isSeguindo()
-                            progressBarTemporada?.visibility = View.GONE
-                        }.create()
+                    .setTitle(R.string.title_delete)
+                    .setMessage(R.string.msg_parar_seguir)
+                    .setNegativeButton(R.string.no, null)
+                    .setOnDismissListener { progressBarTemporada?.visibility = View.GONE }
+                    .setPositiveButton(R.string.ok) { _, _ ->
+                        myRef?.child(if (mAuth?.currentUser != null) mAuth?.currentUser?.uid!! else "")
+                            ?.child(SEGUINDO)
+                            ?.child(series.id.toString())
+                            ?.removeValue()
+                            ?.addOnCompleteListener { task ->
+                                if (task.isSuccessful)
+                                    seguir?.setText(R.string.seguir)
+                            }
+                        seguindo = !seguindo
+                        isSeguindo()
+                        progressBarTemporada?.visibility = View.GONE
+                    }.create()
 
                 dialog.show()
             }
@@ -559,9 +587,9 @@ class TvShowFragment : FragmentBase() {
     private fun setAnimacao() {
         AnimatorSet().apply {
             playTogether(
-                    ObjectAnimator.ofFloat(img_star, View.ALPHA, 0.0f, 1.0f).setDuration(2000),
-                    ObjectAnimator.ofFloat(voto_media, View.ALPHA, 0.0f, 1.0f).setDuration(2300),
-                    ObjectAnimator.ofFloat(icon_site, View.ALPHA, 0.0f, 1.0f).setDuration(3000)
+                ObjectAnimator.ofFloat(img_star, View.ALPHA, 0.0f, 1.0f).setDuration(2000),
+                ObjectAnimator.ofFloat(voto_media, View.ALPHA, 0.0f, 1.0f).setDuration(2300),
+                ObjectAnimator.ofFloat(icon_site, View.ALPHA, 0.0f, 1.0f).setDuration(3000)
             )
         }.start()
     }
@@ -575,9 +603,9 @@ class TvShowFragment : FragmentBase() {
                     putExtra(Constantes.NOME, series.name)
                 }
                 val compat = ActivityOptionsCompat
-                        .makeSceneTransitionAnimation(requireActivity(),
-                                img_poster,
-                                getString(R.string.poster_transition))
+                    .makeSceneTransitionAnimation(requireActivity(),
+                        img_poster,
+                        getString(R.string.poster_transition))
                 ActivityCompat.startActivity(requireActivity(), intent, compat.toBundle())
             }
         }
@@ -648,7 +676,7 @@ class TvShowFragment : FragmentBase() {
     }
 
     private fun setPopularity() {
-        //Todo refazer metodo
+        // Todo refazer metodo
         if (series.popularity != null) {
             ValueAnimator.ofFloat(1.0f, series.popularity!!.toFloat()).apply {
                 addUpdateListener { valueAnimator ->
@@ -658,7 +686,6 @@ class TvShowFragment : FragmentBase() {
                     if (popularidade[0] == '0' && isAdded) {
                         popularidade = popularidade.substring(2, popularidade.length)
                         popularity?.text = "$popularidade  ${getString(mil)}"
-
                     } else {
 
                         val posicao = popularidade.indexOf(".") + 2
@@ -701,7 +728,7 @@ class TvShowFragment : FragmentBase() {
     private fun setProducao() {
 
         textview_crews?.setOnClickListener {
-            startActivity(  Intent(context, CrewsActivity::class.java).apply {
+            startActivity(Intent(context, CrewsActivity::class.java).apply {
                 putExtra(Constantes.PRODUCAO, series.credits?.crew as Serializable)
                 putExtra(Constantes.NOME, series.name)
             })
@@ -736,7 +763,7 @@ class TvShowFragment : FragmentBase() {
                 layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
                 adapter = SimilaresSerieAdapter(requireActivity(), series.similar?.results)
             }
-            //Todo - faz um metodo generico para usar em todos os recycler
+            // Todo - faz um metodo generico para usar em todos os recycler
             recycle_tvshow_similares.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     when (newState) {
@@ -754,7 +781,6 @@ class TvShowFragment : FragmentBase() {
             })
 
             text_similares.visible()
-
         } else {
             text_similares.gone()
             recycle_tvshow_similares.layoutParams.height = 1
@@ -779,7 +805,7 @@ class TvShowFragment : FragmentBase() {
                 recycle_tvshow_trailer?.setHasFixedSize(true)
                 recycle_tvshow_trailer?.itemAnimator = DefaultItemAnimator()
                 recycle_tvshow_trailer?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                recycle_tvshow_trailer.adapter =  TrailerAdapter(activity, series.videos?.results, series.overview)
+                recycle_tvshow_trailer.adapter = TrailerAdapter(activity, series.videos?.results, series.overview)
             }
         }
     }
@@ -798,24 +824,24 @@ class TvShowFragment : FragmentBase() {
 
     fun getImdb() {
         subscriptions.add(Api(context!!).getOmdbpi(series.external_ids?.imdbId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Imdb> {
-                    override fun onCompleted() {
-                    }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<Imdb> {
+                override fun onCompleted() {
+                }
 
-                    override fun onError(e: Throwable) {
-                        requireActivity().makeToast(R.string.ops)
-                    }
+                override fun onError(e: Throwable) {
+                    requireActivity().makeToast(R.string.ops)
+                }
 
-                    override fun onNext(imdb: Imdb) {
-                        imdbDd = imdb
-                    }
-                }))
+                override fun onNext(imdb: Imdb) {
+                    imdbDd = imdb
+                }
+            }))
     }
 
     private fun getMedia(): Float {
-        //Todo - refazer metodo
+        // Todo - refazer metodo
         var imdb = 0f
         var tmdb = 0f
         var metascore = 0f
@@ -828,7 +854,6 @@ class TvShowFragment : FragmentBase() {
                     tmdb = series.voteAverage!!.toFloat()
                     tamanho++
                 } catch (e: Exception) {
-
                 }
             }
 
@@ -839,7 +864,6 @@ class TvShowFragment : FragmentBase() {
                     imdb = java.lang.Float.parseFloat(imdbDd?.imdbRating!!)
                     tamanho++
                 } catch (e: Exception) {
-
                 }
             }
 
@@ -852,8 +876,6 @@ class TvShowFragment : FragmentBase() {
                     tamanho++
                 } catch (e: Exception) {
                 }
-
-
             }
 
             if (imdbDd?.tomatoRating.isNullOrEmpty()) {
@@ -868,6 +890,3 @@ class TvShowFragment : FragmentBase() {
         return (tmdb + imdb + metascore + tomato) / tamanho
     }
 }
-
-
-

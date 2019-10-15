@@ -56,8 +56,8 @@ class DynamicLink : AppCompatActivity() {
         var action: String? = ""
         var name: String? = ""
         // Exemplo
-        //https://br.com.icaro.filme/?action=movie&id=58
-        //https://br.com.icaro.filme/?action=tvshow&id=58
+        // https://br.com.icaro.filme/?action=movie&id=58
+        // https://br.com.icaro.filme/?action=tvshow&id=58
 
         for (param in deepLink.queryParameterNames) {
             when (param) {
@@ -67,7 +67,7 @@ class DynamicLink : AppCompatActivity() {
             }
         }
 
-        if (action.isNullOrBlank() ||  id.isNullOrBlank()) {
+        if (action.isNullOrBlank() || id.isNullOrBlank()) {
             callMainActivity()
         } else {
             try {
@@ -92,7 +92,7 @@ class DynamicLink : AppCompatActivity() {
                         stackBuilder.startActivities()
                         finish()
                     }
-                    else ->  callMainActivity()
+                    else -> callMainActivity()
                 }
             } catch (ex: NumberFormatException) {
                 callMainActivity()

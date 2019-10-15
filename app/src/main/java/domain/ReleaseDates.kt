@@ -7,6 +7,6 @@ import javax.annotation.Generated
 @Generated("com.robohorse.robopojogenerator")
 data class ReleaseDates(
 
-	@field:SerializedName("results")
-	val resultsReleaseDates: List<ResultsReleaseDatesItem?>? = null
-): Serializable
+    @field:SerializedName("results")
+    val resultsReleaseDates: List<ResultsReleaseDatesItem?>? = null
+) : Serializable

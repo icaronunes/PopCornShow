@@ -15,15 +15,15 @@ import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import domain.person.CastItem
 import filme.activity.MovieDetailsActivity
+import java.lang.Exception
 import utils.Constantes
 import utils.UtilsApp
-import java.lang.Exception
 
 /**
  * Created by icaro on 18/08/16.
  */
-class PersonMovieAdapter(private val context: Context, private val personCredits: List<CastItem?>?)
-    : RecyclerView.Adapter<PersonMovieAdapter.PersonMovieViewHolder>() {
+class PersonMovieAdapter(private val context: Context, private val personCredits: List<CastItem?>?) :
+    RecyclerView.Adapter<PersonMovieAdapter.PersonMovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonMovieViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.person_movie_filmes_layout, parent, false)
@@ -42,7 +42,7 @@ class PersonMovieAdapter(private val context: Context, private val personCredits
                     override fun onError(e: Exception?) {
                         holder.progressBar.visibility = View.INVISIBLE
                         val data = StringBuilder()
-                        if (!credit?.releaseDate.isNullOrBlank() ) {
+                        if (!credit?.releaseDate.isNullOrBlank()) {
                             data.append(if (credit?.releaseDate?.length!! >= 4) " - " + credit.releaseDate.substring(0, 4) else "")
                         }
                         holder.title.text = credit?.title + data
@@ -53,7 +53,6 @@ class PersonMovieAdapter(private val context: Context, private val personCredits
                         holder.progressBar.visibility = View.INVISIBLE
                         holder.title.visibility = View.GONE
                     }
-
                 })
 
         holder.poster.setOnClickListener {
@@ -73,6 +72,5 @@ class PersonMovieAdapter(private val context: Context, private val personCredits
         val progressBar: ProgressBar = itemView.findViewById(R.id.progress_poster_grid)
         val poster: ImageView = itemView.findViewById(R.id.img_poster_grid)
         val title: TextView = itemView.findViewById(R.id.text_title_crew)
-
     }
 }

@@ -8,12 +8,18 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.tvshow.ResultsItem
-import kotlinx.android.synthetic.main.scroll_similares.view.*
+import kotlinx.android.synthetic.main.scroll_similares.view.imgPagerSimilares
+import kotlinx.android.synthetic.main.scroll_similares.view.progressBarSimilares
+import kotlinx.android.synthetic.main.scroll_similares.view.textSimilaresName
 import tvshow.activity.TvShowActivity
-import utils.*
+import utils.Constantes
+import utils.UtilsApp
+import utils.gone
+import utils.setPicassoWithCache
+import utils.visible
 
-class SimilaresSerieAdapter(val activity: FragmentActivity, private val similarItems: List<ResultsItem?>?)
-    : RecyclerView.Adapter<SimilaresSerieAdapter.SimilaresSerieHolde>() {
+class SimilaresSerieAdapter(val activity: FragmentActivity, private val similarItems: List<ResultsItem?>?) :
+    RecyclerView.Adapter<SimilaresSerieAdapter.SimilaresSerieHolde>() {
 
     override fun onBindViewHolder(holder: SimilaresSerieHolde, position: Int) = holder.bind(similarItems?.get(position)!!)
 
@@ -21,8 +27,8 @@ class SimilaresSerieAdapter(val activity: FragmentActivity, private val similarI
 
     override fun getItemCount() = similarItems?.size!!
 
-    inner class SimilaresSerieHolde(parent: ViewGroup)
-        : RecyclerView.ViewHolder(LayoutInflater.from(activity).inflate(R.layout.scroll_similares, parent, false)) {
+    inner class SimilaresSerieHolde(parent: ViewGroup) :
+        RecyclerView.ViewHolder(LayoutInflater.from(activity).inflate(R.layout.scroll_similares, parent, false)) {
         private var colorTop: Int = ContextCompat.getColor(activity.baseContext, R.color.primary)
 
         fun bind(tvshow: ResultsItem) = with(itemView) {

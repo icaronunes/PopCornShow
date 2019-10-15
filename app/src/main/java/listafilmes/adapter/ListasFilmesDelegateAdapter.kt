@@ -33,17 +33,16 @@ class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
     inner class ListViewHolder(parent: ViewGroup) :
             RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_filmes_list, parent, false)) {
 
-
         fun bind(item: ListaItemFilme) = with(itemView) {
             putdata(context, item, title_filmes_lista)
 
             Picasso.get().load(UtilsApp
                     .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.posterPath)
                     .error(R.drawable.poster_empty)
-                    .into(imgFilmes, object: Callback {
+                    .into(imgFilmes, object : Callback {
                         override fun onError(e: Exception?) {
                             progress_filmes_lista.visibility = View.GONE
-                            val dataLancamento = if (!item.releaseDate.isNullOrEmpty() && item.releaseDate.length > 3) item.releaseDate.subSequence(0,4) else "-"
+                            val dataLancamento = if (!item.releaseDate.isNullOrEmpty() && item.releaseDate.length > 3) item.releaseDate.subSequence(0, 4) else "-"
                             title_filmes_lista.text = "${item.title} - $dataLancamento"
                             title_filmes_lista.visibility = View.VISIBLE
                         }
@@ -52,7 +51,7 @@ class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
                             progress_filmes_lista.visibility = View.GONE
                             title_filmes_lista.visibility = View.GONE
                         }
-                    } )
+                    })
 
             itemView.setOnClickListener {
                 val intent = Intent(context, MovieDetailsActivity::class.java)
@@ -62,10 +61,10 @@ class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
             }
         }
 
-        private fun putdata(context: Context, item: ListaItemFilme?, title_filmes_lista: TextView){
-            when(context.javaClass.simpleName) {
-                "FilmesActivity" -> {title_filmes_lista.visibility = View.GONE}
-                else -> {title_filmes_lista.text = if (!item?.releaseDate.isNullOrEmpty() && item?.releaseDate?.length!! > 3) item.releaseDate .subSequence(0,4) else "-"}
+        private fun putdata(context: Context, item: ListaItemFilme?, title_filmes_lista: TextView) {
+            when (context.javaClass.simpleName) {
+                "FilmesActivity" -> { title_filmes_lista.visibility = View.GONE }
+                else -> { title_filmes_lista.text = if (!item?.releaseDate.isNullOrEmpty() && item?.releaseDate?.length!! > 3) item.releaseDate.subSequence(0, 4) else "-" }
             }
         }
     }

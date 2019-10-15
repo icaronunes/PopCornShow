@@ -1,7 +1,6 @@
 package activity
 
 import adapter.ListUserAdapter
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,6 +9,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.icaro.filme.R
 import domain.Api
+import java.util.Random
+import kotlin.collections.HashMap
 import kotlinx.android.synthetic.main.activity_lista.*
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -17,13 +18,11 @@ import rx.subscriptions.CompositeSubscription
 import utils.Constantes
 import utils.InfiniteScrollListener
 import utils.UtilsApp
-import java.util.*
 
 /**
  * Created by icaro on 04/10/16.
  */
 class ListaGenericaActivity : BaseActivity() {
-
 
     private lateinit var listId: String
     private var totalPagina: Int = 1
@@ -39,14 +38,14 @@ class ListaGenericaActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = intent.getStringExtra(Constantes.LISTA_GENERICA)
         listId = intent.getStringExtra(Constantes.LISTA_ID)
-        
+
         if (intent.hasExtra(Constantes.BUNDLE)) {
             map = HashMap()
             map = intent.getSerializableExtra(Constantes.BUNDLE) as Map<String, String>
         }
         createRecyler()
     }
-    
+
     private fun createRecyler() {
         recycleView_favorite.apply {
             val gridlayout = GridLayoutManager(this@ListaGenericaActivity, 3)
@@ -57,7 +56,7 @@ class ListaGenericaActivity : BaseActivity() {
             adapter = ListUserAdapter(this@ListaGenericaActivity)
         }
     }
-    
+
     override fun onResume() {
         super.onResume()
         subscriptions = CompositeSubscription()
@@ -119,7 +118,6 @@ class ListaGenericaActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if(subscriptions.hasSubscriptions()) subscriptions.clear()
+        if (subscriptions.hasSubscriptions()) subscriptions.clear()
     }
-
 }

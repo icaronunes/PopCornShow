@@ -20,7 +20,6 @@ import rx.subscriptions.CompositeSubscription
 import utils.Constantes
 import utils.UtilsApp
 
-
 /**
  * Created by icaro on 24/07/16.
  */
@@ -41,7 +40,7 @@ class ElencoActivity : BaseActivity() {
 
         supportActionBar?.title = title
         setAdMob(adView)
-        
+
         elenco_recycleview.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
@@ -65,12 +64,10 @@ class ElencoActivity : BaseActivity() {
 
                 subscriptions.add(inscricaoMovie)
             }
-
         } else {
             text_elenco_no_internet?.visibility = View.VISIBLE
             snack()
         }
-
     }
 
     override fun onDestroy() {
@@ -84,7 +81,6 @@ class ElencoActivity : BaseActivity() {
         lista = intent.getSerializableExtra(Constantes.ELENCO) as List<CastItem?>?
         season = intent.getIntExtra(Constantes.TVSEASONS, -100)
         id = intent.getIntExtra(Constantes.ID, 0)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

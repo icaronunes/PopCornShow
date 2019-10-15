@@ -17,8 +17,10 @@ import utils.setPicassoWithCache
  * Created by icaro on 12/08/16.
  */
 
-class SimilaresListaFilmeAdapter(private val activity: SimilaresActivity,
-                                 private val listSimilares: List<ResultsSimilarItem?>?) :
+class SimilaresListaFilmeAdapter(
+    private val activity: SimilaresActivity,
+    private val listSimilares: List<ResultsSimilarItem?>?
+) :
         RecyclerView.Adapter<SimilaresListaFilmeAdapter.SimilareViewHolde>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimilareViewHolde {

@@ -4,20 +4,19 @@ import androidx.fragment.app.Fragment
 import br.com.icaro.filme.R
 import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_list_medias.*
+import kotlinx.android.synthetic.main.fragment_list_medias.frame_list_filme
 import rx.subscriptions.CompositeSubscription
 import utils.UtilsKt
 
-open class FragmentBase: Fragment() {
-    
+open class FragmentBase : Fragment() {
+
     protected var subscriptions = CompositeSubscription()
-    
+
     override fun onResume() {
         super.onResume()
         subscriptions = CompositeSubscription()
-        
     }
-    
+
     override fun onPause() {
         super.onPause()
         subscriptions.unsubscribe()
@@ -28,11 +27,8 @@ open class FragmentBase: Fragment() {
         UtilsKt.setAdMob(adView)
     }
 
-     private fun snack(block: () -> Unit) {
+    private fun snack(block: () -> Unit) {
         Snackbar.make(frame_list_filme!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry) {
-                    block()
-                }.show()
+            .setAction(R.string.retry) { block() }.show()
     }
-
 }

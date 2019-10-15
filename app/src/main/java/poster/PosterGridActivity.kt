@@ -1,7 +1,6 @@
 package poster
 
 import activity.BaseActivity
-import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.view.Window
@@ -30,12 +29,11 @@ class PosterGridActivity : BaseActivity() {
             layoutManager = GridLayoutManager(baseContext, 2)
         }
         setAdMob(adView)
-        
+
         if (intent.hasExtra(Constantes.POSTER)) {
             val posters = intent.getSerializableExtra(Constantes.POSTER) as List<PostersItem>
             val titulo = intent.getStringExtra(Constantes.NOME)
             recycleView_poster_grid.adapter = PosterGridAdapter(this@PosterGridActivity, posters, titulo)
         }
-
     }
 }

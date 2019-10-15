@@ -15,7 +15,7 @@ import java.text.Normalizer
  * Created by icaro on 03/09/17.
  */
 
-fun ImageView.setPicasso(stillPath: String?, patten: Int = 4,  sucesso: () -> Unit = {}, error: () -> Unit = {}, img_erro: Int = R.drawable.poster_empty) {
+fun ImageView.setPicasso(stillPath: String?, patten: Int = 4, sucesso: () -> Unit = {}, error: () -> Unit = {}, img_erro: Int = R.drawable.poster_empty) {
     Picasso.get()
             .load(UtilsApp
                     .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, patten)) + stillPath)
@@ -33,7 +33,7 @@ fun ImageView.setPicasso(stillPath: String?, patten: Int = 4,  sucesso: () -> Un
             })
 }
 
-fun ImageView.setPicassoWithCache(stillPath: String?, patten: Int = 4,  sucesso: () -> Unit = {}, error: () -> Unit = {}, img_erro: Int = R.drawable.poster_empty) {
+fun ImageView.setPicassoWithCache(stillPath: String?, patten: Int = 4, sucesso: () -> Unit = {}, error: () -> Unit = {}, img_erro: Int = R.drawable.poster_empty) {
     Picasso.get()
             .load(UtilsApp
                     .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, patten)) + stillPath)
@@ -54,13 +54,12 @@ fun Activity.makeToast(restText: Int, time: Int = Toast.LENGTH_SHORT) {
 }
 
 fun Activity.makeToast(text: String?, time: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(this, text, time ).show()
+    Toast.makeText(this, text, time).show()
 }
 
 fun View.gone() {
     this.visibility = View.GONE
 }
-
 
 fun View.visible() {
     this.visibility = View.VISIBLE

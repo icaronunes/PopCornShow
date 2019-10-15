@@ -12,12 +12,12 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import domain.ListaItemSerie
 import domain.ViewType
+import java.lang.Exception
 import kotlinx.android.synthetic.main.adapter_filmes_list.view.*
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
-import java.lang.Exception
 
 class ListasSeriesDelegateAdapter : ViewTypeDelegateAdapter {
 
@@ -29,12 +29,10 @@ class ListasSeriesDelegateAdapter : ViewTypeDelegateAdapter {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType, context: Context?) {
         this.context = context
         (holder as ListViewHolder).bind(item as ListaItemSerie)
-
     }
 
     inner class ListViewHolder(parent: ViewGroup) :
             RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_filmes_list, parent, false)) {
-
 
         fun bind(item: ListaItemSerie?) = with(itemView) {
             putdata(context, item, title_filmes_lista)
@@ -48,7 +46,6 @@ class ListasSeriesDelegateAdapter : ViewTypeDelegateAdapter {
                             if (!item?.firstAirDate.isNullOrEmpty() && item?.firstAirDate?.length!! > 3) {
                                 title_filmes_lista.text = "${item.name} - ${item.firstAirDate.subSequence(0, 4)}"
                             } else {
-
                             }
                             title_filmes_lista.visibility = View.VISIBLE
                         }
@@ -78,6 +75,5 @@ class ListasSeriesDelegateAdapter : ViewTypeDelegateAdapter {
                 }
             }
         }
-
     }
 }

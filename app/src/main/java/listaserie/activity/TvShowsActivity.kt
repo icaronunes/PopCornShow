@@ -11,7 +11,6 @@ import br.com.icaro.filme.R
 import listaserie.fragment.TvShowsFragment
 import utils.Constantes
 
-
 class TvShowsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +22,7 @@ class TvShowsActivity : BaseActivity() {
         val titulo = resources.getString(intent
                 .getIntExtra(Constantes.NAV_DRAW_ESCOLIDO, 0))
         supportActionBar?.title = titulo
-        
+
         if (savedInstanceState == null) {
             val tvShowsFragment = TvShowsFragment()
             tvShowsFragment.arguments = intent.extras
@@ -40,4 +39,3 @@ class TvShowsActivity : BaseActivity() {
         return true
     }
 }
-

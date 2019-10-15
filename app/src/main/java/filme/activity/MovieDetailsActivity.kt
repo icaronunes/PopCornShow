@@ -8,7 +8,11 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.RatingBar
 import android.widget.TextView
@@ -20,26 +24,33 @@ import br.com.icaro.filme.R
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import domain.Api
 import domain.FilmeDB
 import domain.FilmeService
 import domain.Movie
 import filme.fragment.MovieFragment
 import fragment.ImagemTopFilmeScrollFragment
-import kotlinx.android.synthetic.main.activity_filme.*
-import kotlinx.android.synthetic.main.fab_float.*
-import kotlinx.android.synthetic.main.include_progress_horizontal.*
+import java.io.File
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import kotlinx.android.synthetic.main.activity_filme.top_img_viewpager
+import kotlinx.android.synthetic.main.fab_float.fab_menu_filme
+import kotlinx.android.synthetic.main.fab_float.menu_item_favorite
+import kotlinx.android.synthetic.main.fab_float.menu_item_rated
+import kotlinx.android.synthetic.main.fab_float.menu_item_watchlist
+import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import utils.Constantes
 import utils.UtilsApp
-import java.io.File
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
-
 
 class MovieDetailsActivity : BaseActivity() {
     private var color_fundo: Int = 0
@@ -78,12 +89,10 @@ class MovieDetailsActivity : BaseActivity() {
         setTitle(" ")
         getExtras()
 
-
         top_img_viewpager.apply {
             setBackgroundColor(color_fundo)
             offscreenPageLimit = 3
         }
-
 
         iniciarFirebases()
         subscriptions = CompositeSubscription()
@@ -93,9 +102,7 @@ class MovieDetailsActivity : BaseActivity() {
         } else {
             snack()
         }
-
     }
-
 
     private fun getDados() {
 
@@ -114,7 +121,6 @@ class MovieDetailsActivity : BaseActivity() {
                 })
 
         subscriptions.add(inscricaoMovie)
-
     }
 
     private fun setEventListenerWatch() {
@@ -132,11 +138,9 @@ class MovieDetailsActivity : BaseActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-
             }
         }
         myWatch?.addValueEventListener(valueEventWatch!!)
-
     }
 
     private fun setEventListenerRated() {
@@ -153,7 +157,6 @@ class MovieDetailsActivity : BaseActivity() {
                             menu_item_rated?.labelText = resources.getString(R.string.adicionar_rated)
                         }
                     }
-
                 } else {
                     addRated = false
                     numero_rated = 0.0f
@@ -162,11 +165,9 @@ class MovieDetailsActivity : BaseActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-
             }
         }
         myRated?.addValueEventListener(valueEventRated!!)
-
     }
 
     private fun setEventListenerFavorite() {
@@ -178,12 +179,10 @@ class MovieDetailsActivity : BaseActivity() {
                 } else {
                     addFavorite = false
                     menu_item_favorite?.labelText = resources.getString(R.string.adicionar_favorite)
-
                 }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-
             }
         }
         myFavorite?.addValueEventListener(valueEventFavorite!!)
@@ -232,7 +231,6 @@ class MovieDetailsActivity : BaseActivity() {
             menu_item_favorite?.setOnClickListener(addOrRemoveFavorite())
             menu_item_rated?.setOnClickListener(ratedFilme())
             menu_item_watchlist?.setOnClickListener(addOrRemoveWatch())
-
         } else {
             fab_menu_filme?.alpha = 0.0f
         }
@@ -273,7 +271,6 @@ class MovieDetailsActivity : BaseActivity() {
                         Toast.makeText(this@MovieDetailsActivity, resources.getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show()
                     }
                 })
-
             } else {
                 Toast.makeText(this@MovieDetailsActivity, resources.getString(R.string.erro_ainda_sem_imagem), Toast.LENGTH_SHORT).show()
             }
@@ -281,12 +278,10 @@ class MovieDetailsActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-
     fun buildDeepLink(): String {
         // Get the unique appcode for this app.
         return "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3Dmovie%26id%3D${movieDb?.id}&apn=br.com.icaro.filme"
     }
-
 
     fun ratedFilme(): View.OnClickListener {
         return View.OnClickListener {
@@ -321,8 +316,6 @@ class MovieDetailsActivity : BaseActivity() {
                     no.visibility = View.GONE
                 }
 
-
-
                 no.setOnClickListener {
 
                     myRated?.child(id_filme.toString())?.setValue(null)
@@ -335,7 +328,6 @@ class MovieDetailsActivity : BaseActivity() {
                 }
 
                 ok.setOnClickListener(View.OnClickListener {
-
 
                     if (UtilsApp.isNetWorkAvailable(this@MovieDetailsActivity)) {
 
@@ -362,7 +354,6 @@ class MovieDetailsActivity : BaseActivity() {
                     }
                     alertDialog.dismiss()
                 })
-
             }
         }
     }
@@ -385,7 +376,6 @@ class MovieDetailsActivity : BaseActivity() {
             animator.duration = 1600
             animator.start()
 
-
             var date: Date? = null
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             try {
@@ -396,7 +386,6 @@ class MovieDetailsActivity : BaseActivity() {
 
             if (!UtilsApp.verificaLancamento(date)) {
                 Toast.makeText(this@MovieDetailsActivity, R.string.filme_nao_lancado, Toast.LENGTH_SHORT).show()
-
             } else {
 
                 if (addFavorite) {
@@ -446,8 +435,6 @@ class MovieDetailsActivity : BaseActivity() {
 
                             fab_menu_filme?.close(true)
                         }
-
-
             } else {
 
                 val filmeDB = FilmeDB()
@@ -463,7 +450,6 @@ class MovieDetailsActivity : BaseActivity() {
 
                             fab_menu_filme?.close(true)
                         }
-
             }
         }
     }
@@ -481,7 +467,7 @@ class MovieDetailsActivity : BaseActivity() {
         bundle.putInt(Constantes.COLOR_TOP, color_fundo)
         filmeFrag.arguments = bundle
 
-        if (!isDestroyed && !isFinishing ) {
+        if (!isDestroyed && !isFinishing) {
             supportFragmentManager
                     .beginTransaction()
                     .add(R.id.filme_container, filmeFrag, null)
@@ -525,5 +511,4 @@ class MovieDetailsActivity : BaseActivity() {
             return 0
         }
     }
-
 }

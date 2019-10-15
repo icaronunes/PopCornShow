@@ -7,18 +7,24 @@ import domain.colecao.Colecao
 import domain.movie.ListaFilmes
 import domain.person.Person
 import domain.tvshow.Tvshow
+import java.io.IOException
+import java.net.SocketTimeoutException
+import java.util.Locale
+import java.util.Random
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 import kotlinx.coroutines.suspendCancellableCoroutine
-import okhttp3.*
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import okhttp3.internal.http2.Http2Reader.Companion.logger
 import rx.Observable
 import utils.Config
 import utils.UtilsKt.Companion.getIdiomaEscolhido
-import java.io.IOException
-import java.net.SocketTimeoutException
-import java.util.*
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 class Api(val context: Context) {
 
@@ -43,7 +49,6 @@ class Api(val context: Context) {
             return response
         }
     }
-
 
     object TYPESEARCH {
 
@@ -111,7 +116,7 @@ class Api(val context: Context) {
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
-                    .url("http://www.omdbapi.com/?i=$id&tomatoes=true&r=json&apikey=${Config.OMDBAPI_API_KEY}") //Api de alguem)
+                    .url("http://www.omdbapi.com/?i=$id&tomatoes=true&r=json&apikey=${Config.OMDBAPI_API_KEY}") // Api de alguem)
                     .get()
                     .build()
             val response = client.newCall(request).execute()
@@ -164,10 +169,7 @@ class Api(val context: Context) {
                 subscriber.onError(Throwable(response.message))
             }
         }
-
-
     }
-
 
     fun buscaDeFilmes(tipoDeBusca: String? = TYPESEARCH.FILME.agora, pagina: Int = 1, local: String = "US"): Observable<ListaFilmes> {
         return Observable.create { subscriber ->
@@ -189,7 +191,7 @@ class Api(val context: Context) {
     }
 
     fun buscaDeSeries(tipoDeBusca: String? = TYPESEARCH.SERIE.popular, pagina: Int = 1, local: String = "US"): Observable<ListaSeries> {
-        //Todo Erro na busca da paginacao
+        // Todo Erro na busca da paginacao
         return Observable.create { subscriber ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
@@ -314,10 +316,9 @@ class Api(val context: Context) {
         }
     }
 
-
     suspend fun getTvShowLiteC(id: Int): Tvshow { // Usado em "Seguindo"
         return suspendCoroutine { cont ->
-            val client =  OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$id?api_key=${Config.TMDB_API_KEY}" + "&language=$timeZone" +
                             "&append_to_response=release_dates,external_ids&include_image_language=en,null")
@@ -338,14 +339,13 @@ class Api(val context: Context) {
                         cont.resumeWithException(Throwable(ex.message))
                     }
                 }
-
             })
         }
     }
 
     suspend fun getTvShowEpC(id: Int, idTemp: Int, idEp: Int): EpisodesItem { // Usado em "Seguindo"
         return suspendCoroutine { cont ->
-            val client =  OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
                     .url("${baseUrl3}tv/$id/season/$idTemp/episode/$idEp?api_key=${getKey()}" + "&language=$timeZone")
                     .get()
@@ -364,11 +364,9 @@ class Api(val context: Context) {
                         cont.resumeWithException(Throwable(ex.message))
                     }
                 }
-
             })
         }
     }
-
 
     fun getColecao(id: Int): Observable<Colecao> {
         return Observable.create { subscriber ->
@@ -487,7 +485,6 @@ class Api(val context: Context) {
                         cont.resumeWithException(Throwable(ex.message))
                     }
                 }
-
             })
         }
     }
@@ -533,7 +530,7 @@ class Api(val context: Context) {
     }
 
     fun reviewsFilme(idImdb: String?): Observable<ReviewsUflixit> {
-        //TODO usar para buscar reviews no the movie
+        // TODO usar para buscar reviews no the movie
         return Observable.create { subscriber ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
@@ -686,7 +683,6 @@ class Api(val context: Context) {
         }
     }
 
-
     suspend fun getPopularTv(): ListaSeries {
         return suspendCancellableCoroutine { continuation ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
@@ -694,7 +690,6 @@ class Api(val context: Context) {
                     .url("${baseUrl3}tv/popular?api_key=${Config.TMDB_API_KEY}&language=${getIdiomaEscolhido(context)}&page=1")
                     .get()
                     .build()
-
 
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {

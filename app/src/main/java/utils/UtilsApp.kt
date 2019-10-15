@@ -16,27 +16,32 @@ import androidx.core.content.FileProvider
 import androidx.palette.graphics.Palette
 import com.crashlytics.android.Crashlytics
 import configuracao.SettingsActivity
-import domain.*
+import domain.FilmeService
+import domain.TvSeasons
+import domain.UserEp
+import domain.UserSeasons
+import domain.UserTvshow
 import domain.busca.ResultsItem
 import domain.tvshow.ExternalIds
 import domain.tvshow.Tvshow
 import info.movito.themoviedbapi.model.config.Timezone
 import info.movito.themoviedbapi.model.tv.TvSeason
-import utils.enums.EnumTypeMedia
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.net.URL
-import java.util.*
-
+import java.util.ArrayList
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import utils.enums.EnumTypeMedia
 
 /**
  * Created by icaro on 24/06/16.
  */
 
 object UtilsApp {
-
 
     /* Checks if external storage is available for read and write */
     val isExternalStorageWritable: Boolean
@@ -59,7 +64,6 @@ object UtilsApp {
             Locale.getDefault().language + "-" + Locale.getDefault().country
         }
 
-
     val timezone: Timezone
         get() {
             for (timezone in FilmeService.getTimeZone()) {
@@ -75,7 +79,7 @@ object UtilsApp {
         userTvshow.poster = serie.posterPath
         userTvshow.id = serie.id ?: -1
         userTvshow.nome = serie.originalName
-        //userTvshow.setExternalIds(valoresExternalIds(serie.getExternal_ids()));
+        // userTvshow.setExternalIds(valoresExternalIds(serie.getExternal_ids()));
         userTvshow.numberOfEpisodes = serie.numberOfEpisodes ?: 0
         userTvshow.numberOfSeasons = serie.numberOfSeasons ?: 0
         userTvshow.seasons = setUserSeasson(serie)
@@ -92,7 +96,6 @@ object UtilsApp {
         return ext
     }
 
-
     private fun setUserSeasson(serie: Tvshow): MutableList<UserSeasons> {
         val list = ArrayList<UserSeasons>()
         return try {
@@ -106,7 +109,6 @@ object UtilsApp {
         } catch (e: Exception) {
             list
         }
-
     }
 
     fun setEp(tvSeason: TvSeason): List<UserEp> {
@@ -136,12 +138,11 @@ object UtilsApp {
         } catch (e: Exception) {
             mutableListOf<UserEp>()
         }
-
     }
 
     fun verificaLancamento(air_date: Date?): Boolean {
         val data: Boolean
-        //Arrumar. Ta esquisito.
+        // Arrumar. Ta esquisito.
         if (air_date == null) return false
         val myDate = Calendar.getInstance().time
         if (air_date.before(myDate)) {
@@ -158,7 +159,6 @@ object UtilsApp {
         calendar.time = air_date
         val hoje = Calendar.getInstance()
         hoje.time = Calendar.getInstance().time
-
 
         return if (calendar.after(hoje)) {
             false
@@ -194,11 +194,10 @@ object UtilsApp {
             // Log.e(TAG, e.getMessage(), e);
             Crashlytics.logException(e)
         }
-
     }
 
     fun salvaImagemMemoriaCache(context: Context, imageView: ImageView?, endereco: String): File {
-        //Usar metodo do activity.BaseActivity
+        // Usar metodo do activity.BaseActivity
         val file = context.externalCacheDir
 
         if (!file!!.exists()) {
@@ -244,14 +243,13 @@ object UtilsApp {
         } catch (e: IOException) {
             Crashlytics.logException(e)
         }
-
     }
 
     fun isNetWorkAvailable(context: Context?): Boolean {
         val conectivtyManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return (conectivtyManager.activeNetworkInfo != null
-                && conectivtyManager.activeNetworkInfo.isAvailable
-                && conectivtyManager.activeNetworkInfo.isConnected)
+        return (conectivtyManager.activeNetworkInfo != null &&
+            conectivtyManager.activeNetworkInfo.isAvailable &&
+            conectivtyManager.activeNetworkInfo.isConnected)
     }
 
     fun loadPalette(view: View): Int {
@@ -274,20 +272,20 @@ object UtilsApp {
         val info = cm.activeNetworkInfo
 
         if (info == null || !info.isConnected)
-            return "-" //sem conexão
+            return "-" // sem conexão
         if (info.type == ConnectivityManager.TYPE_WIFI)
-            return "forte" //WIFI
+            return "forte" // WIFI
         if (info.type == ConnectivityManager.TYPE_MOBILE) {
             val networkType = info.subtype
             when (networkType) {
-                TelephonyManager.NETWORK_TYPE_GPRS, TelephonyManager.NETWORK_TYPE_EDGE, TelephonyManager.NETWORK_TYPE_CDMA, TelephonyManager.NETWORK_TYPE_1xRTT, TelephonyManager.NETWORK_TYPE_IDEN //api<8 : troque por 11
-                -> return "fraca" //2G
-                TelephonyManager.NETWORK_TYPE_UMTS, TelephonyManager.NETWORK_TYPE_EVDO_0, TelephonyManager.NETWORK_TYPE_EVDO_A, TelephonyManager.NETWORK_TYPE_HSDPA, TelephonyManager.NETWORK_TYPE_HSUPA, TelephonyManager.NETWORK_TYPE_HSPA, TelephonyManager.NETWORK_TYPE_EVDO_B //api<9 : troque por 14
-                    , TelephonyManager.NETWORK_TYPE_EHRPD  //api<11 : troque por 12
-                    , TelephonyManager.NETWORK_TYPE_HSPAP  //api<13 : troque por 15
-                -> return "fraca" //3G
-                TelephonyManager.NETWORK_TYPE_LTE    //api<11 : troque por 13
-                -> return "forte" //4G
+                TelephonyManager.NETWORK_TYPE_GPRS, TelephonyManager.NETWORK_TYPE_EDGE, TelephonyManager.NETWORK_TYPE_CDMA, TelephonyManager.NETWORK_TYPE_1xRTT, TelephonyManager.NETWORK_TYPE_IDEN // api<8 : troque por 11
+                -> return "fraca" // 2G
+                TelephonyManager.NETWORK_TYPE_UMTS, TelephonyManager.NETWORK_TYPE_EVDO_0, TelephonyManager.NETWORK_TYPE_EVDO_A, TelephonyManager.NETWORK_TYPE_HSDPA, TelephonyManager.NETWORK_TYPE_HSUPA, TelephonyManager.NETWORK_TYPE_HSPA, TelephonyManager.NETWORK_TYPE_EVDO_B, // api<9 : troque por 14
+                TelephonyManager.NETWORK_TYPE_EHRPD, // api<11 : troque por 12
+                TelephonyManager.NETWORK_TYPE_HSPAP // api<13 : troque por 15
+                -> return "fraca" // 3G
+                TelephonyManager.NETWORK_TYPE_LTE // api<11 : troque por 13
+                -> return "forte" // 4G
                 else -> return "?"
             }
         }
@@ -348,7 +346,6 @@ object UtilsApp {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-
         }
     }
 
@@ -360,7 +357,6 @@ object UtilsApp {
         } else if (item.mediaType.equals(EnumTypeMedia.MOVIE.type, ignoreCase = true)) {
             if (item.posterPath != null && !item.posterPath.isEmpty() && !item.posterPath.equals("", ignoreCase = true))
                 UtilsApp.saveImagemSearch(context, item.posterPath)
-
         } else if (item.mediaType.equals(EnumTypeMedia.PERSON.type, ignoreCase = true)) {
             if (item.profile_path != null && !item.profile_path.isEmpty() && !item.profile_path.equals("", ignoreCase = true))
                 UtilsApp.saveImagemSearch(context, item.profile_path)
@@ -372,34 +368,26 @@ object UtilsApp {
         when (tamanho) {
             1 -> {
                 return "http://image.tmdb.org/t/p/w92/"
-
             }
             2 -> {
                 return "http://image.tmdb.org/t/p/w154/"
-
             }
             3 -> {
                 return "http://image.tmdb.org/t/p/w185/"
-
             }
             4 -> {
                 return "http://image.tmdb.org/t/p/w342/"
-
             }
             5 -> {
                 return "http://image.tmdb.org/t/p/w500/"
-
             }
             6 -> {
                 return "http://image.tmdb.org/t/p/w780/"
-
             }
             7 -> {
                 return "http://image.tmdb.org/t/p/original/"
-
             }
             else -> return null
         }
-
     }
 }

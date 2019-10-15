@@ -15,9 +15,30 @@ import androidx.fragment.app.Fragment
 import applicaton.BaseFragment
 import br.com.icaro.filme.R
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
-import domain.*
-import kotlinx.android.synthetic.main.epsodio_fragment.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import domain.CrewItem
+import domain.EpisodesItem
+import domain.FilmeService
+import domain.UserEp
+import domain.UserSeasons
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import kotlinx.android.synthetic.main.epsodio_fragment.air_date
+import kotlinx.android.synthetic.main.epsodio_fragment.ep_director
+import kotlinx.android.synthetic.main.epsodio_fragment.ep_image
+import kotlinx.android.synthetic.main.epsodio_fragment.ep_rating
+import kotlinx.android.synthetic.main.epsodio_fragment.ep_rating_button
+import kotlinx.android.synthetic.main.epsodio_fragment.ep_sinopse
+import kotlinx.android.synthetic.main.epsodio_fragment.ep_title
+import kotlinx.android.synthetic.main.epsodio_fragment.ep_votos
+import kotlinx.android.synthetic.main.epsodio_fragment.ep_write
+import kotlinx.android.synthetic.main.epsodio_fragment.wrapper_rating_ep
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -32,10 +53,6 @@ import utils.ConstFirebase.VISTO
 import utils.Constantes
 import utils.UtilsApp
 import utils.setPicasso
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
-
 
 /**
  * Created by icaro on 27/08/16.
@@ -163,11 +180,9 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
             myRef?.addValueEventListener(userListener!!)
             databaseReference!!.addValueEventListener(this@EpsodioFragment)
         }
-
     }
 
     override fun onCancelled(dataSnapshot: DatabaseError) {
-
     }
 
     override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -326,8 +341,14 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
 
     companion object {
 
-        fun newInstance(tvEpisode: EpisodesItem, tvshow_id: Int,
-                        color: Int, seguindo: Boolean, position: Int, temporada_position: Int): Fragment {
+        fun newInstance(
+            tvEpisode: EpisodesItem,
+            tvshow_id: Int,
+            color: Int,
+            seguindo: Boolean,
+            position: Int,
+            temporada_position: Int
+        ): Fragment {
 
             val fragment = EpsodioFragment()
             val bundle = Bundle()
@@ -341,5 +362,4 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
             return fragment
         }
     }
-
 }

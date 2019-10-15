@@ -12,11 +12,10 @@ import br.com.icaro.filme.R
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import domain.person.ProfilesItem
+import java.io.Serializable
 import pessoa.activity.FotoPersonActivity
 import utils.Constantes
 import utils.UtilsApp
-import java.io.Serializable
-import java.lang.Exception
 
 /**
  * Created by icaro on 18/08/16.
@@ -33,16 +32,16 @@ class PersonImagemAdapter(private val context: Context, private val artworks: Li
         val item = artworks!![position]
 
         Picasso.get().load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3)) + item?.filePath)
-                .placeholder(R.drawable.person)
-                .into(holder.imageButton, object : Callback {
-                    override fun onError(e: Exception?) {
-                        holder.progressBar.visibility = View.GONE
-                    }
+            .placeholder(R.drawable.person)
+            .into(holder.imageButton, object : Callback {
+                override fun onError(e: Exception?) {
+                    holder.progressBar.visibility = View.GONE
+                }
 
-                    override fun onSuccess() {
-                        holder.progressBar.visibility = View.GONE
-                    }
-                })
+                override fun onSuccess() {
+                    holder.progressBar.visibility = View.GONE
+                }
+            })
 
         holder.imageButton.setOnClickListener {
             val intent = Intent(context, FotoPersonActivity::class.java)
@@ -60,8 +59,8 @@ class PersonImagemAdapter(private val context: Context, private val artworks: Li
     }
 
     inner class PersonImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-         val progressBar: ProgressBar
-         val imageButton: ImageButton
+        val progressBar: ProgressBar
+        val imageButton: ImageButton
 
         init {
             progressBar = itemView.findViewById<View>(R.id.progress_poster_grid) as ProgressBar

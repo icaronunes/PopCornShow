@@ -1,14 +1,21 @@
 package main
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.OnLifecycleEvent
 import applicaton.BaseViewModel
 import domain.Api
 import domain.ListaSeries
 import domain.movie.ListaFilmes
-import kotlinx.coroutines.*
-import utils.UtilsApp
 import java.net.ConnectException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.launch
+import utils.UtilsApp
 
 class MainFragViewModel(application: Application) : BaseViewModel(application) {
 
@@ -84,7 +91,6 @@ class MainFragViewModel(application: Application) : BaseViewModel(application) {
             } catch (ex: ConnectException) {
                 ops()
                 job.cancelAndJoin()
-
             } catch (ex: java.lang.Exception) {
                 ops()
                 job.cancelAndJoin()
@@ -110,7 +116,6 @@ class MainFragViewModel(application: Application) : BaseViewModel(application) {
             } catch (ex: ConnectException) {
                 ops()
                 job.cancelAndJoin()
-
             } catch (ex: java.lang.Exception) {
                 ops()
                 job.cancelAndJoin()

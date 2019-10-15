@@ -1,14 +1,12 @@
 package intro
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-
+import androidx.fragment.app.Fragment
 import br.com.icaro.filme.R
 
 /**
@@ -26,6 +24,5 @@ class SecondSlide : Fragment() {
         val imageView = view.findViewById<View>(R.id.intro_img) as ImageView
         imageView.setImageResource(R.drawable.intro_link)
         return view
-
     }
 }

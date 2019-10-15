@@ -1,7 +1,6 @@
 package domain
 
 import androidx.annotation.Keep
-
 import java.io.Serializable
 
 /**
@@ -9,8 +8,8 @@ import java.io.Serializable
  */
 @Keep
 data class UserSeasons(
-        var userEps: MutableList<UserEp>? = null,
-        var id: Int = 0,
-        var seasonNumber: Int = 0,
-        var isVisto: Boolean = false
+    var userEps: MutableList<UserEp>? = null,
+    var id: Int = 0,
+    var seasonNumber: Int = 0,
+    var isVisto: Boolean = false
 ) : Serializable

@@ -53,7 +53,6 @@ class SeguindoRecycleAdapter(private val context: FragmentActivity?, private val
             intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
             context?.startActivity(intent)
         }
-
     }
 
     fun add(tvFire: UserTvshow) {
@@ -80,6 +79,5 @@ class SeguindoRecycleAdapter(private val context: FragmentActivity?, private val
         val poster: ImageView = itemView.findViewById<View>(R.id.seguindo_imageView) as ImageView
         val title: TextView = itemView.findViewById<View>(R.id.seguindo_title) as TextView
         val circulo: ImageView = itemView.findViewById(R.id.seguindo_circulo)
-
     }
 }

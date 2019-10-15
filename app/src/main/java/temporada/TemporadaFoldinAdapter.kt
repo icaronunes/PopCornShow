@@ -10,22 +10,45 @@ import domain.EpisodesItem
 import domain.TvSeasons
 import domain.UserEp
 import domain.UserSeasons
-import kotlinx.android.synthetic.main.epsodio_detalhes.view.*
-import kotlinx.android.synthetic.main.foldin_main.view.*
-import kotlinx.android.synthetic.main.item_epsodio.view.*
-import kotlinx.android.synthetic.main.layout_diretor.view.*
-import utils.*
+import kotlinx.android.synthetic.main.epsodio_detalhes.view.epsodio_detalhes_img
+import kotlinx.android.synthetic.main.epsodio_detalhes.view.epsodio_detalhes_ler_mais
+import kotlinx.android.synthetic.main.epsodio_detalhes.view.epsodio_detalhes_nota
+import kotlinx.android.synthetic.main.epsodio_detalhes.view.epsodio_detalhes_nota_user
+import kotlinx.android.synthetic.main.epsodio_detalhes.view.epsodio_detalhes_progress
+import kotlinx.android.synthetic.main.epsodio_detalhes.view.epsodio_detalhes_votos
+import kotlinx.android.synthetic.main.epsodio_detalhes.view.layout_diretor_nome_visto
+import kotlinx.android.synthetic.main.epsodio_detalhes.view.wrapper_rating
+import kotlinx.android.synthetic.main.foldin_main.view.folding_cell
+import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_nota
+import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_numero
+import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_titulo
+import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_titulo_resumo
+import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_visto
+import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_votos
+import kotlinx.android.synthetic.main.layout_diretor.view.director_name
+import kotlinx.android.synthetic.main.layout_diretor.view.grup_director
+import kotlinx.android.synthetic.main.layout_diretor.view.grup_writer
+import kotlinx.android.synthetic.main.layout_diretor.view.img_director
+import kotlinx.android.synthetic.main.layout_diretor.view.writer_img
+import kotlinx.android.synthetic.main.layout_diretor.view.writer_name
+import utils.Constantes
+import utils.gone
+import utils.makeToast
+import utils.setPicassoWithCache
+import utils.visible
 
 /**
  * Created by root on 27/02/18.
  */
 
-
-
-class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, private val tvSeason: TvSeasons,
-                             val seasons: UserSeasons?, val seguindo: Boolean,
-                             private val temporadaOnClickListener: TemporadaAdapter.TemporadaOnClickListener)
-    : RecyclerView.Adapter<TemporadaFoldinAdapter.HoldeTemporada>() {
+class TemporadaFoldinAdapter(
+    val temporadaActivity: TemporadaActivity,
+    private val tvSeason: TvSeasons,
+    val seasons: UserSeasons?,
+    val seguindo: Boolean,
+    private val temporadaOnClickListener: TemporadaAdapter.TemporadaOnClickListener
+) :
+    RecyclerView.Adapter<TemporadaFoldinAdapter.HoldeTemporada>() {
 
     private var unfoldedIndexes = HashSet<Int>()
 
@@ -51,7 +74,7 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, private v
     }
 
     inner class HoldeTemporada(parent: ViewGroup) :
-            RecyclerView.ViewHolder(LayoutInflater.from(temporadaActivity).inflate(R.layout.foldin_main, parent, false)) {
+        RecyclerView.ViewHolder(LayoutInflater.from(temporadaActivity).inflate(R.layout.foldin_main, parent, false)) {
 
         fun bind(ep: EpisodesItem, epUser: UserEp?) = with(itemView) {
             epsodio_detalhes_progress.visibility = if (seguindo) View.VISIBLE else View.GONE
@@ -129,7 +152,6 @@ class TemporadaFoldinAdapter(val temporadaActivity: TemporadaActivity, private v
                     else -> {
                     }
                 }
-
             } else {
                 layout_diretor_nome_visto.gone()
                 epsodio_detalhes_ler_mais.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT

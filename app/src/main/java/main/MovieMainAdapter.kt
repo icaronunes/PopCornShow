@@ -11,8 +11,15 @@ import br.com.icaro.filme.R
 import domain.movie.ListaFilmes
 import domain.movie.ListaItemFilme
 import filme.activity.MovieDetailsActivity
-import kotlinx.android.synthetic.main.poster_main.view.*
-import utils.*
+import kotlinx.android.synthetic.main.poster_main.view.img_poster_grid
+import kotlinx.android.synthetic.main.poster_main.view.layout_poster_main
+import kotlinx.android.synthetic.main.poster_main.view.progress_poster_grid
+import kotlinx.android.synthetic.main.poster_main.view.title_main
+import utils.Constantes
+import utils.UtilsApp
+import utils.gone
+import utils.setPicassoWithCache
+import utils.visible
 
 /**
  * Created by icaro on 17/02/17.

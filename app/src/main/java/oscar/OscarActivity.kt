@@ -2,9 +2,7 @@ package oscar
 
 import activity.BaseActivity
 import adapter.ListUserAdapter
-import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -12,7 +10,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
 import domain.Api
-import kotlinx.android.synthetic.main.activity_lista.*
+import kotlinx.android.synthetic.main.activity_lista.linear_lista
+import kotlinx.android.synthetic.main.activity_lista.recycleView_favorite
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -47,7 +46,6 @@ class OscarActivity : BaseActivity() {
         }
     }
 
-
     override fun onResume() {
         super.onResume()
         subscriptions = CompositeSubscription()
@@ -73,43 +71,40 @@ class OscarActivity : BaseActivity() {
 
     protected fun snack() {
         Snackbar.make(linear_lista, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry) {
-                    if (UtilsApp.isNetWorkAvailable(baseContext)) {
-                        getOscar()
-                    } else {
-                        snack()
-                    }
-                }.show()
+            .setAction(R.string.retry) {
+                if (UtilsApp.isNetWorkAvailable(baseContext)) {
+                    getOscar()
+                } else {
+                    snack()
+                }
+            }.show()
     }
 
     private fun getOscar() {
 
         val teste = Api(context = this).loadMovieComVideo(18)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                   it.id
-                }, {
-                    Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                it.id
+            }, {
+                Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
+            })
 
         if (totalPagina >= pagina) {
             val inscricao = Api(context = this).getLista(id = listId, pagina = pagina)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        (recycleView_favorite.adapter as ListUserAdapter).addItens(it.results, it?.totalResults!!)
-                        pagina = it.page
-                        totalPagina = it.totalPages
-                        ++pagina
-                    }, {
-                        Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                    })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    (recycleView_favorite.adapter as ListUserAdapter).addItens(it.results, it?.totalResults!!)
+                    pagina = it.page
+                    totalPagina = it.totalPages
+                    ++pagina
+                }, {
+                    Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
+                })
             subscriptions.add(inscricao)
             subscriptions.add(teste)
         }
-
     }
-
-
 }

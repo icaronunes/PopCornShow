@@ -7,6 +7,6 @@ import javax.annotation.Generated
 @Generated("com.robohorse.robopojogenerator")
 data class Videos(
 
-	@field:SerializedName("results")
-	val results: MutableList<domain.ResultsVideosItem?>? = null
-): Serializable
+    @field:SerializedName("results")
+    val results: MutableList<domain.ResultsVideosItem?>? = null
+) : Serializable

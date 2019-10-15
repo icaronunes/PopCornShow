@@ -11,10 +11,16 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.ListaItemSerie
 import domain.ListaSeries
-import kotlinx.android.synthetic.main.poster_main.view.*
+import kotlinx.android.synthetic.main.poster_main.view.img_poster_grid
+import kotlinx.android.synthetic.main.poster_main.view.layout_poster_main
+import kotlinx.android.synthetic.main.poster_main.view.progress_poster_grid
+import kotlinx.android.synthetic.main.poster_main.view.title_main
 import tvshow.activity.TvShowActivity
-import utils.*
-
+import utils.Constantes
+import utils.UtilsApp
+import utils.gone
+import utils.setPicassoWithCache
+import utils.visible
 
 /**
  * Created by icaro on 17/02/17.
@@ -38,22 +44,22 @@ class TvShowMainAdapter(activity: FragmentActivity, private val popularTvshow: L
     override fun getItemCount() = if (popularTvshow.results.size < 15) popularTvshow.results.size else 15
 
     inner class TvShowPopularesViewHolder(parent: ViewGroup) :
-            RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.poster_main, parent, false)) {
+        RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.poster_main, parent, false)) {
         fun bind(item: ListaItemSerie) = with(itemView) {
             img_poster_grid.setBackgroundColor(ActivityCompat.getColor(context, R.color.accent))
             img_poster_grid.setPicassoWithCache(item.posterPath, 2,
-                    {
-                        progress_poster_grid.gone()
-                        color = UtilsApp.loadPalette(img_poster_grid)
-                        layout_poster_main.setCardBackgroundColor(color)
-                    },
-                    {
-                        progress_poster_grid.gone()
-                        title_main.apply {
-                            text = item.name
-                            title_main.visible()
-                        }
-                    }, img_erro = R.drawable.poster_empty)
+                {
+                    progress_poster_grid.gone()
+                    color = UtilsApp.loadPalette(img_poster_grid)
+                    layout_poster_main.setCardBackgroundColor(color)
+                },
+                {
+                    progress_poster_grid.gone()
+                    title_main.apply {
+                        text = item.name
+                        title_main.visible()
+                    }
+                }, img_erro = R.drawable.poster_empty)
 
             img_poster_grid.setOnClickListener {
                 context.startActivity(Intent(context, TvShowActivity::class.java).apply {
@@ -62,7 +68,6 @@ class TvShowMainAdapter(activity: FragmentActivity, private val popularTvshow: L
                     putExtra(Constantes.COLOR_TOP, color)
                 })
             }
-
         }
     }
 }

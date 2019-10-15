@@ -49,6 +49,5 @@ class ElencoAdapter(private val context: Context, private val casts: List<CastIt
         val elencoNome: TextView = itemView.findViewById(R.id.elenco_nome)
         val elencoCharacter: TextView = itemView.findViewById(R.id.elenco_character)
         val imgElenco: ImageView = itemView.findViewById(R.id.img_elenco)
-
     }
 }

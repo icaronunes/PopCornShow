@@ -12,6 +12,7 @@ import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.material.snackbar.Snackbar
 import domain.Api
 import fragment.FragmentBase
+import java.util.concurrent.TimeUnit
 import kotlinx.android.synthetic.main.fragment_list_medias.*
 import listaserie.adapter.ListaSeriesAdapter
 import rx.android.schedulers.AndroidSchedulers
@@ -21,7 +22,6 @@ import utils.InfiniteScrollStaggeredListener
 import utils.UtilsApp
 import utils.UtilsKt
 import utils.UtilsKt.Companion.getIdiomaEscolhido
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by icaro on 14/09/16.
@@ -38,8 +38,11 @@ class TvShowsFragment : FragmentBase() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
             inflater.inflate(R.layout.fragment_list_medias, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -59,7 +62,6 @@ class TvShowsFragment : FragmentBase() {
             txt_listas.visibility = View.VISIBLE
             txt_listas.text = resources.getString(R.string.no_internet)
             snack()
-
         } else {
             getListaSereies()
         }
@@ -92,8 +94,8 @@ class TvShowsFragment : FragmentBase() {
                             ++pagina
 
                             UtilsKt.getAnuncio(context!!, 2) { nativeAd: UnifiedNativeAd ->
-                                if (recycle_listas != null
-                                        && (recycle_listas.adapter as ListaSeriesAdapter)
+                                if (recycle_listas != null &&
+                                        (recycle_listas.adapter as ListaSeriesAdapter)
                                                 .getItemViewType((recycle_listas.adapter as ListaSeriesAdapter).itemCount - 1)
                                         != Constantes.BuscaConstants.AD) {
                                     (recycle_listas.adapter as ListaSeriesAdapter).addAd(nativeAd)
@@ -126,4 +128,3 @@ class TvShowsFragment : FragmentBase() {
         return null
     }
 }
-

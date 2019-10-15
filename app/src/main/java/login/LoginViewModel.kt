@@ -19,5 +19,4 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
         return false
     }
-
 }

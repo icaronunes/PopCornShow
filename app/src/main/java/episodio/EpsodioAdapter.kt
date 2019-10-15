@@ -8,11 +8,15 @@ import domain.TvSeasons
 /**
  * Created by icaro on 27/08/16.
  */
-class EpsodioAdapter(supportFragmentManager: FragmentManager,
-                     private val tvSeason: TvSeasons, private val tvshowId: Int,
-                     private val color: Int, private val seguindo: Boolean,
-                     private val temporadaPosition: Int) :
-        FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT ) {
+class EpsodioAdapter(
+    supportFragmentManager: FragmentManager,
+    private val tvSeason: TvSeasons,
+    private val tvshowId: Int,
+    private val color: Int,
+    private val seguindo: Boolean,
+    private val temporadaPosition: Int
+) :
+        FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
         return EpsodioFragment.newInstance(tvSeason.episodes!![position]!!,

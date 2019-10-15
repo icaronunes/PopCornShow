@@ -16,28 +16,27 @@ import domain.EpisodesItem
 import domain.UserEp
 import domain.UserTvshow
 import domain.tvshow.Tvshow
+import java.text.SimpleDateFormat
+import java.util.Calendar
 import org.apache.commons.lang3.tuple.MutablePair
 import seguindo.ProximosAdapter.CalendarViewHolder
 import temporada.TemporadaActivity
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
-import java.text.SimpleDateFormat
-import java.util.*
-
 
 /**
  * Created by icaro on 25/11/16.
  */
-class ProximosAdapter(private val context: FragmentActivity)
-    : RecyclerView.Adapter<CalendarViewHolder>() {
+class ProximosAdapter(private val context: FragmentActivity) :
+    RecyclerView.Adapter<CalendarViewHolder>() {
 
     private var colorTop: Int = 0
     private val userTvshows: MutableList<
-            MutablePair<
-                    Pair<UserEp, UserTvshow>,
-                    MutablePair<EpisodesItem, Tvshow>?
-                    >> = mutableListOf()
+        MutablePair<
+            Pair<UserEp, UserTvshow>,
+            MutablePair<EpisodesItem, Tvshow>?
+            >> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.calendar_adapter, parent, false)
@@ -77,7 +76,7 @@ class ProximosAdapter(private val context: FragmentActivity)
                 else -> {
                     view.newSeguindo.visibility = View.GONE
                     new.right.lastAirDate
-                    //Todo contagem errada. quando falta um, monstra que falta 0
+                    // Todo contagem errada. quando falta um, monstra que falta 0
                 }
             }
 
@@ -89,10 +88,9 @@ class ProximosAdapter(private val context: FragmentActivity)
             }
 
             setImage(view.poster, new.right.posterPath)
-
         } else {
             view.title.text = old.second.nome
-            view.proximo.text = ""//"S${new.left.seasonNumber}/E${new.left.episodeNumber}"
+            view.proximo.text = "" // "S${new.left.seasonNumber}/E${new.left.episodeNumber}"
             view.epTitle.text = old.second.nome
             view.faltando.text = "${old.first.episodeNumber}/${old.second.numberOfEpisodes}"
             view.progressBar.isIndeterminate = true
@@ -105,7 +103,7 @@ class ProximosAdapter(private val context: FragmentActivity)
             context.startActivity(Intent(context, TemporadaActivity::class.java).apply {
                 putExtra(Constantes.TVSHOW_ID, old.second.id)
                 putExtra(Constantes.TEMPORADA_ID, old.first.seasonNumber)
-                putExtra(Constantes.TEMPORADA_POSITION, temporadaZero(old?.second?.seasons?.get(0)?.seasonNumber, old.first.seasonNumber)) //old.first.episodeNumber)
+                putExtra(Constantes.TEMPORADA_POSITION, temporadaZero(old?.second?.seasons?.get(0)?.seasonNumber, old.first.seasonNumber)) // old.first.episodeNumber)
                 putExtra(Constantes.NOME, new?.right?.name)
                 putExtra(Constantes.COLOR_TOP, colorTop)
             })
@@ -121,7 +119,7 @@ class ProximosAdapter(private val context: FragmentActivity)
     }
 
     private fun temporadaZero(new: Int?, episodeNumber: Int): Int {
-        return if (new == 0)  episodeNumber else episodeNumber - 1
+        return if (new == 0) episodeNumber else episodeNumber - 1
     }
 
     private fun isEpLancado(airDate: String?): Boolean {
@@ -159,22 +157,21 @@ class ProximosAdapter(private val context: FragmentActivity)
 
     private fun setImage(viewImage: ImageView, url: String?) {
         Picasso.get()
-                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + url)
-                .placeholder(R.drawable.poster_empty)
-                .into(viewImage, object : Callback {
-                    override fun onError(e: Exception?) {
-                    }
+            .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + url)
+            .placeholder(R.drawable.poster_empty)
+            .into(viewImage, object : Callback {
+                override fun onError(e: Exception?) {
+                }
 
-                    override fun onSuccess() {
-                        colorTop = UtilsApp.loadPalette(viewImage)
-                    }
-                })
+                override fun onSuccess() {
+                    colorTop = UtilsApp.loadPalette(viewImage)
+                }
+            })
     }
 
     override fun getItemCount(): Int {
         return userTvshows.size
     }
-
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
@@ -209,6 +206,5 @@ class ProximosAdapter(private val context: FragmentActivity)
         internal val epsFaltantes: TextView = itemView.findViewById(R.id.eps_faltantes) as TextView
         internal val newSeguindo: TextView = itemView.findViewById(R.id.new_seguindo) as TextView
         internal val progressBar: ProgressBar = itemView.findViewById(R.id.calendar_progress) as ProgressBar
-
     }
 }

@@ -1,6 +1,5 @@
 package intro
 
-import login.LoginActivity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -10,6 +9,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.github.paolorotolo.appintro.AppIntro
 import com.github.paolorotolo.appintro.R
+import login.LoginActivity
 
 /**
  * Created by icaro on 21/11/16.

@@ -7,9 +7,9 @@ import javax.annotation.Generated
 @Generated("com.robohorse.robopojogenerator")
 data class Images(
 
-	@field:SerializedName("backdrops")
-	val backdrops: List<domain.BackdropsItem?>? = null,
+    @field:SerializedName("backdrops")
+    val backdrops: List<domain.BackdropsItem?>? = null,
 
-	@field:SerializedName("posters")
-	val posters: List<domain.PostersItem?>? = null
-): Serializable
+    @field:SerializedName("posters")
+    val posters: List<domain.PostersItem?>? = null
+) : Serializable

@@ -1,7 +1,5 @@
 package tvshow
 
-import producao.CrewsActivity
-import elenco.ElencoActivity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +14,8 @@ import br.com.icaro.filme.R
 import com.squareup.picasso.Picasso
 import domain.UserTvshow
 import domain.tvshow.Tvshow
+import elenco.ElencoActivity
+import producao.CrewsActivity
 import utils.Constantes
 import utils.UtilsApp
 
@@ -23,10 +23,14 @@ import utils.UtilsApp
  * Created by icaro on 26/08/16.
  */
 
-
-class TemporadasAdapter(val context: FragmentActivity, private val series: Tvshow?,
-                        private val onClickListener: TemporadasOnClickListener, private val color: Int, private val userTvshow: UserTvshow?)
-    : RecyclerView.Adapter<TemporadasAdapter.HoldeTemporada>() {
+class TemporadasAdapter(
+    val context: FragmentActivity,
+    private val series: Tvshow?,
+    private val onClickListener: TemporadasOnClickListener,
+    private val color: Int,
+    private val userTvshow: UserTvshow?
+) :
+    RecyclerView.Adapter<TemporadasAdapter.HoldeTemporada>() {
 
     interface TemporadasOnClickListener {
         fun onClickTemporada(view: View, position: Int, color: Int)
@@ -68,13 +72,12 @@ class TemporadasAdapter(val context: FragmentActivity, private val series: Tvsho
         }
     }
 
-
     override fun onBindViewHolder(holder: HoldeTemporada, position: Int) {
 
         holder.temporada.text = "${context.getString(R.string.temporada)} ${series?.seasons!![position]?.seasonNumber!!}"
         Picasso.get().load(UtilsApp.getBaseUrlImagem(2) + series.seasons[position]?.posterPath)
-                .error(R.drawable.poster_empty)
-                .into(holder.image_temporada)
+            .error(R.drawable.poster_empty)
+            .into(holder.image_temporada)
         holder.data.text = series.seasons[position]?.airDate ?: ""
         holder.itemView.setOnClickListener { view -> onClickListener.onClickTemporada(view, position, color) }
 
@@ -91,13 +94,12 @@ class TemporadasAdapter(val context: FragmentActivity, private val series: Tvsho
                 holder.bt_seguindo.setImageResource(R.drawable.icon_movie_now)
             }
         }
-
     }
 
     private fun isVisto(position: Int): Boolean {
         if (userTvshow != null) {
             if (userTvshow.seasons?.size!! > position) {
-               return userTvshow.seasons!![position].isVisto
+                return userTvshow.seasons!![position].isVisto
             }
         }
         return false
@@ -117,6 +119,5 @@ class TemporadasAdapter(val context: FragmentActivity, private val series: Tvsho
         internal val image_temporada: ImageView = itemView.findViewById(R.id.image_temporada)
         internal val popup: ImageButton = itemView.findViewById(R.id.popup_temporada)
         internal val bt_seguindo: ImageView = itemView.findViewById(R.id.bt_assistido)
-
     }
 }

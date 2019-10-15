@@ -23,7 +23,6 @@ import fragment.ViewPageMainTopFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import utils.UtilsApp
 
-
 class MainActivity : BaseActivity() {
 
     private lateinit var model: MainViewModel
@@ -50,8 +49,8 @@ class MainActivity : BaseActivity() {
 
     private fun setObservers() {
         model.data.observe(this, Observer {
-            when(it) {
-                is MainViewModel.MainModel.Data ->  mescla(it.data.first, it.data.second)
+            when (it) {
+                is MainViewModel.MainModel.Data -> mescla(it.data.first, it.data.second)
                 is MainViewModel.MainModel.News -> news()
                 is MainViewModel.MainModel.VisibleAnimed -> visibleAnimed(it)
             }
@@ -158,7 +157,7 @@ class MainActivity : BaseActivity() {
 
         val multi = mutableListOf<TopMain>().apply {
             for (index in 0..15) {
-                val topMain = TopMain()// criar class utilitaria
+                val topMain = TopMain() // criar class utilitaria
                 if (index % 2 == 0) {
                     if (index <= listaFilmes.size) {
                         val movieDb = listaFilmes[index]!!

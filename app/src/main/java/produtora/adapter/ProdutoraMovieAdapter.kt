@@ -16,7 +16,6 @@ import utils.Constantes
 import utils.UtilsApp
 import utils.setPicassoWithCache
 
-
 /**
  * Created by icaro on 10/08/16.
  */
@@ -56,7 +55,6 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
                     putExtra(Constantes.NOME_FILME, item.title)
                 })
             }
-
         }
     }
 }

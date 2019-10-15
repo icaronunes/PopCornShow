@@ -67,7 +67,6 @@ class CollectionPagerAdapter(private val info: List<PartsItem?>?, private val co
         }
         container.addView(view)
         return view
-
     }
 
     private fun loadPaletteCollection(drawable: BitmapDrawable) {
@@ -83,5 +82,4 @@ class CollectionPagerAdapter(private val info: List<PartsItem?>?, private val co
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         (container as ViewPager).removeView(`object` as View)
     }
-
 }

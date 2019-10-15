@@ -11,6 +11,7 @@ import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
 import domain.Api
 import fragment.FragmentBase
+import java.util.concurrent.TimeUnit
 import kotlinx.android.synthetic.main.fragment_list_medias.*
 import listafilmes.adapter.ListaFilmesAdapter
 import rx.android.schedulers.AndroidSchedulers
@@ -20,8 +21,6 @@ import utils.InfiniteScrollStaggeredListener
 import utils.UtilsApp
 import utils.UtilsKt
 import utils.UtilsKt.Companion.getIdiomaEscolhido
-import java.util.concurrent.TimeUnit
-
 
 /**
  * A simple [Fragment] subclass.
@@ -43,8 +42,11 @@ class MoviesFragment : FragmentBase() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_list_medias, container, false)
     }
 
@@ -65,7 +67,6 @@ class MoviesFragment : FragmentBase() {
             txt_listas?.visibility = View.VISIBLE
             txt_listas?.text = getString(R.string.no_internet)
             snack()
-
         } else {
             getListaFilmes()
         }
@@ -103,7 +104,6 @@ class MoviesFragment : FragmentBase() {
         subscriptions.add(inscricao)
     }
 
-
     private fun snack() {
         Snackbar.make(frame_list_filme!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
@@ -127,10 +127,7 @@ class MoviesFragment : FragmentBase() {
             R.string.populares -> return Api.TYPESEARCH.FILME.popular
 
             R.string.top_rated -> return Api.TYPESEARCH.FILME.melhores
-
         }
         return ""
     }
-
 }
-

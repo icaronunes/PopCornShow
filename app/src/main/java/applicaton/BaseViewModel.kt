@@ -6,26 +6,25 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import br.com.icaro.filme.R
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
-import kotlin.coroutines.CoroutineContext
 
 open class BaseViewModel(open val app: Application) : AndroidViewModel(app), LifecycleObserver {
 
     protected var job: Job = Job()
     val coroutineContext: CoroutineContext
-        get() =  Dispatchers.Main + job
+        get() = Dispatchers.Main + job
 
     val failura = MutableLiveData<BaseView.Failure>()
     val success = MutableLiveData<BaseView.Success>()
 
-
-    fun ops(){
+    fun ops() {
         Toast.makeText(app.baseContext, app.getString(R.string.ops), Toast.LENGTH_LONG).show()
     }
 
-    fun noInternet(){
+    fun noInternet() {
         Toast.makeText(app.baseContext, R.string.no_internet, Toast.LENGTH_LONG).show()
     }
 

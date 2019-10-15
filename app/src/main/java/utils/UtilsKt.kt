@@ -15,7 +15,11 @@ import configuracao.SettingsActivity
 import domain.Api
 import domain.UserTvshow
 import domain.tvshow.Tvshow
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class UtilsKt {
 
@@ -31,7 +35,6 @@ class UtilsKt {
                         val userEp = UtilsApp.setEp2(season)
                         if (userEp != null)
                             userTvshow.seasons!![index].userEps = userEp.toMutableList()
-
                     }
                 } catch (ex: Exception) {
                     Toast.makeText(context, context?.getString(R.string.ops), Toast.LENGTH_SHORT).show()
@@ -56,37 +59,37 @@ class UtilsKt {
 
             val adLoader = AdLoader.Builder(context, context.getString(R.string.adMobNotive))
 
-                    //TODO AdMob Cadastrado
-                    .forUnifiedNativeAd { ad: UnifiedNativeAd ->
-                        // Show the ad.
-                        //Retornando Ad para ser usado
-                        listener(ad)
-                    }
-                    .withAdListener(object : AdListener() {
-                        override fun onAdFailedToLoad(errorCode: Int) {
-                            Log.d(this.javaClass.name, "onAdFailedToLoad $errorCode")
+                // TODO AdMob Cadastrado
+                .forUnifiedNativeAd { ad: UnifiedNativeAd ->
+                    // Show the ad.
+                    // Retornando Ad para ser usado
+                    listener(ad)
+                }
+                .withAdListener(object : AdListener() {
+                    override fun onAdFailedToLoad(errorCode: Int) {
+                        Log.d(this.javaClass.name, "onAdFailedToLoad $errorCode")
 
-                            // Handle the failure by logging, altering the UI, and so on.
-                            //	Toast.makeText(context, context.getString(R.string.ops), Toast.LENGTH_LONG).show()
-                        }
-                    })
-                    .withNativeAdOptions(NativeAdOptions.Builder()
-                            // Methods in the NativeAdOptions.Builder class can be
-                            // used here to specify individual options settings.
-                            .setAdChoicesPlacement(NativeAdOptions.ADCHOICES_BOTTOM_LEFT)
-                            .setMediaAspectRatio(NativeAdOptions.NATIVE_MEDIA_ASPECT_RATIO_PORTRAIT)
-                            //.setImageOrientation(NativeAdOptions.ORIENTATION_PORTRAIT)
-                            .build())
-                    .build()
+                        // Handle the failure by logging, altering the UI, and so on.
+                        // 	Toast.makeText(context, context.getString(R.string.ops), Toast.LENGTH_LONG).show()
+                    }
+                })
+                .withNativeAdOptions(NativeAdOptions.Builder()
+                    // Methods in the NativeAdOptions.Builder class can be
+                    // used here to specify individual options settings.
+                    .setAdChoicesPlacement(NativeAdOptions.ADCHOICES_BOTTOM_LEFT)
+                    .setMediaAspectRatio(NativeAdOptions.NATIVE_MEDIA_ASPECT_RATIO_PORTRAIT)
+                    // .setImageOrientation(NativeAdOptions.ORIENTATION_PORTRAIT)
+                    .build())
+                .build()
 
             adLoader.loadAds(AdRequest.Builder().build(), quant)
         }
 
         fun setAdMob(adView: AdView) {
             adView.loadAd(AdRequest.Builder()
-                     //.addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)       // All emulators
-                     //.addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
-                    .build())
+                // .addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)       // All emulators
+                // .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+                .build())
 
             adView.adListener = object : AdListener() {
                 override fun onAdLoaded() {

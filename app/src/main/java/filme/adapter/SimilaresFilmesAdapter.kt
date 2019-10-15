@@ -52,7 +52,6 @@ class SimilaresFilmesAdapter(activity: FragmentActivity, val similarItems: List<
                             color_top = UtilsApp.loadPalette(holder.imgPagerSimilares)
                             holder.progressBarSimilares.visibility = View.GONE
                         }
-
                     })
 
             holder.imgPagerSimilares.setOnClickListener { _ ->
@@ -61,16 +60,13 @@ class SimilaresFilmesAdapter(activity: FragmentActivity, val similarItems: List<
                 intent.putExtra(Constantes.NOME_FILME, it.title)
                 intent.putExtra(Constantes.FILME_ID, it.id)
                 context.startActivity(intent)
-
             }
-
         }
     }
 
     override fun getItemCount(): Int {
         return similarItems?.size!!
     }
-
 
     inner class SimilaresViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

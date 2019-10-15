@@ -1,6 +1,5 @@
 package pessoaspopulares.adapter
 
-import pessoa.activity.PersonActivity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -13,6 +12,7 @@ import domain.PersonItem
 import domain.ViewType
 import kotlinx.android.synthetic.main.adapter_person_popular.view.*
 import kotlinx.android.synthetic.main.include_progress.view.*
+import pessoa.activity.PersonActivity
 import utils.Constantes
 import utils.UtilsApp
 
@@ -24,7 +24,6 @@ class PersonDelegateAdapter : ViewTypeDelegateAdapter {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType, context: Context?) {
         holder as PersonViewHoder
         holder.bind(item as PersonItem)
-
     }
 
     inner class PersonViewHoder(parent: ViewGroup) :
@@ -37,7 +36,7 @@ class PersonDelegateAdapter : ViewTypeDelegateAdapter {
             text_person_name.text = item.name
             progress.visibility = View.GONE
             itemView.setOnClickListener {
-                val intent = Intent(context, PersonActivity::class.java )
+                val intent = Intent(context, PersonActivity::class.java)
                 intent.putExtra(Constantes.NOME_PERSON, item.name)
                 intent.putExtra(Constantes.PERSON_ID, item.id)
                 context.startActivity(intent)

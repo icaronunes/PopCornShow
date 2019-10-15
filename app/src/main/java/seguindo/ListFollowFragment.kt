@@ -14,11 +14,16 @@ import br.com.icaro.filme.R
 import domain.Api
 import domain.UserEp
 import domain.UserTvshow
-import kotlinx.coroutines.*
+import java.io.Serializable
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.apache.commons.lang3.tuple.MutablePair
 import utils.Constantes
-import java.io.Serializable
 
 /**
  * Created by icaro on 25/11/16.
@@ -39,8 +44,11 @@ class ListFollowFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         when (tipo) {
 
             0 -> {
@@ -84,13 +92,12 @@ class ListFollowFragment : Fragment() {
         atualizar(series)
     }
 
-
     private fun atualizar(series: MutableList<Pair<UserEp, UserTvshow>>) {
 
         series.forEach {
             try {
                 GlobalScope.launch(Dispatchers.Main) {
-                    //Pegar serie atualizada do Server. Enviar para o metodo para atualizar baseado nela
+                    // Pegar serie atualizada do Server. Enviar para o metodo para atualizar baseado nela
                     val serie = async(Dispatchers.IO) { Api(context = context!!).getTvShowLiteC(it.second.id) }
                     val ep = async(Dispatchers.IO) { Api(context = context!!).getTvShowEpC(it.second.id, it.first.seasonNumber, it.first.episodeNumber) }
                     val ultima = async { MutablePair(ep.await(), serie.await()) }.await()

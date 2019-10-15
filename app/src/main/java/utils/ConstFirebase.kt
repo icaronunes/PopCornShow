@@ -9,6 +9,4 @@ object ConstFirebase {
     const val ASSISTIDO = "assistido"
     const val VISTO = "visto"
     const val NOTA = "nota"
-
-
 }

@@ -33,7 +33,7 @@ class PersonTvAdapter(private val context: Context, private val personCredits: L
         holder.poster.setPicasso(credit.posterPath, 2,
                 error = {
                     holder.progressBar.visibility = View.INVISIBLE
-                    if(credit.releaseDate != null) {
+                    if (credit.releaseDate != null) {
                         val data = if (credit.releaseDate.length >= 4) " - " + credit.releaseDate.substring(0, 4) else ""
                         holder.title.text = "${credit.name} $data"
                     } else {
@@ -66,7 +66,5 @@ class PersonTvAdapter(private val context: Context, private val personCredits: L
         val progressBar: ProgressBar = itemView.findViewById(R.id.progress_poster_grid)
         val poster: ImageView = itemView.findViewById(R.id.img_poster_grid)
         val title: TextView = itemView.findViewById(R.id.text_title_crew)
-
     }
 }
-

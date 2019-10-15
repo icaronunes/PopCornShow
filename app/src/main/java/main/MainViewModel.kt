@@ -35,7 +35,7 @@ class MainViewModel(override val app: Application) : BaseViewModel(app), MainBus
         _data.value = MainModel.Data(Pair(movies, tvShows))
     }
 
-    override fun getOps(){
+    override fun getOps() {
         ops()
     }
 

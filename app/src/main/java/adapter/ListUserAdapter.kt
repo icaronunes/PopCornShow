@@ -9,7 +9,6 @@ import domain.movie.ListaItemFilme
 import pessoaspopulares.adapter.LoadingDelegateAdapter
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
-import java.util.*
 
 /**
  * Created by icaro on 14/08/16.
@@ -44,8 +43,8 @@ class ListUserAdapter(private val context: Context) : RecyclerView.Adapter<Recyc
             for (result in listaMedia) {
                 this.listaResult.add(result!!)
             }
-            this.listaResult.sortedBy { (it as ListaItemFilme).releaseDate  }
-                    .reversed()
+            this.listaResult.sortedBy { (it as ListaItemFilme).releaseDate }
+                .reversed()
             notifyItemRangeChanged(initPosition, this.listaResult.size + 1 /* plus loading item */)
             if (listaResult.size < totalResults)
                 this.listaResult.add(loading)
@@ -62,5 +61,4 @@ class ListUserAdapter(private val context: Context) : RecyclerView.Adapter<Recyc
             }
         }
     }
-
 }

@@ -11,12 +11,13 @@ import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
 import domain.ResultsSimilarItem
 import domain.tvshow.ResultsItem
-import kotlinx.android.synthetic.main.activity_similares.*
-import kotlinx.android.synthetic.main.include_progress_horizontal.*
+import kotlinx.android.synthetic.main.activity_similares.adView
+import kotlinx.android.synthetic.main.activity_similares.similares_recyclerview
+import kotlinx.android.synthetic.main.activity_similares.text_similares_no_internet
+import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal
 import tvshow.adapter.SimilaresListaSerieAdapter
 import utils.Constantes
 import utils.UtilsApp
-
 
 /**
  * Created by icaro on 12/08/16.
@@ -67,14 +68,13 @@ open class SimilaresActivity : BaseActivity() {
             listaTvshow = intent.getSerializableExtra(Constantes.SIMILARES_TVSHOW) as List<ResultsItem?>?
         }
         title = intent.getStringExtra(Constantes.NOME)
-
     }
 
     private fun snack() {
         Snackbar.make(similares_recyclerview, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry) {
-                   setDataRecycler()
-                }.show()
+            .setAction(R.string.retry) {
+                setDataRecycler()
+            }.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -87,5 +87,4 @@ open class SimilaresActivity : BaseActivity() {
         }
         return true
     }
-
 }
