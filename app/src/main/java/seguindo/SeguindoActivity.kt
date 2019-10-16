@@ -14,13 +14,13 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import domain.UserTvshow
-import java.util.ArrayList
 import kotlinx.android.synthetic.main.activity_usuario_list.linear_usuario_list
 import kotlinx.android.synthetic.main.activity_usuario_list.progress
 import kotlinx.android.synthetic.main.activity_usuario_list.tabLayout
 import kotlinx.android.synthetic.main.activity_usuario_list.viewpage_usuario
 import utils.ConstFirebase
 import utils.UtilsApp
+import java.util.ArrayList
 
 /**
  * Created by icaro on 25/11/16.

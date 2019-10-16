@@ -2,88 +2,68 @@ package seguindo
 
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import domain.UserTvshow
+import kotlinx.android.synthetic.main.seguindo_tvshow.view.follow_poster
+import kotlinx.android.synthetic.main.seguindo_tvshow.view.follow_title
+import kotlinx.android.synthetic.main.seguindo_tvshow.view.follow_update
+import seguindo.SeguindoRecycleAdapter.SeguindoViewHolder
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
 import utils.gone
+import utils.setPicassoWithCache
 import utils.visible
 
 /**
  * Created by icaro on 02/12/16.
  */
-class SeguindoRecycleAdapter(private val context: FragmentActivity?, private val userTvshows: MutableList<UserTvshow>?) :
-        RecyclerView.Adapter<SeguindoRecycleAdapter.SeguindoViewHolder>() {
+class SeguindoRecycleAdapter(private val context: FragmentActivity?, private val userTvshows: MutableList<UserTvshow>) :
+    RecyclerView.Adapter<SeguindoViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeguindoViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.seguindo_tvshow, parent, false)
-        return SeguindoViewHolder(view)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SeguindoViewHolder(parent)
 
-    override fun onBindViewHolder(holder: SeguindoViewHolder, position: Int) {
-        val (nome, id, _, _, poster, _, _, desatualizada) = userTvshows!![position]
-        Picasso.get().load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + poster!!)
-                .into(holder.poster, object : Callback {
-                    override fun onSuccess() {}
+    override fun onBindViewHolder(holder: SeguindoViewHolder, position: Int) = holder.bind(userTvshows[position])
 
-                    override fun onError(e: Exception) {
-                        holder.title.text = nome
-                        holder.poster.setImageResource(R.drawable.poster_empty)
-                        holder.title.visibility = View.VISIBLE
-                    }
-                })
+    override fun getItemCount() = userTvshows.size
 
-        holder.itemView.contentDescription = nome
-        holder.itemView.importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_YES
-
-        if (desatualizada) {
-            holder.circulo.visible()
-        } else {
-            holder.circulo.gone()
-        }
-
-        holder.itemView.setOnClickListener {
-            val intent = Intent(context, TvShowActivity::class.java)
-            intent.putExtra(Constantes.TVSHOW_ID, id)
-            intent.putExtra(Constantes.NOME_TVSHOW, nome)
-            intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
-            context?.startActivity(intent)
-        }
-    }
+    override fun getItemViewType(position: Int) = position
 
     fun add(tvFire: UserTvshow) {
-        userTvshows!!.add(tvFire)
-        notifyDataSetChanged()
+        userTvshows.add(tvFire)
+        notifyItemInserted(userTvshows.size - 1)
     }
 
-    override fun getItemCount(): Int {
-        return userTvshows?.size ?: 0
-    }
+    inner class SeguindoViewHolder(parent: ViewGroup) :
+        RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.seguindo_tvshow, parent, false)) {
 
-    fun addAtualizado(tvFire: UserTvshow) {
-        userTvshows?.forEachIndexed { index, userTvshow ->
-            if (userTvshow.id == tvFire.id) {
-                userTvshows[index] = tvFire
-                notifyItemChanged(index)
-                return@forEachIndexed
+        fun bind(item: UserTvshow) = with(itemView) {
+
+            follow_poster.setPicassoWithCache(item.poster, 2, {
+
+            }, {
+                follow_title.apply {
+                    text = item.nome
+                    visible()
+                }
+            }, img_erro = R.drawable.poster_empty)
+
+            itemView.contentDescription = item.nome
+            itemView.importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_YES
+
+            if (item.desatualizada) follow_update.visible() else follow_update.gone()
+
+            itemView.setOnClickListener {
+                context?.startActivity(Intent(context, TvShowActivity::class.java).apply {
+                    putExtra(Constantes.TVSHOW_ID, item.id)
+                    putExtra(Constantes.NOME_TVSHOW, item.nome)
+                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(follow_poster))
+                })
             }
         }
-    }
-
-    inner class SeguindoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        val poster: ImageView = itemView.findViewById<View>(R.id.seguindo_imageView) as ImageView
-        val title: TextView = itemView.findViewById<View>(R.id.seguindo_title) as TextView
-        val circulo: ImageView = itemView.findViewById(R.id.seguindo_circulo)
     }
 }

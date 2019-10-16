@@ -14,8 +14,7 @@ import br.com.icaro.filme.R
 import domain.Api
 import domain.UserEp
 import domain.UserTvshow
-import java.io.Serializable
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -24,6 +23,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.apache.commons.lang3.tuple.MutablePair
 import utils.Constantes
+import java.io.Serializable
 
 /**
  * Created by icaro on 25/11/16.
@@ -67,7 +67,6 @@ class ListFollowFragment : Fragment() {
             0 -> {
                 verificarProximoEp()
             }
-
             1 -> {
                 verificarSerieCoroutine()
             }
@@ -93,13 +92,12 @@ class ListFollowFragment : Fragment() {
     }
 
     private fun atualizar(series: MutableList<Pair<UserEp, UserTvshow>>) {
-
         series.forEach {
             try {
-                GlobalScope.launch(Dispatchers.Main) {
+                GlobalScope.launch(Main) {
                     // Pegar serie atualizada do Server. Enviar para o metodo para atualizar baseado nela
-                    val serie = async(Dispatchers.IO) { Api(context = context!!).getTvShowLiteC(it.second.id) }
-                    val ep = async(Dispatchers.IO) { Api(context = context!!).getTvShowEpC(it.second.id, it.first.seasonNumber, it.first.episodeNumber) }
+                    val serie = async(IO) { Api(context = context!!).getTvShowLiteC(it.second.id) }
+                    val ep = async(IO) { Api(context = context!!).getTvShowEpC(it.second.id, it.first.seasonNumber, it.first.episodeNumber) }
                     val ultima = async { MutablePair(ep.await(), serie.await()) }.await()
                     launch {
                         adapterProximo?.addAtual(ultima)
@@ -112,25 +110,24 @@ class ListFollowFragment : Fragment() {
     }
 
     private fun verificarSerieCoroutine() {
-
-        userTvshows?.forEach { tvFire ->
-            try {
-                adapterSeguindo?.add(tvFire)
-                rotina = GlobalScope.launch(Dispatchers.IO) {
-                    val serie = async {
+        try {
+            userTvshows?.forEach { tvFire ->
+                rotina = GlobalScope.launch(Main) {
+                    val serie = async(IO) {
                         delay(600)
                         Api(context = context!!).getTvShowLiteC(tvFire.id)
                     }.await()
-                    if (serie.numberOfEpisodes != tvFire.numberOfEpisodes) {
-                        launch(Main) {
-                            tvFire.desatualizada = true
-                            adapterSeguindo?.addAtualizado(tvFire)
-                        }
+                    if (serie.numberOfEpisodes != null) {
+                        tvFire.desatualizada = serie.numberOfEpisodes != tvFire.numberOfEpisodes
+                        adapterSeguindo?.add(tvFire)
+                    } else {
+                        tvFire.desatualizada = false
+                        adapterSeguindo?.add(tvFire)
                     }
                 }
-            } catch (ex: Exception) {
-                ex.message
             }
+        } catch (ex: Exception) {
+            ex.message
         }
     }
 

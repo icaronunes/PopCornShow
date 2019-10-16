@@ -36,11 +36,6 @@ import domain.UserEp
 import domain.UserSeasons
 import domain.UserTvshow
 import domain.tvshow.Tvshow
-import java.io.File
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import kotlinx.android.synthetic.main.fab_float.fab_menu_filme
 import kotlinx.android.synthetic.main.fab_float.menu_item_favorite
 import kotlinx.android.synthetic.main.fab_float.menu_item_rated
@@ -59,6 +54,11 @@ import utils.Constantes
 import utils.UtilsApp
 import utils.UtilsApp.setEp2
 import utils.makeToast
+import java.io.File
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class TvShowActivity : BaseActivity() {
 
@@ -371,7 +371,7 @@ class TvShowActivity : BaseActivity() {
         }
     }
 
-    private fun RatedFilme(): View.OnClickListener {
+    private fun ratedMovie(): View.OnClickListener {
         return View.OnClickListener {
             var date: Date? = null
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -549,8 +549,17 @@ class TvShowActivity : BaseActivity() {
                     setupViewPagerTabs()
                     setTitle()
                     setImageTop()
-                    makeToast(R.string.season_updated)
                 }
+            }
+
+        val hashMap = HashMap<String, Any>()
+        hashMap["desatualizada"] = false
+        myRef?.child(mAuth?.currentUser?.uid!!)
+            ?.child("seguindo")
+            ?.child(series?.id.toString())
+            ?.updateChildren(hashMap)
+            ?.addOnCompleteListener {
+                makeToast(R.string.season_updated)
             }
     }
 
@@ -617,13 +626,13 @@ class TvShowActivity : BaseActivity() {
 
                 if (UtilsApp.verificaLancamento(date)) {
                     menu_item_favorite?.setOnClickListener(addOrRemoveFavorite())
-                    menu_item_rated?.setOnClickListener(RatedFilme())
+                    menu_item_rated?.setOnClickListener(ratedMovie())
                 }
                 menu_item_watchlist?.setOnClickListener(addOrRemoveWatch())
             } else {
                 menu_item_watchlist?.setOnClickListener(addOrRemoveWatch())
                 menu_item_favorite?.setOnClickListener(addOrRemoveFavorite())
-                menu_item_rated?.setOnClickListener(RatedFilme())
+                menu_item_rated?.setOnClickListener(ratedMovie())
             }
         } else {
             fab_menu_filme?.alpha = 0.0f
