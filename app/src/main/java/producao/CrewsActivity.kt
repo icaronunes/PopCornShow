@@ -12,8 +12,10 @@ import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
 import domain.Api
 import domain.CrewItem
-import kotlinx.android.synthetic.main.activity_crews.*
-import kotlinx.android.synthetic.main.include_progress_horizontal.*
+import kotlinx.android.synthetic.main.activity_crews.adView
+import kotlinx.android.synthetic.main.activity_crews.crews_recyclerview
+import kotlinx.android.synthetic.main.activity_crews.linear_crews_layout
+import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -81,7 +83,7 @@ class CrewsActivity : BaseActivity() {
     private fun snack() {
         Snackbar.make(linear_crews_layout!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry) {
-                    if (UtilsApp.isNetWorkAvailable(baseContext)) {
+                    if (UtilsApp.isNetWorkAvailable(baseContext)) { //Todo encapsular em metodo
                         if (id == 0 && season == -100) {
                             crews_recyclerview?.adapter = CrewsAdapter(this@CrewsActivity, lista)
                             progress_horizontal.visibility = View.GONE
