@@ -10,10 +10,13 @@ import br.com.icaro.filme.R
 import domain.ViewType
 import domain.movie.ListaItemFilme
 import filme.activity.MovieDetailsActivity
-import kotlinx.android.synthetic.main.adapter_produtora.view.*
+import kotlinx.android.synthetic.main.adapter_produtora.view.img_movie
+import kotlinx.android.synthetic.main.adapter_produtora.view.progress_bar
+import kotlinx.android.synthetic.main.adapter_produtora.view.year_or_title
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
 import utils.UtilsApp
+import utils.parseDateShot
 import utils.setPicassoWithCache
 
 /**
@@ -34,7 +37,7 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
 
         fun bind(item: ListaItemFilme) = with(itemView) {
             progress_bar?.visibility = View.VISIBLE
-            item.releaseDate?.let { year_or_title.text = it }
+            item.releaseDate?.let { year_or_title.text = it.parseDateShot() }
 
             val failure = {
                 progress_bar?.visibility = View.GONE
