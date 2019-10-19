@@ -51,8 +51,8 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
                     error = { failure() },
                     sucesso = { progress_bar?.visibility = View.GONE })
 
-            itemView.setOnClickListener {
-                itemView.context.startActivity(Intent(itemView.context, MovieDetailsActivity::class.java).apply {
+            setOnClickListener {
+                it.context.startActivity(Intent(itemView.context, MovieDetailsActivity::class.java).apply {
                     putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(img_movie))
                     putExtra(Constantes.FILME_ID, item.id)
                     putExtra(Constantes.NOME_FILME, item.title)
