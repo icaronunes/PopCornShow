@@ -9,7 +9,9 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
+import java.text.DateFormat
 import java.text.Normalizer
+import java.text.SimpleDateFormat
 
 /**
  * Created by icaro on 03/09/17.
@@ -78,4 +80,16 @@ fun String.removerAcentos(): String {
     this.replace("/", "")
     this.replace(";", "")
     return Normalizer.normalize(this, Normalizer.Form.NFD).replace("[^\\p{ASCII}]".toRegex(), "")
+}
+
+@Throws(Exception::class)
+fun String.parseDate(): String {
+
+    return try {
+        val sim = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        val data = sim.parse(this)
+        DateFormat.getDateInstance(DateFormat.SHORT).format(data)
+    } catch (ex: Exception) {
+        "N/A"
+    }
 }

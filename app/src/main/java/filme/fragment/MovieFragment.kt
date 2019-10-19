@@ -76,15 +76,13 @@ import utils.Constantes.METACRITICMOVIE
 import utils.Constantes.ROTTENTOMATOESMOVIE
 import utils.gone
 import utils.makeToast
+import utils.parseDate
 import utils.removerAcentos
 import utils.setPicasso
 import utils.visible
 import java.io.Serializable
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Locale
-import java.util.TimeZone
 
 /**
  * Created by icaro on 03/07/16.
@@ -591,26 +589,13 @@ class MovieFragment : FragmentBase() {
 
             if (date != null) {
                 date.releaseDates?.get(0)?.releaseDate?.let {
-                    lancamento.text = parseDateRelease(it)
+                    lancamento.text = it.parseDate()
                 }
             } else {
                 lancamento.text = getString(R.string.nao_informado)
             }
         } else {
             lancamento.text = getString(R.string.nao_informado)
-        }
-    }
-
-    private fun parseDateRelease(date: String): String {
-        // Todo mover para extensions
-        return try {
-            val df = SimpleDateFormat("yyyy-MM-dd").parse(date.substring(0, 10))
-            Calendar.getInstance().apply {
-                this.time = df
-                timeZone = TimeZone.getDefault()
-            }.time.toLocaleString().removeSuffix("00:00:00")
-        } catch (ex: Exception) {
-            getString(R.string.nao_informado)
         }
     }
 
