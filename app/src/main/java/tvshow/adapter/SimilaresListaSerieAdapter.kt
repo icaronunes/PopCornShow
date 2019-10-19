@@ -7,11 +7,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.tvshow.ResultsItem
-import kotlinx.android.synthetic.main.adapter_similares.view.*
+import kotlinx.android.synthetic.main.adapter_similares.view.img_similares
+import kotlinx.android.synthetic.main.adapter_similares.view.similares_data_lancamento
+import kotlinx.android.synthetic.main.adapter_similares.view.similares_nome
+import kotlinx.android.synthetic.main.adapter_similares.view.similares_title_original
+import kotlinx.android.synthetic.main.adapter_similares.view.similares_voto_media
 import similares.SimilaresActivity
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
+import utils.parseDateShot
 import utils.setPicassoWithCache
 
 /**
@@ -40,7 +45,7 @@ class SimilaresListaSerieAdapter(
 
         fun bind(item: ResultsItem) = with(itemView) {
             item.name?.let { similares_nome.text = item.name }
-            item.firstAirDate?.let { similares_data_lancamento.text = it }
+            item.firstAirDate?.let { similares_data_lancamento.text = it.parseDateShot() }
             item.originalName?.let { similares_title_original.text = it }
             item.voteAverage?.let { similares_voto_media.text = it.toString() }
             img_similares.setPicassoWithCache(item.posterPath, 2, img_erro = R.drawable.poster_empty)
