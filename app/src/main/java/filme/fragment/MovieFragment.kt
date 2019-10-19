@@ -21,9 +21,9 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import br.com.icaro.filme.R
+import com.github.clans.fab.FloatingActionMenu
 import domain.Api
 import domain.Imdb
 import domain.Movie
@@ -32,7 +32,6 @@ import elenco.ElencoActivity
 import filme.adapter.CollectionPagerAdapter
 import filme.adapter.SimilaresFilmesAdapter
 import fragment.FragmentBase
-import kotlinx.android.synthetic.main.fab_float.fab_menu_filme
 import kotlinx.android.synthetic.main.info_details_movie_layout.icon_collection
 import kotlinx.android.synthetic.main.info_details_movie_layout.icon_site
 import kotlinx.android.synthetic.main.info_details_movie_layout.img_budget
@@ -79,6 +78,7 @@ import utils.makeToast
 import utils.parseDate
 import utils.removerAcentos
 import utils.setPicasso
+import utils.setScrollInvisibleFloatMenu
 import utils.visible
 import java.io.Serializable
 import java.text.DecimalFormat
@@ -93,7 +93,6 @@ class MovieFragment : FragmentBase() {
     private lateinit var movieDb: Movie
     private var imdbDd: Imdb? = null
     private var color: Int = 0
-    //  private lateinit var subscriptions: CompositeSubscription
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -157,10 +156,10 @@ class MovieFragment : FragmentBase() {
                     var valor = it.toString()
                     if (valor.length >= 6)
                         valor = valor.substring(0, valor.length - 6)
-                    BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu_filme),
+                    BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu),
                         "${getString(R.string.orcamento_budget)} $$valor ${getString(R.string.milhoes_budget)}")
                 } else {
-                    BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu_filme),
+                    BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu),
                         getString(R.string.no_budget))
                 }
             }
@@ -173,7 +172,7 @@ class MovieFragment : FragmentBase() {
                         putExtra(Constantes.SITE, it)
                     })
                 } else {
-                    BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu_filme),
+                    BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu),
                         getString(R.string.no_site))
                 }
             }
@@ -192,7 +191,7 @@ class MovieFragment : FragmentBase() {
                         requireActivity().makeToast(R.string.ops)
                     }))
             } else {
-                BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu_filme),
+                BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu),
                     getString(R.string.sem_informacao_colletion))
             }
         }
@@ -304,7 +303,7 @@ class MovieFragment : FragmentBase() {
                 builder.setView(layout)
                 builder.show()
             } else {
-                BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu_filme),
+                BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu),
                     getString(R.string.no_vote))
             }
         }
@@ -519,6 +518,8 @@ class MovieFragment : FragmentBase() {
                 layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
                 adapter = CastAdapter(requireActivity(), movieDb.credits?.cast)
             }
+            recycle_filme_elenco.setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
+
             textview_elenco?.visible()
         } else {
             textview_elenco?.gone()
@@ -536,6 +537,8 @@ class MovieFragment : FragmentBase() {
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
                 adapter = CrewAdapter(activity, movieDb.credits?.crew)
             }
+            recycle_filme_producao.setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
+
             textview_crews.visible()
         } else {
             textview_crews.gone()
@@ -554,23 +557,7 @@ class MovieFragment : FragmentBase() {
                 adapter = SimilaresFilmesAdapter(activity!!, movieDb.similar?.resultsSimilar)
             }
 
-            recycle_filme_similares.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    when (newState) {
-                        0 -> {
-                            fab_menu_filme?.visibility = View.VISIBLE
-                        }
-                        1 -> {
-                            fab_menu_filme?.visibility = View.INVISIBLE
-                        }
-                        2 -> {
-                            fab_menu_filme?.visibility = View.INVISIBLE
-                        }
-                    }
-                }
-            })
-
+            recycle_filme_similares.setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
             textview_similares.visible()
         } else {
             textview_similares.gone()
@@ -609,6 +596,7 @@ class MovieFragment : FragmentBase() {
                 adapter = TrailerAdapter(activity, movieDb.videos?.results, movieDb.overview
                     ?: "")
             }
+            recycle_filme_trailer.setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
         } else {
             recycle_filme_trailer.layoutParams.height = 1
         }

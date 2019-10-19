@@ -1,83 +1,66 @@
 package filme.adapter
 
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import domain.ResultsSimilarItem
 import filme.activity.MovieDetailsActivity
+import kotlinx.android.synthetic.main.scroll_similares.view.imgPagerSimilares
+import kotlinx.android.synthetic.main.scroll_similares.view.progressBarSimilares
+import kotlinx.android.synthetic.main.scroll_similares.view.textSimilaresName
 import utils.Constantes
 import utils.UtilsApp
+import utils.gone
+import utils.setPicassoWithCache
+import utils.visible
 
 /**
  * Created by icaro on 22/02/17.
  */
-class SimilaresFilmesAdapter(activity: FragmentActivity, val similarItems: List<ResultsSimilarItem?>?) : RecyclerView.Adapter<SimilaresFilmesAdapter.SimilaresViewHolder>() {
+class SimilaresFilmesAdapter(val context: FragmentActivity, private val similarItems: List<ResultsSimilarItem?>?)
+    : RecyclerView.Adapter<SimilaresFilmesAdapter.SimilaresViewHolder>() {
 
-    private val context: Context
-    private var color_top: Int = 0
-
-    init {
-        context = activity
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimilaresViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.scroll_similares, parent, false)
-        return SimilaresViewHolder(view)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SimilaresViewHolder(parent)
 
     override fun onBindViewHolder(holder: SimilaresViewHolder, position: Int) {
-        val it = similarItems?.get(position)!!
-        holder.progressBarSimilares.visibility = View.VISIBLE
-        if (it.title != null && it.posterPath != null) {
-            holder.textSimilares.visibility = View.GONE
-            Picasso.get()
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + it.posterPath)
-                    .placeholder(R.drawable.poster_empty)
-                    .into(holder.imgPagerSimilares, object : Callback {
-                        override fun onError(e: Exception?) {
-                            holder.progressBarSimilares.visibility = View.GONE
-                        }
-
-                        override fun onSuccess() {
-                            color_top = UtilsApp.loadPalette(holder.imgPagerSimilares)
-                            holder.progressBarSimilares.visibility = View.GONE
-                        }
-                    })
-
-            holder.imgPagerSimilares.setOnClickListener { _ ->
-                val intent = Intent(context, MovieDetailsActivity::class.java)
-                intent.putExtra(Constantes.COLOR_TOP, color_top)
-                intent.putExtra(Constantes.NOME_FILME, it.title)
-                intent.putExtra(Constantes.FILME_ID, it.id)
-                context.startActivity(intent)
-            }
-        }
+        holder.bind(similarItems?.get(position)!!)
     }
 
     override fun getItemCount(): Int {
         return similarItems?.size!!
     }
 
-    inner class SimilaresViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class SimilaresViewHolder(parent: ViewGroup)
+        : RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.scroll_similares, parent, false)) {
+        fun bind(item: ResultsSimilarItem) = with(itemView) {
+            progressBarSimilares.visible()
+            item.title.let {
+                textSimilaresName.text = it
+            }
 
-        internal val progressBarSimilares: ProgressBar
-        internal val textSimilares: TextView
-        internal val imgPagerSimilares: ImageView
+            item.posterPath.let {
+                imgPagerSimilares.setPicassoWithCache(it, 2,
+                    {
+                        textSimilaresName.gone()
+                        progressBarSimilares.gone()
+                    },
+                    {
+                        textSimilaresName.visible()
+                        progressBarSimilares.gone()
+                    },
+                    img_erro = R.drawable.poster_empty)
+            }
 
-        init {
-            progressBarSimilares = itemView.findViewById<View>(R.id.progressBarSimilares) as ProgressBar
-            textSimilares = itemView.findViewById<View>(R.id.textSimilaresName) as TextView
-            imgPagerSimilares = itemView.findViewById<View>(R.id.imgPagerSimilares) as ImageView
+            setOnClickListener {
+                context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
+                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(imgPagerSimilares))
+                    putExtra(Constantes.NOME_FILME, item.title)
+                    putExtra(Constantes.FILME_ID, item.id)
+                })
+            }
         }
     }
 }

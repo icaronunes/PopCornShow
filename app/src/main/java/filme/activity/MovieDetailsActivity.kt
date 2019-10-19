@@ -35,13 +35,8 @@ import domain.FilmeService
 import domain.Movie
 import filme.fragment.MovieFragment
 import fragment.ImagemTopFilmeScrollFragment
-import java.io.File
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import kotlinx.android.synthetic.main.activity_filme.top_img_viewpager
-import kotlinx.android.synthetic.main.fab_float.fab_menu_filme
+import kotlinx.android.synthetic.main.fab_float.fab_menu
 import kotlinx.android.synthetic.main.fab_float.menu_item_favorite
 import kotlinx.android.synthetic.main.fab_float.menu_item_rated
 import kotlinx.android.synthetic.main.fab_float.menu_item_watchlist
@@ -51,6 +46,11 @@ import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import utils.Constantes
 import utils.UtilsApp
+import java.io.File
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class MovieDetailsActivity : BaseActivity() {
     private var color_fundo: Int = 0
@@ -226,13 +226,13 @@ class MovieDetailsActivity : BaseActivity() {
             setEventListenerRated()
             setEventListenerWatch()
 
-            fab_menu_filme?.alpha = 1.0f
+            fab_menu?.alpha = 1.0f
             setColorFab(color_fundo)
             menu_item_favorite?.setOnClickListener(addOrRemoveFavorite())
             menu_item_rated?.setOnClickListener(ratedFilme())
             menu_item_watchlist?.setOnClickListener(addOrRemoveWatch())
         } else {
-            fab_menu_filme?.alpha = 0.0f
+            fab_menu?.alpha = 0.0f
         }
     }
 
@@ -324,7 +324,7 @@ class MovieDetailsActivity : BaseActivity() {
                                         resources.getText(R.string.remover_rated), Toast.LENGTH_SHORT).show()
                             }
                     alertDialog.dismiss()
-                    fab_menu_filme.close(true)
+                    fab_menu.close(true)
                 }
 
                 ok.setOnClickListener(View.OnClickListener {
@@ -348,7 +348,7 @@ class MovieDetailsActivity : BaseActivity() {
                                     Toast.makeText(this@MovieDetailsActivity, resources.getString(R.string.filme_rated) + " - " + ratingBar.rating * 2, Toast.LENGTH_SHORT)
                                             .show()
 
-                                    fab_menu_filme?.close(true)
+                                    fab_menu?.close(true)
                                 }
                         Thread(Runnable { FilmeService.ratedMovieGuest(id_filme, (ratingBar.rating * 2).toInt(), this@MovieDetailsActivity) }).start()
                     }
@@ -359,7 +359,7 @@ class MovieDetailsActivity : BaseActivity() {
     }
 
     private fun setColorFab(color: Int) {
-        fab_menu_filme?.menuButtonColorNormal = color
+        fab_menu?.menuButtonColorNormal = color
         menu_item_favorite?.colorNormal = color
         menu_item_watchlist?.colorNormal = color
         menu_item_rated?.colorNormal = color
@@ -394,7 +394,7 @@ class MovieDetailsActivity : BaseActivity() {
                             ?.addOnCompleteListener {
                                 Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_remove_favorite), Toast.LENGTH_SHORT).show()
 
-                                fab_menu_filme?.close(true)
+                                fab_menu?.close(true)
                             }
                 } else {
 
@@ -409,7 +409,7 @@ class MovieDetailsActivity : BaseActivity() {
                                 Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_add_favorite), Toast.LENGTH_SHORT)
                                         .show()
 
-                                fab_menu_filme?.close(true)
+                                fab_menu?.close(true)
                             }
                 }
             }
@@ -433,7 +433,7 @@ class MovieDetailsActivity : BaseActivity() {
                         ?.addOnCompleteListener {
                             Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_remove), Toast.LENGTH_SHORT).show()
 
-                            fab_menu_filme?.close(true)
+                            fab_menu?.close(true)
                         }
             } else {
 
@@ -448,7 +448,7 @@ class MovieDetailsActivity : BaseActivity() {
                             Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
                                     .show()
 
-                            fab_menu_filme?.close(true)
+                            fab_menu?.close(true)
                         }
             }
         }

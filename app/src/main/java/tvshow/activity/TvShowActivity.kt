@@ -36,7 +36,7 @@ import domain.UserEp
 import domain.UserSeasons
 import domain.UserTvshow
 import domain.tvshow.Tvshow
-import kotlinx.android.synthetic.main.fab_float.fab_menu_filme
+import kotlinx.android.synthetic.main.fab_float.fab_menu
 import kotlinx.android.synthetic.main.fab_float.menu_item_favorite
 import kotlinx.android.synthetic.main.fab_float.menu_item_rated
 import kotlinx.android.synthetic.main.fab_float.menu_item_watchlist
@@ -315,7 +315,7 @@ class TvShowActivity : BaseActivity() {
                             .show()
                     }
             }
-            fab_menu_filme!!.close(true)
+            fab_menu!!.close(true)
         }
     }
 
@@ -366,7 +366,7 @@ class TvShowActivity : BaseActivity() {
                         }
                 }
 
-                fab_menu_filme?.close(true)
+                fab_menu?.close(true)
             }
         }
     }
@@ -412,7 +412,7 @@ class TvShowActivity : BaseActivity() {
                                 resources.getText(R.string.tvshow_remove_rated), Toast.LENGTH_SHORT).show()
                         }
                     alertDialog.dismiss()
-                    fab_menu_filme?.close(true)
+                    fab_menu?.close(true)
                 }
 
                 ok.setOnClickListener {
@@ -439,7 +439,7 @@ class TvShowActivity : BaseActivity() {
                             .start()
                     }
                     alertDialog.dismiss()
-                    fab_menu_filme?.close(true)
+                    fab_menu?.close(true)
                 }
                 alertDialog.show()
             }
@@ -470,7 +470,7 @@ class TvShowActivity : BaseActivity() {
     }
 
     private fun setColorFab(color: Int) {
-        fab_menu_filme?.menuButtonColorNormal = color
+        fab_menu?.menuButtonColorNormal = color
         menu_item_favorite?.colorNormal = color
         menu_item_watchlist?.colorNormal = color
         menu_item_rated?.colorNormal = color
@@ -615,7 +615,7 @@ class TvShowActivity : BaseActivity() {
             setEventListenerRated()
 
             var date: Date? = null
-            fab_menu_filme?.alpha = 1.0f
+            fab_menu?.alpha = 1.0f
             if (series?.firstAirDate != null) {
                 val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 try {
@@ -635,7 +635,7 @@ class TvShowActivity : BaseActivity() {
                 menu_item_rated?.setOnClickListener(ratedMovie())
             }
         } else {
-            fab_menu_filme?.alpha = 0.0f
+            fab_menu?.alpha = 0.0f
         }
     }
 }

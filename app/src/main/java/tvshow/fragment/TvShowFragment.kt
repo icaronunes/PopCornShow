@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.string.in_production
 import br.com.icaro.filme.R.string.mil
+import com.github.clans.fab.FloatingActionMenu
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -47,7 +48,6 @@ import fragment.FragmentBase
 import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbTvSeasons
 import info.movito.themoviedbapi.model.tv.TvSeason
-import kotlinx.android.synthetic.main.fab_float.fab_menu_filme
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.card_poster
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.img_poster
 import kotlinx.android.synthetic.main.tvshow_info.adView
@@ -108,6 +108,7 @@ import utils.invisible
 import utils.makeToast
 import utils.removerAcentos
 import utils.setPicasso
+import utils.setScrollInvisibleFloatMenu
 import utils.visible
 import java.io.Serializable
 import java.text.DecimalFormat
@@ -210,7 +211,7 @@ class TvShowFragment : FragmentBase() {
                     putExtra(Constantes.SITE, series.homepage)
                 })
             } else {
-                BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
+                BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu),
                     getString(R.string.no_site))
             }
         }
@@ -297,7 +298,7 @@ class TvShowFragment : FragmentBase() {
             builder.setView(layout)
             builder.show()
         } else {
-            BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu_filme),
+            BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu),
                 getString(R.string.no_vote))
         }
     }
@@ -411,10 +412,13 @@ class TvShowFragment : FragmentBase() {
     private fun getViewTemporadas(inflater: LayoutInflater?, container: ViewGroup?): View {
         val view = inflater?.inflate(R.layout.temporadas, container, false)
         progressBarTemporada = view?.findViewById<View>(R.id.progressBarTemporadas) as ProgressBar
-        recyclerViewTemporada = view.findViewById<View>(R.id.temporadas_recycler) as RecyclerView
-        recyclerViewTemporada.setHasFixedSize(true)
-        recyclerViewTemporada.itemAnimator = DefaultItemAnimator()
-        recyclerViewTemporada.layoutManager = LinearLayoutManager(context)
+        recyclerViewTemporada = view.findViewById<RecyclerView>(R.id.temporadas_recycler).apply {
+            setHasFixedSize(true)
+            itemAnimator = DefaultItemAnimator()
+            layoutManager = LinearLayoutManager(context)
+            setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
+        }
+
         if (mAuth?.currentUser != null) {
             recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, userTvshow)
             if (progressBarTemporada != null) {
@@ -722,10 +726,13 @@ class TvShowFragment : FragmentBase() {
 
         if (series.credits?.cast?.isNotEmpty()!!) {
             textview_elenco?.visible()
-            recycle_tvshow_elenco?.setHasFixedSize(true)
-            recycle_tvshow_elenco?.itemAnimator = DefaultItemAnimator()
-            recycle_tvshow_elenco?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            recycle_tvshow_elenco.adapter = CastAdapter(activity, series.credits?.cast)
+            recycle_tvshow_elenco.apply {
+                setHasFixedSize(true)
+                itemAnimator = DefaultItemAnimator()
+                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                adapter = CastAdapter(activity, series.credits?.cast)
+                setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
+            }
         } else {
             textview_elenco.gone()
             recycle_tvshow_elenco.layoutParams.height = 1
@@ -748,6 +755,7 @@ class TvShowFragment : FragmentBase() {
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
                 adapter = CrewAdapter(activity, series.credits?.crew)
+                setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
             }
         } else {
             textview_crews.gone()
@@ -764,29 +772,13 @@ class TvShowFragment : FragmentBase() {
         }
 
         if (series.similar?.results?.isNotEmpty()!!) {
-            recycle_tvshow_similares?.apply {
+            recycle_tvshow_similares.apply {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
                 adapter = SimilaresSerieAdapter(requireActivity(), series.similar?.results)
+                setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
             }
-            // Todo - faz um metodo generico para usar em todos os recycler
-            recycle_tvshow_similares.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    when (newState) {
-                        0 -> {
-                            activity?.fab_menu_filme?.visibility = View.VISIBLE
-                        }
-                        1 -> {
-                            activity?.fab_menu_filme?.visibility = View.INVISIBLE
-                        }
-                        2 -> {
-                            activity?.fab_menu_filme?.visibility = View.INVISIBLE
-                        }
-                    }
-                }
-            })
-
             text_similares.visible()
         } else {
             text_similares.gone()
@@ -809,11 +801,14 @@ class TvShowFragment : FragmentBase() {
     private fun setTrailer() {
         if (series.videos?.results?.isNotEmpty()!!) {
             recycle_tvshow_trailer.apply {
-                recycle_tvshow_trailer?.setHasFixedSize(true)
-                recycle_tvshow_trailer?.itemAnimator = DefaultItemAnimator()
-                recycle_tvshow_trailer?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                recycle_tvshow_trailer.adapter = TrailerAdapter(activity, series.videos?.results, series.overview)
+                setHasFixedSize(true)
+                itemAnimator = DefaultItemAnimator()
+                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                adapter = TrailerAdapter(activity, series.videos?.results, series.overview)
+                setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
             }
+        } else {
+            recycle_tvshow_trailer.layoutParams.height = 1
         }
     }
 
