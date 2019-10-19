@@ -173,4 +173,5 @@
     <string name="vote">"VOTOS: "</string>
     <string name="directo_label">Director</string>
     <string name="cd_collectons">Ver películas de franquicia</string>
+    <string name="poster_empty">sin una lista de carteles</string>
 </resources>

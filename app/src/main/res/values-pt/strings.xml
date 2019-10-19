@@ -189,10 +189,12 @@
     <string name="score">"NOTA: "</string>
     <string name="vote">"VOTOS: "</string>
     <string name="directo_label">Diretor</string>
+    <string name="poster_empty">sem uma lista de posters</string>
 
     //////////
     //// content Description
     //////////
 
     <string name="cd_collectons">Veja os filmes das franquia</string>
+
 </resources>

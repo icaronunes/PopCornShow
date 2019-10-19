@@ -199,6 +199,7 @@
     <string name="vote">VOTES: </string>
     <string name="directo_label">Director</string>
     <string name="two_minus" translatable="false">--</string>
+    <string name="poster_empty">without a list of posters</string>
 
     //////////
     //// content Description
@@ -213,5 +214,6 @@
 
     <string name="bar_ten" translatable="false">%s/10</string>
     <string name="bar_hundred" translatable="false">%s/100</string>
+
 
 </resources>

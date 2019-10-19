@@ -7,6 +7,7 @@ import adapter.TrailerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -46,9 +47,6 @@ import fragment.FragmentBase
 import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbTvSeasons
 import info.movito.themoviedbapi.model.tv.TvSeason
-import java.io.Serializable
-import java.text.DecimalFormat
-import java.util.Locale
 import kotlinx.android.synthetic.main.fab_float.fab_menu_filme
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.card_poster
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.img_poster
@@ -111,6 +109,9 @@ import utils.makeToast
 import utils.removerAcentos
 import utils.setPicasso
 import utils.visible
+import java.io.Serializable
+import java.text.DecimalFormat
+import java.util.Locale
 
 /**
  * Created by icaro on 23/08/16.
@@ -217,14 +218,14 @@ class TvShowFragment : FragmentBase() {
         imdb_site?.setOnClickListener {
             series.external_ids?.imdbId?.let {
                 startActivity(Intent(activity, Site::class.java).apply {
-                    putExtra(Constantes.SITE, "${Constantes.IMDB}$it")
+                    putExtra(Constantes.SITE, "${IMDB}$it")
                 })
             }
         }
 
         tmdb_site?.setOnClickListener {
             startActivity(Intent(activity, Site::class.java).apply {
-                putExtra(Constantes.SITE, "${Constantes.BASEMOVIEDB_TV}${series.id}")
+                putExtra(Constantes.SITE, "${BASEMOVIEDB_TV}${series.id}")
             })
         }
 
@@ -233,6 +234,7 @@ class TvShowFragment : FragmentBase() {
         }
     }
 
+    @SuppressLint("InflateParams")
     private fun clickStarsNote() {
         if (mediaNotas > 0) {
             val builder = AlertDialog.Builder(requireActivity())
@@ -595,11 +597,13 @@ class TvShowFragment : FragmentBase() {
     }
 
     private fun setPoster() {
-        series.posterPath?.let {
-            img_poster.setPicasso(it, 2, img_erro = R.drawable.poster_empty)
-            img_poster?.setOnClickListener {
+        img_poster.setPicasso(series.posterPath, 2, img_erro = R.drawable.poster_empty)
+        val posters = series.images?.posters
+
+        img_poster?.setOnClickListener {
+            if (posters != null && posters.isNotEmpty()) {
                 val intent = Intent(context, PosterGridActivity::class.java).apply {
-                    putExtra(Constantes.POSTER, series.images?.posters as Serializable)
+                    putExtra(Constantes.POSTER, posters as Serializable)
                     putExtra(Constantes.NOME, series.name)
                 }
                 val compat = ActivityOptionsCompat
@@ -607,8 +611,11 @@ class TvShowFragment : FragmentBase() {
                         img_poster,
                         getString(R.string.poster_transition))
                 ActivityCompat.startActivity(requireActivity(), intent, compat.toBundle())
+            } else {
+                requireActivity().makeToast(R.string.poster_empty)
             }
         }
+
         card_poster.setCardBackgroundColor(color)
     }
 
