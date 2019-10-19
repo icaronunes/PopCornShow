@@ -8,9 +8,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.tvshow.ResultsItem
-import kotlinx.android.synthetic.main.scroll_similares.view.imgPagerSimilares
-import kotlinx.android.synthetic.main.scroll_similares.view.progressBarSimilares
-import kotlinx.android.synthetic.main.scroll_similares.view.textSimilaresName
+import kotlinx.android.synthetic.main.poster_main.view.img_poster_grid
+import kotlinx.android.synthetic.main.poster_main.view.layout_poster_main
+import kotlinx.android.synthetic.main.poster_main.view.progress_poster_grid
+import kotlinx.android.synthetic.main.poster_main.view.title_main
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
@@ -29,21 +30,24 @@ class SimilaresSerieAdapter(val activity: FragmentActivity, private val similarI
 
     inner class SimilaresSerieHolde(parent: ViewGroup) :
         RecyclerView.ViewHolder(LayoutInflater.from(activity).inflate(R.layout.scroll_similares, parent, false)) {
-        private var colorTop: Int = ContextCompat.getColor(activity.baseContext, R.color.primary)
 
         fun bind(tvshow: ResultsItem) = with(itemView) {
-            progressBarSimilares.visible()
-            textSimilaresName.gone()
+            layout_poster_main.setCardBackgroundColor(ContextCompat.getColor(context, R.color.accent))
+            progress_poster_grid.visible()
+            title_main.text = tvshow.name
 
-            imgPagerSimilares.setPicassoWithCache(tvshow.posterPath, 2, sucesso = {
-                progressBarSimilares.gone()
+            img_poster_grid.setPicassoWithCache(tvshow.posterPath, 2, sucesso = {
+                progress_poster_grid.gone()
+                title_main.gone()
+                layout_poster_main.setCardBackgroundColor(UtilsApp.loadPalette(img_poster_grid))
             }, error = {
-                progressBarSimilares.gone()
+                progress_poster_grid.gone()
+                title_main.visible()
             }, img_erro = R.drawable.poster_empty)
 
-            imgPagerSimilares.setOnClickListener {
+            setOnClickListener {
                 activity.startActivity(Intent(activity, TvShowActivity::class.java).apply {
-                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(imgPagerSimilares))
+                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(img_poster_grid))
                     putExtra(Constantes.NOME_TVSHOW, tvshow.name)
                     putExtra(Constantes.TVSHOW_ID, tvshow.id)
                 })
