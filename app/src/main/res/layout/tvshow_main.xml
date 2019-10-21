@@ -31,7 +31,7 @@
                 app:chipBackgroundColor="@color/blue_main"
                 app:rippleColor="@color/color_botton_main"
                 android:textColor="@color/white"
-                android:text="@string/air_date" />
+                android:text="@string/air_date_main" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_today"

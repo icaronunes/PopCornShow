@@ -16,6 +16,7 @@
     <string name="app_name" translatable="false">PopCorn Show</string>
     <string name="about">About</string>
     <string name="air_date">On the Air: </string>
+    <string name="air_date_main">On the Air</string>
     <string name="apelido">Nickname:</string>
     <string name="author">Author:</string>
     <string name="avaliados">Evaluated</string>
@@ -214,6 +215,7 @@
 
     <string name="bar_ten" translatable="false">%s/10</string>
     <string name="bar_hundred" translatable="false">%s/100</string>
+    <string name="stream_avaliable">Stream Disponivel</string>
 
 
 </resources>

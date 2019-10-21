@@ -5,6 +5,7 @@
     <string name="adicionar_rated">Añadir a los Anuncios</string>
     <string name="adicionar_watch">Añadir a Ver Después</string>
     <string name="air_date">En el aire:</string>
+    <string name="air_date_main">En el aire</string>
     <string name="ajuda_desenvolvimento">Desarrollo</string>
     <string name="anonimo_alerta">Este tipo de inicio de sesión no es seguro. Puede perder todo si la aplicación falla. Recomendamos crear un inicio de sesión.</string>
     <string name="anonymous">Anónimo</string>
@@ -174,4 +175,5 @@
     <string name="directo_label">Director</string>
     <string name="cd_collectons">Ver películas de franquicia</string>
     <string name="poster_empty">sin una lista de carteles</string>
+    <string name="stream_avaliable">Stream Disponivel</string>
 </resources>
