@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:background="@color/white"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    tools:showIn="@layout/activity_filme">
+    <!--    app:behavior_peekHeight="250dp"-->
+    <TextView
+        android:id="@+id/title_streaming"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent2"
+        android:gravity="center"
+        android:text="@string/stream_avaliable"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/label_stream"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:text="stream"
+        app:layout_constraintEnd_toStartOf="@+id/label_rent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_streaming" />
+
+    <TextView
+        android:id="@+id/label_rent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:text="alugar"
+        app:layout_constraintEnd_toStartOf="@+id/label_bay"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/label_stream"
+        app:layout_constraintTop_toBottomOf="@+id/title_streaming" />
+
+    <TextView
+        android:id="@+id/label_bay"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:text="Comprar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/label_rent"
+        app:layout_constraintTop_toBottomOf="@+id/title_streaming" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcRent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hapticFeedbackEnabled="true"
+        app:layout_constraintEnd_toEndOf="@id/label_rent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/label_rent"
+        app:layout_constraintStart_toStartOf="@id/label_rent"
+        app:layout_constraintTop_toBottomOf="@id/label_rent"
+        tools:itemCount="1"
+        tools:listitem="@layout/sources_item_layout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcStream"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hapticFeedbackEnabled="true"
+        app:layout_constraintEnd_toEndOf="@+id/label_stream"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/label_stream"
+        app:layout_constraintTop_toBottomOf="@id/label_stream"
+        tools:itemCount="1"
+        tools:listitem="@layout/sources_item_layout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcBay"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hapticFeedbackEnabled="true"
+        app:layout_constraintEnd_toEndOf="@id/label_bay"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/label_bay"
+        app:layout_constraintTop_toBottomOf="@id/label_bay"
+        tools:itemCount="1"
+        tools:listitem="@layout/sources_item_layout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

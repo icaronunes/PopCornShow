@@ -77,6 +77,8 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <include layout="@layout/bottom_streaming" />
+
         <include
             layout="@layout/fab_float"
             android:visibility="visible" />

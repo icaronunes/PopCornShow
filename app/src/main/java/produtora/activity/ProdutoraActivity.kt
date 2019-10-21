@@ -80,7 +80,7 @@ class ProdutoraActivity : BaseActivity() {
                     pagina = companyFilmes?.page!!
                     totalPagina = companyFilmes.totalPages!!
 
-                    (produtora_filmes_recycler.adapter as ProdutoraAdapter).addprodutoraMovie(companyFilmes.results
+                    (produtora_filmes_recycler.adapter as ProdutoraAdapter).addProdutoraMovie(companyFilmes.results
                         ?.sortedBy { it?.releaseDate }
                         ?.reversed(), companyFilmes.totalResults!!)
                     ++pagina

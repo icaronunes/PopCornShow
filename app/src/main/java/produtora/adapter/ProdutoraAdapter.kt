@@ -5,10 +5,10 @@ import androidx.collection.SparseArrayCompat
 import androidx.recyclerview.widget.RecyclerView
 import domain.ViewType
 import domain.movie.ListaItemFilme
-import java.util.ArrayList
 import pessoaspopulares.adapter.LoadingDelegateAdapter
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
+import java.util.ArrayList
 
 class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -30,7 +30,7 @@ class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return delegateAdapters.get(getItemViewType(position))!!.onBindViewHolder(holder, produtoraResultsPage[position], context = null)
     }
 
-    fun addprodutoraMovie(list: List<ListaItemFilme?>?, totalResult: Int) {
+    fun addProdutoraMovie(list: List<ListaItemFilme?>?, totalResult: Int) {
         if (list?.isNotEmpty()!!) {
             val initPosition = produtoraResultsPage.size - 1
             this.produtoraResultsPage.removeAt(initPosition)

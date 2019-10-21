@@ -20,6 +20,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.icaro.filme.R
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
@@ -33,20 +35,29 @@ import domain.Api
 import domain.FilmeDB
 import domain.FilmeService
 import domain.Movie
+import filme.adapter.StreamMovieAdapter
 import filme.fragment.MovieFragment
 import fragment.ImagemTopFilmeScrollFragment
 import kotlinx.android.synthetic.main.activity_filme.top_img_viewpager
+import kotlinx.android.synthetic.main.bottom_streaming.rcBay
+import kotlinx.android.synthetic.main.bottom_streaming.rcRent
+import kotlinx.android.synthetic.main.bottom_streaming.rcStream
 import kotlinx.android.synthetic.main.fab_float.fab_menu
 import kotlinx.android.synthetic.main.fab_float.menu_item_favorite
 import kotlinx.android.synthetic.main.fab_float.menu_item_rated
 import kotlinx.android.synthetic.main.fab_float.menu_item_watchlist
 import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import utils.Constantes
 import utils.UtilsApp
 import java.io.File
+import java.net.ConnectException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -107,20 +118,87 @@ class MovieDetailsActivity : BaseActivity() {
     private fun getDados() {
 
         val inscricaoMovie = Api(context = this).loadMovieComVideo(id_filme)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    movieDb = it
-                    title = movieDb?.title
-                    top_img_viewpager?.adapter = ImagemTopFragment(supportFragmentManager)
-                    progress_horizontal?.visibility = View.GONE
-                    setFAB()
-                    setFragmentInfo()
-                }, {
-                    Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                movieDb = it
+                title = movieDb?.title
+                top_img_viewpager?.adapter = ImagemTopFragment(supportFragmentManager)
+                progress_horizontal?.visibility = View.GONE
+                setFAB()
+                setFragmentInfo()
+                setStream()
+            }, {
+                Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
+            })
 
         subscriptions.add(inscricaoMovie)
+    }
+
+    private fun setStream() {
+        fun getNameTypeReel(title: String) = title.replace(" ", "-").replace(":", "").toLowerCase()
+
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val reelGood = async(Dispatchers.IO) {
+                    val id = "${getNameTypeReel(movieDb?.originalTitle
+                        ?: "")}-${movieDb?.releaseDate?.substring(0, 4)}"
+                    Api(this@MovieDetailsActivity).getAvaliableMovie(id)
+                }.await()
+
+                rcStream.apply {
+                    setHasFixedSize(true)
+                    itemAnimator = DefaultItemAnimator()
+                    layoutManager = LinearLayoutManager(this@MovieDetailsActivity, LinearLayoutManager.VERTICAL, false)
+                    adapter = StreamMovieAdapter(reelGood.availability
+                        .filter { it.accessType == 2 }
+                        .filter { availability ->
+                            availability.sourceName == "starz" ||
+                                availability.sourceName == "netflix" ||
+                                availability.sourceName == "hulu_plus" ||
+                                availability.sourceName == "itunes" ||
+                                availability.sourceName == "google_play" ||
+                                availability.sourceName == "amazon_buy"
+                        })
+                }
+
+                rcBay.apply {
+                    setHasFixedSize(true)
+                    itemAnimator = DefaultItemAnimator()
+                    layoutManager = LinearLayoutManager(this@MovieDetailsActivity, LinearLayoutManager.VERTICAL, false)
+                    adapter = StreamMovieAdapter(reelGood.availability
+                        .filter { it.accessType == 3 }
+                        .filter { availability ->
+                            availability.sourceName == "starz" ||
+                                availability.sourceName == "netflix" ||
+                                availability.sourceName == "hulu_plus" ||
+                                availability.sourceName == "itunes" ||
+                                availability.sourceName == "google_play" ||
+                                availability.sourceName == "amazon_buy"
+                        })
+                }
+
+                rcRent.apply {
+                    setHasFixedSize(true)
+                    itemAnimator = DefaultItemAnimator()
+                    layoutManager = LinearLayoutManager(this@MovieDetailsActivity, LinearLayoutManager.VERTICAL, false)
+                    adapter = StreamMovieAdapter(reelGood.availability
+                        .filter { it.accessType == 3 }
+                        .filter { availability ->
+                            availability.sourceName == "starz" ||
+                                availability.sourceName == "netflix" ||
+                                availability.sourceName == "hulu_plus" ||
+                                availability.sourceName == "itunes" ||
+                                availability.sourceName == "google_play" ||
+                                availability.sourceName == "amazon_buy"
+                        })
+                }
+            } catch (ex: ConnectException) {
+                ex
+            } catch (ex: java.lang.Exception) {
+                ex
+            }
+        }
     }
 
     private fun setEventListenerWatch() {
@@ -196,16 +274,16 @@ class MovieDetailsActivity : BaseActivity() {
         if (mAuth?.currentUser != null) {
 
             myWatch = database.getReference("users").child(mAuth?.currentUser
-                    ?.uid!!).child("watch")
-                    .child("movie")
+                ?.uid!!).child("watch")
+                .child("movie")
 
             myFavorite = database.getReference("users").child(mAuth?.currentUser
-                    ?.uid!!).child("favorites")
-                    .child("movie")
+                ?.uid!!).child("favorites")
+                .child("movie")
 
             myRated = database.getReference("users").child(mAuth?.currentUser
-                    ?.uid!!).child("rated")
-                    .child("movie")
+                ?.uid!!).child("rated")
+                .child("movie")
         }
     }
 
@@ -238,13 +316,13 @@ class MovieDetailsActivity : BaseActivity() {
 
     private fun snack() {
         Snackbar.make(top_img_viewpager, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry) {
-                    if (UtilsApp.isNetWorkAvailable(baseContext)) {
-                        getDados()
-                    } else {
-                        snack()
-                    }
-                }.show()
+            .setAction(R.string.retry) {
+                if (UtilsApp.isNetWorkAvailable(baseContext)) {
+                    getDados()
+                } else {
+                    snack()
+                }
+            }.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -319,10 +397,10 @@ class MovieDetailsActivity : BaseActivity() {
                 no.setOnClickListener {
 
                     myRated?.child(id_filme.toString())?.setValue(null)
-                            ?.addOnCompleteListener {
-                                Toast.makeText(this@MovieDetailsActivity,
-                                        resources.getText(R.string.remover_rated), Toast.LENGTH_SHORT).show()
-                            }
+                        ?.addOnCompleteListener {
+                            Toast.makeText(this@MovieDetailsActivity,
+                                resources.getText(R.string.remover_rated), Toast.LENGTH_SHORT).show()
+                        }
                     alertDialog.dismiss()
                     fab_menu.close(true)
                 }
@@ -344,12 +422,12 @@ class MovieDetailsActivity : BaseActivity() {
                         filmeDB.poster = movieDb?.posterPath
 
                         myRated?.child(id_filme.toString())?.setValue(filmeDB)
-                                ?.addOnCompleteListener {
-                                    Toast.makeText(this@MovieDetailsActivity, resources.getString(R.string.filme_rated) + " - " + ratingBar.rating * 2, Toast.LENGTH_SHORT)
-                                            .show()
+                            ?.addOnCompleteListener {
+                                Toast.makeText(this@MovieDetailsActivity, resources.getString(R.string.filme_rated) + " - " + ratingBar.rating * 2, Toast.LENGTH_SHORT)
+                                    .show()
 
-                                    fab_menu?.close(true)
-                                }
+                                fab_menu?.close(true)
+                            }
                         Thread(Runnable { FilmeService.ratedMovieGuest(id_filme, (ratingBar.rating * 2).toInt(), this@MovieDetailsActivity) }).start()
                     }
                     alertDialog.dismiss()
@@ -367,12 +445,12 @@ class MovieDetailsActivity : BaseActivity() {
 
     private fun addOrRemoveFavorite(): View.OnClickListener {
         return View.OnClickListener {
-            val anim1 = PropertyValuesHolder.ofFloat("scaleX", 1.0f, 0.2f)
-            val anim2 = PropertyValuesHolder.ofFloat("scaley", 1.0f, 0.2f)
-            val anim3 = PropertyValuesHolder.ofFloat("scaleX", 0.0f, 1.0f)
-            val anim4 = PropertyValuesHolder.ofFloat("scaley", 0.0f, 1.0f)
+            val anim1 = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.0f, 0.2f)
+            val anim2 = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.0f, 0.2f)
+            val anim3 = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.0f, 1.0f)
+            val anim4 = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.0f, 1.0f)
             val animator = ObjectAnimator
-                    .ofPropertyValuesHolder(menu_item_favorite, anim1, anim2, anim3, anim4)
+                .ofPropertyValuesHolder(menu_item_favorite, anim1, anim2, anim3, anim4)
             animator.duration = 1600
             animator.start()
 
@@ -391,11 +469,11 @@ class MovieDetailsActivity : BaseActivity() {
                 if (addFavorite) {
                     //  Log.d(TAG, "Apagou Favorite");
                     myFavorite?.child(id_filme.toString())?.setValue(null)
-                            ?.addOnCompleteListener {
-                                Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_remove_favorite), Toast.LENGTH_SHORT).show()
+                        ?.addOnCompleteListener {
+                            Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_remove_favorite), Toast.LENGTH_SHORT).show()
 
-                                fab_menu?.close(true)
-                            }
+                            fab_menu?.close(true)
+                        }
                 } else {
 
                     val filmeDB = FilmeDB()
@@ -405,12 +483,12 @@ class MovieDetailsActivity : BaseActivity() {
                     filmeDB.poster = movieDb?.posterPath
 
                     myFavorite?.child(id_filme.toString())?.setValue(filmeDB)
-                            ?.addOnCompleteListener {
-                                Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_add_favorite), Toast.LENGTH_SHORT)
-                                        .show()
+                        ?.addOnCompleteListener {
+                            Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_add_favorite), Toast.LENGTH_SHORT)
+                                .show()
 
-                                fab_menu?.close(true)
-                            }
+                            fab_menu?.close(true)
+                        }
                 }
             }
         }
@@ -423,18 +501,18 @@ class MovieDetailsActivity : BaseActivity() {
             val anim3 = PropertyValuesHolder.ofFloat("scaleX", 0.5f, 1.0f)
             val anim4 = PropertyValuesHolder.ofFloat("scaley", 0.5f, 1.0f)
             val animator = ObjectAnimator
-                    .ofPropertyValuesHolder(menu_item_watchlist, anim1, anim2, anim3, anim4)
+                .ofPropertyValuesHolder(menu_item_watchlist, anim1, anim2, anim3, anim4)
             animator.duration = 1650
             animator.start()
 
             if (addWatch) {
 
                 myWatch?.child(id_filme.toString())?.setValue(null)
-                        ?.addOnCompleteListener {
-                            Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_remove), Toast.LENGTH_SHORT).show()
+                    ?.addOnCompleteListener {
+                        Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_remove), Toast.LENGTH_SHORT).show()
 
-                            fab_menu?.close(true)
-                        }
+                        fab_menu?.close(true)
+                    }
             } else {
 
                 val filmeDB = FilmeDB()
@@ -444,12 +522,12 @@ class MovieDetailsActivity : BaseActivity() {
                 filmeDB.poster = movieDb?.posterPath
 
                 myWatch?.child(id_filme.toString())?.setValue(filmeDB)
-                        ?.addOnCompleteListener {
-                            Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
-                                    .show()
+                    ?.addOnCompleteListener {
+                        Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
+                            .show()
 
-                            fab_menu?.close(true)
-                        }
+                        fab_menu?.close(true)
+                    }
             }
         }
     }
@@ -469,10 +547,10 @@ class MovieDetailsActivity : BaseActivity() {
 
         if (!isDestroyed && !isFinishing) {
             supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.filme_container, filmeFrag, null)
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                    .commitAllowingStateLoss()
+                .beginTransaction()
+                .add(R.id.filme_container, filmeFrag, null)
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                .commitAllowingStateLoss()
         }
     }
 

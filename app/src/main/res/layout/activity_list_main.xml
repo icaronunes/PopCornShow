@@ -24,6 +24,7 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
@@ -44,7 +45,6 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_drawer_header"
         app:menu="@menu/nav_drawe_menu">
-
 
     </com.google.android.material.navigation.NavigationView>
 

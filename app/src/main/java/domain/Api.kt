@@ -6,14 +6,8 @@ import domain.busca.MultiSearch
 import domain.colecao.Colecao
 import domain.movie.ListaFilmes
 import domain.person.Person
+import domain.reelgood.ReelGood
 import domain.tvshow.Tvshow
-import java.io.IOException
-import java.net.SocketTimeoutException
-import java.util.Locale
-import java.util.Random
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
 import okhttp3.Callback
@@ -25,6 +19,13 @@ import okhttp3.internal.http2.Http2Reader.Companion.logger
 import rx.Observable
 import utils.Config
 import utils.UtilsKt.Companion.getIdiomaEscolhido
+import java.io.IOException
+import java.net.SocketTimeoutException
+import java.util.Locale
+import java.util.Random
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class Api(val context: Context) {
 
@@ -728,6 +729,32 @@ class Api(val context: Context) {
                     try {
                         val json = response.body?.string()
                         val lista = gson.fromJson(json, TvSeasons::class.java)
+                        cont.resume(lista)
+                    } catch (ex: Exception) {
+                        cont.resumeWithException(ex)
+                    }
+                }
+            })
+        }
+    }
+
+    suspend fun getAvaliableMovie(id: String = "salt-2010"): ReelGood {
+        return suspendCancellableCoroutine { cont ->
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
+            val gson = Gson()
+            val request = Request.Builder()
+                .url("")
+                .get()
+                .build()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    cont.resumeWithException(e)
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    try {
+                        val json = response.body?.string()
+                        val lista = gson.fromJson(json, ReelGood::class.java)
                         cont.resume(lista)
                     } catch (ex: Exception) {
                         cont.resumeWithException(ex)

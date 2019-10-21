@@ -27,7 +27,7 @@
         android:cropToPadding="true"
         android:minWidth="90dp"
         android:scaleType="centerCrop"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/person" />
 
     <ProgressBar
         android:id="@+id/progress_poster_grid"
@@ -50,6 +50,7 @@
         android:textSize="14sp"
         android:textStyle="bold"
         android:visibility="gone"
+        tools:visibility="visible"
         tools:text="The Walkin" />
 
 </androidx.cardview.widget.CardView>
