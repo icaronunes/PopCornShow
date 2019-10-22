@@ -67,4 +67,14 @@ object Constantes {
         val LOADING = 2
         val AD = 3
     }
+
+    object ReelGood {
+        const val LOADING = 1
+        const val GOOGLEPLAY = 2
+        const val NETFLIX = 3
+        const val HBO = 4
+        const val STARZ = 5
+        const val HULU = 6
+        const val AMAZON = 7
+    }
 }

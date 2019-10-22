@@ -743,7 +743,7 @@ class Api(val context: Context) {
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
-                .url("")
+                .url("https://api.reelgood.com/v1/movie/$id?sources=amazon_prime%2Cfx_tveverywhere%2Chbo%2Chulu_plus%2Cnetflix%2Cshowtime%2Cstarz&free=true")
                 .get()
                 .build()
             client.newCall(request).enqueue(object : Callback {

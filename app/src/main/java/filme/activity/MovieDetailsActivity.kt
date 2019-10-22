@@ -35,7 +35,8 @@ import domain.Api
 import domain.FilmeDB
 import domain.FilmeService
 import domain.Movie
-import filme.adapter.StreamMovieAdapter
+import domain.reelgood.Availability
+import filme.adapter.StreamMovieDelegatesAdapter
 import filme.fragment.MovieFragment
 import fragment.ImagemTopFilmeScrollFragment
 import kotlinx.android.synthetic.main.activity_filme.top_img_viewpager
@@ -150,48 +151,43 @@ class MovieDetailsActivity : BaseActivity() {
                     setHasFixedSize(true)
                     itemAnimator = DefaultItemAnimator()
                     layoutManager = LinearLayoutManager(this@MovieDetailsActivity, LinearLayoutManager.VERTICAL, false)
-                    adapter = StreamMovieAdapter(reelGood.availability
-                        .filter { it.accessType == 2 }
-                        .filter { availability ->
-                            availability.sourceName == "starz" ||
-                                availability.sourceName == "netflix" ||
-                                availability.sourceName == "hulu_plus" ||
-                                availability.sourceName == "itunes" ||
-                                availability.sourceName == "google_play" ||
-                                availability.sourceName == "amazon_buy"
-                        })
+                    adapter = StreamMovieDelegatesAdapter(true).apply {
+                        val stream = reelGood.availability.filter {
+                            it.accessType == 2
+                        }.filter {
+                            isStreamValid(it)
+                        }
+                        addStream(stream)
+                    }
+
                 }
 
                 rcBay.apply {
                     setHasFixedSize(true)
                     itemAnimator = DefaultItemAnimator()
                     layoutManager = LinearLayoutManager(this@MovieDetailsActivity, LinearLayoutManager.VERTICAL, false)
-                    adapter = StreamMovieAdapter(reelGood.availability
-                        .filter { it.accessType == 3 }
-                        .filter { availability ->
-                            availability.sourceName == "starz" ||
-                                availability.sourceName == "netflix" ||
-                                availability.sourceName == "hulu_plus" ||
-                                availability.sourceName == "itunes" ||
-                                availability.sourceName == "google_play" ||
-                                availability.sourceName == "amazon_buy"
-                        })
+                    adapter = StreamMovieDelegatesAdapter(subscription = false, purchase = true).apply {
+                        val stream = reelGood.availability.filter {
+                            it.accessType == 3
+                        }.filter {
+                            isStreamValid(it)
+                        }
+                        addStream(stream)
+                    }
                 }
 
                 rcRent.apply {
                     setHasFixedSize(true)
                     itemAnimator = DefaultItemAnimator()
                     layoutManager = LinearLayoutManager(this@MovieDetailsActivity, LinearLayoutManager.VERTICAL, false)
-                    adapter = StreamMovieAdapter(reelGood.availability
-                        .filter { it.accessType == 3 }
-                        .filter { availability ->
-                            availability.sourceName == "starz" ||
-                                availability.sourceName == "netflix" ||
-                                availability.sourceName == "hulu_plus" ||
-                                availability.sourceName == "itunes" ||
-                                availability.sourceName == "google_play" ||
-                                availability.sourceName == "amazon_buy"
-                        })
+                    adapter = StreamMovieDelegatesAdapter(subscription = false, purchase = false).apply {
+                        val stream = reelGood.availability.filter {
+                            it.accessType == 3
+                        }.filter {
+                            isStreamValid(it)
+                        }
+                        addStream(stream)
+                    }
                 }
             } catch (ex: ConnectException) {
                 ex
@@ -199,6 +195,15 @@ class MovieDetailsActivity : BaseActivity() {
                 ex
             }
         }
+    }
+
+    private fun isStreamValid(it: Availability): Boolean {
+        return it.sourceName == "starz" ||
+            it.sourceName == "netflix" ||
+            it.sourceName == "hulu_plus" ||
+            it.sourceName == "google_play" ||
+            it.sourceName == "amazon_buy" ||
+            it.sourceName == "hbo"
     }
 
     private fun setEventListenerWatch() {
