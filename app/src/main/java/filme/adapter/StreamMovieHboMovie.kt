@@ -20,9 +20,9 @@ class StreamMovieHboAdapterAdapter(val subscription: Boolean = false, val purcha
         (holder as StreamMovieHolder).bind(item as Availability)
     }
 
-    inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_layout, parent, false)) {
+    inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
         fun bind(availability: Availability) = with(itemView) {
-            icon_source.setPicasso("", img_erro = R.drawable.starz)
+            icon_source.setBackgroundResource(R.drawable.hbo)
             if (!subscription) {
                 source_sd.text = if (purchase) "SD: ${availability.purchaseCostSd}" else "SD: ${availability.rentalCostSd}"
                 source_hd.text = if (purchase) "HD: ${availability.purchaseCostHd}" else "SD: ${availability.rentalCostHd}"
