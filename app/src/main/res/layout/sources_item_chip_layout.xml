@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    android:focusable="true"
+    android:importantForAccessibility="yes">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:importantForAccessibility="yes">
+
+        <TextView
+            android:id="@+id/tv_price_stream"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent2"
+            android:importantForAccessibility="no"
+            android:text="SD 2.99"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@id/icon_source"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/icon_source"
+            app:layout_constraintTop_toBottomOf="@id/icon_source" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icon_source"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            android:focusable="false"
+            android:importantForAccessibility="no"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/amazon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

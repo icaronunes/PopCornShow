@@ -41,5 +41,4 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/hulu" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

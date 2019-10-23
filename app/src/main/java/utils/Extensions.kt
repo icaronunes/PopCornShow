@@ -11,6 +11,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
+import domain.reelgood.Availability
 import java.text.DateFormat
 import java.text.Normalizer
 import java.text.SimpleDateFormat
@@ -135,4 +136,21 @@ fun RecyclerView.setScrollInvisibleFloatMenu(floatButton: FloatingActionMenu) {
             }
         }
     })
+}
+
+/**
+ * AVAILABILITY
+ */
+fun Availability.getPricePurchase(): String {
+    val less = purchaseCostHd.coerceAtMost(purchaseCostSd)
+    val biggest = purchaseCostHd.coerceAtLeast(purchaseCostSd)
+    if (less == biggest) return less.toString()
+    return "${if (less != 0.0) less.toString() else "--"} - ${if (biggest != 0.0) biggest.toString() else "--"}"
+}
+
+fun Availability.getPriceRental(): String {
+    val less = rentalCostHd.coerceAtMost(rentalCostSd)
+    val biggest = rentalCostHd.coerceAtLeast(rentalCostSd)
+    if (less == biggest) return less.toString()
+    return "${if (less != 0.0) less.toString() else "--"} - ${if (biggest != 0.0) biggest.toString() else "--"}"
 }
