@@ -7,12 +7,8 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
 import domain.ViewType
 import domain.reelgood.Availability
-import kotlinx.android.synthetic.main.sources_item_layout.view.icon_source
-import kotlinx.android.synthetic.main.sources_item_layout.view.source_hd
-import kotlinx.android.synthetic.main.sources_item_layout.view.source_sd
-import kotlinx.android.synthetic.main.sources_item_view.view.*
+import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
-import utils.setPicasso
 
 class StreamMovieGoogleAdapterAdapter(val subscription: Boolean = false, val purchase: Boolean = false) : ViewTypeDelegateAdapter {
     override fun onCreateViewHolder(parent: ViewGroup) = StreamMovieHolder(parent)

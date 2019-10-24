@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
 import domain.ViewType
 import domain.reelgood.Availability
+import filme.adapter.StreamMovieDelegatesAdapter.Companion.netflixPackage
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 
@@ -22,17 +23,9 @@ class StreamMovieNetflixAdapter(val subscription: Boolean = false, val purchase:
     inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
         fun bind(availability: Availability) = with(itemView.source_item) {
             iconSource = resources.getDrawable(R.drawable.netflix, null)
+
             setOnClickListener {
-                try {
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    intent.setClassName(
-                        "com.netflix.mediaclient",
-                        "com.netflix.mediaclient.ui.launch.UIWebViewActivity"
-                    )
-                    intent.data = Uri.parse("http://www.netflix.com/watch/${availability.sourceData.references.android.movieId}")
-                    context.startActivity(intent)
-                } catch (e: Exception) {
-                    // netflix app isn't installed, send to website.
+                callAppOrWeb(availability = availability, packagerCall = netflixPackage) {
                     val intent = Intent(Intent.ACTION_VIEW)
                     intent.data = Uri.parse(availability.sourceData.links.web)
                     context.startActivity(intent)

@@ -16,6 +16,11 @@ class StreamMovieDelegatesAdapter(val subscription: Boolean, val purchase: Boole
     private var streamList = ArrayList<ViewType>()
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
+    companion object {
+        const val huluPackage = "com.hulu.plus"
+        const val netflixPackage = "com.netflix.mediaclient"
+    }
+
     init {
         delegateAdapters.put(Constantes.ReelGood.LOADING, LoadingDelegateAdapter())
         delegateAdapters.put(Constantes.ReelGood.GOOGLEPLAY, StreamMovieGoogleAdapterAdapter(subscription, purchase))

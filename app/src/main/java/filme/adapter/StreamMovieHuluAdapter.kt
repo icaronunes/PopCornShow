@@ -1,16 +1,19 @@
 package filme.adapter
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
 import domain.ViewType
 import domain.reelgood.Availability
+import filme.adapter.StreamMovieDelegatesAdapter.Companion.huluPackage
 import kotlinx.android.synthetic.main.sources_item_layout.view.icon_source
 import kotlinx.android.synthetic.main.sources_item_layout.view.source_hd
 import kotlinx.android.synthetic.main.sources_item_layout.view.source_sd
-import kotlinx.android.synthetic.main.sources_item_view.view.*
+import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.setPicasso
 
@@ -28,6 +31,14 @@ class StreamMovieHuluAdapter(val subscription: Boolean = false, val purchase: Bo
             if (!subscription) {
                 source_sd.text = if (purchase) "SD: ${availability.purchaseCostSd}" else "SD: ${availability.rentalCostSd}"
                 source_hd.text = if (purchase) "HD: ${availability.purchaseCostHd}" else "SD: ${availability.rentalCostHd}"
+            }
+
+            setOnClickListener {
+                callAppOrWeb(availability = availability, packagerCall = huluPackage) {
+                    val intent = Intent(Intent.ACTION_VIEW)
+                    intent.data = Uri.parse(it.sourceData.links.web)
+                    context.startActivity(intent)
+                }
             }
         }
     }

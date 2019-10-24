@@ -1,7 +1,6 @@
 package pessoaspopulares
 
 import activity.BaseActivity
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -12,7 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
 import domain.Api
-import kotlinx.android.synthetic.main.activity_person_popular.*
+import kotlinx.android.synthetic.main.activity_person_popular.activity_person_popular_no_internet
+import kotlinx.android.synthetic.main.activity_person_popular.linear_person_popular
+import kotlinx.android.synthetic.main.activity_person_popular.recycleView_person_popular
 import pessoaspopulares.adapter.PersonPopularAdapter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -33,7 +34,6 @@ class PersonPopularActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_person_popular)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle(R.string.person_rated)
