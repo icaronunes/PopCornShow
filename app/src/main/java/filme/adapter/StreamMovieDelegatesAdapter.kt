@@ -24,7 +24,6 @@ class StreamMovieDelegatesAdapter(val subscription: Boolean, val purchase: Boole
         delegateAdapters.put(Constantes.ReelGood.STARZ, StreamMovieStarzAdapterAdapter(subscription, purchase))
         delegateAdapters.put(Constantes.ReelGood.HULU, StreamMovieHuluAdapter(subscription, purchase))
         delegateAdapters.put(Constantes.ReelGood.AMAZON, StreamMovieAmazonAdapterAdapter(subscription, purchase))
-        //streamList = ArrayList()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
