@@ -191,7 +191,7 @@ class MovieDetailsActivity : BaseActivity() {
                 }
             } catch (ex: ConnectException) {
                 ex
-            } catch (ex: java.lang.Exception) {
+            } catch (ex: Exception) {
                 ex
             }
         }

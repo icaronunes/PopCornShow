@@ -23,7 +23,6 @@ class StreamMovieNetflixAdapter(val subscription: Boolean = false, val purchase:
     inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
         fun bind(availability: Availability) = with(itemView.source_item) {
             iconSource = resources.getDrawable(R.drawable.netflix, null)
-
             setOnClickListener {
                 callAppOrWeb(availability = availability, packagerCall = netflixPackage) {
                     val intent = Intent(Intent.ACTION_VIEW)

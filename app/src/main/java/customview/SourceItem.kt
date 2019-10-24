@@ -10,45 +10,42 @@ import android.view.View
 import android.widget.FrameLayout
 import br.com.icaro.filme.R
 import domain.reelgood.Availability
-import kotlinx.android.synthetic.main.sources_item_layout.view.icon_source
-import kotlinx.android.synthetic.main.sources_item_layout.view.source_hd
-import kotlinx.android.synthetic.main.sources_item_layout.view.source_sd
+import kotlinx.android.synthetic.main.sources_item_layout.view.*
 import site.Site
 import utils.Constantes
-import utils.gone
 import kotlin.properties.Delegates
 
 class SourceItem : FrameLayout {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     init {
         View.inflate(context, R.layout.sources_item_layout, this)
     }
 
-    var sourceSd: String? by Delegates.observable<String?>(null) { _, old: String?, new: String? ->
-        if (new != old && !new.isNullOrBlank() && new != "SD: 0.0") {
+    var sourceSd: String by Delegates.observable<String>("") { _, old: String, new: String ->
+        if (new != old && !new.isNotBlank() && new != "SD: 0.0") {
             source_sd.apply {
                 text = new
-                visibility = View.VISIBLE
-                if (new.length > 8) setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f)
             }
         } else {
-            source_sd.gone()
+            source_sd.text = "SD: --"
         }
     }
 
-    var sourceHd: String? by Delegates.observable(null) { _, old: String?, new: String? ->
-        if (new != old && !new.isNullOrBlank() && new != "HD: 0.0") {
+    var sourceHd: String by Delegates.observable("") { _, old: String, new: String ->
+        if (new != old && new.isNotBlank() && new != "HD: 0.0") {
             source_hd.apply {
                 text = new
-                visibility = View.VISIBLE
-                if (new.length > 8) setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f)
             }
         } else {
-            source_hd.gone()
+            source_hd.text = "HD: --"
         }
     }
 
@@ -56,7 +53,11 @@ class SourceItem : FrameLayout {
         icon_source.setImageDrawable(newIcon)
     }
 
-    fun callAppOrWeb(availability: Availability, packagerCall: String, callActivity: (Availability) -> Unit) {
+    fun callAppOrWeb(
+        availability: Availability,
+        packagerCall: String,
+        callActivity: (Availability) -> Unit
+    ) {
         val pack = context.packageManager.getLaunchIntentForPackage(packagerCall)
         if (pack != null) {
             try {

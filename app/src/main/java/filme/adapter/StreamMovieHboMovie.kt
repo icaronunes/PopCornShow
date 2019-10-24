@@ -1,15 +1,19 @@
 package filme.adapter
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
 import domain.ViewType
 import domain.reelgood.Availability
+import filme.adapter.StreamMovieDelegatesAdapter.Companion.hboPackage
 import kotlinx.android.synthetic.main.sources_item_layout.view.icon_source
 import kotlinx.android.synthetic.main.sources_item_layout.view.source_hd
 import kotlinx.android.synthetic.main.sources_item_layout.view.source_sd
+import kotlinx.android.synthetic.main.sources_item_view.view.*
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.setPicasso
 
@@ -21,11 +25,14 @@ class StreamMovieHboAdapterAdapter(val subscription: Boolean = false, val purcha
     }
 
     inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
-        fun bind(availability: Availability) = with(itemView) {
-            icon_source.setBackgroundResource(R.drawable.hbo)
-            if (!subscription) {
-                source_sd.text = if (purchase) "SD: ${availability.purchaseCostSd}" else "SD: ${availability.rentalCostSd}"
-                source_hd.text = if (purchase) "HD: ${availability.purchaseCostHd}" else "SD: ${availability.rentalCostHd}"
+        fun bind(availability: Availability) = with(itemView.source_item) {
+            iconSource = resources.getDrawable(R.drawable.hbo, null)
+            setOnClickListener {
+                callAppOrWeb(availability, hboPackage) {
+                    val intent = Intent(Intent.ACTION_VIEW)
+                    intent.data = Uri.parse(availability.sourceData.links.web)
+                    context.startActivity(intent)
+                }
             }
         }
     }

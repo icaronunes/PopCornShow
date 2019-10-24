@@ -19,15 +19,19 @@ class StreamMovieDelegatesAdapter(val subscription: Boolean, val purchase: Boole
     companion object {
         const val huluPackage = "com.hulu.plus"
         const val netflixPackage = "com.netflix.mediaclient"
+        const val googleVideosPackage = "com.google.android.videos"
+        const val hboPackage = "com.hbo.broadband.br"
     }
 
     init {
         delegateAdapters.put(Constantes.ReelGood.LOADING, LoadingDelegateAdapter())
-        delegateAdapters.put(Constantes.ReelGood.GOOGLEPLAY, StreamMovieGoogleAdapterAdapter(subscription, purchase))
+
         delegateAdapters.put(Constantes.ReelGood.NETFLIX, StreamMovieNetflixAdapter(subscription, purchase))
         delegateAdapters.put(Constantes.ReelGood.HBO, StreamMovieHboAdapterAdapter(subscription, purchase))
-        delegateAdapters.put(Constantes.ReelGood.STARZ, StreamMovieStarzAdapterAdapter(subscription, purchase))
         delegateAdapters.put(Constantes.ReelGood.HULU, StreamMovieHuluAdapter(subscription, purchase))
+
+        delegateAdapters.put(Constantes.ReelGood.GOOGLEPLAY, StreamMovieGoogleAdapterAdapter(subscription, purchase))
+        delegateAdapters.put(Constantes.ReelGood.STARZ, StreamMovieStarzAdapterAdapter(subscription, purchase))
         delegateAdapters.put(Constantes.ReelGood.AMAZON, StreamMovieAmazonAdapterAdapter(subscription, purchase))
     }
 
