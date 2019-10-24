@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
 import domain.ViewType
 import domain.reelgood.Availability
-import kotlinx.android.synthetic.main.sources_item_view.view.*
+import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 
 class StreamMovieNetflixAdapter(val subscription: Boolean = false, val purchase: Boolean = false) : ViewTypeDelegateAdapter {
@@ -34,7 +34,7 @@ class StreamMovieNetflixAdapter(val subscription: Boolean = false, val purchase:
                 } catch (e: Exception) {
                     // netflix app isn't installed, send to website.
                     val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = Uri.parse(availability.sourceData.links.android)
+                    intent.data = Uri.parse(availability.sourceData.links.web)
                     context.startActivity(intent)
                 }
             }
