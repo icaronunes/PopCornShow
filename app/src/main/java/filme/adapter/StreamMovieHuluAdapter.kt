@@ -10,12 +10,10 @@ import br.com.icaro.filme.R
 import domain.ViewType
 import domain.reelgood.Availability
 import filme.adapter.StreamMovieDelegatesAdapter.Companion.huluPackage
-import kotlinx.android.synthetic.main.sources_item_layout.view.icon_source
 import kotlinx.android.synthetic.main.sources_item_layout.view.source_hd
 import kotlinx.android.synthetic.main.sources_item_layout.view.source_sd
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
-import utils.setPicasso
 
 class StreamMovieHuluAdapter(val subscription: Boolean = false, val purchase: Boolean = false) : ViewTypeDelegateAdapter {
     override fun onCreateViewHolder(parent: ViewGroup) = StreamMovieHolder(parent)
@@ -26,7 +24,6 @@ class StreamMovieHuluAdapter(val subscription: Boolean = false, val purchase: Bo
 
     inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
         fun bind(availability: Availability) = with(itemView.source_item) {
-            icon_source.setPicasso("", img_erro = R.drawable.hulu)
             iconSource = resources.getDrawable(R.drawable.hulu, null)
             if (!subscription) {
                 source_sd.text = if (purchase) "SD: ${availability.purchaseCostSd}" else "SD: ${availability.rentalCostSd}"

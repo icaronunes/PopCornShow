@@ -10,7 +10,7 @@ import br.com.icaro.filme.R
 import domain.ViewType
 import domain.reelgood.Availability
 import filme.adapter.StreamMovieDelegatesAdapter.Companion.googleVideosPackage
-import kotlinx.android.synthetic.main.sources_item_view.view.*
+import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 
 class StreamMovieGoogleAdapterAdapter(
@@ -23,13 +23,7 @@ class StreamMovieGoogleAdapterAdapter(
         (holder as StreamMovieHolder).bind(item as Availability)
     }
 
-    inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(
-        LayoutInflater.from(parent.context).inflate(
-            R.layout.sources_item_view,
-            parent,
-            false
-        )
-    ) {
+    inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
         fun bind(availability: Availability) = with(itemView.source_item) {
             iconSource = resources.getDrawable(R.drawable.google, null)
             if (!subscription) {

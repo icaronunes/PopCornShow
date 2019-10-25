@@ -21,6 +21,8 @@ class StreamMovieDelegatesAdapter(val subscription: Boolean, val purchase: Boole
         const val netflixPackage = "com.netflix.mediaclient"
         const val googleVideosPackage = "com.google.android.videos"
         const val hboPackage = "com.hbo.broadband.br"
+        const val starzPackage = "com.starz.starzplay.android"
+        const val amazonPackage = "com.amazon.avod.thirdpartyclient"
     }
 
     init {

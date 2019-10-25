@@ -5,14 +5,13 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.View
 import android.widget.FrameLayout
 import br.com.icaro.filme.R
 import domain.reelgood.Availability
-import kotlinx.android.synthetic.main.sources_item_layout.view.*
-import site.Site
-import utils.Constantes
+import kotlinx.android.synthetic.main.sources_item_layout.view.icon_source
+import kotlinx.android.synthetic.main.sources_item_layout.view.source_hd
+import kotlinx.android.synthetic.main.sources_item_layout.view.source_sd
 import kotlin.properties.Delegates
 
 class SourceItem : FrameLayout {
@@ -74,12 +73,5 @@ class SourceItem : FrameLayout {
         } else {
             callActivity(availability)
         }
-    }
-
-    var link: String by Delegates.observable("") { _, _, linkWeb: String ->
-        if (linkWeb.isNotBlank() && linkWeb.contains("http"))
-            context.startActivity(Intent(context, Site::class.java).apply {
-                putExtra(Constantes.SITE, linkWeb)
-            })
     }
 }
