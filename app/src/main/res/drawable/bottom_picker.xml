@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="@dimen/trade_size_dp_40" />
+    <solid android:color="@color/bottonsheet_picker" />
+</shape>

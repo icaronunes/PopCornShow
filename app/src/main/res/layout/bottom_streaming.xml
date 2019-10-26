@@ -4,45 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/stream_customview"
+    android:clickable="false"
+    app:behavior_peekHeight="30dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     tools:showIn="@layout/activity_filme">
-    <!--    app:behavior_peekHeight="250dp"-->
+
     <TextView
         android:id="@+id/title_streaming"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/transparent2"
+        android:layout_marginTop="@dimen/trade_size_dp_15"
+        android:fontFamily="serif-monospace"
         android:gravity="center"
         android:text="@string/stream_avaliable"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
+        android:textSize="@dimen/trade_txt_size_sp_20"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/open_bar" />
 
     <TextView
         android:id="@+id/label_stream"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="3dp"
-        android:background="@color/transparent"
+        android:background="@color/transparent2"
+        android:fontFamily="sans-serif-condensed"
         android:gravity="center"
-        android:text="stream"
+        android:text="Stream"
+        android:textColor="@color/black"
+        android:textSize="@dimen/trade_txt_size_sp_16"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/label_rent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_streaming" />
 
+
     <TextView
         android:id="@+id/label_rent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="3dp"
-        android:background="@color/transparent"
+        android:background="@color/transparent2"
+        android:fontFamily="sans-serif-condensed"
         android:gravity="center"
-        android:text="alugar"
+        android:text="Alugar"
+        android:textColor="@color/black"
+        android:textSize="@dimen/trade_txt_size_sp_16"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/label_bay"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/label_stream"
@@ -52,15 +62,28 @@
         android:id="@+id/label_bay"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="3dp"
-        android:background="@color/transparent"
+        android:background="@color/transparent2"
+        android:fontFamily="sans-serif-condensed"
         android:gravity="center"
         android:text="Comprar"
+        android:textColor="@color/black"
+        android:textSize="@dimen/trade_txt_size_sp_16"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/label_rent"
         app:layout_constraintTop_toBottomOf="@+id/title_streaming" />
+
+    <View
+        android:id="@+id/open_bar"
+        android:layout_width="@dimen/trade_size_dp_25"
+        android:layout_height="@dimen/trade_size_dp_4"
+        android:layout_marginTop="@dimen/trade_size_dp_8"
+        android:alpha="0.6"
+        android:background="@color/bottonsheet_picker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcRent"

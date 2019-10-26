@@ -6,7 +6,6 @@ import android.animation.PropertyValuesHolder
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -94,7 +93,6 @@ class MovieDetailsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filme)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpToolBar()
         setupNavDrawer()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -128,7 +126,7 @@ class MovieDetailsActivity : BaseActivity() {
                 progress_horizontal?.visibility = View.GONE
                 setFAB()
                 setFragmentInfo()
-                setStream()
+                //setStream()
             }, {
                 Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
             })
@@ -136,7 +134,7 @@ class MovieDetailsActivity : BaseActivity() {
         subscriptions.add(inscricaoMovie)
     }
 
-    private fun setStream() {
+    fun setStream() {
         fun getNameTypeReel(title: String) = title.replace(" ", "-").replace(":", "").toLowerCase()
 
         GlobalScope.launch(Dispatchers.Main) {
@@ -159,7 +157,6 @@ class MovieDetailsActivity : BaseActivity() {
                         }
                         addStream(stream)
                     }
-
                 }
 
                 rcBay.apply {

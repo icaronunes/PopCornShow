@@ -23,6 +23,7 @@
     <color name="black">#000000</color>
     <color name="black_transparente">#32767676</color>
     <color name="play_video">#86767676</color>
+    <color name="bottonsheet_picker">#1E767676</color>
     <color name="colorFAB">#2196F3</color>
     <color name="yellow_transparente">#a9ffea00</color>
     <color name="tmdb_site">#34a34e</color>

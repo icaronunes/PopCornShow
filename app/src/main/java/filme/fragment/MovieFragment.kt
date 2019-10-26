@@ -29,6 +29,7 @@ import domain.Imdb
 import domain.Movie
 import domain.colecao.PartsItem
 import elenco.ElencoActivity
+import filme.activity.MovieDetailsActivity
 import filme.adapter.CollectionPagerAdapter
 import filme.adapter.SimilaresFilmesAdapter
 import fragment.FragmentBase
@@ -151,6 +152,7 @@ class MovieFragment : FragmentBase() {
         }
 
         img_budget?.setOnClickListener {
+            (activity as MovieDetailsActivity).setStream()
             movieDb.budget?.let {
                 if (it > 0) {
                     var valor = it.toString()

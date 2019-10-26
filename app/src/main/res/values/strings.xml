@@ -215,7 +215,7 @@
 
     <string name="bar_ten" translatable="false">%s/10</string>
     <string name="bar_hundred" translatable="false">%s/100</string>
-    <string name="stream_avaliable">Stream Disponivel</string>
+    <string name="stream_avaliable">Aonde assistir</string>
 
 
 </resources>
