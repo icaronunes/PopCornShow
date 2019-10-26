@@ -35,6 +35,7 @@ import filme.adapter.SimilaresFilmesAdapter
 import fragment.FragmentBase
 import kotlinx.android.synthetic.main.info_details_movie_layout.icon_collection
 import kotlinx.android.synthetic.main.info_details_movie_layout.icon_site
+import kotlinx.android.synthetic.main.info_details_movie_layout.icon_stream
 import kotlinx.android.synthetic.main.info_details_movie_layout.img_budget
 import kotlinx.android.synthetic.main.info_details_movie_layout.img_star
 import kotlinx.android.synthetic.main.info_details_movie_layout.original_title
@@ -105,6 +106,10 @@ class MovieFragment : FragmentBase() {
         subscriptions = CompositeSubscription()
     }
 
+    fun teste(b: Boolean) {
+        activity?.makeToast("teste")
+    }
+
     override fun onStart() {
         super.onStart()
         getImdb()
@@ -137,6 +142,7 @@ class MovieFragment : FragmentBase() {
         setSimilares()
         setAnimated()
         setStatus()
+        streamCast()
         setAdMob(adView)
 
         imdb_site.setOnClickListener {
@@ -152,7 +158,6 @@ class MovieFragment : FragmentBase() {
         }
 
         img_budget?.setOnClickListener {
-            (activity as MovieDetailsActivity).setStream()
             movieDb.budget?.let {
                 if (it > 0) {
                     var valor = it.toString()
@@ -337,6 +342,14 @@ class MovieFragment : FragmentBase() {
     private fun setBuget() {
         movieDb.budget?.let {
             if (it > 0) img_budget.setImageResource(R.drawable.orcamento) else img_budget.setImageResource(R.drawable.sem_orcamento)
+        }
+    }
+
+    private fun streamCast() {
+        icon_stream?.let {
+            it.setOnClickListener {
+                (activity as MovieDetailsActivity).setStream()
+            }
         }
     }
 

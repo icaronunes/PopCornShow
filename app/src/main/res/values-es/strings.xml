@@ -175,5 +175,14 @@
     <string name="directo_label">Director</string>
     <string name="cd_collectons">Ver películas de franquicia</string>
     <string name="poster_empty">sin una lista de carteles</string>
-    <string name="stream_avaliable">Stream Disponivel</string>
+
+    ///////////////
+    ///// Stream
+    //////////////
+
+    <string name="stream_avaliable">Donde ver la pelicula</string>
+    <string name="rent">Alquilar</string>
+    <string name="purchase">Comprar</string>
+
+
 </resources>

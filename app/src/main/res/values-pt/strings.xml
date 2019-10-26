@@ -197,6 +197,8 @@
     //////////
 
     <string name="cd_collectons">Veja os filmes das franquia</string>
-    <string name="stream_avaliable">Stream Disponivel</string>
+    <string name="stream_avaliable">Onde assistir o filme</string>
+    <string name="rent">Alugar</string>
+    <string name="purchase">Comprar</string>
 
 </resources>

@@ -1,12 +1,16 @@
 package utils
 
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import com.github.clans.fab.FloatingActionMenu
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
@@ -154,3 +158,23 @@ fun Availability.getPriceRental(): String {
     if (less == biggest) return less.toString()
     return "${if (less != 0.0) less.toString() else "--"} - ${if (biggest != 0.0) biggest.toString() else "--"}"
 }
+
+/**
+ * BottomSheetBehavior
+ */
+fun BottomSheetBehavior<View>.setAnimation(container: View, viewHeight: View) {
+
+    ValueAnimator.ofInt(container.measuredHeight, viewHeight.marginTop).apply {
+        addUpdateListener {
+            this@setAnimation.peekHeight = it.animatedValue as Int
+        }
+        duration = 1800
+    }.start()
+
+    container.post {
+        val newLayoutParams = (container.layoutParams as? MarginLayoutParams)
+        newLayoutParams?.setMargins(0, 0, 0, viewHeight.marginTop + 1)
+        container.layoutParams = newLayoutParams
+    }
+}
+

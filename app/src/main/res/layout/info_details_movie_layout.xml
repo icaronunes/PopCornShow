@@ -63,6 +63,16 @@
         app:layout_constraintTop_toTopOf="@+id/icon_site"
         tools:src="@drawable/collection_on" />
 
+    <ImageView
+        android:id="@+id/icon_stream"
+        android:layout_width="@dimen/trade_size_dp_42"
+        android:layout_height="@dimen/trade_size_dp_42"
+        android:layout_gravity="center"
+        android:contentDescription="@string/sem_informacao_colletion"
+        android:src="@drawable/tv"
+        app:layout_constraintStart_toEndOf="@+id/icon_collection"
+        app:layout_constraintTop_toTopOf="@+id/icon_collection" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="0dp"
