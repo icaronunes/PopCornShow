@@ -76,7 +76,7 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
 
 
 			Picasso.get()
-					.load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(context, 2)) + series.getPoster())
+                    .load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(context, 4)) + series.getPoster())
 					.error(R.drawable.poster_empty)
 					.into(holder.img_favorite, new Callback() {
 						@Override

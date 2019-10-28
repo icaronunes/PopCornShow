@@ -108,7 +108,6 @@ public class ListaFavoriteFragment extends Fragment {
             @Override
             public void onClick(final View view, final int position) {
                 Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
-              //  Log.d("ListaFilmeAdapter", "ListaFilmeAdapter");
                 ImageView imageView = (ImageView) view;
                 int color = UtilsApp.INSTANCE.loadPalette(imageView);
                 intent.putExtra(Constantes.COLOR_TOP, color);

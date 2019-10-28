@@ -10,7 +10,9 @@ import br.com.icaro.filme.R
 import domain.ViewType
 import domain.movie.ListaItemFilme
 import filme.activity.MovieDetailsActivity
-import kotlinx.android.synthetic.main.lista.view.*
+import kotlinx.android.synthetic.main.lista.view.date_oscar
+import kotlinx.android.synthetic.main.lista.view.img_lista
+import kotlinx.android.synthetic.main.lista.view.progress
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import tvshow.activity.TvShowActivity
 import utils.Constantes
@@ -35,7 +37,7 @@ class ListasDelegateAdapter : ViewTypeDelegateAdapter {
 
         fun bind(item: ListaItemFilme) = with(itemView) {
 
-            img_lista.setPicassoWithCache(item.posterPath, 2)
+            img_lista.setPicassoWithCache(item.posterPath, 3)
             when (item.mediaType) {
                 "tv" -> date_oscar.text = if (!item.first_air_date.isNullOrEmpty() && item.first_air_date.length > 3)
                     item.first_air_date.subSequence(0, 4) else "-"

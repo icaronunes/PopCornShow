@@ -67,7 +67,7 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
 
             Picasso.get()
                     .load(UtilsApp.INSTANCE
-                    .getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(context, 2)) + movie.getPoster())
+                            .getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(context, 4)) + movie.getPoster())
                     .into(holder.imageView, new Callback() {
                         @Override
                         public void onSuccess() {
