@@ -10,8 +10,9 @@ import br.com.icaro.filme.R
 import com.squareup.picasso.Picasso
 import domain.PersonItem
 import domain.ViewType
-import kotlinx.android.synthetic.main.adapter_person_popular.view.*
-import kotlinx.android.synthetic.main.include_progress.view.*
+import kotlinx.android.synthetic.main.adapter_person_popular.view.img_popular_person
+import kotlinx.android.synthetic.main.adapter_person_popular.view.text_person_name
+import kotlinx.android.synthetic.main.include_progress.view.progress
 import pessoa.activity.PersonActivity
 import utils.Constantes
 import utils.UtilsApp
@@ -32,7 +33,7 @@ class PersonDelegateAdapter : ViewTypeDelegateAdapter {
         fun bind(item: PersonItem) = with(itemView) {
 
             Picasso.get()
-                    .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.profilePath).into(img_popular_person)
+                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3)) + item.profilePath).into(img_popular_person)
             text_person_name.text = item.name
             progress.visibility = View.GONE
             itemView.setOnClickListener {
