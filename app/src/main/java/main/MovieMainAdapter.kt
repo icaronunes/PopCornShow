@@ -48,7 +48,7 @@ class MovieMainAdapter(context: FragmentActivity, private val movieDbs: ListaFil
         fun bind(item: ListaItemFilme) = with(itemView) {
             img_poster_grid.setBackgroundColor(ActivityCompat.getColor(context, R.color.primary_dark))
             img_poster_grid
-                    .setPicassoWithCache(item.posterPath, 2, {
+                .setPicassoWithCache(item.posterPath, 3, {
                         progress_poster_grid.gone()
                         color = UtilsApp.loadPalette(img_poster_grid)
                         layout_poster_main.setCardBackgroundColor(color)
