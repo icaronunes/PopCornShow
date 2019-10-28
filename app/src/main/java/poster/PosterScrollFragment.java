@@ -66,7 +66,7 @@ public class PosterScrollFragment extends Fragment {
         View view = inflater.inflate(R.layout.page_scroll_image, container, false);
         imageView = view.findViewById(R.id.img_poster_scroll);
         Picasso.get()
-                .load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(getContext(), 5)) + endereco)
+                .load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(getContext(), 7)) + endereco)
                 .into(imageView);
 
         return view;
