@@ -12,10 +12,10 @@ import br.com.icaro.filme.R
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import domain.person.ProfilesItem
-import java.io.Serializable
 import pessoa.activity.FotoPersonActivity
 import utils.Constantes
 import utils.UtilsApp
+import java.io.Serializable
 
 /**
  * Created by icaro on 18/08/16.
@@ -31,7 +31,7 @@ class PersonImagemAdapter(private val context: Context, private val artworks: Li
     override fun onBindViewHolder(holder: PersonImageViewHolder, position: Int) {
         val item = artworks!![position]
 
-        Picasso.get().load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3)) + item?.filePath)
+        Picasso.get().load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 5)) + item?.filePath)
             .placeholder(R.drawable.person)
             .into(holder.imageButton, object : Callback {
                 override fun onError(e: Exception?) {

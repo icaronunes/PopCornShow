@@ -32,33 +32,7 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
 
         val item = personCredits?.get(position)
 
-//        Picasso.get().load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3))!! + item?.posterPath)
-//                .placeholder(R.drawable.poster_empty)
-//                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-//                .into(holder.poster, object : Callback {
-//                    override fun onError(e: Exception?) {
-//                        holder.progressBar.visibility = View.INVISIBLE
-//                        val data = StringBuilder()
-//                        if (item?.releaseDate != null) {
-//                            if (item.releaseDate.length >= 4) {
-//                                data.append(if (item.releaseDate.length >= 4) " - " + item.releaseDate.substring(0, 4) else "")
-//                            }
-//                        }
-//                        if (item?.mediaType == "tv") {
-//                            holder.title.text = item.name + data
-//                        } else {
-//                            holder.title.text = item?.title + data
-//                        }
-//                        holder.title.visibility = View.VISIBLE
-//                    }
-//
-//
-//                    override fun onSuccess() {
-//                        holder.title.visibility = View.INVISIBLE
-//                        holder.progressBar.visibility = View.INVISIBLE
-//                    }
-//                })
-        holder.poster.setPicasso(item?.posterPath, 3, error = {
+        holder.poster.setPicasso(item?.posterPath, 5, error = {
             holder.progressBar.visibility = View.INVISIBLE
             val data = StringBuilder()
             if (item?.releaseDate != null) {

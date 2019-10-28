@@ -2,7 +2,6 @@ package pessoa.activity
 
 import activity.BaseActivity
 import android.content.Context
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -12,8 +11,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import domain.Api
 import domain.person.Person
-import kotlinx.android.synthetic.main.activity_person.*
-import kotlinx.android.synthetic.main.include_progress_horizontal.*
+import kotlinx.android.synthetic.main.activity_person.viewPager_person
+import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal
 import pessoa.adapter.PersonAdapter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -33,7 +32,6 @@ class PersonActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_person)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpToolBar()
         getExtras()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

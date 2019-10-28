@@ -1,7 +1,6 @@
 package pessoa.activity
 
 import activity.BaseActivity
-import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.view.Window
@@ -11,7 +10,8 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import br.com.icaro.filme.R
 import domain.person.ProfilesItem
-import kotlinx.android.synthetic.main.activity_scroll_poster.*
+import kotlinx.android.synthetic.main.activity_scroll_poster.indicator
+import kotlinx.android.synthetic.main.activity_scroll_poster.pager
 import poster.PosterScrollFragment
 import utils.Constantes
 
@@ -30,7 +30,6 @@ class FotoPersonActivity : BaseActivity() {
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scroll_poster)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         getExtras()
 

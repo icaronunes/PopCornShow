@@ -30,7 +30,7 @@ class PersonTvAdapter(private val context: Context, private val personCredits: L
     override fun onBindViewHolder(holder: PersonTvViewHolder, position: Int) {
 
         val credit = personCredits[position]!!
-        holder.poster.setPicasso(credit.posterPath, 2,
+        holder.poster.setPicasso(credit.posterPath, 5,
                 error = {
                     holder.progressBar.visibility = View.INVISIBLE
                     if (credit.releaseDate != null) {

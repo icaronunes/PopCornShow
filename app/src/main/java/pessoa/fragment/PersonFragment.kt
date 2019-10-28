@@ -257,7 +257,7 @@ class PersonFragment : Fragment() {
             }
         }
 
-        Picasso.get().load(UtilsApp.getBaseUrlImagem(2) + information.profilePath)
+        Picasso.get().load(UtilsApp.getBaseUrlImagem(3) + information.profilePath)
             .placeholder(R.drawable.person)
             .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
             .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)

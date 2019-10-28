@@ -15,7 +15,6 @@ import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import domain.person.CastItem
 import filme.activity.MovieDetailsActivity
-import java.lang.Exception
 import utils.Constantes
 import utils.UtilsApp
 
@@ -35,7 +34,7 @@ class PersonMovieAdapter(private val context: Context, private val personCredits
         val credit = personCredits?.get(position)
 
         Picasso.get()
-                .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + credit?.posterPath)
+            .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 5)) + credit?.posterPath)
                 .error(R.drawable.poster_empty)
                 .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(holder.poster, object : Callback {
