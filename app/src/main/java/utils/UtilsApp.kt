@@ -26,6 +26,7 @@ import domain.tvshow.ExternalIds
 import domain.tvshow.Tvshow
 import info.movito.themoviedbapi.model.config.Timezone
 import info.movito.themoviedbapi.model.tv.TvSeason
+import utils.enums.EnumTypeMedia
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -35,7 +36,6 @@ import java.util.ArrayList
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import utils.enums.EnumTypeMedia
 
 /**
  * Created by icaro on 24/06/16.
@@ -299,7 +299,7 @@ object UtilsApp {
         if (!ativo) {
             return padrao
         } else {
-            val conexao = UtilsApp.getNetworkClass(context)
+            val conexao = getNetworkClass(context)
 
             return if (conexao == "forte") {
                 padrao
