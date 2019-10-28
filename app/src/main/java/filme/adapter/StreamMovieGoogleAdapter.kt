@@ -27,10 +27,8 @@ class StreamMovieGoogleAdapterAdapter(
         fun bind(availability: Availability) = with(itemView.source_item) {
             iconSource = resources.getDrawable(R.drawable.google, null)
             if (!subscription) {
-                sourceSd =
-                    if (purchase) "SD: ${availability.purchaseCostSd}" else "SD: ${availability.rentalCostSd}"
-                sourceHd =
-                    if (purchase) "HD: ${availability.purchaseCostHd}" else "HD: ${availability.rentalCostHd}"
+                sourceSd = if (purchase) "SD: ${availability.purchaseCostSd}" else "SD: ${availability.rentalCostSd}"
+                sourceHd = if (purchase) "HD: ${availability.purchaseCostHd}" else "HD: ${availability.rentalCostHd}"
             }
 
             setOnClickListener {
