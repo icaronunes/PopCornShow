@@ -30,7 +30,7 @@ class ImagemTopFilmeScrollFragment : Fragment() {
         img.setPicassoWithCache(path, 6, img_erro = R.drawable.top_empty, sucesso = {
             AnimatorSet().apply {
                 ObjectAnimator.ofFloat(img, View.Y, -100f, 0f)
-                duration = 8000
+                duration = 800
             }.start()
         })
 

@@ -17,7 +17,6 @@ public class ViewPageMainTopFragment extends FragmentPagerAdapter {
         this.multis = objects;
     }
 
-
     @Override
     public Fragment getItem(int position) {
 

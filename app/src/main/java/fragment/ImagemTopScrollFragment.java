@@ -54,13 +54,10 @@ public class ImagemTopScrollFragment extends Fragment {
         final ImageView imageView = view.findViewById(R.id.img_top_scroll);
         TextView title = view.findViewById(R.id.title);
 
-
-
-
         if (topMains.getMediaType().equalsIgnoreCase(Multi.MediaType.MOVIE.name())) {
 
             Picasso.get()
-                    .load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(getContext(), 5)) + topMains.getImagem())
+                    .load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(getContext(), 6)) + topMains.getImagem())
                     .error(R.drawable.top_empty)
                     .into(imageView);
 
@@ -77,7 +74,7 @@ public class ImagemTopScrollFragment extends Fragment {
             title.setText(topMains.getNome());
         } else {
 
-            Picasso.get().load(UtilsApp.INSTANCE.getBaseUrlImagem(5) + topMains.getImagem())
+            Picasso.get().load(UtilsApp.INSTANCE.getBaseUrlImagem(6) + topMains.getImagem())
                     .error(R.drawable.top_empty)
                     .into(imageView);
             imageView.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +91,7 @@ public class ImagemTopScrollFragment extends Fragment {
         }
 
         AnimatorSet animatorSet = new AnimatorSet();
-        ObjectAnimator alphaStar = ObjectAnimator.ofFloat(imageView, "y", -100, 0)
+        ObjectAnimator alphaStar = ObjectAnimator.ofFloat(imageView, View.Y, -100, 0)
                 .setDuration(800);
         animatorSet.playTogether(alphaStar);
 
