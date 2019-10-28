@@ -65,8 +65,8 @@ import java.util.Locale
 
 class MovieDetailsActivity : BaseActivity() {
     private lateinit var movieFragment: MovieFragment
-    private var color_fundo: Int = 0
-    private var id_filme: Int = 0
+    private var color: Int = 0
+    private var idMovie: Int = 0
     private var movieDb: Movie? = null
     private var addFavorite = true
     private var addWatch = true
@@ -101,7 +101,7 @@ class MovieDetailsActivity : BaseActivity() {
         getExtras()
 
         top_img_viewpager.apply {
-            setBackgroundColor(color_fundo)
+            setBackgroundColor(color)
             offscreenPageLimit = 3
         }
 
@@ -117,7 +117,7 @@ class MovieDetailsActivity : BaseActivity() {
 
     private fun getDados() {
 
-        val inscricaoMovie = Api(context = this).loadMovieComVideo(id_filme)
+        val inscricaoMovie = Api(context = this).loadMovieComVideo(idMovie)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -196,7 +196,7 @@ class MovieDetailsActivity : BaseActivity() {
         valueEventWatch = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                if (dataSnapshot.child(id_filme.toString()).exists()) {
+                if (dataSnapshot.child(idMovie.toString()).exists()) {
                     addWatch = true
                     menu_item_watchlist?.labelText = resources.getString(R.string.remover_watch)
                 } else {
@@ -214,11 +214,11 @@ class MovieDetailsActivity : BaseActivity() {
     private fun setEventListenerRated() {
         valueEventRated = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.child(id_filme.toString()).exists()) {
+                if (dataSnapshot.child(idMovie.toString()).exists()) {
                     addRated = true
 
-                    if (dataSnapshot.child(id_filme.toString()).child("nota").exists()) {
-                        val nota = dataSnapshot.child(id_filme.toString()).child("nota").value.toString()
+                    if (dataSnapshot.child(idMovie.toString()).child("nota").exists()) {
+                        val nota = dataSnapshot.child(idMovie.toString()).child("nota").value.toString()
                         numero_rated = java.lang.Float.parseFloat(nota)
                         menu_item_rated?.labelText = resources.getString(R.string.remover_rated)
                         if (numero_rated == 0.0f) {
@@ -241,7 +241,7 @@ class MovieDetailsActivity : BaseActivity() {
     private fun setEventListenerFavorite() {
         valueEventFavorite = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.child(id_filme.toString()).exists()) {
+                if (dataSnapshot.child(idMovie.toString()).exists()) {
                     addFavorite = true
                     menu_item_favorite?.labelText = resources.getString(R.string.remover_favorite)
                 } else {
@@ -279,11 +279,11 @@ class MovieDetailsActivity : BaseActivity() {
 
     private fun getExtras() {
         if (intent.action == null) {
-            id_filme = intent.getIntExtra(Constantes.FILME_ID, 0)
-            color_fundo = intent.getIntExtra(Constantes.COLOR_TOP, R.color.transparent)
+            idMovie = intent.getIntExtra(Constantes.FILME_ID, 0)
+            color = intent.getIntExtra(Constantes.COLOR_TOP, R.color.transparent)
         } else {
-            id_filme = Integer.parseInt(intent.getStringExtra(Constantes.FILME_ID))
-            color_fundo = Integer.parseInt(intent.getStringExtra(Constantes.COLOR_TOP))
+            idMovie = Integer.parseInt(intent.getStringExtra(Constantes.FILME_ID))
+            color = Integer.parseInt(intent.getStringExtra(Constantes.COLOR_TOP))
         }
     }
 
@@ -295,7 +295,7 @@ class MovieDetailsActivity : BaseActivity() {
             setEventListenerWatch()
 
             fab_menu?.alpha = 1.0f
-            setColorFab(color_fundo)
+            setColorFab(color)
             menu_item_favorite?.setOnClickListener(addOrRemoveFavorite())
             menu_item_rated?.setOnClickListener(ratedFilme())
             menu_item_watchlist?.setOnClickListener(addOrRemoveWatch())
@@ -386,7 +386,7 @@ class MovieDetailsActivity : BaseActivity() {
 
                 no.setOnClickListener {
 
-                    myRated?.child(id_filme.toString())?.setValue(null)
+                    myRated?.child(idMovie.toString())?.setValue(null)
                         ?.addOnCompleteListener {
                             Toast.makeText(this@MovieDetailsActivity,
                                 resources.getText(R.string.remover_rated), Toast.LENGTH_SHORT).show()
@@ -411,14 +411,14 @@ class MovieDetailsActivity : BaseActivity() {
                         filmeDB.nota = ratingBar.rating * 2
                         filmeDB.poster = movieDb?.posterPath
 
-                        myRated?.child(id_filme.toString())?.setValue(filmeDB)
+                        myRated?.child(idMovie.toString())?.setValue(filmeDB)
                             ?.addOnCompleteListener {
                                 Toast.makeText(this@MovieDetailsActivity, resources.getString(R.string.filme_rated) + " - " + ratingBar.rating * 2, Toast.LENGTH_SHORT)
                                     .show()
 
                                 fab_menu?.close(true)
                             }
-                        Thread(Runnable { FilmeService.ratedMovieGuest(id_filme, (ratingBar.rating * 2).toInt(), this@MovieDetailsActivity) }).start()
+                        Thread(Runnable { FilmeService.ratedMovieGuest(idMovie, (ratingBar.rating * 2).toInt(), this@MovieDetailsActivity) }).start()
                     }
                     alertDialog.dismiss()
                 })
@@ -458,7 +458,7 @@ class MovieDetailsActivity : BaseActivity() {
 
                 if (addFavorite) {
                     //  Log.d(TAG, "Apagou Favorite");
-                    myFavorite?.child(id_filme.toString())?.setValue(null)
+                    myFavorite?.child(idMovie.toString())?.setValue(null)
                         ?.addOnCompleteListener {
                             Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_remove_favorite), Toast.LENGTH_SHORT).show()
 
@@ -472,7 +472,7 @@ class MovieDetailsActivity : BaseActivity() {
                     filmeDB.title = movieDb?.title
                     filmeDB.poster = movieDb?.posterPath
 
-                    myFavorite?.child(id_filme.toString())?.setValue(filmeDB)
+                    myFavorite?.child(idMovie.toString())?.setValue(filmeDB)
                         ?.addOnCompleteListener {
                             Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_add_favorite), Toast.LENGTH_SHORT)
                                 .show()
@@ -497,7 +497,7 @@ class MovieDetailsActivity : BaseActivity() {
 
             if (addWatch) {
 
-                myWatch?.child(id_filme.toString())?.setValue(null)
+                myWatch?.child(idMovie.toString())?.setValue(null)
                     ?.addOnCompleteListener {
                         Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_remove), Toast.LENGTH_SHORT).show()
 
@@ -511,7 +511,7 @@ class MovieDetailsActivity : BaseActivity() {
                 filmeDB.title = movieDb?.title
                 filmeDB.poster = movieDb?.posterPath
 
-                myWatch?.child(id_filme.toString())?.setValue(filmeDB)
+                myWatch?.child(idMovie.toString())?.setValue(filmeDB)
                     ?.addOnCompleteListener {
                         Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
                             .show()
@@ -532,7 +532,7 @@ class MovieDetailsActivity : BaseActivity() {
         movieFragment = MovieFragment()
         val bundle = Bundle()
         bundle.putSerializable(Constantes.FILME, movieDb)
-        bundle.putInt(Constantes.COLOR_TOP, color_fundo)
+        bundle.putInt(Constantes.COLOR_TOP, color)
         movieFragment.arguments = bundle
 
         if (!isDestroyed && !isFinishing) {
@@ -572,9 +572,8 @@ class MovieDetailsActivity : BaseActivity() {
 
         override fun getCount(): Int {
             if (movieDb?.images?.backdrops != null) {
-
-                val tamanho = movieDb?.images?.backdrops?.size
-                return if (tamanho!! > 0) tamanho else 1 // ???????????????? tamahao vai ser nulo?
+                val size = movieDb?.images?.backdrops?.size!!
+                return if (size > 0) size else 1
             }
             return 0
         }

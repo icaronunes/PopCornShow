@@ -6,7 +6,7 @@
     android:layout_height="@dimen/trade_size_dp_202">
 
     <ImageView
-        android:id="@+id/img_top_scroll"
+        android:id="@+id/img_top_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
