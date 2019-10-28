@@ -16,14 +16,14 @@ import domain.EpisodesItem
 import domain.UserEp
 import domain.UserTvshow
 import domain.tvshow.Tvshow
-import java.text.SimpleDateFormat
-import java.util.Calendar
 import org.apache.commons.lang3.tuple.MutablePair
 import seguindo.ProximosAdapter.CalendarViewHolder
 import temporada.TemporadaActivity
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 /**
  * Created by icaro on 25/11/16.
@@ -157,7 +157,7 @@ class ProximosAdapter(private val context: FragmentActivity) :
 
     private fun setImage(viewImage: ImageView, url: String?) {
         Picasso.get()
-            .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2))!! + url)
+            .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3))!! + url)
             .placeholder(R.drawable.poster_empty)
             .into(viewImage, object : Callback {
                 override fun onError(e: Exception?) {

@@ -43,7 +43,7 @@ class SeguindoRecycleAdapter(private val context: FragmentActivity?, private val
 
         fun bind(item: UserTvshow) = with(itemView) {
 
-            follow_poster.setPicassoWithCache(item.poster, 2, {
+            follow_poster.setPicassoWithCache(item.poster, 3, {
 
             }, {
                 follow_title.apply {
