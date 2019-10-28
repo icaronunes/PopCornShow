@@ -359,28 +359,29 @@ class MovieFragment : FragmentBase() {
                 ObjectAnimator.ofFloat(voto_media, View.ALPHA, 0f, 1f).setDuration(2300),
                 ObjectAnimator.ofFloat(img_budget, View.ALPHA, 0f, 1f).setDuration(2500),
                 ObjectAnimator.ofFloat(icon_site, View.ALPHA, 0f, 1f).setDuration(3000),
-                ObjectAnimator.ofFloat(icon_collection, View.ALPHA, 0f, 1f).setDuration(3300))
+                ObjectAnimator.ofFloat(icon_collection, View.ALPHA, 0f, 1f).setDuration(3300),
+                ObjectAnimator.ofFloat(icon_stream, View.ALPHA, 0f, 1f).setDuration(3500))
         }.start()
     }
 
     private fun setPoster() {
 
-        img_poster.setPicasso(movieDb.posterPath, 2, img_erro = R.drawable.poster_empty)
+        img_poster.setPicasso(movieDb.posterPath, 3, img_erro = R.drawable.poster_empty)
         val posters = movieDb.images?.posters
 
-            img_poster.setOnClickListener {
-                if (posters != null && posters.isNotEmpty()) {
-                    val intent = Intent(requireActivity(), PosterGridActivity::class.java).apply {
-                        putExtra(Constantes.POSTER, posters as Serializable)
-                        putExtra(Constantes.NOME, movieDb.title)
-                    }
-                    val compat = ActivityOptionsCompat
-                        .makeSceneTransitionAnimation(requireActivity(), img_poster, getString(R.string.poster_transition))
-                    ActivityCompat.startActivity(requireActivity(), intent, compat.toBundle())
-                } else {
-                    requireActivity().makeToast(R.string.poster_empty)
+        img_poster.setOnClickListener {
+            if (posters != null && posters.isNotEmpty()) {
+                val intent = Intent(requireActivity(), PosterGridActivity::class.java).apply {
+                    putExtra(Constantes.POSTER, posters as Serializable)
+                    putExtra(Constantes.NOME, movieDb.title)
                 }
+                val compat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(requireActivity(), img_poster, getString(R.string.poster_transition))
+                ActivityCompat.startActivity(requireActivity(), intent, compat.toBundle())
+            } else {
+                requireActivity().makeToast(R.string.poster_empty)
             }
+        }
 
         card_poster.setCardBackgroundColor(color)
     }
