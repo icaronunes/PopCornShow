@@ -48,18 +48,18 @@ fun ImageView.setPicasso(stillPath: String?, patten: Int = 4, sucesso: () -> Uni
 
 fun ImageView.setPicassoWithCache(stillPath: String?, patten: Int = 4, sucesso: () -> Unit = {}, error: () -> Unit = {}, img_erro: Int = R.drawable.poster_empty) {
     Picasso.get()
-            .load(UtilsApp
-                    .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, patten)) + stillPath)
-            .error(img_erro)
-            .into(this, object : Callback {
-                override fun onSuccess() {
-                    sucesso()
-                }
+        .load(UtilsApp
+            .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, patten)) + stillPath)
+        .error(img_erro)
+        .into(this, object : Callback {
+            override fun onSuccess() {
+                sucesso()
+            }
 
-                override fun onError(e: java.lang.Exception?) {
-                    error()
-                }
-            })
+            override fun onError(e: java.lang.Exception?) {
+                error()
+            }
+        })
 }
 
 /**
@@ -125,6 +125,25 @@ fun String.parseDateShot(): String {
     }
 }
 
+fun String.getNameTypeReel(): String {
+    return replace(" ", "-")
+        .replace(":", "")
+        .replace("&", "-")
+        .replace(".", "")
+        .replace("é", "e")
+        .replace("ẽ", "e")
+        .replace("è", "e")
+        .replace("ë", "e")
+        .replace("ç", "c")
+        .replace("â", "a")
+        .replace("ã", "a")
+        .replace("á", "a")
+        .replace("à", "a")
+        .replace("ä", "a")
+        .replace("ä", "a")
+        .toLowerCase()
+}
+
 /**
  * RECYCLER
  */
@@ -166,7 +185,7 @@ fun BottomSheetBehavior<View>.setAnimation(container: View, viewHeight: View) {
 
     ValueAnimator.ofInt(container.measuredHeight, viewHeight.marginTop).apply {
         addUpdateListener {
-            this@setAnimation.peekHeight = it.animatedValue as Int
+            peekHeight = it.animatedValue as Int
         }
         duration = 1800
     }.start()

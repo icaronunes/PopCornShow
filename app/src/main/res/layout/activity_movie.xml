@@ -14,6 +14,8 @@
         android:fitsSystemWindows="false">
 
 
+        <!-- Layout da app bar -->
+
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nested"
             android:layout_width="match_parent"
@@ -38,7 +40,6 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <!-- Layout da app bar -->
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
@@ -81,7 +82,17 @@
             layout="@layout/fab_float"
             android:visibility="visible" />
 
-        <include layout="@layout/bottom_streaming" />
+        <customview.StreamView
+            android:id="@+id/streamview_movie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            app:behavior_peekHeight="0dp"
+            app:title_streaming="@string/stream_avaliable"
+            app:errorImg="@drawable/sad"
+            app:label_bay="@string/purchase"
+            app:label_rent="@string/rent"
+            app:label_stream="@string/stream" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StreamView">
+        <attr name="error" format="boolean" />
+        <attr name="errorImg" format="reference" />
+        <attr name="title_streaming" format="string" />
+        <attr name="label_stream" format="string" />
+        <attr name="label_rent" format="string" />
+        <attr name="label_bay" format="string" />
+    </declare-styleable>
+</resources>

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.AttributeSet
-import android.view.View
 import android.widget.FrameLayout
 import br.com.icaro.filme.R
 import domain.reelgood.Availability
@@ -25,11 +24,11 @@ class SourceItem : FrameLayout {
     )
 
     init {
-        View.inflate(context, R.layout.sources_item_layout, this)
+        inflate(context, R.layout.sources_item_layout, this)
     }
 
     var sourceSd: String by Delegates.observable<String>("") { _, old: String, new: String ->
-        if (new != old && !new.isNotBlank() && new != "SD: 0.0") {
+        if (new.isNotBlank() && new != "SD: 0.0") {
             source_sd.apply {
                 text = new
             }
@@ -39,7 +38,7 @@ class SourceItem : FrameLayout {
     }
 
     var sourceHd: String by Delegates.observable("") { _, old: String, new: String ->
-        if (new != old && new.isNotBlank() && new != "HD: 0.0") {
+        if (new.isNotBlank() && new != "HD: 0.0") {
             source_hd.apply {
                 text = new
             }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/conteiner_stream"
@@ -7,15 +8,13 @@
     android:layout_height="wrap_content"
     android:background="@drawable/stream_customview"
     android:clickable="false"
-    app:behavior_peekHeight="0dp"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     tools:showIn="@layout/activity_movie">
 
     <ImageView
-        android:id="@+id/stream_error_sad"
+        android:id="@+id/stream_error"
         android:layout_width="match_parent"
         android:layout_height="@dimen/trade_size_dp_150"
-        android:src="@drawable/sad"
+        tools:src="@drawable/sad"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +28,7 @@
         android:layout_marginTop="@dimen/trade_size_dp_15"
         android:fontFamily="serif-monospace"
         android:gravity="center"
-        android:text="@string/stream_avaliable"
+        tools:text="@string/stream_avaliable"
         android:textColor="@color/black"
         android:textSize="@dimen/trade_txt_size_sp_20"
         android:textStyle="bold"
@@ -96,7 +95,7 @@
         android:layout_width="@dimen/trade_size_dp_25"
         android:layout_height="@dimen/trade_size_dp_4"
         android:layout_marginTop="@dimen/trade_size_dp_8"
-        android:alpha="0.6"
+        android:alpha="0.8"
         android:background="@color/bottonsheet_picker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

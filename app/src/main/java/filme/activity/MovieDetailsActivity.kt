@@ -19,8 +19,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.icaro.filme.R
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -36,18 +34,12 @@ import domain.FilmeDB
 import domain.FilmeService
 import domain.Movie
 import domain.reelgood.Availability
-import filme.adapter.StreamMovieDelegatesAdapter
 import filme.fragment.MovieFragment
 import fragment.ImagemTopFilmeScrollFragment
 import kotlinx.android.synthetic.main.activity_movie.filme_container
+import kotlinx.android.synthetic.main.activity_movie.streamview_movie
 import kotlinx.android.synthetic.main.activity_movie.top_img_viewpager
-import kotlinx.android.synthetic.main.bottom_streaming.conteiner_stream
-import kotlinx.android.synthetic.main.bottom_streaming.group_recycler_list
-import kotlinx.android.synthetic.main.bottom_streaming.group_types_list
-import kotlinx.android.synthetic.main.bottom_streaming.rcBay
-import kotlinx.android.synthetic.main.bottom_streaming.rcRent
-import kotlinx.android.synthetic.main.bottom_streaming.rcStream
-import kotlinx.android.synthetic.main.bottom_streaming.stream_error_sad
+import kotlinx.android.synthetic.main.bottom_streaming.title_streaming
 import kotlinx.android.synthetic.main.fab_float.fab_menu
 import kotlinx.android.synthetic.main.fab_float.menu_item_favorite
 import kotlinx.android.synthetic.main.fab_float.menu_item_rated
@@ -62,9 +54,8 @@ import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import utils.Constantes
 import utils.UtilsApp
-import utils.gone
+import utils.getNameTypeReel
 import utils.setAnimation
-import utils.visible
 import java.io.File
 import java.net.ConnectException
 import java.text.ParseException
@@ -144,89 +135,41 @@ class MovieDetailsActivity : BaseActivity() {
     }
 
     fun setStream() {
-        fun getNameTypeReel(title: String) = title
-            .replace(" ", "-")
-            .replace(":", "")
-            .replace("é", "e")
-            .replace("ẽ", "e")
-            .replace("è", "e")
-            .replace("ë", "e")
-            .replace("ç", "c")
-            .replace("â", "a")
-            .replace("ã", "a")
-            .replace("á", "a")
-            .replace("à", "a")
-            .replace("ä", "a")
-            .replace("ä", "a")
-            .toLowerCase()
-
         GlobalScope.launch(Dispatchers.Main) {
             try {
+                title_streaming.text = getString(R.string.stream_avaliable)
                 val reelGood = async(Dispatchers.IO) {
-                    val id = "${getNameTypeReel(movieDb?.originalTitle
-                        ?: "")}-${movieDb?.releaseDate?.substring(0, 4)}"
+                    val id = "${movieDb?.originalTitle?.getNameTypeReel()
+                        ?: ""}-${movieDb?.releaseDate?.substring(0, 4)}"
                     Api(this@MovieDetailsActivity).getAvaliableMovie(id)
                 }.await()
 
                 if (reelGood.availability.isNotEmpty()) {
-
-                    rcStream.apply {
-                        setHasFixedSize(true)
-                        itemAnimator = DefaultItemAnimator()
-                        layoutManager = LinearLayoutManager(this@MovieDetailsActivity, LinearLayoutManager.VERTICAL, false)
-                        adapter = StreamMovieDelegatesAdapter(true).apply {
-                            val stream = reelGood.availability.filter {
-                                it.accessType == 2
-                            }.filter {
-                                isStreamValid(it)
-                            }
-                            addStream(stream)
-                        }
+                    streamview_movie.stream = reelGood.availability.filter {
+                        it.accessType == 2
+                    }.filter {
+                        isStreamValid(it)
                     }
 
-                    rcBay.apply {
-                        setHasFixedSize(true)
-                        itemAnimator = DefaultItemAnimator()
-                        layoutManager = LinearLayoutManager(this@MovieDetailsActivity, LinearLayoutManager.VERTICAL, false)
-                        adapter = StreamMovieDelegatesAdapter(subscription = false, purchase = true).apply {
-                            val stream = reelGood.availability.filter {
-                                it.accessType == 3
-                            }.filter {
-                                isStreamValid(it)
-                            }
-                            addStream(stream)
-                        }
+                    streamview_movie.bay = reelGood.availability.filter {
+                        it.accessType == 3
+                    }.filter {
+                        isStreamValid(it)
                     }
 
-                    rcRent.apply {
-                        setHasFixedSize(true)
-                        itemAnimator = DefaultItemAnimator()
-                        layoutManager = LinearLayoutManager(this@MovieDetailsActivity, LinearLayoutManager.VERTICAL, false)
-                        adapter = StreamMovieDelegatesAdapter(subscription = false, purchase = false).apply {
-                            val stream = reelGood.availability.filter {
-                                it.accessType == 3
-                            }.filter {
-                                isStreamValid(it)
-                            }
-                            addStream(stream)
-                        }
+                    streamview_movie.rent = reelGood.availability.filter {
+                        it.accessType == 3
+                    }.filter {
+                        isStreamValid(it)
                     }
 
-                    group_types_list.visible()
-                    stream_error_sad.gone()
-                    group_recycler_list.visible()
                 } else {
-                    group_types_list.gone()
-                    group_recycler_list.gone()
-                    stream_error_sad.visible()
+                    streamview_movie.error = true
                 }
             } catch (ex: ConnectException) {
-                group_types_list.gone()
-                group_recycler_list.gone()
+                streamview_movie.error = true
             } catch (ex: Exception) {
-                group_types_list.gone()
-                group_recycler_list.gone()
-                stream_error_sad.visible()
+                streamview_movie.error = true
             } finally {
                 setAnimated()
             }
@@ -235,8 +178,8 @@ class MovieDetailsActivity : BaseActivity() {
 
     @Suppress("UNCHECKED_CAST")
     private fun setAnimated() {
-        val sheet = BottomSheetBehavior.from(conteiner_stream)
-        (sheet as? BottomSheetBehavior<View>)?.setAnimation(filme_container, conteiner_stream.findViewById<TextView>(R.id.title_streaming))
+        val sheet = BottomSheetBehavior.from(streamview_movie)
+        (sheet as? BottomSheetBehavior<View>)?.setAnimation(filme_container, streamview_movie.findViewById(R.id.title_streaming))
     }
 
     private fun isStreamValid(it: Availability): Boolean {
