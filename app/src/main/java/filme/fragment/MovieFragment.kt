@@ -417,6 +417,8 @@ class MovieFragment : FragmentBase() {
                     }
                 }, {
                     if (view != null) {
+                        voto_media.gone()
+                        img_star.gone()
                         requireActivity().makeToast(R.string.ops)
                     }
                 }))
