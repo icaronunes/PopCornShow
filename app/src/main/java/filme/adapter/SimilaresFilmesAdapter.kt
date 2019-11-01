@@ -45,7 +45,7 @@ class SimilaresFilmesAdapter(val context: FragmentActivity, private val similarI
             }
 
             item.posterPath.let {
-                img_poster_grid.setPicassoWithCache(it, 2, sucesso = {
+                img_poster_grid.setPicassoWithCache(it, 3, sucesso = {
                     title_main.gone()
                     progress_poster_grid.gone()
                     layout_poster_main.setCardBackgroundColor(UtilsApp.loadPalette(img_poster_grid))

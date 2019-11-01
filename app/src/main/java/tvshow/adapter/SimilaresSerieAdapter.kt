@@ -36,7 +36,7 @@ class SimilaresSerieAdapter(val activity: FragmentActivity, private val similarI
             progress_poster_grid.visible()
             title_main.text = tvshow.name
 
-            img_poster_grid.setPicassoWithCache(tvshow.posterPath, 2, sucesso = {
+            img_poster_grid.setPicassoWithCache(tvshow.posterPath, 3, sucesso = {
                 progress_poster_grid.gone()
                 title_main.gone()
                 layout_poster_main.setCardBackgroundColor(UtilsApp.loadPalette(img_poster_grid))
