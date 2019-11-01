@@ -30,7 +30,6 @@ class StreamMovieGoogleAdapterAdapter(
                 sourceSd = if (purchase) "SD: ${availability.purchaseCostSd}" else "SD: ${availability.rentalCostSd}"
                 sourceHd = if (purchase) "HD: ${availability.purchaseCostHd}" else "HD: ${availability.rentalCostHd}"
             }
-
             setOnClickListener {
                 callAppOrWeb(availability, googleVideosPackage) {
                     val intent = Intent(Intent.ACTION_VIEW)

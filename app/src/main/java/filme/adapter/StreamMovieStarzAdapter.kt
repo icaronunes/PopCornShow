@@ -23,6 +23,10 @@ class StreamMovieStarzAdapterAdapter(val subscription: Boolean = false, val purc
     inner class StreamMovieHolder(val parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
         fun bind(availability: Availability) = with(itemView.source_item) {
             iconSource = resources.getDrawable(R.drawable.starz, null)
+            if (!subscription) {
+                sourceSd = if (purchase) "SD: ${availability.purchaseCostSd}" else "SD: ${availability.rentalCostSd}"
+                sourceHd = if (purchase) "HD: ${availability.purchaseCostHd}" else "HD: ${availability.rentalCostHd}"
+            }
             setOnClickListener {
                 callAppOrWeb(availability, starzPackage) {
                     val intent = Intent(Intent.ACTION_VIEW)

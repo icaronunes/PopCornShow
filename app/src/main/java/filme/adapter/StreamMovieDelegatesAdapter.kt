@@ -31,9 +31,9 @@ class StreamMovieDelegatesAdapter(val subscription: Boolean, val purchase: Boole
         delegateAdapters.put(Constantes.ReelGood.NETFLIX, StreamMovieNetflixAdapter(subscription, purchase))
         delegateAdapters.put(Constantes.ReelGood.HBO, StreamMovieHboAdapterAdapter(subscription, purchase))
         delegateAdapters.put(Constantes.ReelGood.HULU, StreamMovieHuluAdapter(subscription, purchase))
+        delegateAdapters.put(Constantes.ReelGood.STARZ, StreamMovieStarzAdapterAdapter(subscription, purchase))
 
         delegateAdapters.put(Constantes.ReelGood.GOOGLEPLAY, StreamMovieGoogleAdapterAdapter(subscription, purchase))
-        delegateAdapters.put(Constantes.ReelGood.STARZ, StreamMovieStarzAdapterAdapter(subscription, purchase))
         delegateAdapters.put(Constantes.ReelGood.AMAZON, StreamMovieAmazonAdapterAdapter(subscription, purchase))
     }
 

@@ -738,13 +738,13 @@ class Api(val context: Context) {
         }
     }
 
-    suspend fun getAvaliableMovie(id: String = "salt-2010"): ReelGood {
+    suspend fun getAvaliableMovie(id: String): ReelGood {
         return suspendCancellableCoroutine { cont ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
             val request = Request.Builder()
-                .url("https://api.reelgood.com/v1/movie/$id?sources=amazon_prime%2Cfx_tveverywhere%2Chbo%2Chulu_plus%2Cnetflix%2Cshowtime%2Cstarz&free=true")
-                .get()
+                .url("https://api.reelgood.com/v1/movie/$id?sources=amazon_prime%2Chbo%2Chulu_plus%2Cnetflix%2Cstarz%2Cgoogle_plus&free=true")
+                .get() // ou https://api.reelgood.com/v1/movie/upgrade-2018?&availability=onAnySource
                 .build()
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
