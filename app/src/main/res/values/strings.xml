@@ -224,6 +224,7 @@
     <string name="stream" translatable="false">Stream</string>
     <string name="rent">Rent</string>
     <string name="purchase">Purchase</string>
+    <string name="beta" translatable="false">beta</string>
 
 
 </resources>
