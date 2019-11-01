@@ -346,9 +346,9 @@ class MovieFragment : FragmentBase() {
     }
 
     private fun streamCast() {
-        icon_stream?.let {
-            it.setOnClickListener {
-                (activity as MovieDetailsActivity).setStream()
+        icon_stream?.let { img ->
+            img.setOnClickListener {
+                (activity as MovieDetailsActivity).setStream(img)
             }
         }
     }

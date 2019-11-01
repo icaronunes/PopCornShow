@@ -13,6 +13,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
@@ -134,7 +135,7 @@ class MovieDetailsActivity : BaseActivity() {
         subscriptions.add(inscricaoMovie)
     }
 
-    fun setStream() {
+    fun setStream(it: ImageView) {
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 title_streaming.text = getString(R.string.stream_avaliable)
@@ -165,11 +166,17 @@ class MovieDetailsActivity : BaseActivity() {
 
                 } else {
                     streamview_movie.error = true
+                    it.setImageResource(R.drawable.tv_off)
+                    it.isEnabled = false
                 }
             } catch (ex: ConnectException) {
                 streamview_movie.error = true
+                it.setImageResource(R.drawable.tv_off)
+                it.isEnabled = false
             } catch (ex: Exception) {
                 streamview_movie.error = true
+                it.setImageResource(R.drawable.tv_off)
+                it.isEnabled = false
             } finally {
                 setAnimated()
             }
