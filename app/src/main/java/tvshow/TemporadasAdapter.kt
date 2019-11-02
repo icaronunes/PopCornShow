@@ -17,6 +17,7 @@ import elenco.ElencoActivity
 import producao.CrewsActivity
 import utils.Constantes
 import utils.gone
+import utils.parseDateShot
 import utils.setPicassoWithCache
 
 /**
@@ -81,7 +82,7 @@ class TemporadasAdapter(
         }, {
             holder.image_temporada.gone()
         })
-        holder.data.text = series.seasons[position]?.airDate ?: ""
+        holder.data.text = series.seasons[position]?.airDate?.parseDateShot() ?: ""
         holder.itemView.setOnClickListener { view -> onClickListener.onClickTemporada(view, position, color) }
 
         holder.popup.setOnClickListener { view -> showPopUp(view, series.seasons[position]?.seasonNumber!!) }
