@@ -183,6 +183,7 @@
     <string name="stream_avaliable">Donde ver la pelicula</string>
     <string name="rent">Alquilar</string>
     <string name="purchase">Comprar</string>
+    <string name="valid_us">Valid for USA</string>
 
 
 </resources>

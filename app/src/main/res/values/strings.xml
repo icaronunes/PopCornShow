@@ -226,6 +226,7 @@
     <string name="rent">Rent</string>
     <string name="purchase">Purchase</string>
     <string name="beta" translatable="false">**beta</string>
+    <string name="valid_us">Valid for USA</string>
 
 
 </resources>

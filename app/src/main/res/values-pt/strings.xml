@@ -200,5 +200,6 @@
     <string name="stream_avaliable">Onde assistir o filme</string>
     <string name="rent">Alugar</string>
     <string name="purchase">Comprar</string>
+    <string name="valid_us">Válido para USA</string>
 
 </resources>
