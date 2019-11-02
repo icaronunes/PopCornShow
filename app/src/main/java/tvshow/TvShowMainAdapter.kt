@@ -47,7 +47,7 @@ class TvShowMainAdapter(activity: FragmentActivity, private val popularTvshow: L
         RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.poster_main, parent, false)) {
         fun bind(item: ListaItemSerie) = with(itemView) {
             img_poster_grid.setBackgroundColor(ActivityCompat.getColor(context, R.color.accent))
-            img_poster_grid.setPicassoWithCache(item.posterPath, 3,
+            img_poster_grid.setPicassoWithCache(item.posterPath, 6,
                 {
                     progress_poster_grid.gone()
                     color = UtilsApp.loadPalette(img_poster_grid)

@@ -75,7 +75,7 @@ class TemporadasAdapter(
     override fun onBindViewHolder(holder: HoldeTemporada, position: Int) {
 
         holder.temporada.text = "${context.getString(R.string.temporada)} ${series?.seasons!![position]?.seasonNumber!!}"
-        Picasso.get().load(UtilsApp.getBaseUrlImagem(2) + series.seasons[position]?.posterPath)
+        Picasso.get().load(UtilsApp.getBaseUrlImagem(4) + series.seasons[position]?.posterPath)
             .error(R.drawable.poster_empty)
             .into(holder.image_temporada)
         holder.data.text = series.seasons[position]?.airDate ?: ""

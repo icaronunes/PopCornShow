@@ -601,7 +601,7 @@ class TvShowFragment : FragmentBase() {
     }
 
     private fun setPoster() {
-        img_poster.setPicasso(series.posterPath, 2, img_erro = R.drawable.poster_empty)
+        img_poster.setPicasso(series.posterPath, 4, img_erro = R.drawable.poster_empty)
         val posters = series.images?.posters
 
         img_poster?.setOnClickListener {

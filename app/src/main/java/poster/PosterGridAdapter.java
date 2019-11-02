@@ -53,7 +53,7 @@ public class PosterGridAdapter extends RecyclerView.Adapter<PosterGridAdapter.Po
         if (artworks.size() > 0) {
 
             Picasso.get().load(UtilsApp.INSTANCE
-                    .getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(context, 4)) + artworks.get(position).getFilePath())
+                    .getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(context, 6)) + artworks.get(position).getFilePath())
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                     .into(holder.img, new Callback() {
                         @Override
