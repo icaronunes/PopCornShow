@@ -29,7 +29,7 @@ class MainBusiness(val app: Application, private val mainViewModel: MainViewMode
 
     fun setNovidade() {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(app)
-        if (sharedPref.getBoolean(BuildConfig.VERSION_CODE.toString(), true) || true) {
+        if (sharedPref.getBoolean(BuildConfig.VERSION_CODE.toString(), true)) {
             listener.setNovidade(MainViewModel.MainModel.News)
         }
     }

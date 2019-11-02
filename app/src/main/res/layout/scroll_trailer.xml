@@ -8,6 +8,17 @@
     android:orientation="vertical"
     android:padding="@dimen/trade_size_dp_2">
 
+    <com.google.android.youtube.player.YouTubeThumbnailView
+        android:id="@+id/youtube_view_thumbnail"
+        android:layout_width="@dimen/trade_size_dp_190"
+        android:layout_height="@dimen/trade_size_dp_150"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/empty_produtora2" />
+
     <ImageView
         android:id="@+id/play_treiler_img"
         android:layout_width="wrap_content"
@@ -22,16 +33,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
-
-    <com.google.android.youtube.player.YouTubeThumbnailView
-        android:id="@+id/youtube_view_thumbnail"
-        android:layout_width="@dimen/trade_size_dp_190"
-        android:layout_height="@dimen/trade_size_dp_150"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/empty_produtora2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
