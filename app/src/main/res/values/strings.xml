@@ -201,6 +201,7 @@
     <string name="directo_label">Director</string>
     <string name="two_minus" translatable="false">--</string>
     <string name="poster_empty">without a list of posters</string>
+    <string name="play_trailer" translatable="false">Play Trailer</string>
 
     //////////
     //// content Description

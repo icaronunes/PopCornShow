@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scroll_treiler_linearlayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/trade_size_dp_2"
-    android:weightSum="1">
+    android:padding="@dimen/trade_size_dp_2">
 
-
-    <FrameLayout
-        android:id="@+id/frame_youtube_view_thumbnail"
+    <ImageView
+        android:id="@+id/play_treiler_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:foreground="?attr/selectableItemBackgroundBorderless">
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:contentDescription="@string/play_trailer"
+        android:scaleType="centerCrop"
+        android:src="@drawable/play"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
-        <com.google.android.youtube.player.YouTubeThumbnailView
-            android:id="@+id/youtube_view_thumbnail"
-            android:layout_width="@dimen/trade_size_dp_190"
-            android:layout_height="@dimen/trade_size_dp_140"
-            android:layout_gravity="center_vertical|center_horizontal|center" />
+    <com.google.android.youtube.player.YouTubeThumbnailView
+        android:id="@+id/youtube_view_thumbnail"
+        android:layout_width="@dimen/trade_size_dp_190"
+        android:layout_height="@dimen/trade_size_dp_150"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/empty_produtora2" />
 
-        <ImageView
-            android:id="@+id/play_treiler_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:contentDescription="Play Trailer"
-            android:scaleType="centerCrop"
-            android:src="@drawable/play" />
-    </FrameLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

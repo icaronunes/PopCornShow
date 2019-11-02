@@ -48,6 +48,7 @@ import utils.ConstFirebase.USEREPS
 import utils.ConstFirebase.VISTO
 import utils.Constantes
 import utils.UtilsApp
+import utils.parseDateShot
 import utils.setPicasso
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -330,7 +331,7 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
 
     private fun setAirDate() {
         episode?.airDate?.let {
-            air_date.text = it
+            air_date.text = it.parseDateShot()
             setButtonRating(it)
         }
     }

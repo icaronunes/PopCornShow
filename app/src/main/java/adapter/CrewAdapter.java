@@ -53,7 +53,7 @@ public class CrewAdapter extends RecyclerView.Adapter<CrewAdapter.CrewViewHolder
             holder.textCrewJob.setText(crew.getJob());
             holder.textCrewNome.setText(crew.getName());
             Picasso.get()
-                    .load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(context, 2)) + crew.getProfilePath())
+                    .load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(context, 4)) + crew.getProfilePath())
                     .placeholder(R.drawable.person)
                     .into(holder.imgPagerCrews, new Callback() {
                         @Override

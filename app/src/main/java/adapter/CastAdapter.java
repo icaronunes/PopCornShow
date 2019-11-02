@@ -54,7 +54,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
             holder.textCastNome.setText(personCast.getName());
             
             Picasso.get()
-                    .load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(context, 2)) + personCast.getProfilePath())
+                    .load(UtilsApp.INSTANCE.getBaseUrlImagem(UtilsApp.INSTANCE.getTamanhoDaImagem(context, 4)) + personCast.getProfilePath())
                     .placeholder(R.drawable.person)
                     .into(holder.imageView, new Callback() {
                         @Override

@@ -6,9 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.crashlytics.android.Crashlytics;
@@ -41,7 +42,6 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
         this.sinopse = overview;
     }
 
-
     @Override
     public TrailerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.scroll_trailer, parent, false);
@@ -52,26 +52,35 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     public void onBindViewHolder(@NotNull TrailerAdapter.TrailerViewHolder holder, final int position) {
         final String youtube_key = videos.get(position).getKey();
         try {
-            holder.thumbnailView.initialize(Config.YOUTUBE_API_KEY, OnInitializedListener(youtube_key));
-            holder.play_view.setOnClickListener(new View.OnClickListener() {
+            holder.thumbnailView.initialize(Config.YOUTUBE_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
+
                 @Override
-                public void onClick(View view) {
+                public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
+                    youTubeThumbnailLoader.setVideo(youtube_key);
+                    holder.playTrailer.setVisibility(View.VISIBLE);
+                }
 
-                    Intent intent = new Intent(context, TrailerActivity.class);
-                    //  Log.d("OnClick", youtube_key);
-                    intent.putExtra(Constantes.YOU_TUBE_KEY, youtube_key);
-                    intent.putExtra(Constantes.SINOPSE, sinopse);
-
-                    context.startActivity(intent);
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TrailerActivity.class.getName());
-                    bundle.putString("URL", youtube_key);
-                    FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                @Override
+                public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+                    Crashlytics.logException(new Exception("Erro em \"onInitializationFailure\" dentro de " + this.getClass()));
                 }
             });
 
-        } catch (Exception e){
+            holder.play_view.setOnClickListener(view -> {
+
+                Intent intent = new Intent(context, TrailerActivity.class);
+                intent.putExtra(Constantes.YOU_TUBE_KEY, youtube_key);
+                intent.putExtra(Constantes.SINOPSE, sinopse);
+
+                context.startActivity(intent);
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, TrailerActivity.class.getName());
+                bundle.putString("URL", youtube_key);
+                FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+            });
+
+        } catch (Exception e) {
             Crashlytics.logException(e);
             Toast.makeText(context, R.string.ops, Toast.LENGTH_SHORT).show();
         }
@@ -82,30 +91,16 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
         return videos.size();
     }
 
-    private YouTubeThumbnailView.OnInitializedListener OnInitializedListener(final String youtube_key) {
-        return new YouTubeThumbnailView.OnInitializedListener() {
-
-            @Override
-            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
-                youTubeThumbnailLoader.setVideo(youtube_key);
-            }
-
-            @Override
-            public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
-                Crashlytics.logException(new Exception("Erro em \"onInitializationFailure\" dentro de " + this.getClass()));
-            }
-        };
-    }
-
-
-    class TrailerViewHolder extends RecyclerView.ViewHolder {
-        private FrameLayout play_view;
+    static class TrailerViewHolder extends RecyclerView.ViewHolder {
+        private ConstraintLayout play_view;
         private YouTubeThumbnailView thumbnailView;
+        private ImageView playTrailer;
 
         TrailerViewHolder(View itemView) {
             super(itemView);
-            play_view = itemView.findViewById(R.id.frame_youtube_view_thumbnail);
+            play_view = itemView.findViewById(R.id.scroll_treiler_linearlayout);
             thumbnailView = itemView.findViewById(R.id.youtube_view_thumbnail);
+            playTrailer = itemView.findViewById(R.id.play_treiler_img);
 
         }
     }
