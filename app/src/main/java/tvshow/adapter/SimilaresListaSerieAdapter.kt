@@ -48,7 +48,7 @@ class SimilaresListaSerieAdapter(
             item.firstAirDate?.let { similares_data_lancamento.text = it.parseDateShot() }
             item.originalName?.let { similares_title_original.text = it }
             item.voteAverage?.let { similares_voto_media.text = it.toString() }
-            img_similares.setPicassoWithCache(item.posterPath, 2, img_erro = R.drawable.poster_empty)
+            img_similares.setPicassoWithCache(item.posterPath, 3, img_erro = R.drawable.poster_empty)
 
             setOnClickListener {
                 activity.startActivity(Intent(activity, TvShowActivity::class.java).apply {

@@ -46,7 +46,7 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
                 }
             }
 
-            img_movie.setPicassoWithCache(item.posterPath, 2,
+            img_movie.setPicassoWithCache(item.posterPath, 3,
                     img_erro = R.drawable.poster_empty,
                     error = { failure() },
                     sucesso = { progress_bar?.visibility = View.GONE })

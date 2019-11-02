@@ -20,7 +20,8 @@ import java.io.Serializable
 /**
  * Created by icaro on 18/08/16.
  */
-class PersonImagemAdapter(private val context: Context, private val artworks: List<ProfilesItem?>?, private val nome: String?) : RecyclerView.Adapter<PersonImagemAdapter.PersonImageViewHolder>() {
+class PersonImagemAdapter(private val context: Context, private val artworks: List<ProfilesItem?>?, private val nome: String?)
+    : RecyclerView.Adapter<PersonImagemAdapter.PersonImageViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonImageViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.poster_grid_image, parent, false)
