@@ -36,7 +36,7 @@ class SearchAdapter(val context: SearchMultiActivity, private val multis: List<M
             Multi.MediaType.MOVIE -> {
                 val movieDb = multis[position] as MovieDb
 
-                holder.poster.setPicassoWithCache(movieDb.posterPath, 2)
+                holder.poster.setPicassoWithCache(movieDb.posterPath, 4)
 
                 holder.itemView.setOnClickListener {
                     context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
@@ -69,7 +69,7 @@ class SearchAdapter(val context: SearchMultiActivity, private val multis: List<M
             Multi.MediaType.TV_SERIES -> {
                 val series = multis[position] as TvSeries
 
-                holder.poster.setPicassoWithCache(series.posterPath, 2)
+                holder.poster.setPicassoWithCache(series.posterPath, 4)
 
                 holder.itemView.setOnClickListener {
                     context.startActivity(Intent(context, TvShowActivity::class.java).apply {
@@ -101,7 +101,7 @@ class SearchAdapter(val context: SearchMultiActivity, private val multis: List<M
 
             Multi.MediaType.PERSON -> {
                 val person = multis[position] as Person
-                holder.poster.setPicassoWithCache(person.profilePath, 2)
+                holder.poster.setPicassoWithCache(person.profilePath, 4)
 
                 holder.itemView.setOnClickListener {
                     context.startActivity(Intent(context, PersonActivity::class.java).apply {

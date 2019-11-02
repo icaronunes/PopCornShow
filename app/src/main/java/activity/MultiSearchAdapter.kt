@@ -19,7 +19,8 @@ import utils.UtilsApp
 import utils.enums.EnumTypeMedia
 import utils.setPicassoWithCache
 
-class MultiSearchAdapter(val application: Context, private val multiReturn: MultiSearch, private val icon: Drawable?) : RecyclerView.Adapter<MultiSearchAdapter.HolderView>() {
+class MultiSearchAdapter(val application: Context, private val multiReturn: MultiSearch, private val icon: Drawable?)
+    : RecyclerView.Adapter<MultiSearchAdapter.HolderView>() {
 
     override fun onBindViewHolder(holder: HolderView, position: Int) {
         val item = multiReturn.results?.get(position)!!
