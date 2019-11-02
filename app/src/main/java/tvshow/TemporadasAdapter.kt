@@ -11,13 +11,13 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
-import com.squareup.picasso.Picasso
 import domain.UserTvshow
 import domain.tvshow.Tvshow
 import elenco.ElencoActivity
 import producao.CrewsActivity
 import utils.Constantes
-import utils.UtilsApp
+import utils.gone
+import utils.setPicassoWithCache
 
 /**
  * Created by icaro on 26/08/16.
@@ -75,9 +75,12 @@ class TemporadasAdapter(
     override fun onBindViewHolder(holder: HoldeTemporada, position: Int) {
 
         holder.temporada.text = "${context.getString(R.string.temporada)} ${series?.seasons!![position]?.seasonNumber!!}"
-        Picasso.get().load(UtilsApp.getBaseUrlImagem(4) + series.seasons[position]?.posterPath)
-            .error(R.drawable.poster_empty)
-            .into(holder.image_temporada)
+
+        holder.image_temporada.setPicassoWithCache(series.seasons[position]?.posterPath, 4, {
+
+        }, {
+            holder.image_temporada.gone()
+        })
         holder.data.text = series.seasons[position]?.airDate ?: ""
         holder.itemView.setOnClickListener { view -> onClickListener.onClickTemporada(view, position, color) }
 

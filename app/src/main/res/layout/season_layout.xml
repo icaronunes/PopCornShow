@@ -32,10 +32,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:layout_marginTop="6dp"
-            android:gravity="start"
             android:text="@string/temporadas"
             android:textSize="@dimen/trade_txt_size_sp_18"
             android:textStyle="normal|bold|italic"
+            app:layout_constraintEnd_toStartOf="@id/bt_assistido"
+            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toEndOf="@id/image_temporada"
             app:layout_constraintTop_toTopOf="@id/image_temporada" />
 
