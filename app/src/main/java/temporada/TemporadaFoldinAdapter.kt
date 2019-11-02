@@ -83,7 +83,7 @@ class TemporadaFoldinAdapter(
             item_epsodio_titulo_resumo.text = ep.overview
             item_epsodio_votos.text = ep.voteCount.toString()
             epsodio_detalhes_votos.text = ep.voteCount.toString()
-            epsodio_detalhes_img.setPicassoWithCache(ep.stillPath, img_erro = R.drawable.empty_popcorn)
+            epsodio_detalhes_img.setPicassoWithCache(ep.stillPath, 5, img_erro = R.drawable.empty_popcorn)
             epsodio_detalhes_nota.text = ep.overview
 
             ep.voteAverage?.let {
@@ -103,13 +103,13 @@ class TemporadaFoldinAdapter(
             ep.crew?.firstOrNull { it?.job == Constantes.DIRECTOR }?.let {
                 grup_director.visible()
                 director_name.text = it.name
-                img_director.setPicassoWithCache(it.profilePath, 2, img_erro = R.drawable.person)
+                img_director.setPicassoWithCache(it.profilePath, 3, img_erro = R.drawable.person)
             }
 
             ep.crew?.firstOrNull { it?.job == Constantes.WRITER }?.let {
                 grup_writer.visible()
                 writer_name.text = it.name
-                writer_img.setPicassoWithCache(it.profilePath, 2, img_erro = R.drawable.person)
+                writer_img.setPicassoWithCache(it.profilePath, 3, img_erro = R.drawable.person)
             }
 
             epUser?.nota?.let {

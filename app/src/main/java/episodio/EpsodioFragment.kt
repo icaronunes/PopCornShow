@@ -25,10 +25,6 @@ import domain.EpisodesItem
 import domain.FilmeService
 import domain.UserEp
 import domain.UserSeasons
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import kotlinx.android.synthetic.main.epsodio_fragment.air_date
 import kotlinx.android.synthetic.main.epsodio_fragment.ep_director
 import kotlinx.android.synthetic.main.epsodio_fragment.ep_image
@@ -53,6 +49,10 @@ import utils.ConstFirebase.VISTO
 import utils.Constantes
 import utils.UtilsApp
 import utils.setPicasso
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * Created by icaro on 27/08/16.
@@ -312,7 +312,7 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
     private fun setImage() {
 
         if (!episode?.stillPath.isNullOrBlank()) {
-            ep_image.setPicasso(episode?.stillPath, img_erro = R.drawable.top_empty)
+            ep_image.setPicasso(episode?.stillPath, 5, img_erro = R.drawable.top_empty)
         } else {
             ep_image.setPicasso("", img_erro = R.drawable.top_empty)
         }
