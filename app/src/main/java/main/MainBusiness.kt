@@ -4,11 +4,11 @@ import android.app.Application
 import android.preference.PreferenceManager
 import br.com.icaro.filme.BuildConfig
 import domain.Api
-import java.net.ConnectException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.net.ConnectException
 
 class MainBusiness(val app: Application, private val mainViewModel: MainViewModel, private val listener: MainBusinessListener) {
 
@@ -29,7 +29,7 @@ class MainBusiness(val app: Application, private val mainViewModel: MainViewMode
 
     fun setNovidade() {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(app)
-        if (sharedPref.getBoolean(BuildConfig.VERSION_CODE.toString(), true)) {
+        if (sharedPref.getBoolean(BuildConfig.VERSION_CODE.toString(), true) || true) {
             listener.setNovidade(MainViewModel.MainModel.News)
         }
     }

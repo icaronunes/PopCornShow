@@ -29,13 +29,11 @@ import domain.Imdb
 import domain.Movie
 import domain.colecao.PartsItem
 import elenco.ElencoActivity
-import filme.activity.MovieDetailsActivity
 import filme.adapter.CollectionPagerAdapter
 import filme.adapter.SimilaresFilmesAdapter
 import fragment.FragmentBase
 import kotlinx.android.synthetic.main.info_details_movie_layout.icon_collection
 import kotlinx.android.synthetic.main.info_details_movie_layout.icon_site
-import kotlinx.android.synthetic.main.info_details_movie_layout.icon_stream
 import kotlinx.android.synthetic.main.info_details_movie_layout.img_budget
 import kotlinx.android.synthetic.main.info_details_movie_layout.img_star
 import kotlinx.android.synthetic.main.info_details_movie_layout.original_title
@@ -142,7 +140,6 @@ class MovieFragment : FragmentBase() {
         setSimilares()
         setAnimated()
         setStatus()
-        streamCast()
         setAdMob(adView)
 
         imdb_site.setOnClickListener {
@@ -345,22 +342,13 @@ class MovieFragment : FragmentBase() {
         }
     }
 
-    private fun streamCast() {
-        icon_stream?.let { img ->
-            img.setOnClickListener {
-                (activity as MovieDetailsActivity).setStream(img)
-            }
-        }
-    }
-
     private fun setAnimated() {
         AnimatorSet().apply {
             playTogether(ObjectAnimator.ofFloat(img_star, View.ALPHA, 0.0f, 1.0f).setDuration(2000),
                 ObjectAnimator.ofFloat(voto_media, View.ALPHA, 0f, 1f).setDuration(2300),
                 ObjectAnimator.ofFloat(img_budget, View.ALPHA, 0f, 1f).setDuration(2500),
                 ObjectAnimator.ofFloat(icon_site, View.ALPHA, 0f, 1f).setDuration(3000),
-                ObjectAnimator.ofFloat(icon_collection, View.ALPHA, 0f, 1f).setDuration(3300),
-                ObjectAnimator.ofFloat(icon_stream, View.ALPHA, 0f, 1f).setDuration(3500))
+                ObjectAnimator.ofFloat(icon_collection, View.ALPHA, 0f, 1f).setDuration(3300))
         }.start()
     }
 

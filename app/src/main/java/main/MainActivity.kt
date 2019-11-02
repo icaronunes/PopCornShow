@@ -20,7 +20,10 @@ import domain.ListaSeries
 import domain.TopMain
 import domain.movie.ListaFilmes
 import fragment.ViewPageMainTopFragment
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.activity_main_img
+import kotlinx.android.synthetic.main.activity_main.tabLayout
+import kotlinx.android.synthetic.main.activity_main.viewPager_main
+import kotlinx.android.synthetic.main.activity_main.viewpage_top_main
 import utils.UtilsApp
 
 class MainActivity : BaseActivity() {

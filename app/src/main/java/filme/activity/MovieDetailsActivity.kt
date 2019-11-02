@@ -13,7 +13,6 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
@@ -128,6 +127,7 @@ class MovieDetailsActivity : BaseActivity() {
                 progress_horizontal?.visibility = View.GONE
                 setFAB()
                 setFragmentInfo()
+                setStream()
             }, {
                 Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
             })
@@ -135,7 +135,8 @@ class MovieDetailsActivity : BaseActivity() {
         subscriptions.add(inscricaoMovie)
     }
 
-    fun setStream(it: ImageView) {
+    private fun setStream() {
+        //Todo remover comportamento do bottom não é mais necessario
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 title_streaming.text = getString(R.string.stream_avaliable)
@@ -166,17 +167,11 @@ class MovieDetailsActivity : BaseActivity() {
 
                 } else {
                     streamview_movie.error = true
-                    it.setImageResource(R.drawable.tv_off)
-                    it.isEnabled = false
                 }
             } catch (ex: ConnectException) {
                 streamview_movie.error = true
-                it.setImageResource(R.drawable.tv_off)
-                it.isEnabled = false
             } catch (ex: Exception) {
                 streamview_movie.error = true
-                it.setImageResource(R.drawable.tv_off)
-                it.isEnabled = false
             } finally {
                 setAnimated()
             }
@@ -185,11 +180,13 @@ class MovieDetailsActivity : BaseActivity() {
 
     @Suppress("UNCHECKED_CAST")
     private fun setAnimated() {
+        //Todo colocar dentro do Stream
         val sheet = BottomSheetBehavior.from(streamview_movie)
         (sheet as? BottomSheetBehavior<View>)?.setAnimation(filme_container, streamview_movie.findViewById(R.id.title_streaming))
     }
 
     private fun isStreamValid(it: Availability): Boolean {
+        //Todo colocar dentro do Stream
         return it.sourceName == "starz" ||
             it.sourceName == "netflix" ||
             it.sourceName == "hulu_plus" ||
