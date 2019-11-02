@@ -49,15 +49,13 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
     public void onBindViewHolder(final FavoriteViewHolder holder, final int position) {
 
         final FilmeDB movie = filmes.get(position);
-       // Log.d("onBindViewHolder", "position" + position);
         if (movie != null) {
 
         if (status) {
             String valor = String.valueOf(movie.getNota());
-           // Log.d("Rated", "" + valor);
+
             if (valor.length() > 3) {
                 valor = valor.substring(0, 2);
-               // Log.d("Rated 2", "" + valor);
                 holder.rated.setText(valor);
             }
             holder.rated.setText(valor);

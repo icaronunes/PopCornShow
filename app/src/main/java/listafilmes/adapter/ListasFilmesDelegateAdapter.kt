@@ -13,7 +13,9 @@ import com.squareup.picasso.Picasso
 import domain.ViewType
 import domain.movie.ListaItemFilme
 import filme.activity.MovieDetailsActivity
-import kotlinx.android.synthetic.main.adapter_filmes_list.view.*
+import kotlinx.android.synthetic.main.adapter_filmes_list.view.imgFilmes
+import kotlinx.android.synthetic.main.adapter_filmes_list.view.progress_filmes_lista
+import kotlinx.android.synthetic.main.adapter_filmes_list.view.title_filmes_lista
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
 import utils.UtilsApp
@@ -37,7 +39,7 @@ class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
             putdata(context, item, title_filmes_lista)
 
             Picasso.get().load(UtilsApp
-                    .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 2)) + item.posterPath)
+                .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 4)) + item.posterPath)
                     .error(R.drawable.poster_empty)
                     .into(imgFilmes, object : Callback {
                         override fun onError(e: Exception?) {

@@ -1,5 +1,6 @@
 package listafilmes.adapter
 
+import adapter.AdDelegateAdapter
 import android.content.Context
 import android.view.ViewGroup
 import androidx.collection.SparseArrayCompat
@@ -8,10 +9,10 @@ import com.google.android.gms.ads.formats.UnifiedNativeAd
 import domain.ViewType
 import domain.movie.ListAd
 import domain.movie.ListaItemFilme
-import java.util.ArrayList
 import pessoaspopulares.adapter.LoadingDelegateAdapter
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
+import java.util.ArrayList
 
 class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val listaResult = ArrayList<ViewType>()

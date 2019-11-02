@@ -1,4 +1,4 @@
-package listafilmes.adapter
+package adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,7 +10,15 @@ import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import domain.ViewType
 import domain.movie.ListAd
-import kotlinx.android.synthetic.main.ad_unified.view.*
+import kotlinx.android.synthetic.main.ad_unified.view.ad_advertiser
+import kotlinx.android.synthetic.main.ad_unified.view.ad_body
+import kotlinx.android.synthetic.main.ad_unified.view.ad_call_to_action
+import kotlinx.android.synthetic.main.ad_unified.view.ad_headline
+import kotlinx.android.synthetic.main.ad_unified.view.ad_icon
+import kotlinx.android.synthetic.main.ad_unified.view.ad_media
+import kotlinx.android.synthetic.main.ad_unified.view.ad_price
+import kotlinx.android.synthetic.main.ad_unified.view.ad_stars
+import kotlinx.android.synthetic.main.ad_unified.view.ad_store
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 
 class AdDelegateAdapter : ViewTypeDelegateAdapter {
