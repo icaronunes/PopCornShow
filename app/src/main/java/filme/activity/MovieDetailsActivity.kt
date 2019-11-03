@@ -48,6 +48,7 @@ import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horiz
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -171,6 +172,8 @@ class MovieDetailsActivity : BaseActivity() {
                     }.filter {
                         isStreamValid(it)
                     }
+                    delay(100)
+                    if (streamview_movie.isListsEmpty()) streamview_movie.error = true
 
                 } else {
                     streamview_movie.error = true

@@ -68,6 +68,8 @@ class StreamView : FrameLayout {
         }
     }
 
+    fun isListsEmpty() = rent.isEmpty() && bay.isEmpty() && stream.isEmpty()
+
     var iconSource: Drawable? by Delegates.observable<Drawable?>(null) { _, _, iconErro ->
         stream_error.setImageDrawable(iconErro)
         invalidate()
