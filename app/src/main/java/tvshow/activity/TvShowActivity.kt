@@ -62,8 +62,8 @@ import java.util.Locale
 
 class TvShowActivity : BaseActivity() {
 
-    private var id_tvshow: Int = 0
-    private var color_top: Int = 0
+    private var idTvshow: Int = 0
+    private var colorTop: Int = 0
     private var series: Tvshow? = null
     private var addFavorite = true
     private var addWatch = true
@@ -89,12 +89,12 @@ class TvShowActivity : BaseActivity() {
         setUpToolBar()
         setupNavDrawer()
         getExtras()
-        collapsing_toolbar?.setBackgroundColor(color_top)
+        collapsing_toolbar?.setBackgroundColor(colorTop)
         collapsing_toolbar.title = " "
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        setColorFab(color_top)
+        setColorFab(colorTop)
 
         iniciarFirebases()
         compositeSubscription = CompositeSubscription()
@@ -109,7 +109,7 @@ class TvShowActivity : BaseActivity() {
     private fun getDadosTvshow() {
 
         val subscriber = Api(this)
-            .loadTvshowComVideo(id_tvshow)
+            .loadTvshowComVideo(idTvshow)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Observer<Tvshow> {
@@ -135,7 +135,7 @@ class TvShowActivity : BaseActivity() {
         valueEventWatch = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                if (dataSnapshot.child(id_tvshow.toString()).exists()) {
+                if (dataSnapshot.child(idTvshow.toString()).exists()) {
                     addWatch = true
                     menu_item_watchlist?.labelText = resources.getString(R.string.remover_watch)
                 } else {
@@ -153,10 +153,10 @@ class TvShowActivity : BaseActivity() {
     private fun setEventListenerRated() {
         valueEventRated = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.child(id_tvshow.toString()).exists()) {
+                if (dataSnapshot.child(idTvshow.toString()).exists()) {
                     addRated = true
-                    if (dataSnapshot.child(id_tvshow.toString()).child("nota").exists()) {
-                        val nota = dataSnapshot.child(id_tvshow.toString()).child("nota").value.toString()
+                    if (dataSnapshot.child(idTvshow.toString()).child("nota").exists()) {
+                        val nota = dataSnapshot.child(idTvshow.toString()).child("nota").value.toString()
                         numero_rated = java.lang.Float.parseFloat(nota)
                         menu_item_rated?.labelText = resources.getString(R.string.remover_rated)
                         if (numero_rated == 0f) {
@@ -179,7 +179,7 @@ class TvShowActivity : BaseActivity() {
     private fun setEventListenerFavorite() {
         valueEventFavorite = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.child(id_tvshow.toString()).exists()) {
+                if (dataSnapshot.child(idTvshow.toString()).exists()) {
                     addFavorite = true
                     menu_item_favorite?.labelText = resources.getString(R.string.remover_favorite)
                 } else {
@@ -225,11 +225,11 @@ class TvShowActivity : BaseActivity() {
     private fun getExtras() {
 
         if (intent.action == null) {
-            color_top = intent.getIntExtra(Constantes.COLOR_TOP, R.color.colorFAB)
-            id_tvshow = intent.getIntExtra(Constantes.TVSHOW_ID, 0)
+            colorTop = intent.getIntExtra(Constantes.COLOR_TOP, R.color.colorFAB)
+            idTvshow = intent.getIntExtra(Constantes.TVSHOW_ID, 0)
         } else {
-            color_top = Integer.parseInt(intent.getStringExtra(Constantes.COLOR_TOP))
-            id_tvshow = Integer.parseInt(intent.getStringExtra(Constantes.TVSHOW_ID))
+            colorTop = Integer.parseInt(intent.getStringExtra(Constantes.COLOR_TOP))
+            idTvshow = Integer.parseInt(intent.getStringExtra(Constantes.TVSHOW_ID))
         }
     }
 
@@ -346,7 +346,7 @@ class TvShowActivity : BaseActivity() {
 
                 if (addFavorite) {
                     try {
-                        myFavorite?.child(id_tvshow.toString())?.setValue(null)
+                        myFavorite?.child(idTvshow.toString())?.setValue(null)
                             ?.addOnCompleteListener {
                                 Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_remove_favorite), Toast.LENGTH_SHORT).show()
                             }
@@ -359,7 +359,7 @@ class TvShowActivity : BaseActivity() {
                     tvshowDB.id = series?.id!!
                     tvshowDB.poster = series?.posterPath
 
-                    myFavorite?.child(id_tvshow.toString())?.setValue(tvshowDB)
+                    myFavorite?.child(idTvshow.toString())?.setValue(tvshowDB)
                         ?.addOnCompleteListener {
                             Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_add_favorite), Toast.LENGTH_SHORT)
                                 .show()
@@ -406,7 +406,7 @@ class TvShowActivity : BaseActivity() {
                 }
 
                 no.setOnClickListener {
-                    myRated?.child(id_tvshow.toString())?.setValue(null)
+                    myRated?.child(idTvshow.toString())?.setValue(null)
                         ?.addOnCompleteListener {
                             Toast.makeText(this@TvShowActivity,
                                 resources.getText(R.string.tvshow_remove_rated), Toast.LENGTH_SHORT).show()
@@ -428,14 +428,14 @@ class TvShowActivity : BaseActivity() {
                         tvshowDB.title = series?.name
                         tvshowDB.poster = series?.posterPath
 
-                        myRated?.child(id_tvshow.toString())?.setValue(tvshowDB)
+                        myRated?.child(idTvshow.toString())?.setValue(tvshowDB)
                             ?.addOnCompleteListener {
                                 Toast.makeText(this@TvShowActivity,
                                     getString(R.string.tvshow_rated) + " - ${tvshowDB.nota}", Toast.LENGTH_SHORT)
                                     .show()
                             }
 
-                        Thread(Runnable { FilmeService.ratedTvshowGuest(id_tvshow, (ratingBar.rating * 2).toInt(), this@TvShowActivity) })
+                        Thread(Runnable { FilmeService.ratedTvshowGuest(idTvshow, (ratingBar.rating * 2).toInt(), this@TvShowActivity) })
                             .start()
                     }
                     alertDialog.dismiss()
@@ -448,10 +448,10 @@ class TvShowActivity : BaseActivity() {
 
     private fun setupViewPagerTabs() {
         viewPager_tvshow?.offscreenPageLimit = 1
-        viewPager_tvshow?.adapter = TvShowAdapter(this, supportFragmentManager, series, color_top, seguindo)
+        viewPager_tvshow?.adapter = TvShowAdapter(this, supportFragmentManager, series, colorTop, seguindo)
         viewPager_tvshow?.currentItem = 0
         tabLayout.setupWithViewPager(viewPager_tvshow)
-        tabLayout.setSelectedTabIndicatorColor(color_top)
+        tabLayout.setSelectedTabIndicatorColor(colorTop)
         progress_horizontal.visibility = View.GONE
     }
 
@@ -483,7 +483,7 @@ class TvShowActivity : BaseActivity() {
         series?.seasons?.forEachIndexed { index, seasonsItem ->
 
             val subscriber = Api(this)
-                .getTvSeasons(id_tvshow, seasonsItem?.seasonNumber!!, 1)
+                .getTvSeasons(idTvshow, seasonsItem?.seasonNumber!!, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.immediate())
                 .onBackpressureBuffer(1000)

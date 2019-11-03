@@ -355,7 +355,7 @@ class MovieDetailsActivity : BaseActivity() {
         return "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3Dmovie%26id%3D${movieDb?.id}&apn=br.com.icaro.filme"
     }
 
-    fun ratedFilme(): View.OnClickListener {
+    private fun ratedFilme(): View.OnClickListener {
         return View.OnClickListener {
             var date: Date? = null
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -561,7 +561,7 @@ class MovieDetailsActivity : BaseActivity() {
             myFavorite?.removeEventListener(valueEventFavorite!!)
         }
 
-        subscriptions.clear()
+        subscriptions.unsubscribe()
     }
 
     private inner class ImagemTopFragment(supportFragmentManager: FragmentManager) : FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
