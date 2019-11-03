@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class SourceData(
     @SerializedName("links")
-    val links: Links,
+    val links: Links?,
     @SerializedName("references")
-    val references: References
+    val references: References?
 )

@@ -11,7 +11,7 @@ data class LastEpisodeAir(
     @field:SerializedName("id")
     val id: Int,
     @field:SerializedName("name")
-    val name: String?,
+    val name: String? = "",
     @field:SerializedName("overview")
     val overView: String?,
     @field:SerializedName("production_code")

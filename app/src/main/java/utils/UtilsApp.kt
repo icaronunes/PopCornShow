@@ -255,7 +255,7 @@ object UtilsApp {
     fun loadPalette(view: View): Int {
 
         val imageView = view as ImageView
-        val drawable = imageView.drawable as BitmapDrawable
+        val drawable = imageView.drawable as? BitmapDrawable
         if (drawable != null) {
             val bitmap = drawable.bitmap
             val builder = Palette.Builder(bitmap)
@@ -263,7 +263,7 @@ object UtilsApp {
             for (swatch in palette.swatches) {
                 return swatch.rgb
             }
-        }
+        } //Todo verificar o uso de swatch para fazer textos
         return 0
     }
 
@@ -353,13 +353,13 @@ object UtilsApp {
 
         if (item.mediaType!!.equals(EnumTypeMedia.TV.type, ignoreCase = true)) {
             if (item.posterPath != null && !item.posterPath.isEmpty() && !item.posterPath.equals("", ignoreCase = true))
-                UtilsApp.saveImagemSearch(context, item.posterPath)
+                saveImagemSearch(context, item.posterPath)
         } else if (item.mediaType.equals(EnumTypeMedia.MOVIE.type, ignoreCase = true)) {
             if (item.posterPath != null && !item.posterPath.isEmpty() && !item.posterPath.equals("", ignoreCase = true))
-                UtilsApp.saveImagemSearch(context, item.posterPath)
+                saveImagemSearch(context, item.posterPath)
         } else if (item.mediaType.equals(EnumTypeMedia.PERSON.type, ignoreCase = true)) {
             if (item.profile_path != null && !item.profile_path.isEmpty() && !item.profile_path.equals("", ignoreCase = true))
-                UtilsApp.saveImagemSearch(context, item.profile_path)
+                saveImagemSearch(context, item.profile_path)
         }
     }
 
@@ -387,7 +387,7 @@ object UtilsApp {
             7 -> {
                 return "http://image.tmdb.org/t/p/original/"
             }
-            else -> return null
+            else -> return "http://image.tmdb.org/t/p/w92/"
         }
     }
 }

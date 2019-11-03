@@ -33,10 +33,20 @@ class StreamMovieHuluAdapter(val subscription: Boolean = false, val purchase: Bo
             setOnClickListener {
                 callAppOrWeb(availability = availability, packagerCall = huluPackage) {
                     val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = Uri.parse(it.sourceData.links.web)
+                    val link = getLink(availability)
+                    intent.data = Uri.parse(link)
                     context.startActivity(intent)
                 }
             }
         }
+    }
+
+    private fun getLink(availability: Availability): String {
+        val id = availability.sourceData?.references?.web
+            ?: availability.sourceData?.references?.android
+            ?: availability.sourceData?.references?.ios
+        return if (id != null) {
+            "https://www.hulu.com/movie/$id"
+        } else "https://www.hulu.com/welcome"
     }
 }

@@ -26,11 +26,20 @@ class StreamMovieNetflixAdapter(val subscription: Boolean = false, val purchase:
             setOnClickListener {
                 callAppOrWeb(availability = availability, packagerCall = netflixPackage) {
                     val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = Uri.parse(availability.sourceData.links.web)
+                    intent.data = Uri.parse(getLink(availability))
                     context.startActivity(intent)
                 }
             }
         }
+    }
+
+    private fun getLink(availability: Availability): String {
+        val id = availability.sourceData?.references?.web
+            ?: availability.sourceData?.references?.android
+            ?: availability.sourceData?.references?.ios
+        return if (id != null) {
+            "https://www.netflix.com/title/$id"
+        } else "https://www.netflix.com"
     }
 }
 

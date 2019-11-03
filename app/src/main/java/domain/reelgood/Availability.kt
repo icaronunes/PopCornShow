@@ -16,7 +16,7 @@ data class Availability(
     @SerializedName("rental_cost_sd")
     val rentalCostSd: Double, // 2.99
     @SerializedName("source_data")
-    val sourceData: SourceData,
+    val sourceData: SourceData?,
     @SerializedName("source_id")
     val sourceId: String, // verizon_on_demand-verizon_on_demand-purchase
     @SerializedName("source_name")

@@ -30,10 +30,19 @@ class StreamMovieStarzAdapterAdapter(val subscription: Boolean = false, val purc
             setOnClickListener {
                 callAppOrWeb(availability, starzPackage) {
                     val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = Uri.parse(it.sourceData.links.web)
+                    intent.data = Uri.parse(getLink(availability))
                     context.startActivity(intent)
                 }
             }
         }
+    }
+
+    private fun getLink(availability: Availability): String {
+        val id = availability.sourceData?.references?.web
+            ?: availability.sourceData?.references?.android
+            ?: availability.sourceData?.references?.ios
+        return if (id != null) {
+            "https://www.starz.com/movies/$id"
+        } else "https://www.starz.com/"
     }
 }

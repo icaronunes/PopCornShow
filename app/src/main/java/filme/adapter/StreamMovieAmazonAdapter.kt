@@ -30,10 +30,20 @@ class StreamMovieAmazonAdapterAdapter(val subscription: Boolean = false, val pur
             setOnClickListener {
                 callAppOrWeb(availability, amazonPackage) {
                     val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = Uri.parse(availability.sourceData.links.web)
+                    val link = getLink(availability)
+                    intent.data = Uri.parse(link)
                     context.startActivity(intent)
                 }
             }
         }
+    }
+
+    private fun getLink(availability: Availability): String {
+        val id = availability.sourceData?.references?.web
+            ?: availability.sourceData?.references?.android
+            ?: availability.sourceData?.references?.ios
+        return if (id != null) {
+            "https://www.amazon.com/gp/product/$id?tag=reelgood06-20"
+        } else "https://www.amazon.com/"
     }
 }

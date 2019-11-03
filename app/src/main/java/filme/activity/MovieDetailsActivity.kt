@@ -135,15 +135,22 @@ class MovieDetailsActivity : BaseActivity() {
         subscriptions.add(inscricaoMovie)
     }
 
+    fun getIdStream(): String {
+        return return try {
+            "${movieDb?.originalTitle?.getNameTypeReel()
+                ?: ""}-${movieDb?.releaseDate?.substring(0, 4)}"
+        } catch (ex: java.lang.Exception) {
+            ""
+        }
+    }
+
     private fun setStream() {
         //Todo remover comportamento do bottom não é mais necessario
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 title_streaming.text = getString(R.string.stream_avaliable)
                 val reelGood = async(Dispatchers.IO) {
-                    val id = "${movieDb?.originalTitle?.getNameTypeReel()
-                        ?: ""}-${movieDb?.releaseDate?.substring(0, 4)}"
-                    Api(this@MovieDetailsActivity).getAvaliableMovie(id)
+                    Api(this@MovieDetailsActivity).getAvaliableMovie(getIdStream())
                 }.await()
 
                 if (reelGood.availability.isNotEmpty()) {

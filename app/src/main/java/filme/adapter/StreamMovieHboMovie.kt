@@ -26,10 +26,19 @@ class StreamMovieHboAdapterAdapter(val subscription: Boolean = false, val purcha
             setOnClickListener {
                 callAppOrWeb(availability, hboPackage) {
                     val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = Uri.parse(availability.sourceData.links.web)
+                    intent.data = Uri.parse(getLink(availability))
                     context.startActivity(intent)
                 }
             }
         }
+    }
+
+    private fun getLink(availability: Availability): String {
+        val id = availability.sourceData?.references?.web
+            ?: availability.sourceData?.references?.android
+            ?: availability.sourceData?.references?.ios
+        return if (id != null) {
+            "http://play.hbogo.com/feature/urn:hbo:feature:$id"
+        } else "https://play.hbogo.com/"
     }
 }
