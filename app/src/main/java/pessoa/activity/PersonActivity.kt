@@ -22,6 +22,7 @@ import utils.UtilsApp
 
 class PersonActivity : BaseActivity() {
 
+    lateinit var person: Person
     private var id_person: Int = 0
     private var nome: String? = null
     private val subscription: CompositeSubscription? = null
@@ -92,6 +93,7 @@ class PersonActivity : BaseActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    person = it
                     setTitleActionBar(it.name)
                     setupViewPagerTabs(it)
                     progress_horizontal.visibility = View.GONE

@@ -23,6 +23,7 @@ import domain.person.CastItem
 import domain.person.CrewItem
 import domain.person.Person
 import domain.person.ProfilesItem
+import pessoa.activity.PersonActivity
 import pessoa.adapter.PersonCrewsAdapter
 import pessoa.adapter.PersonImagemAdapter
 import pessoa.adapter.PersonMovieAdapter
@@ -63,7 +64,7 @@ class PersonFragment : Fragment() {
         if (arguments != null) {
             tipo = arguments?.getInt(Constantes.ABA)!!
             if (person == null) {
-                person = arguments?.getSerializable(Constantes.PERSON) as Person
+                person = (activity as PersonActivity).person // arguments?.getSerializable(Constantes.PERSON) as Person
             }
         }
     }
@@ -189,7 +190,7 @@ class PersonFragment : Fragment() {
         val adview = view.findViewById<AdView>(R.id.adView)
         val adRequest = AdRequest.Builder()
             // .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-            // .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
+            // .addTestDevice ("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
             .build()
         adview.loadAd(adRequest)
 
@@ -246,7 +247,7 @@ class PersonFragment : Fragment() {
             imageButtonWiki?.visibility = View.VISIBLE
 
             imageButtonWiki?.setOnClickListener {
-                val basewiki = "https://pt.wikipedia.org/wiki/"
+                val basewiki = Constantes.WIKI
                 val site: String
                 val intent = Intent(context, Site::class.java)
                 val nome = information.name
@@ -323,11 +324,10 @@ class PersonFragment : Fragment() {
 
     companion object {
 
-        fun newInstance(aba: Int, person: Person): PersonFragment {
+        fun newInstance(aba: Int): PersonFragment {
 
             val args = Bundle()
             args.putInt(Constantes.ABA, aba)
-            args.putSerializable(Constantes.PERSON, person)
             val fragment = PersonFragment()
             fragment.arguments = args
             return fragment

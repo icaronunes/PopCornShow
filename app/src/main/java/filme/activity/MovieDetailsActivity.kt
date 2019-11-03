@@ -180,13 +180,13 @@ class MovieDetailsActivity : BaseActivity() {
 
     @Suppress("UNCHECKED_CAST")
     private fun setAnimated() {
-        //Todo colocar dentro do Stream
+        // Todo colocar dentro do Stream
         val sheet = BottomSheetBehavior.from(streamview_movie)
         (sheet as? BottomSheetBehavior<View>)?.setAnimation(filme_container, streamview_movie.findViewById(R.id.title_streaming))
     }
 
     private fun isStreamValid(it: Availability): Boolean {
-        //Todo colocar dentro do Stream
+        // Todo colocar dentro do Stream
         return it.sourceName == "starz" ||
             it.sourceName == "netflix" ||
             it.sourceName == "hulu_plus" ||

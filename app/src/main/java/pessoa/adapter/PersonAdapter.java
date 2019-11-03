@@ -14,32 +14,30 @@ import pessoa.fragment.PersonFragment;
  * Created by icaro on 18/08/16.
  */
 public class PersonAdapter extends FragmentPagerAdapter {
-    private final Person person;
     private Context context;
 
     public PersonAdapter(Context context, FragmentManager supportFragmentManager, Person person) {
         super(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.context = context;
-        this.person = person;
     }
 
     @Override
     public Fragment getItem(int position) {
 
         if (position == 0) {
-            return PersonFragment.Companion.newInstance(R.string.tvshow, person);
+            return PersonFragment.Companion.newInstance(R.string.tvshow);
         }
         if (position == 1) {
-            return PersonFragment.Companion.newInstance(R.string.filme, person);
+            return PersonFragment.Companion.newInstance(R.string.filme);
         }
         if (position == 2) {
-            return PersonFragment.Companion.newInstance(R.string.person, person);
+            return PersonFragment.Companion.newInstance(R.string.person);
         }
         if (position == 3) {
-            return PersonFragment.Companion.newInstance(R.string.imagem_person, person);
+            return PersonFragment.Companion.newInstance(R.string.imagem_person);
         }
         if (position == 4) {
-            return PersonFragment.Companion.newInstance(R.string.producao, person);
+            return PersonFragment.Companion.newInstance(R.string.producao);
         }
 
         return null;

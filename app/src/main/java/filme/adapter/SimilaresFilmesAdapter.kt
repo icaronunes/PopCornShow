@@ -22,8 +22,8 @@ import utils.visible
 /**
  * Created by icaro on 22/02/17.
  */
-class SimilaresFilmesAdapter(val context: FragmentActivity, private val similarItems: List<ResultsSimilarItem?>?)
-    : RecyclerView.Adapter<SimilaresFilmesAdapter.SimilaresViewHolder>() {
+class SimilaresFilmesAdapter(val context: FragmentActivity, private val similarItems: List<ResultsSimilarItem?>?) :
+    RecyclerView.Adapter<SimilaresFilmesAdapter.SimilaresViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SimilaresViewHolder(parent)
 
@@ -35,8 +35,8 @@ class SimilaresFilmesAdapter(val context: FragmentActivity, private val similarI
         return similarItems?.size!!
     }
 
-    inner class SimilaresViewHolder(parent: ViewGroup)
-        : RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.scroll_similares, parent, false)) {
+    inner class SimilaresViewHolder(parent: ViewGroup) :
+        RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.scroll_similares, parent, false)) {
         fun bind(item: ResultsSimilarItem) = with(itemView) {
             progress_poster_grid.visible()
             layout_poster_main.setCardBackgroundColor(ContextCompat.getColor(context, R.color.primary))
