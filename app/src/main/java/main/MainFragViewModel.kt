@@ -9,13 +9,13 @@ import applicaton.BaseViewModel
 import domain.Api
 import domain.ListaSeries
 import domain.movie.ListaFilmes
-import java.net.ConnectException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.launch
 import utils.UtilsApp
+import java.net.ConnectException
 
 class MainFragViewModel(application: Application) : BaseViewModel(application) {
 

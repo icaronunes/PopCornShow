@@ -2,6 +2,7 @@ package domain
 
 import android.content.Context
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import domain.busca.MultiSearch
 import domain.colecao.Colecao
 import domain.movie.ListaFilmes
@@ -593,9 +594,11 @@ class Api(val context: Context) {
                         val gson = Gson()
                         val listaFilmes = gson.fromJson(json, ListaFilmes::class.java)
                         continuation.resume(listaFilmes)
-                    } catch (Ex: Exception) {
-                        continuation.resumeWithException(Ex)
+                    } catch (e: JsonSyntaxException){
+                        continuation.resumeWithException(e)
                     } catch (ex: SocketTimeoutException) {
+                        continuation.resumeWithException(ex)
+                    } catch (ex: Exception) {
                         continuation.resumeWithException(ex)
                     }
                 }
@@ -620,9 +623,11 @@ class Api(val context: Context) {
                         val json = response.body?.string()
                         val listaTv = Gson().fromJson(json, ListaFilmes::class.java)
                         continuation.resume(listaTv)
-                    } catch (ex: Exception) {
-                        continuation.resumeWithException(ex)
+                    } catch (e: JsonSyntaxException){
+                        continuation.resumeWithException(e)
                     } catch (ex: SocketTimeoutException) {
+                        continuation.resumeWithException(ex)
+                    } catch (ex: Exception) {
                         continuation.resumeWithException(ex)
                     }
                 }
@@ -647,9 +652,11 @@ class Api(val context: Context) {
                         val json = response.body?.string()
                         val listaTv = Gson().fromJson(json, ListaFilmes::class.java)
                         continuation.resume(listaTv)
-                    } catch (ex: Exception) {
-                        continuation.resumeWithException(ex)
+                    } catch (e: JsonSyntaxException){
+                        continuation.resumeWithException(e)
                     } catch (ex: SocketTimeoutException) {
+                        continuation.resumeWithException(ex)
+                    } catch (ex: Exception) {
                         continuation.resumeWithException(ex)
                     }
                 }
@@ -674,9 +681,11 @@ class Api(val context: Context) {
                         val json = response.body?.string()
                         val listaTv = Gson().fromJson(json, ListaSeries::class.java)
                         continuation.resume(listaTv)
-                    } catch (ex: Exception) {
-                        continuation.resumeWithException(ex)
+                    } catch (e: JsonSyntaxException){
+                        continuation.resumeWithException(e)
                     } catch (ex: SocketTimeoutException) {
+                        continuation.resumeWithException(ex)
+                    } catch (ex: Exception) {
                         continuation.resumeWithException(ex)
                     }
                 }
@@ -702,9 +711,11 @@ class Api(val context: Context) {
                         val json = response.body?.string()
                         val listaTv = Gson().fromJson(json, ListaSeries::class.java)
                         continuation.resume(listaTv)
-                    } catch (ex: Exception) {
-                        continuation.resumeWithException(ex)
+                    }  catch (e: JsonSyntaxException){
+                        continuation.resumeWithException(e)
                     } catch (ex: SocketTimeoutException) {
+                        continuation.resumeWithException(ex)
+                    } catch (ex: Exception) {
                         continuation.resumeWithException(ex)
                     }
                 }
@@ -730,6 +741,10 @@ class Api(val context: Context) {
                         val json = response.body?.string()
                         val lista = gson.fromJson(json, TvSeasons::class.java)
                         cont.resume(lista)
+                    }  catch (e: JsonSyntaxException){
+                        cont.resumeWithException(e)
+                    } catch (ex: SocketTimeoutException) {
+                        cont.resumeWithException(ex)
                     } catch (ex: Exception) {
                         cont.resumeWithException(ex)
                     }
@@ -756,6 +771,10 @@ class Api(val context: Context) {
                         val json = response.body?.string()
                         val lista = gson.fromJson(json, ReelGood::class.java)
                         cont.resume(lista)
+                    } catch (e: JsonSyntaxException){
+                        cont.resumeWithException(e)
+                    } catch (ex: SocketTimeoutException) {
+                        cont.resumeWithException(ex)
                     } catch (ex: Exception) {
                         cont.resumeWithException(ex)
                     }

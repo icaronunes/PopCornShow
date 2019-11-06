@@ -16,9 +16,12 @@ import br.com.icaro.filme.R
 import br.com.icaro.filme.R.string.filmes_main
 import domain.ListaSeries
 import domain.movie.ListaFilmes
-import kotlinx.android.synthetic.main.filmes_main.*
-import kotlinx.android.synthetic.main.tvshow_main.*
-import kotlinx.coroutines.Job
+import kotlinx.android.synthetic.main.filmes_main.chip_group_movie
+import kotlinx.android.synthetic.main.filmes_main.recycle_movie_popular_main
+import kotlinx.android.synthetic.main.filmes_main.recycle_upcoming_movie_main
+import kotlinx.android.synthetic.main.tvshow_main.chip_group_tvshow
+import kotlinx.android.synthetic.main.tvshow_main.recycle_tvshowtoday_main
+import kotlinx.android.synthetic.main.tvshow_main.tvshow_popular_main
 import listafilmes.activity.MoviesActivity
 import listaserie.activity.TvShowsActivity
 import tvshow.TvShowMainAdapter
@@ -29,7 +32,6 @@ import utils.Constantes
  */
 class MainFragment : BaseFragment() {
 
-    private var rotina: Job = Job()
     private var tipo: Int = 0
     private lateinit var model: MainFragViewModel
 
@@ -229,7 +231,7 @@ class MainFragment : BaseFragment() {
     }
 
     override fun onDestroy() {
-        if (rotina.isActive) rotina.cancel()
+        model.destroy()
         super.onDestroy()
     }
 }

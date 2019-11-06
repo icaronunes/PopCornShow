@@ -6,10 +6,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import br.com.icaro.filme.R
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import kotlin.coroutines.CoroutineContext
 
 open class BaseViewModel(open val app: Application) : AndroidViewModel(app), LifecycleObserver {
 
@@ -31,6 +31,15 @@ open class BaseViewModel(open val app: Application) : AndroidViewModel(app), Lif
     override fun onCleared() {
         coroutineContext.cancel()
         super.onCleared()
+    }
+
+    fun destroy() {
+        try {
+            if (job.isActive)
+                job.cancel()
+        } catch (e: Exception) {
+
+        }
     }
 
     sealed class BaseView {
