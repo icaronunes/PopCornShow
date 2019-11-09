@@ -6,7 +6,7 @@ import utils.Constantes
 
 data class Availability(
     @SerializedName("access_type")
-    val accessType: Int, // 3
+    val accessType: Int?, // 3
     @SerializedName("purchase_cost_hd")
     val purchaseCostHd: Double, // 12.99
     @SerializedName("purchase_cost_sd")
@@ -18,9 +18,9 @@ data class Availability(
     @SerializedName("source_data")
     val sourceData: SourceData?,
     @SerializedName("source_id")
-    val sourceId: String, // verizon_on_demand-verizon_on_demand-purchase
+    val sourceId: String?, // verizon_on_demand-verizon_on_demand-purchase
     @SerializedName("source_name")
-    val sourceName: String // verizon_on_demand
+    val sourceName: String? // verizon_on_demand
 ) : ViewType {
     override fun getViewType(): Int {
         return when (sourceName) {

@@ -197,12 +197,12 @@ class MovieDetailsActivity : BaseActivity() {
 
     private fun isStreamValid(it: Availability): Boolean {
         // Todo colocar dentro do Stream
-        return it.sourceName == "starz" ||
+        return (it.sourceName == "starz" ||
             it.sourceName == "netflix" ||
             it.sourceName == "hulu_plus" ||
             it.sourceName == "google_play" ||
             it.sourceName == "amazon_buy" ||
-            it.sourceName == "hbo"
+            it.sourceName == "hbo")
     }
 
     private fun setEventListenerWatch() {

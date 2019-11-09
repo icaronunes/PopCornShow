@@ -165,15 +165,15 @@ fun RecyclerView.setScrollInvisibleFloatMenu(floatButton: FloatingActionMenu) {
  * AVAILABILITY
  */
 fun Availability.getPricePurchase(): String {
-    val less = purchaseCostHd.coerceAtMost(purchaseCostSd)
-    val biggest = purchaseCostHd.coerceAtLeast(purchaseCostSd)
+    val less = purchaseCostSd?.let { purchaseCostHd?.coerceAtMost(it) }
+    val biggest = purchaseCostSd?.let { purchaseCostHd?.coerceAtLeast(it) }
     if (less == biggest) return less.toString()
     return "${if (less != 0.0) less.toString() else "--"} - ${if (biggest != 0.0) biggest.toString() else "--"}"
 }
 
 fun Availability.getPriceRental(): String {
-    val less = rentalCostHd.coerceAtMost(rentalCostSd)
-    val biggest = rentalCostHd.coerceAtLeast(rentalCostSd)
+    val less = rentalCostSd?.let { rentalCostHd?.coerceAtMost(it) }
+    val biggest = rentalCostSd?.let { rentalCostHd?.coerceAtLeast(it) }
     if (less == biggest) return less.toString()
     return "${if (less != 0.0) less.toString() else "--"} - ${if (biggest != 0.0) biggest.toString() else "--"}"
 }

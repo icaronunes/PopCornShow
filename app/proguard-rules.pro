@@ -25,6 +25,7 @@
 -keepattributes SourceFile,LineNumberTable
 -keep class com.crashlytics.** { *; }
 -dontwarn com.crashlytics.**
+-keep public class * extends java.lang.Exception
 
 -keeppackagenames br.com.icaro.**
 -keep class br.com.icaro.** {*;}
