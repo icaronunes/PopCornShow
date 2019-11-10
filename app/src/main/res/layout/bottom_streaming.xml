@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/conteiner_stream"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/stream_customview"
     android:clickable="false"
-    tools:showIn="@layout/activity_movie">
+    android:fitsSystemWindows="true"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <ImageView
         android:id="@+id/stream_error"
         android:layout_width="match_parent"
         android:layout_height="@dimen/trade_size_dp_150"
-        tools:src="@drawable/sad"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_streaming"
+        tools:src="@drawable/sad"
         tools:visibility="visible" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:contentDescription="beta"
         android:text="@string/beta"
         android:textColor="@color/black_transparente_produtora"
         android:textSize="8sp"
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:text="@string/valid_us"
-        android:textColor="@color/black_transparente_produtora"
+        android:textColor="@color/black"
         android:textSize="8sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -50,13 +50,13 @@
         android:layout_marginTop="@dimen/trade_size_dp_15"
         android:fontFamily="serif-monospace"
         android:gravity="center"
-        tools:text="@string/stream_avaliable"
         android:textColor="@color/black"
         android:textSize="@dimen/trade_txt_size_sp_20"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/open_bar" />
+        app:layout_constraintTop_toBottomOf="@id/open_bar"
+        tools:text="@string/stream_avaliable" />
 
     <TextView
         android:id="@+id/label_stream"
@@ -133,49 +133,81 @@
         android:id="@+id/group_recycler_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="rcRent, rcStream, rcBay" />
+        app:constraint_referenced_ids="coord_rent, coord_stream, coor_bay " />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcRent"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coord_rent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hapticFeedbackEnabled="true"
-        android:visibility="gone"
+        android:background="@color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintEnd_toEndOf="@id/label_rent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/label_rent"
         app:layout_constraintStart_toStartOf="@id/label_rent"
-        app:layout_constraintTop_toBottomOf="@id/label_rent"
-        tools:itemCount="1"
-        tools:listitem="@layout/sources_item_layout"
-        tools:visibility="gone" />
+        app:layout_constraintTop_toBottomOf="@id/label_rent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcStream"
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:fillViewport="true">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcRent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hapticFeedbackEnabled="true"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="@id/label_rent"
+                    tools:itemCount="15"
+                    tools:listitem="@layout/sources_item_layout"
+                    tools:visibility="visible" />
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/coord_stream"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hapticFeedbackEnabled="true"
-        android:visibility="gone"
+        android:visibility="visible"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintEnd_toEndOf="@+id/label_stream"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@id/label_stream"
-        app:layout_constraintTop_toBottomOf="@id/label_stream"
-        tools:itemCount="1"
-        tools:listitem="@layout/sources_item_layout"
-        tools:visibility="gone" />
+        app:layout_constraintTop_toBottomOf="@id/label_stream">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcBay"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcStream"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hapticFeedbackEnabled="true"
+            app:layout_constraintHorizontal_bias="0.5"
+            tools:itemCount="1"
+            tools:listitem="@layout/sources_item_layout" />
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/coor_bay"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hapticFeedbackEnabled="true"
-        android:visibility="gone"
+        android:orientation="vertical"
+        android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="@id/label_bay"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@id/label_bay"
-        app:layout_constraintTop_toBottomOf="@id/label_bay"
-        tools:itemCount="1"
-        tools:listitem="@layout/sources_item_layout"
-        tools:visibility="gone" />
+        app:layout_constraintTop_toBottomOf="@id/label_bay">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcBay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hapticFeedbackEnabled="true"
+            android:visibility="visible"
+            tools:itemCount="15"
+            tools:listitem="@layout/sources_item_layout"
+             />
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

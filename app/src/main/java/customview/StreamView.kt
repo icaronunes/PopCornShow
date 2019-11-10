@@ -16,8 +16,8 @@ import kotlinx.android.synthetic.main.bottom_streaming.view.label_bay
 import kotlinx.android.synthetic.main.bottom_streaming.view.label_rent
 import kotlinx.android.synthetic.main.bottom_streaming.view.label_stream
 import kotlinx.android.synthetic.main.bottom_streaming.view.rcBay
-import kotlinx.android.synthetic.main.bottom_streaming.view.rcRent
 import kotlinx.android.synthetic.main.bottom_streaming.view.rcStream
+import kotlinx.android.synthetic.main.bottom_streaming.view.rcRent
 import kotlinx.android.synthetic.main.bottom_streaming.view.stream_error
 import kotlinx.android.synthetic.main.bottom_streaming.view.title_streaming
 import utils.gone
@@ -135,19 +135,19 @@ class StreamView : FrameLayout {
         title_streaming.text = title
     }
 
-    var labelStream: String? by Delegates.observable<String?>(context.getString(R.string.stream)) { _, _, title ->
+    var labelStream: String? by Delegates.observable(context.getString(R.string.stream)) { _, _, title ->
         label_stream.text = title
         invalidate()
         requestLayout()
     }
 
-    var labelRent: String? by Delegates.observable<String?>(context.getString(R.string.rent)) { _, _, title ->
+    var labelRent: String? by Delegates.observable(context.getString(R.string.rent)) { _, _, title ->
         label_rent.text = title
         invalidate()
         requestLayout()
     }
 
-    var labelBay: String? by Delegates.observable<String?>(context.getString(R.string.purchase)) { _, _, title ->
+    var labelBay: String? by Delegates.observable(context.getString(R.string.purchase)) { _, _, title ->
         label_bay.text = title
         invalidate()
         requestLayout()

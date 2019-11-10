@@ -74,5 +74,6 @@ object Constantes {
         const val STARZ = 5
         const val HULU = 6
         const val AMAZON = 7
+        const val WEB = 8
     }
 }

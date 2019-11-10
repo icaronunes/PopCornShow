@@ -27,14 +27,13 @@ class StreamMovieDelegatesAdapter(val subscription: Boolean, val purchase: Boole
 
     init {
         delegateAdapters.put(Constantes.ReelGood.LOADING, LoadingDelegateAdapter())
-
         delegateAdapters.put(Constantes.ReelGood.NETFLIX, StreamMovieNetflixAdapter(subscription, purchase))
         delegateAdapters.put(Constantes.ReelGood.HBO, StreamMovieHboAdapterAdapter(subscription, purchase))
         delegateAdapters.put(Constantes.ReelGood.HULU, StreamMovieHuluAdapter(subscription, purchase))
         delegateAdapters.put(Constantes.ReelGood.STARZ, StreamMovieStarzAdapterAdapter(subscription, purchase))
-
         delegateAdapters.put(Constantes.ReelGood.GOOGLEPLAY, StreamMovieGoogleAdapterAdapter(subscription, purchase))
         delegateAdapters.put(Constantes.ReelGood.AMAZON, StreamMovieAmazonAdapterAdapter(subscription, purchase))
+        delegateAdapters.put(Constantes.ReelGood.WEB, StreamMovieGenericWebAdapterAdapter(subscription, purchase))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

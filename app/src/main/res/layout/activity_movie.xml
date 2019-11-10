@@ -13,7 +13,6 @@
         android:background="@color/white"
         android:fitsSystemWindows="false">
 
-
         <!-- Layout da app bar -->
 
         <androidx.core.widget.NestedScrollView
@@ -89,7 +88,8 @@
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
             android:clickable="true"
             android:focusable="true"
-            app:behavior_peekHeight="0dp"
+            app:behavior_peekHeight="400dp"
+            app:behavior_hideable="true"
             app:title_streaming="@string/stream_avaliable"
             app:errorImg="@drawable/sad"
             app:label_bay="@string/purchase"

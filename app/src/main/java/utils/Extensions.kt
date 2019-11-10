@@ -141,6 +141,11 @@ fun String.getNameTypeReel(): String {
         .replace("à", "a")
         .replace("ä", "a")
         .replace("ä", "a")
+        .replace("'", "")
+        .replace("\"", "")
+        .replace("´", "")
+        .replace("~", "")
+        .replace("^", "")
         .toLowerCase()
 }
 

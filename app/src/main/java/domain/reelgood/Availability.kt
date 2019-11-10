@@ -30,7 +30,8 @@ data class Availability(
             "google_play" -> Constantes.ReelGood.GOOGLEPLAY
             "amazon_buy" -> Constantes.ReelGood.AMAZON
             "hbo" -> Constantes.ReelGood.HBO
-            else -> Constantes.ReelGood.LOADING
+             else  -> Constantes.ReelGood.WEB
+           // else -> Constantes.ReelGood.LOADING
         }
     }
 }
