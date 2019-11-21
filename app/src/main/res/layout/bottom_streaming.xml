@@ -2,12 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coord"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/trade_size_dp_450"
     android:background="@drawable/stream_customview"
-    android:clickable="false"
     android:fitsSystemWindows="true"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    android:focusable="false"
+    android:nestedScrollingEnabled="true"
+    android:overScrollMode="ifContentScrolls">
 
     <ImageView
         android:id="@+id/stream_error"
@@ -114,11 +116,11 @@
 
     <View
         android:id="@+id/open_bar"
-        android:layout_width="@dimen/trade_size_dp_25"
-        android:layout_height="@dimen/trade_size_dp_4"
+        android:layout_width="@dimen/trade_size_dp_40"
+        android:layout_height="@dimen/trade_size_dp_25"
         android:layout_marginTop="@dimen/trade_size_dp_8"
         android:alpha="0.8"
-        android:background="@color/bottonsheet_picker"
+        android:background="@drawable/arrow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -133,81 +135,44 @@
         android:id="@+id/group_recycler_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="coord_rent, coord_stream, coor_bay " />
+        app:constraint_referenced_ids="rcStream, rcRent, rcBay" />
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coord_rent"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcStream"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintEnd_toEndOf="@id/label_rent"
-        app:layout_constraintStart_toEndOf="@+id/label_rent"
-        app:layout_constraintStart_toStartOf="@id/label_rent"
-        app:layout_constraintTop_toBottomOf="@id/label_rent">
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:fillViewport="true">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcRent"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hapticFeedbackEnabled="true"
-                    android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="@id/label_rent"
-                    tools:itemCount="15"
-                    tools:listitem="@layout/sources_item_layout"
-                    tools:visibility="visible" />
-
-        </androidx.core.widget.NestedScrollView>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/coord_stream"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/label_stream"
         app:layout_constraintStart_toStartOf="@id/label_stream"
-        app:layout_constraintTop_toBottomOf="@id/label_stream">
+        app:layout_constraintTop_toBottomOf="@id/label_stream"
+        tools:itemCount="16"
+        tools:listitem="@layout/sources_item_layout" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcStream"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hapticFeedbackEnabled="true"
-            app:layout_constraintHorizontal_bias="0.5"
-            tools:itemCount="1"
-            tools:listitem="@layout/sources_item_layout" />
 
-    </androidx.core.widget.NestedScrollView>
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/coor_bay"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcRent"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:fillViewport="true"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/label_rent"
+        app:layout_constraintStart_toStartOf="@id/label_rent"
+        app:layout_constraintTop_toBottomOf="@id/label_rent"
+        tools:itemCount="16"
+        tools:listitem="@layout/sources_item_layout" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcBay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/label_bay"
         app:layout_constraintStart_toStartOf="@id/label_bay"
-        app:layout_constraintTop_toBottomOf="@id/label_bay">
+        app:layout_constraintTop_toBottomOf="@id/label_bay"
+        app:layout_constraintVertical_bias="0.0"
+        tools:itemCount="17"
+        tools:listitem="@layout/sources_item_layout" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcBay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hapticFeedbackEnabled="true"
-            android:visibility="visible"
-            tools:itemCount="15"
-            tools:listitem="@layout/sources_item_layout"
-             />
-
-    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

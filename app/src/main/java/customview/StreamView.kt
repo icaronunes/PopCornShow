@@ -5,19 +5,23 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.icaro.filme.R
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import domain.reelgood.Availability
 import filme.adapter.StreamMovieDelegatesAdapter
+import kotlinx.android.synthetic.main.bottom_streaming.view.coord
 import kotlinx.android.synthetic.main.bottom_streaming.view.group_recycler_list
 import kotlinx.android.synthetic.main.bottom_streaming.view.group_types_list
 import kotlinx.android.synthetic.main.bottom_streaming.view.label_bay
 import kotlinx.android.synthetic.main.bottom_streaming.view.label_rent
 import kotlinx.android.synthetic.main.bottom_streaming.view.label_stream
+import kotlinx.android.synthetic.main.bottom_streaming.view.open_bar
 import kotlinx.android.synthetic.main.bottom_streaming.view.rcBay
-import kotlinx.android.synthetic.main.bottom_streaming.view.rcStream
 import kotlinx.android.synthetic.main.bottom_streaming.view.rcRent
+import kotlinx.android.synthetic.main.bottom_streaming.view.rcStream
 import kotlinx.android.synthetic.main.bottom_streaming.view.stream_error
 import kotlinx.android.synthetic.main.bottom_streaming.view.title_streaming
 import utils.gone
@@ -28,8 +32,8 @@ import kotlin.properties.Delegates
  * TODO: document your custom view class.
  * adicionar
  *   app:behavior_peekHeight="0dp"
-     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-    na implementacao da view no xml
+app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+na implementacao da view no xml
  */
 class StreamView : FrameLayout {
 
@@ -69,6 +73,14 @@ class StreamView : FrameLayout {
     }
 
     fun isListsEmpty() = rent.isEmpty() && bay.isEmpty() && stream.isEmpty()
+    fun setClose(sheet: BottomSheetBehavior<StreamView>) {
+        open_bar.setOnClickListener {
+            sheet.state = when (sheet.state) {
+                BottomSheetBehavior.STATE_EXPANDED -> BottomSheetBehavior.STATE_COLLAPSED
+                else -> BottomSheetBehavior.STATE_EXPANDED
+            }
+        }
+    }
 
     var iconSource: Drawable? by Delegates.observable<Drawable?>(null) { _, _, iconErro ->
         stream_error.setImageDrawable(iconErro)
@@ -122,6 +134,7 @@ class StreamView : FrameLayout {
             group_types_list.gone()
             group_recycler_list.gone()
             stream_error.visible()
+            coord.layoutParams.height = ConstraintLayout.LayoutParams.WRAP_CONTENT
         } else {
             group_types_list.visible()
             group_recycler_list.visible()

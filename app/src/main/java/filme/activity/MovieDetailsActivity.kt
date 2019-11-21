@@ -165,16 +165,24 @@ class MovieDetailsActivity : BaseActivity() {
                         it.accessType == 3
                     }.filter {
                         isStreamValid(it)
+                    } + reelGood.availability.filter {
+                        it.accessType == 3
+                    }.filter {
+                        isStreamValid(it)
                     }
 
                     streamview_movie.rent = reelGood.availability.filter {
                         it.accessType == 3
                     }.filter {
                         isStreamValid(it)
+                    } + reelGood.availability.filter {
+                        it.accessType == 3
+                    }.filter {
+                        isStreamValid(it)
                     }
+
                     delay(100)
                     if (streamview_movie.isListsEmpty()) streamview_movie.error = true
-
                 } else {
                     streamview_movie.error = true
                 }
@@ -193,6 +201,7 @@ class MovieDetailsActivity : BaseActivity() {
         // Todo colocar dentro do Stream
         val sheet = BottomSheetBehavior.from(streamview_movie)
         (sheet as? BottomSheetBehavior<View>)?.setAnimation(filme_container, streamview_movie.findViewById(R.id.title_streaming))
+        streamview_movie.setClose(sheet)
     }
 
     private fun isStreamValid(it: Availability): Boolean {
