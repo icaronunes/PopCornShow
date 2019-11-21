@@ -47,9 +47,9 @@ import kotlinx.android.synthetic.main.fab_float.menu_item_watchlist
 import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -150,9 +150,9 @@ class MovieDetailsActivity : BaseActivity() {
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 title_streaming.text = getString(R.string.stream_avaliable)
-                val reelGood = async(Dispatchers.IO) {
+                val reelGood = withContext(Dispatchers.IO) {
                     Api(this@MovieDetailsActivity).getAvaliableMovie(getIdStream())
-                }.await()
+                }
 
                 if (reelGood.availability.isNotEmpty()) {
                     streamview_movie.stream = reelGood.availability.filter {
@@ -165,17 +165,9 @@ class MovieDetailsActivity : BaseActivity() {
                         it.accessType == 3
                     }.filter {
                         isStreamValid(it)
-                    } + reelGood.availability.filter {
-                        it.accessType == 3
-                    }.filter {
-                        isStreamValid(it)
                     }
 
                     streamview_movie.rent = reelGood.availability.filter {
-                        it.accessType == 3
-                    }.filter {
-                        isStreamValid(it)
-                    } + reelGood.availability.filter {
                         it.accessType == 3
                     }.filter {
                         isStreamValid(it)
