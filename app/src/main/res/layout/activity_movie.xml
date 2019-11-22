@@ -57,13 +57,6 @@
                 app:contentScrim="@android:drawable/screen_background_light_transparent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/top_img_viewpager"
                     android:layout_width="match_parent"
@@ -71,6 +64,13 @@
                     android:layout_gravity="bottom|start"
                     android:background="@android:drawable/screen_background_light_transparent"
                     app:layout_collapseMode="parallax" />
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
