@@ -137,7 +137,7 @@ class MovieDetailsActivity : BaseActivity() {
     }
 
     fun getIdStream(): String {
-        return return try {
+        return try {
             "${movieDb?.originalTitle?.getNameTypeReel()
                 ?: ""}-${movieDb?.releaseDate?.substring(0, 4)}"
         } catch (ex: java.lang.Exception) {
@@ -157,21 +157,24 @@ class MovieDetailsActivity : BaseActivity() {
                 if (reelGood.availability.isNotEmpty()) {
                     streamview_movie.stream = reelGood.availability.filter {
                         it.accessType == 2
-                    }.filter {
-                        isStreamValid(it)
                     }
+//                        .filter {
+//                        isStreamValid(it)
+//                    }
 
                     streamview_movie.bay = reelGood.availability.filter {
                         it.accessType == 3
-                    }.filter {
-                        isStreamValid(it)
                     }
+//                        .filter {
+//                        isStreamValid(it)
+//                    }
 
                     streamview_movie.rent = reelGood.availability.filter {
                         it.accessType == 3
-                    }.filter {
-                        isStreamValid(it)
                     }
+//                        .filter {
+//                        isStreamValid(it)
+//                    }
 
                     delay(100)
                     if (streamview_movie.isListsEmpty()) streamview_movie.error = true

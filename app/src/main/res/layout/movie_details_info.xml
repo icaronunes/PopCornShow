@@ -16,6 +16,7 @@
         android:paddingEnd="@dimen/trade_size_dp_4"
         android:textSize="@dimen/trade_txt_size_sp_20"
         android:typeface="serif"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -43,6 +44,7 @@
         android:layout_marginEnd="4dp"
         android:layout_weight="0.5"
         android:gravity="end"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titulo_text"
         tools:text="1 hora 45 min" />
@@ -83,6 +85,7 @@
         android:layout_marginEnd="4dp"
         android:maxLines="1"
         android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/produtora"
         tools:text="2019-01-03 BR" />
@@ -92,6 +95,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/trade_size_dp_4"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/group_information"

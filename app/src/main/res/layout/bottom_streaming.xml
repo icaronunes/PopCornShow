@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coord"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/trade_size_dp_500"
+    android:layout_height="@dimen/trade_size_dp_350"
     android:background="@drawable/stream_customview"
     android:fitsSystemWindows="true"
     android:focusable="false"
