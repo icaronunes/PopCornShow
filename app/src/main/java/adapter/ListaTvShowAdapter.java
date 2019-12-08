@@ -57,14 +57,11 @@ public class ListaTvShowAdapter extends RecyclerView.Adapter<ListaTvShowAdapter.
 	public void onBindViewHolder(final FavoriteViewHolder holder, final int position) {
 
 		final TvshowDB series = tvshows.get(position);
-		// Log.d("onBindViewHolder", "position" + position);
 
 		if (status) {
 			String valor = String.valueOf(series.getNota());
-			//  Log.d("Rated", "" + valor);
 			if (valor.length() > 3) {
 				valor = valor.substring(0, 2);
-				//     Log.d("Rated 2", "" + valor);
 				holder.text_rated_favoritos.setText(valor);
 			}
 			holder.text_rated_favoritos.setText(valor);

@@ -7,6 +7,8 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -45,11 +47,13 @@ import kotlinx.android.synthetic.main.fab_float.menu_item_favorite
 import kotlinx.android.synthetic.main.fab_float.menu_item_rated
 import kotlinx.android.synthetic.main.fab_float.menu_item_watchlist
 import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -58,7 +62,6 @@ import utils.UtilsApp
 import utils.getNameTypeReel
 import utils.setAnimation
 import java.io.File
-import java.net.ConnectException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -146,48 +149,36 @@ class MovieDetailsActivity : BaseActivity() {
     }
 
     private fun setStream() {
-        //Todo remover comportamento do bottom não é mais necessario
-        GlobalScope.launch(Dispatchers.Main) {
-            try {
-                title_streaming.text = getString(R.string.stream_avaliable)
-                val reelGood = withContext(Dispatchers.IO) {
-                    Api(this@MovieDetailsActivity).getAvaliableMovie(getIdStream())
-                }
-
-                if (reelGood.availability.isNotEmpty()) {
-                    streamview_movie.stream = reelGood.availability.filter {
-                        it.accessType == 2
-                    }
-//                        .filter {
-//                        isStreamValid(it)
-//                    }
-
-                    streamview_movie.bay = reelGood.availability.filter {
-                        it.accessType == 3
-                    }
-//                        .filter {
-//                        isStreamValid(it)
-//                    }
-
-                    streamview_movie.rent = reelGood.availability.filter {
-                        it.accessType == 3
-                    }
-//                        .filter {
-//                        isStreamValid(it)
-//                    }
-
-                    delay(100)
-                    if (streamview_movie.isListsEmpty()) streamview_movie.error = true
-                } else {
-                    streamview_movie.error = true
-                }
-            } catch (ex: ConnectException) {
+        GlobalScope.launch(Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, erro ->
+            Handler(Looper.getMainLooper()).post {
                 streamview_movie.error = true
-            } catch (ex: Exception) {
-                streamview_movie.error = true
-            } finally {
                 setAnimated()
             }
+        }) {
+            title_streaming.text = getString(R.string.stream_avaliable)
+            val reelGood = async(Dispatchers.IO) {
+                Api(this@MovieDetailsActivity).getAvaliableMovie(getIdStream())
+            }.await()
+
+            if (reelGood.availability.isNotEmpty()) {
+                streamview_movie.stream = reelGood.availability.filter {
+                    it.accessType == 2
+                }
+
+                streamview_movie.bay = reelGood.availability.filter {
+                    it.accessType == 3
+                }
+
+                streamview_movie.rent = reelGood.availability.filter {
+                    it.accessType == 3
+                }
+
+                delay(50)
+                if (streamview_movie.isListsEmpty()) streamview_movie.error = true
+            } else {
+                streamview_movie.error = true
+            }
+            setAnimated()
         }
     }
 

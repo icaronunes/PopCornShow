@@ -1,6 +1,8 @@
 package domain
 
 import android.content.Context
+import applicaton.BaseViewModel.BaseRequest
+import applicaton.BaseViewModel.BaseRequest.Success
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import domain.busca.MultiSearch
@@ -585,7 +587,7 @@ class Api(val context: Context) {
             }
     }
 
-    suspend fun getNowPlayingMovies(): ListaFilmes {
+    suspend fun getNowPlayingMovies(): BaseRequest<*> {
         return suspendCancellableCoroutine { continuation ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val idioma = getIdiomaEscolhido(context)
@@ -601,25 +603,21 @@ class Api(val context: Context) {
                 override fun onResponse(call: Call, response: Response) {
                     try {
                         if (response.isSuccessful) {
-                            val json = response.body?.string()
-                            val listaFilmes = Gson().fromJson(json, ListaFilmes::class.java)
-                            continuation.resume(listaFilmes)
+                            val listMovie = Gson().fromJson(response.body?.string(),
+                                ListaFilmes::class.java)
+                            continuation.resume(Success(listMovie))
                         } else {
-                            continuation.cancel(null)
+                            continuation.resumeWithException(Exception("Failure"))
                         }
-                    } catch (e: JsonSyntaxException) {
+                    } catch (e: Exception) {
                         continuation.resumeWithException(e)
-                    } catch (ex: SocketTimeoutException) {
-                        continuation.resumeWithException(ex)
-                    } catch (ex: Exception) {
-                        continuation.resumeWithException(ex)
                     }
                 }
             })
         }
     }
 
-    suspend fun getMoviePopular(): ListaFilmes {
+    suspend fun getMoviePopular(): BaseRequest<*> {
         return suspendCancellableCoroutine { continuation ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
@@ -636,14 +634,10 @@ class Api(val context: Context) {
                         if (response.isSuccessful) {
                             val json = response.body?.string()
                             val listaTv = Gson().fromJson(json, ListaFilmes::class.java)
-                            continuation.resume(listaTv)
+                            continuation.resume(Success(listaTv))
                         } else {
-                            continuation.cancel(null)
+                            continuation.resumeWithException(Exception("Failure"))
                         }
-                    } catch (e: JsonSyntaxException) {
-                        continuation.resumeWithException(e)
-                    } catch (ex: SocketTimeoutException) {
-                        continuation.resumeWithException(ex)
                     } catch (ex: Exception) {
                         continuation.resumeWithException(ex)
                     }
@@ -652,7 +646,7 @@ class Api(val context: Context) {
         }
     }
 
-    suspend fun getUpcoming(): ListaFilmes {
+    suspend fun getUpcoming(): BaseRequest<*> {
         return suspendCancellableCoroutine { continuation ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
@@ -669,23 +663,19 @@ class Api(val context: Context) {
                         if (response.isSuccessful) {
                             val json = response.body?.string()
                             val listaTv = Gson().fromJson(json, ListaFilmes::class.java)
-                            continuation.resume(listaTv)
+                            continuation.resume(Success(listaTv))
                         } else {
-                            continuation.cancel(null)
+                            continuation.resumeWithException(Exception("Failure"))
                         }
-                    } catch (e: JsonSyntaxException) {
+                    } catch (e: Exception) {
                         continuation.resumeWithException(e)
-                    } catch (ex: SocketTimeoutException) {
-                        continuation.resumeWithException(ex)
-                    } catch (ex: Exception) {
-                        continuation.resumeWithException(ex)
                     }
                 }
             })
         }
     }
 
-    suspend fun getAiringToday(): ListaSeries {
+    suspend fun getAiringToday(): BaseRequest<*> {
         return suspendCancellableCoroutine { continuation ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
@@ -700,25 +690,21 @@ class Api(val context: Context) {
                 override fun onResponse(call: Call, response: Response) {
                     try {
                         if (response.isSuccessful) {
-                            val json = response.body?.string()
-                            val listaTv = Gson().fromJson(json, ListaSeries::class.java)
-                            continuation.resume(listaTv)
+                            val list = Gson().fromJson(response.body?.string(),
+                                ListaSeries::class.java)
+                            continuation.resume(Success(list))
                         } else {
-                            continuation.cancel(null)
+                            continuation.resumeWithException(Exception("Failure"))
                         }
-                    } catch (e: JsonSyntaxException) {
-                        continuation.resumeWithException(e)
-                    } catch (ex: SocketTimeoutException) {
-                        continuation.resumeWithException(ex)
-                    } catch (ex: Exception) {
-                        continuation.resumeWithException(ex)
+                    } catch (e: Exception) {
+                        continuation.resumeWithException(Exception("Failure"))
                     }
                 }
             })
         }
     }
 
-    suspend fun getPopularTv(): ListaSeries {
+    suspend fun getPopularTv(): BaseRequest<*> {
         return suspendCancellableCoroutine { continuation ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
@@ -736,14 +722,39 @@ class Api(val context: Context) {
                         if (response.isSuccessful) {
                             val json = response.body?.string()
                             val listaTv = Gson().fromJson(json, ListaSeries::class.java)
-                            continuation.resume(listaTv)
+                            continuation.resume(Success(listaTv))
                         } else {
-                            continuation.cancel(null)
+                            continuation.resumeWithException(Exception("Failure"))
                         }
-                    } catch (e: JsonSyntaxException) {
-                        continuation.resumeWithException(e)
-                    } catch (ex: SocketTimeoutException) {
+                    } catch (ex: Exception) {
                         continuation.resumeWithException(ex)
+                    }
+                }
+            })
+        }
+    }
+
+    suspend fun getAvaliableMovie(id: String): ReelGood {
+        return suspendCancellableCoroutine { continuation ->
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
+            val request = Request.Builder()
+                .url("https://api.reelgood.com/v1/movie/$id?sources=amazon_prime%2Chbo%2Chulu_plus%2Cnetflix%2Cstarz%2Cgoogle_plus&free=false")
+                .get()
+                .build()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    continuation.resumeWithException(e)
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    try {
+                        if (response.isSuccessful) {
+                            val json = response.body?.string()
+                            val lista = Gson().fromJson(json, ReelGood::class.java)
+                            continuation.resume(lista)
+                        } else {
+                            continuation.resumeWithException(Exception("Failure"))
+                        }
                     } catch (ex: Exception) {
                         continuation.resumeWithException(ex)
                     }
@@ -770,39 +781,6 @@ class Api(val context: Context) {
                         val json = response.body?.string()
                         val lista = gson.fromJson(json, TvSeasons::class.java)
                         cont.resume(lista)
-                    } catch (e: JsonSyntaxException) {
-                        cont.resumeWithException(e)
-                    } catch (ex: SocketTimeoutException) {
-                        cont.resumeWithException(ex)
-                    } catch (ex: Exception) {
-                        cont.resumeWithException(ex)
-                    }
-                }
-            })
-        }
-    }
-
-    suspend fun getAvaliableMovie(id: String): ReelGood {
-        return suspendCancellableCoroutine { cont ->
-            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-            val request = Request.Builder()
-                .url("https://api.reelgood.com/v1/movie/$id?sources=amazon_prime%2Chbo%2Chulu_plus%2Cnetflix%2Cstarz%2Cgoogle_plus&free=false")
-                .get() // ou https://api.reelgood.com/v1/movie/upgrade-2018?&availability=onAnySource
-                .build()
-            client.newCall(request).enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    cont.resumeWithException(e)
-                }
-
-                override fun onResponse(call: Call, response: Response) {
-                    try {
-                        if (response.isSuccessful) {
-                            val json = response.body?.string()
-                            val lista = Gson().fromJson(json, ReelGood::class.java)
-                            cont.resume(lista)
-                        } else {
-                            cont.cancel(null)
-                        }
                     } catch (e: JsonSyntaxException) {
                         cont.resumeWithException(e)
                     } catch (ex: SocketTimeoutException) {

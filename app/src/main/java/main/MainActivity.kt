@@ -40,13 +40,13 @@ class MainActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         animation()
+        setObservers()
         if (UtilsApp.isNetWorkAvailable(this)) {
             model.getTopoLista()
         } else {
             snack()
         }
         setupViewBotton()
-        setObservers()
         model.novidade()
     }
 

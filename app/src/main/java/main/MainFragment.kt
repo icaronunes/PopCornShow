@@ -230,8 +230,4 @@ class MainFragment : BaseFragment() {
         recycle_upcoming_movie_main.adapter = MovieMainAdapter(requireActivity(), airDay)
     }
 
-    override fun onDestroy() {
-        model.destroy()
-        super.onDestroy()
-    }
 }

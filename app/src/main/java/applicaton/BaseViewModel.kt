@@ -1,24 +1,27 @@
 package applicaton
 
 import android.app.Application
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.MutableLiveData
 import br.com.icaro.filme.R
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.isActive
 import kotlin.coroutines.CoroutineContext
 
 open class BaseViewModel(open val app: Application) : AndroidViewModel(app), LifecycleObserver {
 
-    protected var job: Job = Job()
     val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
-
-    val failura = MutableLiveData<BaseView.Failure>()
-    val success = MutableLiveData<BaseView.Success>()
+        get() = Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { coroutineContext, throwable ->
+            Handler(Looper.getMainLooper()).post {
+                ops()
+            }
+        }
 
     fun ops() {
         Toast.makeText(app.baseContext, app.getString(R.string.ops), Toast.LENGTH_LONG).show()
@@ -29,21 +32,12 @@ open class BaseViewModel(open val app: Application) : AndroidViewModel(app), Lif
     }
 
     override fun onCleared() {
-        coroutineContext.cancel()
+        if (coroutineContext.isActive) coroutineContext.cancel()
         super.onCleared()
     }
 
-    fun destroy() {
-        try {
-            if (job.isActive)
-                job.cancel()
-        } catch (e: Exception) {
-
-        }
-    }
-
-    sealed class BaseView {
-        object Failure : BaseView()
-        object Success : BaseView()
+    sealed class BaseRequest<in T> {
+        class Failure<T>(val error: Exception) : BaseRequest<T>()
+        class Success<T>(val result: T) : BaseRequest<T>()
     }
 }
