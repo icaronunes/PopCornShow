@@ -193,14 +193,12 @@ class TvShowFragment : FragmentBase() {
     }
 
     private fun setUltimoEpDate() {
-        proximo_ep_date.let {
-            it.text = series.lastEpisodeAir.airDate
-        }
+        proximo_ep_date.text = series.lastEpisodeAir?.airDate
     }
 
     private fun setNomeUltimoEp() {
-        series.lastEpisodeAir.let {
-            ultimo_ep_name.text = it.name
+        series.lastEpisodeAir?.let {
+            ultimo_ep_name.text = it.name ?: ""
         }
     }
 

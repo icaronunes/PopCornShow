@@ -101,5 +101,5 @@ data class Tvshow(
     val external_ids: ExternalIds? = null,
 
     @field:SerializedName("last_episode_to_air")
-    val lastEpisodeAir: LastEpisodeAir
+    val lastEpisodeAir: LastEpisodeAir?
 ) : Serializable
