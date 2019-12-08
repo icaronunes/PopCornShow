@@ -45,7 +45,6 @@ class StreamMovieGenericWebAdapterAdapter(val subscription: Boolean, val purchas
             "youtube_purchase" -> R.drawable.youtube
             "verizon_on_demand" -> R.drawable.verizon
             "mgo" -> R.drawable.mgo
-            "itunes" -> R.drawable.itunes
             else -> R.drawable.question
         }
     }
@@ -63,7 +62,8 @@ class StreamMovieGenericWebAdapterAdapter(val subscription: Boolean, val purchas
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }, null)
         } catch (e: ActivityNotFoundException) {
-            startActivity(context, Intent(Intent.ACTION_VIEW, Uri.parse("thttps://play.google.com/store/search?q=${availability.sourceName}")).apply {
+            startActivity(context, Intent(Intent.ACTION_VIEW, Uri.parse("thttps://play.google.com/store/search?q=${availability.sourceName
+                ?: ""}")).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }, null)
         }
