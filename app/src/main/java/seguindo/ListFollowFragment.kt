@@ -1,40 +1,56 @@
 package seguindo
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import applicaton.BaseFragment
 import br.com.icaro.filme.R
 import domain.Api
 import domain.UserEp
 import domain.UserTvshow
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.apache.commons.lang3.tuple.MutablePair
 import utils.Constantes
 import java.io.Serializable
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Created by icaro on 25/11/16.
  */
-class ListFollowFragment : Fragment() {
+class ListFollowFragment : BaseFragment() {
 
     private var userTvshows: MutableList<UserTvshow>? = null
     private var tipo: Int = 0
     private var rotina: Job? = null
     private var adapterProximo: ProximosAdapter? = null
     private var adapterSeguindo: SeguindoRecycleAdapter? = null
+
+    private val coroutineContext: CoroutineContext
+        get() = Main + SupervisorJob() + CoroutineExceptionHandler { coroutineContext, throwable ->
+            Handler(Looper.getMainLooper()).post {
+                Toast
+                    .makeText(requireActivity(),
+                        requireActivity().getString(R.string.ops), Toast.LENGTH_LONG).show()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,7 +110,7 @@ class ListFollowFragment : Fragment() {
     private fun atualizar(series: MutableList<Pair<UserEp, UserTvshow>>) {
         series.forEach {
             try {
-                GlobalScope.launch(Main) {
+                GlobalScope.launch(coroutineContext) {
                     // Pegar serie atualizada do Server. Enviar para o metodo para atualizar baseado nela
                     val serie = async(IO) { Api(context = context!!).getTvShowLiteC(it.second.id) }
                     val ep = async(IO) { Api(context = context!!).getTvShowEpC(it.second.id, it.first.seasonNumber, it.first.episodeNumber) }
@@ -112,10 +128,11 @@ class ListFollowFragment : Fragment() {
     private fun verificarSerieCoroutine() {
         try {
             userTvshows?.forEach { tvFire ->
-                rotina = GlobalScope.launch(Main) {
+                rotina = GlobalScope.launch(coroutineContext) {
                     val serie = async(IO) {
                         delay(600)
                         Api(context = context!!).getTvShowLiteC(tvFire.id)
+
                     }.await()
                     if (serie.numberOfEpisodes != null) {
                         tvFire.desatualizada = serie.numberOfEpisodes != tvFire.numberOfEpisodes
