@@ -27,8 +27,10 @@ class StreamMovieGoogleAdapterAdapter(
         fun bind(availability: Availability) = with(itemView.source_item) {
             iconSource = resources.getDrawable(R.drawable.google, null)
             if (!subscription) {
-                sourceSd = if (purchase) "SD: ${availability.purchaseCostSd}" else "SD: ${availability.rentalCostSd}"
-                sourceHd = if (purchase) "HD: ${availability.purchaseCostHd}" else "HD: ${availability.rentalCostHd}"
+                sourceSd = if (purchase) "SD: ${availability.purchaseCostSd
+                    ?: "--"}" else "SD: ${availability.rentalCostSd ?: "--"}"
+                sourceHd = if (purchase) "HD: ${availability.purchaseCostHd
+                    ?: "--"}" else "HD: ${availability.rentalCostHd ?: "--"}"
             }
             setOnClickListener {
                 callAppOrWeb(availability, googleVideosPackage) {
@@ -42,9 +44,9 @@ class StreamMovieGoogleAdapterAdapter(
     }
 
     private fun getLink(availability: Availability): String {
-        val id = availability.sourceData?.references?.web
-            ?: availability.sourceData?.references?.android
-            ?: availability.sourceData?.references?.ios
+        val id = availability.sourceData?.references?.web?.movieId
+            ?: availability.sourceData?.references?.android?.movieId
+            ?: availability.sourceData?.references?.ios?.movieId
         return if (id != null) {
             "https://play.google.com/store/movies/details/?id=$id"
         } else "https://play.google.com/store/movies/"

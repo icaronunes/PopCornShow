@@ -34,9 +34,9 @@ class StreamMovieNetflixAdapter(val subscription: Boolean = false, val purchase:
     }
 
     private fun getLink(availability: Availability): String {
-        val id = availability.sourceData?.references?.web
-            ?: availability.sourceData?.references?.android
-            ?: availability.sourceData?.references?.ios
+        val id = availability.sourceData?.references?.web?.movieId
+            ?: availability.sourceData?.references?.android?.movieId
+            ?: availability.sourceData?.references?.ios?.movieId
         return if (id != null) {
             "https://www.netflix.com/title/$id"
         } else "https://www.netflix.com"

@@ -26,8 +26,10 @@ class StreamMovieHuluAdapter(val subscription: Boolean = false, val purchase: Bo
         fun bind(availability: Availability) = with(itemView.source_item) {
             iconSource = resources.getDrawable(R.drawable.hulu, null)
             if (!subscription) {
-                source_sd.text = if (purchase) "SD: ${availability.purchaseCostSd}" else "SD: ${availability.rentalCostSd}"
-                source_hd.text = if (purchase) "HD: ${availability.purchaseCostHd}" else "SD: ${availability.rentalCostHd}"
+                source_sd.text = if (purchase) "SD: ${availability.purchaseCostSd
+                    ?: "--"}" else "SD: ${availability.rentalCostSd ?: "--"}"
+                source_hd.text = if (purchase) "HD: ${availability.purchaseCostHd
+                    ?: "--"}" else "SD: ${availability.rentalCostHd ?: "--"}"
             }
 
             setOnClickListener {
@@ -42,9 +44,9 @@ class StreamMovieHuluAdapter(val subscription: Boolean = false, val purchase: Bo
     }
 
     private fun getLink(availability: Availability): String {
-        val id = availability.sourceData?.references?.web
-            ?: availability.sourceData?.references?.android
-            ?: availability.sourceData?.references?.ios
+        val id = availability.sourceData?.references?.web?.movieId
+            ?: availability.sourceData?.references?.android?.movieId
+            ?: availability.sourceData?.references?.ios?.movieId
         return if (id != null) {
             "https://www.hulu.com/movie/$id"
         } else "https://www.hulu.com/welcome"

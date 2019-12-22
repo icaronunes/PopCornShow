@@ -34,9 +34,9 @@ class StreamMovieHboAdapterAdapter(val subscription: Boolean = false, val purcha
     }
 
     private fun getLink(availability: Availability): String {
-        val id = availability.sourceData?.references?.web
-            ?: availability.sourceData?.references?.android
-            ?: availability.sourceData?.references?.ios
+        val id = availability.sourceData?.references?.web?.movieId
+            ?: availability.sourceData?.references?.android?.movieId
+            ?: availability.sourceData?.references?.ios?.movieId
         return if (id != null) {
             "http://play.hbogo.com/feature/urn:hbo:feature:$id"
         } else "https://play.hbogo.com/"

@@ -1,6 +1,5 @@
 package filme.adapter
 
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -25,8 +24,10 @@ class StreamMovieGenericWebAdapterAdapter(val subscription: Boolean, val purchas
         fun bind(availability: Availability) = with(itemView.source_item) {
             iconSource = resources.getDrawable(getImg(availability), null)
             if (!subscription) {
-                sourceSd = if (purchase) "SD: ${availability.purchaseCostSd}" else "SD: ${availability.rentalCostSd}"
-                sourceHd = if (purchase) "HD: ${availability.purchaseCostHd}" else "HD: ${availability.rentalCostHd}"
+                sourceSd = if (purchase) "SD: ${availability.purchaseCostSd
+                    ?: "--"}" else "SD: ${availability.rentalCostSd ?: "---"}"
+                sourceHd = if (purchase) "HD: ${availability.purchaseCostHd
+                    ?: "--"}" else "HD: ${availability.rentalCostHd ?: "--"}"
             }
             setOnClickListener {
                 callWeb(availability, context)
@@ -35,7 +36,7 @@ class StreamMovieGenericWebAdapterAdapter(val subscription: Boolean, val purchas
     }
 
     private fun getImg(availability: Availability): Int {
-       return when(availability.sourceName) {
+        return when (availability.sourceName) {
             "imdb_tv" -> R.drawable.imdb_tv
             "showtime" -> R.drawable.showtime
             "epix" -> R.drawable.epix
@@ -45,6 +46,7 @@ class StreamMovieGenericWebAdapterAdapter(val subscription: Boolean, val purchas
             "youtube_purchase" -> R.drawable.youtube
             "verizon_on_demand" -> R.drawable.verizon
             "mgo" -> R.drawable.mgo
+            "itunes" -> R.drawable.itunes
             else -> R.drawable.question
         }
     }
@@ -61,9 +63,10 @@ class StreamMovieGenericWebAdapterAdapter(val subscription: Boolean, val purchas
             startActivity(context, Intent(Intent.ACTION_VIEW, Uri.parse(getLink(availability))).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }, null)
-        } catch (e: ActivityNotFoundException) {
-            startActivity(context, Intent(Intent.ACTION_VIEW, Uri.parse("thttps://play.google.com/store/search?q=${availability.sourceName
-                ?: ""}")).apply {
+        } catch (e: Exception) {
+            startActivity(context, Intent(Intent.ACTION_VIEW,
+                Uri.parse("https://play.google.com/store/search?q=${availability.sourceName
+                    ?: ""}")).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }, null)
         }

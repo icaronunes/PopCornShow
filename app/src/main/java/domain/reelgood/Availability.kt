@@ -31,7 +31,6 @@ data class Availability(
             "amazon_buy" -> Constantes.ReelGood.AMAZON
             "hbo" -> Constantes.ReelGood.HBO
              else  -> Constantes.ReelGood.WEB
-           // else -> Constantes.ReelGood.LOADING
         }
     }
 }

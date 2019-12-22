@@ -39,9 +39,9 @@ class StreamMovieAmazonAdapterAdapter(val subscription: Boolean = false, val pur
     }
 
     private fun getLink(availability: Availability): String {
-        val id = availability.sourceData?.references?.web
-            ?: availability.sourceData?.references?.android
-            ?: availability.sourceData?.references?.ios
+        val id = availability.sourceData?.references?.web?.movieId
+            ?: availability.sourceData?.references?.android?.movieId
+            ?: availability.sourceData?.references?.ios?.movieId
         return if (id != null) {
             "https://www.amazon.com/gp/product/$id?tag=reelgood06-20"
         } else "https://www.amazon.com/"
