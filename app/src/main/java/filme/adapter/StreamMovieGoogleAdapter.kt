@@ -15,7 +15,8 @@ import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 
 class StreamMovieGoogleAdapterAdapter(
     val subscription: Boolean = false,
-    val purchase: Boolean = false
+    val purchase: Boolean = false,
+    private val titleMovie: String? = ""
 ) : ViewTypeDelegateAdapter {
     override fun onCreateViewHolder(parent: ViewGroup) = StreamMovieHolder(parent)
 
@@ -47,8 +48,8 @@ class StreamMovieGoogleAdapterAdapter(
         val id = availability.sourceData?.references?.web?.movieId
             ?: availability.sourceData?.references?.android?.movieId
             ?: availability.sourceData?.references?.ios?.movieId
-        return if (id != null) {
+        return if (id != null && false) {
             "https://play.google.com/store/movies/details/?id=$id"
-        } else "https://play.google.com/store/movies/"
+        } else "https://play.google.com/store/search?q=$titleMovie&c=movies"
     }
 }

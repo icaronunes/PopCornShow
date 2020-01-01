@@ -13,7 +13,7 @@ import domain.reelgood.Availability
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 
-class StreamMovieGenericWebAdapterAdapter(val subscription: Boolean, val purchase: Boolean) : ViewTypeDelegateAdapter {
+class StreamMovieGenericWebAdapterAdapter(val subscription: Boolean, val purchase: Boolean, private val titleMovie: String? = "") : ViewTypeDelegateAdapter {
     override fun onCreateViewHolder(parent: ViewGroup) = StreamMovieHolder(parent)
 
     override fun onBindViewHolder(holder: ViewHolder, item: ViewType, context: Context?) {
@@ -65,8 +65,7 @@ class StreamMovieGenericWebAdapterAdapter(val subscription: Boolean, val purchas
             }, null)
         } catch (e: Exception) {
             startActivity(context, Intent(Intent.ACTION_VIEW,
-                Uri.parse("https://play.google.com/store/search?q=${availability.sourceName
-                    ?: ""}")).apply {
+                Uri.parse("https://play.google.com/store/search?q=$titleMovie&c=movies")).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }, null)
         }

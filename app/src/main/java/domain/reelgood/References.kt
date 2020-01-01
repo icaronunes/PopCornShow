@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 //Todo criar o mesmo objeto para todos
 data class References(
     @SerializedName("web")
-    val web: Web?,
+    val web: LinkReferences?,
     @SerializedName("android")
-    val android: Android?,
+    val android: LinkReferences,
     @SerializedName("ios")
-    val ios: Web?
+    val ios: LinkReferences?
     //Todo criar o mesmo objeto para todos
 )

@@ -2,9 +2,9 @@ package domain.reelgood
 
 import com.google.gson.annotations.SerializedName
 
-data class SourceData(
+class SourceData {
     @SerializedName("links")
-    val links: Links?,
+    val links: Links? = null
     @SerializedName("references")
-    val references: References?
-)
+    val references: References? = null
+}

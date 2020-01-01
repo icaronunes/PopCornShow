@@ -66,6 +66,7 @@ class StreamView : FrameLayout {
                 labelRent = getString(R.styleable.StreamView_label_rent)
                 labelBay = getString(R.styleable.StreamView_label_bay)
                 iconSource = getDrawable(R.styleable.StreamView_errorImg)
+                titleMovie = getString(R.styleable.StreamView_movie_name)
             } finally {
                 recycle()
             }
@@ -92,7 +93,7 @@ class StreamView : FrameLayout {
             setHasFixedSize(true)
             itemAnimator = DefaultItemAnimator()
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = StreamMovieDelegatesAdapter(false, purchase = false).apply {
+            adapter = StreamMovieDelegatesAdapter(false, purchase = false, titleMedia = titleMovie).apply {
                 addStream(listRent)
             }
         }
@@ -106,7 +107,7 @@ class StreamView : FrameLayout {
             setHasFixedSize(true)
             itemAnimator = DefaultItemAnimator()
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = StreamMovieDelegatesAdapter(false, purchase = true).apply {
+            adapter = StreamMovieDelegatesAdapter(false, purchase = true, titleMedia = titleMovie).apply {
                 addStream(listBay)
             }
         }
@@ -120,7 +121,7 @@ class StreamView : FrameLayout {
             setHasFixedSize(true)
             itemAnimator = DefaultItemAnimator()
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = StreamMovieDelegatesAdapter(true).apply {
+            adapter = StreamMovieDelegatesAdapter(true, titleMedia = titleMovie).apply {
                 addStream(listStream)
             }
         }
@@ -147,6 +148,8 @@ class StreamView : FrameLayout {
     var title: String? by Delegates.observable<String?>("") { _, _, title ->
         title_streaming.text = title
     }
+
+    var titleMovie: String? = ""
 
     var labelStream: String? by Delegates.observable(context.getString(R.string.stream)) { _, _, title ->
         label_stream.text = title

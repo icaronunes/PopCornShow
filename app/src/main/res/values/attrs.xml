@@ -7,5 +7,6 @@
         <attr name="label_stream" format="string" />
         <attr name="label_rent" format="string" />
         <attr name="label_bay" format="string" />
+        <attr name="movie_name" format="string" />
     </declare-styleable>
 </resources>

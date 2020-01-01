@@ -41,7 +41,6 @@ import fragment.ImagemTopFilmeScrollFragment
 import kotlinx.android.synthetic.main.activity_movie.filme_container
 import kotlinx.android.synthetic.main.activity_movie.streamview_movie
 import kotlinx.android.synthetic.main.activity_movie.top_img_viewpager
-import kotlinx.android.synthetic.main.bottom_streaming.title_streaming
 import kotlinx.android.synthetic.main.fab_float.fab_menu
 import kotlinx.android.synthetic.main.fab_float.menu_item_favorite
 import kotlinx.android.synthetic.main.fab_float.menu_item_rated
@@ -155,12 +154,12 @@ class MovieDetailsActivity : BaseActivity() {
                 setAnimated()
             }
         }) {
-            title_streaming.text = getString(R.string.stream_avaliable)
             val reelGood = async(Dispatchers.IO) {
                 Api(this@MovieDetailsActivity).getAvaliableMovie(getIdStream())
             }.await()
 
             if (reelGood.availability.isNotEmpty()) {
+                streamview_movie.titleMovie = movieDb?.title ?: ""
                 streamview_movie.stream = reelGood.availability.filter {
                     it.accessType == 2
                 }

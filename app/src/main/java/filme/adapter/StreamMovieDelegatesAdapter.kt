@@ -11,7 +11,7 @@ import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constantes
 import java.util.ArrayList
 
-class StreamMovieDelegatesAdapter(val subscription: Boolean, val purchase: Boolean = false) : Adapter<ViewHolder>() {
+class StreamMovieDelegatesAdapter(val subscription: Boolean, val purchase: Boolean = false, val titleMedia: String? = "") : Adapter<ViewHolder>() {
 
     private var streamList = ArrayList<ViewType>()
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
@@ -31,9 +31,9 @@ class StreamMovieDelegatesAdapter(val subscription: Boolean, val purchase: Boole
         delegateAdapters.put(Constantes.ReelGood.HBO, StreamMovieHboAdapterAdapter(subscription, purchase))
         delegateAdapters.put(Constantes.ReelGood.HULU, StreamMovieHuluAdapter(subscription, purchase))
         delegateAdapters.put(Constantes.ReelGood.STARZ, StreamMovieStarzAdapterAdapter(subscription, purchase))
-        delegateAdapters.put(Constantes.ReelGood.GOOGLEPLAY, StreamMovieGoogleAdapterAdapter(subscription, purchase))
+        delegateAdapters.put(Constantes.ReelGood.GOOGLEPLAY, StreamMovieGoogleAdapterAdapter(subscription, purchase, titleMedia))
         delegateAdapters.put(Constantes.ReelGood.AMAZON, StreamMovieAmazonAdapterAdapter(subscription, purchase))
-        delegateAdapters.put(Constantes.ReelGood.WEB, StreamMovieGenericWebAdapterAdapter(subscription, purchase))
+        delegateAdapters.put(Constantes.ReelGood.WEB, StreamMovieGenericWebAdapterAdapter(subscription, purchase, titleMedia))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -45,7 +45,9 @@ class StreamMovieDelegatesAdapter(val subscription: Boolean, val purchase: Boole
     override fun getItemCount(): Int = streamList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        return delegateAdapters.get(getItemViewType(position))!!.onBindViewHolder(holder = holder, item = streamList[position], context = null)
+        return delegateAdapters.get(getItemViewType(position))!!.onBindViewHolder(holder = holder,
+            item = streamList[position],
+            context = null)
     }
 
     fun addStream(stream: List<Availability>) {
