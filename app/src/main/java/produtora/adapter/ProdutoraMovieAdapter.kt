@@ -28,7 +28,7 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
         return ProdutoraViewHolde(parent)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType, context: Context?) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType?, context: Context?) {
         (holder as ProdutoraViewHolde).bind(item as ListaItemFilme)
     }
 

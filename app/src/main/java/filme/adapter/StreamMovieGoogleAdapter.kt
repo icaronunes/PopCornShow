@@ -20,18 +20,18 @@ class StreamMovieGoogleAdapterAdapter(
 ) : ViewTypeDelegateAdapter {
     override fun onCreateViewHolder(parent: ViewGroup) = StreamMovieHolder(parent)
 
-    override fun onBindViewHolder(holder: ViewHolder, item: ViewType, context: Context?) {
-        (holder as StreamMovieHolder).bind(item as Availability)
+    override fun onBindViewHolder(holder: ViewHolder, item: ViewType?, context: Context?) {
+        (holder as StreamMovieHolder).bind(item as? Availability)
     }
 
     inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
-        fun bind(availability: Availability) = with(itemView.source_item) {
+        fun bind(availability: Availability?) = with(itemView.source_item) {
             iconSource = resources.getDrawable(R.drawable.google, null)
             if (!subscription) {
-                sourceSd = if (purchase) "SD: ${availability.purchaseCostSd
-                    ?: "--"}" else "SD: ${availability.rentalCostSd ?: "--"}"
-                sourceHd = if (purchase) "HD: ${availability.purchaseCostHd
-                    ?: "--"}" else "HD: ${availability.rentalCostHd ?: "--"}"
+                sourceSd = if (purchase) "SD: ${availability?.purchaseCostSd
+                    ?: "--"}" else "SD: ${availability?.rentalCostSd ?: "--"}"
+                sourceHd = if (purchase) "HD: ${availability?.purchaseCostHd
+                    ?: "--"}" else "HD: ${availability?.rentalCostHd ?: "--"}"
             }
             setOnClickListener {
                 callAppOrWeb(availability, googleVideosPackage) {
@@ -44,7 +44,8 @@ class StreamMovieGoogleAdapterAdapter(
         }
     }
 
-    private fun getLink(availability: Availability): String {
+    private fun getLink(availability: Availability?): String {
+        if (availability == null) return "https://play.google.com/store/search?q=$titleMovie&c=movies"
         val id = availability.sourceData?.references?.web?.movieId
             ?: availability.sourceData?.references?.android?.movieId
             ?: availability.sourceData?.references?.ios?.movieId

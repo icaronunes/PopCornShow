@@ -30,7 +30,7 @@ class AdDelegateAdapter : ViewTypeDelegateAdapter {
         return AdAdapter(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType, context: Context?) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType?, context: Context?) {
         val adview = holder.itemView.findViewById<UnifiedNativeAdView>(R.id.ad_view)
         val nativeAd = (item as ListAd).unifiedNativeAd
         (holder as AdAdapter)

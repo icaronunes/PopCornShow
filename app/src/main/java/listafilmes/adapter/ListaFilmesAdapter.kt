@@ -15,7 +15,7 @@ import utils.Constantes
 import java.util.ArrayList
 
 class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val listaResult = ArrayList<ViewType>()
+    private val listaResult = ArrayList<ViewType?>()
     private val delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     init {
@@ -28,15 +28,15 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
             delegateAdapters.get(viewType)!!.onCreateViewHolder(parent)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        delegateAdapters.get(getItemViewType(position))?.onBindViewHolder(holder, listaResult[position], context)
+        delegateAdapters.get(getItemViewType(position))?.onBindViewHolder(holder, listaResult[position]!!, context)
     }
 
-    override fun getItemViewType(position: Int): Int = listaResult[position].getViewType()
+    override fun getItemViewType(position: Int): Int = listaResult[position]?.getViewType() ?: Constantes.BuscaConstants.LOADING
 
     fun addFilmes(listaMedia: List<ListaItemFilme?>?, totalPagina: Int) {
         if (listaMedia?.isNotEmpty()!!) {
             val initPosition = listaResult.size - 1
-            if (listaResult.isNotEmpty() && listaResult[listaResult.size - 1].getViewType() == Constantes.BuscaConstants.LOADING) {
+            if (listaResult.isNotEmpty() && listaResult[listaResult.size - 1]?.getViewType() == Constantes.BuscaConstants.LOADING) {
                 this.listaResult.removeAt(listaResult.size - 1)
             }
 
@@ -57,7 +57,7 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
     override fun getItemCount(): Int = listaResult.size
 
     fun addAd(ad: UnifiedNativeAd, totalPagina: Int) {
-        if (listaResult[listaResult.size - 1].getViewType() == Constantes.BuscaConstants.LOADING) {
+        if (listaResult[listaResult.size - 1]?.getViewType() == Constantes.BuscaConstants.LOADING) {
             this.listaResult.removeAt(listaResult.size - 1)
         }
         listaResult.add(ListAd(ad))

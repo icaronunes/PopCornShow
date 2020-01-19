@@ -11,7 +11,7 @@ class LoadingDelegateAdapter : ViewTypeDelegateAdapter {
 
     override fun onCreateViewHolder(parent: ViewGroup) = LoadingViewHolder(parent)
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType, context: Context?) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType?, context: Context?) {
     }
 
     class LoadingViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(

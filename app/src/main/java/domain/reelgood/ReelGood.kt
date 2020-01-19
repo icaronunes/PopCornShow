@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class ReelGood(
     @SerializedName("availability")
     val availability: List<Availability> //,
-//    @SerializedName("classification")
+/*    @SerializedName("classification")
 //    val classification: String?, // 13+
 //    @SerializedName("countries")
 //    val countries: List<String>?,
@@ -58,5 +58,5 @@ data class ReelGood(
 //    @SerializedName("trailer")
 //    val trailer: Trailer,
 //    @SerializedName("watchlisted")
-//    val watchlisted: Boolean // false
+//    val watchlisted: Boolean // false */
 )

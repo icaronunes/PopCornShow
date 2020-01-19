@@ -16,12 +16,12 @@ import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 class StreamMovieNetflixAdapter(val subscription: Boolean = false, val purchase: Boolean = false) : ViewTypeDelegateAdapter {
     override fun onCreateViewHolder(parent: ViewGroup) = StreamMovieHolder(parent)
 
-    override fun onBindViewHolder(holder: ViewHolder, item: ViewType, context: Context?) {
-        (holder as StreamMovieHolder).bind(item as Availability)
+    override fun onBindViewHolder(holder: ViewHolder, item: ViewType?, context: Context?) {
+        (holder as StreamMovieHolder).bind(item as? Availability)
     }
 
     inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
-        fun bind(availability: Availability) = with(itemView.source_item) {
+        fun bind(availability: Availability?) = with(itemView.source_item) {
             iconSource = resources.getDrawable(R.drawable.netflix_stream, null)
             setOnClickListener {
                 callAppOrWeb(availability = availability, packagerCall = netflixPackage) {
@@ -33,7 +33,8 @@ class StreamMovieNetflixAdapter(val subscription: Boolean = false, val purchase:
         }
     }
 
-    private fun getLink(availability: Availability): String {
+    private fun getLink(availability: Availability?): String {
+        if (availability == null) return "https://www.netflix.com"
         val id = availability.sourceData?.references?.web?.movieId
             ?: availability.sourceData?.references?.android?.movieId
             ?: availability.sourceData?.references?.ios?.movieId
