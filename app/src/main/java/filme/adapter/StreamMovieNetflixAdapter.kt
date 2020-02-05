@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
+import com.crashlytics.android.Crashlytics
 import domain.ViewType
 import domain.reelgood.Availability
 import filme.adapter.StreamMovieDelegatesAdapter.Companion.netflixPackage
@@ -24,10 +25,14 @@ class StreamMovieNetflixAdapter(val subscription: Boolean = false, val purchase:
         fun bind(availability: Availability?) = with(itemView.source_item) {
             iconSource = resources.getDrawable(R.drawable.netflix_stream, null)
             setOnClickListener {
-                callAppOrWeb(availability = availability, packagerCall = netflixPackage) {
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = Uri.parse(getLink(availability))
-                    context.startActivity(intent)
+                try {
+                    callAppOrWeb(availability = availability, packagerCall = netflixPackage) {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data = Uri.parse(getLink(availability))
+                        context.startActivity(intent)
+                    }
+                } catch (ex: Exception) {
+                    Crashlytics.log("Erro no Stream - ${availability.toString()}")
                 }
             }
         }

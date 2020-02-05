@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
+import com.crashlytics.android.Crashlytics
 import domain.ViewType
 import domain.reelgood.Availability
 import filme.adapter.StreamMovieDelegatesAdapter.Companion.amazonPackage
@@ -24,15 +25,21 @@ class StreamMovieAmazonAdapterAdapter(val subscription: Boolean = false, val pur
         fun bind(availability: Availability?) = with(itemView.source_item) {
             iconSource = resources.getDrawable(R.drawable.amazon, null)
             if (!subscription) {
-                sourceSd = if (purchase) "SD: ${availability?.purchaseCostSd ?: "--"}" else "SD: ${availability?.rentalCostSd ?: "--"}"
-                sourceHd = if (purchase) "HD: ${availability?.purchaseCostHd ?: "--"}" else "HD: ${availability?.rentalCostHd ?: "--"}"
+                sourceSd = if (purchase) "SD: ${availability?.purchaseCostSd
+                    ?: "--"}" else "SD: ${availability?.rentalCostSd ?: "--"}"
+                sourceHd = if (purchase) "HD: ${availability?.purchaseCostHd
+                    ?: "--"}" else "HD: ${availability?.rentalCostHd ?: "--"}"
             }
             setOnClickListener {
-                callAppOrWeb(availability, amazonPackage) {
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    val link = getLink(it)
-                    intent.data = Uri.parse(link)
-                    context.startActivity(intent)
+                try {
+                    callAppOrWeb(availability, amazonPackage) {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        val link = getLink(it)
+                        intent.data = Uri.parse(link)
+                        context.startActivity(intent)
+                    }
+                } catch (ex: Exception) {
+                    Crashlytics.log("Erro no Stream - ${availability.toString()}")
                 }
             }
         }

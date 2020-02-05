@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
+import com.crashlytics.android.Crashlytics
 import domain.ViewType
 import domain.reelgood.Availability
 import filme.adapter.StreamMovieDelegatesAdapter.Companion.huluPackage
@@ -33,11 +34,15 @@ class StreamMovieHuluAdapter(val subscription: Boolean = false, val purchase: Bo
             }
 
             setOnClickListener {
-                callAppOrWeb(availability = availability, packagerCall = huluPackage) {
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    val link = getLink(availability)
-                    intent.data = Uri.parse(link)
-                    context.startActivity(intent)
+                try {
+                    callAppOrWeb(availability = availability, packagerCall = huluPackage) {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        val link = getLink(availability)
+                        intent.data = Uri.parse(link)
+                        context.startActivity(intent)
+                    }
+                } catch (ex: Exception) {
+                    Crashlytics.log("Erro no Stream - ${availability.toString()}")
                 }
             }
         }

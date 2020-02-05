@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
+import com.crashlytics.android.Crashlytics
 import domain.ViewType
 import domain.reelgood.Availability
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
@@ -30,7 +31,11 @@ class StreamMovieGenericWebAdapterAdapter(val subscription: Boolean, val purchas
                     ?: "--"}" else "HD: ${availability?.rentalCostHd ?: "--"}"
             }
             setOnClickListener {
-                callWeb(availability, context)
+                try {
+                    callWeb(availability, context)
+                } catch (ex: Exception) {
+                    Crashlytics.log("Erro no Stream - ${availability.toString()}")
+                }
             }
         }
     }

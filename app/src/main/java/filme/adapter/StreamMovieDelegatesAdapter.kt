@@ -26,14 +26,16 @@ class StreamMovieDelegatesAdapter(val subscription: Boolean, val purchase: Boole
     }
 
     init {
-        delegateAdapters.put(Constantes.ReelGood.LOADING, LoadingDelegateAdapter())
-        delegateAdapters.put(Constantes.ReelGood.NETFLIX, StreamMovieNetflixAdapter(subscription, purchase))
-        delegateAdapters.put(Constantes.ReelGood.HBO, StreamMovieHboAdapterAdapter(subscription, purchase))
-        delegateAdapters.put(Constantes.ReelGood.HULU, StreamMovieHuluAdapter(subscription, purchase))
-        delegateAdapters.put(Constantes.ReelGood.STARZ, StreamMovieStarzAdapterAdapter(subscription, purchase))
-        delegateAdapters.put(Constantes.ReelGood.GOOGLEPLAY, StreamMovieGoogleAdapterAdapter(subscription, purchase, titleMedia))
-        delegateAdapters.put(Constantes.ReelGood.AMAZON, StreamMovieAmazonAdapterAdapter(subscription, purchase))
-        delegateAdapters.put(Constantes.ReelGood.WEB, StreamMovieGenericWebAdapterAdapter(subscription, purchase, titleMedia))
+        delegateAdapters.run {
+            put(Constantes.ReelGood.LOADING, LoadingDelegateAdapter())
+            put(Constantes.ReelGood.NETFLIX, StreamMovieNetflixAdapter(subscription, purchase))
+            put(Constantes.ReelGood.HBO, StreamMovieHboAdapterAdapter(subscription, purchase))
+            put(Constantes.ReelGood.HULU, StreamMovieHuluAdapter(subscription, purchase))
+            put(Constantes.ReelGood.STARZ, StreamMovieStarzAdapterAdapter(subscription, purchase))
+            put(Constantes.ReelGood.GOOGLEPLAY, StreamMovieGoogleAdapterAdapter(subscription, purchase, titleMedia))
+            put(Constantes.ReelGood.AMAZON, StreamMovieAmazonAdapterAdapter(subscription, purchase))
+            put(Constantes.ReelGood.WEB, StreamMovieGenericWebAdapterAdapter(subscription, purchase, titleMedia))
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
