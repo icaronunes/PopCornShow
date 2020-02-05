@@ -131,8 +131,8 @@
     <string name="remover_rated">Remove from Classifieds</string>
     <string name="remover_watch">Remove from Watchlist</string>
     <string name="sem_login">User not logged</string>
-    <string name="title_intro_1">PopCorn Show</string>
-    <string name="subtitle_intro_1">Welcome to the PopCorn Show.\n\nCheck out the latest news</string>
+    <string name="title_intro_1"><b>PopCorn Show</b></string>
+    <string name="subtitle_intro_1">Welcome to the PopCorn Show\n\n<b>This app does not play Movies or Series. It is an information center</b></string>
     <string name="subtitle_intro_2">Several links to sites around the world talking about the movie / tvshow</string>
     <string name="title_intro_3">Following</string>
     <string name="reset_password">Forgot Password?</string>

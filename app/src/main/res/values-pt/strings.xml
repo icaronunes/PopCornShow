@@ -129,8 +129,8 @@
     <string name="adicionar_rated">Adicionar aos Classificados</string>
     <string name="remover_rated">Remover dos Classificados</string>
     <string name="sem_login">Usuário não logado</string>
-    <string name="title_intro_1">PopCorn Show</string>
-    <string name="subtitle_intro_1">Bem-vindo ao PopCorn Show.\n\nConfira as ultimas novidades</string>
+    <string name="title_intro_1"><b>PopCorn Show</b></string>
+    <string name="subtitle_intro_1">Bem-vindo ao PopCorn Show\n\n<b> Este aplicativo não reproduz filmes ou séries. \n É uma biblioteca de informações</b></string>
     <string name="subtitle_intro_2">Diversos links para sites do mundo todo falando sobre o filme ou tvshow</string>
     <string name="title_intro_3">Seguindo</string>
     <string name="seguir">Seguir</string>

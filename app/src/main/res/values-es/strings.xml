@@ -120,7 +120,7 @@
     <string name="sem_tvshow">No hay espectáculo</string>
     <string name="similares">Similar</string>
     <string name="spoken_languages">Idioma original:</string>
-    <string name="subtitle_intro_1">Bienvenido a las palomitas Mostrar.\n\nEcha un vistazo a las últimas noticias</string>
+    <string name="subtitle_intro_1">Bienvenido a las palomitas Mostrar\n\n<b>Esta aplicación no reproduce películas o series. Es un centro de información</b></string>
     <string name="subtitle_intro_2">Varios enlaces a sitios de todo el mundo hablando de la película / tvshow</string>
     <string name="subtitle_intro_5">Crea tu login y disfruta</string>
     <string name="tempo_nao_informado">Tiempo N / A</string>
@@ -128,7 +128,7 @@
     <string name="temporadas">Temporadas:</string>
     <string name="text_logoff_dialog">Después de cerrar la sesión, no será posible interactuar con la aplicación.</string>
     <string name="title_delete">Dejar de seguir el programa de televisión?</string>
-    <string name="title_intro_1">PopCorn Show</string>
+    <string name="title_intro_1"><b>PopCorn Show</b></string>
     <string name="title_intro_3">Siguiendo</string>
     <string name="title_logoff_dialog">Salir delPopCorn Show?</string>
     <string name="toast_salvar_imagem">Imagen guardada en la carpeta de la aplicación</string>
