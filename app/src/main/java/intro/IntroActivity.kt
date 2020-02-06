@@ -7,15 +7,15 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.github.paolorotolo.appintro.AppIntro
-import com.github.paolorotolo.appintro.R
+import br.com.icaro.filme.R
+import com.github.paolorotolo.appintro.AppIntro2
 import login.LoginActivity
 
 /**
  * Created by icaro on 21/11/16.
  */
 
-class IntroActivity : AppIntro() {
+class IntroActivity : AppIntro2() {
 
     // Please DO NOT override onCreate. Use init
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,11 +35,11 @@ class IntroActivity : AppIntro() {
             findViewById<View>(R.id.back).setBackgroundColor(Color.parseColor("#3F51B5"))
             addSlide(FirstSlide())
             addSlide(SecondSlide())
-            addSlide(FiveSlide())
+            addSlide(ThreeSlide())
         }
 
         setBarColor(Color.parseColor("#3F51B5"))
-        setSeparatorColor(Color.parseColor("#2196F3"))
+        // setSeparatorColor(Color.parseColor("#2196F3"))
 
         // Hide Skip button
         showSkipButton(false)

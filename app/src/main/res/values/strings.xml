@@ -14,6 +14,7 @@
     <string name="email_tx" translatable="false">E-Mail</string>
     <string name="infor_tmdb" translatable="false">"This product uses the TMDb API but is not endorsed or certified by TMDb."</string>
     <string name="app_name" translatable="false">PopCorn Show</string>
+    <string name="enjoy">Enjoy!</string>
     <string name="about">About</string>
     <string name="air_date">On the Air: </string>
     <string name="air_date_main">On the Air</string>
@@ -133,7 +134,7 @@
     <string name="sem_login">User not logged</string>
     <string name="title_intro_1"><b>PopCorn Show</b></string>
     <string name="subtitle_intro_1">Welcome to the PopCorn Show\n\n<b>This app does not play Movies or Series. It is an information center</b></string>
-    <string name="subtitle_intro_2">Several links to sites around the world talking about the movie / tvshow</string>
+    <string name="subtitle_intro_2">We have links to the streaming service. \n Enjoy!</string>
     <string name="title_intro_3">Following</string>
     <string name="reset_password">Forgot Password?</string>
     <string name="bt_signin">Sign In</string>

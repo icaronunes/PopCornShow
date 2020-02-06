@@ -14,15 +14,15 @@ import br.com.icaro.filme.R
  */
 class FirstSlide : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.intro, container, false)
-        val title = view.findViewById<View>(R.id.intro_tite) as TextView
-        title.text = resources.getString(R.string.title_intro_1)
+        return inflater.inflate(R.layout.intro, container, false).apply {
+            val title = findViewById<View>(R.id.intro_tite) as TextView
+            title.text = resources.getString(R.string.title_intro_1)
 
-        val subtitle = view.findViewById<View>(R.id.intro_subtitle) as TextView
-        subtitle.text = resources.getText(R.string.subtitle_intro_1)
+            val subtitle = findViewById<View>(R.id.intro_subtitle) as TextView
+            subtitle.text = resources.getText(R.string.subtitle_intro_1)
 
-        val imageView = view.findViewById<View>(R.id.intro_img) as ImageView
-        imageView.setImageResource(R.drawable.ic_popcorn2)
-        return view
+            val imageView = findViewById<View>(R.id.intro_img) as ImageView
+            imageView.setImageResource(R.drawable.ic_popcorn2)
+        }
     }
 }

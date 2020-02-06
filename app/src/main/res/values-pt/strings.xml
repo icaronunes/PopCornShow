@@ -131,7 +131,7 @@
     <string name="sem_login">Usuário não logado</string>
     <string name="title_intro_1"><b>PopCorn Show</b></string>
     <string name="subtitle_intro_1">Bem-vindo ao PopCorn Show\n\n<b> Este aplicativo não reproduz filmes ou séries. \n É uma biblioteca de informações</b></string>
-    <string name="subtitle_intro_2">Diversos links para sites do mundo todo falando sobre o filme ou tvshow</string>
+    <string name="subtitle_intro_2">Temos links para serviço de Streaming.\n Aproveite!</string>
     <string name="title_intro_3">Seguindo</string>
     <string name="seguir">Seguir</string>
     <string name="seguindo">Seguindo</string>
@@ -159,6 +159,7 @@
     <string name="title_delete">Para de seguir a Série?</string>
     <string name="erro_seguir">Erro, tente novamente</string>
     <string name="subtitle_intro_5">Crie seu login e aproveite</string>
+    <string name="enjoy">Divirta-se</string>
     <string name="ops">Oops… Algo deu errado</string>
     <string name="notificacao">Notificação</string>
     <string name="notificacao_summary">Receber Notificação</string>

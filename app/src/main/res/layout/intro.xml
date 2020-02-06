@@ -1,53 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
-    android:layout_weight="10"
-    android:orientation="vertical">
+    android:background="@color/white"
+    android:paddingBottom="@dimen/trade_size_dp_100">
+
+    <ImageView
+        android:id="@+id/intro_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/trade_size_dp_16"
+        android:src="@drawable/ic_popcorn2"
+        app:layout_constraintBottom_toTopOf="@+id/intro_subtitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intro_tite" />
+
 
     <TextView
         android:id="@+id/intro_tite"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="3"
         android:fontFamily="sans-serif-thin"
         android:gravity="center"
         android:paddingLeft="@dimen/trade_size_dp_32"
         android:paddingRight="@dimen/trade_size_dp_32"
-        android:textSize="@dimen/trade_size_dp_28" />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/intro_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingLeft="@dimen/trade_size_dp_16"
-            android:paddingRight="@dimen/trade_size_dp_16" />
-    </LinearLayout>
+        android:layout_marginTop="@dimen/trade_size_dp_45"
+        android:layout_marginBottom="@dimen/trade_size_dp_30"
+        android:textSize="@dimen/trade_txt_size_sp_28"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="PopCorn show" />
 
     <TextView
         android:id="@+id/intro_subtitle"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_weight="3"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingLeft="@dimen/trade_size_dp_64"
-        android:paddingRight="@dimen/trade_size_dp_64"
+        android:layout_marginBottom="@dimen/trade_size_dp_45"
+        android:paddingStart="@dimen/trade_size_dp_15"
+        android:paddingEnd="@dimen/trade_size_dp_15"
         android:textAlignment="center"
-        android:textSize="@dimen/trade_size_dp_16" />
+        android:textSize="@dimen/trade_txt_size_sp_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="duiaeduaeudanduiandaeda" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/trade_size_dp_64" />
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
