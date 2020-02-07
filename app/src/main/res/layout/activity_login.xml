@@ -24,7 +24,7 @@
             android:layout_gravity="center"
             android:contentDescription="@string/app_name"
             android:padding="@dimen/trade_size_dp_5"
-            android:layout_marginTop="@dimen/trade_size_dp_40"
+            android:layout_marginTop="@dimen/trade_size_dp_35"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +51,6 @@
             android:fontFamily="serif"
             android:gravity="center"
             android:text="@string/corn"
-            android:layout_marginStart="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/red"
             android:textSize="@dimen/trade_txt_size_sp_40"
@@ -61,23 +60,24 @@
 
         <TextView
             android:id="@+id/txt_show"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="end"
             android:text="@string/show"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/blue"
+            android:layout_marginTop="@dimen/trade_size_dp_20"
             android:textSize="@dimen/trade_txt_size_sp_30"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_pop"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintTop_toTopOf="@+id/txt_pop"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textinput_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/txt_show"
-            android:layout_marginTop="@dimen/trade_size_dp_5">
+            android:layout_marginTop="@dimen/trade_size_dp_8">
 
             <EditText
                 android:id="@+id/login"

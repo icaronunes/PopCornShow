@@ -22,13 +22,13 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import java.util.Arrays
 import kotlinx.android.synthetic.main.activity_login.login
 import kotlinx.android.synthetic.main.activity_login.pass
 import kotlinx.android.synthetic.main.activity_login.recuperar_senha
 import kotlinx.android.synthetic.main.activity_login.vincular_login
 import main.MainActivity
 import utils.makeToast
+import java.util.Arrays
 
 /**
  * Created by icaro on 06/11/16.
@@ -83,7 +83,7 @@ class LoginActivity : BaseActivity() {
 
         dialog.findViewById<Button>(R.id.bt_recuperar_senha)?.setOnClickListener {
             val email = dialog.findViewById<TextInputLayout>(R.id.ed_email_recuperar)?.editText?.text.toString()
-            if (email.contains("@") && email.contains(".")) {
+            if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 mAuth!!.sendPasswordResetEmail(email).addOnCompleteListener {
                     makeToast(R.string.email_recuperacao_enviado)
                     dialog.dismiss()

@@ -11,7 +11,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         val passReceive: String = senha.editText!!.text.toString()
         val checkPass: String = repetirSenha.editText!!.text.toString()
 
-        if (loginReceive.contains("@") && loginReceive.contains(".")) {
+        if (android.util.Patterns.EMAIL_ADDRESS.matcher(loginReceive).matches()) {
             if (passReceive === checkPass && passReceive.length > 6) {
                 return true
             }
