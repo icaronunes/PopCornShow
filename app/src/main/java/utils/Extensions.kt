@@ -28,7 +28,7 @@ import java.text.SimpleDateFormat
  * IMAGEVIEW
  */
 
-fun ImageView.setPicasso(stillPath: String?, patten: Int = 4, sucesso: () -> Unit = {}, error: () -> Unit = {}, img_erro: Int = R.drawable.poster_empty) {
+fun ImageView.setPicasso(stillPath: String?, patten: Int = 4, sucesso: () -> Unit = {}, error: () -> Unit = {}, img_erro: Int = R.drawable.poster_empty): ImageView {
     Picasso.get()
         .load(UtilsApp
             .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, patten)) + stillPath)
@@ -44,6 +44,7 @@ fun ImageView.setPicasso(stillPath: String?, patten: Int = 4, sucesso: () -> Uni
                 error()
             }
         })
+    return this
 }
 
 fun ImageView.setPicassoWithCache(stillPath: String?, patten: Int = 4, sucesso: () -> Unit = {}, error: () -> Unit = {}, img_erro: Int = R.drawable.poster_empty) {

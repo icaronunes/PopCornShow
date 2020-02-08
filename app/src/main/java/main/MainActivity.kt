@@ -15,12 +15,12 @@ import androidx.viewpager.widget.ViewPager
 import br.com.icaro.filme.BuildConfig
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
-import com.viewpagerindicator.CirclePageIndicator
 import domain.ListaSeries
 import domain.TopMain
 import domain.movie.ListaFilmes
 import fragment.ViewPageMainTopFragment
 import kotlinx.android.synthetic.main.activity_main.activity_main_img
+import kotlinx.android.synthetic.main.activity_main.indication_main
 import kotlinx.android.synthetic.main.activity_main.tabLayout
 import kotlinx.android.synthetic.main.activity_main.viewPager_main
 import kotlinx.android.synthetic.main.activity_main.viewpage_top_main
@@ -69,7 +69,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun news() {
-            val dialog = AlertDialog.Builder(this)
+           AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_popcorn2)
                     .setTitle(R.string.novidades_title)
                     .setMessage(R.string.novidades_text)
@@ -79,8 +79,7 @@ class MainActivity : BaseActivity() {
                         editor.putBoolean(BuildConfig.VERSION_CODE.toString(), false)
                         editor.remove((BuildConfig.VERSION_CODE - 1).toString())
                         editor.apply()
-                    }.create()
-            dialog.show()
+                    }.create().show()
     }
 
     private fun animation() {
@@ -110,8 +109,7 @@ class MainActivity : BaseActivity() {
     private fun setupViewPagerTabs(multi: MutableList<TopMain>) {
         viewpage_top_main.offscreenPageLimit = 2
         viewpage_top_main.adapter = ViewPageMainTopFragment(supportFragmentManager, multi)
-        findViewById<CirclePageIndicator>(R.id.indication_main)
-                .setViewPager(viewpage_top_main)
+        indication_main.setViewPager(viewpage_top_main)
         model.animation(false)
     }
 
@@ -152,11 +150,11 @@ class MainActivity : BaseActivity() {
 
         val listaFilmes = tmdbMovies.results.filter {
             !it?.backdropPath.isNullOrBlank() && !it?.releaseDate.isNullOrBlank()
-        }.toList()
+        }
 
         val listaTv = tmdbTv.results.filter {
             !it.backdropPath.isNullOrBlank()
-        }.toList()
+        }
 
         val multi = mutableListOf<TopMain>().apply {
             for (index in 0..15) {

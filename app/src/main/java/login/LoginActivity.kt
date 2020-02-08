@@ -35,7 +35,7 @@ import java.util.Arrays
  */
 
 class LoginActivity : BaseActivity() {
-    private var mAuthProgressDialog: Lazy<ProgressDialog> = lazy {
+    private var progressDialog: Lazy<ProgressDialog> = lazy {
         createDialog()
     }
     private val TAG = this.javaClass.name
@@ -169,7 +169,7 @@ class LoginActivity : BaseActivity() {
 
     private fun logarComEmail() {
         if (pass?.text.toString().length > 4 && login.text.toString().length > 4) {
-            mAuthProgressDialog.value.show()
+            progressDialog.value.show()
             mAuth?.signInWithEmailAndPassword(login.text.toString(), pass?.text.toString())
                     ?.addOnCompleteListener(this) { task ->
                         /*  Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
@@ -181,16 +181,16 @@ class LoginActivity : BaseActivity() {
                             makeToast(R.string.ops)
                         }
                         if (!isDestroyed)
-                            mAuthProgressDialog.value.dismiss()
+                            progressDialog.value.dismiss()
                     }?.addOnFailureListener {
                         Log.w(TAG, "signInWithEmail:failed " + it.message)
                         if (!isDestroyed)
-                            mAuthProgressDialog.value.dismiss()
+                            progressDialog.value.dismiss()
                     }
         } else {
             if (!isDestroyed) {
                 makeToast(R.string.ops)
-                mAuthProgressDialog.value.dismiss()
+                progressDialog.value.dismiss()
             }
         }
     }
@@ -209,7 +209,7 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun accessLoginData(provider: String, vararg tokens: String) {
-        mAuthProgressDialog.value.show()
+        progressDialog.value.show()
         if (tokens.isNotEmpty()) {
 
             var credential = FacebookAuthProvider.getCredential(tokens[0])
@@ -220,13 +220,13 @@ class LoginActivity : BaseActivity() {
                             makeToast(R.string.ops)
                         }
                         if (!isDestroyed) {
-                            mAuthProgressDialog.value.dismiss()
+                            progressDialog.value.dismiss()
                         }
                     }
                     .addOnFailureListener { e ->
                         if (!isDestroyed) {
                             makeToast(e.message)
-                            mAuthProgressDialog.value.dismiss()
+                            progressDialog.value.dismiss()
                         }
                     }
         } else {
@@ -234,12 +234,12 @@ class LoginActivity : BaseActivity() {
                 mAuth?.signOut()
             }
             if (!isDestroyed)
-                mAuthProgressDialog.value.dismiss()
+                progressDialog.value.dismiss()
         }
     }
 
     private fun criarLoginEmail(email: String, pass: String) {
-        mAuthProgressDialog.value.show()
+        progressDialog.value.show()
         mAuth?.createUserWithEmailAndPassword(email, pass)?.addOnCompleteListener(this) { task ->
 
             /* If sign in fails, display a message to the user. If sign in succeeds
@@ -255,13 +255,19 @@ class LoginActivity : BaseActivity() {
                 makeToast(R.string.ops)
             }
             if (!isDestroyed)
-                mAuthProgressDialog.value.dismiss()
+                progressDialog.value.dismiss()
         }?.addOnFailureListener { e ->
             if (!isDestroyed) {
                 makeToast(e.message)
-                mAuthProgressDialog.value.dismiss()
+                progressDialog.value.dismiss()
             }
         }
+    }
+
+    override fun onDestroy() {
+        if (progressDialog.isInitialized() && progressDialog.value.isShowing)
+            progressDialog.value.dismiss()
+        super.onDestroy()
     }
 
     override fun onStart() {
@@ -275,7 +281,7 @@ class LoginActivity : BaseActivity() {
     }
 
     fun logarAnonimous() {
-        mAuthProgressDialog.value.show()
+        progressDialog.value.show()
         mAuth?.signInAnonymously()
                 ?.addOnCompleteListener(this) { task ->
                     /*  Log.d(TAG, "signInAnonymously:onComplete:" + task.isSuccessful());
@@ -290,7 +296,7 @@ class LoginActivity : BaseActivity() {
                         this.makeToast("Authentication failed.")
                     }
                     if (!isDestroyed)
-                        mAuthProgressDialog.value.dismiss()
+                        progressDialog.value.dismiss()
                 }
     }
 }
