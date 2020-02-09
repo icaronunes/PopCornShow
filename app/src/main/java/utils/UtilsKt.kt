@@ -85,6 +85,8 @@ class UtilsKt {
             adLoader.loadAds(AdRequest.Builder().build(), quant)
         }
 
+
+        @JvmStatic
         fun setAdMob(adView: AdView) {
             adView.loadAd(AdRequest.Builder()
                 // .addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)       // All emulators

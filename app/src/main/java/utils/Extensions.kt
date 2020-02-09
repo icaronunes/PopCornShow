@@ -193,7 +193,7 @@ fun BottomSheetBehavior<View>.setAnimation(container: View, viewHeight: View) {
         addUpdateListener {
             peekHeight = it.animatedValue as Int
         }
-        duration = 700
+        duration = 500
     }.start()
 
     container.post {

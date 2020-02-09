@@ -147,7 +147,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
     }
 
     protected void setAdMob(AdView adView) {
-        UtilsKt.Companion.setAdMob(adView);
+        UtilsKt.setAdMob(adView);
     }
 
     public void hideSoftKeyboard() {

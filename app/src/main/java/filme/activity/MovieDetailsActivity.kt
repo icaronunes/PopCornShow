@@ -189,23 +189,6 @@ class MovieDetailsActivity : BaseActivity() {
         streamview_movie.setClose(sheet)
     }
 
-    private fun isStreamValid(it: Availability): Boolean {
-        // Todo colocar dentro do Stream
-        return (it.sourceName == "starz" ||
-            it.sourceName == "netflix" ||
-            it.sourceName == "hulu_plus" ||
-            it.sourceName == "google_play" ||
-            it.sourceName == "amazon_buy" ||
-            it.sourceName == "showtime" ||
-            it.sourceName == "epix" ||
-            it.sourceName == "imdb_tv" ||
-            it.sourceName == "vunu" ||
-            it.sourceName == "sony" ||
-            it.sourceName == "verizon_on_demand" ||
-            it.sourceName == "mgo" ||
-            it.sourceName == "hbo" || true)
-    }
-
     private fun setEventListenerWatch() {
 
         valueEventWatch = object : ValueEventListener {

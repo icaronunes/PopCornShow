@@ -529,7 +529,11 @@ class MovieFragment : FragmentBase() {
             textview_elenco?.visible()
         } else {
             textview_elenco?.gone()
-            recycle_filme_elenco.layoutParams.height = 1
+            recycle_filme_elenco.apply {
+                layoutParams.height = 1
+                importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                isFocusable = false
+            }
         }
     }
 
@@ -548,7 +552,11 @@ class MovieFragment : FragmentBase() {
             textview_crews.visible()
         } else {
             textview_crews.gone()
-            recycle_filme_producao.layoutParams.height = 1
+            recycle_filme_producao.apply {
+                layoutParams.height = 1
+                importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                isFocusable = false
+            }
         }
     }
 
@@ -567,7 +575,11 @@ class MovieFragment : FragmentBase() {
             textview_similares.visible()
         } else {
             textview_similares.gone()
-            recycle_filme_similares.layoutParams.height = 1
+            recycle_filme_similares.apply {
+                layoutParams.height = 1
+                importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                isFocusable = false
+            }
         }
     }
 
@@ -593,19 +605,22 @@ class MovieFragment : FragmentBase() {
     }
 
     private fun setTrailer() {
-
-        if (movieDb.videos?.results?.isNotEmpty()!!) {
-            recycle_filme_trailer?.apply {
-                setHasFixedSize(true)
-                itemAnimator = DefaultItemAnimator()
-                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                adapter = TrailerAdapter(activity, movieDb.videos?.results, movieDb.overview
-                    ?: "")
+            if (movieDb.videos?.results?.isNotEmpty()!!) {
+                recycle_filme_trailer?.apply {
+                    setHasFixedSize(true)
+                    itemAnimator = DefaultItemAnimator()
+                    layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                    adapter = TrailerAdapter(movieDb.videos?.results ?:  mutableListOf(), movieDb.overview
+                        ?: "")
+                }
+                recycle_filme_trailer.setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
+            } else {
+                recycle_filme_trailer.apply {
+                    layoutParams.height = 1
+                    importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                    isFocusable = false
+                }
             }
-            recycle_filme_trailer.setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
-        } else {
-            recycle_filme_trailer.layoutParams.height = 1
-        }
     }
 
     private fun setHome() {

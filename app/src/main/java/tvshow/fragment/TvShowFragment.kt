@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.Button
@@ -83,7 +84,6 @@ import produtora.activity.ProdutoraActivity
 import rx.Observer
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import rx.subscriptions.CompositeSubscription
 import similares.SimilaresActivity
 import site.Site
 import temporada.TemporadaActivity
@@ -157,7 +157,7 @@ class TvShowFragment : FragmentBase() {
             seguindo = arguments?.getBoolean(Constantes.USER)!!
         }
         // Validar se esta logado. Caso não, não precisa instanciar nada.
-        subscriptions = CompositeSubscription()
+       // subscriptions = CompositeSubscription()
         mAuth = FirebaseAuth.getInstance()
         myRef = FirebaseDatabase.getInstance().getReference("users")
     }
@@ -733,7 +733,11 @@ class TvShowFragment : FragmentBase() {
             }
         } else {
             textview_elenco.gone()
-            recycle_tvshow_elenco.layoutParams.height = 1
+            recycle_tvshow_elenco.apply {
+                layoutParams.height = 1
+                importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
+                isFocusable = false
+            }
         }
     }
 
@@ -757,7 +761,11 @@ class TvShowFragment : FragmentBase() {
             }
         } else {
             textview_crews.gone()
-            recycle_tvshow_producao.layoutParams.height = 1
+            recycle_tvshow_producao.apply {
+                layoutParams.height = 1
+                importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
+                isFocusable = false
+            }
         }
     }
 
@@ -780,7 +788,11 @@ class TvShowFragment : FragmentBase() {
             text_similares.visible()
         } else {
             text_similares.gone()
-            recycle_tvshow_similares.layoutParams.height = 1
+            recycle_tvshow_similares.apply {
+                layoutParams.height = 1
+                importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
+                isFocusable = false
+            }
         }
     }
 
@@ -802,11 +814,15 @@ class TvShowFragment : FragmentBase() {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                adapter = TrailerAdapter(activity, series.videos?.results, series.overview)
-                setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
+                adapter = TrailerAdapter(series.videos?.results, series.overview ?: "")
+                setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
             }
         } else {
-            recycle_tvshow_trailer.layoutParams.height = 1
+            recycle_tvshow_trailer.apply {
+                layoutParams.height = 1
+                importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
+                isFocusable = false
+            }
         }
     }
 

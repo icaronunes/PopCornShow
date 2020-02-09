@@ -1,5 +1,6 @@
 package utils
 
+import activity.BaseActivity
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.AdView
@@ -9,7 +10,7 @@ import rx.subscriptions.CompositeSubscription
  * Created by icaro on 27/08/17.
  */
 @SuppressLint("Registered")
-open class BaseActivityKt : AppCompatActivity() {
+open class BaseActivityKt : BaseActivity() {
 
     protected var subscriptions = CompositeSubscription()
 
@@ -22,12 +23,5 @@ open class BaseActivityKt : AppCompatActivity() {
         super.onPause()
         subscriptions.clear()
         subscriptions.unsubscribe()
-    }
-
-    fun setAdMob(adView: AdView) {
-        adView.loadAd(com.google.android.gms.ads.AdRequest.Builder()
-            // .addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-            // .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
-            .build())
     }
 }

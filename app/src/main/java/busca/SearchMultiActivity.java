@@ -31,6 +31,7 @@ import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.model.Multi;
 import pessoa.activity.PersonActivity;
 import tvshow.activity.TvShowActivity;
+import utils.BaseActivityKt;
 import utils.Constantes;
 import utils.UtilsApp;
 import utils.enums.EnumTypeMedia;
@@ -40,7 +41,7 @@ import utils.enums.EnumTypeMedia;
  * Created by icaro on 08/07/16.
  */
 
-public class SearchMultiActivity extends BaseActivity {
+public class SearchMultiActivity extends BaseActivityKt {
 
 
 	private RecyclerView recyclerView;
