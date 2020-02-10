@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="tryagain">Try Again</string>
     <string name="foto_principal" translatable="false" />
     <string name="imagem_filme" translatable="false" />
     <string name="milhoes" translatable="false">Mi</string>
@@ -228,6 +229,7 @@
     <string name="purchase">Purchase</string>
     <string name="beta" translatable="false">**beta</string>
     <string name="valid_us">Valid for USA</string>
+
 
 
 </resources>

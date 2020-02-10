@@ -1,6 +1,7 @@
 package activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -105,8 +106,8 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-    protected <T extends AndroidViewModel> T createViewModel(Class<T> classViewModel) {
-        PopCornViewModelFactory model = new PopCornViewModelFactory(this.getApplication(), null);
+    protected <T extends AndroidViewModel> T createViewModel(Class<T> classViewModel,@NonNull Activity activity) {
+        PopCornViewModelFactory model = new PopCornViewModelFactory(this.getApplication(), null, activity);
         return ViewModelProviders.of(this, model).get(classViewModel);
     }
 

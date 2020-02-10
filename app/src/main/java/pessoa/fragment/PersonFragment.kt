@@ -64,7 +64,7 @@ class PersonFragment : Fragment() {
         if (arguments != null) {
             tipo = arguments?.getInt(Constantes.ABA)!!
             if (person == null) {
-                person = (activity as PersonActivity).person // arguments?.getSerializable(Constantes.PERSON) as Person
+                person = (activity as PersonActivity).person
             }
         }
     }

@@ -252,7 +252,7 @@ object UtilsApp {
             conectivtyManager.activeNetworkInfo.isConnected)
     }
 
-    fun loadPalette(view: View): Int {
+    fun loadPalette(view: ImageView): Int {
 
         val imageView = view as ImageView
         val drawable = imageView.drawable as? BitmapDrawable

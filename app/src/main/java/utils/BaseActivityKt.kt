@@ -2,26 +2,24 @@ package utils
 
 import activity.BaseActivity
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.ads.AdView
+import android.widget.Toast
+import br.com.icaro.filme.R
 import rx.subscriptions.CompositeSubscription
 
 /**
  * Created by icaro on 27/08/17.
  */
-@SuppressLint("Registered")
 open class BaseActivityKt : BaseActivity() {
 
-    protected var subscriptions = CompositeSubscription()
-
-    override fun onResume() {
-        super.onResume()
-        subscriptions = CompositeSubscription()
-    }
+    var subscriptions = CompositeSubscription()
 
     override fun onPause() {
         super.onPause()
         subscriptions.clear()
         subscriptions.unsubscribe()
+    }
+
+    fun ops() {
+        Toast.makeText(baseContext, getString(R.string.ops), Toast.LENGTH_LONG).show()
     }
 }

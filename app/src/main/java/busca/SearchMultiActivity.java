@@ -22,7 +22,6 @@ import com.google.android.gms.ads.AdView;
 
 import java.util.List;
 
-import activity.BaseActivity;
 import br.com.icaro.filme.R;
 import configuracao.SettingsActivity;
 import domain.FilmeService;

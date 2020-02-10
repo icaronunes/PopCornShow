@@ -33,7 +33,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        model = createViewModel(MainViewModel::class.java)
+        model = createViewModel(MainViewModel::class.java, this)
         setUpToolBar()
         setupNavDrawer()
         setDefaultKeyMode(Activity.DEFAULT_KEYS_SEARCH_LOCAL)

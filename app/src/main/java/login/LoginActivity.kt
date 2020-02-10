@@ -58,7 +58,7 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(baseContext)
-        model = createViewModel(LoginViewModel::class.java)
+        model = createViewModel(LoginViewModel::class.java, this)
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         mAuth = FirebaseAuth.getInstance()
         setContentView(R.layout.activity_login)

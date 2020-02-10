@@ -12,10 +12,10 @@
     app:cardUseCompatPadding="false"
     card_view:cardElevation="@trade_size_dp_3">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:minHeight="@dimen/trade_size_dp_150"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:minHeight="@dimen/trade_size_dp_150">
 
         <ImageView
             android:id="@+id/img_popular_person"
@@ -25,24 +25,35 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/imagem_filme"
             android:cropToPadding="true"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_person_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_margin="@dimen/trade_size_dp_1"
             android:background="@color/black_transparente"
             android:gravity="top|center_horizontal"
             android:lines="1"
+            android:ellipsize="end"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="@dimen/trade_txt_size_sp_16"
+            android:textSize="@dimen/trade_txt_size_sp_12"
             android:typeface="serif"
-            android:visibility="invisible" />
+            card_view:text="Papai noel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <include layout="@layout/include_progress" />
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@android:style/Widget.DeviceDefault.ProgressBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

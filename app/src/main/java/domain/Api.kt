@@ -524,23 +524,31 @@ class Api(val context: Context) {
         }
     }
 
-    fun personDetalhes(id: Int): Observable<Person> {
-        return Observable.create { subscriber ->
-            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-            val gson = Gson()
+    suspend fun personDetalhes(id: Int): BaseRequest<Person> {
+        return suspendCancellableCoroutine { continuation ->
             val request = Request.Builder()
-                .url("${baseUrl3}person/$id?api_key=${Config.TMDB_API_KEY}&language=en-US+" + "&append_to_response=combined_credits,images")
-                .get()
-                .build()
-            val response = client.newCall(request).execute()
-            if (response.isSuccessful) {
-                val json = response.body?.string()
-                val person = gson.fromJson(json, Person::class.java)
-                subscriber.onNext(person)
-                subscriber.onCompleted()
-            } else {
-                subscriber.onError(Throwable(response.message))
-            }
+                .url("${baseUrl3}person/$id?api_key=${Config.TMDB_API_KEY}&language=en-US&append_to_response=combined_credits,images,translations")
+                .get().build()
+            OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
+                .newCall(request).enqueue(responseCallback = object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        continuation.resumeWithException(e)
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        try {
+                            if (response.isSuccessful) {
+                                val json = response.body?.string()
+                                val person = Gson().fromJson(json, Person::class.java)
+                                continuation.resume(Success(person))
+                            } else {
+                                continuation.resumeWithException(Exception("Failure"))
+                            }
+                        } catch (e: Exception) {
+                            continuation.resumeWithException(e)
+                        }
+                    }
+                })
         }
     }
 

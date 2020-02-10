@@ -8,7 +8,7 @@ import com.google.android.gms.ads.AdView
 open class BaseFragment : Fragment() {
 
     fun <T : BaseViewModel> createViewModel(java: Class<T>): BaseViewModel {
-        val factory = PopCornViewModelFactory(application = this.activity?.application as PopCornApplication)
+        val factory = PopCornViewModelFactory(application = this.activity?.application as PopCornApplication, activity = requireActivity())
         return ViewModelProviders.of(this, factory).get(java)
     }
 

@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import applicaton.BaseFragment
 import br.com.icaro.filme.R
@@ -18,6 +20,7 @@ import domain.TopMain
 import filme.activity.MovieDetailsActivity
 import info.movito.themoviedbapi.model.Multi.MediaType.MOVIE
 import kotlinx.android.synthetic.main.page_scroll_image_top.img_top_scroll
+import kotlinx.android.synthetic.main.page_scroll_image_top.layout_scroll_image_top
 import kotlinx.android.synthetic.main.page_scroll_image_top.title
 import tvshow.activity.TvShowActivity
 import utils.Constantes
@@ -55,22 +58,25 @@ class ImagemTopScrollFragment : BaseFragment() {
         with(inflater.inflate(layout.page_scroll_image_top, container, false)) {
            findViewById<TextView>(R.id.title).text = topMains.nome
             val img = findViewById<ImageView>(R.id.img_top_scroll)
+            val container = findViewById<ConstraintLayout>(R.id.layout_scroll_image_top)
             if (topMains.mediaType.equals(MOVIE.name, ignoreCase = true)) {
+                container.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.red))
                 img.setPicasso(topMains.imagem, 6, img_erro = drawable.top_empty)
                     .setOnClickListener {
                         val intent = Intent(context, MovieDetailsActivity::class.java)
                         intent.putExtra(Constantes.NOME_FILME, topMains.nome)
                         intent.putExtra(Constantes.FILME_ID, topMains.id)
-                        intent.putExtra(Constantes.COLOR_TOP, loadPalette(it))
+                        intent.putExtra(Constantes.COLOR_TOP, loadPalette(it as ImageView))
                         startActivity(intent)
                     }
             } else {
+                container.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.blue_main))
                 img.setPicasso(topMains.imagem, 6, img_erro = drawable.top_empty)
                     .setOnClickListener {
                         val intent = Intent(context, TvShowActivity::class.java)
                         intent.putExtra(Constantes.NOME_TVSHOW, topMains.nome)
                         intent.putExtra(Constantes.TVSHOW_ID, topMains.id)
-                        intent.putExtra(Constantes.COLOR_TOP, loadPalette(it))
+                        intent.putExtra(Constantes.COLOR_TOP, loadPalette(it as ImageView))
                         startActivity(intent)
                     }
             }

@@ -157,7 +157,7 @@ class TvShowFragment : FragmentBase() {
             seguindo = arguments?.getBoolean(Constantes.USER)!!
         }
         // Validar se esta logado. Caso não, não precisa instanciar nada.
-       // subscriptions = CompositeSubscription()
+        // subscriptions = CompositeSubscription()
         mAuth = FirebaseAuth.getInstance()
         myRef = FirebaseDatabase.getInstance().getReference("users")
     }
@@ -728,7 +728,7 @@ class TvShowFragment : FragmentBase() {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                adapter = CastAdapter(activity, series.credits?.cast)
+                adapter = CastAdapter(requireActivity(), series.credits?.cast ?: listOf())
                 setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
             }
         } else {
@@ -756,7 +756,7 @@ class TvShowFragment : FragmentBase() {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                adapter = CrewAdapter(activity, series.credits?.crew)
+                adapter = CrewAdapter(requireActivity(), series.credits?.crew ?: listOf())
                 setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
             }
         } else {

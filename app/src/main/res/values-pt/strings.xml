@@ -5,6 +5,7 @@
     <string name="about">Sobre</string>
     <string name="retry">Repetir</string>
     <string name="no_internet">Sem Internet</string>
+    <string name="tryagain">Tentar de novo</string>
 
     <string name="top_rated">Melhores Avaliados</string>
     <string name="upcoming">Em Breve</string>

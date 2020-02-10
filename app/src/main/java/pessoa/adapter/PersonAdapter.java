@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import br.com.icaro.filme.R;
 import domain.person.Person;
+import fragment.FragmentError;
 import pessoa.fragment.PersonFragment;
 
 /**
@@ -15,14 +16,17 @@ import pessoa.fragment.PersonFragment;
  */
 public class PersonAdapter extends FragmentPagerAdapter {
     private Context context;
+    private Boolean error;
 
-    public PersonAdapter(Context context, FragmentManager supportFragmentManager, Person person) {
+    public PersonAdapter(Context context, FragmentManager supportFragmentManager, Boolean error) {
         super(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.context = context;
+        this.error = error;
     }
 
     @Override
     public Fragment getItem(int position) {
+        if(error) return new FragmentError();
 
         if (position == 0) {
             return PersonFragment.Companion.newInstance(R.string.tvshow);
@@ -45,6 +49,7 @@ public class PersonAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
+        if(error) return "Error :(";
 
         if (position == 0) {
             return context.getString(R.string.tvshow);
@@ -60,13 +65,14 @@ public class PersonAdapter extends FragmentPagerAdapter {
         }
         if (position == 4) {
             return context.getString(R.string.producao);
+        } else {
+            return "Error";
         }
-
-        return null;
     }
 
     @Override
     public int getCount() {
+        if(error) return 1;
         return 5;
     }
 }

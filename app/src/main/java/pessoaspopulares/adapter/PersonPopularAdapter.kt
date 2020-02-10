@@ -27,28 +27,26 @@ class PersonPopularAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         personResultsPage.add(loadingItem)
     }
 
-    fun addPersonPopular(personResults: List<PersonItem?>?) {
-
+    fun addPersonPopular(personResults: List<PersonItem>) {
         val initPosition = personResultsPage.size - 1
         this.personResultsPage.removeAt(initPosition)
         notifyItemRemoved(initPosition)
 
-        // insert news and the loading at the end of the list
-        for (person in personResults!!) {
-            this.personResultsPage.add(person!!)
+        for (person in personResults) {
+            this.personResultsPage.add(person)
         }
 
-        notifyItemRangeChanged(initPosition, this.personResultsPage.size + 1 /* plus loading item */)
+        notifyItemRangeChanged(initPosition, this.personResultsPage.size + 1)
         personResultsPage.add(loadingItem)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        delegateAdapters.get(viewType)!!.onCreateViewHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
+        = delegateAdapters.get(viewType)!!.onCreateViewHolder(parent)
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
-        delegateAdapters.get(getItemViewType(position))!!.onBindViewHolder(holder, personResultsPage[position], context = null)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int)
+        = delegateAdapters.get(getItemViewType(position))!!
+        .onBindViewHolder(holder, personResultsPage[position], context = null)
 
     override fun getItemViewType(position: Int): Int = personResultsPage[position].getViewType()
-
     override fun getItemCount(): Int = personResultsPage.size
 }

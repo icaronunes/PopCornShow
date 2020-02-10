@@ -25,6 +25,7 @@ import androidx.viewpager.widget.ViewPager
 import br.com.icaro.filme.R
 import com.github.clans.fab.FloatingActionMenu
 import domain.Api
+import domain.CastItem
 import domain.Imdb
 import domain.Movie
 import domain.colecao.PartsItem
@@ -522,7 +523,7 @@ class MovieFragment : FragmentBase() {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-                adapter = CastAdapter(requireActivity(), movieDb.credits?.cast)
+                adapter = CastAdapter(requireActivity(), movieDb.credits?.cast ?: listOf())
             }
             recycle_filme_elenco.setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
 
@@ -545,7 +546,7 @@ class MovieFragment : FragmentBase() {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                adapter = CrewAdapter(activity, movieDb.credits?.crew)
+                adapter = CrewAdapter(requireActivity(), movieDb.credits?.crew ?: listOf())
             }
             recycle_filme_producao.setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
 

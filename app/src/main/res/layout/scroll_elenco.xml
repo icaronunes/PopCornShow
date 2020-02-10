@@ -1,52 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scroll_elenco_linearlayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:focusable="true"
+    android:importantForAccessibility="yes"
     android:orientation="vertical"
-    android:weightSum="1"
     android:padding="@dimen/trade_size_dp_2">
 
+    <ImageView
+        android:id="@+id/imgPager"
+        android:layout_width="@dimen/trade_size_dp_100"
+        android:layout_height="@dimen/trade_size_dp_140"
+        android:adjustViewBounds="false"
+        android:focusable="false"
+        android:foregroundGravity="center_vertical"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textCastNomes"
+        tools:src="@drawable/person" />
+
+
+    <ProgressBar
+        android:id="@+id/progressBarCast"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:focusable="false"
+        android:importantForAccessibility="no"
+        android:indeterminate="false"
+        app:layout_constraintBottom_toTopOf="@id/textCastPersonagem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textCastNomes" />
 
     <TextView
         android:id="@+id/textCastNomes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:ellipsize="end"
+        android:focusable="false"
         android:gravity="bottom|center_horizontal"
-        tools:text="Nome do cara"
+        android:importantForAccessibility="yes"
+        android:maxLength="14"
         android:maxLines="2"
-        android:maxLength="14" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Nome do cara" />
 
-    <FrameLayout android:layout_height="@dimen/trade_size_dp_140"
-        android:layout_width="@dimen/trade_size_dp_100">
-
-        <ImageView
-            android:id="@+id/imgPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="false"
-            android:foregroundGravity="center_vertical"
-            android:scaleType="centerCrop" />
-
-        <ProgressBar
-            android:id="@+id/progressBarCast"
-            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminate="false" />
-
-    </FrameLayout>
 
     <TextView
         android:id="@+id/textCastPersonagem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:ellipsize="end"
+        android:focusable="false"
         android:gravity="top|center_horizontal"
+        android:importantForAccessibility="yes"
+        android:maxLength="14"
         android:maxLines="2"
-        android:maxLength="14" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgPager"
+        tools:text="Nome do personagem do cara" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

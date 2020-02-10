@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="about">Acerca de</string>
+    <string name="tryagain">Inténtalo de nuevo</string>
     <string name="adicionar_favorite">Agregar a los favoritos</string>
     <string name="adicionar_rated">Añadir a los Anuncios</string>
     <string name="adicionar_watch">Añadir a Ver Después</string>
@@ -177,6 +178,7 @@
     <string name="cd_collectons">Ver películas de franquicia</string>
     <string name="poster_empty">sin una lista de carteles</string>
 
+
     ///////////////
     ///// Stream
     //////////////
@@ -185,6 +187,7 @@
     <string name="rent">Alquilar</string>
     <string name="purchase">Comprar</string>
     <string name="valid_us">Valid for USA</string>
+
 
 
 </resources>

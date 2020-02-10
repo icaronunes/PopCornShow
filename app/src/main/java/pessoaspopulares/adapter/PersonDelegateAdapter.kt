@@ -3,7 +3,6 @@ package pessoaspopulares.adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
@@ -11,16 +10,19 @@ import com.squareup.picasso.Picasso
 import domain.PersonItem
 import domain.ViewType
 import kotlinx.android.synthetic.main.adapter_person_popular.view.img_popular_person
+import kotlinx.android.synthetic.main.adapter_person_popular.view.progress
 import kotlinx.android.synthetic.main.adapter_person_popular.view.text_person_name
-import kotlinx.android.synthetic.main.include_progress.view.progress
 import pessoa.activity.PersonActivity
 import utils.Constantes
 import utils.UtilsApp
+import utils.gone
+import utils.setPicassoWithCacheAndHolder
+import utils.visible
 
 class PersonDelegateAdapter : ViewTypeDelegateAdapter {
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            PersonViewHoder(parent)
+        PersonViewHoder(parent)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType?, context: Context?) {
         holder as PersonViewHoder
@@ -28,15 +30,20 @@ class PersonDelegateAdapter : ViewTypeDelegateAdapter {
     }
 
     inner class PersonViewHoder(parent: ViewGroup) :
-            RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_person_popular, parent, false)) {
+        RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_person_popular, parent, false)) {
 
         fun bind(item: PersonItem) = with(itemView) {
-
+            progress.visible()
             Picasso.get()
                 .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 3)) + item.profilePath).into(img_popular_person)
+            img_popular_person.setPicassoWithCacheAndHolder(item.profilePath, 3,
+                { progress.gone() },
+                { progress.gone() },
+                img_erro = R.drawable.person,
+                holder = R.drawable.person)
             text_person_name.text = item.name
-            progress.visibility = View.GONE
-            itemView.setOnClickListener {
+
+            setOnClickListener {
                 val intent = Intent(context, PersonActivity::class.java)
                 intent.putExtra(Constantes.NOME_PERSON, item.name)
                 intent.putExtra(Constantes.PERSON_ID, item.id)

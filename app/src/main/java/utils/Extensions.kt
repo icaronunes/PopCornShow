@@ -47,7 +47,10 @@ fun ImageView.setPicasso(stillPath: String?, patten: Int = 4, sucesso: () -> Uni
     return this
 }
 
-fun ImageView.setPicassoWithCache(stillPath: String?, patten: Int = 4, sucesso: () -> Unit = {}, error: () -> Unit = {}, img_erro: Int = R.drawable.poster_empty) {
+fun ImageView.setPicassoWithCache(stillPath: String?, patten: Int = 4,
+    sucesso: () -> Unit = {},
+    error: () -> Unit = {},
+    img_erro: Int = R.drawable.poster_empty): ImageView {
     Picasso.get()
         .load(UtilsApp
             .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, patten)) + stillPath)
@@ -61,6 +64,28 @@ fun ImageView.setPicassoWithCache(stillPath: String?, patten: Int = 4, sucesso: 
                 error()
             }
         })
+   return this
+}
+
+fun ImageView.setPicassoWithCacheAndHolder(stillPath: String?, patten: Int = 4,
+    sucesso: () -> Unit = {},
+    error: () -> Unit = {},
+    img_erro: Int = R.drawable.poster_empty,
+    holder: Int): ImageView {
+    Picasso.get()
+        .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, patten)) + stillPath)
+        .placeholder(holder)
+        .error(img_erro)
+        .into(this, object : Callback {
+            override fun onSuccess() {
+                sucesso()
+            }
+
+            override fun onError(e: java.lang.Exception?) {
+                error()
+            }
+        })
+    return this
 }
 
 /**

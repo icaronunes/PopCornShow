@@ -6,6 +6,8 @@ import android.os.Looper
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import br.com.icaro.filme.R
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -16,12 +18,16 @@ import kotlin.coroutines.CoroutineContext
 
 open class BaseViewModel(open val app: Application) : AndroidViewModel(app), LifecycleObserver {
 
-    val coroutineContext: CoroutineContext
+   open val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, _ ->
             Handler(Looper.getMainLooper()).post {
                 ops()
             }
         }
+
+    val _response = MutableLiveData<BaseRequest<*>>()
+    val response: LiveData<BaseRequest<*>>
+        get() = _response
 
     fun ops() {
         Toast.makeText(app.baseContext, app.getString(R.string.ops), Toast.LENGTH_LONG).show()
@@ -39,5 +45,6 @@ open class BaseViewModel(open val app: Application) : AndroidViewModel(app), Lif
     sealed class BaseRequest<in T> {
         class Failure<T>(val error: Exception) : BaseRequest<T>()
         class Success<T>(val result: T) : BaseRequest<T>()
+        class Loading<T>(val loading: Boolean) : BaseRequest<T>()
     }
 }
