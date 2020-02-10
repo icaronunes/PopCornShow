@@ -69,7 +69,7 @@ class PersonPopularActivity : BaseActivity() {
                         pagina = it?.page!!
                         totalPagina = it.totalPages!!
                         (recycleView_person_popular.adapter as PersonPopularAdapter)
-                            .addPersonPopular(it.results)
+                            .addPersonPopular(it.results ?: listOf())
                         ++this.pagina
                     }, { erro ->
                         Toast.makeText(this, resources.getString(R.string.ops), Toast.LENGTH_SHORT).show()

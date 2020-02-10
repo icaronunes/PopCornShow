@@ -42,7 +42,6 @@ import utils.enums.EnumTypeMedia;
 
 public class SearchMultiActivity extends BaseActivityKt {
 
-
 	private RecyclerView recyclerView;
 	private String query = "";
 	private List<Multi> movieDbList = null;
@@ -69,13 +68,7 @@ public class SearchMultiActivity extends BaseActivityKt {
 		query = getIntent().getStringExtra(SearchManager.QUERY);
 		getSupportActionBar().setTitle(query);
 
-		/*TODO
-		 *
-		 * Arrumar! Gambiara. Funcionando.
-		 *
-		 */
-
-		if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
+		if (Intent.ACTION_VIEW.equals(getIntent().getAction())) { //TODO pra que server isso?
 
 			Intent intent;
 			if (getIntent().getData().getLastPathSegment().equalsIgnoreCase(EnumTypeMedia.MOVIE.getType())) {

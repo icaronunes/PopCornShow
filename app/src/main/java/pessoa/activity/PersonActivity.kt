@@ -31,6 +31,7 @@ class PersonActivity : BaseActivityKt(), CallBackError {
         setContentView(R.layout.activity_person)
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setTitleActionBar("")
         getExtras()
         observers()
 
