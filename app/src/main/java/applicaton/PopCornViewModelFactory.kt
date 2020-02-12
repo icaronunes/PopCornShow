@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import busca.SearchMultiModelView
 import domain.Api
 import login.LoginViewModel
 import main.MainFragViewModel
@@ -22,6 +23,7 @@ class PopCornViewModelFactory constructor(
                 isAssignableFrom(MainViewModel::class.java) -> MainViewModel(application)
                 isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(app = application)
                 isAssignableFrom(PersonViewModel::class.java) -> PersonViewModel(app = application, activity = activity)
+                isAssignableFrom(SearchMultiModelView::class.java) -> SearchMultiModelView(app = application)
                 else -> throw IllegalArgumentException("Class Desconhecida...")
             }
         } as T

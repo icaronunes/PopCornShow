@@ -75,7 +75,6 @@ public class FilmeService {
     }
 
     public static TmdbSearch getTmdbSearch() {
-
         return new TmdbApi(Config.TMDB_API_KEY).getSearch();
     }
 

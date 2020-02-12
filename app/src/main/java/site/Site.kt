@@ -66,14 +66,10 @@ class Site : BaseActivityKt() {
         webViewClient.webViewClient = object : WebViewClient() {
             override fun onPageStarted(view: WebView, url: String, favicon: Bitmap) {
                 super.onPageStarted(view, url, favicon)
-                if (!swipeToRefresh.isShown) {
-                    progress.visibility = View.VISIBLE
-                }
             }
 
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
-                progress.visibility = View.INVISIBLE
                 swipeToRefresh.isRefreshing = false
             }
         }

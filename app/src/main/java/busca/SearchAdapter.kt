@@ -1,4 +1,4 @@
-package busca
+ package busca
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -10,15 +10,14 @@ import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.drawable
+import domain.search.Result
+import domain.search.SearchMulti
 import filme.activity.MovieDetailsActivity
-import info.movito.themoviedbapi.model.MovieDb
-import info.movito.themoviedbapi.model.Multi
-import info.movito.themoviedbapi.model.people.Person
-import info.movito.themoviedbapi.model.tv.TvSeries
 import pessoa.activity.PersonActivity
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
+import utils.enums.EnumTypeMedia
 import utils.gone
 import utils.setPicassoWithCache
 import utils.visible
@@ -26,11 +25,11 @@ import utils.visible
 /**
  * Created by icaro on 18/09/16.
  */
-class SearchAdapter(val context: SearchMultiActivity, private val multis: List<Multi>) : RecyclerView.Adapter<SearchAdapter.HolderSearch>() {
+class SearchAdapter(val context: SearchMultiActivity, private val multis: SearchMulti) : RecyclerView.Adapter<SearchAdapter.HolderSearch>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = HolderSearch(parent)
-    override fun onBindViewHolder(holder: HolderSearch, position: Int) { holder.bind(multis[position]) }
-    override fun getItemCount() = multis.size
+    override fun onBindViewHolder(holder: HolderSearch, position: Int) { holder.bind(multis.results[position]) }
+    override fun getItemCount() = multis.results.size
 
     inner class HolderSearch(parent: ViewGroup)
         : RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.search_list_adapter, parent, false)) {
@@ -42,16 +41,16 @@ class SearchAdapter(val context: SearchMultiActivity, private val multis: List<M
         private val searchTitleOriginal: TextView = itemView.findViewById(R.id.search_title_original)
         private val groupStar: Group = itemView.findViewById(R.id.group_star)
 
-        fun bind(item: Multi) = with(itemView) {
-            when (item.mediaType!!) {
-                Multi.MediaType.MOVIE -> setMovie(this@HolderSearch, this)
-                Multi.MediaType.TV_SERIES -> setTvShow(this@HolderSearch, this)
-                Multi.MediaType.PERSON -> setPerson(this@HolderSearch, this)
+        fun bind(item: Result) = with(itemView) {
+            when (item.mediaType) {
+                EnumTypeMedia.MOVIE.type -> setMovie(this@HolderSearch, this)
+                EnumTypeMedia.TV.type-> setTvShow(this@HolderSearch, this)
+                EnumTypeMedia.PERSON.type -> setPerson(this@HolderSearch, this)
             }
         }
 
         private fun setPerson(holderSearch: HolderSearch, view: View) {
-            val person = multis[holderSearch.adapterPosition] as Person
+            val person = multis.results[holderSearch.adapterPosition]
             poster.setPicassoWithCache(person.profilePath, 4, img_erro = drawable.person)
             person.name?.let { searchNome.text = it }
 
@@ -66,7 +65,7 @@ class SearchAdapter(val context: SearchMultiActivity, private val multis: List<M
         }
 
         private fun setTvShow(holderSearch: HolderSearch, view: View) {
-            val series = multis[holderSearch.adapterPosition] as TvSeries
+            val series = multis.results[holderSearch.adapterPosition]
             poster.setPicassoWithCache(series.posterPath, 4, img_erro = drawable.poster_empty)
             series.originalName?.let { searchTitleOriginal.text = it }
             series.name?.let { searchNome.text = it }
@@ -92,7 +91,7 @@ class SearchAdapter(val context: SearchMultiActivity, private val multis: List<M
         }
 
         private fun setMovie(holderSearch: HolderSearch, itemView: View) {
-            val movieDb = multis[holderSearch.adapterPosition] as MovieDb
+            val movieDb = multis.results[holderSearch.adapterPosition]
             poster.setPicassoWithCache(movieDb.posterPath, 4, img_erro = drawable.poster_empty)
             movieDb.title.let { searchNome.text = it }
             movieDb.originalTitle?.let { searchTitleOriginal.text = it }

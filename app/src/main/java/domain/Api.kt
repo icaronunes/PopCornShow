@@ -10,6 +10,7 @@ import domain.colecao.Colecao
 import domain.movie.ListaFilmes
 import domain.person.Person
 import domain.reelgood.ReelGood
+import domain.search.SearchMulti
 import domain.tvshow.Tvshow
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
@@ -48,7 +49,7 @@ class Api(val context: Context) {
 
             val t2 = System.nanoTime()
             logger.info(String.format("Received response for %s in %.1fms%n%s",
-                response.request.url, (t2 - t1) / 1e6, response.headers))
+                response.request.url, (t2 - t1) / 1e6, response.body))
             return response
         }
     }
@@ -771,7 +772,41 @@ class Api(val context: Context) {
         }
     }
 
-    suspend fun getTvSeasonsC(id: Int, id_season: Int): TvSeasons {
+    suspend fun getTmdbSearch(query: String, page: Int = 1): SearchMulti {
+        return suspendCancellableCoroutine { cont ->
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
+            val gson = Gson()
+            val request = Request.Builder()
+                .url("${baseUrl3}search/multi?api_key=${Config.TMDB_API_KEY}&language=${getIdiomaEscolhido(context)}&query=$query&page=$page&include_adult=false")
+                .get()
+                .build()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    cont.resumeWithException(e)
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    try {
+                        if (response.isSuccessful) {
+                            val json = response.body?.string()
+                            val lista = gson.fromJson(json, SearchMulti::class.java)
+                            cont.resume(lista)
+                        } else {
+                            cont.resumeWithException(Exception("Failure"))
+                        }
+                    } catch (e: JsonSyntaxException) {
+                        cont.resumeWithException(e)
+                    } catch (ex: SocketTimeoutException) {
+                        cont.resumeWithException(ex)
+                    } catch (ex: Exception) {
+                        cont.resumeWithException(ex)
+                    }
+                }
+            })
+        }
+    }
+
+    suspend fun getTvSeasonsCd(id: Int, id_season: Int): TvSeasons {
         return suspendCancellableCoroutine { cont ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val gson = Gson()
