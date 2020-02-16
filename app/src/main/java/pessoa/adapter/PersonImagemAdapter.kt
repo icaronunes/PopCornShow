@@ -3,18 +3,16 @@ package pessoa.adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import domain.person.ProfilesItem
 import pessoa.activity.FotoPersonActivity
 import utils.Constantes
-import utils.UtilsApp
+import utils.gone
+import utils.setPicassoWithCache
 import java.io.Serializable
 
 /**
@@ -23,49 +21,33 @@ import java.io.Serializable
 class PersonImagemAdapter(private val context: Context, private val artworks: List<ProfilesItem?>?, private val nome: String?)
     : RecyclerView.Adapter<PersonImagemAdapter.PersonImageViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonImageViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.poster_grid_image, parent, false)
-
-        return PersonImageViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PersonImageViewHolder(parent)
+    override fun onBindViewHolder(holder: PersonImageViewHolder, position: Int) {
+        holder.bind(artworks!![position])
     }
 
-    override fun onBindViewHolder(holder: PersonImageViewHolder, position: Int) {
-        val item = artworks!![position]
+    override fun getItemCount() = artworks?.size ?: 0
 
-        Picasso.get().load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, 5)) + item?.filePath)
-            .placeholder(R.drawable.person)
-            .into(holder.imageButton, object : Callback {
-                override fun onError(e: Exception?) {
-                    holder.progressBar.visibility = View.GONE
-                }
+    inner class PersonImageViewHolder(parent: ViewGroup) :
+        RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.poster_grid_image, parent, false)) {
+        val progressBar: ProgressBar = itemView.findViewById(R.id.progress_poster_grid)
+        val image: ImageView = itemView.findViewById(R.id.img_poster_grid)
 
-                override fun onSuccess() {
-                    holder.progressBar.visibility = View.GONE
-                }
+        fun bind(item: ProfilesItem?) = with(itemView) {
+            image.setPicassoWithCache(item?.filePath ?: "", 5,
+                error = {
+                    progressBar.gone()
+                }, sucesso = {
+                progressBar.gone()
             })
 
-        holder.imageButton.setOnClickListener {
-            val intent = Intent(context, FotoPersonActivity::class.java)
-            intent.putExtra(Constantes.PERSON, artworks as Serializable)
-            intent.putExtra(Constantes.NOME_PERSON, nome)
-            intent.putExtra(Constantes.POSICAO, position)
-            context.startActivity(intent)
-        }
-    }
-
-    override fun getItemCount(): Int {
-        return if (artworks != null && artworks.isNotEmpty()) {
-            artworks.size
-        } else 0
-    }
-
-    inner class PersonImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val progressBar: ProgressBar
-        val imageButton: ImageButton
-
-        init {
-            progressBar = itemView.findViewById<View>(R.id.progress_poster_grid) as ProgressBar
-            imageButton = itemView.findViewById<View>(R.id.img_poster_grid) as ImageButton
+            setOnClickListener {
+                context.startActivity(Intent(context, FotoPersonActivity::class.java).apply {
+                    putExtra(Constantes.PERSON, artworks as Serializable)
+                    putExtra(Constantes.NOME_PERSON, nome)
+                    putExtra(Constantes.POSICAO, position)
+                })
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.person.CrewItem
@@ -15,68 +16,73 @@ import filme.activity.MovieDetailsActivity
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
-import utils.setPicasso
+import utils.gone
+import utils.setPicassoWithCache
+import utils.visible
 
 /**
  * Created by icaro on 18/08/16.
  */
 class PersonCrewsAdapter(private val context: Context, private val personCredits: List<CrewItem?>?) :
-        RecyclerView.Adapter<PersonCrewsAdapter.PersonCrewsViewHolder>() {
+    RecyclerView.Adapter<PersonCrewsAdapter.PersonCrewsViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonCrewsViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.crews_filmes_layout, parent, false)
-        return PersonCrewsViewHolder(view)
-    }
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PersonCrewsViewHolder(parent)
     override fun onBindViewHolder(holder: PersonCrewsViewHolder, position: Int) {
-
-        val item = personCredits?.get(position)
-
-        holder.poster.setPicasso(item?.posterPath, 5, error = {
-            holder.progressBar.visibility = View.INVISIBLE
-            val data = StringBuilder()
-            if (item?.releaseDate != null) {
-                if (item.releaseDate.length >= 4) {
-                    data.append(if (item.releaseDate.length >= 4) " - " + item.releaseDate.substring(0, 4) else "")
-                }
-            }
-            if (item?.mediaType == "tv") {
-                holder.title.text = item.name + data
-            } else {
-                holder.title.text = item?.title + data
-            }
-            holder.title.visibility = View.VISIBLE
-        }, sucesso = {
-            holder.title.visibility = View.INVISIBLE
-            holder.progressBar.visibility = View.INVISIBLE
-        })
-
-        holder.poster.setOnClickListener {
-
-            if (item?.mediaType == "movie") {
-                val intent = Intent(context, MovieDetailsActivity::class.java)
-                intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
-                intent.putExtra(Constantes.FILME_ID, item.id)
-                intent.putExtra(Constantes.NOME_FILME, item.title)
-                context.startActivity(intent)
-            } else if (item?.mediaType == "tv") {
-                val intent = Intent(context, TvShowActivity::class.java)
-                intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
-                intent.putExtra(Constantes.TVSHOW_ID, item.id)
-                intent.putExtra(Constantes.NOME_TVSHOW, item.title)
-                context.startActivity(intent)
-            }
-        }
+        holder.bind(personCredits?.get(position))
     }
 
-    override fun getItemCount(): Int {
-        return personCredits?.size ?: 0
-    }
+    override fun getItemCount() = personCredits?.size ?: 0
 
-    inner class PersonCrewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class PersonCrewsViewHolder(parent: ViewGroup)
+        : RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.crews_filmes_layout, parent, false)) {
 
         val progressBar: ProgressBar = itemView.findViewById<View>(R.id.progress_poster_grid) as ProgressBar
         val poster: ImageView = itemView.findViewById<View>(R.id.img_poster_grid) as ImageView
         val title: TextView = itemView.findViewById<View>(R.id.text_title_crew) as TextView
+
+        fun bind(item: CrewItem?) = with(itemView) {
+            poster.setPicassoWithCache(item?.posterPath, 5,
+                error = {
+                    progressBar.visibility = View.INVISIBLE
+                    val data = StringBuilder()
+                    if (item?.releaseDate != null) {
+                        if (item.releaseDate.length >= 4) {
+                            data.append(if (item.releaseDate.length >= 4) " - " + item.releaseDate.substring(0, 4) else "")
+                        }
+                    }
+                    if (item?.mediaType == "tv") {
+                        title.text = "${item?.name} $data"
+                    } else {
+                        title.text = "${item?.title} $data"
+                    }
+                    title.visible()
+                },
+                sucesso = {
+                title.gone()
+                progressBar.gone()
+            })
+
+            setOnClickListener {
+                when (item?.mediaType?.toLowerCase()) {
+                    "movie" -> {
+                        context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
+                            putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(poster))
+                            putExtra(Constantes.FILME_ID, item.id)
+                            putExtra(Constantes.NOME_FILME, item.title)
+                        })
+                    }
+                    "tv" -> {
+                        context.startActivity(Intent(context, TvShowActivity::class.java).apply {
+                            putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(poster))
+                            putExtra(Constantes.TVSHOW_ID, item.id)
+                            putExtra(Constantes.NOME_TVSHOW, item.title)
+                        })
+                    }
+                    else -> {
+                        Toast.makeText(context, context.getString(R.string.ops), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
 }
