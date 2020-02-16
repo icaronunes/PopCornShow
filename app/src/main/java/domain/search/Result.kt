@@ -4,6 +4,8 @@ package domain.search
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import android.os.Parcelable
+import domain.ViewType
+import utils.enums.EnumTypeMedia
 
 @Parcelize
 data class Result(
@@ -49,4 +51,13 @@ data class Result(
     val voteAverage: Float = 0f,
     @SerializedName("vote_count")
     val voteCount: Int = 0
-) : Parcelable
+) : Parcelable, ViewType {
+    override fun getViewType(): Int {
+        return when(mediaType) {
+            EnumTypeMedia.MOVIE.type -> 1
+            EnumTypeMedia.TV.type -> 2
+            EnumTypeMedia.PERSON.type -> 3
+            else -> 0
+        }
+    }
+}

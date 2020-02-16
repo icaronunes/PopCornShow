@@ -31,6 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:textSize="@dimen/trade_txt_size_sp_24"
+            android:maxLines="3"
+            android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_search"
             app:layout_constraintTop_toTopOf="@+id/img_search"
@@ -41,7 +43,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:textSize="@dimen/trade_txt_size_sp_24"
+            android:textSize="@dimen/trade_txt_size_sp_14"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_search"
             app:layout_constraintTop_toBottomOf="@+id/search_name"
@@ -54,6 +56,8 @@
             android:layout_height="@dimen/trade_size_dp_42"
             android:src="@android:drawable/star_big_on"
             android:tint="@color/yellow"
+            android:importantForAccessibility="no"
+            android:focusable="false"
             app:layout_constraintStart_toEndOf="@+id/img_search"
             app:layout_constraintTop_toBottomOf="@+id/search_data_lancamento"
             android:visibility="visible" />
@@ -68,6 +72,8 @@
             app:layout_constraintTop_toTopOf="@id/star"
             app:layout_constraintBottom_toBottomOf="@id/star"
             tools:text="6.9"
+            android:importantForAccessibility="no"
+            android:focusable="false"
             android:textStyle="bold" />
 
         <TextView
@@ -75,11 +81,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/trade_size_dp_2"
+            android:layout_marginStart="@dimen/trade_size_dp_4"
             app:layout_constraintTop_toTopOf="@+id/search_voto_media"
             app:layout_constraintStart_toEndOf="@id/star"
-            tools:text="Matrix Recarregando"
-            />
+            tools:text="Matrix Recarregando" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group_star"
@@ -88,7 +93,6 @@
             android:visibility="gone"
             tools:visibility="visible"
             app:constraint_referenced_ids="star,search_voto_media" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

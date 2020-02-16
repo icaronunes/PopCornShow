@@ -111,7 +111,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
         return ViewModelProviders.of(this, model).get(classViewModel);
     }
 
-    public static void SnackBar(final View view, String msg) {
+    public void SnackBar(final View view, String msg) {
         Snackbar.make(view, msg
                 , Snackbar.LENGTH_SHORT).setCallback(new Snackbar.Callback() {
             @Override

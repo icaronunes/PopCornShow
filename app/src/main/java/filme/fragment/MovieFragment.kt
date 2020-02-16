@@ -1,6 +1,5 @@
 package filme.fragment
 
-import activity.BaseActivity
 import adapter.CastAdapter
 import adapter.CrewAdapter
 import adapter.TrailerAdapter
@@ -25,7 +24,6 @@ import androidx.viewpager.widget.ViewPager
 import br.com.icaro.filme.R
 import com.github.clans.fab.FloatingActionMenu
 import domain.Api
-import domain.CastItem
 import domain.Imdb
 import domain.Movie
 import domain.colecao.PartsItem
@@ -33,6 +31,7 @@ import elenco.ElencoActivity
 import filme.adapter.CollectionPagerAdapter
 import filme.adapter.SimilaresFilmesAdapter
 import fragment.FragmentBase
+import kotlinx.android.synthetic.main.fab_float.fab_menu
 import kotlinx.android.synthetic.main.info_details_movie_layout.icon_collection
 import kotlinx.android.synthetic.main.info_details_movie_layout.icon_site
 import kotlinx.android.synthetic.main.info_details_movie_layout.img_budget
@@ -105,10 +104,6 @@ class MovieFragment : FragmentBase() {
         subscriptions = CompositeSubscription()
     }
 
-    fun teste(b: Boolean) {
-        activity?.makeToast("teste")
-    }
-
     override fun onStart() {
         super.onStart()
         getImdb()
@@ -161,11 +156,9 @@ class MovieFragment : FragmentBase() {
                     var valor = it.toString()
                     if (valor.length >= 6)
                         valor = valor.substring(0, valor.length - 6)
-                    BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu),
-                        "${getString(R.string.orcamento_budget)} $$valor ${getString(R.string.milhoes_budget)}")
+                    snack(fab_menu, "${getString(R.string.orcamento_budget)} $$valor ${getString(R.string.milhoes_budget)}")
                 } else {
-                    BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu),
-                        getString(R.string.no_budget))
+                    snack(fab_menu, getString(R.string.no_budget) )
                 }
             }
         }
@@ -177,8 +170,7 @@ class MovieFragment : FragmentBase() {
                         putExtra(Constantes.SITE, it)
                     })
                 } else {
-                    BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu),
-                        getString(R.string.no_site))
+                    snack(fab_menu, getString(R.string.no_site))
                 }
             }
         }
@@ -196,7 +188,7 @@ class MovieFragment : FragmentBase() {
                         requireActivity().makeToast(R.string.ops)
                     }))
             } else {
-                BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu),
+                snack(fab_menu,
                     getString(R.string.sem_informacao_colletion))
             }
         }
@@ -308,8 +300,7 @@ class MovieFragment : FragmentBase() {
                 builder.setView(layout)
                 builder.show()
             } else {
-                BaseActivity.SnackBar(requireActivity().findViewById(R.id.fab_menu),
-                    getString(R.string.no_vote))
+                snack(fab_menu, getString(R.string.no_vote))
             }
         }
     }

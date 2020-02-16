@@ -1,5 +1,6 @@
 package fragment
 
+import android.view.View
 import androidx.fragment.app.Fragment
 import br.com.icaro.filme.R
 import com.google.android.gms.ads.AdView
@@ -27,8 +28,8 @@ open class FragmentBase : Fragment() {
         UtilsKt.setAdMob(adView)
     }
 
-    private fun snack(block: () -> Unit) {
-        Snackbar.make(frame_list_filme!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+    fun snack(anchor: View, txt: String,  block: () -> Unit = {}) {
+        Snackbar.make(anchor, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
             .setAction(R.string.retry) { block() }.show()
     }
 }

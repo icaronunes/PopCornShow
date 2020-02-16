@@ -5,19 +5,15 @@ import android.os.Handler
 import android.os.Looper
 import applicaton.BaseViewModel
 import applicaton.BaseViewModel.BaseRequest.Failure
+import applicaton.BaseViewModel.BaseRequest.Loading
 import applicaton.BaseViewModel.BaseRequest.Success
 import domain.Api
-import info.movito.themoviedbapi.TmdbSearch
-import info.movito.themoviedbapi.TmdbSearch.MultiListResultsPage
-import info.movito.themoviedbapi.model.Multi
-import info.movito.themoviedbapi.model.core.ResultsPage
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import kotlin.coroutines.CoroutineContext
 
 class SearchMultiModelView(override val app: Application): BaseViewModel(app) {
@@ -36,6 +32,10 @@ class SearchMultiModelView(override val app: Application): BaseViewModel(app) {
             val response = async { Api(app).getTmdbSearch(query) }
             _response.value = Success(response.await())
         }
+    }
+
+    fun setLoading(status: Boolean) {
+        _response.value = Loading<Boolean>(status)
     }
 
 }

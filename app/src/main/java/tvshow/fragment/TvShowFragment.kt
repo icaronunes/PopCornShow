@@ -1,6 +1,5 @@
 package tvshow.fragment
 
-import activity.BaseActivity
 import adapter.CastAdapter
 import adapter.CrewAdapter
 import adapter.TrailerAdapter
@@ -49,6 +48,7 @@ import fragment.FragmentBase
 import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbTvSeasons
 import info.movito.themoviedbapi.model.tv.TvSeason
+import kotlinx.android.synthetic.main.fab_float.fab_menu
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.card_poster
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.img_poster
 import kotlinx.android.synthetic.main.tvshow_info.adView
@@ -209,8 +209,7 @@ class TvShowFragment : FragmentBase() {
                     putExtra(Constantes.SITE, series.homepage)
                 })
             } else {
-                BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu),
-                    getString(R.string.no_site))
+                snack(fab_menu, getString(R.string.no_site))
             }
         }
 
@@ -296,8 +295,7 @@ class TvShowFragment : FragmentBase() {
             builder.setView(layout)
             builder.show()
         } else {
-            BaseActivity.SnackBar(activity?.findViewById(R.id.fab_menu),
-                getString(R.string.no_vote))
+            snack(fab_menu, getString(R.string.no_vote))
         }
     }
 

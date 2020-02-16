@@ -3,19 +3,21 @@ package busca
 import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import applicaton.BaseViewModel.BaseRequest
+import br.com.icaro.filme.R
 import br.com.icaro.filme.R.layout
+import busca.adapter.SearchDelegateAdapter
 import domain.search.SearchMulti
 import filme.activity.MovieDetailsActivity
+import kotlinx.android.synthetic.main.include_progress.progress
 import kotlinx.android.synthetic.main.search_layout.adView
 import kotlinx.android.synthetic.main.search_layout.recycleView_search
-import kotlinx.android.synthetic.main.search_layout.swipeToRefresh
+import kotlinx.android.synthetic.main.search_layout.text_search_empty
 import pessoa.activity.PersonActivity
 import tvshow.activity.TvShowActivity
 import utils.BaseActivityKt
@@ -24,12 +26,14 @@ import utils.UtilsApp.isNetWorkAvailable
 import utils.enums.EnumTypeMedia.MOVIE
 import utils.enums.EnumTypeMedia.PERSON
 import utils.enums.EnumTypeMedia.TV
+import utils.gone
+import utils.visible
 
 /**
  * Created by icaro on 08/07/16.
  */
 class SearchMultiActivity : BaseActivityKt() {
-
+    //Colocar paginação na lista
     private val recyclerView: RecyclerView by lazy {
             recycleView_search.apply {
             layoutManager = LinearLayoutManager(context)
@@ -41,7 +45,6 @@ class SearchMultiActivity : BaseActivityKt() {
         createViewModel(SearchMultiModelView::class.java, this)
     }
     private var query = ""
-    private var pagina = 1
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +54,7 @@ class SearchMultiActivity : BaseActivityKt() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         query = intent.getStringExtra(SearchManager.QUERY)
         supportActionBar!!.title = query
+        observers()
         if (Intent.ACTION_VIEW == intent.action) { //TODO pra que server isso?
             val intent: Intent
             when {
@@ -85,41 +89,45 @@ class SearchMultiActivity : BaseActivityKt() {
         } else {
             if (isNetWorkAvailable(baseContext)) {
                 model.fetchData(query)
+            } else {
+                snack(adView, getString(R.string.tryagain)) {
+                    model.fetchData(query)
+                }
             }
-            swipeToRefresh.setOnRefreshListener(onRefreshListener())
         }
-
-        observers()
     }
 
     private fun observers() {
         model.response.observe(this, Observer {
             when (it) {
                 is BaseRequest.Success -> {
+                    model.setLoading(false)
                     fillRecycler(it.result as SearchMulti)
                 }
                 is BaseRequest.Failure -> {
-                    Toast.makeText(this, "Failure", Toast.LENGTH_LONG).show()
+                    snack(adView, getString(R.string.tryagain)) {
+                        model.fetchData(query)
+                    }
                 }
                 is BaseRequest.Loading -> {
-                    Toast.makeText(this, "Loading", Toast.LENGTH_LONG).show()
+                    setLoading(it.loading)
                 }
             }
         })
     }
 
-    private fun fillRecycler(it: SearchMulti) {
-        recyclerView.adapter = SearchAdapter(this@SearchMultiActivity, it)
+    private fun setLoading(loading: Boolean) {
+        progress.visibility = if (loading) View.VISIBLE else View.GONE
     }
 
-    private fun onRefreshListener(): OnRefreshListener {
-        return OnRefreshListener {
-            //TODO adicionar infinityScroll
-            if (isNetWorkAvailable(this@SearchMultiActivity)) {
-                model.fetchData(query)
-            } else {
-
-            }
+    private fun fillRecycler(it: SearchMulti) {
+        if (it.results.isEmpty()) {
+            text_search_empty.visible()
+            model.setLoading(false)
+        } else {
+            text_search_empty.gone()
+            model.setLoading(false)
+            recyclerView.adapter = SearchDelegateAdapter(this@SearchMultiActivity, it)
         }
     }
 
@@ -127,58 +135,4 @@ class SearchMultiActivity : BaseActivityKt() {
         super.onResume()
         setAdMob(adView)
     }
-
-//    private inner class TMDVAsync : AsyncTask<Void?, Void?, MutableList<Multi>?>() {
-//        override fun onPreExecute() {
-//            swipeRefreshLayout!!.isEnabled = false
-//        }
-//
-//        protected override fun doInBackground(vararg voids: Void): MutableList<Multi>? {
-//            if (!query.isEmpty()) {
-//                val sharedPref = PreferenceManager.getDefaultSharedPreferences(this@SearchMultiActivity)
-//                val idioma_padrao = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true)
-//                try {
-//                    return if (idioma_padrao) {
-//                        val tmdbSearch = FilmeService.getTmdbSearch()
-//                        val movieResultsPage = tmdbSearch.searchMulti(query,
-//                            getLocale() + "en,null", pagina)
-//                        movieResultsPage.results
-//                    } else {
-//                        val tmdbSearch = FilmeService.getTmdbSearch()
-//                        val movieResultsPage = tmdbSearch.searchMulti(query,
-//                            "en,null", pagina)
-//                        movieResultsPage.results
-//                    }
-//                } catch (e: Exception) {
-//                    Crashlytics.logException(e)
-//                    runOnUiThread { Toast.makeText(this@SearchMultiActivity, string.ops, Toast.LENGTH_SHORT).show() }
-//                }
-//            }
-//            return null
-//        }
-//
-//        override fun onPostExecute(movieDbs: MutableList<Multi>?) {
-//            swipeRefreshLayout!!.isEnabled = true
-//            if (movieDbs != null && pagina != 1) {
-//                val x: List<Multi>? = movieDbList
-//                movieDbList = movieDbs
-//                for (movie in x!!) {
-//                    movieDbList!!.add(movie)
-//                }
-//                pagina++
-//            } else {
-//                movieDbList = movieDbs
-//            }
-//            if (movieDbList != null && movieDbList!!.size > 0) { // TODO: 09/01/17 pode ser null? - vai dar erro?
-//                swipeRefreshLayout!!.isRefreshing = false
-//                recyclerView!!.adapter = SearchAdapter(this@SearchMultiActivity, movieDbList!!)
-//                swipeRefreshLayout!!.isEnabled = true
-//                pagina++
-//                progressBar!!.visibility = View.GONE
-//            } else {
-//                progressBar!!.visibility = View.GONE
-//                text_search_empty!!.visibility = View.VISIBLE
-//            }
-//        }
-//    }
 }

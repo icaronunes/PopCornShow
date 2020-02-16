@@ -31,6 +31,8 @@ data class KnownFor(
     val releaseDate: String = "",
     @SerializedName("title")
     val title: String = "",
+    @SerializedName("name")
+    val name: String = "",
     @SerializedName("video")
     val video: Boolean = false,
     @SerializedName("vote_average")
