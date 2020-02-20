@@ -35,7 +35,6 @@ import domain.Api
 import domain.FilmeDB
 import domain.FilmeService
 import domain.Movie
-import domain.reelgood.Availability
 import filme.fragment.MovieFragment
 import fragment.ImagemTopFilmeScrollFragment
 import kotlinx.android.synthetic.main.activity_movie.filme_container
@@ -100,7 +99,7 @@ class MovieDetailsActivity : BaseActivity() {
         setUpToolBar()
         setupNavDrawer()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        setTitle(" ")
+        setTitleAndDisableTalk(" ")
         getExtras()
 
         top_img_viewpager.apply {
@@ -520,9 +519,10 @@ class MovieDetailsActivity : BaseActivity() {
         }
     }
 
-    private fun setTitle(title: String) {
+    private fun setTitleAndDisableTalk(title: String) {
         val collapsingToolbarLayout = findViewById<View>(R.id.collapsing_toolbar) as CollapsingToolbarLayout
         collapsingToolbarLayout.title = title
+        collapsingToolbarLayout.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
     }
 
     private fun setFragmentInfo() {

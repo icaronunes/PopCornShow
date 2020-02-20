@@ -7,6 +7,9 @@ import android.view.ViewGroup.MarginLayoutParams
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.view.marginTop
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import com.github.clans.fab.FloatingActionMenu
@@ -190,6 +193,20 @@ fun RecyclerView.setScrollInvisibleFloatMenu(floatButton: FloatingActionMenu) {
             }
         }
     })
+}
+
+fun RecyclerView.patternRecyler(): RecyclerView {
+    layoutManager = LinearLayoutManager(context)
+    itemAnimator = DefaultItemAnimator()
+    setHasFixedSize(true)
+    return this
+}
+
+fun RecyclerView.patternRecyclerGrid(quant: Int = 2): RecyclerView {
+    layoutManager = GridLayoutManager(context, quant)
+    setHasFixedSize(true)
+    itemAnimator = DefaultItemAnimator()
+    return this
 }
 
 /**

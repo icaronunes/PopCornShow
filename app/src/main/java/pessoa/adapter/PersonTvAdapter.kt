@@ -3,7 +3,6 @@ package pessoa.adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -14,57 +13,51 @@ import domain.person.CastItem
 import tvshow.activity.TvShowActivity
 import utils.Constantes
 import utils.UtilsApp
-import utils.setPicasso
+import utils.gone
+import utils.setPicassoWithCache
+import utils.visible
 
 /**
  * Created by icaro on 18/08/16.
  */
 class PersonTvAdapter(private val context: Context, private val personCredits: List<CastItem?>) :
-        RecyclerView.Adapter<PersonTvAdapter.PersonTvViewHolder>() {
+    RecyclerView.Adapter<PersonTvAdapter.PersonTvViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonTvViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.person_movie_filmes_layout, parent, false)
-        return PersonTvViewHolder(view)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PersonTvViewHolder(parent)
+    override fun getItemCount() = personCredits.size
 
     override fun onBindViewHolder(holder: PersonTvViewHolder, position: Int) {
-
-        val credit = personCredits[position]!!
-        holder.poster.setPicasso(credit.posterPath, 5,
-                error = {
-                    holder.progressBar.visibility = View.INVISIBLE
-                    if (credit.releaseDate != null) {
-                        val data = if (credit.releaseDate.length >= 4) " - " + credit.releaseDate.substring(0, 4) else ""
-                        holder.title.text = "${credit.name} $data"
-                    } else {
-                        holder.title.text = "${credit.name}"
-                    }
-                    holder.title.visibility = View.VISIBLE
-                }, sucesso = {
-            holder.progressBar.visibility = View.INVISIBLE
-            holder.title.visibility = View.GONE
-        })
-
-        holder.poster.setOnClickListener {
-            val intent = Intent(context, TvShowActivity::class.java).apply {
-                putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
-                putExtra(Constantes.TVSHOW_ID, credit.id)
-                putExtra(Constantes.NOME_TVSHOW, credit.title)
-            }
-            context.startActivity(intent)
-        }
+        holder.bind(personCredits[position]!!)
     }
 
-    override fun getItemCount(): Int {
-        return if (personCredits.isNotEmpty()) {
-            personCredits.size
-        } else 0
-    }
-
-    inner class PersonTvViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class PersonTvViewHolder(parent: ViewGroup) :
+        RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.person_midias_filmes_layout, parent, false)) {
 
         val progressBar: ProgressBar = itemView.findViewById(R.id.progress_poster_grid)
         val poster: ImageView = itemView.findViewById(R.id.img_poster_grid)
         val title: TextView = itemView.findViewById(R.id.text_title_crew)
+
+        fun bind(credit: CastItem) = with(itemView) {
+            poster.setPicassoWithCache(credit.posterPath, 5,
+                sucesso = {
+                    progressBar.gone()
+                    title.gone()
+                },
+                error = {
+                    title.visible()
+                    progressBar.gone()
+                    val date = credit.firstAir?.substring(0, 4)
+                    title.text = "${credit.name ?: ""} - $date"
+                },
+                img_erro = R.drawable.poster_empty)
+
+            setOnClickListener {
+                context.startActivity(Intent(context, TvShowActivity::class.java).apply {
+                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(poster))
+                    putExtra(Constantes.TVSHOW_ID, credit.id)
+                    putExtra(Constantes.NOME_TVSHOW, credit.title)
+                })
+            }
+        }
     }
 }

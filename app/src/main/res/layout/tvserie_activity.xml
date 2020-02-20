@@ -36,7 +36,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom"
                 android:fitsSystemWindows="false"
-                app:titleEnabled="false"
+                android:importantForAccessibility="no"
                 app:contentScrim="@android:drawable/screen_background_light_transparent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -52,13 +52,11 @@
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="1.0" />
 
-
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
-                    app:title=" "
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 

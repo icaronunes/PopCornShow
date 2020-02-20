@@ -44,6 +44,7 @@ import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horiz
 import kotlinx.android.synthetic.main.tvserie_activity.collapsing_toolbar
 import kotlinx.android.synthetic.main.tvserie_activity.img_top_tvshow
 import kotlinx.android.synthetic.main.tvserie_activity.tabLayout
+import kotlinx.android.synthetic.main.tvserie_activity.toolbar
 import kotlinx.android.synthetic.main.tvserie_activity.viewPager_tvshow
 import rx.Observer
 import rx.android.schedulers.AndroidSchedulers
@@ -90,7 +91,7 @@ class TvShowActivity : BaseActivity() {
         setupNavDrawer()
         getExtras()
         collapsing_toolbar?.setBackgroundColor(colorTop)
-        collapsing_toolbar.title = " "
+        setTitleAndDisableTalk()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -104,6 +105,14 @@ class TvShowActivity : BaseActivity() {
         } else {
             snack()
         }
+    }
+
+    private fun setTitleAndDisableTalk() {
+        collapsing_toolbar.title = " "
+        collapsing_toolbar.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+        collapsing_toolbar.isFocusable = false
+        toolbar.title = " "
+        toolbar.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
     }
 
     private fun getDadosTvshow() {

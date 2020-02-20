@@ -8,17 +8,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import applicaton.BaseFragment
 import br.com.icaro.filme.R
-import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
-import com.squareup.picasso.Callback
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.NetworkPolicy
-import com.squareup.picasso.Picasso
 import domain.person.CastItem
 import domain.person.CrewItem
 import domain.person.Person
@@ -30,27 +23,29 @@ import pessoa.adapter.PersonMovieAdapter
 import pessoa.adapter.PersonTvAdapter
 import site.Site
 import utils.Constantes
-import utils.UtilsApp
+import utils.gone
+import utils.patternRecyclerGrid
+import utils.setPicasso
+import utils.visible
 
 /**
  * Created by icaro on 18/08/16.
  */
-class PersonFragment : Fragment() {
+class PersonFragment : BaseFragment() {
 
     private var nome_person: TextView? = null
-    private var birthday: TextView? = null
-    private var dead: TextView? = null
-    private var homepage: TextView? = null
-    private var biografia: TextView? = null
-    private var aka: TextView? = null
-    private var conhecido: TextView? = null
-    private var place_of_birth: TextView? = null
-    private var sem_filmes: TextView? = null
-    private var sem_fotos: TextView? = null
-    private var sem_crews: TextView? = null
-    private var sem_serie: TextView? = null
-    private var imageView: ImageView? = null
-    private var imageButtonWiki: ImageView? = null
+    private lateinit var birthday: TextView
+    private lateinit var dead: TextView
+    private lateinit var homepage: TextView
+    private lateinit var biografia: TextView
+    private lateinit var aka: TextView
+    private lateinit var conhecido: TextView
+    private lateinit var place_of_birth: TextView
+    private lateinit var sem_filmes: TextView
+    private lateinit var sem_fotos: TextView
+    private lateinit var sem_crews: TextView
+    private lateinit var sem_serie: TextView
+    private lateinit var imageView: ImageView
     private var recyclerViewMovie: RecyclerView? = null
     private var recyclerViewImagem: RecyclerView? = null
     private var recyclerViewCrews: RecyclerView? = null
@@ -94,243 +89,182 @@ class PersonFragment : Fragment() {
 
     private fun getViewPersonTvShow(inflater: LayoutInflater?, container: ViewGroup?): View {
 
-        val view = inflater?.inflate(R.layout.activity_person_tvshow, container, false)
-        recyclerViewTvshow = view?.findViewById<View>(R.id.recycleView_person_tvshow) as RecyclerView
-        sem_serie = view.findViewById<View>(R.id.sem_tvshow) as TextView
-        progressBar = view.findViewById<View>(R.id.progress) as ProgressBar
-        recyclerViewTvshow?.layoutManager = GridLayoutManager(context, 2)
-        recyclerViewTvshow?.setHasFixedSize(true)
-        recyclerViewTvshow?.itemAnimator = DefaultItemAnimator()
+        return inflater!!.inflate(R.layout.activity_person_tvshow, container, false).apply {
+            sem_serie = findViewById(R.id.sem_tvshow)
+            progressBar = findViewById(R.id.progress)
+            recyclerViewTvshow = findViewById<RecyclerView>(R.id.recycleView_person_tvshow).patternRecyclerGrid()
+            setAdMob(findViewById(R.id.adView))
 
-        val adview = view.findViewById<View>(R.id.adView) as AdView
-        val adRequest = AdRequest.Builder()
-            // .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-            // .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
-            .build()
-        adview.loadAd(adRequest)
-
-        setPersonCreditsTvshow(person?.combinedCredits?.cast?.filter { it -> it?.mediaType.equals("tv") }
-            ?.distinctBy { it -> it?.id }
-            ?.sortedBy { it -> it?.releaseDate }
-            ?.reversed())
-
-        return view
+            setPersonCreditsTvshow(person?.combinedCredits?.cast?.filter { it -> it?.mediaType.equals("tv") }
+                ?.distinctBy { it -> it?.id }
+                ?.sortedBy { it -> it?.releaseDate }
+                ?.reversed())
+        }
     }
 
     private fun getViewPersonImage(inflater: LayoutInflater?, container: ViewGroup?): View {
-
-        val view = inflater?.inflate(R.layout.activity_person_imagem, container, false)
-        recyclerViewImagem = view?.findViewById<View>(R.id.recycleView_person_imagem) as RecyclerView
-        sem_fotos = view.findViewById<View>(R.id.sem_fotos) as TextView
-        progressBar = view.findViewById<View>(R.id.progress) as ProgressBar
-        recyclerViewImagem?.layoutManager = GridLayoutManager(context, 2)
-        recyclerViewImagem?.setHasFixedSize(true)
-        recyclerViewImagem?.itemAnimator = DefaultItemAnimator()
-        setPersonImagem(person?.images?.profiles)
-
-        return view
+        return inflater!!.inflate(R.layout.activity_person_imagem, container, false).apply {
+            sem_fotos = findViewById(R.id.sem_fotos)
+            progressBar = findViewById(R.id.progress)
+            recyclerViewImagem = findViewById<RecyclerView>(R.id.recycleView_person_imagem).patternRecyclerGrid()
+            setPersonImagem(person?.images?.profiles)
+        }
     }
 
     private fun getViewPersonCrews(inflater: LayoutInflater?, container: ViewGroup?): View {
-        val view = inflater?.inflate(R.layout.activity_person_crews, container, false)
-        recyclerViewCrews = view?.findViewById<View>(R.id.recycleView_person_crews) as RecyclerView
-        sem_crews = view.findViewById<View>(R.id.sem_crews) as TextView
-        progressBar = view.findViewById<View>(R.id.progress) as ProgressBar
-        recyclerViewCrews?.itemAnimator = DefaultItemAnimator()
-        recyclerViewCrews?.layoutManager = GridLayoutManager(context, 2)
-        recyclerViewCrews?.setHasFixedSize(true)
+        return inflater!!.inflate(R.layout.activity_person_crews, container, false).apply {
+            sem_crews = findViewById(R.id.sem_crews)
+            progressBar = findViewById(R.id.progress)
+            recyclerViewCrews = findViewById<RecyclerView>(R.id.recycleView_person_crews).patternRecyclerGrid()
 
-        val adview = view.findViewById<AdView>(R.id.adView)
-        val adRequest = AdRequest.Builder()
-            // .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-            // .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
-            .build()
-        adview.loadAd(adRequest)
+            setAdMob(findViewById(R.id.adView))
 
-        setPersonCrews(person?.combinedCredits?.crew
-            ?.distinctBy { it -> it?.id }
-            ?.sortedBy { it -> it?.releaseDate }
-            ?.reversed())
-
-        return view
+            setPersonCrews(person?.combinedCredits?.crew
+                ?.distinctBy { it -> it?.id }
+                ?.sortedBy { it -> it?.releaseDate }
+                ?.reversed())
+        }
     }
 
     private fun getViewPerson(inflater: LayoutInflater?, container: ViewGroup?): View {
-
-        val view = inflater?.inflate(R.layout.activity_person_perfil, container, false)
-        nome_person = view?.findViewById<View>(R.id.nome_person) as TextView
-        birthday = view.findViewById<View>(R.id.birthday) as TextView
-        dead = view.findViewById<View>(R.id.dead) as TextView
-        homepage = view.findViewById<View>(R.id.person_homepage) as TextView
-        biografia = view.findViewById<View>(R.id.person_biogragia) as TextView
-        imageView = view.findViewById<View>(R.id.image_person) as ImageView
-        aka = view.findViewById<View>(R.id.aka) as TextView
-        imageButtonWiki = view.findViewById<View>(R.id.person_wiki) as ImageView
-        conhecido = view.findViewById<View>(R.id.conhecido) as TextView
-        place_of_birth = view.findViewById<View>(R.id.place_of_birth) as TextView
-        progressBar = view.findViewById<View>(R.id.progress) as ProgressBar
-        setPersonInformation(person)
-        return view
+        return inflater?.inflate(R.layout.activity_person_perfil, container, false)!!.apply {
+            nome_person = findViewById(R.id.nome_person)
+            birthday = findViewById(R.id.birthday)
+            dead = findViewById(R.id.dead)
+            homepage = findViewById(R.id.person_homepage)
+            biografia = findViewById(R.id.person_biogragia)
+            imageView = findViewById(R.id.image_person)
+            aka = findViewById(R.id.aka)
+            conhecido = findViewById(R.id.conhecido)
+            place_of_birth = findViewById(R.id.place_of_birth)
+            person?.fillViews()
+        }
     }
 
     private fun getViewPersonMovie(inflater: LayoutInflater?, container: ViewGroup?): View {
 
-        val view = inflater?.inflate(R.layout.activity_person_movies, container, false)
-        recyclerViewMovie = view?.findViewById<View>(R.id.recycleView_person_movies) as RecyclerView
-        sem_filmes = view.findViewById<View>(R.id.sem_filmes) as TextView
-        progressBar = view.findViewById<View>(R.id.progress) as ProgressBar
-        recyclerViewMovie?.layoutManager = GridLayoutManager(context, 2)
-        recyclerViewMovie?.setHasFixedSize(true)
+        return inflater!!.inflate(R.layout.activity_person_movies, container, false).apply {
+            sem_filmes = findViewById(R.id.sem_filmes)
+            progressBar = findViewById(R.id.progress)
+            recyclerViewMovie = findViewById<RecyclerView>(R.id.recycleView_person_movies).patternRecyclerGrid()
+            setPersonMovies(person?.combinedCredits?.cast?.filter { it -> it?.mediaType.equals("movie") }
+                ?.distinctBy { it -> it?.id }
+                ?.sortedBy { it -> it?.releaseDate }
+                ?.reversed())
 
-        setPersonMovies(person?.combinedCredits?.cast?.filter { it -> it?.mediaType.equals("movie") }
-            ?.distinctBy { it -> it?.id }
-            ?.sortedBy { it -> it?.releaseDate }
-            ?.reversed())
-
-        val adview = view.findViewById<AdView>(R.id.adView)
-        val adRequest = AdRequest.Builder()
-            // .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-            // .addTestDevice ("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
-            .build()
-        adview.loadAd(adRequest)
-
-        return view
+            setAdMob(findViewById<AdView>(R.id.adView))
+        }
     }
 
-    private fun setPersonInformation(information: Person?) {
-        if (information == null) {
-            return
-        }
+    private fun Person.fillViews() {
 
-        if (information.name != null) {
-            nome_person?.text = information.name
+        imageView.setPicasso(profilePath, 2, img_erro = R.drawable.person)
+        if (!name.isNullOrBlank()) {
+            nome_person?.text = name
             nome_person?.visibility = View.VISIBLE
-        }
-        if (information.birthday != null) {
-            birthday?.text = information.birthday
-            birthday?.visibility = View.VISIBLE
+        } else {
+            nome_person?.gone()
         }
 
-        if (information.deathday != null) {
-            dead?.text = " - " + information.deathday
-            dead?.visibility = View.VISIBLE
+        if (!birthday.isNullOrBlank()) {
+            this@PersonFragment.birthday.text = birthday
+            this@PersonFragment.birthday.visible()
+        } else {
+            this@PersonFragment.birthday.gone()
         }
 
-        if (information.homepage != null) {
-            var site = information.homepage
-            site = site.replace("http://", "")
+        if (!deathday.isNullOrBlank()) {
+            dead.text = " - ${deathday}"
+            dead.visible()
+        } else {
+            dead.gone()
+        }
 
-            homepage?.text = site
-            homepage?.visibility = View.VISIBLE
-
-            homepage?.setOnClickListener {
-                val intent = Intent(context, Site::class.java)
-                intent.putExtra(Constantes.SITE, information.homepage)
-                startActivity(intent)
+        if (!homepage.isNullOrBlank()) {
+            val site = homepage.replace("http://", "")
+            this@PersonFragment.homepage.apply {
+                text = site
+                contentDescription = "site - $site"
+                visible()
+                setOnClickListener {
+                    val intent = Intent(context, Site::class.java)
+                    intent.putExtra(Constantes.SITE, homepage)
+                    startActivity(intent)
+                }
             }
         } else {
-            homepage?.visibility = View.GONE
+            this@PersonFragment.homepage.gone()
         }
 
-        if (information.placeOfBirth != null) {
-            place_of_birth?.text = information.placeOfBirth
-            place_of_birth?.visibility = View.VISIBLE
-        }
-
-        if (information.biography != null) {
-            biografia?.text = information.biography
+        if (!placeOfBirth.isNullOrBlank()) {
+            place_of_birth.text = placeOfBirth
+            place_of_birth.visible()
         } else {
-            biografia?.setText(R.string.sem_biografia)
+            place_of_birth.gone()
         }
 
-        if (information.name != null) {
-            imageButtonWiki?.visibility = View.VISIBLE
+        if (!biography.isNullOrBlank()) {
+            biografia.text = biography
+        } else {
+            biografia.setText(R.string.sem_biografia)
+        }
 
-            imageButtonWiki?.setOnClickListener {
-                val basewiki = Constantes.WIKI
-                val site: String
-                val intent = Intent(context, Site::class.java)
-                val nome = information.name
-                site = basewiki + nome.replace(" ", "_")
-
-                intent.putExtra(Constantes.SITE, site)
-                startActivity(intent)
+        if (!alsoKnownAs.isNullOrEmpty()) {
+            aka.visible()
+            alsoKnownAs.take(3).forEach {
+                aka.text = if (aka.text.isBlank()) {
+                    "$it"
+                } else {
+                    "${aka.text} - $it"
+                }
             }
+        } else {
+            aka.gone()
+            conhecido.gone()
         }
-
-        Picasso.get().load(UtilsApp.getBaseUrlImagem(3) + information.profilePath)
-            .placeholder(R.drawable.person)
-            .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-            .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-            .into(imageView, object : Callback {
-                override fun onError(e: Exception?) {
-                    progressBar?.visibility = View.VISIBLE
-                }
-
-                override fun onSuccess() {
-                    imageView?.visibility = View.VISIBLE
-                    progressBar?.visibility = View.GONE
-                }
-            })
     }
 
     private fun setPersonMovies(personMovies: List<CastItem?>?) {
-
-        if (personMovies?.isEmpty()!!) {
-            sem_filmes?.visibility = View.VISIBLE
-            progressBar?.visibility = View.GONE
+        progressBar?.gone()
+        if (personMovies.isNullOrEmpty()) {
+            sem_filmes.visible()
         } else {
-            progressBar?.visibility = View.GONE
-            recyclerViewMovie?.adapter = PersonMovieAdapter(context!!, personMovies)
+            recyclerViewMovie?.adapter = PersonMovieAdapter(requireActivity(), personMovies)
         }
     }
 
     private fun setPersonCrews(personCredits: List<CrewItem?>?) {
-
-        if (personCredits?.isEmpty()!!) {
-            sem_crews?.visibility = View.VISIBLE
-            progressBar?.visibility = View.GONE
-            return
+        progressBar?.gone()
+        if (personCredits.isNullOrEmpty()) {
+            sem_crews.visible()
+        } else {
+            recyclerViewCrews?.adapter = PersonCrewsAdapter(requireActivity(), personCredits)
         }
-        recyclerViewCrews?.adapter = PersonCrewsAdapter(context!!, personCredits)
-        progressBar?.visibility = View.GONE
     }
 
     private fun setPersonImagem(artworks: List<ProfilesItem?>?) {
-        if (artworks == null) {
-            return
-        }
-
-        if (artworks.isEmpty()) {
-            sem_fotos?.visibility = View.VISIBLE
-            progressBar?.visibility = View.GONE
+        progressBar?.gone()
+        if (artworks.isNullOrEmpty()) {
+            sem_fotos.visibility = View.VISIBLE
         } else {
-            recyclerViewImagem?.adapter = PersonImagemAdapter(context!!, artworks, person?.name)
-            progressBar?.visibility = View.GONE
+            recyclerViewImagem?.adapter = PersonImagemAdapter(requireActivity(), artworks, person?.name)
         }
     }
 
     private fun setPersonCreditsTvshow(personCredits: List<CastItem?>?) {
-
         if (personCredits?.isEmpty()!!) {
-            sem_serie?.visibility = View.VISIBLE
-            progressBar?.visibility = View.GONE
-            return
+            sem_serie.visible()
+        } else {
+            recyclerViewTvshow?.adapter = PersonTvAdapter(requireActivity(), personCredits)
         }
-
-        recyclerViewTvshow?.adapter = PersonTvAdapter(context!!, personCredits)
-        progressBar?.visibility = View.GONE
+        progressBar?.gone()
     }
 
     companion object {
 
         fun newInstance(aba: Int): PersonFragment {
-
-            val args = Bundle()
-            args.putInt(Constantes.ABA, aba)
-            val fragment = PersonFragment()
-            fragment.arguments = args
-            return fragment
+            return PersonFragment().apply { arguments = Bundle().apply { putInt(Constantes.ABA, aba) } }
         }
     }
 }
+

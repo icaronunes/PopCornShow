@@ -44,7 +44,6 @@
                 app:contentScrim="@android:drawable/screen_background_light_transparent"
                 app:title=" ">
 
-
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabLayout"
                     android:layout_width="match_parent"
@@ -79,6 +78,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    android:importantForAccessibility="no"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
                 <com.viewpagerindicator.CirclePageIndicator

@@ -19,7 +19,7 @@
     <string name="about">About</string>
     <string name="air_date">On the Air: </string>
     <string name="air_date_main">On the Air</string>
-    <string name="apelido">Nickname:</string>
+    <string name="apelido">Nicknames:</string>
     <string name="author">Author:</string>
     <string name="avaliados">Evaluated</string>
     <string name="cancel">Cancel</string>
@@ -230,7 +230,7 @@
     <string name="purchase">Purchase</string>
     <string name="beta" translatable="false">**beta</string>
     <string name="valid_us">Valid for USA</string>
-
+    <string name="wiki">Wikipidia</string>
 
 
 </resources>

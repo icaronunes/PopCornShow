@@ -10,7 +10,7 @@
     <string name="ajuda_desenvolvimento">Desarrollo</string>
     <string name="anonimo_alerta">Este tipo de inicio de sesión no es seguro. Puede perder todo si la aplicación falla. Recomendamos crear un inicio de sesión.</string>
     <string name="anonymous">Anónimo</string>
-    <string name="apelido">Apodo:</string>
+    <string name="apelido">Apodos:</string>
     <string name="author">Autor:</string>
     <string name="avaliados">Evaluado</string>
     <string name="bt_desativar">Desactivar Cuenta</string>
@@ -188,7 +188,7 @@
     <string name="rent">Alquilar</string>
     <string name="purchase">Comprar</string>
     <string name="valid_us">Valid for USA</string>
-
+    <string name="wiki">Wikipidia</string>
 
 
 </resources>

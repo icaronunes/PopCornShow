@@ -112,7 +112,6 @@ class PersonActivity : BaseActivityKt(), CallBackError {
                 else -> {
                 }
             }
-
         })
     }
 

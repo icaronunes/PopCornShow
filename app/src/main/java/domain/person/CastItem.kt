@@ -62,5 +62,8 @@ data class CastItem(
     val adult: Boolean? = null,
 
     @field:SerializedName("vote_count")
-    val voteCount: Int? = null
+    val voteCount: Int? = null,
+
+    @field:SerializedName("first_air_date")
+    val firstAir: String? = null
 ) : Serializable
