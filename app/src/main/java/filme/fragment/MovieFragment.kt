@@ -31,7 +31,6 @@ import elenco.ElencoActivity
 import filme.adapter.CollectionPagerAdapter
 import filme.adapter.SimilaresFilmesAdapter
 import fragment.FragmentBase
-import kotlinx.android.synthetic.main.fab_float.fab_menu
 import kotlinx.android.synthetic.main.info_details_movie_layout.icon_collection
 import kotlinx.android.synthetic.main.info_details_movie_layout.icon_site
 import kotlinx.android.synthetic.main.info_details_movie_layout.img_budget
@@ -94,6 +93,7 @@ class MovieFragment : FragmentBase() {
     private var imdbDd: Imdb? = null
     private var color: Int = 0
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
@@ -110,7 +110,9 @@ class MovieFragment : FragmentBase() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.movie_details_info, container, false)
+        return inflater.inflate(R.layout.movie_details_info, container, false).apply {
+
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -158,7 +160,7 @@ class MovieFragment : FragmentBase() {
                         valor = valor.substring(0, valor.length - 6)
                     snack(fab_menu, "${getString(R.string.orcamento_budget)} $$valor ${getString(R.string.milhoes_budget)}")
                 } else {
-                    snack(fab_menu, getString(R.string.no_budget) )
+                    snack(fab_menu, R.string.no_budget)
                 }
             }
         }
@@ -170,7 +172,7 @@ class MovieFragment : FragmentBase() {
                         putExtra(Constantes.SITE, it)
                     })
                 } else {
-                    snack(fab_menu, getString(R.string.no_site))
+                    snack(fab_menu, R.string.no_site)
                 }
             }
         }
@@ -188,8 +190,7 @@ class MovieFragment : FragmentBase() {
                         requireActivity().makeToast(R.string.ops)
                     }))
             } else {
-                snack(fab_menu,
-                    getString(R.string.sem_informacao_colletion))
+                snack(fab_menu, R.string.sem_informacao_colletion)
             }
         }
 

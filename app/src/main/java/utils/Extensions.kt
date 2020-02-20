@@ -2,6 +2,7 @@ package utils
 
 import android.animation.ValueAnimator
 import android.app.Activity
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.ImageView
@@ -117,6 +118,18 @@ fun View.visible() {
 
 fun View.invisible() {
     this.visibility = View.INVISIBLE
+}
+
+/**
+ * Any
+ */
+
+fun Any.putString(cxt: Context): String = when(this) {
+    is String -> this
+    is Int -> cxt.getString(this)
+    else -> {
+        require(false) { "Need R.string.id or string" }
+        "" }
 }
 
 /**

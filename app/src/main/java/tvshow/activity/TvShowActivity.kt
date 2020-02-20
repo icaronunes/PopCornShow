@@ -1,6 +1,6 @@
 package tvshow.activity
 
-import activity.BaseActivity
+import activity.BaseActivityAb
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
@@ -61,7 +61,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class TvShowActivity : BaseActivity() {
+class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : BaseActivityAb() {
 
     private var idTvshow: Int = 0
     private var colorTop: Int = 0
@@ -86,7 +86,6 @@ class TvShowActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.tvserie_activity)
         setUpToolBar()
         setupNavDrawer()
         getExtras()

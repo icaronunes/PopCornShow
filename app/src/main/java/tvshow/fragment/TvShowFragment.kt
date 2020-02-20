@@ -48,7 +48,6 @@ import fragment.FragmentBase
 import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbTvSeasons
 import info.movito.themoviedbapi.model.tv.TvSeason
-import kotlinx.android.synthetic.main.fab_float.fab_menu
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.card_poster
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.img_poster
 import kotlinx.android.synthetic.main.tvshow_info.adView

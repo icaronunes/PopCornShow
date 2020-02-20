@@ -1,6 +1,6 @@
 package main
 
-import activity.BaseActivity
+import activity.BaseActivityAb
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.app.Activity
@@ -26,13 +26,12 @@ import kotlinx.android.synthetic.main.activity_main.viewPager_main
 import kotlinx.android.synthetic.main.activity_main.viewpage_top_main
 import utils.UtilsApp
 
-class MainActivity : BaseActivity() {
+class MainActivity(override var layout: Int = R.layout.activity_main) : BaseActivityAb() {
 
     private lateinit var model: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         model = createViewModel(MainViewModel::class.java, this)
         setUpToolBar()
         setupNavDrawer()
