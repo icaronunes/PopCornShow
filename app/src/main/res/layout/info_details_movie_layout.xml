@@ -9,6 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:importantForAccessibility="yes"
+        android:focusable="true"
         android:layout_margin="@dimen/trade_size_dp_1"
         android:layout_marginStart="@dimen/trade_size_dp_4"
         app:layout_constraintStart_toEndOf="@+id/card_poster"
@@ -19,6 +21,7 @@
             android:layout_width="@dimen/trade_size_dp_42"
             android:layout_height="@dimen/trade_size_dp_42"
             android:importantForAccessibility="no"
+            android:focusable="false"
             tools:src="@drawable/icon_star" />
 
         <TextView
@@ -26,7 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:importantForAccessibility="no"
+            android:importantForAccessibility="yes"
+            android:focusable="false"
             android:textStyle="normal|bold"
             android:typeface="sans"
             tools:text="8.8" />
@@ -38,6 +42,7 @@
         android:layout_height="@dimen/trade_size_dp_42"
         android:layout_gravity="center"
         android:contentDescription="@string/orcamento_budget"
+        android:importantForAccessibility="yes"
         app:layout_constraintStart_toEndOf="@+id/frame_nota"
         app:layout_constraintTop_toTopOf="@+id/frame_nota"
         tools:src="@drawable/orcamento" />
@@ -49,6 +54,7 @@
         android:layout_height="@dimen/trade_size_dp_42"
         android:layout_gravity="center"
         android:contentDescription="@string/site"
+        android:importantForAccessibility="yes"
         app:layout_constraintStart_toEndOf="@+id/img_budget"
         app:layout_constraintTop_toTopOf="@+id/img_budget"
         tools:src="@drawable/site_on" />
@@ -58,7 +64,8 @@
         android:layout_width="@dimen/trade_size_dp_42"
         android:layout_height="@dimen/trade_size_dp_42"
         android:layout_gravity="center"
-        android:contentDescription="@string/sem_informacao_colletion"
+        android:importantForAccessibility="yes"
+        android:contentDescription="@string/cd_collectons"
         app:layout_constraintStart_toEndOf="@+id/icon_site"
         app:layout_constraintTop_toTopOf="@+id/icon_site"
         tools:src="@drawable/collection_on" />
@@ -168,7 +175,8 @@
                 android:id="@+id/production_countries"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/trade_size_dp_4"
+                android:layout_marginEnd="@dimen/trade_size_dp_4"
+                android:layout_marginStart="@dimen/trade_size_dp_4"
                 android:gravity="end"
                 android:maxLines="2"
                 app:layout_constraintEnd_toEndOf="parent"

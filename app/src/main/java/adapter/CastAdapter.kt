@@ -65,12 +65,6 @@ class CastAdapter(val activity: FragmentActivity, val casts: List<CastItem>) : A
                     putExtra(Constantes.NOME_PERSON, name)
                     putExtra(Constantes.PERSON_ID, id)
                 })
-                FirebaseAnalytics.getInstance(context).logEvent(Event.SELECT_CONTENT,
-                    Bundle().apply {
-                        putString(Event.SELECT_CONTENT, PersonActivity::class.java.name)
-                        putInt(Param.ITEM_ID, id!!)
-                        putString(Param.ITEM_NAME, name)
-                    })
             }
         }
     }

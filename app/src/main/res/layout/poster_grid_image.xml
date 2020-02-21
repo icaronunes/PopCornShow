@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     app:cardUseCompatPadding="true"
+    android:minHeight="@dimen/trade_size_dp_80"
     app:contentPadding="@dimen/trade_size_dp_3">
 
     <androidx.constraintlayout.widget.ConstraintLayout

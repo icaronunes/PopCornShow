@@ -1,6 +1,7 @@
 package filme.activity
 
 import activity.BaseActivity
+import activity.BaseActivityAb
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.annotation.SuppressLint
@@ -65,7 +66,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class MovieDetailsActivity : BaseActivity() {
+class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) : BaseActivityAb() {
     private lateinit var movieFragment: MovieFragment
     private var color: Int = 0
     private var idMovie: Int = 0
@@ -86,7 +87,6 @@ class MovieDetailsActivity : BaseActivity() {
 
     private var numero_rated: Float = 0.0f
 
-    private var subscriptions = CompositeSubscription()
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing Api.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -95,7 +95,6 @@ class MovieDetailsActivity : BaseActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie)
         setUpToolBar()
         setupNavDrawer()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -527,12 +526,13 @@ class MovieDetailsActivity : BaseActivity() {
 
     private fun setFragmentInfo() {
 
-        movieFragment = MovieFragment()
-        val bundle = Bundle()
-        bundle.putSerializable(Constantes.FILME, movieDb)
-        bundle.putInt(Constantes.COLOR_TOP, color)
-        movieFragment.arguments = bundle
 
+        movieFragment = MovieFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable(Constantes.FILME, movieDb)
+                putInt(Constantes.COLOR_TOP, color)
+            }
+        }
         if (!isDestroyed && !isFinishing) {
             supportFragmentManager
                 .beginTransaction()

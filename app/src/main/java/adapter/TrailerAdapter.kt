@@ -38,7 +38,7 @@ class TrailerAdapter(private val videos: MutableList<ResultsVideosItem?>?, priva
         .inflate(layout.scroll_trailer, parent, false)) {
 
         fun bind(video: ResultsVideosItem) = with(itemView)  {
-
+            contentDescription = video.name
             findViewById<YouTubeThumbnailView>(R.id.youtube_view_thumbnail)
                 .initialize(Config.YOUTUBE_API_KEY, object : OnInitializedListener {
                 override fun onInitializationSuccess(youTubeThumbnailView: YouTubeThumbnailView, youTubeThumbnailLoader: YouTubeThumbnailLoader) {

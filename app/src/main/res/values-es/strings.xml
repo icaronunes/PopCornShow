@@ -128,6 +128,7 @@
     <string name="tempo_nao_informado">Tiempo N / A</string>
     <string name="temporada">"Temporada: "</string>
     <string name="temporadas">Temporadas:</string>
+    <string name="temporadas_tv">Temporadas</string>
     <string name="text_logoff_dialog">Después de cerrar la sesión, no será posible interactuar con la aplicación.</string>
     <string name="title_delete">Dejar de seguir el programa de televisión?</string>
     <string name="title_intro_1"><b>PopCorn Show</b></string>

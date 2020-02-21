@@ -34,10 +34,10 @@ public class TvShowAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if (position == 0) {
 
-            return TvShowFragment.Companion.newInstance(R.string.informacoes,  series, color, seguindo);
+            return TvShowFragment.newInstance(R.string.informacoes,  series, color, seguindo);
         }
         if (position == 1) {
-            return TvShowFragment.Companion.newInstance(R.string.temporadas, series, color, seguindo);
+            return TvShowFragment.newInstance(R.string.temporadas, series, color, seguindo);
         }
         return null;
     }
@@ -48,7 +48,7 @@ public class TvShowAdapter extends FragmentPagerAdapter {
             return context.getString(R.string.informacoes);
         }
         if (position == 1) {
-            return context.getString(R.string.temporadas);
+            return context.getString(R.string.temporadas_tv );
         }
         return null;
     }

@@ -105,6 +105,7 @@ import utils.UtilsApp.setUserTvShow
 import utils.gone
 import utils.invisible
 import utils.makeToast
+import utils.patternRecyler
 import utils.removerAcentos
 import utils.setPicasso
 import utils.setScrollInvisibleFloatMenu
@@ -133,17 +134,16 @@ class TvShowFragment : FragmentBase() {
     private var imdbDd: Imdb? = null
 
     companion object {
-
+        @JvmStatic
         fun newInstance(tipo: Int, series: Tvshow, color: Int, seguindo: Boolean): Fragment {
-            val fragment = TvShowFragment()
-            val bundle = Bundle()
-            bundle.putSerializable(Constantes.SERIE, series)
-            bundle.putInt(Constantes.COLOR_TOP, color)
-            bundle.putInt(Constantes.ABA, tipo)
-            bundle.putSerializable(Constantes.USER, seguindo)
-            fragment.arguments = bundle
-
-            return fragment
+            return TvShowFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable(Constantes.SERIE, series)
+                    putInt(Constantes.COLOR_TOP, color)
+                    putInt(Constantes.ABA, tipo)
+                    putSerializable(Constantes.USER, seguindo)
+                }
+            }
         }
     }
 
@@ -721,12 +721,9 @@ class TvShowFragment : FragmentBase() {
 
         if (series.credits?.cast?.isNotEmpty()!!) {
             textview_elenco?.visible()
-            recycle_tvshow_elenco.apply {
-                setHasFixedSize(true)
-                itemAnimator = DefaultItemAnimator()
-                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            recycle_tvshow_elenco.patternRecyler(true).apply {
                 adapter = CastAdapter(requireActivity(), series.credits?.cast ?: listOf())
-                setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
+                setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
             }
         } else {
             textview_elenco.gone()
@@ -749,12 +746,9 @@ class TvShowFragment : FragmentBase() {
 
         if (series.credits?.crew?.isNotEmpty()!!) {
             textview_crews?.visibility = View.VISIBLE
-            recycle_tvshow_producao.apply {
-                setHasFixedSize(true)
-                itemAnimator = DefaultItemAnimator()
-                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            recycle_tvshow_producao.patternRecyler(true).apply {
                 adapter = CrewAdapter(requireActivity(), series.credits?.crew ?: listOf())
-                setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
+                setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
             }
         } else {
             textview_crews.gone()
@@ -775,10 +769,7 @@ class TvShowFragment : FragmentBase() {
         }
 
         if (series.similar?.results?.isNotEmpty()!!) {
-            recycle_tvshow_similares.apply {
-                setHasFixedSize(true)
-                itemAnimator = DefaultItemAnimator()
-                layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+            recycle_tvshow_similares.patternRecyler().apply {
                 adapter = SimilaresSerieAdapter(requireActivity(), series.similar?.results)
                 setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
             }

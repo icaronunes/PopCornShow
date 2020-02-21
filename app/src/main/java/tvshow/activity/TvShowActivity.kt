@@ -54,7 +54,9 @@ import tvshow.TvShowAdapter
 import utils.Constantes
 import utils.UtilsApp
 import utils.UtilsApp.setEp2
+import utils.gone
 import utils.makeToast
+import utils.visible
 import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -222,11 +224,14 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
         database = FirebaseDatabase.getInstance()
 
         if (mAuth?.currentUser != null) {
-            myWatch = database?.getReference("users")?.child(mAuth?.currentUser?.uid!!)?.child("watch")?.child("tvshow")
+            myWatch = database?.getReference("users")?.child(mAuth?.currentUser?.uid!!)
+                ?.child("watch")?.child("tvshow")
 
-            myFavorite = database?.getReference("users")?.child(mAuth?.currentUser?.uid!!)?.child("favorites")?.child("tvshow")
+            myFavorite = database?.getReference("users")?.child(mAuth?.currentUser?.uid!!)
+                ?.child("favorites")?.child("tvshow")
 
-            myRated = database?.getReference("users")?.child(mAuth?.currentUser?.uid!!)?.child("rated")?.child("tvshow")
+            myRated = database?.getReference("users")?.child(mAuth?.currentUser?.uid!!)
+                ?.child("rated")?.child("tvshow")
         }
     }
 
@@ -287,17 +292,13 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
         return "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3Dtvshow%26id%3D${series?.id}&apn=br.com.icaro.filme"
     }
 
-    private fun setTitle() {
-        collapsing_toolbar?.title = series?.name
-    }
-
     private fun addOrRemoveWatch(): View.OnClickListener {
         return View.OnClickListener {
 
-            val anim1 = PropertyValuesHolder.ofFloat("scaleX", 1.0f, 0.2f)
-            val anim2 = PropertyValuesHolder.ofFloat("scaley", 1.0f, 0.0f)
-            val anim3 = PropertyValuesHolder.ofFloat("scaleX", 0.5f, 1.0f)
-            val anim4 = PropertyValuesHolder.ofFloat("scaley", 0.5f, 1.0f)
+            val anim1 = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.0f, 0.2f)
+            val anim2 = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.0f, 0.0f)
+            val anim3 = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.5f, 1.0f)
+            val anim4 = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.5f, 1.0f)
             val animator = ObjectAnimator
                 .ofPropertyValuesHolder(menu_item_watchlist, anim1, anim2, anim3, anim4)
             animator.duration = 1700
@@ -312,10 +313,11 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                     }
             } else {
 
-                val tvshowDB = TvshowDB()
-                tvshowDB.title = series?.name
-                tvshowDB.id = series?.id!!
-                tvshowDB.poster = series?.posterPath
+                val tvshowDB = TvshowDB().apply {
+                   title = series?.name
+                    id = series?.id!!
+                    poster = series?.posterPath
+                }
 
                 myWatch?.child(series?.id.toString())?.setValue(tvshowDB)
                     ?.addOnCompleteListener {
@@ -329,10 +331,10 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 
     private fun addOrRemoveFavorite(): View.OnClickListener {
         return View.OnClickListener {
-            val anim1 = PropertyValuesHolder.ofFloat("scaleX", 1.0f, 0.2f)
-            val anim2 = PropertyValuesHolder.ofFloat("scaley", 1.0f, 0.2f)
-            val anim3 = PropertyValuesHolder.ofFloat("scaleX", 0.0f, 1.0f)
-            val anim4 = PropertyValuesHolder.ofFloat("scaley", 0.0f, 1.0f)
+            val anim1 = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.0f, 0.2f)
+            val anim2 = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.0f, 0.2f)
+            val anim3 = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.0f, 1.0f)
+            val anim4 = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.0f, 1.0f)
             val animator = ObjectAnimator
                 .ofPropertyValuesHolder(menu_item_favorite, anim1, anim2, anim3, anim4)
             animator.duration = 1700
@@ -408,9 +410,9 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                 alertDialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
 
                 if (addRated) {
-                    no.visibility = View.VISIBLE
+                    no.visible()
                 } else {
-                    no.visibility = View.GONE
+                    no.gone()
                 }
 
                 no.setOnClickListener {
@@ -430,7 +432,6 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                         //  Log.d(TAG, "Gravou Rated");
 
                         val tvshowDB = TvshowDB()
-                        // tvshowDB.externalIds = series?.external_ids
                         tvshowDB.nota = ratingBar.rating * 2
                         tvshowDB.id = series?.id!!
                         tvshowDB.title = series?.name
@@ -471,7 +472,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
             .into(img_top_tvshow)
 
         val animatorSet = AnimatorSet()
-        val animator = ObjectAnimator.ofFloat(img_top_tvshow, "x", -100f, 0.0f)
+        val animator = ObjectAnimator.ofFloat(img_top_tvshow, View.X, -100f, 0.0f)
             .setDuration(1000)
         animatorSet.playTogether(animator)
         animatorSet.start()
@@ -555,7 +556,6 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                 if (task.isComplete) {
                     seguindo = true
                     setupViewPagerTabs()
-                    setTitle()
                     setImageTop()
                 }
             }
@@ -585,14 +585,12 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                                     if (userTvshowOld?.numberOfEpisodes == series?.numberOfEpisodes) {
                                         seguindo = true
                                         setupViewPagerTabs()
-                                        setTitle()
                                         setImageTop()
                                     } else {
                                         atualizarRealDate()
                                     }
                                 } catch (e: Exception) {
                                     setupViewPagerTabs()
-                                    setTitle()
                                     setImageTop()
                                     Toast.makeText(this@TvShowActivity, resources.getString(R.string
                                         .ops_seguir_novamente), Toast.LENGTH_LONG).show()
@@ -600,7 +598,6 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                                 }
                             } else {
                                 setupViewPagerTabs()
-                                setTitle()
                                 setImageTop()
                             }
                         }
@@ -609,7 +606,6 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                     })
         } else {
             seguindo = false
-            setTitle()
             setupViewPagerTabs()
             setImageTop()
         }

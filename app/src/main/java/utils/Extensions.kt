@@ -208,8 +208,9 @@ fun RecyclerView.setScrollInvisibleFloatMenu(floatButton: FloatingActionMenu) {
     })
 }
 
-fun RecyclerView.patternRecyler(): RecyclerView {
-    layoutManager = LinearLayoutManager(context)
+fun RecyclerView.patternRecyler(horizont: Boolean = true): RecyclerView {
+    val typeOrient = if (horizont) LinearLayoutManager.HORIZONTAL else LinearLayoutManager.VERTICAL
+    layoutManager = LinearLayoutManager(context, typeOrient, false)
     itemAnimator = DefaultItemAnimator()
     setHasFixedSize(true)
     return this

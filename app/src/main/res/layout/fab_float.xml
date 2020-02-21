@@ -6,6 +6,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom|end"
+    android:importantForAccessibility="yes"
+    android:focusable="true"
     android:layout_marginEnd="@dimen/trade_size_dp_6"
     android:layout_marginBottom="@dimen/trade_size_dp_35"
     android:alpha="0"
@@ -16,6 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/icon_heart"
+        android:importantForAccessibility="yes"
+        android:focusable="true"
         fab:fab_label="@string/adicionar_favorite"
         fab:fab_size="mini" />
 
@@ -24,6 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/fab_calendar2"
+        android:importantForAccessibility="yes"
+        android:focusable="true"
         fab:fab_label="@string/adicionar_watch"
         fab:fab_size="mini" />
 
@@ -32,6 +38,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/fab_star2"
+        android:importantForAccessibility="yes"
+        android:focusable="true"
         fab:fab_label="@string/adicionar_rated"
         fab:fab_size="mini" />
 

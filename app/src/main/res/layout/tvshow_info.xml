@@ -437,7 +437,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textview_elenco"
                 tools:itemCount="3"
-                tools:listitem="@layout/scroll_similares"
+                tools:listitem="@layout/scroll_elenco"
                 tools:orientation="horizontal" />
 
             <TextView
@@ -469,7 +469,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textview_crews"
                 tools:itemCount="3"
-                tools:listitem="@layout/scroll_crews"
+                tools:listitem="@layout/scroll_elenco"
                 tools:orientation="horizontal" />
 
             <com.google.android.gms.ads.AdView

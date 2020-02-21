@@ -75,6 +75,7 @@ import utils.Constantes.ROTTENTOMATOESMOVIE
 import utils.gone
 import utils.makeToast
 import utils.parseDate
+import utils.putString
 import utils.removerAcentos
 import utils.setPicasso
 import utils.setScrollInvisibleFloatMenu
@@ -189,6 +190,7 @@ class MovieFragment : FragmentBase() {
                     }, { _ ->
                         requireActivity().makeToast(R.string.ops)
                     }))
+                it.contentDescription = R.string.sem_informacao_colletion.putString(requireContext())
             } else {
                 snack(fab_menu, R.string.sem_informacao_colletion)
             }

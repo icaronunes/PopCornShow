@@ -41,11 +41,11 @@ class CrewAdapter(val activity: FragmentActivity, val crews: List<CrewItem>) : A
     }
 
     inner class CrewViewHolder(parent: ViewGroup) :
-        ViewHolder(LayoutInflater.from(activity).inflate(layout.scroll_crews, parent, false)) {
-        private val textCrewJob: TextView = itemView.findViewById(id.textCrewJob)
-        private val textCrewNome: TextView = itemView.findViewById(id.textCrewNome)
-        private val img: ImageView = itemView.findViewById(id.imgPagerCrews)
-        private val progressBarCrew: ProgressBar = itemView.findViewById(id.progressBarCrews)
+        ViewHolder(LayoutInflater.from(activity).inflate(layout.scroll_elenco, parent, false)) {
+        private val textCrewJob: TextView = itemView.findViewById(id.textCastPersonagem)
+        private val textCrewNome: TextView = itemView.findViewById(id.textCastNomes)
+        private val img: ImageView = itemView.findViewById(id.imgPager)
+        private val progressBarCrew: ProgressBar = itemView.findViewById(id.progressBarCast)
 
         fun bind(crewItem: CrewItem) = with(itemView) {
             progressBarCrew.visible()
@@ -63,11 +63,6 @@ class CrewAdapter(val activity: FragmentActivity, val crews: List<CrewItem>) : A
                 context.startActivity(Intent(context, PersonActivity::class.java).apply {
                     putExtra(Constantes.PERSON_ID, id)
                     putExtra(Constantes.NOME_PERSON, name)
-                })
-                FirebaseAnalytics.getInstance(context).logEvent(Event.SELECT_CONTENT, Bundle().apply {
-                    putString(Event.SELECT_CONTENT, PersonActivity::class.java.name)
-                    putInt(Param.ITEM_ID, id!!)
-                    putString(Param.ITEM_NAME, name)
                 })
             }
         }
