@@ -46,6 +46,9 @@ data class CrewItem(
     @field:SerializedName("release_date")
     val releaseDate: String? = null,
 
+    @field:SerializedName("first_air_date")
+    val firstAir: String? = null,
+
     @field:SerializedName("popularity")
     val popularity: Double? = null,
 

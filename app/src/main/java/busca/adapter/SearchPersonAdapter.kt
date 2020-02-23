@@ -62,7 +62,8 @@ class SearchPersonAdapter : ViewTypeDelegateAdapter {
 
         private fun setKnow(person: Result) {
             linear.removeAllViews() // Por que precisa disso?
-            person.knownFor.filter { !it.posterPath.isBlank() }
+            if (!person.knownFor.isNullOrEmpty())
+            person.knownFor.filter { !it.posterPath!!.isBlank() }
                 .take(3).forEach { media ->
                     fun getNameByType() = when (media.mediaType) {
                         EnumTypeMedia.MOVIE.type -> {

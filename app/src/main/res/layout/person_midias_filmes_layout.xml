@@ -46,6 +46,7 @@
             android:gravity="center"
             android:textColor="@color/white"
             android:visibility="invisible"
+            android:maxLines="2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

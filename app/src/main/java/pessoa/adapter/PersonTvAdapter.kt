@@ -46,7 +46,7 @@ class PersonTvAdapter(private val context: Context, private val personCredits: L
                 error = {
                     title.visible()
                     progressBar.gone()
-                    val date = credit.firstAir?.substring(0, 4)
+                    val date = getYear(credit)
                     title.text = "${credit.name ?: ""} - $date"
                 },
                 img_erro = R.drawable.poster_empty)
@@ -57,6 +57,14 @@ class PersonTvAdapter(private val context: Context, private val personCredits: L
                     putExtra(Constantes.TVSHOW_ID, credit.id)
                     putExtra(Constantes.NOME_TVSHOW, credit.title)
                 })
+            }
+        }
+
+        private fun getYear(credit: CastItem?): String {
+            return if (credit?.firstAir.isNullOrEmpty() ) {
+                ""
+            } else {
+                credit?.firstAir?.substring(0, 4) ?: ""
             }
         }
     }

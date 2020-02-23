@@ -41,19 +41,24 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
         val title: TextView = itemView.findViewById<View>(R.id.text_title_crew) as TextView
 
         fun bind(item: CrewItem?) = with(itemView) {
+
+            fun getYear(date: String?): String {
+                return if (date.isNullOrEmpty() ) {
+                    "-"
+                } else {
+                    " - ${date.substring(0, 4)}"
+                }
+            }
+
             poster.setPicassoWithCache(item?.posterPath, 5,
                 error = {
                     progressBar.visibility = View.INVISIBLE
-                    val data = StringBuilder()
-                    if (item?.releaseDate != null) {
-                        if (item.releaseDate.length >= 4) {
-                            data.append(if (item.releaseDate.length >= 4) " - " + item.releaseDate.substring(0, 4) else "")
-                        }
-                    }
                     if (item?.mediaType == "tv") {
-                        title.text = "${item?.name} $data"
+                        val date = getYear(item.firstAir)
+                        title.text = "${item?.name} $date"
                     } else {
-                        title.text = "${item?.title} $data"
+                        val date = getYear(item?.releaseDate)
+                        title.text = "${item?.title} $date"
                     }
                     title.visible()
                 },
@@ -61,6 +66,8 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
                 title.gone()
                 progressBar.gone()
             })
+
+
 
             setOnClickListener {
                 when (item?.mediaType?.toLowerCase()) {

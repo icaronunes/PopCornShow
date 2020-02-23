@@ -19,7 +19,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.firebase.firebase-perf'
 
 
-android {
+android {\
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
 
@@ -27,8 +27,8 @@ android {
         applicationId "br.com.icaro.filme"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 81
-        versionName "8.1"
+        versionCode 83
+        versionName "8.3"
 
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

@@ -38,8 +38,8 @@ class PersonMovieAdapter(private val context: Context, private val personCredits
                     progressBar.gone()
                 },
                 error = {
-                    val date = credit?.releaseDate?.substring(0, 4) ?: ""
-                    title.text = "${credit?.title ?: ""} - $date"
+                    val date = getYear(credit)
+                    title.text = "${credit?.title ?: ""}$date"
                     progressBar.gone()
                     title.visible()
                 },
@@ -52,6 +52,14 @@ class PersonMovieAdapter(private val context: Context, private val personCredits
                     putExtra(Constantes.FILME_ID, credit?.id)
                     putExtra(Constantes.NOME_FILME, credit?.title)
                 })
+            }
+        }
+
+        private fun getYear(credit: CastItem?): String {
+            return if (credit?.releaseDate.isNullOrEmpty() ) {
+                ""
+            } else {
+                " - ${credit?.releaseDate?.substring(0, 4)}"
             }
         }
 
