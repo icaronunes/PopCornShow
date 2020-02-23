@@ -13,11 +13,9 @@ import utils.putString
 open class FragmentBase : Fragment() {
 
     protected var subscriptions = CompositeSubscription()
-    protected lateinit var fab_menu: FloatingActionMenu
 
     override fun onResume() {
         super.onResume()
-        fab_menu = requireActivity().findViewById(R.id.fab_menu)
         subscriptions = CompositeSubscription()
     }
 

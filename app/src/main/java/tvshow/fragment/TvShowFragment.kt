@@ -208,7 +208,7 @@ class TvShowFragment : FragmentBase() {
                     putExtra(Constantes.SITE, series.homepage)
                 })
             } else {
-                snack(fab_menu, getString(R.string.no_site))
+                snack(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu), getString(R.string.no_site))
             }
         }
 
@@ -294,7 +294,7 @@ class TvShowFragment : FragmentBase() {
             builder.setView(layout)
             builder.show()
         } else {
-            snack(fab_menu, getString(R.string.no_vote))
+            snack(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu), getString(R.string.no_vote))
         }
     }
 
@@ -637,12 +637,12 @@ class TvShowFragment : FragmentBase() {
     }
 
     private fun setCategoria() {
-        StringBuilder().apply {
-            series.genres?.forEach {
-                this.append(" | ${it?.name}")
+        categoria_tvshow?.text = StringBuilder().apply {
+            series.genres?.forEachIndexed {  index, it ->
+                if(index != 0) append(" | ")
+                append("${it?.name}")
             }
-            categoria_tvshow?.text = toString()
-        }
+        }.toString()
     }
 
     private fun setVotoMedia() {

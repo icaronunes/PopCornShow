@@ -159,10 +159,11 @@ class MovieFragment : FragmentBase() {
                     var valor = it.toString()
                     if (valor.length >= 6)
                         valor = valor.substring(0, valor.length - 6)
-                    snack(fab_menu, "${getString(R.string.orcamento_budget)} $$valor ${getString(R.string.milhoes_budget)}")
+                    snack(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu), "${getString(R.string.orcamento_budget)} $$valor ${getString(R.string.milhoes_budget)}")
                 } else {
-                    snack(fab_menu, R.string.no_budget)
+                    snack(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu), R.string.no_budget)
                 }
+
             }
         }
 
@@ -173,7 +174,7 @@ class MovieFragment : FragmentBase() {
                         putExtra(Constantes.SITE, it)
                     })
                 } else {
-                    snack(fab_menu, R.string.no_site)
+                    snack(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu), R.string.no_site)
                 }
             }
         }
@@ -192,7 +193,7 @@ class MovieFragment : FragmentBase() {
                     }))
                 it.contentDescription = R.string.sem_informacao_colletion.putString(requireContext())
             } else {
-                snack(fab_menu, R.string.sem_informacao_colletion)
+                snack(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu), R.string.sem_informacao_colletion)
             }
         }
 
@@ -303,7 +304,7 @@ class MovieFragment : FragmentBase() {
                 builder.setView(layout)
                 builder.show()
             } else {
-                snack(fab_menu, getString(R.string.no_vote))
+                snack(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu), getString(R.string.no_vote))
             }
         }
     }
@@ -421,11 +422,12 @@ class MovieFragment : FragmentBase() {
     }
 
     private fun setCategoria() {
-        val stringBuilder = StringBuilder("")
-        movieDb.genres?.forEach { genero ->
-            stringBuilder.append(" | " + genero?.name)
-        }
-        categoria_filme.text = stringBuilder.toString()
+        categoria_filme.text  = StringBuilder("").apply {
+            movieDb.genres?.forEachIndexed { index, genero ->
+                if (index != 0) append(" | ")
+                append(genero?.name)
+            }
+        }.toString()
     }
 
     private fun setTitulo() {
@@ -519,7 +521,7 @@ class MovieFragment : FragmentBase() {
                 layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
                 adapter = CastAdapter(requireActivity(), movieDb.credits?.cast ?: listOf())
             }
-            recycle_filme_elenco.setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
+            recycle_filme_elenco.setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
 
             textview_elenco?.visible()
         } else {
