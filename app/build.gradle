@@ -27,8 +27,8 @@ android {\
         applicationId "br.com.icaro.filme"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 83
-        versionName "8.3"
+        versionCode 84
+        versionName "8.4"
 
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
