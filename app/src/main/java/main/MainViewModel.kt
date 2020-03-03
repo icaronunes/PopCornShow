@@ -15,8 +15,9 @@ class MainViewModel(override val app: Application) : BaseViewModel(app), MainBus
     val data: LiveData<MainModel>
         get() = _data
 
-    fun getTopoLista() = business.setTopLista()
-    fun novidade() = business.setNovidade()
+    fun getTopList() = business.setTopList()
+    fun news() = business.setNews()
+    override fun getOps() = ops()
 
     override fun animation(visible: Boolean) {
         _data.value = MainModel.VisibleAnimed(visible)
@@ -26,11 +27,9 @@ class MainViewModel(override val app: Application) : BaseViewModel(app), MainBus
         _data.value = isNews
     }
 
-    override fun setTopLista(movies: ListaFilmes, tvShows: ListaSeries) {
+    override fun setTopList(movies: ListaFilmes, tvShows: ListaSeries) {
         _data.value = MainModel.Data(Pair(movies, tvShows))
     }
-
-    override fun getOps() = ops()
 
     sealed class MainModel {
         class Data(val data: Pair<ListaFilmes, ListaSeries>) : MainModel()

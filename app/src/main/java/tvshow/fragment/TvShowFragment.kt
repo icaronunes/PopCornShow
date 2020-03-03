@@ -38,7 +38,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import configuracao.SettingsActivity
-import domain.Api
+import utils.Api
 import domain.Imdb
 import domain.UserTvshow
 import domain.tvshow.SeasonsItem

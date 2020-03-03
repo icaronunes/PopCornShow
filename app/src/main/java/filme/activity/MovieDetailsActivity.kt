@@ -1,6 +1,5 @@
 package filme.activity
 
-import activity.BaseActivity
 import activity.BaseActivityAb
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
@@ -32,7 +31,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import domain.Api
+import utils.Api
 import domain.FilmeDB
 import domain.FilmeService
 import domain.Movie

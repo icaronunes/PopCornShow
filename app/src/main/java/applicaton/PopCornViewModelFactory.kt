@@ -5,7 +5,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import busca.SearchMultiModelView
-import domain.Api
+import utils.Api
 import login.LoginViewModel
 import main.MainFragViewModel
 import main.MainViewModel

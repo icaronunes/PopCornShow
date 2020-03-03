@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.icaro.filme.R
-import domain.Api
+import utils.Api
 import kotlinx.android.synthetic.main.produtora_layout.collapsing_toolbar
 import kotlinx.android.synthetic.main.produtora_layout.produtora_filmes_recycler
 import kotlinx.android.synthetic.main.produtora_layout.toolbar

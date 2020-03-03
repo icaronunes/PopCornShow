@@ -7,7 +7,7 @@ import applicaton.BaseViewModel
 import applicaton.BaseViewModel.BaseRequest.Failure
 import applicaton.BaseViewModel.BaseRequest.Loading
 import applicaton.BaseViewModel.BaseRequest.Success
-import domain.Api
+import utils.Api
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

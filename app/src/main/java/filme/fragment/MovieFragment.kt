@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import br.com.icaro.filme.R
 import com.github.clans.fab.FloatingActionMenu
-import domain.Api
+import utils.Api
 import domain.Imdb
 import domain.Movie
 import domain.colecao.PartsItem

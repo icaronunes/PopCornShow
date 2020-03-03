@@ -64,7 +64,7 @@ import br.com.icaro.filme.BuildConfig;
 import br.com.icaro.filme.R;
 import busca.SearchMultiActivity;
 import configuracao.SettingsActivity;
-import domain.Api;
+import utils.Api;
 import domain.busca.MultiSearch;
 import favorito.FavoriteActivity;
 import login.LoginActivity;

@@ -1,10 +1,21 @@
-package domain
+package utils
 
 import android.content.Context
 import applicaton.BaseViewModel.BaseRequest
 import applicaton.BaseViewModel.BaseRequest.Success
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
+import domain.Company
+import domain.CompanyFilmes
+import domain.Credits
+import domain.EpisodesItem
+import domain.Imdb
+import domain.ListaSeries
+import domain.Movie
+import domain.PersonPopular
+import domain.ReviewsUflixit
+import domain.TvSeasons
+import domain.Videos
 import domain.busca.MultiSearch
 import domain.colecao.Colecao
 import domain.movie.ListaFilmes
@@ -21,7 +32,8 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.internal.http2.Http2Reader.Companion.logger
 import rx.Observable
-import utils.Config
+import utils.Api.TYPESEARCH.FILME
+import utils.Api.TYPESEARCH.SERIE
 import utils.UtilsKt.Companion.getIdiomaEscolhido
 import java.io.IOException
 import java.net.SocketTimeoutException
@@ -30,7 +42,7 @@ import java.util.Random
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-class Api(val context: Context) {
+class Api(val context: Context): ApiSingleton() {
 
     private var timeZone: String = getIdiomaEscolhido(context)
     private var region: String = Locale.getDefault().country
@@ -42,15 +54,8 @@ class Api(val context: Context) {
         override fun intercept(chain: Interceptor.Chain): Response {
             val request = chain.request()
 
-            val t1 = System.nanoTime()
-            logger.info(String.format("Sending request %s on %s%n%s",
-                request.url, chain.connection(), request.headers))
-            val response = chain.proceed(request)
-
-            val t2 = System.nanoTime()
-            logger.info(String.format("Received response for %s in %.1fms%n%s",
-                response.request.url, (t2 - t1) / 1e6, response.body))
-            return response
+            logger.info("Sending request ${ request.url} with Method - ${request.method}")
+            return chain.proceed(request)
         }
     }
 
@@ -77,13 +82,7 @@ class Api(val context: Context) {
 
     fun personPopular(pagina: Int): Observable<PersonPopular> {
         return Observable.create { subscriber ->
-            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-            val gson = Gson()
-            val request = Request.Builder()
-                .url("${baseUrl3}person/popular?page=" + pagina + "&language=en-US&api_key=" + Config.TMDB_API_KEY)
-                .get()
-                .build()
-            val response = client.newCall(request).execute()
+            val response = executeCall("${baseUrl3}person/popular?page=" + pagina + "&language=en-US&api_key=" + Config.TMDB_API_KEY)
             if (response.isSuccessful) {
                 val json = response.body?.string()
                 val person = gson.fromJson(json, PersonPopular::class.java)
@@ -175,7 +174,7 @@ class Api(val context: Context) {
         }
     }
 
-    fun buscaDeFilmes(tipoDeBusca: String? = TYPESEARCH.FILME.agora, pagina: Int = 1, local: String = "US"): Observable<ListaFilmes> {
+    fun buscaDeFilmes(tipoDeBusca: String? = FILME.agora, pagina: Int = 1, local: String = "US"): Observable<ListaFilmes> {
         return Observable.create { subscriber ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val url = "${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=$region"
@@ -194,7 +193,7 @@ class Api(val context: Context) {
         }
     }
 
-    fun buscaDeSeries(tipoDeBusca: String? = TYPESEARCH.SERIE.popular, pagina: Int = 1, local: String = "US"): Observable<ListaSeries> {
+    fun buscaDeSeries(tipoDeBusca: String? = SERIE.popular, pagina: Int = 1, local: String = "US"): Observable<ListaSeries> {
         // Todo Erro na busca da paginacao
         return Observable.create { subscriber ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()

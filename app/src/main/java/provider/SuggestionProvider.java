@@ -15,7 +15,7 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import br.com.icaro.filme.R;
-import domain.Api;
+import utils.Api;
 import domain.busca.MultiSearch;
 import domain.busca.ResultsItem;
 import rx.Observer;

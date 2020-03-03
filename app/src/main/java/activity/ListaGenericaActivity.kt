@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.icaro.filme.R
-import domain.Api
+import utils.Api
 import java.util.Random
 import kotlin.collections.HashMap
 import kotlinx.android.synthetic.main.activity_lista.*

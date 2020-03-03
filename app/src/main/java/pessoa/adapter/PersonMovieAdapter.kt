@@ -54,7 +54,6 @@ class PersonMovieAdapter(private val context: Context, private val personCredits
                 })
             }
         }
-
         private fun getYear(credit: CastItem?): String {
             return if (credit?.releaseDate.isNullOrEmpty() ) {
                 ""

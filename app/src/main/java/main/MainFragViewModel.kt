@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import applicaton.BaseViewModel
 import applicaton.BaseViewModel.BaseRequest.Success
-import domain.Api
+import utils.Api
 import domain.ListaSeries
 import domain.movie.ListaFilmes
 import kotlinx.coroutines.Dispatchers

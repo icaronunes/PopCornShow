@@ -41,12 +41,12 @@ class MainActivity(override var layout: Int = R.layout.activity_main) : BaseActi
         animation()
         setObservers()
         if (UtilsApp.isNetWorkAvailable(this)) {
-            model.getTopoLista()
+            model.getTopList()
         } else {
             snack()
         }
         setupViewBotton()
-        model.novidade()
+        model.news()
     }
 
     private fun setObservers() {
@@ -68,17 +68,17 @@ class MainActivity(override var layout: Int = R.layout.activity_main) : BaseActi
     }
 
     private fun news() {
-           AlertDialog.Builder(this)
-                    .setIcon(R.drawable.ic_popcorn2)
-                    .setTitle(R.string.novidades_title)
-                    .setMessage(R.string.novidades_text)
-                    .setPositiveButton(R.string.ok) { _, _ ->
-                        val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
-                        val editor = sharedPref.edit()
-                        editor.putBoolean(BuildConfig.VERSION_CODE.toString(), false)
-                        editor.remove((BuildConfig.VERSION_CODE - 1).toString())
-                        editor.apply()
-                    }.create().show()
+        AlertDialog.Builder(this)
+            .setIcon(R.drawable.ic_popcorn2)
+            .setTitle(R.string.novidades_title)
+            .setMessage(R.string.novidades_text)
+            .setPositiveButton(R.string.ok) { _, _ ->
+                val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
+                val editor = sharedPref.edit()
+                editor.putBoolean(BuildConfig.VERSION_CODE.toString(), false)
+                editor.remove((BuildConfig.VERSION_CODE - 1).toString())
+                editor.apply()
+            }.create().show()
     }
 
     private fun animation() {
@@ -95,14 +95,14 @@ class MainActivity(override var layout: Int = R.layout.activity_main) : BaseActi
 
     private fun snack() {
         Snackbar.make(viewpage_top_main, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry) {
-                    if (UtilsApp.isNetWorkAvailable(baseContext)) {
-                        model.getTopoLista()
-                        setupViewBotton()
-                    } else {
-                        snack()
-                    }
-                }.show()
+            .setAction(R.string.retry) {
+                if (UtilsApp.isNetWorkAvailable(baseContext)) {
+                    model.getTopList()
+                    setupViewBotton()
+                } else {
+                    snack()
+                }
+            }.show()
     }
 
     private fun setupViewPagerTabs(multi: MutableList<TopMain>) {

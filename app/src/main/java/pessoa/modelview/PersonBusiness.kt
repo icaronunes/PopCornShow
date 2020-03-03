@@ -2,7 +2,7 @@ package pessoa.modelview
 
 import android.app.Activity
 import android.app.Application
-import domain.Api
+import utils.Api
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async

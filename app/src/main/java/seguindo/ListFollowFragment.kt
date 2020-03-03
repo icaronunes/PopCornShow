@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import applicaton.BaseFragment
 import br.com.icaro.filme.R
-import domain.Api
+import utils.Api
 import domain.UserEp
 import domain.UserTvshow
 import kotlinx.coroutines.CoroutineExceptionHandler

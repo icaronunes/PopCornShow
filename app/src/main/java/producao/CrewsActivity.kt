@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
-import domain.Api
+import utils.Api
 import domain.CrewItem
 import kotlinx.android.synthetic.main.activity_crews.adView
 import kotlinx.android.synthetic.main.activity_crews.crews_recyclerview

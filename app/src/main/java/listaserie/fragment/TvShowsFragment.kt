@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import br.com.icaro.filme.R
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.material.snackbar.Snackbar
-import domain.Api
+import utils.Api
 import fragment.FragmentBase
 import java.util.concurrent.TimeUnit
 import kotlinx.android.synthetic.main.fragment_list_medias.*

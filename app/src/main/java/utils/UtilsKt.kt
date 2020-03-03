@@ -12,7 +12,6 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.formats.NativeAdOptions
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import configuracao.SettingsActivity
-import domain.Api
 import domain.UserTvshow
 import domain.tvshow.Tvshow
 import kotlinx.coroutines.Dispatchers
