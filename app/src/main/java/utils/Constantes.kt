@@ -76,4 +76,20 @@ object Constantes {
         const val AMAZON = 7
         const val WEB = 8
     }
+
+    object Signal {
+        const val MOVIE = "MovieDetailsActivity"
+        const val TVSHOW = "TvshowActivity"
+        const val MOVIESLIST = "FilmesActivity"
+        const val TVSHOWLIST = "TvShowsActivity"
+        const val LISTGENERIC = "ListaGenericaActivity"
+        const val TRAILER = "TrailerActivity"
+        const val ELENCO = "ElencoActivity"
+        const val CREWS = "CrewsActivity"
+        const val SITE = "SiteActivity"
+        const val PRODUTORA = "ProdutoraActivity"
+        const val SIMILARES = "SimilaresActivity"
+        const val FOTOPERSON = "FotoPersonActivity"
+        const val TEMPORADA = "TemporadaActivity"
+    }
 }
