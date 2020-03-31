@@ -20,7 +20,7 @@ import filme.activity.MovieDetailsActivity
 import pessoa.activity.PersonActivity
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import tvshow.activity.TvShowActivity
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.enums.EnumTypeMedia
 import utils.setPicasso
@@ -50,9 +50,9 @@ class SearchPersonAdapter : ViewTypeDelegateAdapter {
             contentDescription = "$contentDescription - ${context.getString(R.string.know_for)}"
             itemView.setOnClickListener {
                 context.startActivity(Intent(context, PersonActivity::class.java).apply {
-                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(poster))
-                    putExtra(Constantes.PERSON_ID, person.id)
-                    putExtra(Constantes.NOME_PERSON, person.name)
+                    putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
+                    putExtra(Constant.PERSON_ID, person.id)
+                    putExtra(Constant.NOME_PERSON, person.name)
                 })
             }
 
@@ -90,16 +90,16 @@ class SearchPersonAdapter : ViewTypeDelegateAdapter {
             when (knownFor.mediaType) {
                 EnumTypeMedia.MOVIE.type -> {
                     context.startActivity(Intent(itemView.context, MovieDetailsActivity::class.java).apply {
-                        putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(poster))
-                        putExtra(Constantes.FILME_ID, knownFor.id)
-                        putExtra(Constantes.NOME_FILME, knownFor.title)
+                        putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
+                        putExtra(Constant.FILME_ID, knownFor.id)
+                        putExtra(Constant.NOME_FILME, knownFor.title)
                     })
                 }
                 EnumTypeMedia.TV.type -> {
                     context.startActivity(Intent(context, TvShowActivity::class.java).apply {
-                        putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(poster))
-                        putExtra(Constantes.TVSHOW_ID, knownFor.id)
-                        putExtra(Constantes.NOME_TVSHOW, knownFor.name)
+                        putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
+                        putExtra(Constant.TVSHOW_ID, knownFor.id)
+                        putExtra(Constant.NOME_TVSHOW, knownFor.name)
                     })
                 }
             }

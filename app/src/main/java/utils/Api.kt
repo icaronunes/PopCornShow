@@ -188,6 +188,7 @@ class Api(val context: Context): ApiSingleton() {
                 val lista = Gson().fromJson(json, ListaFilmes::class.java)
                 subscriber.onNext(lista)
                 subscriber.onCompleted()
+            } else {
                 subscriber.onError(Throwable(response.message))
             }
         }

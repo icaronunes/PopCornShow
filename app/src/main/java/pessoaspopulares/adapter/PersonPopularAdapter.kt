@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import domain.PersonItem
 import domain.ViewType
 import java.util.ArrayList
-import utils.Constantes
+import utils.Constant
 
 /**
  * Created by icaro on 04/10/16.
@@ -17,12 +17,12 @@ class PersonPopularAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     private val loadingItem = object : ViewType {
-        override fun getViewType() = Constantes.BuscaConstants.LOADING
+        override fun getViewType() = Constant.BuscaConstants.LOADING
     }
 
     init {
-        delegateAdapters.put(Constantes.BuscaConstants.LOADING, LoadingDelegateAdapter())
-        delegateAdapters.put(Constantes.BuscaConstants.NEWS, PersonDelegateAdapter())
+        delegateAdapters.put(Constant.BuscaConstants.LOADING, LoadingDelegateAdapter())
+        delegateAdapters.put(Constant.BuscaConstants.NEWS, PersonDelegateAdapter())
         personResultsPage = ArrayList()
         personResultsPage.add(loadingItem)
     }

@@ -3,7 +3,7 @@ package domain.movie
 import com.google.gson.annotations.SerializedName
 import domain.ViewType
 import javax.annotation.Generated
-import utils.Constantes
+import utils.Constant
 
 @Generated("com.robohorse.robopojogenerator")
 data class ListaItemFilme(
@@ -63,5 +63,5 @@ data class ListaItemFilme(
     val name: String? = null
 
 ) : ViewType {
-    override fun getViewType() = Constantes.BuscaConstants.NEWS
+    override fun getViewType() = Constant.BuscaConstants.NEWS
 }

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.person.CastItem
 import tvshow.activity.TvShowActivity
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.gone
 import utils.setPicassoWithCache
@@ -53,9 +53,9 @@ class PersonTvAdapter(private val context: Context, private val personCredits: L
 
             setOnClickListener {
                 context.startActivity(Intent(context, TvShowActivity::class.java).apply {
-                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(poster))
-                    putExtra(Constantes.TVSHOW_ID, credit.id)
-                    putExtra(Constantes.NOME_TVSHOW, credit.title)
+                    putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
+                    putExtra(Constant.TVSHOW_ID, credit.id)
+                    putExtra(Constant.NOME_TVSHOW, credit.title)
                 })
             }
         }

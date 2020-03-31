@@ -4,7 +4,6 @@ import adapter.TrailerAdapter.TrailerViewHolder
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +20,7 @@ import com.google.firebase.analytics.FirebaseAnalytics.Event
 import domain.ResultsVideosItem
 import trailer.TrailerActivity
 import utils.Config
-import utils.Constantes
+import utils.Constant
 import utils.visible
 
 /**
@@ -56,8 +55,8 @@ class TrailerAdapter(private val videos: MutableList<ResultsVideosItem?>?, priva
                     putString("URL", video.key)
                 })
                 context.startActivity(Intent(context, TrailerActivity::class.java).apply {
-                    putExtra(Constantes.YOU_TUBE_KEY, video.key)
-                    putExtra(Constantes.SINOPSE, sinopse)
+                    putExtra(Constant.YOU_TUBE_KEY, video.key)
+                    putExtra(Constant.SINOPSE, sinopse)
                 })
             }
         }

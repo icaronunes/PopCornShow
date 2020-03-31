@@ -11,7 +11,7 @@ import domain.movie.ListAd
 import domain.movie.ListaItemFilme
 import pessoaspopulares.adapter.LoadingDelegateAdapter
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
-import utils.Constantes
+import utils.Constant
 import java.util.ArrayList
 
 class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -19,9 +19,9 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
     private val delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     init {
-        delegateAdapters.put(Constantes.BuscaConstants.LOADING, LoadingDelegateAdapter())
-        delegateAdapters.put(Constantes.BuscaConstants.NEWS, ListasFilmesDelegateAdapter())
-        delegateAdapters.put(Constantes.BuscaConstants.AD, AdDelegateAdapter())
+        delegateAdapters.put(Constant.BuscaConstants.LOADING, LoadingDelegateAdapter())
+        delegateAdapters.put(Constant.BuscaConstants.NEWS, ListasFilmesDelegateAdapter())
+        delegateAdapters.put(Constant.BuscaConstants.AD, AdDelegateAdapter())
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
@@ -31,12 +31,12 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
         delegateAdapters.get(getItemViewType(position))?.onBindViewHolder(holder, listaResult[position]!!, context)
     }
 
-    override fun getItemViewType(position: Int): Int = listaResult[position]?.getViewType() ?: Constantes.BuscaConstants.LOADING
+    override fun getItemViewType(position: Int): Int = listaResult[position]?.getViewType() ?: Constant.BuscaConstants.LOADING
 
     fun addFilmes(listaMedia: List<ListaItemFilme?>?, totalPagina: Int) {
         if (listaMedia?.isNotEmpty()!!) {
             val initPosition = listaResult.size - 1
-            if (listaResult.isNotEmpty() && listaResult[listaResult.size - 1]?.getViewType() == Constantes.BuscaConstants.LOADING) {
+            if (listaResult.isNotEmpty() && listaResult[listaResult.size - 1]?.getViewType() == Constant.BuscaConstants.LOADING) {
                 this.listaResult.removeAt(listaResult.size - 1)
             }
 
@@ -57,7 +57,7 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
     override fun getItemCount(): Int = listaResult.size
 
     fun addAd(ad: UnifiedNativeAd, totalPagina: Int) {
-        if (listaResult[listaResult.size - 1]?.getViewType() == Constantes.BuscaConstants.LOADING) {
+        if (listaResult[listaResult.size - 1]?.getViewType() == Constant.BuscaConstants.LOADING) {
             this.listaResult.removeAt(listaResult.size - 1)
         }
         listaResult.add(ListAd(ad))
@@ -71,7 +71,7 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
     companion object {
 
         private val loading = object : ViewType {
-            override fun getViewType(): Int = Constantes.BuscaConstants.LOADING
+            override fun getViewType(): Int = Constant.BuscaConstants.LOADING
         }
     }
 }

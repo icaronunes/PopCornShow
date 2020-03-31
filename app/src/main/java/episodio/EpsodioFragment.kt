@@ -46,7 +46,7 @@ import utils.ConstFirebase.SEASONS
 import utils.ConstFirebase.USER
 import utils.ConstFirebase.USEREPS
 import utils.ConstFirebase.VISTO
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.parseDateShot
 import utils.setPicasso
@@ -78,12 +78,12 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            episode = arguments?.getSerializable(Constantes.EPSODIO) as EpisodesItem
-            tvshowId = arguments?.getInt(Constantes.TVSHOW_ID)!!
-            color = arguments?.getInt(Constantes.COLOR_TOP)!!
-            seguindo = arguments?.getBoolean(Constantes.SEGUINDO)!!
-            position = arguments?.getInt(Constantes.POSICAO)!!
-            temporadaPosition = arguments?.getInt(Constantes.TEMPORADA_POSITION)!!
+            episode = arguments?.getSerializable(Constant.EPSODIO) as EpisodesItem
+            tvshowId = arguments?.getInt(Constant.TVSHOW_ID)!!
+            color = arguments?.getInt(Constant.COLOR_TOP)!!
+            seguindo = arguments?.getBoolean(Constant.SEGUINDO)!!
+            position = arguments?.getInt(Constant.POSICAO)!!
+            temporadaPosition = arguments?.getInt(Constant.TEMPORADA_POSITION)!!
         }
 
         if (seguindo) {
@@ -145,8 +145,8 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
 
     private fun nextPersonActivity(it: CrewItem) {
         startActivity(Intent(context, PersonActivity::class.java).apply {
-            putExtra(Constantes.NOME_PERSON, it.name)
-            putExtra(Constantes.PERSON_ID, it.id)
+            putExtra(Constant.NOME_PERSON, it.name)
+            putExtra(Constant.PERSON_ID, it.id)
         })
     }
 
@@ -353,12 +353,12 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
 
             val fragment = EpsodioFragment()
             val bundle = Bundle()
-            bundle.putSerializable(Constantes.EPSODIO, tvEpisode)
-            bundle.putInt(Constantes.TVSHOW_ID, tvshow_id)
-            bundle.putInt(Constantes.COLOR_TOP, color)
-            bundle.putBoolean(Constantes.SEGUINDO, seguindo)
-            bundle.putInt(Constantes.POSICAO, position)
-            bundle.putInt(Constantes.TEMPORADA_POSITION, temporada_position)
+            bundle.putSerializable(Constant.EPSODIO, tvEpisode)
+            bundle.putInt(Constant.TVSHOW_ID, tvshow_id)
+            bundle.putInt(Constant.COLOR_TOP, color)
+            bundle.putBoolean(Constant.SEGUINDO, seguindo)
+            bundle.putInt(Constant.POSICAO, position)
+            bundle.putInt(Constant.TEMPORADA_POSITION, temporada_position)
             fragment.arguments = bundle
             return fragment
         }

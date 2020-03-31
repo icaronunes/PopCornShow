@@ -14,7 +14,7 @@ import br.com.icaro.filme.R
 import domain.person.CrewItem
 import filme.activity.MovieDetailsActivity
 import tvshow.activity.TvShowActivity
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.gone
 import utils.setPicassoWithCache
@@ -73,16 +73,16 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
                 when (item?.mediaType?.toLowerCase()) {
                     "movie" -> {
                         context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
-                            putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(poster))
-                            putExtra(Constantes.FILME_ID, item.id)
-                            putExtra(Constantes.NOME_FILME, item.title)
+                            putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
+                            putExtra(Constant.FILME_ID, item.id)
+                            putExtra(Constant.NOME_FILME, item.title)
                         })
                     }
                     "tv" -> {
                         context.startActivity(Intent(context, TvShowActivity::class.java).apply {
-                            putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(poster))
-                            putExtra(Constantes.TVSHOW_ID, item.id)
-                            putExtra(Constantes.NOME_TVSHOW, item.title)
+                            putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
+                            putExtra(Constant.TVSHOW_ID, item.id)
+                            putExtra(Constant.NOME_TVSHOW, item.title)
                         })
                     }
                     else -> {

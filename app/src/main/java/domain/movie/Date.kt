@@ -2,7 +2,7 @@ package domain.movie
 
 import com.google.gson.annotations.SerializedName
 import domain.ViewType
-import utils.Constantes
+import utils.Constant
 
 data class Date(
 
@@ -12,5 +12,5 @@ data class Date(
     @field:SerializedName("minimum")
     val minimum: String? = null
 ) : ViewType {
-    override fun getViewType() = Constantes.BuscaConstants.NEWS
+    override fun getViewType() = Constant.BuscaConstants.NEWS
 }

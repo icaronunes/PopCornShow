@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.layout_diretor.view.grup_writer
 import kotlinx.android.synthetic.main.layout_diretor.view.img_director
 import kotlinx.android.synthetic.main.layout_diretor.view.writer_img
 import kotlinx.android.synthetic.main.layout_diretor.view.writer_name
-import utils.Constantes
+import utils.Constant
 import utils.gone
 import utils.makeToast
 import utils.setPicassoWithCache
@@ -100,13 +100,13 @@ class TemporadaFoldinAdapter(
                 registerToggle(layoutPosition)
             }
 
-            ep.crew?.firstOrNull { it?.job == Constantes.DIRECTOR }?.let {
+            ep.crew?.firstOrNull { it?.job == Constant.DIRECTOR }?.let {
                 grup_director.visible()
                 director_name.text = it.name
                 img_director.setPicassoWithCache(it.profilePath, 3, img_erro = R.drawable.person)
             }
 
-            ep.crew?.firstOrNull { it?.job == Constantes.WRITER }?.let {
+            ep.crew?.firstOrNull { it?.job == Constant.WRITER }?.let {
                 grup_writer.visible()
                 writer_name.text = it.name
                 writer_img.setPicassoWithCache(it.profilePath, 3, img_erro = R.drawable.person)

@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.poster_main.view.layout_poster_main
 import kotlinx.android.synthetic.main.poster_main.view.progress_poster_grid
 import kotlinx.android.synthetic.main.poster_main.view.title_main
 import tvshow.activity.TvShowActivity
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.gone
 import utils.setPicassoWithCache
@@ -47,9 +47,9 @@ class SimilaresSerieAdapter(val activity: FragmentActivity, private val similarI
 
             setOnClickListener {
                 activity.startActivity(Intent(activity, TvShowActivity::class.java).apply {
-                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(img_poster_grid))
-                    putExtra(Constantes.NOME_TVSHOW, tvshow.name)
-                    putExtra(Constantes.TVSHOW_ID, tvshow.id)
+                    putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_poster_grid))
+                    putExtra(Constant.NOME_TVSHOW, tvshow.name)
+                    putExtra(Constant.TVSHOW_ID, tvshow.id)
                 })
             }
         }

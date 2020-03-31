@@ -22,7 +22,7 @@ import pessoa.adapter.PersonImagemAdapter
 import pessoa.adapter.PersonMovieAdapter
 import pessoa.adapter.PersonTvAdapter
 import site.Site
-import utils.Constantes
+import utils.Constant
 import utils.gone
 import utils.patternRecyclerGrid
 import utils.setPicasso
@@ -33,7 +33,7 @@ import utils.visible
  */
 class PersonFragment : BaseFragment() {
 
-    private var nome_person: TextView? = null
+    private var namePerson: TextView? = null
     private lateinit var birthday: TextView
     private lateinit var dead: TextView
     private lateinit var homepage: TextView
@@ -57,7 +57,7 @@ class PersonFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            tipo = arguments?.getInt(Constantes.ABA)!!
+            tipo = arguments?.getInt(Constant.ABA)!!
             if (person == null) {
                 person = (activity as PersonActivity).person
             }
@@ -128,7 +128,7 @@ class PersonFragment : BaseFragment() {
 
     private fun getViewPerson(inflater: LayoutInflater?, container: ViewGroup?): View {
         return inflater?.inflate(R.layout.activity_person_perfil, container, false)!!.apply {
-            nome_person = findViewById(R.id.nome_person)
+            namePerson = findViewById(R.id.nome_person)
             birthday = findViewById(R.id.birthday)
             dead = findViewById(R.id.dead)
             homepage = findViewById(R.id.person_homepage)
@@ -160,10 +160,10 @@ class PersonFragment : BaseFragment() {
 
         imageView.setPicasso(profilePath, 2, img_erro = R.drawable.person)
         if (!name.isNullOrBlank()) {
-            nome_person?.text = name
-            nome_person?.visibility = View.VISIBLE
+            namePerson?.text = name
+            namePerson?.visibility = View.VISIBLE
         } else {
-            nome_person?.gone()
+            namePerson?.gone()
         }
 
         if (!birthday.isNullOrBlank()) {
@@ -188,7 +188,7 @@ class PersonFragment : BaseFragment() {
                 visible()
                 setOnClickListener {
                     val intent = Intent(context, Site::class.java)
-                    intent.putExtra(Constantes.SITE, homepage)
+                    intent.putExtra(Constant.SITE, homepage)
                     startActivity(intent)
                 }
             }
@@ -263,7 +263,7 @@ class PersonFragment : BaseFragment() {
     companion object {
 
         fun newInstance(aba: Int): PersonFragment {
-            return PersonFragment().apply { arguments = Bundle().apply { putInt(Constantes.ABA, aba) } }
+            return PersonFragment().apply { arguments = Bundle().apply { putInt(Constant.ABA, aba) } }
         }
     }
 }

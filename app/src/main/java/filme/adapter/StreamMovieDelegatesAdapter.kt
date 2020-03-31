@@ -8,7 +8,7 @@ import domain.ViewType
 import domain.reelgood.Availability
 import pessoaspopulares.adapter.LoadingDelegateAdapter
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
-import utils.Constantes
+import utils.Constant
 import java.util.ArrayList
 
 class StreamMovieDelegatesAdapter(val subscription: Boolean, val purchase: Boolean = false, val titleMedia: String? = "") : Adapter<ViewHolder>() {
@@ -27,14 +27,14 @@ class StreamMovieDelegatesAdapter(val subscription: Boolean, val purchase: Boole
 
     init {
         delegateAdapters.run {
-            put(Constantes.ReelGood.LOADING, LoadingDelegateAdapter())
-            put(Constantes.ReelGood.NETFLIX, StreamMovieNetflixAdapter(subscription, purchase))
-            put(Constantes.ReelGood.HBO, StreamMovieHboAdapterAdapter(subscription, purchase))
-            put(Constantes.ReelGood.HULU, StreamMovieHuluAdapter(subscription, purchase))
-            put(Constantes.ReelGood.STARZ, StreamMovieStarzAdapterAdapter(subscription, purchase))
-            put(Constantes.ReelGood.GOOGLEPLAY, StreamMovieGoogleAdapterAdapter(subscription, purchase, titleMedia))
-            put(Constantes.ReelGood.AMAZON, StreamMovieAmazonAdapterAdapter(subscription, purchase))
-            put(Constantes.ReelGood.WEB, StreamMovieGenericWebAdapterAdapter(subscription, purchase, titleMedia))
+            put(Constant.ReelGood.LOADING, LoadingDelegateAdapter())
+            put(Constant.ReelGood.NETFLIX, StreamMovieNetflixAdapter(subscription, purchase))
+            put(Constant.ReelGood.HBO, StreamMovieHboAdapterAdapter(subscription, purchase))
+            put(Constant.ReelGood.HULU, StreamMovieHuluAdapter(subscription, purchase))
+            put(Constant.ReelGood.STARZ, StreamMovieStarzAdapterAdapter(subscription, purchase))
+            put(Constant.ReelGood.GOOGLEPLAY, StreamMovieGoogleAdapterAdapter(subscription, purchase, titleMedia))
+            put(Constant.ReelGood.AMAZON, StreamMovieAmazonAdapterAdapter(subscription, purchase))
+            put(Constant.ReelGood.WEB, StreamMovieGenericWebAdapterAdapter(subscription, purchase, titleMedia))
         }
     }
 

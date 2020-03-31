@@ -2,7 +2,6 @@ package main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +24,9 @@ import kotlinx.android.synthetic.main.tvshow_main.tvshow_popular_main
 import listafilmes.activity.MoviesActivity
 import listaserie.activity.TvShowsActivity
 import tvshow.TvShowMainAdapter
-import utils.Constantes
+import utils.Api.TYPESEARCH.FILME
+import utils.Api.TYPESEARCH.SERIE
+import utils.Constant
 
 /**
  * Created by icaro on 23/08/16.
@@ -38,7 +39,7 @@ class MainFragment : BaseFragment() {
     companion object {
         fun newInstance(info: Int): Fragment {
             return MainFragment().apply {
-                arguments = Bundle().apply { putInt(Constantes.ABA, info) }
+                arguments = Bundle().apply { putInt(Constant.ABA, info) }
             }
         }
     }
@@ -46,7 +47,7 @@ class MainFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            tipo = arguments!!.getInt(Constantes.ABA)
+            tipo = arguments!!.getInt(Constant.ABA)
         }
         model = createViewModel(MainFragViewModel::class.java) as MainFragViewModel
         setObservers()
@@ -156,29 +157,25 @@ class MainFragment : BaseFragment() {
             when (id) {
                 R.id.chip_now_playing -> {
                     startActivity(Intent(activity, MoviesActivity::class.java).apply {
-                        putExtra(Constantes.ABA, R.string.now_playing)
-                        putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.now_playing)
+                        putExtra(Constant.NAV_DRAW_ESCOLIDO, FILME.agora)
                     })
                 }
 
                 R.id.chip_upcoming -> {
                     startActivity(Intent(activity, MoviesActivity::class.java).apply {
-                        putExtra(Constantes.ABA, R.string.upcoming)
-                        putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.upcoming)
+                        putExtra(Constant.NAV_DRAW_ESCOLIDO, FILME.chegando)
                     })
                 }
 
                 R.id.chip_populares -> {
                     startActivity(Intent(activity, MoviesActivity::class.java).apply {
-                        putExtra(Constantes.ABA, R.string.populares)
-                        putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.populares)
+                        putExtra(Constant.NAV_DRAW_ESCOLIDO, FILME.popular)
                     })
                 }
 
                 R.id.chip_top_rated -> {
                     startActivity(Intent(activity, MoviesActivity::class.java).apply {
-                        putExtra(Constantes.ABA, R.string.top_rated)
-                        putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.top_rated)
+                        putExtra(Constant.NAV_DRAW_ESCOLIDO, FILME.melhores)
                     })
                 }
             }
@@ -186,28 +183,27 @@ class MainFragment : BaseFragment() {
     }
 
     private fun setScrollTvshowButton() {
-        chip_group_tvshow.setOnCheckedChangeListener { chipGroup, id ->
-            Log.d(this.javaClass.name, "$chipGroup - $id")
+        chip_group_tvshow.setOnCheckedChangeListener { _, id ->
             when (id) {
                 R.id.chip_air_data -> {
                     val intent = Intent(activity, TvShowsActivity::class.java)
-                    intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.air_date)
+                    intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, SERIE.semana)
                     startActivity(intent)
                 }
                 R.id.chip_today -> {
                     val intent = Intent(activity, TvShowsActivity::class.java)
-                    intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.today)
+                    intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, SERIE.hoje)
                     startActivity(intent)
                 }
                 R.id.chip_populares_tvshow -> {
                     val intent = Intent(activity, TvShowsActivity::class.java)
-                    intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.populares)
+                    intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, SERIE.popular)
                     startActivity(intent)
                 }
 
                 R.id.chip_top_rated_tvshow -> {
                     val intent = Intent(activity, TvShowsActivity::class.java)
-                    intent.putExtra(Constantes.NAV_DRAW_ESCOLIDO, R.string.top_rated)
+                    intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, SERIE.melhores)
                     startActivity(intent)
                 }
             }
@@ -229,5 +225,4 @@ class MainFragment : BaseFragment() {
     private fun setScrollUpComing(airDay: ListaFilmes) {
         recycle_upcoming_movie_main.adapter = MovieMainAdapter(requireActivity(), airDay)
     }
-
 }

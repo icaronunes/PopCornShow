@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentManager
 import br.com.icaro.filme.R
 import domain.TvSeasons
 import kotlinx.android.synthetic.main.activity_epsodios.*
-import utils.Constantes
+import utils.Constant
 
 /**
  * Created by icaro on 27/08/16.
@@ -45,15 +45,15 @@ class EpsodioActivity : BaseActivity() {
     }
 
     private fun setExtras() {
-        tvshowId = intent.getIntExtra(Constantes.TVSHOW_ID, 0)
-        posicao = intent.getIntExtra(Constantes.POSICAO, 0)
-        color = intent.getIntExtra(Constantes.COLOR_TOP, 0)
-        temporadaPosition = intent.getIntExtra(Constantes.TEMPORADA_POSITION, 0)
-        fallow = intent.getBooleanExtra(Constantes.SEGUINDO, false)
-        (intent.getSerializableExtra(Constantes.TVSEASONS) as TvSeasons).let {
+        tvshowId = intent.getIntExtra(Constant.TVSHOW_ID, 0)
+        posicao = intent.getIntExtra(Constant.POSICAO, 0)
+        color = intent.getIntExtra(Constant.COLOR_TOP, 0)
+        temporadaPosition = intent.getIntExtra(Constant.TEMPORADA_POSITION, 0)
+        fallow = intent.getBooleanExtra(Constant.SEGUINDO, false)
+        (intent.getSerializableExtra(Constant.TVSEASONS) as TvSeasons).let {
             tvSeason = it
         }
-        supportActionBar?.title = if (tvSeason.name!!.isNotEmpty()) tvSeason.name else intent.getStringExtra(Constantes.NOME)
+        supportActionBar?.title = if (tvSeason.name!!.isNotEmpty()) tvSeason.name else intent.getStringExtra(Constant.NAME)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

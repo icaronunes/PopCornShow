@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.CastItem
 import pessoa.activity.PersonActivity
-import utils.Constantes
+import utils.Constant
 import utils.setPicassoWithCache
 
 /**
@@ -34,8 +34,8 @@ class ElencoAdapter(private val context: Context, private val casts: List<CastIt
 
         holder.itemView.setOnClickListener {
             context.startActivity(Intent(context, PersonActivity::class.java).apply {
-                putExtra(Constantes.PERSON_ID, id)
-                putExtra(Constantes.NOME_PERSON, name)
+                putExtra(Constant.PERSON_ID, id)
+                putExtra(Constant.NOME_PERSON, name)
             })
         }
     }

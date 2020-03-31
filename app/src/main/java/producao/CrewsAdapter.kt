@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.CrewItem
 import pessoa.activity.PersonActivity
-import utils.Constantes
+import utils.Constant
 import utils.setPicassoWithCache
 
 /**
@@ -32,8 +32,8 @@ class CrewsAdapter(private val context: CrewsActivity, private val crews: List<C
 
         holder.itemView.setOnClickListener {
             context.startActivity(Intent(context, PersonActivity::class.java).apply {
-                putExtra(Constantes.PERSON_ID, crew?.id)
-                putExtra(Constantes.NOME_PERSON, crew?.name)
+                putExtra(Constant.PERSON_ID, crew?.id)
+                putExtra(Constant.NOME_PERSON, crew?.name)
             })
         }
     }

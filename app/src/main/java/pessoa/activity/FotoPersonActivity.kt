@@ -13,7 +13,7 @@ import domain.person.ProfilesItem
 import kotlinx.android.synthetic.main.activity_scroll_poster.indicator
 import kotlinx.android.synthetic.main.activity_scroll_poster.pager
 import poster.PosterScrollFragment
-import utils.Constantes
+import utils.Constant
 
 /**
  * Created by icaro on 12/07/16.
@@ -40,13 +40,13 @@ class FotoPersonActivity : BaseActivity() {
 
     private fun getExtras() {
         if (intent.action == null) {
-            artworks = intent.extras?.getSerializable(Constantes.PERSON) as List<ProfilesItem>
-            nome = intent.extras?.getString(Constantes.NOME_PERSON)
-            position = intent.extras?.getInt(Constantes.POSICAO)
+            artworks = intent.extras?.getSerializable(Constant.PERSON) as List<ProfilesItem>
+            nome = intent.extras?.getString(Constant.NOME_PERSON)
+            position = intent.extras?.getInt(Constant.POSICAO)
         } else {
-            artworks = intent.extras?.getSerializable(Constantes.PERSON) as List<ProfilesItem>
-            nome = intent.extras?.getString(Constantes.NOME_PERSON)
-            position = intent.extras?.getInt(Constantes.POSICAO)
+            artworks = intent.extras?.getSerializable(Constant.PERSON) as List<ProfilesItem>
+            nome = intent.extras?.getString(Constant.NOME_PERSON)
+            position = intent.extras?.getInt(Constant.POSICAO)
         }
     }
 

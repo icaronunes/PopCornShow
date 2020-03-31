@@ -19,11 +19,8 @@ import br.com.icaro.filme.R.layout
 import domain.TopMain
 import filme.activity.MovieDetailsActivity
 import info.movito.themoviedbapi.model.Multi.MediaType.MOVIE
-import kotlinx.android.synthetic.main.page_scroll_image_top.img_top_scroll
-import kotlinx.android.synthetic.main.page_scroll_image_top.layout_scroll_image_top
-import kotlinx.android.synthetic.main.page_scroll_image_top.title
 import tvshow.activity.TvShowActivity
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp.loadPalette
 import utils.setPicasso
 
@@ -41,7 +38,7 @@ class ImagemTopScrollFragment : BaseFragment() {
         fun newInstance(topMainList: TopMain?): Fragment {
             val topScrollFragment = ImagemTopScrollFragment()
             val bundle = Bundle()
-            bundle.putSerializable(Constantes.MAIN, topMainList)
+            bundle.putSerializable(Constant.MAIN, topMainList)
             topScrollFragment.arguments = bundle
             return topScrollFragment
         }
@@ -51,7 +48,7 @@ class ImagemTopScrollFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        topMains = arguments!!.getSerializable(Constantes.MAIN) as TopMain
+        topMains = arguments!!.getSerializable(Constant.MAIN) as TopMain
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -64,9 +61,9 @@ class ImagemTopScrollFragment : BaseFragment() {
                 img.setPicasso(topMains.imagem, 6, img_erro = drawable.top_empty)
                     .setOnClickListener {
                         val intent = Intent(context, MovieDetailsActivity::class.java)
-                        intent.putExtra(Constantes.NOME_FILME, topMains.nome)
-                        intent.putExtra(Constantes.FILME_ID, topMains.id)
-                        intent.putExtra(Constantes.COLOR_TOP, loadPalette(it as ImageView))
+                        intent.putExtra(Constant.NOME_FILME, topMains.nome)
+                        intent.putExtra(Constant.FILME_ID, topMains.id)
+                        intent.putExtra(Constant.COLOR_TOP, loadPalette(it as ImageView))
                         startActivity(intent)
                     }
             } else {
@@ -74,9 +71,9 @@ class ImagemTopScrollFragment : BaseFragment() {
                 img.setPicasso(topMains.imagem, 6, img_erro = drawable.top_empty)
                     .setOnClickListener {
                         val intent = Intent(context, TvShowActivity::class.java)
-                        intent.putExtra(Constantes.NOME_TVSHOW, topMains.nome)
-                        intent.putExtra(Constantes.TVSHOW_ID, topMains.id)
-                        intent.putExtra(Constantes.COLOR_TOP, loadPalette(it as ImageView))
+                        intent.putExtra(Constant.NOME_TVSHOW, topMains.nome)
+                        intent.putExtra(Constant.TVSHOW_ID, topMains.id)
+                        intent.putExtra(Constant.COLOR_TOP, loadPalette(it as ImageView))
                         startActivity(intent)
                     }
             }

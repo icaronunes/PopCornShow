@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horiz
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 
 class CrewsActivity : BaseActivity() {
@@ -69,10 +69,10 @@ class CrewsActivity : BaseActivity() {
     }
 
     private fun getExtras() {
-        title = intent.getStringExtra(Constantes.NOME)
-        lista = intent.getSerializableExtra(Constantes.PRODUCAO) as List<CrewItem?>?
-        id = intent.getIntExtra(Constantes.ID, 0)
-        season = intent.getIntExtra(Constantes.TVSEASONS, -100)
+        title = intent.getStringExtra(Constant.NAME)
+        lista = intent.getSerializableExtra(Constant.PRODUCAO) as List<CrewItem?>?
+        id = intent.getIntExtra(Constant.ID, 0)
+        season = intent.getIntExtra(Constant.TVSEASONS, -100)
     }
 
     override fun onDestroy() {

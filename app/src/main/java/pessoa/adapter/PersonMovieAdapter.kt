@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.person.CastItem
 import filme.activity.MovieDetailsActivity
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.gone
 import utils.setPicassoWithCache
@@ -48,9 +48,9 @@ class PersonMovieAdapter(private val context: Context, private val personCredits
 
             setOnClickListener {
                 context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
-                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(poster))
-                    putExtra(Constantes.FILME_ID, credit?.id)
-                    putExtra(Constantes.NOME_FILME, credit?.title)
+                    putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
+                    putExtra(Constant.FILME_ID, credit?.id)
+                    putExtra(Constant.NOME_FILME, credit?.title)
                 })
             }
         }

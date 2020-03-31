@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_similares.similares_recyclerview
 import kotlinx.android.synthetic.main.activity_similares.text_similares_no_internet
 import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal
 import tvshow.adapter.SimilaresListaSerieAdapter
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 
 /**
@@ -62,12 +62,12 @@ open class SimilaresActivity : BaseActivity() {
     }
 
     private fun getExtras() {
-        if (intent.hasExtra(Constantes.SIMILARES_FILME)) {
-            listaFilme = intent.getSerializableExtra(Constantes.SIMILARES_FILME) as List<ResultsSimilarItem?>?
-        } else if (intent.hasExtra(Constantes.SIMILARES_TVSHOW)) {
-            listaTvshow = intent.getSerializableExtra(Constantes.SIMILARES_TVSHOW) as List<ResultsItem?>?
+        if (intent.hasExtra(Constant.SIMILARES_FILME)) {
+            listaFilme = intent.getSerializableExtra(Constant.SIMILARES_FILME) as List<ResultsSimilarItem?>?
+        } else if (intent.hasExtra(Constant.SIMILARES_TVSHOW)) {
+            listaTvshow = intent.getSerializableExtra(Constant.SIMILARES_TVSHOW) as List<ResultsItem?>?
         }
-        title = intent.getStringExtra(Constantes.NOME)
+        title = intent.getStringExtra(Constant.NAME)
     }
 
     private fun snack() {

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import br.com.icaro.filme.R
-import utils.Constantes
+import utils.Constant
 import utils.setPicassoWithCache
 
 /**
@@ -21,7 +21,7 @@ class ImagemTopFilmeScrollFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        path = arguments?.getString(Constantes.ENDERECO)
+        path = arguments?.getString(Constant.ENDERECO)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,7 +42,7 @@ class ImagemTopFilmeScrollFragment : Fragment() {
         fun newInstance(artwork: String?): Fragment {
             val topScrollFragment = ImagemTopFilmeScrollFragment()
             val bundle = Bundle()
-            bundle.putString(Constantes.ENDERECO, artwork)
+            bundle.putString(Constant.ENDERECO, artwork)
             topScrollFragment.arguments = bundle
             return topScrollFragment
         }

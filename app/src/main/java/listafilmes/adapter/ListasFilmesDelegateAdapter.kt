@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.adapter_filmes_list.view.imgFilmes
 import kotlinx.android.synthetic.main.adapter_filmes_list.view.progress_filmes_lista
 import kotlinx.android.synthetic.main.adapter_filmes_list.view.title_filmes_lista
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 
 class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
@@ -57,8 +57,8 @@ class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
 
             itemView.setOnClickListener {
                 val intent = Intent(context, MovieDetailsActivity::class.java)
-                intent.putExtra(Constantes.FILME_ID, item.id)
-                intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(imgFilmes))
+                intent.putExtra(Constant.FILME_ID, item.id)
+                intent.putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(imgFilmes))
                 context.startActivity(intent)
             }
         }

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.person.ProfilesItem
 import pessoa.activity.FotoPersonActivity
-import utils.Constantes
+import utils.Constant
 import utils.gone
 import utils.setPicassoWithCache
 import java.io.Serializable
@@ -43,9 +43,9 @@ class PersonImagemAdapter(private val context: Context, private val artworks: Li
 
             setOnClickListener {
                 context.startActivity(Intent(context, FotoPersonActivity::class.java).apply {
-                    putExtra(Constantes.PERSON, artworks as Serializable)
-                    putExtra(Constantes.NOME_PERSON, nome)
-                    putExtra(Constantes.POSICAO, position)
+                    putExtra(Constant.PERSON, artworks as Serializable)
+                    putExtra(Constant.NOME_PERSON, nome)
+                    putExtra(Constant.POSICAO, position)
                 })
             }
         }

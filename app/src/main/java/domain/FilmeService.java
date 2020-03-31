@@ -2,8 +2,6 @@ package domain;
 
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
 
 import androidx.annotation.Keep;
 
@@ -13,14 +11,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import info.movito.themoviedbapi.TmdbApi;
@@ -46,7 +39,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import utils.Config;
-import utils.Constantes;
 
 import static info.movito.themoviedbapi.TmdbPeople.TMDB_METHOD_PERSON;
 

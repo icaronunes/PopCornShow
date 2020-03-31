@@ -51,7 +51,7 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import tvshow.TvShowAdapter
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.UtilsApp.setEp2
 import utils.gone
@@ -238,11 +238,11 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
     private fun getExtras() {
 
         if (intent.action == null) {
-            colorTop = intent.getIntExtra(Constantes.COLOR_TOP, R.color.colorFAB)
-            idTvshow = intent.getIntExtra(Constantes.TVSHOW_ID, 0)
+            colorTop = intent.getIntExtra(Constant.COLOR_TOP, R.color.colorFAB)
+            idTvshow = intent.getIntExtra(Constant.TVSHOW_ID, 0)
         } else {
-            colorTop = Integer.parseInt(intent.getStringExtra(Constantes.COLOR_TOP))
-            idTvshow = Integer.parseInt(intent.getStringExtra(Constantes.TVSHOW_ID))
+            colorTop = Integer.parseInt(intent.getStringExtra(Constant.COLOR_TOP))
+            idTvshow = Integer.parseInt(intent.getStringExtra(Constant.TVSHOW_ID))
         }
     }
 
@@ -265,7 +265,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                     override fun retornaFile(file: File) {
                         val intent = Intent(Intent.ACTION_SEND)
                         intent.type = "message/rfc822"
-                        intent.putExtra(Intent.EXTRA_TEXT, series?.name + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL)
+                        intent.putExtra(Intent.EXTRA_TEXT, series?.name + " " + buildDeepLink() + " by: " + Constant.TWITTER_URL)
                         intent.type = "image/*"
                         intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.getUriDownloadImage(this@TvShowActivity, file))
                         startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar) + " " + series?.name))

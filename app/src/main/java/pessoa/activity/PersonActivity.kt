@@ -15,7 +15,7 @@ import pessoa.adapter.PersonAdapter
 import pessoa.modelview.PersonViewModel
 import utils.BaseActivityKt
 import utils.CallBackError
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.gone
 
@@ -44,11 +44,11 @@ class PersonActivity : BaseActivityKt(), CallBackError {
 
     private fun getExtras() {
         if (intent.action == null) {
-            nome = intent.getStringExtra(Constantes.NOME_PERSON)
-            idPerso = intent.getIntExtra(Constantes.PERSON_ID, 0)
+            nome = intent.getStringExtra(Constant.NOME_PERSON)
+            idPerso = intent.getIntExtra(Constant.PERSON_ID, 0)
         } else {
-            nome = intent.getStringExtra(Constantes.NOME_PERSON)
-            idPerso = Integer.parseInt(intent.getStringExtra(Constantes.PERSON_ID))
+            nome = intent.getStringExtra(Constant.NOME_PERSON)
+            idPerso = Integer.parseInt(intent.getStringExtra(Constant.PERSON_ID))
         }
     }
 

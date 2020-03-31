@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.include_progress_horizontal.*
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 
 /**
@@ -77,10 +77,10 @@ class ElencoActivity : BaseActivity() {
 
     private fun getExtras() {
 
-        title = intent.getStringExtra(Constantes.NOME)
-        lista = intent.getSerializableExtra(Constantes.ELENCO) as List<CastItem?>?
-        season = intent.getIntExtra(Constantes.TVSEASONS, -100)
-        id = intent.getIntExtra(Constantes.ID, 0)
+        title = intent.getStringExtra(Constant.NAME)
+        lista = intent.getSerializableExtra(Constant.ELENCO) as List<CastItem?>?
+        season = intent.getIntExtra(Constant.TVSEASONS, -100)
+        id = intent.getIntExtra(Constant.ID, 0)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

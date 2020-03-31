@@ -11,7 +11,7 @@ import domain.ViewType
 import domain.movie.ListAd
 import pessoaspopulares.adapter.LoadingDelegateAdapter
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
-import utils.Constantes
+import utils.Constant
 import java.util.ArrayList
 
 class ListaSeriesAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -19,9 +19,9 @@ class ListaSeriesAdapter(private val context: Context) : RecyclerView.Adapter<Re
     private val delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     init {
-        delegateAdapters.put(Constantes.BuscaConstants.LOADING, LoadingDelegateAdapter())
-        delegateAdapters.put(Constantes.BuscaConstants.NEWS, ListasSeriesDelegateAdapter())
-        delegateAdapters.put(Constantes.BuscaConstants.AD, AdDelegateAdapter())
+        delegateAdapters.put(Constant.BuscaConstants.LOADING, LoadingDelegateAdapter())
+        delegateAdapters.put(Constant.BuscaConstants.NEWS, ListasSeriesDelegateAdapter())
+        delegateAdapters.put(Constant.BuscaConstants.AD, AdDelegateAdapter())
         listaResult.add(loading)
     }
 
@@ -36,7 +36,7 @@ class ListaSeriesAdapter(private val context: Context) : RecyclerView.Adapter<Re
 
     fun addSeries(listaMedia: List<ListaItemSerie?>?) {
         // TODO fix metodo
-        if (itemCount != 0 && listaResult[itemCount - 1].getViewType() == Constantes.BuscaConstants.LOADING) {
+        if (itemCount != 0 && listaResult[itemCount - 1].getViewType() == Constant.BuscaConstants.LOADING) {
             this.listaResult.removeAt(itemCount - 1)
             notifyItemRemoved(itemCount)
         }
@@ -46,7 +46,7 @@ class ListaSeriesAdapter(private val context: Context) : RecyclerView.Adapter<Re
     }
 
     fun addAd(ad: UnifiedNativeAd) {
-        if (itemCount != 0 && listaResult[itemCount - 1].getViewType() == Constantes.BuscaConstants.LOADING) {
+        if (itemCount != 0 && listaResult[itemCount - 1].getViewType() == Constant.BuscaConstants.LOADING) {
             this.listaResult.removeAt(itemCount - 1)
             notifyItemRemoved(itemCount)
         }
@@ -67,7 +67,7 @@ class ListaSeriesAdapter(private val context: Context) : RecyclerView.Adapter<Re
 
     companion object {
         private val loading = object : ViewType {
-            override fun getViewType(): Int = Constantes.BuscaConstants.LOADING
+            override fun getViewType(): Int = Constant.BuscaConstants.LOADING
         }
     }
 }

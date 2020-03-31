@@ -16,7 +16,7 @@ import java.util.List;
 
 import br.com.icaro.filme.R;
 import domain.PostersItem;
-import utils.Constantes;
+import utils.Constant;
 
 import static br.com.icaro.filme.R.id.pager;
 
@@ -39,13 +39,13 @@ public class PosterActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scroll_poster);
-        artworks = (List<PostersItem>) getIntent().getBundleExtra(Constantes.BUNDLE).getSerializable(Constantes.ARTWORKS);
-        nome = getIntent().getStringExtra(Constantes.NOME);
+        artworks = (List<PostersItem>) getIntent().getBundleExtra(Constant.BUNDLE).getSerializable(Constant.ARTWORKS);
+        nome = getIntent().getStringExtra(Constant.NAME);
         ViewPager viewPager = findViewById(pager);
         LinePageIndicator titlePageIndicator = findViewById(R.id.indicator);
         viewPager.setAdapter(new PosterFragment(getSupportFragmentManager()));
         titlePageIndicator.setViewPager(viewPager);
-        titlePageIndicator.setCurrentItem(getIntent().getExtras().getInt(Constantes.POSICAO));
+        titlePageIndicator.setCurrentItem(getIntent().getExtras().getInt(Constant.POSICAO));
  
     }
 

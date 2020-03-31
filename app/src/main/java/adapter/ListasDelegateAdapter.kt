@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.lista.view.img_lista
 import kotlinx.android.synthetic.main.lista.view.progress
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import tvshow.activity.TvShowActivity
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.setPicassoWithCache
 
@@ -50,14 +50,14 @@ class ListasDelegateAdapter : ViewTypeDelegateAdapter {
                 when (item.mediaType) {
                     "tv" -> {
                         val intent = Intent(context, TvShowActivity::class.java)
-                        intent.putExtra(Constantes.TVSHOW_ID, item.id)
-                        intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(img_lista))
+                        intent.putExtra(Constant.TVSHOW_ID, item.id)
+                        intent.putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_lista))
                         context.startActivity(intent)
                     }
                     "movie" -> {
                         val intent = Intent(context, MovieDetailsActivity::class.java)
-                        intent.putExtra(Constantes.FILME_ID, item.id)
-                        intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(img_lista))
+                        intent.putExtra(Constant.FILME_ID, item.id)
+                        intent.putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_lista))
                         context.startActivity(intent)
                     }
                 }

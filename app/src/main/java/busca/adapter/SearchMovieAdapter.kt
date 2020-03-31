@@ -15,7 +15,7 @@ import domain.ViewType
 import domain.search.Result
 import filme.activity.MovieDetailsActivity
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.gone
 import utils.setPicassoWithCache
@@ -46,9 +46,9 @@ class SearchMovieAdapter : ViewTypeDelegateAdapter {
 
             itemView.setOnClickListener {
                 context.startActivity(Intent(itemView.context, MovieDetailsActivity::class.java).apply {
-                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(poster))
-                    putExtra(Constantes.FILME_ID, movie.id)
-                    putExtra(Constantes.NOME_FILME, movie.title)
+                    putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
+                    putExtra(Constant.FILME_ID, movie.id)
+                    putExtra(Constant.NOME_FILME, movie.title)
                 })
             }
 

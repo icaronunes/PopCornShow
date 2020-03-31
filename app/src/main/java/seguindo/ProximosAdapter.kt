@@ -20,7 +20,7 @@ import org.apache.commons.lang3.tuple.MutablePair
 import seguindo.ProximosAdapter.CalendarViewHolder
 import temporada.TemporadaActivity
 import tvshow.activity.TvShowActivity
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -101,19 +101,19 @@ class ProximosAdapter(private val context: FragmentActivity) :
 
         view.itemView.setOnClickListener { _ ->
             context.startActivity(Intent(context, TemporadaActivity::class.java).apply {
-                putExtra(Constantes.TVSHOW_ID, old.second.id)
-                putExtra(Constantes.TEMPORADA_ID, old.first.seasonNumber)
-                putExtra(Constantes.TEMPORADA_POSITION, temporadaZero(old?.second?.seasons?.get(0)?.seasonNumber, old.first.seasonNumber)) // old.first.episodeNumber)
-                putExtra(Constantes.NOME, new?.right?.name)
-                putExtra(Constantes.COLOR_TOP, colorTop)
+                putExtra(Constant.TVSHOW_ID, old.second.id)
+                putExtra(Constant.TEMPORADA_ID, old.first.seasonNumber)
+                putExtra(Constant.TEMPORADA_POSITION, temporadaZero(old?.second?.seasons?.get(0)?.seasonNumber, old.first.seasonNumber)) // old.first.episodeNumber)
+                putExtra(Constant.NAME, new?.right?.name)
+                putExtra(Constant.COLOR_TOP, colorTop)
             })
         }
 
         view.poster.setOnClickListener {
             context.startActivity(Intent(context, TvShowActivity::class.java).apply {
-                putExtra(Constantes.COLOR_TOP, colorTop)
-                putExtra(Constantes.TVSHOW_ID, old.second.id)
-                putExtra(Constantes.NOME_TVSHOW, old.second.nome)
+                putExtra(Constant.COLOR_TOP, colorTop)
+                putExtra(Constant.TVSHOW_ID, old.second.id)
+                putExtra(Constant.NOME_TVSHOW, old.second.nome)
             })
         }
     }

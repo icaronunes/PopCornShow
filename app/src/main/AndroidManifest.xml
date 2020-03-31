@@ -141,7 +141,7 @@
         </activity>
 
         <activity
-            android:name="activity.ListaGenericaActivity"
+            android:name="activity.ListGenericActivity"
             android:parentActivityName="main.MainActivity">
 
             <meta-data

@@ -15,7 +15,7 @@ import androidx.viewpager.widget.ViewPager
 import br.com.icaro.filme.R
 import domain.colecao.PartsItem
 import filme.activity.MovieDetailsActivity
-import utils.Constantes
+import utils.Constant
 import utils.setPicasso
 
 /**
@@ -43,8 +43,8 @@ class CollectionPagerAdapter(private val info: List<PartsItem?>?, private val co
 
             setOnClickListener {
                 context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
-                    putExtra(Constantes.FILME_ID, item?.id)
-                    putExtra(Constantes.NOME_FILME, item?.title)
+                    putExtra(Constant.FILME_ID, item?.id)
+                    putExtra(Constant.NOME_FILME, item?.title)
                 })
             }
 

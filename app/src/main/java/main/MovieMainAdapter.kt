@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.poster_main.view.img_poster_grid
 import kotlinx.android.synthetic.main.poster_main.view.layout_poster_main
 import kotlinx.android.synthetic.main.poster_main.view.progress_poster_grid
 import kotlinx.android.synthetic.main.poster_main.view.title_main
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.gone
 import utils.setPicassoWithCache
@@ -62,9 +62,9 @@ class MovieMainAdapter(context: FragmentActivity, private val movieDbs: ListaFil
 
             img_poster_grid.setOnClickListener {
                 context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
-                    putExtra(Constantes.NOME_FILME, item.title)
-                    putExtra(Constantes.FILME_ID, item.id)
-                    putExtra(Constantes.COLOR_TOP, color)
+                    putExtra(Constant.NOME_FILME, item.title)
+                    putExtra(Constant.FILME_ID, item.id)
+                    putExtra(Constant.COLOR_TOP, color)
                 })
             }
         }

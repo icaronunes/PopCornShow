@@ -3,7 +3,7 @@ package domain.movie
 import com.google.gson.annotations.SerializedName
 import domain.ViewType
 import javax.annotation.Generated
-import utils.Constantes
+import utils.Constant
 
 @Generated("com.robohorse.robopojogenerator")
 data class Lista(
@@ -65,7 +65,7 @@ data class Lista(
     @field:SerializedName("results")
     val results: List<ListaItemFilme?>? = null
 ) : ViewType {
-    override fun getViewType() = Constantes.BuscaConstants.NEWS
+    override fun getViewType() = Constant.BuscaConstants.NEWS
 }
 
 @Generated("com.robohorse.robopojogenerator")
@@ -83,5 +83,5 @@ data class CreatedBy(
     @field:SerializedName("username")
     val username: String? = null
 ) : ViewType {
-    override fun getViewType() = Constantes.BuscaConstants.NEWS
+    override fun getViewType() = Constant.BuscaConstants.NEWS
 }

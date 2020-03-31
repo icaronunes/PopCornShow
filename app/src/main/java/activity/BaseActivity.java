@@ -78,7 +78,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import seguindo.SeguindoActivity;
-import utils.Constantes;
+import utils.Constant;
 import utils.UtilsApp;
 import utils.UtilsKt;
 
@@ -262,7 +262,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
             case R.id.menu_drav_home:
 
                 intent = new Intent(this, MainActivity.class);
-                intent.putExtra(Constantes.ABA, R.id.menu_drav_home);
+                intent.putExtra(Constant.ABA, R.id.menu_drav_home);
                 startActivity(intent);
                 break;
 
@@ -296,8 +296,8 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
             case R.id.menu_drav_oscar:
 
                 intent = new Intent(this, OscarActivity.class);
-                intent.putExtra(Constantes.LISTA_ID, getResources().getString(R.string.id_oscar));
-                intent.putExtra(Constantes.LISTA_NOME, R.string.oscar);
+                intent.putExtra(Constant.LISTA_ID, getResources().getString(R.string.id_oscar));
+                intent.putExtra(Constant.LISTA_NOME, R.string.oscar);
                 startActivity(intent);
                 break;
 
@@ -308,8 +308,8 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
             case R.id.seguindo:
 
                 intent = new Intent(this, SeguindoActivity.class);
-                intent.putExtra(Constantes.LISTA_ID, BuildConfig.VERSION_CODE - 1);
-                intent.putExtra(Constantes.LISTA_NOME, R.string.oscar);
+                intent.putExtra(Constant.LISTA_ID, BuildConfig.VERSION_CODE - 1);
+                intent.putExtra(Constant.LISTA_NOME, R.string.oscar);
                 startActivity(intent);
                 break;
 
@@ -318,7 +318,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
 
     private void getParametrosDoRemoteConfig() {
 
-        final Intent intent = new Intent(this, ListaGenericaActivity.class);
+        final Intent intent = new Intent(this, ListGenericActivity.class);
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
                 .setDeveloperModeEnabled(BuildConfig.DEBUG)
@@ -346,9 +346,9 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
                         String numero = String.valueOf(new Random().nextInt(10));
                         //Log.d(TAG, "numero : " + numero);
                         //TODO mandar somente o Map e fazer a troca na outra activity
-                        intent.putExtra(Constantes.LISTA_ID, map.get("id" + numero));
-                        intent.putExtra(Constantes.LISTA_GENERICA, map.get("title" + numero));
-                        intent.putExtra(Constantes.BUNDLE, (Serializable) map);
+                        intent.putExtra(Constant.LISTA_ID, map.get("id" + numero));
+                        intent.putExtra(Constant.LISTA_GENERICA, map.get("title" + numero));
+                        intent.putExtra(Constant.BUNDLE, (Serializable) map);
 
                         startActivity(intent);
 

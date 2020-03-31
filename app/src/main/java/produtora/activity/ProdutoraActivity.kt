@@ -19,7 +19,7 @@ import produtora.adapter.ProdutoraAdapter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
-import utils.Constantes
+import utils.Constant
 import utils.InfiniteScrollListener
 import utils.setPicasso
 
@@ -58,9 +58,9 @@ class ProdutoraActivity : BaseActivity() {
     }
 
     private fun setExtras() {
-        idProdutora = intent.getIntExtra(Constantes.PRODUTORA_ID, 0)
-        name = intent.getStringExtra(Constantes.NOME)
-        logo = intent.getStringExtra(Constantes.ENDERECO)
+        idProdutora = intent.getIntExtra(Constant.PRODUTORA_ID, 0)
+        name = intent.getStringExtra(Constant.NAME)
+        logo = intent.getStringExtra(Constant.ENDERECO)
     }
 
     private fun setTitle() {

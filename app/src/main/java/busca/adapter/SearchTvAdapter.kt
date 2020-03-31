@@ -15,7 +15,7 @@ import domain.ViewType
 import domain.search.Result
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import tvshow.activity.TvShowActivity
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.gone
 import utils.setPicassoWithCache
@@ -45,9 +45,9 @@ class SearchTvAdapter : ViewTypeDelegateAdapter {
 
             setOnClickListener {
                 context.startActivity(Intent(context, TvShowActivity::class.java).apply {
-                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(poster))
-                    putExtra(Constantes.TVSHOW_ID, series.id)
-                    putExtra(Constantes.NOME_TVSHOW, series.name)
+                    putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
+                    putExtra(Constant.TVSHOW_ID, series.id)
+                    putExtra(Constant.NOME_TVSHOW, series.name)
                 })
             }
 

@@ -17,9 +17,8 @@ import br.com.icaro.filme.R.id
 import br.com.icaro.filme.R.layout
 import domain.PostersItem
 import poster.PosterGridAdapter.PosterViewHolder
-import utils.Constantes
+import utils.Constant
 import utils.gone
-import utils.setPicasso
 import utils.setPicassoWithCache
 import java.io.Serializable
 
@@ -44,11 +43,11 @@ class PosterGridAdapter(private val context: Context, private val artworks: List
                 sucesso = { progressBar.gone() }
             ).setOnClickListener {
                 val intent = Intent(context, PosterActivity::class.java).apply {
-                    putExtra(Constantes.BUNDLE,
+                    putExtra(Constant.BUNDLE,
                         Bundle().apply {
-                            putSerializable(Constantes.ARTWORKS, artworks as Serializable) })
-                    putExtra(Constantes.POSICAO, position)
-                    putExtra(Constantes.NOME, nome)
+                            putSerializable(Constant.ARTWORKS, artworks as Serializable) })
+                    putExtra(Constant.POSICAO, position)
+                    putExtra(Constant.NAME, nome)
                 }
                 val opts = ActivityOptionsCompat.makeCustomAnimation(context,
                     anim.fade_in, anim.fade_out)

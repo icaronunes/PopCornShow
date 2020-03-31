@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.adapter_filmes_list.view.progress_filmes_l
 import kotlinx.android.synthetic.main.adapter_filmes_list.view.title_filmes_lista
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import tvshow.activity.TvShowActivity
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 
 class ListasSeriesDelegateAdapter : ViewTypeDelegateAdapter {
@@ -58,9 +58,9 @@ class ListasSeriesDelegateAdapter : ViewTypeDelegateAdapter {
 
             itemView.setOnClickListener {
                 val intent = Intent(context, TvShowActivity::class.java)
-                intent.putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(imgFilmes))
-                intent.putExtra(Constantes.TVSHOW_ID, item?.id)
-                intent.putExtra(Constantes.NOME_TVSHOW, item?.name)
+                intent.putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(imgFilmes))
+                intent.putExtra(Constant.TVSHOW_ID, item?.id)
+                intent.putExtra(Constant.NOME_TVSHOW, item?.name)
                 context.startActivity(intent)
             }
         }

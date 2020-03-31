@@ -2,7 +2,7 @@ package domain.movie
 
 import com.google.gson.annotations.SerializedName
 import domain.ViewType
-import utils.Constantes
+import utils.Constant
 
 /**
  * Created by icaro on 03/09/17.
@@ -24,5 +24,5 @@ data class ListaFilmes(
     @field:SerializedName("total_results")
     val totalResults: Int = 0
 ) : ViewType {
-    override fun getViewType() = Constantes.BuscaConstants.NEWS
+    override fun getViewType() = Constant.BuscaConstants.NEWS
 }

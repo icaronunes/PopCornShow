@@ -15,14 +15,14 @@ import kotlinx.android.synthetic.main.activity_lista.*
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
-import utils.Constantes
+import utils.Constant
 import utils.InfiniteScrollListener
 import utils.UtilsApp
 
 /**
  * Created by icaro on 04/10/16.
  */
-class ListaGenericaActivity : BaseActivity() {
+class ListGenericActivity : BaseActivity() {
 
     private lateinit var listId: String
     private var totalPagina: Int = 1
@@ -36,24 +36,24 @@ class ListaGenericaActivity : BaseActivity() {
         setContentView(R.layout.activity_lista)
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = intent.getStringExtra(Constantes.LISTA_GENERICA)
-        listId = intent.getStringExtra(Constantes.LISTA_ID)
+        supportActionBar?.title = intent.getStringExtra(Constant.LISTA_GENERICA)
+        listId = intent.getStringExtra(Constant.LISTA_ID)
 
-        if (intent.hasExtra(Constantes.BUNDLE)) {
+        if (intent.hasExtra(Constant.BUNDLE)) {
             map = HashMap()
-            map = intent.getSerializableExtra(Constantes.BUNDLE) as Map<String, String>
+            map = intent.getSerializableExtra(Constant.BUNDLE) as Map<String, String>
         }
         createRecyler()
     }
 
     private fun createRecyler() {
         recycleView_favorite.apply {
-            val gridlayout = GridLayoutManager(this@ListaGenericaActivity, 3)
+            val gridlayout = GridLayoutManager(this@ListGenericActivity, 3)
             layoutManager = gridlayout
             itemAnimator = DefaultItemAnimator()
             setHasFixedSize(true)
             addOnScrollListener(InfiniteScrollListener({ getLista() }, gridlayout))
-            adapter = ListUserAdapter(this@ListaGenericaActivity)
+            adapter = ListUserAdapter(this@ListGenericActivity)
         }
     }
 
@@ -110,7 +110,7 @@ class ListaGenericaActivity : BaseActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        if (intent.hasExtra(Constantes.BUNDLE))
+        if (intent.hasExtra(Constant.BUNDLE))
             menuInflater.inflate(R.menu.menu_random_lista, menu)
 
         return true

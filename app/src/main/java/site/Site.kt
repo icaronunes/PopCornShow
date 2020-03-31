@@ -4,13 +4,12 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import br.com.icaro.filme.R
 import kotlinx.android.synthetic.main.activity_site.*
 import utils.BaseActivityKt
-import utils.Constantes
+import utils.Constant
 
 /**
  * Created by icaro on 02/08/16.
@@ -20,7 +19,7 @@ class Site : BaseActivityKt() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_site)
-        val url = intent.getStringExtra(Constantes.SITE)
+        val url = intent.getStringExtra(Constant.SITE)
 
         if (url.contains("https://play.google.com/store/apps/details?id=")) {
             val appPackageName = packageName // getPackageName() from Context or Activity object

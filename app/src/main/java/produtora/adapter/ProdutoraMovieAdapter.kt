@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.adapter_produtora.view.img_movie
 import kotlinx.android.synthetic.main.adapter_produtora.view.progress_bar
 import kotlinx.android.synthetic.main.adapter_produtora.view.year_or_title
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.parseDateShot
 import utils.setPicassoWithCache
@@ -53,9 +53,9 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
 
             setOnClickListener {
                 it.context.startActivity(Intent(itemView.context, MovieDetailsActivity::class.java).apply {
-                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(img_movie))
-                    putExtra(Constantes.FILME_ID, item.id)
-                    putExtra(Constantes.NOME_FILME, item.title)
+                    putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_movie))
+                    putExtra(Constant.FILME_ID, item.id)
+                    putExtra(Constant.NOME_FILME, item.title)
                 })
             }
         }

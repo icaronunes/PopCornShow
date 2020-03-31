@@ -8,7 +8,7 @@ import domain.ViewType
 import domain.movie.ListaItemFilme
 import pessoaspopulares.adapter.LoadingDelegateAdapter
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
-import utils.Constantes
+import utils.Constant
 
 /**
  * Created by icaro on 14/08/16.
@@ -18,8 +18,8 @@ class ListUserAdapter(private val context: Context) : RecyclerView.Adapter<Recyc
     private val delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     init {
-        delegateAdapters.put(Constantes.BuscaConstants.LOADING, LoadingDelegateAdapter())
-        delegateAdapters.put(Constantes.BuscaConstants.NEWS, ListasDelegateAdapter())
+        delegateAdapters.put(Constant.BuscaConstants.LOADING, LoadingDelegateAdapter())
+        delegateAdapters.put(Constant.BuscaConstants.NEWS, ListasDelegateAdapter())
         listaResult.add(loading)
     }
 
@@ -57,7 +57,7 @@ class ListUserAdapter(private val context: Context) : RecyclerView.Adapter<Recyc
 
         private val loading = object : ViewType {
             override fun getViewType(): Int {
-                return Constantes.BuscaConstants.LOADING
+                return Constant.BuscaConstants.LOADING
             }
         }
     }

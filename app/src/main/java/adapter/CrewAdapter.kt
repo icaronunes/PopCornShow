@@ -2,7 +2,6 @@ package adapter
 
 import adapter.CrewAdapter.CrewViewHolder
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -14,12 +13,9 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R.drawable
 import br.com.icaro.filme.R.id
 import br.com.icaro.filme.R.layout
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.FirebaseAnalytics.Event
-import com.google.firebase.analytics.FirebaseAnalytics.Param
 import domain.CrewItem
 import pessoa.activity.PersonActivity
-import utils.Constantes
+import utils.Constant
 import utils.gone
 import utils.setPicassoWithCacheAndHolder
 import utils.visible
@@ -61,8 +57,8 @@ class CrewAdapter(val activity: FragmentActivity, val crews: List<CrewItem>) : A
 
             setOnClickListener {
                 context.startActivity(Intent(context, PersonActivity::class.java).apply {
-                    putExtra(Constantes.PERSON_ID, id)
-                    putExtra(Constantes.NOME_PERSON, name)
+                    putExtra(Constant.PERSON_ID, id)
+                    putExtra(Constant.NOME_PERSON, name)
                 })
             }
         }

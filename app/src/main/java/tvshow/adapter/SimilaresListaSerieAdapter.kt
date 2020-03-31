@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.adapter_similares.view.similares_title_ori
 import kotlinx.android.synthetic.main.adapter_similares.view.similares_voto_media
 import similares.SimilaresActivity
 import tvshow.activity.TvShowActivity
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.parseDateShot
 import utils.setPicassoWithCache
@@ -52,8 +52,8 @@ class SimilaresListaSerieAdapter(
 
             setOnClickListener {
                 activity.startActivity(Intent(activity, TvShowActivity::class.java).apply {
-                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(img_similares))
-                    putExtra(Constantes.TVSHOW_ID, item.id)
+                    putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_similares))
+                    putExtra(Constant.TVSHOW_ID, item.id)
                 })
             }
         }

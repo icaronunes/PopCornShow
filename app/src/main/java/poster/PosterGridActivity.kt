@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import br.com.icaro.filme.R
 import domain.PostersItem
 import kotlinx.android.synthetic.main.poster_grid.*
-import utils.Constantes
+import utils.Constant
 
 /**
  * Created by icaro on 28/07/16.
@@ -30,9 +30,9 @@ class PosterGridActivity : BaseActivity() {
         }
         setAdMob(adView)
 
-        if (intent.hasExtra(Constantes.POSTER)) {
-            val posters = intent.getSerializableExtra(Constantes.POSTER) as List<PostersItem>
-            val titulo = intent.getStringExtra(Constantes.NOME)
+        if (intent.hasExtra(Constant.POSTER)) {
+            val posters = intent.getSerializableExtra(Constant.POSTER) as List<PostersItem>
+            val titulo = intent.getStringExtra(Constant.NAME)
             recycleView_poster_grid.adapter = PosterGridAdapter(this@PosterGridActivity, posters, titulo)
         }
     }

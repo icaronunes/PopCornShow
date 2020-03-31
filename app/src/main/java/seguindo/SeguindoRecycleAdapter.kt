@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.seguindo_tvshow.view.follow_title
 import kotlinx.android.synthetic.main.seguindo_tvshow.view.follow_update
 import seguindo.SeguindoRecycleAdapter.SeguindoViewHolder
 import tvshow.activity.TvShowActivity
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.gone
 import utils.setPicassoWithCache
@@ -59,9 +59,9 @@ class SeguindoRecycleAdapter(private val context: FragmentActivity?, private val
 
             itemView.setOnClickListener {
                 context?.startActivity(Intent(context, TvShowActivity::class.java).apply {
-                    putExtra(Constantes.TVSHOW_ID, item.id)
-                    putExtra(Constantes.NOME_TVSHOW, item.nome)
-                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(follow_poster))
+                    putExtra(Constant.TVSHOW_ID, item.id)
+                    putExtra(Constant.NOME_TVSHOW, item.nome)
+                    putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(follow_poster))
                 })
             }
         }

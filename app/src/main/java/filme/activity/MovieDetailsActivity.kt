@@ -55,7 +55,7 @@ import kotlinx.coroutines.launch
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.getNameTypeReel
 import utils.setAnimation
@@ -84,7 +84,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
     private var valueEventRated: ValueEventListener? = null
     private var valueEventFavorite: ValueEventListener? = null
 
-    private var numero_rated: Float = 0.0f
+    private var numberRated: Float = 0.0f
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing Api.
@@ -214,15 +214,15 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 
                     if (dataSnapshot.child(idMovie.toString()).child("nota").exists()) {
                         val nota = dataSnapshot.child(idMovie.toString()).child("nota").value.toString()
-                        numero_rated = java.lang.Float.parseFloat(nota)
+                        numberRated = java.lang.Float.parseFloat(nota)
                         menu_item_rated?.labelText = resources.getString(R.string.remover_rated)
-                        if (numero_rated == 0.0f) {
+                        if (numberRated == 0.0f) {
                             menu_item_rated?.labelText = resources.getString(R.string.adicionar_rated)
                         }
                     }
                 } else {
                     addRated = false
-                    numero_rated = 0.0f
+                    numberRated = 0.0f
                     menu_item_rated?.labelText = resources.getString(R.string.adicionar_rated)
                 }
             }
@@ -274,11 +274,11 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 
     private fun getExtras() {
         if (intent.action == null) {
-            idMovie = intent.getIntExtra(Constantes.FILME_ID, 0)
-            color = intent.getIntExtra(Constantes.COLOR_TOP, R.color.transparent)
+            idMovie = intent.getIntExtra(Constant.FILME_ID, 0)
+            color = intent.getIntExtra(Constant.COLOR_TOP, R.color.transparent)
         } else {
-            idMovie = Integer.parseInt(intent.getStringExtra(Constantes.FILME_ID))
-            color = Integer.parseInt(intent.getStringExtra(Constantes.COLOR_TOP))
+            idMovie = Integer.parseInt(intent.getStringExtra(Constant.FILME_ID))
+            color = Integer.parseInt(intent.getStringExtra(Constant.COLOR_TOP))
         }
     }
 
@@ -324,7 +324,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
                     override fun retornaFile(file: File) {
                         val intent = Intent(Intent.ACTION_SEND)
                         intent.type = "message/rfc822"
-                        intent.putExtra(Intent.EXTRA_TEXT, movieDb?.title + " " + buildDeepLink() + " by: " + Constantes.TWITTER_URL)
+                        intent.putExtra(Intent.EXTRA_TEXT, movieDb?.title + " " + buildDeepLink() + " by: " + Constant.TWITTER_URL)
                         intent.type = "image/*"
                         intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.getUriDownloadImage(this@MovieDetailsActivity, file))
                         startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar) + " " + movieDb?.title))
@@ -368,7 +368,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
                 val title = alertDialog.findViewById<View>(R.id.rating_title) as TextView
                 title.text = movieDb?.title
                 val ratingBar = alertDialog.findViewById<View>(R.id.ratingBar_rated) as RatingBar
-                ratingBar.rating = (numero_rated / 2)
+                ratingBar.rating = (numberRated / 2)
 
                 alertDialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
                 alertDialog.show()
@@ -528,8 +528,8 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 
         movieFragment = MovieFragment().apply {
             arguments = Bundle().apply {
-                putSerializable(Constantes.FILME, movieDb)
-                putInt(Constantes.COLOR_TOP, color)
+                putSerializable(Constant.FILME, movieDb)
+                putInt(Constant.COLOR_TOP, color)
             }
         }
         if (!isDestroyed && !isFinishing) {

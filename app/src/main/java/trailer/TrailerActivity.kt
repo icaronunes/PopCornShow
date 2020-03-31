@@ -17,7 +17,7 @@ import com.google.firebase.analytics.FirebaseAnalytics.Event
 import com.google.firebase.analytics.FirebaseAnalytics.Param
 import kotlinx.android.synthetic.main.youtube_layout.trailer_sinopse as sinopse
 import utils.Config
-import utils.Constantes
+import utils.Constant
 
 /**
  * Created by icaro on 12/07/16.
@@ -30,8 +30,8 @@ class TrailerActivity : YouTubeBaseActivity(), OnInitializedListener {
         super.onCreate(savedInstanceState)
         setContentView(layout.youtube_layout)
         val youTubeView: YouTubePlayerView = findViewById(id.youtube_view)
-        idYoutube = intent.getStringExtra(Constantes.YOU_TUBE_KEY)
-        sinopse.text = intent.getStringExtra(Constantes.SINOPSE)
+        idYoutube = intent.getStringExtra(Constant.YOU_TUBE_KEY)
+        sinopse.text = intent.getStringExtra(Constant.SINOPSE)
         youTubeView.initialize(Config.YOUTUBE_API_KEY, this)
     }
 

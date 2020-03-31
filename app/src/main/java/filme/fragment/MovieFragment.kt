@@ -67,11 +67,11 @@ import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import similares.SimilaresActivity
 import site.Site
-import utils.Constantes
-import utils.Constantes.BASEMOVIEDB_MOVIE
-import utils.Constantes.IMDB
-import utils.Constantes.METACRITICMOVIE
-import utils.Constantes.ROTTENTOMATOESMOVIE
+import utils.Constant
+import utils.Constant.BASEMOVIEDB_MOVIE
+import utils.Constant.IMDB
+import utils.Constant.METACRITICMOVIE
+import utils.Constant.ROTTENTOMATOESMOVIE
 import utils.gone
 import utils.makeToast
 import utils.parseDate
@@ -99,8 +99,8 @@ class MovieFragment : FragmentBase() {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             val bundle = arguments
-            movieDb = bundle?.getSerializable(Constantes.FILME) as Movie
-            color = bundle.getInt(Constantes.COLOR_TOP, 0)
+            movieDb = bundle?.getSerializable(Constant.FILME) as Movie
+            color = bundle.getInt(Constant.COLOR_TOP, 0)
         }
         subscriptions = CompositeSubscription()
     }
@@ -143,13 +143,13 @@ class MovieFragment : FragmentBase() {
 
         imdb_site.setOnClickListener {
             startActivity(Intent(requireActivity(), Site::class.java).apply {
-                putExtra(Constantes.SITE, "${IMDB}${movieDb.imdbId}/")
+                putExtra(Constant.SITE, "${IMDB}${movieDb.imdbId}/")
             })
         }
 
         tmdb_site?.setOnClickListener {
             startActivity(Intent(requireActivity(), Site::class.java).apply {
-                putExtra(Constantes.SITE, "${BASEMOVIEDB_MOVIE}${movieDb.id}/")
+                putExtra(Constant.SITE, "${BASEMOVIEDB_MOVIE}${movieDb.id}/")
             })
         }
 
@@ -171,7 +171,7 @@ class MovieFragment : FragmentBase() {
             movieDb.homepage?.let {
                 if (it.isNotBlank()) {
                     startActivity(Intent(requireActivity(), Site::class.java).apply {
-                        putExtra(Constantes.SITE, it)
+                        putExtra(Constant.SITE, it)
                     })
                 } else {
                     snack(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu), R.string.no_site)
@@ -199,22 +199,22 @@ class MovieFragment : FragmentBase() {
 
         textview_elenco.setOnClickListener {
             val intent = Intent(requireActivity(), ElencoActivity::class.java)
-            intent.putExtra(Constantes.ELENCO, movieDb.credits?.cast as Serializable)
-            intent.putExtra(Constantes.NOME, movieDb.title)
+            intent.putExtra(Constant.ELENCO, movieDb.credits?.cast as Serializable)
+            intent.putExtra(Constant.NAME, movieDb.title)
             startActivity(intent)
         }
 
         textview_crews.setOnClickListener {
             val intent = Intent(requireActivity(), CrewsActivity::class.java)
-            intent.putExtra(Constantes.PRODUCAO, movieDb.credits?.crew as Serializable)
-            intent.putExtra(Constantes.NOME, movieDb.title)
+            intent.putExtra(Constant.PRODUCAO, movieDb.credits?.crew as Serializable)
+            intent.putExtra(Constant.NAME, movieDb.title)
             startActivity(intent)
         }
 
         textview_similares.setOnClickListener {
             val intent = Intent(requireActivity(), SimilaresActivity::class.java)
-            intent.putExtra(Constantes.SIMILARES_FILME, movieDb.similar?.resultsSimilar as Serializable)
-            intent.putExtra(Constantes.NOME, movieDb.title)
+            intent.putExtra(Constant.SIMILARES_FILME, movieDb.similar?.resultsSimilar as Serializable)
+            intent.putExtra(Constant.NAME, movieDb.title)
             startActivity(intent)
         }
     }
@@ -266,7 +266,7 @@ class MovieFragment : FragmentBase() {
                                 val clenaName = it.replace(" ", "-").toLowerCase(Locale.ROOT).removerAcentos()
                                 val url = "$METACRITICMOVIE$clenaName"
                                 startActivity(Intent(requireActivity(), Site::class.java).apply {
-                                    putExtra(Constantes.SITE, url)
+                                    putExtra(Constant.SITE, url)
                                 })
                             }
                         }
@@ -278,7 +278,7 @@ class MovieFragment : FragmentBase() {
                             imdbDd?.title?.let {
                                 val cleanName = it.replace(" ", "_").toLowerCase(Locale.ROOT).removerAcentos()
                                 startActivity(Intent(requireActivity(), Site::class.java).apply {
-                                    putExtra(Constantes.SITE, "$ROTTENTOMATOESMOVIE$cleanName")
+                                    putExtra(Constant.SITE, "$ROTTENTOMATOESMOVIE$cleanName")
                                 })
                             }
                         }
@@ -288,7 +288,7 @@ class MovieFragment : FragmentBase() {
                     .setOnClickListener OnClickListener@{
                         imdbDd?.let {
                             startActivity(Intent(requireActivity(), Site::class.java).apply {
-                                putExtra(Constantes.SITE, "$IMDB${imdbDd?.imdbID}")
+                                putExtra(Constant.SITE, "$IMDB${imdbDd?.imdbID}")
                             })
                         }
                     }
@@ -297,7 +297,7 @@ class MovieFragment : FragmentBase() {
                     .setOnClickListener {
                         val url = "$BASEMOVIEDB_MOVIE${movieDb.id}"
                         startActivity(Intent(requireActivity(), Site::class.java).apply {
-                            putExtra(Constantes.SITE, url)
+                            putExtra(Constant.SITE, url)
                         })
                     }
 
@@ -356,8 +356,8 @@ class MovieFragment : FragmentBase() {
         img_poster.setOnClickListener {
             if (posters != null && posters.isNotEmpty()) {
                 val intent = Intent(requireActivity(), PosterGridActivity::class.java).apply {
-                    putExtra(Constantes.POSTER, posters as Serializable)
-                    putExtra(Constantes.NOME, movieDb.title)
+                    putExtra(Constant.POSTER, posters as Serializable)
+                    putExtra(Constant.NAME, movieDb.title)
                 }
                 val compat = ActivityOptionsCompat
                     .makeSceneTransitionAnimation(requireActivity(), img_poster, getString(R.string.poster_transition))
@@ -379,9 +379,9 @@ class MovieFragment : FragmentBase() {
                 setOnClickListener {
                     production?.let {
                         startActivity(Intent(requireActivity(), ProdutoraActivity::class.java).apply {
-                            putExtra(Constantes.PRODUTORA_ID, production.id)
-                            putExtra(Constantes.ENDERECO, production.logoPath)
-                            putExtra(Constantes.NOME, production.name)
+                            putExtra(Constant.PRODUTORA_ID, production.id)
+                            putExtra(Constant.ENDERECO, production.logoPath)
+                            putExtra(Constant.NAME, production.name)
                         })
                     }
                 }

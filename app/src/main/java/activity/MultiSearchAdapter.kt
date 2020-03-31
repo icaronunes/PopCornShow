@@ -14,7 +14,7 @@ import domain.busca.MultiSearch
 import filme.activity.MovieDetailsActivity
 import pessoa.activity.PersonActivity
 import tvshow.activity.TvShowActivity
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.enums.EnumTypeMedia
 import utils.setPicassoWithCache
@@ -31,9 +31,9 @@ class MultiSearchAdapter(val application: Context, private val multiReturn: Mult
                 holder.poster.setPicassoWithCache(item.posterPath, 1)
                 holder.itemView.setOnClickListener {
                     application.startActivity(Intent(application, MovieDetailsActivity::class.java).apply {
-                        putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
-                        putExtra(Constantes.FILME_ID, item.id)
-                        putExtra(Constantes.NOME_FILME, item.title)
+                        putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
+                        putExtra(Constant.FILME_ID, item.id)
+                        putExtra(Constant.NOME_FILME, item.title)
                     })
                     icon?.alpha = 255
                 }
@@ -55,9 +55,9 @@ class MultiSearchAdapter(val application: Context, private val multiReturn: Mult
 
                 holder.itemView.setOnClickListener {
                     application.startActivity(Intent(application, TvShowActivity::class.java).apply {
-                        putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
-                        putExtra(Constantes.TVSHOW_ID, item.id)
-                        putExtra(Constantes.NOME_TVSHOW, item.name)
+                        putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
+                        putExtra(Constant.TVSHOW_ID, item.id)
+                        putExtra(Constant.NOME_TVSHOW, item.name)
                     })
                     icon?.alpha = 255
                 }
@@ -79,9 +79,9 @@ class MultiSearchAdapter(val application: Context, private val multiReturn: Mult
                 holder.poster.setPicassoWithCache(item.profile_path, 1)
                 holder.itemView.setOnClickListener {
                     application.startActivity(Intent(application, PersonActivity::class.java).apply {
-                        putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
-                        putExtra(Constantes.PERSON_ID, item.id)
-                        putExtra(Constantes.NOME_PERSON, item.name)
+                        putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
+                        putExtra(Constant.PERSON_ID, item.id)
+                        putExtra(Constant.NOME_PERSON, item.name)
                     })
                     icon?.alpha = 255
                 }

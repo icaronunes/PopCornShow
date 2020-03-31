@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.adapter_similares.view.similares_data_lanc
 import kotlinx.android.synthetic.main.adapter_similares.view.similares_nome
 import kotlinx.android.synthetic.main.adapter_similares.view.similares_title_original
 import kotlinx.android.synthetic.main.adapter_similares.view.similares_voto_media
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.parseDateShot
 import utils.setPicassoWithCache
@@ -51,9 +51,9 @@ class SimilaresListaFilmeAdapter(
 
             itemView.setOnClickListener {
                 activity.startActivity(Intent(activity, MovieDetailsActivity::class.java).apply {
-                    putExtra(Constantes.COLOR_TOP, UtilsApp.loadPalette(img_similares))
-                    putExtra(Constantes.FILME_ID, item.id)
-                    putExtra(Constantes.NOME_FILME, item.title)
+                    putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_similares))
+                    putExtra(Constant.FILME_ID, item.id)
+                    putExtra(Constant.NOME_FILME, item.title)
                 })
             }
         }

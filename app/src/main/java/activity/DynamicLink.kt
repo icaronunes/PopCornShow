@@ -10,7 +10,7 @@ import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import filme.activity.MovieDetailsActivity
 import main.MainActivity
 import tvshow.activity.TvShowActivity
-import utils.Constantes
+import utils.Constant
 import utils.makeToast
 
 /**
@@ -77,7 +77,7 @@ class DynamicLink : AppCompatActivity() {
                         val stackBuilder = TaskStackBuilder.create(this@DynamicLink)
                         stackBuilder.addParentStack(MainActivity::class.java)
                         stackBuilder.addNextIntent(Intent(this@DynamicLink, MovieDetailsActivity::class.java).apply {
-                            putExtra(Constantes.FILME_ID, id.toInt())
+                            putExtra(Constant.FILME_ID, id.toInt())
                         })
                         stackBuilder.startActivities()
                         finish()
@@ -86,8 +86,8 @@ class DynamicLink : AppCompatActivity() {
                         val stackBuilder = TaskStackBuilder.create(this@DynamicLink)
                         stackBuilder.addParentStack(MainActivity::class.java)
                         stackBuilder.addNextIntent(Intent(this@DynamicLink, TvShowActivity::class.java).apply {
-                            putExtra(Constantes.NOME_TVSHOW, name)
-                            putExtra(Constantes.TVSHOW_ID, id.toInt())
+                            putExtra(Constant.NOME_TVSHOW, name)
+                            putExtra(Constant.TVSHOW_ID, id.toInt())
                         })
                         stackBuilder.startActivities()
                         finish()

@@ -4,7 +4,7 @@ package utils
  * Created by icaro on 02/07/16.
  */
 
-object Constantes {
+object Constant {
 
     const val WIKI = "https://www.wikipedia.org/wiki/"
     const val BASEMOVIEDB_TV = "https://www.themoviedb.org/tv/"
@@ -23,6 +23,7 @@ object Constantes {
     const val SINOPSE = "sinopse"
 
     const val COLOR_TOP = "color_top"
+    const val COLOR = "color"
     const val PRODUTORA_ID = "produtora_id"
     const val LISTA_ID = "lista_id"
     const val LISTA_NOME = "lista_nome"
@@ -41,7 +42,7 @@ object Constantes {
     const val TEMPORADA_ID = "temporada_id"
     const val ARTWORKS = "artworks"
     const val BUNDLE = "bundle"
-    const val NOME = "nome"
+    const val NAME = "name"
     const val TVSEASON_ID = "tvseason_id"
     const val EPSODIO_ID = "epsodio_id"
     const val EPSODIO = "epsodio"
@@ -82,8 +83,9 @@ object Constantes {
         const val TVSHOW = "TvshowActivity"
         const val MOVIESLIST = "FilmesActivity"
         const val TVSHOWLIST = "TvShowsActivity"
-        const val LISTGENERIC = "ListaGenericaActivity"
+        const val LISTGENERIC = "ListGenericActivity"
         const val TRAILER = "TrailerActivity"
+        const val VIDEO = "TreilerActivity"
         const val ELENCO = "ElencoActivity"
         const val CREWS = "CrewsActivity"
         const val SITE = "SiteActivity"

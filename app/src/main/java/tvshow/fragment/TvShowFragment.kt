@@ -93,12 +93,12 @@ import utils.ConstFirebase.ASSISTIDO
 import utils.ConstFirebase.SEASONS
 import utils.ConstFirebase.USEREPS
 import utils.ConstFirebase.VISTO
-import utils.Constantes
-import utils.Constantes.BASEMOVIEDB_TV
-import utils.Constantes.IMDB
-import utils.Constantes.METACRITICTV
-import utils.Constantes.ROTTENTOMATOESTV
-import utils.Constantes.SEGUINDO
+import utils.Constant
+import utils.Constant.BASEMOVIEDB_TV
+import utils.Constant.IMDB
+import utils.Constant.METACRITICTV
+import utils.Constant.ROTTENTOMATOESTV
+import utils.Constant.SEGUINDO
 import utils.UtilsApp
 import utils.UtilsApp.setEp
 import utils.UtilsApp.setUserTvShow
@@ -138,10 +138,10 @@ class TvShowFragment : FragmentBase() {
         fun newInstance(tipo: Int, series: Tvshow, color: Int, seguindo: Boolean): Fragment {
             return TvShowFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(Constantes.SERIE, series)
-                    putInt(Constantes.COLOR_TOP, color)
-                    putInt(Constantes.ABA, tipo)
-                    putSerializable(Constantes.USER, seguindo)
+                    putSerializable(Constant.SERIE, series)
+                    putInt(Constant.COLOR_TOP, color)
+                    putInt(Constant.ABA, tipo)
+                    putSerializable(Constant.USER, seguindo)
                 }
             }
         }
@@ -150,10 +150,10 @@ class TvShowFragment : FragmentBase() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments.let {
-            tipo = arguments?.getInt(Constantes.ABA)!!
-            series = arguments?.getSerializable(Constantes.SERIE) as Tvshow
-            color = arguments?.getInt(Constantes.COLOR_TOP)!!
-            seguindo = arguments?.getBoolean(Constantes.USER)!!
+            tipo = arguments?.getInt(Constant.ABA)!!
+            series = arguments?.getSerializable(Constant.SERIE) as Tvshow
+            color = arguments?.getInt(Constant.COLOR_TOP)!!
+            seguindo = arguments?.getBoolean(Constant.USER)!!
         }
         // Validar se esta logado. Caso não, não precisa instanciar nada.
         // subscriptions = CompositeSubscription()
@@ -205,7 +205,7 @@ class TvShowFragment : FragmentBase() {
         icon_site?.setOnClickListener {
             if (!series.homepage.isNullOrBlank()) {
                 startActivity(Intent(context, Site::class.java).apply {
-                    putExtra(Constantes.SITE, series.homepage)
+                    putExtra(Constant.SITE, series.homepage)
                 })
             } else {
                 snack(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu), getString(R.string.no_site))
@@ -215,14 +215,14 @@ class TvShowFragment : FragmentBase() {
         imdb_site?.setOnClickListener {
             series.external_ids?.imdbId?.let {
                 startActivity(Intent(activity, Site::class.java).apply {
-                    putExtra(Constantes.SITE, "${IMDB}$it")
+                    putExtra(Constant.SITE, "${IMDB}$it")
                 })
             }
         }
 
         tmdb_site?.setOnClickListener {
             startActivity(Intent(activity, Site::class.java).apply {
-                putExtra(Constantes.SITE, "${BASEMOVIEDB_TV}${series.id}")
+                putExtra(Constant.SITE, "${BASEMOVIEDB_TV}${series.id}")
             })
         }
 
@@ -265,7 +265,7 @@ class TvShowFragment : FragmentBase() {
                     val nome = it.title.replace(" ", "-").toLowerCase(Locale.ROOT).removerAcentos()
                     val url = "$METACRITICTV$nome"
                     startActivity(Intent(activity, Site::class.java).apply {
-                        putExtra(Constantes.SITE, url)
+                        putExtra(Constant.SITE, url)
                     })
                 }
             }
@@ -274,20 +274,20 @@ class TvShowFragment : FragmentBase() {
                 imdbDd?.let {
                     val nome = it.title.replace(" ", "_").toLowerCase(Locale.ROOT).removerAcentos()
                     startActivity(Intent(activity, Site::class.java).apply {
-                        putExtra(Constantes.SITE, "$ROTTENTOMATOESTV$nome")
+                        putExtra(Constant.SITE, "$ROTTENTOMATOESTV$nome")
                     })
                 }
             }
 
             layout.findViewById<View>(R.id.image_imdb).setOnClickListener {
                 startActivity(Intent(activity, Site::class.java).apply {
-                    putExtra(Constantes.SITE, "$IMDB${imdbDd?.imdbID}")
+                    putExtra(Constant.SITE, "$IMDB${imdbDd?.imdbID}")
                 })
             }
 
             layout.findViewById<View>(R.id.image_tmdb).setOnClickListener {
                 startActivity(Intent(activity, Site::class.java).apply {
-                    putExtra(Constantes.SITE, "$BASEMOVIEDB_TV${series.id!!}")
+                    putExtra(Constant.SITE, "$BASEMOVIEDB_TV${series.id!!}")
                 })
             }
 
@@ -439,11 +439,11 @@ class TvShowFragment : FragmentBase() {
         return object : TemporadasAdapter.TemporadasOnClickListener {
             override fun onClickTemporada(view: View, position: Int, color: Int) {
                 requireActivity().startActivity(Intent(context, TemporadaActivity::class.java).apply {
-                    putExtra(Constantes.NOME, getString(R.string.temporada) + " " + series.seasons?.get(position)?.seasonNumber)
-                    putExtra(Constantes.TEMPORADA_ID, series.seasons?.get(position)?.seasonNumber)
-                    putExtra(Constantes.TEMPORADA_POSITION, position)
-                    putExtra(Constantes.TVSHOW_ID, series.id)
-                    putExtra(Constantes.COLOR_TOP, color)
+                    putExtra(Constant.NAME, getString(R.string.temporada) + " " + series.seasons?.get(position)?.seasonNumber)
+                    putExtra(Constant.TEMPORADA_ID, series.seasons?.get(position)?.seasonNumber)
+                    putExtra(Constant.TEMPORADA_POSITION, position)
+                    putExtra(Constant.TVSHOW_ID, series.id)
+                    putExtra(Constant.COLOR_TOP, color)
                 })
             }
 
@@ -602,8 +602,8 @@ class TvShowFragment : FragmentBase() {
         img_poster?.setOnClickListener {
             if (posters != null && posters.isNotEmpty()) {
                 val intent = Intent(context, PosterGridActivity::class.java).apply {
-                    putExtra(Constantes.POSTER, posters as Serializable)
-                    putExtra(Constantes.NOME, series.name)
+                    putExtra(Constant.POSTER, posters as Serializable)
+                    putExtra(Constant.NAME, series.name)
                 }
                 val compat = ActivityOptionsCompat
                     .makeSceneTransitionAnimation(requireActivity(),
@@ -627,7 +627,7 @@ class TvShowFragment : FragmentBase() {
             produtora?.setOnClickListener {
                 if (production != null) {
                     context?.startActivity(Intent(context, ProdutoraActivity::class.java).apply {
-                        putExtra(Constantes.PRODUTORA_ID, production.id)
+                        putExtra(Constant.PRODUTORA_ID, production.id)
                     })
                 } else {
                     Toast.makeText(context, getString(R.string.sem_informacao_company), Toast.LENGTH_SHORT).show()
@@ -714,8 +714,8 @@ class TvShowFragment : FragmentBase() {
 
         textview_elenco?.setOnClickListener {
             startActivity(Intent(context, ElencoActivity::class.java).apply {
-                putExtra(Constantes.ELENCO, series.credits?.cast as Serializable)
-                putExtra(Constantes.NOME, series.name)
+                putExtra(Constant.ELENCO, series.credits?.cast as Serializable)
+                putExtra(Constant.NAME, series.name)
             })
         }
 
@@ -739,8 +739,8 @@ class TvShowFragment : FragmentBase() {
 
         textview_crews?.setOnClickListener {
             startActivity(Intent(context, CrewsActivity::class.java).apply {
-                putExtra(Constantes.PRODUCAO, series.credits?.crew as Serializable)
-                putExtra(Constantes.NOME, series.name)
+                putExtra(Constant.PRODUCAO, series.credits?.crew as Serializable)
+                putExtra(Constant.NAME, series.name)
             })
         }
 
@@ -763,8 +763,8 @@ class TvShowFragment : FragmentBase() {
     private fun setSimilares() {
         text_similares.setOnClickListener {
             startActivity(Intent(context, SimilaresActivity::class.java).apply {
-                putExtra(Constantes.SIMILARES_TVSHOW, series.similar?.results as Serializable)
-                putExtra(Constantes.NOME, series.name)
+                putExtra(Constant.SIMILARES_TVSHOW, series.similar?.results as Serializable)
+                putExtra(Constant.NAME, series.name)
             })
         }
 

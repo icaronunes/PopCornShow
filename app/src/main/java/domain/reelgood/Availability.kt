@@ -2,18 +2,18 @@ package domain.reelgood
 
 import com.google.gson.annotations.SerializedName
 import domain.ViewType
-import utils.Constantes
+import utils.Constant
 
 class Availability : ViewType {
     override fun getViewType(): Int {
         return when (sourceName) {
-            "starz" -> Constantes.ReelGood.STARZ
-            "netflix" -> Constantes.ReelGood.NETFLIX
-            "hulu_plus" -> Constantes.ReelGood.HULU
-            "google_play" -> Constantes.ReelGood.GOOGLEPLAY
-            "amazon_buy" -> Constantes.ReelGood.AMAZON
-            "hbo" -> Constantes.ReelGood.HBO
-            else -> Constantes.ReelGood.WEB
+            "starz" -> Constant.ReelGood.STARZ
+            "netflix" -> Constant.ReelGood.NETFLIX
+            "hulu_plus" -> Constant.ReelGood.HULU
+            "google_play" -> Constant.ReelGood.GOOGLEPLAY
+            "amazon_buy" -> Constant.ReelGood.AMAZON
+            "hbo" -> Constant.ReelGood.HBO
+            else -> Constant.ReelGood.WEB
         }
     }
 

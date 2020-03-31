@@ -28,7 +28,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.apache.commons.lang3.tuple.MutablePair
-import utils.Constantes
+import utils.Constant
 import java.io.Serializable
 import kotlin.coroutines.CoroutineContext
 
@@ -55,8 +55,8 @@ class ListFollowFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            tipo = arguments!!.getInt(Constantes.ABA)
-            userTvshows = arguments!!.getSerializable(Constantes.SEGUINDO) as MutableList<UserTvshow>
+            tipo = arguments!!.getInt(Constant.ABA)
+            userTvshows = arguments!!.getSerializable(Constant.SEGUINDO) as MutableList<UserTvshow>
         }
     }
 
@@ -185,8 +185,8 @@ class ListFollowFragment : BaseFragment() {
         fun newInstance(tipo: Int, userTvshows: List<UserTvshow>): Fragment {
             return ListFollowFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(Constantes.SEGUINDO, userTvshows as Serializable)
-                    putInt(Constantes.ABA, tipo)
+                    putSerializable(Constant.SEGUINDO, userTvshows as Serializable)
+                    putInt(Constant.ABA, tipo)
                 }
             }
         }

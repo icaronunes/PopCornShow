@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.adapter_person_popular.view.img_popular_pe
 import kotlinx.android.synthetic.main.adapter_person_popular.view.progress
 import kotlinx.android.synthetic.main.adapter_person_popular.view.text_person_name
 import pessoa.activity.PersonActivity
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 import utils.gone
 import utils.setPicassoWithCacheAndHolder
@@ -45,8 +45,8 @@ class PersonDelegateAdapter : ViewTypeDelegateAdapter {
 
             setOnClickListener {
                 val intent = Intent(context, PersonActivity::class.java)
-                intent.putExtra(Constantes.NOME_PERSON, item.name)
-                intent.putExtra(Constantes.PERSON_ID, item.id)
+                intent.putExtra(Constant.NOME_PERSON, item.name)
+                intent.putExtra(Constant.PERSON_ID, item.id)
                 context.startActivity(intent)
             }
         }

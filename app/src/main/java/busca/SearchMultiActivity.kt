@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.search_layout.text_search_empty
 import pessoa.activity.PersonActivity
 import tvshow.activity.TvShowActivity
 import utils.BaseActivityKt
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp.isNetWorkAvailable
 import utils.enums.EnumTypeMedia.MOVIE
 import utils.enums.EnumTypeMedia.PERSON
@@ -61,7 +61,7 @@ class SearchMultiActivity : BaseActivityKt() {
                 getIntent().data.lastPathSegment.equals(MOVIE.type, ignoreCase = true) -> {
                     intent = Intent(this, MovieDetailsActivity::class.java)
                     val id = getIntent().extras.getString(SearchManager.EXTRA_DATA_KEY).toInt() //ID
-                    intent.putExtra(Constantes.FILME_ID, id)
+                    intent.putExtra(Constant.FILME_ID, id)
                     intent.flags = Intent.FLAG_ACTIVITY_FORWARD_RESULT
                     startActivity(intent)
                     finish()
@@ -70,7 +70,7 @@ class SearchMultiActivity : BaseActivityKt() {
                 getIntent().data.lastPathSegment.equals(TV.type, ignoreCase = true) -> {
                     val id = getIntent().extras.getString(SearchManager.EXTRA_DATA_KEY).toInt() //ID
                     intent = Intent(this, TvShowActivity::class.java)
-                    intent.putExtra(Constantes.TVSHOW_ID, id)
+                    intent.putExtra(Constant.TVSHOW_ID, id)
                     intent.flags = Intent.FLAG_ACTIVITY_FORWARD_RESULT
                     startActivity(intent)
                     finish()
@@ -79,7 +79,7 @@ class SearchMultiActivity : BaseActivityKt() {
                 getIntent().data.lastPathSegment.equals(PERSON.type, ignoreCase = true) -> {
                     intent = Intent(this, PersonActivity::class.java)
                     val id = getIntent().extras.getString(SearchManager.EXTRA_DATA_KEY).toInt() //ID
-                    intent.putExtra(Constantes.PERSON_ID, id)
+                    intent.putExtra(Constant.PERSON_ID, id)
                     intent.flags = Intent.FLAG_ACTIVITY_FORWARD_RESULT
                     startActivity(intent)
                     finish()

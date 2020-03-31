@@ -45,7 +45,7 @@ import rx.Observer
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
-import utils.Constantes
+import utils.Constant
 import utils.UtilsApp
 
 /**
@@ -103,17 +103,17 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
 
     fun getExtras() {
         if (intent.action == null) {
-            temporada_id = intent.getIntExtra(Constantes.TEMPORADA_ID, 0)
-            temporada_position = intent.getIntExtra(Constantes.TEMPORADA_POSITION, 0)
-            serie_id = intent.getIntExtra(Constantes.TVSHOW_ID, 0)
-            nome_temporada = intent.getStringExtra(Constantes.NOME)
-            color = intent.getIntExtra(Constantes.COLOR_TOP, resources.getColor(R.color.red))
+            temporada_id = intent.getIntExtra(Constant.TEMPORADA_ID, 0)
+            temporada_position = intent.getIntExtra(Constant.TEMPORADA_POSITION, 0)
+            serie_id = intent.getIntExtra(Constant.TVSHOW_ID, 0)
+            nome_temporada = intent.getStringExtra(Constant.NAME)
+            color = intent.getIntExtra(Constant.COLOR_TOP, resources.getColor(R.color.red))
         } else {
-            temporada_id = Integer.parseInt(intent.getStringExtra(Constantes.TEMPORADA_ID))
-            temporada_position = Integer.parseInt(intent.getStringExtra(Constantes.TEMPORADA_POSITION))
-            serie_id = Integer.parseInt(intent.getStringExtra(Constantes.TVSHOW_ID))
-            nome_temporada = intent.getStringExtra(Constantes.NOME)
-            color = Integer.parseInt(intent.getStringExtra(Constantes.COLOR_TOP))
+            temporada_id = Integer.parseInt(intent.getStringExtra(Constant.TEMPORADA_ID))
+            temporada_position = Integer.parseInt(intent.getStringExtra(Constant.TEMPORADA_POSITION))
+            serie_id = Integer.parseInt(intent.getStringExtra(Constant.TVSHOW_ID))
+            nome_temporada = intent.getStringExtra(Constant.NAME)
+            color = Integer.parseInt(intent.getStringExtra(Constant.COLOR_TOP))
         }
     }
 
@@ -131,12 +131,12 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
 
     override fun onClickTemporada(position: Int) {
         startActivity(Intent(this@TemporadaActivity, EpsodioActivity::class.java).apply {
-            putExtra(Constantes.TVSHOW_ID, serie_id)
-            putExtra(Constantes.POSICAO, position)
-            putExtra(Constantes.TEMPORADA_POSITION, temporada_position)
-            putExtra(Constantes.TVSEASONS, tvSeason)
-            putExtra(Constantes.COLOR_TOP, color)
-            putExtra(Constantes.SEGUINDO, seguindo)
+            putExtra(Constant.TVSHOW_ID, serie_id)
+            putExtra(Constant.POSICAO, position)
+            putExtra(Constant.TEMPORADA_POSITION, temporada_position)
+            putExtra(Constant.TVSEASONS, tvSeason)
+            putExtra(Constant.COLOR_TOP, color)
+            putExtra(Constant.SEGUINDO, seguindo)
         })
     }
 

@@ -15,7 +15,7 @@ import domain.UserTvshow
 import domain.tvshow.Tvshow
 import elenco.ElencoActivity
 import producao.CrewsActivity
-import utils.Constantes
+import utils.Constant
 import utils.gone
 import utils.parseDateShot
 import utils.setPicassoWithCache
@@ -53,17 +53,17 @@ class TemporadasAdapter(
                 when (item.itemId) {
                     R.id.elenco_temporada -> {
                         val intent = Intent(context, ElencoActivity::class.java)
-                        intent.putExtra(Constantes.ID, series?.id)
-                        intent.putExtra(Constantes.TVSEASONS, seasonNumber)
-                        intent.putExtra(Constantes.NOME, series?.name)
+                        intent.putExtra(Constant.ID, series?.id)
+                        intent.putExtra(Constant.TVSEASONS, seasonNumber)
+                        intent.putExtra(Constant.NAME, series?.name)
                         context.startActivity(intent)
                     }
 
                     R.id.producao_temporada -> {
                         val intent = Intent(context, CrewsActivity::class.java)
-                        intent.putExtra(Constantes.ID, series?.id)
-                        intent.putExtra(Constantes.TVSEASONS, seasonNumber)
-                        intent.putExtra(Constantes.NOME, series?.name)
+                        intent.putExtra(Constant.ID, series?.id)
+                        intent.putExtra(Constant.TVSEASONS, seasonNumber)
+                        intent.putExtra(Constant.NAME, series?.name)
                         context.startActivity(intent)
                     }
                 }
