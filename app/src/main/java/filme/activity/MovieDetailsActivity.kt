@@ -31,7 +31,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import utils.Api
 import domain.FilmeDB
 import domain.FilmeService
 import domain.Movie
@@ -55,6 +54,7 @@ import kotlinx.coroutines.launch
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import utils.Api
 import utils.Constant
 import utils.UtilsApp
 import utils.getNameTypeReel

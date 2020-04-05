@@ -1,4 +1,4 @@
-package domain.reelgood
+package domain.reelgood.movie
 
 import com.google.gson.annotations.SerializedName
 

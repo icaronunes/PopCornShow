@@ -201,7 +201,9 @@
     //////////
 
     <string name="cd_collectons">Veja os filmes das franquia</string>
-    <string name="stream_avaliable">Onde assistir o filme</string>
+    <string name="stream_avaliable_movie">Onde assistir o filme</string>
+    <string name="stream_avaliable_tv">Onde assistir a série</string>
+    <string name="main_stream_tv">Principais fornecedores</string>
     <string name="rent">Alugar</string>
     <string name="purchase">Comprar</string>
     <string name="valid_us">Válido para USA</string>

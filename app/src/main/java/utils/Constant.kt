@@ -78,6 +78,15 @@ object Constant {
         const val WEB = 8
     }
 
+    object TypeStream{
+        const val huluPackage = "com.hulu.plus"
+        const val netflixPackage = "com.netflix.mediaclient"
+        const val googleVideosPackage = "com.google.android.videos"
+        const val hboPackage = "com.hbo.broadband.br"
+        const val starzPackage = "com.starz.starzplay.android"
+        const val amazonPackage = "com.amazon.avod.thirdpartyclient"
+    }
+
     object Signal {
         const val MOVIE = "MovieDetailsActivity"
         const val TVSHOW = "TvshowActivity"

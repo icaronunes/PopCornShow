@@ -10,9 +10,9 @@ import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
 import domain.ViewType
 import domain.reelgood.Availability
-import filme.adapter.StreamMovieDelegatesAdapter.Companion.netflixPackage
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
+import utils.Constant.TypeStream.netflixPackage
 
 class StreamMovieNetflixAdapter(val subscription: Boolean = false, val purchase: Boolean = false) : ViewTypeDelegateAdapter {
     override fun onCreateViewHolder(parent: ViewGroup) = StreamMovieHolder(parent)

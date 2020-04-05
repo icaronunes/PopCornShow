@@ -20,20 +20,20 @@ import domain.busca.MultiSearch
 import domain.colecao.Colecao
 import domain.movie.ListaFilmes
 import domain.person.Person
-import domain.reelgood.ReelGood
+import domain.reelgood.movie.ReelGood
+import domain.reelgood.tvshow.ReelGoodTv
 import domain.search.SearchMulti
 import domain.tvshow.Tvshow
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
 import okhttp3.Callback
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
-import okhttp3.internal.http2.Http2Reader.Companion.logger
 import rx.Observable
 import utils.Api.TYPESEARCH.FILME
 import utils.Api.TYPESEARCH.SERIE
+import utils.ApiSingleton.Companion.LoggingInterceptor
 import utils.UtilsKt.Companion.getIdiomaEscolhido
 import java.io.IOException
 import java.net.SocketTimeoutException
@@ -49,30 +49,20 @@ class Api(val context: Context): ApiSingleton() {
     private val baseUrl3 = "https://api.themoviedb.org/3/"
     private val baseUrl4 = "https://api.themoviedb.org/4/"
 
-    internal inner class LoggingInterceptor : Interceptor {
-        @Throws(IOException::class)
-        override fun intercept(chain: Interceptor.Chain): Response {
-            val request = chain.request()
-
-            logger.info("Sending request ${ request.url} with Method - ${request.method}")
-            return chain.proceed(request)
-        }
-    }
-
     object TYPESEARCH {
 
         object FILME {
             val popular: String = "popular"
-            val agora: String = "now_playing"
-            val chegando: String = "upcoming"
-            val melhores: String = "top_rated"
+            val now: String = "now_playing"
+            val upComing: String = "upcoming"
+            val bestScore: String = "top_rated"
         }
 
         object SERIE {
-            val hoje: String = "airing_today"
-            val semana: String = "on_the_air"
+            val toDay: String = "airing_today"
+            val week: String = "on_the_air"
             val popular: String = "popular"
-            val melhores: String = "top_rated"
+            val bestScore: String = "top_rated"
         }
     }
 
@@ -174,7 +164,7 @@ class Api(val context: Context): ApiSingleton() {
         }
     }
 
-    fun buscaDeFilmes(tipoDeBusca: String? = FILME.agora, pagina: Int = 1, local: String = "US"): Observable<ListaFilmes> {
+    fun buscaDeFilmes(tipoDeBusca: String? = FILME.now, pagina: Int = 1, local: String = "US"): Observable<ListaFilmes> {
         return Observable.create { subscriber ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val url = "${baseUrl3}movie/$tipoDeBusca?api_key=${Config.TMDB_API_KEY}&language=$local&page=$pagina&region=$region"
@@ -760,6 +750,35 @@ class Api(val context: Context): ApiSingleton() {
                         if (response.isSuccessful) {
                             val json = response.body?.string()
                             val lista = Gson().fromJson(json, ReelGood::class.java)
+                            continuation.resume(lista)
+                        } else {
+                            continuation.resumeWithException(Exception("Failure"))
+                        }
+                    } catch (ex: Exception) {
+                        continuation.resumeWithException(ex)
+                    }
+                }
+            })
+        }
+    }
+
+    suspend fun getAvaliableShow(id: String): ReelGoodTv {
+        return suspendCancellableCoroutine { continuation ->
+            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
+            val request = Request.Builder()
+                .url("https://api.reelgood.com/v1/show/$id?sources=amazon_prime%2Chbo%2Chulu_plus%2Cnetflix%2Cstarz%2Cgoogle_plus&free=false")
+                .get()
+                .build()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    continuation.resumeWithException(e)
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    try {
+                        if (response.isSuccessful) {
+                            val json = response.body?.string()
+                            val lista = Gson().fromJson(json, ReelGoodTv::class.java)
                             continuation.resume(lista)
                         } else {
                             continuation.resumeWithException(Exception("Failure"))

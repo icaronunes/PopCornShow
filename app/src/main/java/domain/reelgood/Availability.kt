@@ -1,10 +1,14 @@
 package domain.reelgood
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import domain.ViewType
+import domain.reelgood.movie.SourceData
+import kotlinx.android.parcel.Parcelize
 import utils.Constant
 
-class Availability : ViewType {
+@Parcelize
+class Availability : ViewType, Parcelable {
     override fun getViewType(): Int {
         return when (sourceName) {
             "starz" -> Constant.ReelGood.STARZ
@@ -32,5 +36,5 @@ class Availability : ViewType {
     @SerializedName("source_id")
     val sourceId: String? = null // verizon_on_demand-verizon_on_demand-purchase
     @SerializedName("source_name")
-    val sourceName: String? = null // verizon_on_demand
+    var sourceName: String? = null // verizon_on_demand
 }

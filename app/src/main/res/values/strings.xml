@@ -225,8 +225,10 @@
     ///////////////
     ///// Stream
     //////////////
-    <string name="stream_avaliable">Where to watch the movie</string>
+    <string name="stream_avaliable_movie">Where to watch the movie</string>
+    <string name="stream_avaliable_tv">where to see the tvshow</string>
     <string name="stream" translatable="false">Stream</string>
+    <string name="main_stream_tv">Top sources</string>
     <string name="rent">Rent</string>
     <string name="purchase">Purchase</string>
     <string name="beta" translatable="false">**beta</string>

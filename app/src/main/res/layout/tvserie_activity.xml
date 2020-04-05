@@ -82,6 +82,18 @@
         <include layout="@layout/fab_float"
             android:visibility="visible"/>
 
+        <customview.StreamViewTv
+            android:id="@+id/streamview_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            app:behavior_peekHeight="0dp"
+            app:behavior_hideable="true"
+            app:errorImg_tv="@drawable/sad"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            app:title_streaming="@string/stream_avaliable_tv" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView

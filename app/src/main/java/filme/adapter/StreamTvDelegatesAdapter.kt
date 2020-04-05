@@ -4,16 +4,14 @@ import android.view.ViewGroup
 import androidx.collection.SparseArrayCompat
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import domain.ViewType
 import domain.reelgood.Availability
 import pessoaspopulares.adapter.LoadingDelegateAdapter
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constant
-import java.util.ArrayList
 
-class StreamMovieDelegatesAdapter(val subscription: Boolean, val purchase: Boolean = false, val titleMedia: String? = "") : Adapter<ViewHolder>() {
+class StreamTvDelegatesAdapter(val subscription: Boolean, val purchase: Boolean = false, val titleMedia: String? = "") : Adapter<ViewHolder>() {
 
-    private var streamList = ArrayList<ViewType>()
+    private var streamList: List<Availability> = mutableListOf()
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     init {
@@ -34,16 +32,12 @@ class StreamMovieDelegatesAdapter(val subscription: Boolean, val purchase: Boole
     }
 
     override fun getItemViewType(position: Int) = streamList[position].getViewType()
-
     override fun getItemCount(): Int = streamList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         return delegateAdapters.get(getItemViewType(position))!!.onBindViewHolder(holder = holder,
-            item = streamList[position],
-            context = null)
+            item = streamList[position], context = null)
     }
 
-    fun addStream(stream: List<Availability>) {
-        streamList.addAll(stream)
-    }
+    fun addStream(stream: List<Availability>) { streamList = stream }
 }

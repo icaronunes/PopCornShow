@@ -168,8 +168,8 @@ fun String.parseDateShot(): String {
 }
 
 fun String.getNameTypeReel(): String {
-    return replace(" ", "-")
-        .replace(":", "")
+    return replace(":", "-")
+        .replace(" ", "-")
         .replace("&", "-")
         .replace(".", "")
         .replace("é", "e")
@@ -188,6 +188,9 @@ fun String.getNameTypeReel(): String {
         .replace("´", "")
         .replace("~", "")
         .replace("^", "")
+        .replace("---", "-")
+        .replace("----", "-")
+        .replace("--", "-")
         .toLowerCase()
 }
 

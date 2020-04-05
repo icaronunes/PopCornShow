@@ -28,10 +28,10 @@ class MoviesActivity : BaseActivity() {
 
     private fun getTitleChoose() {
         supportActionBar!!.title = when (intent.getStringExtra(Constant.NAV_DRAW_ESCOLIDO)) {
-            Api.TYPESEARCH.FILME.agora -> getString(R.string.now_playing)
-            Api.TYPESEARCH.FILME.chegando -> getString(R.string.upcoming)
+            Api.TYPESEARCH.FILME.now -> getString(R.string.now_playing)
+            Api.TYPESEARCH.FILME.upComing -> getString(R.string.upcoming)
             Api.TYPESEARCH.FILME.popular -> getString(R.string.populares)
-            Api.TYPESEARCH.FILME.melhores -> getString(R.string.top_rated)
+            Api.TYPESEARCH.FILME.bestScore -> getString(R.string.top_rated)
             else -> getString(R.string.app_name)
         }
     }

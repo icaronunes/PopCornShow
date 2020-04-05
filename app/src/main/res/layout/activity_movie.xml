@@ -79,7 +79,7 @@
             layout="@layout/fab_float"
             android:visibility="visible" />
 
-        <customview.StreamView
+        <customview.StreamViewMovie
             android:id="@+id/streamview_movie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
             app:label_rent="@string/rent"
             app:label_stream="@string/stream"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-            app:title_streaming="@string/stream_avaliable" />
+            app:title_streaming="@string/stream_avaliable_movie" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -185,7 +185,9 @@
     ///// Stream
     //////////////
 
-    <string name="stream_avaliable">Donde ver la pelicula</string>
+    <string name="stream_avaliable_movie">Donde ver la película</string>
+    <string name="stream_avaliable_tv">Donde ver la serie</string>
+    <string name="main_stream_tv">Mejores proveedores</string>
     <string name="rent">Alquilar</string>
     <string name="purchase">Comprar</string>
     <string name="valid_us">Valid for USA</string>

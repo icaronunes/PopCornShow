@@ -7,6 +7,8 @@ import android.animation.PropertyValuesHolder
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -19,6 +21,7 @@ import android.widget.TextView
 import android.widget.Toast
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
@@ -28,7 +31,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
-import utils.Api
 import domain.FilmeService
 import domain.TvSeasons
 import domain.TvshowDB
@@ -43,19 +45,29 @@ import kotlinx.android.synthetic.main.fab_float.menu_item_watchlist
 import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal
 import kotlinx.android.synthetic.main.tvserie_activity.collapsing_toolbar
 import kotlinx.android.synthetic.main.tvserie_activity.img_top_tvshow
+import kotlinx.android.synthetic.main.tvserie_activity.streamview_tv
 import kotlinx.android.synthetic.main.tvserie_activity.tabLayout
 import kotlinx.android.synthetic.main.tvserie_activity.toolbar
 import kotlinx.android.synthetic.main.tvserie_activity.viewPager_tvshow
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import rx.Observer
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import tvshow.TvShowAdapter
+import utils.Api
 import utils.Constant
 import utils.UtilsApp
 import utils.UtilsApp.setEp2
+import utils.getNameTypeReel
 import utils.gone
 import utils.makeToast
+import utils.setAnimation
 import utils.visible
 import java.io.File
 import java.text.ParseException
@@ -108,6 +120,39 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
         }
     }
 
+    private fun getDateReel() {
+        GlobalScope.launch(Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, erro ->
+            Handler(Looper.getMainLooper()).post {
+                Log.d(this.javaClass.name, erro.message!!)
+                streamview_tv.error = true
+                setAnimated()
+            }
+        }) {
+            val reelGood = withContext(Dispatchers.IO) {
+                Api(this@TvShowActivity).getAvaliableShow(getIdStream())
+            }
+            streamview_tv.fillStream(series?.name ?: "", reelGood.sources)
+            setAnimated()
+        }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun setAnimated() {
+        // Todo colocar dentro do Stream
+        val sheet = BottomSheetBehavior.from(streamview_tv)
+        (sheet as? BottomSheetBehavior<View>)?.setAnimation(viewPager_tvshow, streamview_tv.findViewById(R.id.title_streaming))
+        streamview_tv.setClose(sheet)
+    }
+
+    private fun getIdStream(): String {
+        return try {
+            "${series?.originalName?.getNameTypeReel()
+                ?: ""}-${series?.firstAirDate?.substring(0, 4)}"
+        } catch (ex: java.lang.Exception) {
+            ""
+        }
+    }
+
     private fun setTitleAndDisableTalk() {
         collapsing_toolbar.title = " "
         collapsing_toolbar.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
@@ -117,7 +162,6 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
     }
 
     private fun getDadosTvshow() {
-
         val subscriber = Api(this)
             .loadTvshowComVideo(idTvshow)
             .subscribeOn(Schedulers.io())
@@ -126,6 +170,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                 override fun onCompleted() {
                     setDados()
                     setFab()
+                    getDateReel()
                 }
 
                 override fun onError(e: Throwable) {

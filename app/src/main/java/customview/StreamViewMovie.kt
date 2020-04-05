@@ -35,7 +35,7 @@ import kotlin.properties.Delegates
 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
 na implementacao da view no xml
  */
-class StreamView : FrameLayout {
+class StreamViewMovie : FrameLayout {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
@@ -58,15 +58,15 @@ class StreamView : FrameLayout {
     private fun initView(attrs: AttributeSet?) {
         attrs ?: return
 
-        with(context.obtainStyledAttributes(attrs, R.styleable.StreamView)) {
+        with(context.obtainStyledAttributes(attrs, R.styleable.StreamViewMovie)) {
             try {
-                title = getString(R.styleable.StreamView_title_streaming)
-                error = getBoolean(R.styleable.StreamView_error, false)
-                labelStream = getString(R.styleable.StreamView_label_stream)
-                labelRent = getString(R.styleable.StreamView_label_rent)
-                labelBay = getString(R.styleable.StreamView_label_bay)
-                iconSource = getDrawable(R.styleable.StreamView_errorImg)
-                titleMovie = getString(R.styleable.StreamView_movie_name)
+                title = getString(R.styleable.StreamViewMovie_title_streaming)
+                error = getBoolean(R.styleable.StreamViewMovie_error, false)
+                labelStream = getString(R.styleable.StreamViewMovie_label_stream)
+                labelRent = getString(R.styleable.StreamViewMovie_label_rent)
+                labelBay = getString(R.styleable.StreamViewMovie_label_bay)
+                iconSource = getDrawable(R.styleable.StreamViewMovie_errorImg)
+                titleMovie = getString(R.styleable.StreamViewMovie_movie_name)
             } finally {
                 recycle()
             }
@@ -74,7 +74,7 @@ class StreamView : FrameLayout {
     }
 
     fun isListsEmpty() = rent.isEmpty() && bay.isEmpty() && stream.isEmpty()
-    fun setClose(sheet: BottomSheetBehavior<StreamView>) {
+    fun setClose(sheet: BottomSheetBehavior<StreamViewMovie>) {
         open_bar.setOnClickListener {
             sheet.state = when (sheet.state) {
                 BottomSheetBehavior.STATE_EXPANDED -> BottomSheetBehavior.STATE_COLLAPSED
@@ -83,7 +83,7 @@ class StreamView : FrameLayout {
         }
     }
 
-    var iconSource: Drawable? by Delegates.observable<Drawable?>(null) { _, _, iconErro ->
+    private var iconSource: Drawable? by Delegates.observable<Drawable?>(null) { _, _, iconErro ->
         stream_error.setImageDrawable(iconErro)
         invalidate()
         requestLayout()
@@ -151,19 +151,19 @@ class StreamView : FrameLayout {
 
     var titleMovie: String? = ""
 
-    var labelStream: String? by Delegates.observable(context.getString(R.string.stream)) { _, _, title ->
+    private var labelStream: String? by Delegates.observable(context.getString(R.string.stream)) { _, _, title ->
         label_stream.text = title
         invalidate()
         requestLayout()
     }
 
-    var labelRent: String? by Delegates.observable(context.getString(R.string.rent)) { _, _, title ->
+    private var labelRent: String? by Delegates.observable(context.getString(R.string.rent)) { _, _, title ->
         label_rent.text = title
         invalidate()
         requestLayout()
     }
 
-    var labelBay: String? by Delegates.observable(context.getString(R.string.purchase)) { _, _, title ->
+    private var labelBay: String? by Delegates.observable(context.getString(R.string.purchase)) { _, _, title ->
         label_bay.text = title
         invalidate()
         requestLayout()

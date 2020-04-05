@@ -10,11 +10,11 @@ import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
 import domain.ViewType
 import domain.reelgood.Availability
-import filme.adapter.StreamMovieDelegatesAdapter.Companion.huluPackage
 import kotlinx.android.synthetic.main.sources_item_layout.view.source_hd
 import kotlinx.android.synthetic.main.sources_item_layout.view.source_sd
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
+import utils.Constant.TypeStream.huluPackage
 
 class StreamMovieHuluAdapter(val subscription: Boolean = false, val purchase: Boolean = false, titleMedia: String = "") : ViewTypeDelegateAdapter {
     override fun onCreateViewHolder(parent: ViewGroup) = StreamMovieHolder(parent)

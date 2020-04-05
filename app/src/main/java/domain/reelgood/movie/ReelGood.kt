@@ -1,10 +1,12 @@
-package domain.reelgood
+package domain.reelgood.movie
 
 import com.google.gson.annotations.SerializedName
+import domain.reelgood.Availability
 
 data class ReelGood(
     @SerializedName("availability")
-    val availability: List<Availability> //,
+    val availability: List<Availability>
+    //,
 /*    @SerializedName("classification")
 //    val classification: String?, // 13+
 //    @SerializedName("countries")

@@ -157,13 +157,13 @@ class MainFragment : BaseFragment() {
             when (id) {
                 R.id.chip_now_playing -> {
                     startActivity(Intent(activity, MoviesActivity::class.java).apply {
-                        putExtra(Constant.NAV_DRAW_ESCOLIDO, FILME.agora)
+                        putExtra(Constant.NAV_DRAW_ESCOLIDO, FILME.now)
                     })
                 }
 
                 R.id.chip_upcoming -> {
                     startActivity(Intent(activity, MoviesActivity::class.java).apply {
-                        putExtra(Constant.NAV_DRAW_ESCOLIDO, FILME.chegando)
+                        putExtra(Constant.NAV_DRAW_ESCOLIDO, FILME.upComing)
                     })
                 }
 
@@ -175,7 +175,7 @@ class MainFragment : BaseFragment() {
 
                 R.id.chip_top_rated -> {
                     startActivity(Intent(activity, MoviesActivity::class.java).apply {
-                        putExtra(Constant.NAV_DRAW_ESCOLIDO, FILME.melhores)
+                        putExtra(Constant.NAV_DRAW_ESCOLIDO, FILME.bestScore)
                     })
                 }
             }
@@ -187,12 +187,12 @@ class MainFragment : BaseFragment() {
             when (id) {
                 R.id.chip_air_data -> {
                     val intent = Intent(activity, TvShowsActivity::class.java)
-                    intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, SERIE.semana)
+                    intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, SERIE.week)
                     startActivity(intent)
                 }
                 R.id.chip_today -> {
                     val intent = Intent(activity, TvShowsActivity::class.java)
-                    intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, SERIE.hoje)
+                    intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, SERIE.toDay)
                     startActivity(intent)
                 }
                 R.id.chip_populares_tvshow -> {
@@ -203,7 +203,7 @@ class MainFragment : BaseFragment() {
 
                 R.id.chip_top_rated_tvshow -> {
                     val intent = Intent(activity, TvShowsActivity::class.java)
-                    intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, SERIE.melhores)
+                    intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, SERIE.bestScore)
                     startActivity(intent)
                 }
             }
