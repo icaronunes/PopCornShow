@@ -39,7 +39,7 @@
         android:id="@+id/icon_source"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:layout_marginTop="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

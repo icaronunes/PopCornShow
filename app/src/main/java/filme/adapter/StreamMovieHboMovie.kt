@@ -8,13 +8,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
+import customview.TypeEnumStream
+import customview.TypeEnumStream.EP
+import customview.TypeEnumStream.MOVIE
+import customview.TypeEnumStream.TV
 import domain.ViewType
 import domain.reelgood.Availability
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constant.TypeStream.hboPackage
 
-class StreamMovieHboAdapterAdapter(val subscription: Boolean = false, val purchase: Boolean = false) : ViewTypeDelegateAdapter {
+class StreamMovieHboAdapter(val subscription: Boolean = false,
+    val purchase: Boolean = false,
+    val type: TypeEnumStream) :
+    BaseStream(), ViewTypeDelegateAdapter {
     override fun onCreateViewHolder(parent: ViewGroup) = StreamMovieHolder(parent)
 
     override fun onBindViewHolder(holder: ViewHolder, item: ViewType?, context: Context?) {
@@ -26,25 +33,35 @@ class StreamMovieHboAdapterAdapter(val subscription: Boolean = false, val purcha
             iconSource = resources.getDrawable(R.drawable.hbo, null)
             setOnClickListener {
                 try {
-                    callAppOrWeb(availability, hboPackage) {
+                    callAppOrWeb(availability, typeStream) {
                         val intent = Intent(Intent.ACTION_VIEW)
                         intent.data = Uri.parse(getLink(availability))
                         context.startActivity(intent)
                     }
                 } catch (ex: Exception) {
                     Crashlytics.log("Erro no Stream - ${availability.toString()}")
+                    tryWebLink(availability,  context)
                 }
             }
         }
     }
 
+    private fun tryWebLink(availability: Availability?, context: Context) {
+        val linkWeb = availability?.sourceData?.links?.web
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(linkWeb ?: "https://play.hbogo.com/")
+        context.startActivity(intent)
+    }
+
     private fun getLink(availability: Availability?): String {
         if (availability == null) return "https://play.hbogo.com/"
-        val id = availability.sourceData?.references?.web?.movieId
-            ?: availability.sourceData?.references?.android?.movieId
-            ?: availability.sourceData?.references?.ios?.movieId
-        return if (id != null) {
-            "http://play.hbogo.com/feature/urn:hbo:feature:$id"
-        } else "https://play.hbogo.com/"
+        if (availability.sourceData?.references == null) return "https://play.hbogo.com/"
+
+        return when (type) {
+            EP, TV -> "android-app://com.hbo.hbonow/https/play.hbonow.com/episode/urn:hbo:episode:${getSomeReference(availability, type)}"
+            MOVIE -> "hbogo://deeplink/MO.MO/${getSomeReference(availability, type)}"
+        }
     }
+
+    override val typeStream: String = hboPackage
 }

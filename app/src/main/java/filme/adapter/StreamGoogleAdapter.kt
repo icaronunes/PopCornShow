@@ -8,15 +8,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
+import customview.TypeEnumStream
 import domain.ViewType
 import domain.reelgood.Availability
-import kotlinx.android.synthetic.main.sources_item_layout.view.source_hd
-import kotlinx.android.synthetic.main.sources_item_layout.view.source_sd
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
-import utils.Constant.TypeStream.huluPackage
+import utils.Constant.TypeStream.googleVideosPackage
 
-class StreamMovieHuluAdapter(val subscription: Boolean = false, val purchase: Boolean = false, titleMedia: String = "") : ViewTypeDelegateAdapter {
+class StreamGoogleAdapter(
+    val subscription: Boolean = false,
+    val purchase: Boolean = false,
+    private val titleMovie: String? = "",
+    type: TypeEnumStream
+) : BaseStream(), ViewTypeDelegateAdapter {
     override fun onCreateViewHolder(parent: ViewGroup) = StreamMovieHolder(parent)
 
     override fun onBindViewHolder(holder: ViewHolder, item: ViewType?, context: Context?) {
@@ -25,17 +29,16 @@ class StreamMovieHuluAdapter(val subscription: Boolean = false, val purchase: Bo
 
     inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
         fun bind(availability: Availability?) = with(itemView.source_item) {
-            iconSource = resources.getDrawable(R.drawable.hulu, null)
+            iconSource = resources.getDrawable(R.drawable.google, null)
             if (!subscription) {
-                source_sd.text = if (purchase) "SD: ${availability?.purchaseCostSd
+                sourceSd = if (purchase) "SD: ${availability?.purchaseCostSd
                     ?: "--"}" else "SD: ${availability?.rentalCostSd ?: "--"}"
-                source_hd.text = if (purchase) "HD: ${availability?.purchaseCostHd
-                    ?: "--"}" else "SD: ${availability?.rentalCostHd ?: "--"}"
+                sourceHd = if (purchase) "HD: ${availability?.purchaseCostHd
+                    ?: "--"}" else "HD: ${availability?.rentalCostHd ?: "--"}"
             }
-
             setOnClickListener {
                 try {
-                    callAppOrWeb(availability = availability, packagerCall = huluPackage) {
+                    callAppOrWeb(availability, typeStream) {
                         val intent = Intent(Intent.ACTION_VIEW)
                         val link = getLink(availability)
                         intent.data = Uri.parse(link)
@@ -49,12 +52,15 @@ class StreamMovieHuluAdapter(val subscription: Boolean = false, val purchase: Bo
     }
 
     private fun getLink(availability: Availability?): String {
-        if (availability == null) return "https://www.hulu.com/welcome"
+        if (availability == null) return "https://play.google.com/store/search?q=$titleMovie"
         val id = availability.sourceData?.references?.web?.movieId
             ?: availability.sourceData?.references?.android?.movieId
             ?: availability.sourceData?.references?.ios?.movieId
         return if (id != null) {
-            "https://www.hulu.com/movie/$id"
-        } else "https://www.hulu.com/welcome"
+
+            "https://play.google.com/store/movies/details/?id=$id"
+        } else "https://play.google.com/store/search?q=$titleMovie&c=movies"
     }
+
+    override val typeStream: String = googleVideosPackage
 }

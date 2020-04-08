@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
+import customview.TypeEnumStream
 import domain.ViewType
 import domain.reelgood.Availability
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constant.TypeStream.amazonPackage
 
-class StreamMovieAmazonAdapterAdapter(val subscription: Boolean = false, val purchase: Boolean = false) : ViewTypeDelegateAdapter {
+class StreamMovieAmazonAdapter(val subscription: Boolean = false, val purchase: Boolean = false, type: TypeEnumStream) : ViewTypeDelegateAdapter {
     override fun onCreateViewHolder(parent: ViewGroup) = StreamMovieHolder(parent)
 
     override fun onBindViewHolder(holder: ViewHolder, item: ViewType?, context: Context?) {

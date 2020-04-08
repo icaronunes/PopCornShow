@@ -34,7 +34,10 @@ class StreamViewTv : FrameLayout {
     private lateinit var name: String
 
     constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) { initView(attrs) }
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        initView(attrs)
+    }
+
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context, attrs, defStyleAttr) {
         initView(attrs)
@@ -79,17 +82,21 @@ class StreamViewTv : FrameLayout {
     }
 
     private var stream: List<String> by Delegates.observable(listOf()) { _, _, listStream ->
-        error = false
-        tvRc.apply {
-            setHasFixedSize(true)
-            itemAnimator = DefaultItemAnimator()
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = StreamTvDelegatesAdapter(true, titleMedia = name).apply {
-                addStream(listStream.map {
-                    Availability().apply {
-                        sourceName = it
-                    }
-                })
+        if (listStream.isEmpty()) {
+            error = true
+        } else {
+            error = false
+            tvRc.apply {
+                setHasFixedSize(true)
+                itemAnimator = DefaultItemAnimator()
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                adapter = StreamTvDelegatesAdapter(true, titleMedia = name).apply {
+                    addStream(listStream.map {
+                        Availability().apply {
+                            sourceName = it
+                        }
+                    })
+                }
             }
         }
         invalidate()

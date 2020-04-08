@@ -56,7 +56,7 @@ class SourceItem : FrameLayout {
         packagerCall: String,
         callActivity: (Availability?) -> Unit
     ) {
-        val pack = context.packageManager.getLaunchIntentForPackage(packagerCall)
+        val pack = if(packagerCall.isNotEmpty()) context.packageManager.getLaunchIntentForPackage(packagerCall) else null
         if (pack != null) {
             try {
                 val intent = Intent(Intent.ACTION_MAIN)

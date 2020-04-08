@@ -781,7 +781,7 @@ class Api(val context: Context): ApiSingleton() {
                             val lista = Gson().fromJson(json, ReelGoodTv::class.java)
                             continuation.resume(lista)
                         } else {
-                            continuation.resumeWithException(Exception("Failure"))
+                            continuation.resumeWithException(Exception(response.message))
                         }
                     } catch (ex: Exception) {
                         continuation.resumeWithException(ex)

@@ -54,6 +54,8 @@ class StreamViewMovie : FrameLayout {
         inflate(context, R.layout.bottom_streaming, this)
     }
 
+    lateinit var titleMovie: String
+
     @SuppressLint("CustomViewStyleable")
     private fun initView(attrs: AttributeSet?) {
         attrs ?: return
@@ -66,7 +68,7 @@ class StreamViewMovie : FrameLayout {
                 labelRent = getString(R.styleable.StreamViewMovie_label_rent)
                 labelBay = getString(R.styleable.StreamViewMovie_label_bay)
                 iconSource = getDrawable(R.styleable.StreamViewMovie_errorImg)
-                titleMovie = getString(R.styleable.StreamViewMovie_movie_name)
+                titleMovie = getString(R.styleable.StreamViewMovie_movie_name) ?: ""
             } finally {
                 recycle()
             }
@@ -148,8 +150,6 @@ class StreamViewMovie : FrameLayout {
     var title: String? by Delegates.observable<String?>("") { _, _, title ->
         title_streaming.text = title
     }
-
-    var titleMovie: String? = ""
 
     private var labelStream: String? by Delegates.observable(context.getString(R.string.stream)) { _, _, title ->
         label_stream.text = title

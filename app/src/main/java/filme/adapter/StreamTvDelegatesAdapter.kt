@@ -1,31 +1,19 @@
 package filme.adapter
 
 import android.view.ViewGroup
-import androidx.collection.SparseArrayCompat
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import customview.TypeEnumStream
 import domain.reelgood.Availability
-import pessoaspopulares.adapter.LoadingDelegateAdapter
-import pessoaspopulares.adapter.ViewTypeDelegateAdapter
-import utils.Constant
 
-class StreamTvDelegatesAdapter(val subscription: Boolean, val purchase: Boolean = false, val titleMedia: String? = "") : Adapter<ViewHolder>() {
+class StreamTvDelegatesAdapter(val subscription: Boolean, val purchase: Boolean = false, val titleMedia: String = ""): Adapter<ViewHolder>(){
 
     private var streamList: List<Availability> = mutableListOf()
-    private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
-
-    init {
-        delegateAdapters.run {
-            put(Constant.ReelGood.LOADING, LoadingDelegateAdapter())
-            put(Constant.ReelGood.NETFLIX, StreamMovieNetflixAdapter(subscription, purchase))
-            put(Constant.ReelGood.HBO, StreamMovieHboAdapterAdapter(subscription, purchase))
-            put(Constant.ReelGood.HULU, StreamMovieHuluAdapter(subscription, purchase))
-            put(Constant.ReelGood.STARZ, StreamMovieStarzAdapterAdapter(subscription, purchase))
-            put(Constant.ReelGood.GOOGLEPLAY, StreamMovieGoogleAdapterAdapter(subscription, purchase, titleMedia))
-            put(Constant.ReelGood.AMAZON, StreamMovieAmazonAdapterAdapter(subscription, purchase))
-            put(Constant.ReelGood.WEB, StreamMovieGenericWebAdapterAdapter(subscription, purchase, titleMedia))
-        }
-    }
+    private var delegateAdapters = AdapterListStreams(subscription = subscription,
+        purchase = purchase,
+        titleMedia = titleMedia,
+        type = TypeEnumStream.TV)
+        .getDeleteAdapters()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return delegateAdapters.get(viewType)!!.onCreateViewHolder(parent)

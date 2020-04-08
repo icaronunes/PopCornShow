@@ -131,7 +131,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
             val reelGood = withContext(Dispatchers.IO) {
                 Api(this@TvShowActivity).getAvaliableShow(getIdStream())
             }
-            streamview_tv.fillStream(series?.name ?: "", reelGood.sources)
+            streamview_tv.fillStream(series?.originalName?.getNameTypeReel() ?: "", reelGood.sources)
             setAnimated()
         }
     }

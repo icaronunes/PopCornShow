@@ -76,6 +76,8 @@ object Constant {
         const val HULU = 6
         const val AMAZON = 7
         const val WEB = 8
+        const val ADULT_SWIM = 9
+        const val FUBO = 10
     }
 
     object TypeStream{
@@ -85,6 +87,7 @@ object Constant {
         const val hboPackage = "com.hbo.broadband.br"
         const val starzPackage = "com.starz.starzplay.android"
         const val amazonPackage = "com.amazon.avod.thirdpartyclient"
+        const val adultswin = "com.adultswim.videoapp.android"
     }
 
     object Signal {

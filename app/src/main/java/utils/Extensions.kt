@@ -170,7 +170,7 @@ fun String.parseDateShot(): String {
 fun String.getNameTypeReel(): String {
     return replace(":", "-")
         .replace(" ", "-")
-        .replace("&", "-")
+        .replace("&", "and")
         .replace(".", "")
         .replace("é", "e")
         .replace("ẽ", "e")

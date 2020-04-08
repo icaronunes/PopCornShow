@@ -156,7 +156,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
             }.await()
 
             if (reelGood.availability.isNotEmpty()) {
-                streamview_movie.titleMovie = movieDb?.title ?: ""
+                streamview_movie.titleMovie = movieDb?.originalTitle ?: ""
                 streamview_movie.stream = reelGood.availability.filter {
                     it.accessType == 2
                 }
