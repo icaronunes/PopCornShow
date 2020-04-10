@@ -72,7 +72,7 @@
 
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/production_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -100,8 +100,8 @@
                 android:textColor="@color/primary"
                 android:text="@string/two_minus"
                 app:layout_constraintEnd_toStartOf="@+id/status"
-                app:layout_constraintStart_toEndOf="@+id/textView"
-                app:layout_constraintTop_toTopOf="@+id/textView"
+                app:layout_constraintStart_toEndOf="@+id/production_label"
+                app:layout_constraintTop_toTopOf="@+id/production_label"
                 tools:text="Revolution Sun Studio" />
 
             <TextView

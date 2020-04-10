@@ -38,7 +38,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import configuracao.SettingsActivity
-import utils.Api
 import domain.Imdb
 import domain.UserTvshow
 import domain.tvshow.SeasonsItem
@@ -62,6 +61,7 @@ import kotlinx.android.synthetic.main.tvshow_info.original_title
 import kotlinx.android.synthetic.main.tvshow_info.popularity
 import kotlinx.android.synthetic.main.tvshow_info.production_countries
 import kotlinx.android.synthetic.main.tvshow_info.produtora
+import kotlinx.android.synthetic.main.tvshow_info.production_label
 import kotlinx.android.synthetic.main.tvshow_info.proximo_ep_date
 import kotlinx.android.synthetic.main.tvshow_info.recycle_tvshow_elenco
 import kotlinx.android.synthetic.main.tvshow_info.recycle_tvshow_producao
@@ -88,6 +88,7 @@ import site.Site
 import temporada.TemporadaActivity
 import tvshow.TemporadasAdapter
 import tvshow.adapter.SimilaresSerieAdapter
+import utils.Api
 import utils.Config
 import utils.ConstFirebase.ASSISTIDO
 import utils.ConstFirebase.SEASONS
@@ -622,7 +623,12 @@ class TvShowFragment : FragmentBase() {
         series.productionCompanies?.let {
             val production = series.productionCompanies?.getOrNull(0)
             produtora?.setTextColor(color)
-            produtora?.text = production?.name
+            if (production?.name.isNullOrBlank()) {
+                produtora.gone()
+                production_label.gone()
+            } else {
+                produtora?.text = production?.name
+            }
 
             produtora?.setOnClickListener {
                 if (production != null) {
@@ -638,8 +644,8 @@ class TvShowFragment : FragmentBase() {
 
     private fun setCategoria() {
         categoria_tvshow?.text = StringBuilder().apply {
-            series.genres?.forEachIndexed {  index, it ->
-                if(index != 0) append(" | ")
+            series.genres?.forEachIndexed { index, it ->
+                if (index != 0) append(" | ")
                 append("${it?.name}")
             }
         }.toString()
