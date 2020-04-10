@@ -23,8 +23,10 @@ import tvshow.activity.TvShowActivity
 import utils.Constant
 import utils.UtilsApp
 import utils.enums.EnumTypeMedia
+import utils.getNameTypeReel
 import utils.setPicasso
 import utils.setPicassoWithCache
+import utils.yearDate
 
 class SearchPersonAdapter : ViewTypeDelegateAdapter {
 
@@ -93,6 +95,7 @@ class SearchPersonAdapter : ViewTypeDelegateAdapter {
                         putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
                         putExtra(Constant.FILME_ID, knownFor.id)
                         putExtra(Constant.NOME_FILME, knownFor.title)
+
                     })
                 }
                 EnumTypeMedia.TV.type -> {
@@ -100,6 +103,7 @@ class SearchPersonAdapter : ViewTypeDelegateAdapter {
                         putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
                         putExtra(Constant.TVSHOW_ID, knownFor.id)
                         putExtra(Constant.NOME_TVSHOW, knownFor.name)
+                        putExtra(Constant.ID_REEL, "${knownFor.originalName.getNameTypeReel()}-${knownFor.firstDate.yearDate()}")
                     })
                 }
             }

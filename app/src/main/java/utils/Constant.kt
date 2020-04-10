@@ -22,6 +22,7 @@ object Constant {
     const val YOU_TUBE_KEY = "youtube_key"
     const val SINOPSE = "sinopse"
 
+    const val ID_REEL = "reel_id"
     const val COLOR_TOP = "color_top"
     const val COLOR = "color"
     const val PRODUTORA_ID = "produtora_id"

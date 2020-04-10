@@ -13,9 +13,11 @@ import domain.person.CastItem
 import tvshow.activity.TvShowActivity
 import utils.Constant
 import utils.UtilsApp
+import utils.getNameTypeReel
 import utils.gone
 import utils.setPicassoWithCache
 import utils.visible
+import utils.yearDate
 
 /**
  * Created by icaro on 18/08/16.
@@ -56,6 +58,7 @@ class PersonTvAdapter(private val context: Context, private val personCredits: L
                     putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
                     putExtra(Constant.TVSHOW_ID, credit.id)
                     putExtra(Constant.NOME_TVSHOW, credit.title)
+                    putExtra(Constant.ID_REEL, "${credit.originalTitle?.getNameTypeReel()}-${credit.firstAir?.yearDate()}")
                 })
             }
         }

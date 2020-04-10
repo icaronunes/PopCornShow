@@ -15,9 +15,11 @@ import kotlinx.android.synthetic.main.poster_main.view.title_main
 import tvshow.activity.TvShowActivity
 import utils.Constant
 import utils.UtilsApp
+import utils.getNameTypeReel
 import utils.gone
 import utils.setPicassoWithCache
 import utils.visible
+import utils.yearDate
 
 class SimilaresSerieAdapter(val activity: FragmentActivity, private val similarItems: List<ResultsItem?>?) :
     RecyclerView.Adapter<SimilaresSerieAdapter.SimilaresSerieHolde>() {
@@ -50,6 +52,7 @@ class SimilaresSerieAdapter(val activity: FragmentActivity, private val similarI
                     putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_poster_grid))
                     putExtra(Constant.NOME_TVSHOW, tvshow.name)
                     putExtra(Constant.TVSHOW_ID, tvshow.id)
+                    putExtra(Constant.ID_REEL, "${tvshow.originalName?.getNameTypeReel()}-${tvshow.firstAirDate?.yearDate()}")
                 })
             }
         }

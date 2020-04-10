@@ -59,6 +59,7 @@ import utils.Constant
 import utils.UtilsApp
 import utils.getNameTypeReel
 import utils.setAnimation
+import utils.yearDate
 import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -135,10 +136,10 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
         subscriptions.add(inscricaoMovie)
     }
 
-    fun getIdStream(): String {
+    private fun getIdStream(): String {
         return try {
             "${movieDb?.originalTitle?.getNameTypeReel()
-                ?: ""}-${movieDb?.releaseDate?.substring(0, 4)}"
+                ?: ""}-${movieDb?.releaseDate?.yearDate()}"
         } catch (ex: java.lang.Exception) {
             ""
         }
@@ -524,7 +525,6 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
     }
 
     private fun setFragmentInfo() {
-
 
         movieFragment = MovieFragment().apply {
             arguments = Bundle().apply {

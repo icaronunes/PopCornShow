@@ -19,6 +19,8 @@ data class KnownFor(
     val mediaType: String = "",
     @SerializedName("original_language")
     val originalLanguage: String = "",
+    @SerializedName("original_name")
+    val originalName: String = "",
     @SerializedName("original_title")
     val originalTitle: String = "",
     @SerializedName("overview")
@@ -38,5 +40,7 @@ data class KnownFor(
     @SerializedName("vote_average")
     val voteAverage: Double = 0.0,
     @SerializedName("vote_count")
-    val voteCount: Int = 0
+    val voteCount: Int = 0,
+    @SerializedName("first_air_date")
+    val firstDate: String = ""
 ) : Parcelable

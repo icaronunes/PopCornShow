@@ -54,6 +54,7 @@ class SimilaresListaSerieAdapter(
                 activity.startActivity(Intent(activity, TvShowActivity::class.java).apply {
                     putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_similares))
                     putExtra(Constant.TVSHOW_ID, item.id)
+
                 })
             }
         }

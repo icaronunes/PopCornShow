@@ -17,7 +17,9 @@ import tvshow.activity.TvShowActivity
 import utils.Constant
 import utils.UtilsApp
 import utils.enums.EnumTypeMedia
+import utils.getNameTypeReel
 import utils.setPicassoWithCache
+import utils.yearDate
 
 class MultiSearchAdapter(val application: Context, private val multiReturn: MultiSearch, private val icon: Drawable?) :
     RecyclerView.Adapter<MultiSearchAdapter.HolderView>() {
@@ -58,6 +60,7 @@ class MultiSearchAdapter(val application: Context, private val multiReturn: Mult
                         putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
                         putExtra(Constant.TVSHOW_ID, item.id)
                         putExtra(Constant.NOME_TVSHOW, item.name)
+                        putExtra(Constant.ID_REEL, "${item.originalName?.getNameTypeReel()}-${item.firstAirDate?.yearDate()}")
                     })
                     icon?.alpha = 255
                 }

@@ -18,9 +18,11 @@ import kotlinx.android.synthetic.main.poster_main.view.title_main
 import tvshow.activity.TvShowActivity
 import utils.Constant
 import utils.UtilsApp
+import utils.getNameTypeReel
 import utils.gone
 import utils.setPicassoWithCache
 import utils.visible
+import utils.yearDate
 
 /**
  * Created by icaro on 17/02/17.
@@ -65,6 +67,7 @@ class TvShowMainAdapter(activity: FragmentActivity, private val popularTvshow: L
                 context.startActivity(Intent(context, TvShowActivity::class.java).apply {
                     putExtra(Constant.NOME_TVSHOW, item.name)
                     putExtra(Constant.TVSHOW_ID, item.id)
+                    putExtra(Constant.ID_REEL, "${item.originalName?.getNameTypeReel()}-${item.firstAirDate?.yearDate()}")
                     putExtra(Constant.COLOR_TOP, color)
                 })
             }

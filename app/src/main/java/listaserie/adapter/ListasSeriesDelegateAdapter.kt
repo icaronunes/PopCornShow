@@ -19,6 +19,8 @@ import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import tvshow.activity.TvShowActivity
 import utils.Constant
 import utils.UtilsApp
+import utils.getNameTypeReel
+import utils.yearDate
 
 class ListasSeriesDelegateAdapter : ViewTypeDelegateAdapter {
 
@@ -46,7 +48,6 @@ class ListasSeriesDelegateAdapter : ViewTypeDelegateAdapter {
                             progress_filmes_lista?.visibility = View.GONE
                             if (!item?.firstAirDate.isNullOrEmpty() && item?.firstAirDate?.length!! > 3) {
                                 title_filmes_lista.text = "${item.name} - ${item.firstAirDate.subSequence(0, 4)}"
-                            } else {
                             }
                             title_filmes_lista.visibility = View.VISIBLE
                         }
@@ -56,11 +57,13 @@ class ListasSeriesDelegateAdapter : ViewTypeDelegateAdapter {
                         }
                     })
 
-            itemView.setOnClickListener {
-                val intent = Intent(context, TvShowActivity::class.java)
-                intent.putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(imgFilmes))
-                intent.putExtra(Constant.TVSHOW_ID, item?.id)
-                intent.putExtra(Constant.NOME_TVSHOW, item?.name)
+            setOnClickListener {
+                val intent = Intent(context, TvShowActivity::class.java).apply {
+                    putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(imgFilmes))
+                    putExtra(Constant.TVSHOW_ID, item?.id)
+                    putExtra(Constant.NOME_TVSHOW, item?.name)
+                    putExtra(Constant.ID_REEL, "${item?.originalName?.getNameTypeReel()}-${item?.firstAirDate?.yearDate()}")
+                }
                 context.startActivity(intent)
             }
         }

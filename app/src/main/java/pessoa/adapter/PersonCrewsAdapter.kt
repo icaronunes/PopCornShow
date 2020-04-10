@@ -16,9 +16,11 @@ import filme.activity.MovieDetailsActivity
 import tvshow.activity.TvShowActivity
 import utils.Constant
 import utils.UtilsApp
+import utils.getNameTypeReel
 import utils.gone
 import utils.setPicassoWithCache
 import utils.visible
+import utils.yearDate
 
 /**
  * Created by icaro on 18/08/16.
@@ -76,6 +78,7 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
                             putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
                             putExtra(Constant.FILME_ID, item.id)
                             putExtra(Constant.NOME_FILME, item.title)
+                            putExtra(Constant.ID_REEL, "${item.originalTitle?.getNameTypeReel()}-${item.releaseDate?.yearDate()}")
                         })
                     }
                     "tv" -> {
@@ -83,6 +86,7 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
                             putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
                             putExtra(Constant.TVSHOW_ID, item.id)
                             putExtra(Constant.NOME_TVSHOW, item.title)
+                            putExtra(Constant.ID_REEL, "${item.originalName?.getNameTypeReel()}-${item.firstAir?.yearDate()}")
                         })
                     }
                     else -> {

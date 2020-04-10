@@ -17,8 +17,10 @@ import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import tvshow.activity.TvShowActivity
 import utils.Constant
 import utils.UtilsApp
+import utils.getNameTypeReel
 import utils.gone
 import utils.setPicassoWithCache
+import utils.yearDate
 
 class SearchTvAdapter : ViewTypeDelegateAdapter {
 
@@ -48,6 +50,7 @@ class SearchTvAdapter : ViewTypeDelegateAdapter {
                     putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
                     putExtra(Constant.TVSHOW_ID, series.id)
                     putExtra(Constant.NOME_TVSHOW, series.name)
+                    putExtra(Constant.ID_REEL, "${series.originalName.getNameTypeReel()}-${series.firstAirDate.yearDate()}")
                 })
             }
 

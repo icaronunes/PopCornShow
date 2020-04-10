@@ -78,6 +78,7 @@ import java.util.Locale
 class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : BaseActivityAb() {
 
     private var idTvshow: Int = 0
+    private var idReel: String = ""
     private var colorTop: Int = 0
     private var series: Tvshow? = null
     private var addFavorite = true
@@ -92,11 +93,11 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
     private var myFavorite: DatabaseReference? = null
     private var myWatch: DatabaseReference? = null
     private var myRated: DatabaseReference? = null
-    private var numero_rated: Float = 0.0f
+    private var numberRated: Float = 0.0f
     private var database: FirebaseDatabase? = null
     private var userTvshow: UserTvshow? = null
     private var userTvshowOld: UserTvshow? = null
-    private var compositeSubscription: CompositeSubscription? = null
+    private var compositeSubscription: CompositeSubscription = CompositeSubscription()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,8 +111,9 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 
         setColorFab(colorTop)
 
+        if (idReel.isNotEmpty()) getDateReel(idReel)
+
         iniciarFirebases()
-        compositeSubscription = CompositeSubscription()
 
         if (UtilsApp.isNetWorkAvailable(baseContext)) {
             getDadosTvshow()
@@ -120,7 +122,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
         }
     }
 
-    private fun getDateReel() {
+    private fun getDateReel(idReel: String = getIdStream()) {
         GlobalScope.launch(Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, erro ->
             Handler(Looper.getMainLooper()).post {
                 Log.d(this.javaClass.name, erro.message!!)
@@ -128,10 +130,11 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                 setAnimated()
             }
         }) {
-            val reelGood = withContext(Dispatchers.IO) {
-                Api(this@TvShowActivity).getAvaliableShow(getIdStream())
+            val reelGood = withContext(Dispatchers.Default) {
+                Api(this@TvShowActivity).getAvaliableShow(idReel)
             }
-            streamview_tv.fillStream(series?.originalName?.getNameTypeReel() ?: "", reelGood.sources)
+            streamview_tv.fillStream(series?.originalName?.getNameTypeReel()
+                ?: "", reelGood.sources)
             setAnimated()
         }
     }
@@ -170,7 +173,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                 override fun onCompleted() {
                     setDados()
                     setFab()
-                    getDateReel()
+                    if (!intent.hasExtra(Constant.ID_REEL)) getDateReel(getIdStream())
                 }
 
                 override fun onError(e: Throwable) {
@@ -212,15 +215,15 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                     addRated = true
                     if (dataSnapshot.child(idTvshow.toString()).child("nota").exists()) {
                         val nota = dataSnapshot.child(idTvshow.toString()).child("nota").value.toString()
-                        numero_rated = java.lang.Float.parseFloat(nota)
+                        numberRated = java.lang.Float.parseFloat(nota)
                         menu_item_rated?.labelText = resources.getString(R.string.remover_rated)
-                        if (numero_rated == 0f) {
+                        if (numberRated == 0f) {
                             menu_item_rated?.labelText = resources.getString(R.string.adicionar_rated)
                         }
                     }
                 } else {
                     addRated = false
-                    numero_rated = 0f
+                    numberRated = 0f
                     menu_item_rated?.labelText = resources.getString(R.string.adicionar_rated)
                 }
             }
@@ -285,9 +288,15 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
         if (intent.action == null) {
             colorTop = intent.getIntExtra(Constant.COLOR_TOP, R.color.colorFAB)
             idTvshow = intent.getIntExtra(Constant.TVSHOW_ID, 0)
+            if (intent.hasExtra(Constant.ID_REEL)) {
+                idReel = intent.getStringExtra(Constant.ID_REEL)
+            }
         } else {
             colorTop = Integer.parseInt(intent.getStringExtra(Constant.COLOR_TOP))
             idTvshow = Integer.parseInt(intent.getStringExtra(Constant.TVSHOW_ID))
+            if (intent.hasExtra(Constant.ID_REEL)) {
+                idReel = intent.getStringExtra(Constant.ID_REEL)
+            }
         }
     }
 
@@ -359,7 +368,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
             } else {
 
                 val tvshowDB = TvshowDB().apply {
-                   title = series?.name
+                    title = series?.name
                     id = series?.id!!
                     poster = series?.posterPath
                 }
@@ -450,7 +459,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                 val title = alertDialog.findViewById<View>(R.id.rating_title) as TextView
                 title.text = series?.name
                 val ratingBar = alertDialog.findViewById<View>(R.id.ratingBar_rated) as RatingBar
-                ratingBar.rating = numero_rated / 2
+                ratingBar.rating = numberRated / 2
 
                 alertDialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
 

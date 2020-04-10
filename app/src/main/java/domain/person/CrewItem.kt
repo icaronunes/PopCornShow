@@ -20,7 +20,7 @@ data class CrewItem(
     val name: String? = null,
 
     @field:SerializedName("original_name") // tvshow
-    val nameOriginal: String? = null,
+    val originalName: String? = null,
 
     @field:SerializedName("video")
     val video: Boolean? = null,

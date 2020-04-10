@@ -167,6 +167,11 @@ fun String.parseDateShot(): String {
     }
 }
 
+@Throws(Exception::class)
+fun String.yearDate(): String {
+    return this.substring(0, 4)
+}
+
 fun String.getNameTypeReel(): String {
     return replace(":", "-")
         .replace(" ", "-")
