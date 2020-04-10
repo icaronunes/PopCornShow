@@ -1,4 +1,4 @@
-package domain.reelgood
+package domain.reelgood.movie
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 import utils.Constant
 
 @Parcelize
-class Availability : ViewType, Parcelable {
+class   Availability : ViewType, Parcelable {
     override fun getViewType(): Int {
         return when (sourceName) {
             "starz" -> Constant.ReelGood.STARZ

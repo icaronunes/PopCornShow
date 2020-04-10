@@ -8,28 +8,35 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
-import customview.stream.BaseStream
 import customview.stream.TypeEnumStream
+import customview.stream.TypeEnumStream.EP
+import customview.stream.TypeEnumStream.MOVIE
+import customview.stream.TypeEnumStream.TV
 import domain.ViewType
-import domain.reelgood.Availability
+import domain.reelgood.movie.Availability
+import customview.stream.BaseStreamAb
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constant.TypeStream
+import utils.getNameTypeReel
 
-class StreamMovieStarzAdapter(val subscription: Boolean = false,
+class AdultAdapterStreamAb(
+    val subscription: Boolean = false,
     val purchase: Boolean = false,
-    val titleMedia: String,
-    type: TypeEnumStream)   :
-    BaseStream(), ViewTypeDelegateAdapter {
+    private val titleMovie: String? = "",
+    private val type: TypeEnumStream
+) : BaseStreamAb(), ViewTypeDelegateAdapter {
+
+    override val typeStream: String = TypeStream.adultswin
     override fun onCreateViewHolder(parent: ViewGroup) = StreamMovieHolder(parent)
 
     override fun onBindViewHolder(holder: ViewHolder, item: ViewType?, context: Context?) {
         (holder as StreamMovieHolder).bind(item as? Availability)
     }
 
-    inner class StreamMovieHolder(val parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
+    inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
         fun bind(availability: Availability?) = with(itemView.source_item) {
-            iconSource = resources.getDrawable(R.drawable.starz, null)
+            iconSource = resources.getDrawable(R.drawable.adult_swim, null)
             if (!subscription) {
                 sourceSd = if (purchase) "SD: ${availability?.purchaseCostSd
                     ?: "--"}" else "SD: ${availability?.rentalCostSd ?: "--"}"
@@ -40,31 +47,25 @@ class StreamMovieStarzAdapter(val subscription: Boolean = false,
                 try {
                     callAppOrWeb(availability, typeStream) {
                         val intent = Intent(Intent.ACTION_VIEW)
-                        intent.data = Uri.parse(getSomeLink(availability, getLink(availability) )  )
+                        val link = getSomeLink(availability, getLink(availability))
+                        intent.data = Uri.parse(link)
                         context.startActivity(intent)
                     }
                 } catch (ex: Exception) {
-                   tryWebLink(availability,  context)
                     Crashlytics.log("Erro no Stream - ${availability.toString()}")
                 }
             }
         }
     }
 
-    private fun tryWebLink(availability: Availability?, context: Context) {
-        val linkWeb = availability?.sourceData?.links?.web
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(linkWeb ?: "https://www.starz.com/")
-            context.startActivity(intent)
-    }
-
     private fun getLink(availability: Availability?): String {
-        if (availability == null) return "https://www.starz.com/"
-        val id = availability.sourceData?.references?.web?.movieId
-            ?: availability.sourceData?.references?.android?.movieId
-            ?: availability.sourceData?.references?.ios?.movieId
-        return if (id != null) { "https://www.starz.com/movies/$id" } else "https://www.starz.com/"
-    }
+        if (availability == null) return "http://www.adultswim.com/"
+        if (availability.sourceData?.references == null) "http://www.adultswim.com/videos/${titleMovie?.getNameTypeReel()}"
 
-    override val typeStream: String = TypeStream.starzPackage
+        return when (type) {
+            MOVIE -> "http://www.adultswim.com/videos/${getSomeReference(availability, MOVIE)}"
+            TV -> "http://www.adultswim.com/videos/${getSomeReference(availability, TV)}"
+            EP -> "http://www.adultswim.com/videos/${getSomeReference(availability, TV)}/${getSomeReference(availability, EP)}"
+        }
+    }
 }

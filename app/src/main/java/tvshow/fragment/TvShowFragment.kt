@@ -38,6 +38,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import configuracao.SettingsActivity
+import customview.stream.BaseStream
+import customview.stream.BaseStreamAb
 import domain.Imdb
 import domain.UserTvshow
 import domain.tvshow.SeasonsItem
@@ -133,6 +135,8 @@ class TvShowFragment : FragmentBase() {
     private var postListener: ValueEventListener? = null
     private var progressBarTemporada: ProgressBar? = null
     private var imdbDd: Imdb? = null
+
+    private val baseStream = BaseStream()
 
     companion object {
         @JvmStatic
@@ -327,7 +331,7 @@ class TvShowFragment : FragmentBase() {
 
                             if (getView() != null) {
                                 recyclerViewTemporada = getView()?.rootView?.findViewById(R.id.temporadas_recycler) as RecyclerView
-                                recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, userTvshow)
+                                recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, userTvshow, baseStream)
                                 if (progressBarTemporada != null) {
                                     progressBarTemporada?.visibility = View.INVISIBLE
                                 }
@@ -340,7 +344,7 @@ class TvShowFragment : FragmentBase() {
                     } else {
                         if (getView() != null) {
                             recyclerViewTemporada = getView()?.rootView?.findViewById(R.id.temporadas_recycler) as RecyclerView
-                            recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, null)
+                            recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, null, baseStream)
                             if (progressBarTemporada != null) {
                                 progressBarTemporada?.visibility = View.INVISIBLE
                             }
@@ -416,12 +420,12 @@ class TvShowFragment : FragmentBase() {
         }
 
         if (mAuth?.currentUser != null) {
-            recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, userTvshow)
+            recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, userTvshow, baseStream)
             if (progressBarTemporada != null) {
                 progressBarTemporada?.visible()
             }
         } else {
-            recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, null)
+            recyclerViewTemporada.adapter = TemporadasAdapter(activity!!, series, onClickListener(), color, null, baseStream)
             if (progressBarTemporada != null) {
                 progressBarTemporada?.invisible()
             }

@@ -1,7 +1,6 @@
 package domain.reelgood.movie
 
 import com.google.gson.annotations.SerializedName
-import domain.reelgood.Availability
 
 data class ReelGood(
     @SerializedName("availability")

@@ -10,7 +10,7 @@ import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
 import customview.stream.TypeEnumStream
 import domain.ViewType
-import domain.reelgood.Availability
+import domain.reelgood.movie.Availability
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constant.TypeStream.amazonPackage

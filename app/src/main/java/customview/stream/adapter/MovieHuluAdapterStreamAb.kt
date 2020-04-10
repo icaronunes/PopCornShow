@@ -10,19 +10,19 @@ import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
 import customview.stream.TypeEnumStream
 import domain.ViewType
-import domain.reelgood.Availability
-import customview.stream.BaseStream
+import domain.reelgood.movie.Availability
+import customview.stream.BaseStreamAb
 import kotlinx.android.synthetic.main.sources_item_layout.view.source_hd
 import kotlinx.android.synthetic.main.sources_item_layout.view.source_sd
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constant.TypeStream
 
-class MovieHuluAdapterStream(val subscription: Boolean = false,
+class MovieHuluAdapterStreamAb(val subscription: Boolean = false,
     val purchase: Boolean = false,
     titleMedia: String = "",
     val type: TypeEnumStream):
-    BaseStream(), ViewTypeDelegateAdapter {
+    BaseStreamAb(), ViewTypeDelegateAdapter {
 
     override val typeStream: String = TypeStream.huluPackage
     override fun onCreateViewHolder(parent: ViewGroup) = StreamMovieHolder(parent)

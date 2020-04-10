@@ -19,7 +19,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
-import domain.reelgood.Availability
+import domain.reelgood.movie.Availability
 import java.text.DateFormat
 import java.text.Normalizer
 import java.text.SimpleDateFormat

@@ -4,7 +4,7 @@ package domain.reelgood.tvshow
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import android.os.Parcelable
-import domain.reelgood.Availability
+import domain.reelgood.movie.Availability
 
 @Parcelize
 data class Episode(

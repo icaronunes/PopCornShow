@@ -4,9 +4,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import customview.stream.TypeEnumStream.MOVIE
-import customview.stream.adapter.AdapterListStreams
 import domain.ViewType
-import domain.reelgood.Availability
+import domain.reelgood.movie.Availability
 import java.util.ArrayList
 
 class StreamMovieDelegatesAdapter(val subscription: Boolean, val purchase: Boolean = false, val titleMedia: String = "") : Adapter<ViewHolder>() {

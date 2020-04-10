@@ -7,7 +7,7 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import br.com.icaro.filme.R
-import domain.reelgood.Availability
+import domain.reelgood.movie.Availability
 import kotlinx.android.synthetic.main.sources_item_layout.view.icon_source
 import kotlinx.android.synthetic.main.sources_item_layout.view.source_hd
 import kotlinx.android.synthetic.main.sources_item_layout.view.source_sd

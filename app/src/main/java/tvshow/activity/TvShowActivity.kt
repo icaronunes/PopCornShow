@@ -37,6 +37,7 @@ import domain.TvshowDB
 import domain.UserEp
 import domain.UserSeasons
 import domain.UserTvshow
+import domain.reelgood.tvshow.ReelGoodTv
 import domain.tvshow.Tvshow
 import kotlinx.android.synthetic.main.fab_float.fab_menu
 import kotlinx.android.synthetic.main.fab_float.menu_item_favorite
@@ -77,6 +78,7 @@ import java.util.Locale
 
 class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : BaseActivityAb() {
 
+    var reelGood: ReelGoodTv? = null
     private var idTvshow: Int = 0
     private var idReel: String = ""
     private var colorTop: Int = 0
@@ -130,11 +132,11 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                 setAnimated()
             }
         }) {
-            val reelGood = withContext(Dispatchers.Default) {
+            reelGood = withContext(Dispatchers.Default) {
                 Api(this@TvShowActivity).getAvaliableShow(idReel)
             }
             streamview_tv.fillStream(series?.originalName?.getNameTypeReel()
-                ?: "", reelGood.sources)
+                ?: "", reelGood?.sources!!)
             setAnimated()
         }
     }
@@ -171,9 +173,9 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Observer<Tvshow> {
                 override fun onCompleted() {
+                    if (!intent.hasExtra(Constant.ID_REEL)) getDateReel(getIdStream())
                     setDados()
                     setFab()
-                    if (!intent.hasExtra(Constant.ID_REEL)) getDateReel(getIdStream())
                 }
 
                 override fun onError(e: Throwable) {

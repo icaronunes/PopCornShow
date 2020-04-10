@@ -9,17 +9,17 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
 import customview.stream.TypeEnumStream
 import domain.ViewType
-import domain.reelgood.Availability
-import customview.stream.BaseStream
+import domain.reelgood.movie.Availability
+import customview.stream.BaseStreamAb
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 
-class FuboAdapterStream(
+class FuboAdapterStreamAb(
     val subscription: Boolean = false,
     val purchase: Boolean = false,
     private val titleMovie: String? = "",
     type: TypeEnumStream
-) : BaseStream(),  ViewTypeDelegateAdapter {
+) : BaseStreamAb(),  ViewTypeDelegateAdapter {
 
     override val typeStream: String = ""
     override fun onCreateViewHolder(parent: ViewGroup) = StreamMovieHolder(parent)

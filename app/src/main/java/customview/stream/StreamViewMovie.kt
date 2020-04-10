@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.icaro.filme.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import domain.reelgood.Availability
+import domain.reelgood.movie.Availability
 import customview.stream.adapter.StreamMovieDelegatesAdapter
 import kotlinx.android.synthetic.main.bottom_streaming.view.coord
 import kotlinx.android.synthetic.main.bottom_streaming.view.group_recycler_list

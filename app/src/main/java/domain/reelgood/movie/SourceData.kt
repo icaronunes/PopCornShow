@@ -9,4 +9,8 @@ class SourceData {
     val links: Links? = null
     @SerializedName("references")
     val references: References? = null
+    @SerializedName("source_name")
+    val sourceName: String? = null
+    @SerializedName("access_type")
+    val accessType: String? = null
 }

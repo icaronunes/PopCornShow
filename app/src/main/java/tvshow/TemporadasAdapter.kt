@@ -4,6 +4,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.GridView
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,10 +13,12 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
+import customview.stream.BaseStreamAb
 import domain.UserTvshow
 import domain.tvshow.Tvshow
 import elenco.ElencoActivity
 import producao.CrewsActivity
+import tvshow.activity.TvShowActivity
 import utils.Constant
 import utils.gone
 import utils.parseDateShot
@@ -29,9 +33,9 @@ class TemporadasAdapter(
     private val series: Tvshow?,
     private val onClickListener: TemporadasOnClickListener,
     private val color: Int,
-    private val userTvshow: UserTvshow?
-) :
-    RecyclerView.Adapter<TemporadasAdapter.HoldeTemporada>() {
+    private val userTvshow: UserTvshow?,
+    private val baseStreamAb: BaseStreamAb
+) : RecyclerView.Adapter<TemporadasAdapter.HoldeTemporada>() {
 
     interface TemporadasOnClickListener {
         fun onClickTemporada(view: View, position: Int, color: Int)
@@ -98,6 +102,21 @@ class TemporadasAdapter(
                 holder.bt_seguindo.setImageResource(R.drawable.icon_movie_now)
             }
         }
+        if ((context as TvShowActivity).reelGood != null) {
+            val seasson = (context as TvShowActivity).reelGood?.seasons?.find {
+                it.number == series.seasons[position]?.seasonNumber
+            }
+
+            val list = seasson?.availability?.sources?.map {
+                var i: Int = R.drawable.question
+                baseStreamAb.getImg(it.sourceName) { drawable ->
+                    i = drawable
+                }
+                i
+            }
+            if(list != null)
+            holder.container.adapter = AdapterStream(if (list.isEmpty()) listOf() else list )
+        }
     }
 
     private fun isVisto(position: Int): Boolean {
@@ -123,5 +142,24 @@ class TemporadasAdapter(
         internal val image_temporada: ImageView = itemView.findViewById(R.id.image_temporada)
         internal val popup: ImageButton = itemView.findViewById(R.id.popup_temporada)
         internal val bt_seguindo: ImageView = itemView.findViewById(R.id.bt_assistido)
+        internal val container: GridView = itemView.findViewById(R.id.container_stream)
+    }
+
+    inner class AdapterStream(val list: List<Int>) : BaseAdapter() {
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            val img = ImageView(context)
+            img.setImageResource(list[position])
+            img.isEnabled = false
+            onClickListener.onClickTemporada(img, position, color)
+            return img
+        }
+
+        override fun getItem(position: Int): Any {
+            return list[position]
+        }
+
+        override fun getItemId(position: Int) = position.toLong()
+
+        override fun getCount() = list.size
     }
 }

@@ -52,8 +52,8 @@
 
         <ImageView
             android:id="@+id/bt_assistido"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="2dp"
+            android:layout_height="3dp"
             android:layout_gravity="end|center_horizontal"
             android:layout_margin="@dimen/trade_size_dp_5"
             android:visibility="visible"
@@ -74,9 +74,22 @@
             android:paddingBottom="@dimen/trade_size_dp_3"
             android:src="@drawable/ic_toc_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            />
+        <GridView
+            android:id="@+id/container_stream"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:importantForAccessibility="no"
+            android:focusable="false"
+            android:layout_marginStart="2dp"
+            android:numColumns="auto_fit"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@id/image_temporada"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/date_temporada"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
