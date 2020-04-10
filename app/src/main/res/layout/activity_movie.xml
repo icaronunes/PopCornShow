@@ -79,7 +79,7 @@
             layout="@layout/fab_float"
             android:visibility="visible" />
 
-        <customview.StreamViewMovie
+        <customview.stream.StreamViewMovie
             android:id="@+id/streamview_movie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

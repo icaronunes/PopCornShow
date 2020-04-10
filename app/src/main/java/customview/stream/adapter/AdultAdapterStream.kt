@@ -1,4 +1,4 @@
-package filme.adapter
+package customview.stream.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -8,23 +8,35 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
-import customview.TypeEnumStream
+import customview.stream.TypeEnumStream
+import customview.stream.TypeEnumStream.EP
+import customview.stream.TypeEnumStream.MOVIE
+import customview.stream.TypeEnumStream.TV
 import domain.ViewType
 import domain.reelgood.Availability
+import customview.stream.BaseStream
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
-import utils.Constant.TypeStream.amazonPackage
+import utils.Constant.TypeStream
+import utils.getNameTypeReel
 
-class StreamMovieAmazonAdapter(val subscription: Boolean = false, val purchase: Boolean = false, type: TypeEnumStream) : ViewTypeDelegateAdapter {
+class AdultAdapterStream(
+    val subscription: Boolean = false,
+    val purchase: Boolean = false,
+    private val titleMovie: String? = "",
+    private val type: TypeEnumStream
+) : BaseStream(), ViewTypeDelegateAdapter {
+
+    override val typeStream: String = TypeStream.adultswin
     override fun onCreateViewHolder(parent: ViewGroup) = StreamMovieHolder(parent)
 
     override fun onBindViewHolder(holder: ViewHolder, item: ViewType?, context: Context?) {
         (holder as StreamMovieHolder).bind(item as? Availability)
     }
 
-    inner class StreamMovieHolder(val parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
+    inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
         fun bind(availability: Availability?) = with(itemView.source_item) {
-            iconSource = resources.getDrawable(R.drawable.amazon, null)
+            iconSource = resources.getDrawable(R.drawable.adult_swim, null)
             if (!subscription) {
                 sourceSd = if (purchase) "SD: ${availability?.purchaseCostSd
                     ?: "--"}" else "SD: ${availability?.rentalCostSd ?: "--"}"
@@ -33,9 +45,9 @@ class StreamMovieAmazonAdapter(val subscription: Boolean = false, val purchase: 
             }
             setOnClickListener {
                 try {
-                    callAppOrWeb(availability, amazonPackage) {
+                    callAppOrWeb(availability, typeStream) {
                         val intent = Intent(Intent.ACTION_VIEW)
-                        val link = getLink(it)
+                        val link = getSomeLink(availability, getLink(availability))
                         intent.data = Uri.parse(link)
                         context.startActivity(intent)
                     }
@@ -47,12 +59,13 @@ class StreamMovieAmazonAdapter(val subscription: Boolean = false, val purchase: 
     }
 
     private fun getLink(availability: Availability?): String {
-        if (availability == null) return "https://www.amazon.com/"
-        val id = availability.sourceData?.references?.web?.movieId
-            ?: availability.sourceData?.references?.android?.movieId
-            ?: availability.sourceData?.references?.ios?.movieId
-        return if (id != null) {
-            "https://www.amazon.com/gp/product/$id?tag=reelgood06-20"
-        } else "https://www.amazon.com/"
+        if (availability == null) return "http://www.adultswim.com/"
+        if (availability.sourceData?.references == null) "http://www.adultswim.com/videos/${titleMovie?.getNameTypeReel()}"
+
+        return when (type) {
+            MOVIE -> "http://www.adultswim.com/videos/${getSomeReference(availability, MOVIE)}"
+            TV -> "http://www.adultswim.com/videos/${getSomeReference(availability, TV)}"
+            EP -> "http://www.adultswim.com/videos/${getSomeReference(availability, TV)}/${getSomeReference(availability, EP)}"
+        }
     }
 }

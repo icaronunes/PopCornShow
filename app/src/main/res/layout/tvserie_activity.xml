@@ -82,7 +82,7 @@
         <include layout="@layout/fab_float"
             android:visibility="visible"/>
 
-        <customview.StreamViewTv
+        <customview.stream.StreamViewTv
             android:id="@+id/streamview_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

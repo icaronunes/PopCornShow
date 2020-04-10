@@ -1,9 +1,9 @@
-package filme.adapter
+package customview.stream
 
 import android.graphics.Bitmap
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
-import customview.TypeEnumStream
+import customview.stream.TypeEnumStream
 import domain.reelgood.Availability
 
 abstract class BaseStream {

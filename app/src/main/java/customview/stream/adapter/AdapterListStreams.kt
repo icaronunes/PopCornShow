@@ -1,7 +1,7 @@
-package filme.adapter
+package customview.stream.adapter
 
 import androidx.collection.SparseArrayCompat
-import customview.TypeEnumStream
+import customview.stream.TypeEnumStream
 import pessoaspopulares.adapter.LoadingDelegateAdapter
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constant
@@ -11,7 +11,7 @@ class AdapterListStreams(val subscription: Boolean, val purchase: Boolean = fals
     private val delegateAdapters: SparseArrayCompat<ViewTypeDelegateAdapter>
         get() = SparseArrayCompat<ViewTypeDelegateAdapter>().apply {
             put(Constant.ReelGood.LOADING, LoadingDelegateAdapter())
-            put(Constant.ReelGood.NETFLIX, StreamMovieNetflixAdapter(subscription, purchase,titleMedia, type))
+            put(Constant.ReelGood.NETFLIX, StreamMovieNetflixAdapter(subscription, purchase, titleMedia, type))
             put(Constant.ReelGood.HBO, StreamMovieHboAdapter(subscription, purchase, type))
             put(Constant.ReelGood.HULU, MovieHuluAdapterStream(subscription, purchase, "", type))
             put(Constant.ReelGood.STARZ, StreamMovieStarzAdapter(subscription, purchase, "", type))

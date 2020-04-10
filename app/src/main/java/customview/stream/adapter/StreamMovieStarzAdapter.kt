@@ -1,4 +1,4 @@
-package filme.adapter
+package customview.stream.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
-import customview.TypeEnumStream
+import customview.stream.BaseStream
+import customview.stream.TypeEnumStream
 import domain.ViewType
 import domain.reelgood.Availability
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item

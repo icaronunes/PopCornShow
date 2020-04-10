@@ -1,4 +1,4 @@
-package customview
+package customview.stream
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.icaro.filme.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import domain.reelgood.Availability
-import filme.adapter.StreamTvDelegatesAdapter
+import customview.stream.adapter.StreamTvDelegatesAdapter
 import kotlinx.android.synthetic.main.bottom_streaming.view.coord
 import kotlinx.android.synthetic.main.bottom_streaming.view.label_stream
 import kotlinx.android.synthetic.main.bottom_streaming.view.open_bar
