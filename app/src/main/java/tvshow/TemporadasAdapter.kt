@@ -147,11 +147,13 @@ class TemporadasAdapter(
 
     inner class AdapterStream(val list: List<Int>) : BaseAdapter() {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val img = ImageView(context)
-            img.setImageResource(list[position])
-            img.isEnabled = false
-            onClickListener.onClickTemporada(img, position, color)
-            return img
+            return ImageView(context).apply {
+                setImageResource(list[position])
+                isEnabled = false
+                setOnClickListener {
+                    onClickListener.onClickTemporada(it, position, color)
+                }
+            }
         }
 
         override fun getItem(position: Int): Any {
