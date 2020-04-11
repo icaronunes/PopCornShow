@@ -90,7 +90,6 @@ class TemporadasAdapter(
         holder.itemView.setOnClickListener { view -> onClickListener.onClickTemporada(view, position, color) }
 
         holder.popup.setOnClickListener { view -> showPopUp(view, series.seasons[position]?.seasonNumber!!) }
-
         holder.bt_seguindo.setOnClickListener { view -> onClickListener.onClickCheckTemporada(view, position) }
 
         if (userTvshow == null) {
@@ -102,20 +101,21 @@ class TemporadasAdapter(
                 holder.bt_seguindo.setImageResource(R.drawable.icon_movie_now)
             }
         }
+
         if ((context as TvShowActivity).reelGood != null) {
             val seasson = (context as TvShowActivity).reelGood?.seasons?.find {
                 it.number == series.seasons[position]?.seasonNumber
             }
 
-            val list = seasson?.availability?.sources?.map {
+            val listStreams = seasson?.availability?.sources?.map {
                 var i: Int = R.drawable.question
                 baseStreamAb.getImg(it.sourceName) { drawable ->
                     i = drawable
                 }
                 i
             }?.toSortedSet()?.toList()
-            if(list != null)
-            holder.container.adapter = AdapterStream(if (list.isEmpty()) listOf() else list, position )
+            if(listStreams != null)
+                holder.container.adapter = AdapterStream(if (listStreams.isEmpty()) listOf() else listStreams, position )
         }
     }
 
@@ -149,9 +149,7 @@ class TemporadasAdapter(
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             return ImageView(context).apply {
                 setImageResource(list[position])
-                setOnClickListener {
-                    onClickListener.onClickTemporada(it, seasonPosition, color)
-                }
+                setOnClickListener { onClickListener.onClickTemporada(it, seasonPosition, color) }
             }
         }
 
