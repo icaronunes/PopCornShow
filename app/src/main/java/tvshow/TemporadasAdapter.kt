@@ -113,9 +113,9 @@ class TemporadasAdapter(
                     i = drawable
                 }
                 i
-            }
+            }?.toSortedSet()?.toList()
             if(list != null)
-            holder.container.adapter = AdapterStream(if (list.isEmpty()) listOf() else list )
+            holder.container.adapter = AdapterStream(if (list.isEmpty()) listOf() else list, position )
         }
     }
 
@@ -145,13 +145,12 @@ class TemporadasAdapter(
         internal val container: GridView = itemView.findViewById(R.id.container_stream)
     }
 
-    inner class AdapterStream(val list: List<Int>) : BaseAdapter() {
+    inner class AdapterStream(val list: List<Int>, val seasonPosition: Int) : BaseAdapter() {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             return ImageView(context).apply {
                 setImageResource(list[position])
-                isEnabled = false
                 setOnClickListener {
-                    onClickListener.onClickTemporada(it, position, color)
+                    onClickListener.onClickTemporada(it, seasonPosition, color)
                 }
             }
         }

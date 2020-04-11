@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
 import domain.reelgood.movie.Availability
-import utils.Constant
 
 abstract class BaseStreamAb {
 
@@ -25,7 +24,7 @@ abstract class BaseStreamAb {
             "itunes" -> "https://itunes.apple.com/us/genre/movies/id33"
             "britbox" -> "https://www.britbox.com/"
             "cbs_all_access" -> "https://www.cbs.com/all-access/"
-            "nbc_tveverywhere", "nbc" -> "https://www.nbc.com/$title"
+            "nbc_tvesverywhere", "nbc" -> "https://www.nbc.com/$title"
             "fox_tveverywhere" -> "https://www.fox.com/"
             "tbs" -> "https://www.international.tbs.com/"
             else -> "https://www.google.com/search?q=$title ${availability.sourceName}"
@@ -53,6 +52,7 @@ abstract class BaseStreamAb {
             "britbox" -> onResource(R.drawable.britbox)
             "cbs_all_access" -> onResource(R.drawable.cbs_all_access)
             "nbc", "nbc_tveverywhere" -> onResource(R.drawable.nbc)
+            "" -> onResource(R.drawable.nbc)
             "fox_tveverywhere" -> onResource(R.drawable.fox)
             "tbs" -> onResource(R.drawable.tbs)
             "abc", "abc_tveverywhere", "abc_family" -> onResource(R.drawable.abc)
@@ -61,7 +61,7 @@ abstract class BaseStreamAb {
             "amc" -> onResource(R.drawable.amc)
             "amc_premiere" -> onResource(R.drawable.amc_premiere)
             "apple_tv_plus" -> onResource(R.drawable.apple_tv_plus)
-            "bbc_america" -> onResource(R.drawable.bbc_america)
+            "bbc_america", "bbc_america_tve" -> onResource(R.drawable.bbc_america)
             "bet" -> onResource(R.drawable.bet)
             "bet_plus" -> onResource(R.drawable.bet_plus)
             "bravo" -> onResource(R.drawable.bravo)
