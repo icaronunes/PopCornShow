@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
+import br.com.icaro.filme.R.drawable
 import br.com.icaro.filme.R.id
 import br.com.icaro.filme.R.layout
 import domain.CastItem
@@ -52,6 +53,7 @@ class CastAdapter(val activity: FragmentActivity, val casts: List<CastItem>) : A
             textCastNome.text = name
             img.setPicassoWithCacheAndHolder(stillPath = profilePath,
                 patten = 4,
+                img_erro = drawable.person,
                 error = { progressBar.gone() },
                 sucesso = { progressBar.gone() },
                 holder = R.drawable.person

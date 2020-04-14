@@ -546,14 +546,10 @@ class MovieFragment : FragmentBase() {
                 textview_elenco?.gone()
                 recycle_filme_elenco.minHeight()
             } else {
-                recycle_filme_elenco?.apply {
-                    setHasFixedSize(true)
-                    itemAnimator = DefaultItemAnimator()
-                    layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+                recycle_filme_elenco.patternRecyler().apply {
                     adapter = CastAdapter(requireActivity(), movieDb.credits?.cast ?: listOf())
+                    setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
                 }
-                recycle_filme_elenco.setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
-
                 textview_elenco?.visible()
             }
     }
@@ -561,14 +557,10 @@ class MovieFragment : FragmentBase() {
     private fun setCrews() {
 
         if (movieDb.credits?.crew!!.isNotEmpty() && isAdded) {
-            recycle_filme_producao?.apply {
-                setHasFixedSize(true)
-                itemAnimator = DefaultItemAnimator()
-                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            recycle_filme_producao.patternRecyler().apply {
                 adapter = CrewAdapter(requireActivity(), movieDb.credits?.crew ?: listOf())
+                setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
             }
-            recycle_filme_producao.setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
-
             textview_crews.visible()
         } else {
             textview_crews.gone()

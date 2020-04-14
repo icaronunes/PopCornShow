@@ -13,16 +13,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import utils.Api
 
-class LoadingMedia(val api: Api) {
+class LoadingMedia(val api: Api): ILoadingMedia {
 
-
-    fun getDataMovie(_movie: MutableLiveData<BaseRequest<Movie>>, idMovie: Int) {
+    override fun getDataMovie(_movie: MutableLiveData<BaseRequest<Movie>>, idMovie: Int) {
         GlobalScope.launch {
                 _movie.postValue(withContext(Dispatchers.Default) { api.getMovie(idMovie) })
         }
     }
 
-    fun getTrailerFromEn(_video: MutableLiveData<BaseRequest<Videos>>, idMovie: Int) {
+    override fun getTrailerFromEn(_video: MutableLiveData<BaseRequest<Videos>>, idMovie: Int) {
         GlobalScope.launch {
             _video.postValue(withContext(Dispatchers.Default) {
                 api.getTrailersFromEn(idMovie)
@@ -30,7 +29,7 @@ class LoadingMedia(val api: Api) {
         }
     }
 
-    fun imdbDate(_imdb: MutableLiveData<BaseRequest<Imdb>>, id: String) {
+    override fun imdbDate(_imdb: MutableLiveData<BaseRequest<Imdb>>, id: String) {
         GlobalScope.launch {
             _imdb.postValue(withContext(Dispatchers.Default) {
                     api.getImdb(id)
@@ -38,7 +37,7 @@ class LoadingMedia(val api: Api) {
         }
     }
 
-    fun putRated(movieDate: MovieDb) {
+    override fun putRated(movieDate: MovieDb) {
         GlobalScope.launch() {
             val guest = withContext(Dispatchers.Default) { api.userGuest() }
             if (guest is Success) api.ratedMovieGuest(movieDate, guest.result)

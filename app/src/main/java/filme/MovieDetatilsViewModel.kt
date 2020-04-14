@@ -2,38 +2,24 @@ package filme
 
 import android.app.Activity
 import android.app.Application
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import applicaton.BaseViewModel
 import applicaton.BaseViewModel.BaseRequest.Loading
-import com.crashlytics.android.Crashlytics
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import domain.Imdb
 import domain.Movie
 import domain.MovieDb
 import domain.Videos
+import filme.loading.ILoadingFireBase
 import filme.loading.LoadingFirebase
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import utils.Api
-import kotlin.coroutines.CoroutineContext
 
 class MovieDetatilsViewModel(app: Application, val activity: Activity, val api: Api) : BaseViewModel(app) {
 
-    private val coroutineContextGuestStarsItem: CoroutineContext
-        get() = Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, _ ->
-            Handler(Looper.getMainLooper()).post {
-                ops()
-                Crashlytics.log("Error Rated Movie")
-            }
-        }
-
-    private val loadingFirebase = LoadingFirebase("movie")
-    private val loadingMedia = LoadingMedia(api)
+    private val loadingFirebase: ILoadingFireBase = LoadingFirebase("movie")
+    private val loadingMedia: ILoadingMedia = LoadingMedia(api)
 
     val auth: MutableLiveData<Boolean> = MutableLiveData(false)
     private val _watch: MutableLiveData<DataSnapshot> = MutableLiveData()
@@ -79,5 +65,7 @@ class MovieDetatilsViewModel(app: Application, val activity: Activity, val api: 
     fun getTrailerEn(idMovie: Int) = loadingMedia.getTrailerFromEn(_videos, idMovie)
     fun getImdb(id: String) = loadingMedia.imdbDate(_imdb, id)
 
-    fun setLoading(boolean: Boolean) { _movie.value = Loading(boolean) }
+    fun setLoading(boolean: Boolean) {
+        _movie.value = Loading(boolean)
+    }
 }

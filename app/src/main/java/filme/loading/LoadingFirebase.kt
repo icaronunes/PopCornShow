@@ -6,23 +6,23 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 
-class LoadingFirebase(type: String) : BaseFireBase(type) {
+class LoadingFirebase(type: String) : BaseFireBase(type), ILoadingFireBase {
 
     private lateinit var valueEventWatch: ValueEventListener
     private lateinit var valueEventRated: ValueEventListener
     private lateinit var valueEventFavorite: ValueEventListener
 
-    fun isAuth(live: MutableLiveData<Boolean>) {
+   override fun isAuth(live: MutableLiveData<Boolean>) {
         live.value = isAuth()
     }
 
-    fun destroy() {
+    override fun destroy() {
         myWatch.removeEventListener(valueEventWatch)
         myRated.removeEventListener(valueEventRated)
         myFavorite.removeEventListener(valueEventFavorite)
     }
 
-    fun setEventListenerWatch(live: MutableLiveData<DataSnapshot>) {
+    override  fun setEventListenerWatch(live: MutableLiveData<DataSnapshot>) {
         valueEventWatch = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 live.value = dataSnapshot
@@ -34,7 +34,7 @@ class LoadingFirebase(type: String) : BaseFireBase(type) {
         myWatch.addValueEventListener(valueEventWatch)
     }
 
-    fun setEventListenerFavorit(live: MutableLiveData<DataSnapshot>) {
+    override fun setEventListenerFavorit(live: MutableLiveData<DataSnapshot>) {
         valueEventFavorite = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 live.value = dataSnapshot
@@ -46,7 +46,7 @@ class LoadingFirebase(type: String) : BaseFireBase(type) {
         myFavorite.addValueEventListener(valueEventFavorite)
     }
 
-    fun setEventListenerRated(live: MutableLiveData<DataSnapshot>) {
+    override fun setEventListenerRated(live: MutableLiveData<DataSnapshot>) {
         valueEventRated = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 live.value = dataSnapshot
@@ -58,7 +58,7 @@ class LoadingFirebase(type: String) : BaseFireBase(type) {
         myRated.addValueEventListener(valueEventRated)
     }
 
-    fun changeWatch(add: (DatabaseReference) -> Unit, remove: (DatabaseReference) -> Unit, idMedia: Int, _watch: DataSnapshot?) {
+    override fun changeWatch(add: (DatabaseReference) -> Unit, remove: (DatabaseReference) -> Unit, idMedia: Int, _watch: DataSnapshot?) {
         if (_watch?.child("$idMedia")?.exists() == true) {
             remove(myWatch)
         } else {
@@ -66,7 +66,7 @@ class LoadingFirebase(type: String) : BaseFireBase(type) {
         }
     }
 
-    fun changeFavority(add: (DatabaseReference) -> Unit,
+    override fun changeFavority(add: (DatabaseReference) -> Unit,
         remove: (DatabaseReference) -> Unit,
         idMedia: Int,
         _favorit: DataSnapshot?) {
@@ -77,7 +77,7 @@ class LoadingFirebase(type: String) : BaseFireBase(type) {
         }
     }
 
-    fun changeRated(add: (DatabaseReference) -> Unit, idMovie: Int) {
+    override fun changeRated(add: (DatabaseReference) -> Unit, idMovie: Int) {
          add(myRated)
     }
 }

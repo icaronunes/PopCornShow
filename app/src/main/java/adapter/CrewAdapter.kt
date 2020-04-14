@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import br.com.icaro.filme.R
 import br.com.icaro.filme.R.drawable
 import br.com.icaro.filme.R.id
 import br.com.icaro.filme.R.layout
@@ -50,6 +51,7 @@ class CrewAdapter(val activity: FragmentActivity, val crews: List<CrewItem>) : A
             textCrewNome.text = name
             img.setPicassoWithCacheAndHolder(stillPath = profilePath,
                 patten = 4,
+                img_erro = drawable.person,
                 holder = drawable.person,
                 sucesso = { progressBarCrew.gone() },
                 error = { progressBarCrew.gone() })
