@@ -10,7 +10,6 @@ import android.os.Environment
 import android.preference.PreferenceManager
 import android.telephony.TelephonyManager
 import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import androidx.core.content.FileProvider
 import androidx.palette.graphics.Palette
@@ -140,16 +139,10 @@ object UtilsApp {
         }
     }
 
-    fun verificaLancamento(air_date: Date?): Boolean {
-        val data: Boolean
-        // Arrumar. Ta esquisito.
+    fun verifyLaunch(air_date: Date?): Boolean {
         if (air_date == null) return false
-        val myDate = Calendar.getInstance().time
-        if (air_date.before(myDate)) {
-            data = true
-        } else
-            data = !air_date.after(myDate)
-        return data
+        val now = Calendar.getInstance().time
+        return if (air_date.before(now)) { true } else !air_date.after(now)
     }
 
     fun verificaDataProximaLancamento(air_date: Date?): Boolean {

@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import java.util.List;
 
 import br.com.icaro.filme.R;
-import domain.FilmeDB;
+import domain.MovieDb;
 import domain.TvshowDB;
 
 /**
@@ -18,12 +18,12 @@ import domain.TvshowDB;
 public class FavoriteAdapater extends FragmentPagerAdapter {
 
     private Context context;
-    private List<FilmeDB> movies;
+    private List<MovieDb> movies;
     private List<TvshowDB> series;
 
 
     public FavoriteAdapater(Context context, FragmentManager supportFragmentManager,
-                            List<FilmeDB> movies, List<TvshowDB> series) {
+                            List<MovieDb> movies, List<TvshowDB> series) {
         super(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.context = context;
         this.series = series;

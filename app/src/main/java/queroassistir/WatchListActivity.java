@@ -22,7 +22,7 @@ import java.util.List;
 
 import activity.BaseActivity;
 import br.com.icaro.filme.R;
-import domain.FilmeDB;
+import domain.MovieDb;
 import domain.TvshowDB;
 import utils.UtilsApp;
 
@@ -32,7 +32,7 @@ public class WatchListActivity extends BaseActivity {
     private TabLayout tabLayout;
     private LinearLayout linearLayout;
     private ProgressBar progressBar;
-    private List<FilmeDB> movieDbs = new ArrayList<>();
+    private List<MovieDb> movieDbs = new ArrayList<>();
     private List<TvshowDB> tvSeries = new ArrayList<>();
     private DatabaseReference favoriteMovie, favoriteTv;
 
@@ -102,7 +102,7 @@ public class WatchListActivity extends BaseActivity {
                 if (dataSnapshot.exists()) {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        movieDbs.add(snapshot.getValue(FilmeDB.class));
+                        movieDbs.add(snapshot.getValue(MovieDb.class));
                         // Log.d(TAG, snapshot.getValue(FilmeDB.class).getTitle());
                     }
                 }

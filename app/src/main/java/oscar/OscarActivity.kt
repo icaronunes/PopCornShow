@@ -82,15 +82,6 @@ class OscarActivity : BaseActivity() {
 
     private fun getOscar() {
 
-        val teste = Api(context = this).loadMovieComVideo(18)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                it.id
-            }, {
-                Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
-            })
-
         if (totalPagina >= pagina) {
             val inscricao = Api(context = this).getLista(id = listId, pagina = pagina)
                 .subscribeOn(Schedulers.io())
@@ -104,7 +95,6 @@ class OscarActivity : BaseActivity() {
                     Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
                 })
             subscriptions.add(inscricao)
-            subscriptions.add(teste)
         }
     }
 }

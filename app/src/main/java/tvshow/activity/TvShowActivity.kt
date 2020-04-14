@@ -404,7 +404,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                 e.printStackTrace()
             }
 
-            if (!UtilsApp.verificaLancamento(date)) {
+            if (!UtilsApp.verifyLaunch(date)) {
                 Toast.makeText(this@TvShowActivity, R.string.tvshow_nao_lancado, Toast.LENGTH_SHORT).show()
                 val bundle = Bundle()
                 bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Favorite - Tvshow ainda não foi lançado.")
@@ -447,7 +447,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                 e.printStackTrace()
             }
 
-            if (!UtilsApp.verificaLancamento(date)) {
+            if (!UtilsApp.verifyLaunch(date)) {
                 Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_nao_lancado), Toast.LENGTH_SHORT).show()
             } else {
 
@@ -684,7 +684,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                     e.printStackTrace()
                 }
 
-                if (UtilsApp.verificaLancamento(date)) {
+                if (UtilsApp.verifyLaunch(date)) {
                     menu_item_favorite?.setOnClickListener(addOrRemoveFavorite())
                     menu_item_rated?.setOnClickListener(ratedMovie())
                 }

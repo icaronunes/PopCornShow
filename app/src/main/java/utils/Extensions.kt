@@ -1,5 +1,7 @@
 package utils
 
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Context
@@ -20,6 +22,7 @@ import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import domain.reelgood.movie.Availability
+import kotlinx.android.synthetic.main.movie_details_info.recycle_filme_elenco
 import java.text.DateFormat
 import java.text.Normalizer
 import java.text.SimpleDateFormat
@@ -68,7 +71,7 @@ fun ImageView.setPicassoWithCache(stillPath: String?, patten: Int = 4,
                 error()
             }
         })
-   return this
+    return this
 }
 
 fun ImageView.setPicassoWithCacheAndHolder(stillPath: String?, patten: Int = 4,
@@ -120,16 +123,29 @@ fun View.invisible() {
     this.visibility = View.INVISIBLE
 }
 
+fun View.animeRotation() {
+    ObjectAnimator
+        .ofPropertyValuesHolder(this,
+            PropertyValuesHolder.ofFloat(View.SCALE_X, 1.0f, 0.2f),
+            PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.0f, 0.2f),
+            PropertyValuesHolder.ofFloat(View.SCALE_X, 0.0f, 1.0f),
+            PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.0f, 1.0f))
+        .apply {
+            duration = 1600
+        }.start()
+}
+
 /**
  * Any
  */
 
-fun Any.putString(cxt: Context): String = when(this) {
+fun Any.putString(cxt: Context): String = when (this) {
     is String -> this
     is Int -> cxt.getString(this)
     else -> {
         require(false) { "Need R.string.id or string" }
-        "" }
+        ""
+    }
 }
 
 /**
@@ -228,6 +244,13 @@ fun RecyclerView.patternRecyclerGrid(quant: Int = 2): RecyclerView {
     layoutManager = GridLayoutManager(context, quant)
     setHasFixedSize(true)
     itemAnimator = DefaultItemAnimator()
+    return this
+}
+
+fun RecyclerView.minHeight(): RecyclerView {
+        layoutParams.height = 1
+        importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+        isFocusable = false
     return this
 }
 

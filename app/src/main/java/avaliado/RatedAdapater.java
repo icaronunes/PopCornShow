@@ -9,9 +9,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import java.util.List;
 
 import br.com.icaro.filme.R;
-import domain.FilmeDB;
+import domain.MovieDb;
 import domain.TvshowDB;
-import avaliado.ListaRatedFragment;
 
 /**
  * Created by icaro on 23/08/16.
@@ -20,11 +19,11 @@ public class RatedAdapater extends FragmentPagerAdapter {
 
     private Context context;
     private List<TvshowDB> series;
-    private List<FilmeDB> movies;
+    private List<MovieDb> movies;
 
 
     public RatedAdapater(Context context, FragmentManager supportFragmentManager,
-                         List<TvshowDB> series, List<FilmeDB> movies) {
+                         List<TvshowDB> series, List<MovieDb> movies) {
         super(supportFragmentManager);
         this.context = context;
         this.series = series;

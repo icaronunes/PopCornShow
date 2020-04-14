@@ -24,7 +24,7 @@
     <string name="elenco">Elenco</string>
     <string name="search">Procurar</string>
     <string name="search_empty">Busca sem Resultado</string>
-    <string name="mil">Mil</string>
+    <string name="mil">%s Mil</string>
 
     <string name="horas">horas</string>
     <string name="hora">hora</string>
@@ -50,7 +50,7 @@
     <string name="excluir_filme">Excluir Filme ?</string>
 
     <string name="no">Não</string>
-    <string name="filme_rated">Filme Classificado</string>
+    <string name="filme_rated">Filme Classificado - %s</string>
     <string name="tvshow_rated">Série Classificada</string>
     <string name="filme_add_favorite">Filme Adicionado ao Favoritos</string>
 

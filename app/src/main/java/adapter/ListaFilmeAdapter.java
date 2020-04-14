@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import br.com.icaro.filme.R;
-import domain.FilmeDB;
+import domain.MovieDb;
 import utils.UtilsApp;
 
 
@@ -26,12 +26,12 @@ import utils.UtilsApp;
  */
 public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.FavoriteViewHolder> {
 
-    private List<FilmeDB> filmes;
+    private List<MovieDb> filmes;
     private Context context;
     private ListaOnClickListener onClickListener;
     private boolean status = false;
 
-    public ListaFilmeAdapter(FragmentActivity favotireActivity, List<FilmeDB> favoritos,
+    public ListaFilmeAdapter(FragmentActivity favotireActivity, List<MovieDb> favoritos,
                              ListaOnClickListener onClickListener, boolean status) {
         this.context = favotireActivity;
         this.filmes = favoritos;
@@ -48,7 +48,7 @@ public class ListaFilmeAdapter extends RecyclerView.Adapter<ListaFilmeAdapter.Fa
     @Override
     public void onBindViewHolder(final FavoriteViewHolder holder, final int position) {
 
-        final FilmeDB movie = filmes.get(position);
+        final MovieDb movie = filmes.get(position);
         if (movie != null) {
 
         if (status) {

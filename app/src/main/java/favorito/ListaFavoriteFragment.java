@@ -30,7 +30,7 @@ import java.util.List;
 import adapter.ListaFilmeAdapter;
 import adapter.ListaTvShowAdapter;
 import br.com.icaro.filme.R;
-import domain.FilmeDB;
+import domain.MovieDb;
 import domain.TvshowDB;
 import filme.activity.MovieDetailsActivity;
 import tvshow.activity.TvShowActivity;
@@ -50,12 +50,12 @@ public class ListaFavoriteFragment extends Fragment {
 
     private int tipo;
     private List<TvshowDB> tvSeries;
-    private List<FilmeDB> movieDbs;
+    private List<MovieDb> movieDbs;
     private RecyclerView recyclerViewFilme;
     private RecyclerView recyclerViewTvShow;
     private FirebaseAnalytics firebaseAnalytics;
 
-    public static Fragment newInstanceMovie(int tipo, List<FilmeDB> movie) {
+    public static Fragment newInstanceMovie(int tipo, List<MovieDb> movie) {
         ListaFavoriteFragment fragment = new ListaFavoriteFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constant.FILME, (Serializable) movie);
@@ -78,7 +78,7 @@ public class ListaFavoriteFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             tipo = getArguments().getInt(Constant.ABA);
-            movieDbs = (List<FilmeDB>) getArguments().getSerializable(Constant.FILME);
+            movieDbs = (List<MovieDb>) getArguments().getSerializable(Constant.FILME);
             tvSeries = (List<TvshowDB>) getArguments().getSerializable(Constant.SERIE);
         }
         firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());

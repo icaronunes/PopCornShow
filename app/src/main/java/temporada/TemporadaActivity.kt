@@ -150,7 +150,7 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
             e.printStackTrace()
         }
 
-        if (UtilsApp.verificaLancamento(date) && mAuth?.currentUser != null && seguindo) {
+        if (UtilsApp.verifyLaunch(date) && mAuth?.currentUser != null && seguindo) {
             val databaseReference = FirebaseDatabase.getInstance()
                 .getReference("users")
                 .child(mAuth!!.currentUser!!.uid)

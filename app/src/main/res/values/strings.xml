@@ -49,14 +49,14 @@
     <string name="home">Main</string>
     <string name="hora">H</string>
     <string name="horas">H</string>
-    <string name="idioma_padrao">Language Android</string>
+    <string name="idioma_padrao">Language Android - %s</string>
     <string name="idioma_padrao_subtitle">English language contains more information on TMDB. If you do not use the standard Android, it will be used.</string>
     <string name="imagem_person">Photos</string>
     <string name="in_production">In Producação</string>
     <string name="infor_app">Information Property on the App</string>
     <string name="informacoes">Information</string>
     <string name="login">Login:</string>
-    <string name="mil">Thousand</string>
+    <string name="mil">%s Thousand</string>
     <string name="milhoes_budget">Millions</string>
     <string name="minutos">mins</string>
     <string name="no">No</string>

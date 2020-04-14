@@ -45,7 +45,7 @@
     <string name="filme_add_favorite">Película añadida a Favoritos</string>
     <string name="filme_add_watchlist">Añadido a \"Ver más tarde\"</string>
     <string name="filme_nao_lancado">La película todavía no ha sido lanzada</string>
-    <string name="filme_rated">Película clasificada</string>
+    <string name="filme_rated">Película clasificada - %s</string>
     <string name="filme_remove">Película removida</string>
     <string name="filme_remove_favorite">Película eliminada de la lista de favoritos</string>
     <string name="home">Principal</string>
@@ -63,7 +63,7 @@
     <string name="marcado_assistido_temporada">Marcado como observado.</string>
     <string name="marcado_nao_assistido">Marcado como sin ayuda.</string>
     <string name="marcado_nao_assistido_temporada">Marcado como sin ayuda.</string>
-    <string name="mil">Mil</string>
+    <string name="mil">%s Mil</string>
     <string name="milhoes_budget">Millones</string>
     <string name="msg_parar_seguir">Si dejan de seguir, han perdido todo el progreso del Show de TV</string>
     <string name="new_segiundo">Nuevo</string>

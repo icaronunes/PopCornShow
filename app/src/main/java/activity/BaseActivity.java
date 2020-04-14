@@ -107,7 +107,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
     }
 
     protected <T extends AndroidViewModel> T createViewModel(Class<T> classViewModel,@NonNull Activity activity) {
-        PopCornViewModelFactory model = new PopCornViewModelFactory(this.getApplication(), null, activity);
+        PopCornViewModelFactory model = new PopCornViewModelFactory(this.getApplication(), new Api(getBaseContext()), activity);
         return ViewModelProviders.of(this, model).get(classViewModel);
     }
 

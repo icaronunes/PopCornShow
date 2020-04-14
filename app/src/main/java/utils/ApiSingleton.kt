@@ -1,10 +1,14 @@
 package utils
 
 import com.google.gson.Gson
+import okhttp3.Call
+import okhttp3.Callback
 import okhttp3.Interceptor
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody
 import okhttp3.Response
 import okhttp3.ResponseBody
 import okhttp3.internal.http2.Http2Reader
@@ -45,7 +49,7 @@ open class ApiSingleton {
                         try {
                             jsonObject.put("code", 200)
                             jsonObject.put("status", "OK")
-                            jsonObject.put("message", "Successful")
+                            jsonObject.put("message", "Successfull")
                             val contentType: MediaType? = response.body!!.contentType()
                             val body: ResponseBody = ResponseBody.create(contentType, jsonObject.toString())
                             Http2Reader.logger.info(body.string())
@@ -58,16 +62,20 @@ open class ApiSingleton {
             }
         }
 
-        private val client: OkHttpClient by lazy {
+        val client: OkHttpClient by lazy {
             OkHttpClient.Builder()
                 .addInterceptor(LoggingInterceptor())
                 .build()
         }
 
-        fun executeCall(url: String) = client.newCall(Request.Builder()
+        fun executeCall(url: String, func: Callback) = client.newCall(Request.Builder()
             .url(url)
             .get()
-            .build())
-            .execute()
+            .build()).enqueue(func)
+
+        fun executeCall(url: String, postRequest: RequestBody,  func: Callback) = client.newCall(Request.Builder()
+            .url(url)
+            .post(postRequest)
+            .build()).enqueue(func)
     }
 }

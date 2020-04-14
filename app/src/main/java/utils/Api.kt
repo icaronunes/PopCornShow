@@ -2,6 +2,7 @@ package utils
 
 import android.content.Context
 import applicaton.BaseViewModel.BaseRequest
+import applicaton.BaseViewModel.BaseRequest.Failure
 import applicaton.BaseViewModel.BaseRequest.Success
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
@@ -9,9 +10,11 @@ import domain.Company
 import domain.CompanyFilmes
 import domain.Credits
 import domain.EpisodesItem
+import domain.GuestSession
 import domain.Imdb
 import domain.ListaSeries
 import domain.Movie
+import domain.MovieDb
 import domain.PersonPopular
 import domain.ReviewsUflixit
 import domain.TvSeasons
@@ -27,8 +30,10 @@ import domain.tvshow.Tvshow
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
 import okhttp3.Callback
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody
 import okhttp3.Response
 import rx.Observable
 import utils.Api.TYPESEARCH.FILME
@@ -42,7 +47,7 @@ import java.util.Random
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-class Api(val context: Context): ApiSingleton() {
+class Api(val context: Context) : ApiSingleton() {
 
     private var timeZone: String = getIdiomaEscolhido(context)
     private var region: String = Locale.getDefault().country
@@ -72,15 +77,23 @@ class Api(val context: Context): ApiSingleton() {
 
     fun personPopular(pagina: Int): Observable<PersonPopular> {
         return Observable.create { subscriber ->
-            val response = executeCall("${baseUrl3}person/popular?page=" + pagina + "&language=en-US&api_key=" + Config.TMDB_API_KEY)
-            if (response.isSuccessful) {
-                val json = response.body?.string()
-                val person = gson.fromJson(json, PersonPopular::class.java)
-                subscriber.onNext(person)
-                subscriber.onCompleted()
-            } else {
-                subscriber.onError(Throwable(response.message))
-            }
+            executeCall("${baseUrl3}person/popular?page=$pagina&language=en-US&api_key=${Config.TMDB_API_KEY}",
+                object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        subscriber.onError(Throwable(e))
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        if (response.isSuccessful) {
+                            val json = response.body?.string()
+                            val person = gson.fromJson(json, PersonPopular::class.java)
+                            subscriber.onNext(person)
+                            subscriber.onCompleted()
+                        } else {
+                            subscriber.onError(Throwable(response.message))
+                        }
+                    }
+                })
         }
     }
 
@@ -205,45 +218,57 @@ class Api(val context: Context): ApiSingleton() {
         }
     }
 
-    private fun getMovie(id: Int): Observable<Movie> {
-        return Observable.create { subscriber ->
-            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-            val gson = Gson()
-            val request = Request.Builder()
-                .url("${baseUrl3}movie/$id?api_key=${Config.TMDB_API_KEY}" + "&language=$timeZone" +
-                    "&append_to_response=credits,videos,images,release_dates,similar&include_image_language=en,null")
-                .get()
-                .build()
-            val response = client.newCall(request).execute()
-            if (response.isSuccessful) {
-                val json = response.body?.string()
-                val lista = gson.fromJson(json, Movie::class.java)
-                subscriber.onNext(lista)
-                subscriber.onCompleted()
-            } else {
-                subscriber.onError(Throwable(response.message))
-            }
+    suspend fun getMovie(idMovie: Int): BaseRequest<Movie> {
+        return suspendCancellableCoroutine { continuation ->
+            val idioma = getIdiomaEscolhido(context)
+            executeCall("${baseUrl3}movie/$idMovie?api_key=${Config.TMDB_API_KEY}&language=$idioma&append_to_response=credits,videos,images,release_dates,similar&include_image_language=en,null",
+                object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        continuation.resume(Failure(e))
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        try {
+                            if (response.isSuccessful) {
+                                val listMovie = Gson().fromJson(response.body?.string(),
+                                    Movie::class.java)
+                                continuation.resume(Success(listMovie))
+                            } else {
+                                continuation.resume(Failure(Exception(response.message)))
+                            }
+                        } catch (e: Exception) {
+                            continuation.resume(Failure(e))
+                        }
+                    }
+                })
         }
     }
 
-    fun getMovieVideos(id: Int): Observable<Videos> {
-        return Observable.create { subscriber ->
-            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-            val gson = Gson()
-            val request = Request.Builder()
-                .url("${baseUrl3}movie/$id/videos?api_key=${Config.TMDB_API_KEY}&language=en-US,null")
-                .get()
-                .build()
-            val response = client.newCall(request).execute()
-            if (response.isSuccessful) {
-                val json = response.body?.string()
-                val videos = gson.fromJson(json, Videos::class.java)
+    suspend fun getTrailersFromEn(movieId: Int): BaseRequest<Videos> { // Todo Validar erros
+        return suspendCancellableCoroutine { cont ->
+            executeCall("${baseUrl3}movie/$movieId/videos?api_key=${Config.TMDB_API_KEY}&language=en-US,null", object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    cont.resume(Failure(e))
+                }
 
-                subscriber.onNext(videos)
-                subscriber.onCompleted()
-            } else {
-                subscriber.onError(Throwable(response.message))
-            }
+                override fun onResponse(call: Call, response: Response) {
+                    try {
+                        if (response.isSuccessful) {
+                            val json = response.body?.string()
+                            val videos = gson.fromJson(json, Videos::class.java)
+                            cont.resume(Success(videos))
+                        } else {
+                            cont.resume(Failure(java.lang.Exception(response.code.toString())))
+                        }
+                    } catch (ex: JsonSyntaxException) {
+                        cont.resume(Failure(ex))
+                    } catch (ex: SocketTimeoutException) {
+                        cont.resume(Failure(ex))
+                    } catch (ex: Exception) {
+                        cont.resume(Failure(ex))
+                    }
+                }
+            })
         }
     }
 
@@ -391,31 +416,31 @@ class Api(val context: Context): ApiSingleton() {
         }
     }
 
-    fun loadMovieComVideo(id: Int): Observable<Movie> {
-        return getMovie(id)
-            .flatMap { it ->
-                Observable.just(it)
-                    .flatMap { video -> Observable.just(video.videos) }
-                    .flatMap { videos ->
-                        if (videos?.results?.isEmpty()!!) {
-                            Observable.zip(Observable.just(it), getMovieVideos(id)
-                                .flatMap { video ->
-                                    if (video.results?.isNotEmpty()!!) {
-                                        it.videos?.results?.addAll(video.results)
-                                        Observable.from(video.results)
-                                    } else {
-                                        Observable.just(it)
-                                    }
-                                }
-                            ) { movie, _ ->
-                                movie
-                            }
-                        } else {
-                            Observable.just(it)
-                        }
-                    }
-            }
-    }
+//    fun loadMovieComVideo(id: Int): Observable<Movie> {
+//        return getMovie(id)
+//            .flatMap { it ->
+//                Observable.just(it)
+//                    .flatMap { video -> Observable.just(video.videos) }
+//                    .flatMap { videos ->
+//                        if (videos?.results?.isEmpty()!!) {
+//                            Observable.zip(Observable.just(it), getMovieVideos(id)
+//                                .flatMap { video ->
+//                                    if (video.results?.isNotEmpty()!!) {
+//                                        it.videos?.results?.addAll(video.results)
+//                                        Observable.from(video.results)
+//                                    } else {
+//                                        Observable.just(it)
+//                                    }
+//                                }
+//                            ) { movie, _ ->
+//                                movie
+//                            }
+//                        } else {
+//                            Observable.just(it)
+//                        }
+//                    }
+//            }
+//    }
 
     fun loadTvshowComVideo(id: Int): Observable<Tvshow> {
         return getTvShow(id)
@@ -852,6 +877,71 @@ class Api(val context: Context): ApiSingleton() {
                     }
                 }
             })
+        }
+    }
+
+    suspend fun userGuest(): BaseRequest<GuestSession> {
+        return suspendCancellableCoroutine { cont ->
+            executeCall("https://api.themoviedb.org/3/authentication/guest_session/new?api_key=${Config.TMDB_API_KEY}", object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    cont.resume(Failure(e))
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    if (response.isSuccessful) {
+                        try {
+                            val json = response.body?.string()
+                            val guestSession = gson.fromJson(json, GuestSession::class.java)
+                            cont.resume(Success(guestSession))
+                        } catch (ex: Exception) {
+                            cont.resume(Failure(ex))
+                        }
+                    } else {
+                        cont.resume(Failure(Exception(response.message)))
+                    }
+                }
+            })
+        }
+    }
+
+    suspend fun ratedMovieGuest(movieDb: MovieDb, guestSession: GuestSession): Any { // Todo Validar erros
+        return suspendCancellableCoroutine { cont ->
+            executeCall(url = "https://api.themoviedb.org/3/movie/${movieDb.id}/rating?api_key=${Config.TMDB_API_KEY}&guest_session_id=${guestSession.guestSessionId}",
+                postRequest = RequestBody.create("application/json".toMediaTypeOrNull(), "{\"value\":${movieDb.nota}}"),
+                func = object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        cont.resumeWithException(e)
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        cont.resume(Any())
+                    }
+                })
+        }
+    }
+
+    suspend fun getImdb(id: String): BaseRequest<Imdb> {
+        return suspendCancellableCoroutine { cont ->
+            executeCall("http://www.omdbapi.com/?i=$id&tomatoes=true&r=json&apikey=${Config.OMDBAPI_API_KEY}",
+                object : Callback {
+                    override fun onResponse(call: Call, response: Response) {
+                        if (response.isSuccessful) {
+                            try {
+                                val json = response.body?.string()
+                                val imdb = gson.fromJson(json, Imdb::class.java)
+                                cont.resume(Success(imdb))
+                            } catch (ex: Exception) {
+                                cont.resume(Failure(Exception(ex.message)))
+                            }
+                        } else {
+                            cont.resume(Failure(Exception(response.message)))
+                        }
+                    }
+
+                    override fun onFailure(call: Call, e: IOException) {
+                        cont.resume(Failure(e))
+                    }
+                })
         }
     }
 }

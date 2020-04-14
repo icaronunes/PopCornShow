@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by icaro on 20/11/16.
  */
 @Keep
-public class FilmeDB implements Serializable {
+public class MovieDb implements Serializable {
 
     private String poster;
     private String idImdb;

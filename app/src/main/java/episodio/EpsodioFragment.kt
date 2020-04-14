@@ -209,7 +209,7 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
             e.printStackTrace()
         }
 
-        if (UtilsApp.verificaLancamento(date) && seguindo) {
+        if (UtilsApp.verifyLaunch(date) && seguindo) {
             ep_rating_button.setOnClickListener {
                 dialogSetRating()
             }

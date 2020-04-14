@@ -62,5 +62,9 @@ class TrailerAdapter(private val videos: MutableList<ResultsVideosItem?>?, priva
         }
     }
 
+    fun addVideos(videosTrailers: MutableList<ResultsVideosItem?>?) {
+            videos?.addAll(videosTrailers?.toList() ?: listOf())
+            notifyDataSetChanged()
+    }
 
 }

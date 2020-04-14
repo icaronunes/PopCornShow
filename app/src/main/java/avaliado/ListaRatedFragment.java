@@ -28,7 +28,7 @@ import java.util.List;
 import adapter.ListaFilmeAdapter;
 import adapter.ListaTvShowAdapter;
 import br.com.icaro.filme.R;
-import domain.FilmeDB;
+import domain.MovieDb;
 import domain.TvshowDB;
 import filme.activity.MovieDetailsActivity;
 import tvshow.activity.TvShowActivity;
@@ -42,15 +42,15 @@ import utils.UtilsApp;
 public class ListaRatedFragment extends Fragment {
 
     private int tipo;
-    private List<FilmeDB> movies;
+    private List<MovieDb> movies;
     private List<TvshowDB> tvSeries;
     private RecyclerView recyclerViewFilme;
     private RecyclerView recyclerViewTvShow;
 
-    public static Fragment newInstanceMovie(int tipo, List<FilmeDB> filmeDBs) {
+    public static Fragment newInstanceMovie(int tipo, List<MovieDb> movieDbs) {
         ListaRatedFragment fragment = new ListaRatedFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.FILME, (Serializable) filmeDBs);
+        bundle.putSerializable(Constant.FILME, (Serializable) movieDbs);
         bundle.putInt(Constant.ABA, tipo);
         fragment.setArguments(bundle);
 
@@ -72,7 +72,7 @@ public class ListaRatedFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             tipo = getArguments().getInt(Constant.ABA);
-            movies = (List<FilmeDB>) getArguments().getSerializable(Constant.FILME);
+            movies = (List<MovieDb>) getArguments().getSerializable(Constant.FILME);
             tvSeries = (List<TvshowDB>) getArguments().getSerializable(Constant.SERIE);
         }
     }
