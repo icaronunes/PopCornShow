@@ -326,44 +326,38 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
                 findViewById<TextView>(R.id.rating_title).text = movieDb?.title ?: ""
                 val ratingBar = findViewById<RatingBar>(R.id.ratingBar_rated).apply { rating = (numberRated / 2) }
                 findViewById<Button>(R.id.ok_rated).apply {
-                    setOnClickListener(View.OnClickListener {
-                        if (UtilsApp.isNetWorkAvailable(this@MovieDetailsActivity)) {
+                    setOnClickListener {
+
                             if (ratingBar.rating == 0.0f) {
-                                dismiss()
-                                return@OnClickListener
+                                removeRated()
                             } else {
-                                setupRated(ratingBar)
+                                addRated(ratingBar)
                             }
-                        } else {
-                            ops()
-                        }
                         dismiss()
-                    })
+                    }
                 }
                 findViewById<Button>(R.id.cancel_rated).apply {
-                    if (addRated) {
-                        visible()
-                    } else {
-                        gone()
-                    }
                     setOnClickListener {
-                        model.changeRated({
-                            it.child(idMovie.toString()).setValue(null)
-                                .addOnCompleteListener {
-                                    makeToast(R.string.remover_rated)
-                                }
-                            dismiss()
-                            this@MovieDetailsActivity.fab_menu.close(true)
-                        }, idMovie = idMovie)
-
+                        removeRated()
+                        dismiss()
                     }
                 }
             }
         }
     }
 
-    private fun setupRated(ratingBar: RatingBar) {
-        val movieDate =  makeMovieDb().apply { nota = ratingBar.rating * 2 }
+    private fun removeRated() {
+        model.changeRated({
+            it.child(idMovie.toString()).setValue(null)
+                .addOnCompleteListener {
+                    makeToast(string.remover_rated)
+                }
+            this@MovieDetailsActivity.fab_menu.close(true)
+        }, idMovie = idMovie)
+    }
+
+    private fun addRated(ratingBar: RatingBar) {
+        val movieDate = makeMovieDb().apply { nota = ratingBar.rating * 2 }
         model.changeRated({ databaseReference ->
             databaseReference.child(idMovie.toString()).setValue(movieDate)
                 .addOnCompleteListener {
@@ -377,10 +371,10 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
     }
 
     private fun openDialog() = Dialog(this@MovieDetailsActivity).apply {
-            requestWindowFeature(Window.FEATURE_NO_TITLE)
-            setContentView(R.layout.dialog_custom_rated)
-            window?.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-            show()
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        setContentView(R.layout.dialog_custom_rated)
+        window?.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        show()
     }
 
     private fun addOrRemoveFavorite(): View.OnClickListener {
@@ -409,10 +403,10 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
     }
 
     private fun makeMovieDb() = MovieDb().apply {
-            id = movieDb?.id!!
-            idImdb = movieDb?.imdbId
-            title = movieDb?.title
-            poster = movieDb?.posterPath
+        id = movieDb?.id!!
+        idImdb = movieDb?.imdbId
+        title = movieDb?.title
+        poster = movieDb?.posterPath
     }
 
     private fun getDateMovie(): Date? {
@@ -474,8 +468,8 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 
     override fun onDestroy() {
         model.destroy()
-        super.onDestroy()
         subscriptions.unsubscribe()
+        super.onDestroy()
     }
 
     private inner class ImagemTopFragment(supportFragmentManager: FragmentManager, val movie: Movie) : FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
