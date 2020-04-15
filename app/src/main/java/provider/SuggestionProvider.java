@@ -15,7 +15,6 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import br.com.icaro.filme.R;
-import utils.Api;
 import domain.busca.MultiSearch;
 import domain.busca.ResultsItem;
 import rx.Observer;
@@ -23,6 +22,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+import utils.Api;
 import utils.UtilsApp;
 import utils.enums.EnumTypeMedia;
 

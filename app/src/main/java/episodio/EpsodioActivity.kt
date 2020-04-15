@@ -7,7 +7,9 @@ import android.view.MenuItem
 import androidx.fragment.app.FragmentManager
 import br.com.icaro.filme.R
 import domain.TvSeasons
-import kotlinx.android.synthetic.main.activity_epsodios.*
+import kotlinx.android.synthetic.main.activity_epsodios.adView
+import kotlinx.android.synthetic.main.activity_epsodios.tabLayout_epsodio
+import kotlinx.android.synthetic.main.activity_epsodios.viewpager_epsodio
 import utils.Constant
 
 /**

@@ -7,13 +7,13 @@ import applicaton.BaseViewModel
 import applicaton.BaseViewModel.BaseRequest.Failure
 import applicaton.BaseViewModel.BaseRequest.Loading
 import applicaton.BaseViewModel.BaseRequest.Success
-import utils.Api
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import utils.Api
 import kotlin.coroutines.CoroutineContext
 
 class SearchMultiModelView(override val app: Application): BaseViewModel(app) {

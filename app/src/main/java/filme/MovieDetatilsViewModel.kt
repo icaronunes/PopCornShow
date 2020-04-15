@@ -12,8 +12,10 @@ import domain.Imdb
 import domain.Movie
 import domain.MovieDb
 import domain.Videos
-import filme.loading.ILoadingFireBase
-import filme.loading.LoadingFirebase
+import loading.api.ILoadingMedia
+import loading.api.LoadingMedia
+import loading.firebase.ILoadingFireBase
+import loading.firebase.LoadingFirebase
 import utils.Api
 
 class MovieDetatilsViewModel(app: Application, val activity: Activity, val api: Api) : BaseViewModel(app) {

@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.icaro.filme.R
 import domain.PostersItem
-import kotlinx.android.synthetic.main.poster_grid.*
+import kotlinx.android.synthetic.main.poster_grid.adView
+import kotlinx.android.synthetic.main.poster_grid.recycleView_poster_grid
 import utils.Constant
 
 /**

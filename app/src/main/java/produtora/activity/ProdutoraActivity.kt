@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.icaro.filme.R
-import utils.Api
 import kotlinx.android.synthetic.main.produtora_layout.collapsing_toolbar
 import kotlinx.android.synthetic.main.produtora_layout.produtora_filmes_recycler
 import kotlinx.android.synthetic.main.produtora_layout.toolbar
@@ -19,6 +18,7 @@ import produtora.adapter.ProdutoraAdapter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import utils.Api
 import utils.Constant
 import utils.InfiniteScrollListener
 import utils.setPicasso

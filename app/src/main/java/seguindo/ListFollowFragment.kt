@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import applicaton.BaseFragment
 import br.com.icaro.filme.R
-import utils.Api
 import domain.UserEp
 import domain.UserTvshow
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -28,6 +27,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.apache.commons.lang3.tuple.MutablePair
+import utils.Api
 import utils.Constant
 import java.io.Serializable
 import kotlin.coroutines.CoroutineContext

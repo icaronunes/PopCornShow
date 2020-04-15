@@ -7,7 +7,8 @@ import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import br.com.icaro.filme.R
-import kotlinx.android.synthetic.main.activity_site.*
+import kotlinx.android.synthetic.main.activity_site.swipeToRefresh
+import kotlinx.android.synthetic.main.activity_site.webView
 import utils.BaseActivityKt
 import utils.Constant
 

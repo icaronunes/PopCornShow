@@ -22,7 +22,6 @@ import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import domain.reelgood.movie.Availability
-import kotlinx.android.synthetic.main.movie_details_info.recycle_filme_elenco
 import java.text.DateFormat
 import java.text.Normalizer
 import java.text.SimpleDateFormat

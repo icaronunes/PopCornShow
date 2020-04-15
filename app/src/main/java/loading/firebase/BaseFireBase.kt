@@ -1,4 +1,4 @@
-package filme.loading
+package loading.firebase
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -26,19 +26,19 @@ open class BaseFireBase(val type: String) {
 
     private fun iniFirebase() {
 
-        if (isAuth()) {
+//        if (isAuth()) {
             myWatch = database.getReference(USERS).child(firebaseAuth?.currentUser
-                ?.uid!!).child(WATCH)
+                ?.uid ?: "").child(WATCH)
                 .child(type)
 
             myFavorite = database.getReference(USERS).child(firebaseAuth?.currentUser
-                ?.uid!!).child(FAVORITY)
+                ?.uid ?: "").child(FAVORITY)
                 .child(type)
 
             myRated = database.getReference(USERS).child(firebaseAuth?.currentUser
-                ?.uid!!).child(RATED)
+                ?.uid ?: "").child(RATED)
                 .child(type)
-        }
+//        }
     }
 
     fun isAuth() = firebaseAuth.currentUser != null

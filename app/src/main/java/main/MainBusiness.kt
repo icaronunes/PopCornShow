@@ -5,13 +5,13 @@ import android.preference.PreferenceManager
 import applicaton.BaseViewModel
 import applicaton.BaseViewModel.BaseRequest.Success
 import br.com.icaro.filme.BuildConfig
-import utils.Api
 import domain.ListaSeries
 import domain.movie.ListaFilmes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import utils.Api
 
 class MainBusiness(val app: Application, private val mainViewModel: BaseViewModel, private val listener: MainBusinessListener) {
 

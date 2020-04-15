@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
-import utils.Api
 import kotlinx.android.synthetic.main.activity_person_popular.activity_person_popular_no_internet
 import kotlinx.android.synthetic.main.activity_person_popular.linear_person_popular
 import kotlinx.android.synthetic.main.activity_person_popular.recycleView_person_popular
@@ -18,6 +17,7 @@ import pessoaspopulares.adapter.PersonPopularAdapter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import utils.Api
 import utils.InfiniteScrollListener
 import utils.UtilsApp
 

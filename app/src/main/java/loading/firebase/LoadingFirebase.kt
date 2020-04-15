@@ -1,4 +1,4 @@
-package filme.loading
+package loading.firebase
 
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot

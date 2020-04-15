@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import br.com.icaro.filme.R;
-import domain.person.Person;
 import fragment.FragmentError;
 import pessoa.fragment.PersonFragment;
 

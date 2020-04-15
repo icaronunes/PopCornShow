@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import br.com.icaro.filme.R
 import br.com.icaro.filme.R.drawable
 import br.com.icaro.filme.R.id
 import br.com.icaro.filme.R.layout

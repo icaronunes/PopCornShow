@@ -9,8 +9,8 @@ import android.util.AttributeSet;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import main.MainActivity;
 import br.com.icaro.filme.R;
+import main.MainActivity;
 
 /**
  * Created by icaro on 15/09/16.

@@ -35,7 +35,7 @@ data class Tvshow(
     val popularity: Double? = null,
 
     @field:SerializedName("id")
-    val id: Int? = null,
+    val id: Int,
 
     @field:SerializedName("number_of_seasons")
     val numberOfSeasons: Int? = null,

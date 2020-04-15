@@ -10,13 +10,16 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
-import utils.Api
 import domain.CastItem
-import kotlinx.android.synthetic.main.activity_elenco.*
-import kotlinx.android.synthetic.main.include_progress_horizontal.*
+import kotlinx.android.synthetic.main.activity_elenco.adView
+import kotlinx.android.synthetic.main.activity_elenco.elenco_recycleview
+import kotlinx.android.synthetic.main.activity_elenco.linear_elenco_layout
+import kotlinx.android.synthetic.main.activity_elenco.text_elenco_no_internet
+import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import utils.Api
 import utils.Constant
 import utils.UtilsApp
 

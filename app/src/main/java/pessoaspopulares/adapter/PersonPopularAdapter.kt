@@ -5,8 +5,8 @@ import androidx.collection.SparseArrayCompat
 import androidx.recyclerview.widget.RecyclerView
 import domain.PersonItem
 import domain.ViewType
-import java.util.ArrayList
 import utils.Constant
+import java.util.ArrayList
 
 /**
  * Created by icaro on 04/10/16.

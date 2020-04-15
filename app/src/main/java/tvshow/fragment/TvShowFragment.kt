@@ -39,7 +39,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import configuracao.SettingsActivity
 import customview.stream.BaseStream
-import customview.stream.BaseStreamAb
 import domain.Imdb
 import domain.UserTvshow
 import domain.tvshow.SeasonsItem
@@ -62,8 +61,8 @@ import kotlinx.android.synthetic.main.tvshow_info.lancamento
 import kotlinx.android.synthetic.main.tvshow_info.original_title
 import kotlinx.android.synthetic.main.tvshow_info.popularity
 import kotlinx.android.synthetic.main.tvshow_info.production_countries
-import kotlinx.android.synthetic.main.tvshow_info.produtora
 import kotlinx.android.synthetic.main.tvshow_info.production_label
+import kotlinx.android.synthetic.main.tvshow_info.produtora
 import kotlinx.android.synthetic.main.tvshow_info.proximo_ep_date
 import kotlinx.android.synthetic.main.tvshow_info.recycle_tvshow_elenco
 import kotlinx.android.synthetic.main.tvshow_info.recycle_tvshow_producao

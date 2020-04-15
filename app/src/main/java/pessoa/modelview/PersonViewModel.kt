@@ -10,7 +10,6 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import pessoa.modelview.listener.PersonBusinessListener
-import java.lang.Exception
 import kotlin.coroutines.CoroutineContext
 
 class PersonViewModel(override val app: Application,private val activity: Activity): BaseViewModel(app), PersonBusinessListener {

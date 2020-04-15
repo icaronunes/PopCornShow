@@ -8,16 +8,15 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.icaro.filme.R
-import utils.Api
-import java.util.Random
-import kotlin.collections.HashMap
-import kotlinx.android.synthetic.main.activity_lista.*
+import kotlinx.android.synthetic.main.activity_lista.recycleView_favorite
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import utils.Api
 import utils.Constant
 import utils.InfiniteScrollListener
 import utils.UtilsApp
+import java.util.Random
 
 /**
  * Created by icaro on 04/10/16.

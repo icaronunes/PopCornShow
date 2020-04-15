@@ -25,18 +25,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import utils.Api
 import domain.EpisodesItem
 import domain.FilmeService
 import domain.TvSeasons
 import domain.UserEp
 import domain.UserSeasons
 import episodio.EpsodioActivity
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.HashMap
-import java.util.Locale
 import kotlinx.android.synthetic.main.temporada_layout.recycleView_temporada
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -45,8 +39,14 @@ import rx.Observer
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import utils.Api
 import utils.Constant
 import utils.UtilsApp
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.HashMap
+import java.util.Locale
 
 /**
  * Created by icaro on 26/08/16.

@@ -1,7 +1,6 @@
 package domain.reelgood.movie
 
 import com.google.gson.annotations.SerializedName
-import domain.reelgood.movie.ListingKey
 
 data class Rank(
     @SerializedName("listing_key")

@@ -1,10 +1,10 @@
 package domain.search
 
 
-import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import domain.ViewType
+import kotlinx.android.parcel.Parcelize
 import utils.enums.EnumTypeMedia
 
 @Parcelize

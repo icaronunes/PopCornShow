@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
-import utils.Api
 import domain.CrewItem
 import kotlinx.android.synthetic.main.activity_crews.adView
 import kotlinx.android.synthetic.main.activity_crews.crews_recyclerview
@@ -19,6 +18,7 @@ import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horiz
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import utils.Api
 import utils.Constant
 import utils.UtilsApp
 

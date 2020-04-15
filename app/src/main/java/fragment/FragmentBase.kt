@@ -3,7 +3,6 @@ package fragment
 import android.view.View
 import androidx.fragment.app.Fragment
 import br.com.icaro.filme.R
-import com.github.clans.fab.FloatingActionMenu
 import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
 import rx.subscriptions.CompositeSubscription

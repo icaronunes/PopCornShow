@@ -3,7 +3,6 @@ package tvshow.activity
 import activity.BaseActivityAb
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.animation.PropertyValuesHolder
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -19,11 +18,12 @@ import android.widget.Button
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import br.com.icaro.filme.R
+import br.com.icaro.filme.R.string
 import com.crashlytics.android.Crashlytics
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -56,15 +56,16 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import rx.Observer
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import tvshow.TvShowAdapter
+import tvshow.viewmodel.TvShowViewModel
 import utils.Api
 import utils.Constant
 import utils.UtilsApp
 import utils.UtilsApp.setEp2
+import utils.animeRotation
 import utils.getNameTypeReel
 import utils.gone
 import utils.makeToast
@@ -78,21 +79,21 @@ import java.util.Locale
 
 class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : BaseActivityAb() {
 
+    private val EMPTY_RATED: Float = 0.0f
     var reelGood: ReelGoodTv? = null
+    private lateinit var model: TvShowViewModel
     private var idTvshow: Int = 0
     private var idReel: String = ""
     private var colorTop: Int = 0
     private var series: Tvshow? = null
-    private var addFavorite = true
+
     private var addWatch = true
     private var addRated = true
     private var seguindo: Boolean = false
     private var valueEventWatch: ValueEventListener? = null
     private var valueEventRated: ValueEventListener? = null
-    private var valueEventFavorite: ValueEventListener? = null
 
     private var mAuth: FirebaseAuth? = null
-    private var myFavorite: DatabaseReference? = null
     private var myWatch: DatabaseReference? = null
     private var myRated: DatabaseReference? = null
     private var numberRated: Float = 0.0f
@@ -106,21 +107,44 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
         setUpToolBar()
         setupNavDrawer()
         getExtras()
-        collapsing_toolbar?.setBackgroundColor(colorTop)
         setTitleAndDisableTalk()
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        setColorFab(colorTop)
+        model = createViewModel(TvShowViewModel::class.java, this)
+        observers()
 
         if (idReel.isNotEmpty()) getDateReel(idReel)
-
-        iniciarFirebases()
 
         if (UtilsApp.isNetWorkAvailable(baseContext)) {
             getDadosTvshow()
         } else {
             snack()
+        }
+    }
+
+    private fun observers() {
+        model.favorit.observe(this, Observer {
+            setEventListenerFavorite(it.child("$idTvshow").exists())
+        })
+
+        model.rated.observe(this, Observer {
+            setEventListenerRated(it.child("$idTvshow").exists())
+            setRatedValue(it)
+        })
+
+        model.auth.observe(this, Observer {
+            setFabVisible(it)
+        })
+
+        model.watch.observe(this, Observer {
+            setEventListenerWatch(it.child("$idTvshow").exists())
+        })
+    }
+
+    private fun setFabVisible(visible: Boolean) {
+        if (visible) {
+            setColorFab(colorTop)
+            fab_menu.visible()
+        } else {
+            fab_menu.gone()
         }
     }
 
@@ -159,6 +183,8 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
     }
 
     private fun setTitleAndDisableTalk() {
+        collapsing_toolbar?.setBackgroundColor(colorTop)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         collapsing_toolbar.title = " "
         collapsing_toolbar.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
         collapsing_toolbar.isFocusable = false
@@ -171,7 +197,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
             .loadTvshowComVideo(idTvshow)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<Tvshow> {
+            .subscribe(object : rx.Observer<Tvshow> {
                 override fun onCompleted() {
                     if (!intent.hasExtra(Constant.ID_REEL)) getDateReel(getIdStream())
                     setDados()
@@ -187,106 +213,44 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                 }
             })
 
-        compositeSubscription?.add(subscriber)
+        compositeSubscription.add(subscriber)
     }
 
-    private fun setEventListenerWatch() {
-
-        valueEventWatch = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                if (dataSnapshot.child(idTvshow.toString()).exists()) {
-                    addWatch = true
-                    menu_item_watchlist?.labelText = resources.getString(R.string.remover_watch)
-                } else {
-                    addWatch = false
-                    menu_item_watchlist?.labelText = resources.getString(R.string.adicionar_watch)
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-            }
+    private fun setEventListenerWatch(boolean: Boolean) {
+        if (boolean) {
+            menu_item_watchlist?.labelText = resources.getString(R.string.remover_watch)
+        } else {
+            menu_item_watchlist?.labelText = resources.getString(R.string.adicionar_watch)
         }
-        myWatch?.addValueEventListener(valueEventWatch!!)
     }
 
-    private fun setEventListenerRated() {
-        valueEventRated = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.child(idTvshow.toString()).exists()) {
-                    addRated = true
-                    if (dataSnapshot.child(idTvshow.toString()).child("nota").exists()) {
-                        val nota = dataSnapshot.child(idTvshow.toString()).child("nota").value.toString()
-                        numberRated = java.lang.Float.parseFloat(nota)
-                        menu_item_rated?.labelText = resources.getString(R.string.remover_rated)
-                        if (numberRated == 0f) {
-                            menu_item_rated?.labelText = resources.getString(R.string.adicionar_rated)
-                        }
-                    }
-                } else {
-                    addRated = false
-                    numberRated = 0f
-                    menu_item_rated?.labelText = resources.getString(R.string.adicionar_rated)
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-            }
+    private fun setEventListenerRated(boolean: Boolean) {
+        if (boolean) {
+            menu_item_rated?.labelText = resources.getString(R.string.remover_rated)
+        } else {
+            menu_item_rated?.labelText = resources.getString(R.string.adicionar_rated)
         }
-        myRated?.addValueEventListener(valueEventRated!!)
     }
 
-    private fun setEventListenerFavorite() {
-        valueEventFavorite = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.child(idTvshow.toString()).exists()) {
-                    addFavorite = true
-                    menu_item_favorite?.labelText = resources.getString(R.string.remover_favorite)
-                } else {
-                    addFavorite = false
-                    menu_item_favorite?.labelText = resources.getString(R.string.adicionar_favorite)
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-            }
+    private fun setEventListenerFavorite(boolean: Boolean) {
+        if (boolean) {
+            menu_item_favorite?.labelText = resources.getString(R.string.remover_favorite)
+        } else {
+            menu_item_favorite?.labelText = resources.getString(R.string.adicionar_favorite)
         }
-        myFavorite?.addValueEventListener(valueEventFavorite!!)
+    }
+
+    private fun setRatedValue(it: DataSnapshot) {
+        numberRated = it.child(idTvshow.toString()).child("nota").value?.toString()?.toFloat()
+            ?: EMPTY_RATED
     }
 
     override fun onDestroy() {
+        model.destroy()
         super.onDestroy()
-        if (valueEventWatch != null) {
-            myWatch?.removeEventListener(valueEventWatch!!)
-        }
-        if (valueEventRated != null) {
-            myRated?.removeEventListener(valueEventRated!!)
-        }
-        if (valueEventFavorite != null) {
-            myFavorite?.removeEventListener(valueEventFavorite!!)
-        }
-
-        compositeSubscription?.unsubscribe()
-    }
-
-    private fun iniciarFirebases() {
-        mAuth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance()
-
-        if (mAuth?.currentUser != null) {
-            myWatch = database?.getReference("users")?.child(mAuth?.currentUser?.uid!!)
-                ?.child("watch")?.child("tvshow")
-
-            myFavorite = database?.getReference("users")?.child(mAuth?.currentUser?.uid!!)
-                ?.child("favorites")?.child("tvshow")
-
-            myRated = database?.getReference("users")?.child(mAuth?.currentUser?.uid!!)
-                ?.child("rated")?.child("tvshow")
-        }
     }
 
     private fun getExtras() {
-
         if (intent.action == null) {
             colorTop = intent.getIntExtra(Constant.COLOR_TOP, R.color.colorFAB)
             idTvshow = intent.getIntExtra(Constant.TVSHOW_ID, 0)
@@ -316,7 +280,6 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (series != null) {
             if (item.itemId == R.id.share) {
-
                 salvaImagemMemoriaCache(this@TvShowActivity, series?.posterPath, object : SalvarImageShare {
                     override fun retornaFile(file: File) {
                         val intent = Intent(Intent.ACTION_SEND)
@@ -348,166 +311,119 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
         return "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3Dtvshow%26id%3D${series?.id}&apn=br.com.icaro.filme"
     }
 
-    private fun addOrRemoveWatch(): View.OnClickListener {
-        return View.OnClickListener {
-
-            val anim1 = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.0f, 0.2f)
-            val anim2 = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.0f, 0.0f)
-            val anim3 = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.5f, 1.0f)
-            val anim4 = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.5f, 1.0f)
-            val animator = ObjectAnimator
-                .ofPropertyValuesHolder(menu_item_watchlist, anim1, anim2, anim3, anim4)
-            animator.duration = 1700
-            animator.start()
-
-            if (addWatch) {
-
-                myWatch?.child(series?.id.toString())?.setValue(null)
-                    ?.addOnCompleteListener {
-                        Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_watch_remove), Toast.LENGTH_SHORT)
-                            .show()
-                    }
-            } else {
-
-                val tvshowDB = TvshowDB().apply {
-                    title = series?.name
-                    id = series?.id!!
-                    poster = series?.posterPath
-                }
-
-                myWatch?.child(series?.id.toString())?.setValue(tvshowDB)
-                    ?.addOnCompleteListener {
-                        Toast.makeText(this@TvShowActivity, getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
-                            .show()
-                    }
-            }
-            fab_menu!!.close(true)
-        }
+    private fun makeTvshiwDb() = TvshowDB().apply {
+        title = series?.name
+        id = series?.id ?: 0
+        poster = series?.posterPath
     }
 
-    private fun addOrRemoveFavorite(): View.OnClickListener {
-        return View.OnClickListener {
-            val anim1 = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.0f, 0.2f)
-            val anim2 = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.0f, 0.2f)
-            val anim3 = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.0f, 1.0f)
-            val anim4 = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.0f, 1.0f)
-            val animator = ObjectAnimator
-                .ofPropertyValuesHolder(menu_item_favorite, anim1, anim2, anim3, anim4)
-            animator.duration = 1700
-            animator.start()
+    private fun addOrRemoveWatch() = View.OnClickListener {
+        menu_item_watchlist.animeRotation()
+        model.chanceWatch(add = {
+            it.child("$idTvshow").setValue(makeTvshiwDb())
+                .addOnCompleteListener {
+                    makeToast(R.string.filme_add_watchlist)
+                }
+        }, remove = {
+            it.child("$idTvshow").setValue(null)
+                .addOnCompleteListener {
+                    makeToast(R.string.tvshow_watch_remove)
+                }
+        }, idMedia = idTvshow)
+        this@TvShowActivity.fab_menu.close(true)
+    }
 
-            var date: Date? = null
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            try {
-                series?.firstAirDate?.let { date = sdf.parse(it) }
-            } catch (e: ParseException) {
-                e.printStackTrace()
-            }
-
-            if (!UtilsApp.verifyLaunch(date)) {
-                Toast.makeText(this@TvShowActivity, R.string.tvshow_nao_lancado, Toast.LENGTH_SHORT).show()
-                val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Event.SELECT_CONTENT, "Favorite - Tvshow ainda não foi lançado.")
-            } else {
-
-                if (addFavorite) {
-                    try {
-                        myFavorite?.child(idTvshow.toString())?.setValue(null)
-                            ?.addOnCompleteListener {
-                                Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_remove_favorite), Toast.LENGTH_SHORT).show()
-                            }
-                    } catch (e: Exception) {
-                    }
-                } else {
-
-                    val tvshowDB = TvshowDB()
-                    tvshowDB.title = series?.name
-                    tvshowDB.id = series?.id!!
-                    tvshowDB.poster = series?.posterPath
-
-                    myFavorite?.child(idTvshow.toString())?.setValue(tvshowDB)
-                        ?.addOnCompleteListener {
+    private fun addOrRemoveFavorite() = View.OnClickListener {
+        menu_item_favorite.animeRotation()
+        if (!UtilsApp.verifyLaunch(getDateTvshow())) {
+            makeToast(R.string.tvshow_nao_lancado)
+        } else {
+            model.putFavority(
+                add = {
+                    it.child(idTvshow.toString()).setValue(null)
+                        .addOnCompleteListener {
+                            Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_remove_favorite), Toast.LENGTH_SHORT).show()
+                        }
+                },
+                remove = {
+                    it.child(idTvshow.toString())?.setValue(makeTvshiwDb())
+                        .addOnCompleteListener {
                             Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_add_favorite), Toast.LENGTH_SHORT)
                                 .show()
                         }
-                }
+                },
+                id = idTvshow)
 
-                fab_menu?.close(true)
+            this@TvShowActivity.fab_menu.close(true)
+        }
+    }
+
+    private fun ratedMovie() = View.OnClickListener {
+        if (!UtilsApp.verifyLaunch(getDateTvshow())) {
+            Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_nao_lancado), Toast.LENGTH_SHORT).show()
+        } else {
+
+            Dialog(this@TvShowActivity).apply {
+                requestWindowFeature(Window.FEATURE_NO_TITLE)
+                setContentView(R.layout.dialog_custom_rated)
+                findViewById<TextView>(R.id.rating_title).text = series?.name ?: ""
+                window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+
+                val ratingBar = findViewById<RatingBar>(R.id.ratingBar_rated)
+                ratingBar.rating = numberRated / 2
+
+                findViewById<Button>(R.id.cancel_rated)
+                    .setOnClickListener {
+                        removeRated()
+                    }
+
+                findViewById<Button>(R.id.ok_rated).setOnClickListener {
+                    if (ratingBar.rating == 0.0f) {
+                        removeRated()
+                    } else {
+                        addRated(ratingBar)
+                    }
+                }
+                show()
             }
         }
     }
 
-    private fun ratedMovie(): View.OnClickListener {
-        return View.OnClickListener {
-            var date: Date? = null
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            try {
-                series?.firstAirDate?.let { date = sdf.parse(it) }
-            } catch (e: ParseException) {
-                e.printStackTrace()
+    private fun Dialog.addRated(ratingBar: RatingBar) {
+        val tvshowDB = makeTvshiwDb().apply { nota = ratingBar.rating * 2 }
+        model.setRated(idTvshow) { database ->
+            database.child(idTvshow.toString()).setValue(tvshowDB)
+                .addOnCompleteListener {
+                    makeToast("${getString(R.string.tvshow_rated)} - ${tvshowDB.nota}")
+                }
+            //TODO alterar para coroutine
+            Thread(Runnable { FilmeService.ratedTvshowGuest(idTvshow, (ratingBar.rating * 2).toInt(), this@TvShowActivity) })
+                .start()
+        }
+        dismiss()
+        this@TvShowActivity.fab_menu.close(true)
+    }
+
+    private fun Dialog.removeRated() {
+        model.setRated(idTvshow) { database ->
+            database.child(idTvshow.toString()).setValue(null)
+                .addOnCompleteListener {
+                    makeToast(string.tvshow_remove_rated)
+                }
+            dismiss()
+            this@TvShowActivity.fab_menu.close(true)
+        }
+    }
+
+    private fun getDateTvshow(): Date? {
+        return try {
+            series?.firstAirDate?.let {
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                sdf.parse(it)
             }
-
-            if (!UtilsApp.verifyLaunch(date)) {
-                Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_nao_lancado), Toast.LENGTH_SHORT).show()
-            } else {
-
-                val alertDialog = Dialog(this@TvShowActivity)
-                alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                alertDialog.setContentView(R.layout.dialog_custom_rated)
-
-                val ok = alertDialog.findViewById<View>(R.id.ok_rated) as Button
-                val no = alertDialog.findViewById<View>(R.id.cancel_rated) as Button
-
-                val title = alertDialog.findViewById<View>(R.id.rating_title) as TextView
-                title.text = series?.name
-                val ratingBar = alertDialog.findViewById<View>(R.id.ratingBar_rated) as RatingBar
-                ratingBar.rating = numberRated / 2
-
-                alertDialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-
-                if (addRated) {
-                    no.visible()
-                } else {
-                    no.gone()
-                }
-
-                no.setOnClickListener {
-                    myRated?.child(idTvshow.toString())?.setValue(null)
-                        ?.addOnCompleteListener {
-                            Toast.makeText(this@TvShowActivity,
-                                resources.getText(R.string.tvshow_remove_rated), Toast.LENGTH_SHORT).show()
-                        }
-                    alertDialog.dismiss()
-                    fab_menu?.close(true)
-                }
-
-                ok.setOnClickListener {
-
-                    if (UtilsApp.isNetWorkAvailable(this@TvShowActivity)) {
-
-                        //  Log.d(TAG, "Gravou Rated");
-
-                        val tvshowDB = TvshowDB()
-                        tvshowDB.nota = ratingBar.rating * 2
-                        tvshowDB.id = series?.id!!
-                        tvshowDB.title = series?.name
-                        tvshowDB.poster = series?.posterPath
-
-                        myRated?.child(idTvshow.toString())?.setValue(tvshowDB)
-                            ?.addOnCompleteListener {
-                                Toast.makeText(this@TvShowActivity,
-                                    getString(R.string.tvshow_rated) + " - ${tvshowDB.nota}", Toast.LENGTH_SHORT)
-                                    .show()
-                            }
-
-                        Thread(Runnable { FilmeService.ratedTvshowGuest(idTvshow, (ratingBar.rating * 2).toInt(), this@TvShowActivity) })
-                            .start()
-                    }
-                    alertDialog.dismiss()
-                    fab_menu?.close(true)
-                }
-                alertDialog.show()
-            }
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            null
         }
     }
 
@@ -552,7 +468,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.immediate())
                 .onBackpressureBuffer(1000)
-                .subscribe(object : Observer<TvSeasons> {
+                .subscribe(object : rx.Observer<TvSeasons> {
                     override fun onCompleted() {
                         atulizarDataBase()
                         setDataBase()
@@ -668,34 +584,8 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
     }
 
     private fun setFab() {
-        if (mAuth?.currentUser != null) {
-
-            setEventListenerWatch()
-            setEventListenerFavorite()
-            setEventListenerRated()
-
-            var date: Date? = null
-            fab_menu?.alpha = 1.0f
-            if (series?.firstAirDate != null) {
-                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                try {
-                    series?.firstAirDate.let { date = sdf.parse(it) }
-                } catch (e: ParseException) {
-                    e.printStackTrace()
-                }
-
-                if (UtilsApp.verifyLaunch(date)) {
-                    menu_item_favorite?.setOnClickListener(addOrRemoveFavorite())
-                    menu_item_rated?.setOnClickListener(ratedMovie())
-                }
-                menu_item_watchlist?.setOnClickListener(addOrRemoveWatch())
-            } else {
-                menu_item_watchlist?.setOnClickListener(addOrRemoveWatch())
-                menu_item_favorite?.setOnClickListener(addOrRemoveFavorite())
-                menu_item_rated?.setOnClickListener(ratedMovie())
-            }
-        } else {
-            fab_menu?.alpha = 0.0f
-        }
+        menu_item_watchlist?.setOnClickListener(addOrRemoveWatch())
+        menu_item_favorite?.setOnClickListener(addOrRemoveFavorite())
+        menu_item_rated?.setOnClickListener(ratedMovie())
     }
 }

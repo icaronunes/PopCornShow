@@ -10,7 +10,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import domain.person.Person
 import kotlinx.android.synthetic.main.activity_person.viewPager_person
-import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal as progress
 import pessoa.adapter.PersonAdapter
 import pessoa.modelview.PersonViewModel
 import utils.BaseActivityKt
@@ -18,6 +17,7 @@ import utils.CallBackError
 import utils.Constant
 import utils.UtilsApp
 import utils.gone
+import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal as progress
 
 class PersonActivity : BaseActivityKt(), CallBackError {
 

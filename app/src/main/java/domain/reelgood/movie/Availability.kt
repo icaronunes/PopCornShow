@@ -3,7 +3,6 @@ package domain.reelgood.movie
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import domain.ViewType
-import domain.reelgood.movie.SourceData
 import kotlinx.android.parcel.Parcelize
 import utils.Constant
 

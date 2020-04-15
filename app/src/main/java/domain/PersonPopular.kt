@@ -1,8 +1,8 @@
 package domain
 
 import com.google.gson.annotations.SerializedName
-import javax.annotation.Generated
 import utils.Constant
+import javax.annotation.Generated
 
 @Generated("com.robohorse.robopojogenerator")
 data class PersonPopular(

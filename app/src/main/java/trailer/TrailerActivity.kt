@@ -15,9 +15,9 @@ import com.google.android.youtube.player.YouTubePlayerView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.FirebaseAnalytics.Event
 import com.google.firebase.analytics.FirebaseAnalytics.Param
-import kotlinx.android.synthetic.main.youtube_layout.trailer_sinopse as sinopse
 import utils.Config
 import utils.Constant
+import kotlinx.android.synthetic.main.youtube_layout.trailer_sinopse as sinopse
 
 /**
  * Created by icaro on 12/07/16.

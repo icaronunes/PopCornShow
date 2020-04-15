@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.clans.fab.FloatingActionMenu
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.github.clans.fab.FloatingActionMenu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fab_menu"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -10,8 +10,8 @@
     android:focusable="true"
     android:layout_marginEnd="@dimen/trade_size_dp_6"
     android:layout_marginBottom="@dimen/trade_size_dp_35"
-    android:alpha="0"
-    android:visibility="visible">
+    tools:visibility="visible"
+    android:visibility="gone">
 
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/menu_item_favorite"

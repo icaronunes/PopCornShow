@@ -1,13 +1,11 @@
 package utils
 
 import activity.BaseActivity
-import android.annotation.SuppressLint
 import android.view.View
 import android.widget.Toast
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
 import rx.subscriptions.CompositeSubscription
-import javax.annotation.Resources
 
 /**
  * Created by icaro on 27/08/17.

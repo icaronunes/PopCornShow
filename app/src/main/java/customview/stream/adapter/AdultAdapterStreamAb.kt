@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
+import customview.stream.BaseStreamAb
 import customview.stream.TypeEnumStream
 import customview.stream.TypeEnumStream.EP
 import customview.stream.TypeEnumStream.MOVIE
 import customview.stream.TypeEnumStream.TV
 import domain.ViewType
 import domain.reelgood.movie.Availability
-import customview.stream.BaseStreamAb
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constant.TypeStream

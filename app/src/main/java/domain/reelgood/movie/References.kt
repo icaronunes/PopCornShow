@@ -1,7 +1,6 @@
 package domain.reelgood.movie
 
 import com.google.gson.annotations.SerializedName
-import domain.reelgood.movie.LinkReferences
 
 //Todo criar o mesmo objeto para todos
 data class References(
