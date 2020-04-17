@@ -11,6 +11,7 @@ open class BaseFireBase(val type: String) {
         const val FAVORITY = "favorites"
         const val RATED = "rated"
         const val USERS = "users"
+        const val FALLOW = "seguindo"
     }
 
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -19,6 +20,7 @@ open class BaseFireBase(val type: String) {
     lateinit var myWatch: DatabaseReference
     lateinit var myFavorite: DatabaseReference
     lateinit var myRated: DatabaseReference
+    lateinit var myFallow: DatabaseReference
 
     init {
         iniFirebase()
@@ -26,20 +28,25 @@ open class BaseFireBase(val type: String) {
 
     private fun iniFirebase() {
 
-//        if (isAuth()) {
-            myWatch = database.getReference(USERS).child(firebaseAuth?.currentUser
+            myWatch = database.getReference(USERS).child(firebaseAuth.currentUser
                 ?.uid ?: "").child(WATCH)
                 .child(type)
 
-            myFavorite = database.getReference(USERS).child(firebaseAuth?.currentUser
+            myFavorite = database.getReference(USERS).child(firebaseAuth.currentUser
                 ?.uid ?: "").child(FAVORITY)
                 .child(type)
 
-            myRated = database.getReference(USERS).child(firebaseAuth?.currentUser
+            myRated = database.getReference(USERS).child(firebaseAuth.currentUser
                 ?.uid ?: "").child(RATED)
                 .child(type)
-//        }
+
+             myFallow = database.getReference(USERS).child(firebaseAuth.currentUser
+                 ?.uid ?: "").child(FALLOW)
     }
 
     fun isAuth() = firebaseAuth.currentUser != null
+
+    fun isFallow(idTv: String) {
+        myFallow.child(idTv)
+    }
 }

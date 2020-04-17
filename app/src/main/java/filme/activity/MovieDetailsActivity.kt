@@ -327,7 +327,6 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
                 val ratingBar = findViewById<RatingBar>(R.id.ratingBar_rated).apply { rating = (numberRated / 2) }
                 findViewById<Button>(R.id.ok_rated).apply {
                     setOnClickListener {
-
                             if (ratingBar.rating == 0.0f) {
                                 removeRated()
                             } else {
@@ -363,7 +362,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         makeToast(String.format(resources.getString(string.filme_rated), "${movieDate.nota}"))
-                        this@MovieDetailsActivity.fab_menu?.close(true)
+                        this@MovieDetailsActivity.fab_menu.close(true)
                     }
                 }
             model.setRatedOnTheMovieDB(movieDate)
@@ -381,21 +380,19 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
         return View.OnClickListener {
             menu_item_favorite.animeRotation()
             if (!UtilsApp.verifyLaunch(getDateMovie())) {
-                Toast.makeText(this@MovieDetailsActivity, R.string.filme_nao_lancado, Toast.LENGTH_SHORT).show()
+                makeToast( R.string.filme_nao_lancado)
             } else {
                 model.executeFavority({
                     it.child(idMovie.toString()).setValue(null)
                         .addOnCompleteListener {
-                            Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_remove_favorite), Toast.LENGTH_SHORT).show()
-                            fab_menu?.close(true)
+                            makeToast(R.string.filme_remove_favorite)
+                            this@MovieDetailsActivity.fab_menu.close(true)
                         }
                 }, {
                     it.child(idMovie.toString()).setValue(makeMovieDb())
                         .addOnCompleteListener {
-                            Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_add_favorite), Toast.LENGTH_SHORT)
-                                .show()
-
-                            fab_menu?.close(true)
+                            makeToast(R.string.filme_add_favorite)
+                            this@MovieDetailsActivity.fab_menu.close(true)
                         }
                 }, idMovie)
             }
@@ -428,7 +425,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
                 it.child(idMovie.toString()).setValue(null)
                     .addOnCompleteListener {
                         Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_remove), Toast.LENGTH_SHORT).show()
-                        fab_menu?.close(true)
+                        this@MovieDetailsActivity.fab_menu.close(true)
                     }
             }, add = {
                 it.child(idMovie.toString()).setValue(makeMovieDb())
@@ -436,7 +433,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
                         Toast.makeText(this@MovieDetailsActivity, getString(R.string.filme_add_watchlist), Toast.LENGTH_SHORT)
                             .show()
 
-                        fab_menu?.close(true)
+                        this@MovieDetailsActivity.fab_menu.close(true)
                     }
             },
                 idMedia = idMovie)

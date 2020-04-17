@@ -19,6 +19,9 @@ import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import applicaton.BaseViewModel.BaseRequest.Failure
+import applicaton.BaseViewModel.BaseRequest.Loading
+import applicaton.BaseViewModel.BaseRequest.Success
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.string
 import com.crashlytics.android.Crashlytics
@@ -27,11 +30,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.squareup.picasso.Picasso
-import domain.FilmeService
 import domain.TvSeasons
 import domain.TvshowDB
 import domain.UserEp
@@ -56,9 +56,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import rx.subscriptions.CompositeSubscription
 import tvshow.TvShowAdapter
 import tvshow.viewmodel.TvShowViewModel
 import utils.Api
@@ -70,6 +68,7 @@ import utils.getNameTypeReel
 import utils.gone
 import utils.makeToast
 import utils.setAnimation
+import utils.setPicassoWithCache
 import utils.visible
 import java.io.File
 import java.text.ParseException
@@ -87,20 +86,13 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
     private var colorTop: Int = 0
     private var series: Tvshow? = null
 
-    private var addWatch = true
-    private var addRated = true
     private var seguindo: Boolean = false
-    private var valueEventWatch: ValueEventListener? = null
-    private var valueEventRated: ValueEventListener? = null
 
     private var mAuth: FirebaseAuth? = null
-    private var myWatch: DatabaseReference? = null
-    private var myRated: DatabaseReference? = null
     private var numberRated: Float = 0.0f
     private var database: FirebaseDatabase? = null
     private var userTvshow: UserTvshow? = null
     private var userTvshowOld: UserTvshow? = null
-    private var compositeSubscription: CompositeSubscription = CompositeSubscription()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,11 +106,13 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
         if (idReel.isNotEmpty()) getDateReel(idReel)
 
         if (UtilsApp.isNetWorkAvailable(baseContext)) {
-            getDadosTvshow()
+            getDataTvshow()
         } else {
             snack()
         }
     }
+
+    fun getModelView() = model
 
     private fun observers() {
         model.favorit.observe(this, Observer {
@@ -137,6 +131,29 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
         model.watch.observe(this, Observer {
             setEventListenerWatch(it.child("$idTvshow").exists())
         })
+
+        model.tvshow.observe(this, Observer {
+            when(it) {
+                is Success -> {
+                    series = it.result
+                    setupViewPagerTabs(it.result)
+                    setImageTop(it.result.backdropPath ?: "")
+                    setFab()
+                    atualizarRealDate()
+                    model.loading(false)
+                }
+                is Failure -> { ops() }
+                is Loading -> { setLoading(it.loading)}
+            }
+        })
+
+        model.fallow.observe(this, Observer {
+
+        })
+    }
+
+    private fun setLoading(loading: Boolean) {
+        progress_horizontal.visibility = if (loading) View.GONE else View.GONE
     }
 
     private fun setFabVisible(visible: Boolean) {
@@ -151,7 +168,6 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
     private fun getDateReel(idReel: String = getIdStream()) {
         GlobalScope.launch(Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, erro ->
             Handler(Looper.getMainLooper()).post {
-                Log.d(this.javaClass.name, erro.message!!)
                 streamview_tv.error = true
                 setAnimated()
             }
@@ -192,28 +208,10 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
         toolbar.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
     }
 
-    private fun getDadosTvshow() {
-        val subscriber = Api(this)
-            .loadTvshowComVideo(idTvshow)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : rx.Observer<Tvshow> {
-                override fun onCompleted() {
-                    if (!intent.hasExtra(Constant.ID_REEL)) getDateReel(getIdStream())
-                    setDados()
-                    setFab()
-                }
-
-                override fun onError(e: Throwable) {
-                    Toast.makeText(this@TvShowActivity, R.string.ops, Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onNext(tvshow: Tvshow) {
-                    series = tvshow
-                }
-            })
-
-        compositeSubscription.add(subscriber)
+    private fun getDataTvshow() {
+        GlobalScope.launch {
+            model.getTvshow(idTvshow)
+        }
     }
 
     private fun setEventListenerWatch(boolean: Boolean) {
@@ -270,7 +268,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
         Snackbar.make(viewPager_tvshow, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
             .setAction(R.string.retry) {
                 if (UtilsApp.isNetWorkAvailable(baseContext)) {
-                    getDadosTvshow()
+                    getDataTvshow()
                 } else {
                     snack()
                 }
@@ -282,11 +280,12 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
             if (item.itemId == R.id.share) {
                 salvaImagemMemoriaCache(this@TvShowActivity, series?.posterPath, object : SalvarImageShare {
                     override fun retornaFile(file: File) {
-                        val intent = Intent(Intent.ACTION_SEND)
-                        intent.type = "message/rfc822"
-                        intent.putExtra(Intent.EXTRA_TEXT, series?.name + " " + buildDeepLink() + " by: " + Constant.TWITTER_URL)
-                        intent.type = "image/*"
-                        intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.getUriDownloadImage(this@TvShowActivity, file))
+                        val intent = Intent(Intent.ACTION_SEND).apply {
+                            type = "message/rfc822"
+                            putExtra(Intent.EXTRA_TEXT, series?.name + " " + buildDeepLink() + " by: " + Constant.TWITTER_URL)
+                            type = "image/*"
+                            putExtra(Intent.EXTRA_STREAM, UtilsApp.getUriDownloadImage(this@TvShowActivity, file))
+                        }
                         startActivity(Intent.createChooser(intent, resources.getString(R.string.compartilhar) + " " + series?.name))
                     }
 
@@ -362,7 +361,6 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
         if (!UtilsApp.verifyLaunch(getDateTvshow())) {
             Toast.makeText(this@TvShowActivity, getString(R.string.tvshow_nao_lancado), Toast.LENGTH_SHORT).show()
         } else {
-
             Dialog(this@TvShowActivity).apply {
                 requestWindowFeature(Window.FEATURE_NO_TITLE)
                 setContentView(R.layout.dialog_custom_rated)
@@ -375,6 +373,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                 findViewById<Button>(R.id.cancel_rated)
                     .setOnClickListener {
                         removeRated()
+                        dismiss()
                     }
 
                 findViewById<Button>(R.id.ok_rated).setOnClickListener {
@@ -383,34 +382,33 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                     } else {
                         addRated(ratingBar)
                     }
+                    dismiss()
                 }
                 show()
             }
         }
     }
 
-    private fun Dialog.addRated(ratingBar: RatingBar) {
+    private fun addRated(ratingBar: RatingBar) {
         val tvshowDB = makeTvshiwDb().apply { nota = ratingBar.rating * 2 }
         model.setRated(idTvshow) { database ->
             database.child(idTvshow.toString()).setValue(tvshowDB)
                 .addOnCompleteListener {
                     makeToast("${getString(R.string.tvshow_rated)} - ${tvshowDB.nota}")
                 }
-            //TODO alterar para coroutine
-            Thread(Runnable { FilmeService.ratedTvshowGuest(idTvshow, (ratingBar.rating * 2).toInt(), this@TvShowActivity) })
-                .start()
+            GlobalScope.launch {
+                model.setRatedOnTheMovieDB(tvshowDB)
+            }
         }
-        dismiss()
         this@TvShowActivity.fab_menu.close(true)
     }
 
-    private fun Dialog.removeRated() {
+    private fun removeRated() {
         model.setRated(idTvshow) { database ->
             database.child(idTvshow.toString()).setValue(null)
                 .addOnCompleteListener {
                     makeToast(string.tvshow_remove_rated)
                 }
-            dismiss()
             this@TvShowActivity.fab_menu.close(true)
         }
     }
@@ -427,27 +425,21 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
         }
     }
 
-    private fun setupViewPagerTabs() {
+    private fun setupViewPagerTabs(tvshow: Tvshow) {
         viewPager_tvshow?.offscreenPageLimit = 1
-        viewPager_tvshow?.adapter = TvShowAdapter(this, supportFragmentManager, series, colorTop, seguindo)
+        viewPager_tvshow?.adapter = TvShowAdapter(this, supportFragmentManager, tvshow, colorTop, seguindo)
         viewPager_tvshow?.currentItem = 0
         tabLayout.setupWithViewPager(viewPager_tvshow)
         tabLayout.setSelectedTabIndicatorColor(colorTop)
-        progress_horizontal.visibility = View.GONE
     }
 
-    private fun setImageTop() {
-
-        Picasso.get()
-            .load(UtilsApp.getBaseUrlImagem(5) + series?.backdropPath)
-            .error(R.drawable.top_empty)
-            .into(img_top_tvshow)
-
-        val animatorSet = AnimatorSet()
-        val animator = ObjectAnimator.ofFloat(img_top_tvshow, View.X, -100f, 0.0f)
-            .setDuration(1000)
-        animatorSet.playTogether(animator)
-        animatorSet.start()
+    private fun setImageTop(path: String) {
+        img_top_tvshow.setPicassoWithCache(path, 5, {}, {}, R.drawable.top_empty )
+        AnimatorSet().apply {
+            playTogether(ObjectAnimator.ofFloat(img_top_tvshow, View.X, -100f, 0.0f)
+                .setDuration(1000))
+            start()
+        }
     }
 
     private fun setColorFab(color: Int) {
@@ -484,7 +476,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                     }
                 })
 
-            compositeSubscription?.add(subscriber)
+            //compositeSubscription?.add(subscriber)
         }
     }
 
@@ -527,8 +519,8 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
             ?.addOnCompleteListener { task ->
                 if (task.isComplete) {
                     seguindo = true
-                    setupViewPagerTabs()
-                    setImageTop()
+                  //  setupViewPagerTabs(it)
+                   // setImageTop()
                 }
             }
 
@@ -556,21 +548,21 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 
                                     if (userTvshowOld?.numberOfEpisodes == series?.numberOfEpisodes) {
                                         seguindo = true
-                                        setupViewPagerTabs()
-                                        setImageTop()
+                                        //setupViewPagerTabs(it)
+                                        //setImageTop()
                                     } else {
                                         atualizarRealDate()
                                     }
                                 } catch (e: Exception) {
-                                    setupViewPagerTabs()
-                                    setImageTop()
+                                //    setupViewPagerTabs(it)
+                                  //  setImageTop()
                                     Toast.makeText(this@TvShowActivity, resources.getString(R.string
                                         .ops_seguir_novamente), Toast.LENGTH_LONG).show()
                                     Crashlytics.logException(e)
                                 }
                             } else {
-                                setupViewPagerTabs()
-                                setImageTop()
+                                //setupViewPagerTabs(it)
+                                //setImageTop()
                             }
                         }
 
@@ -578,14 +570,14 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                     })
         } else {
             seguindo = false
-            setupViewPagerTabs()
-            setImageTop()
+          //  setupViewPagerTabs(it)
+           // setImageTop()
         }
     }
 
     private fun setFab() {
-        menu_item_watchlist?.setOnClickListener(addOrRemoveWatch())
-        menu_item_favorite?.setOnClickListener(addOrRemoveFavorite())
-        menu_item_rated?.setOnClickListener(ratedMovie())
+        menu_item_watchlist.setOnClickListener(addOrRemoveWatch())
+        menu_item_favorite.setOnClickListener(addOrRemoveFavorite())
+        menu_item_rated.setOnClickListener(ratedMovie())
     }
 }

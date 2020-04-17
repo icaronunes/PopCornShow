@@ -62,9 +62,9 @@ class MovieDetatilsViewModel(app: Application, val activity: Activity, val api: 
     }
 
     fun changeRated(change: (DatabaseReference) -> Unit, idMovie: Int) = loadingFirebase.changeRated(change, idMovie)
-    fun setRatedOnTheMovieDB(movieDate: MovieDb) = loadingMedia.putRated(movieDate)
+    fun setRatedOnTheMovieDB(movieDate: MovieDb) = loadingMedia.putRated(movieDate.id, movieDate.nota, "movie")
+    fun getTrailerEn(idMovie: Int) = loadingMedia.getTrailerFromEn(_videos, idMovie, "movie")
     fun getDataMovie(idMovie: Int) = loadingMedia.getDataMovie(_movie, idMovie)
-    fun getTrailerEn(idMovie: Int) = loadingMedia.getTrailerFromEn(_videos, idMovie)
     fun getImdb(id: String) = loadingMedia.imdbDate(_imdb, id)
 
     fun setLoading(boolean: Boolean) {

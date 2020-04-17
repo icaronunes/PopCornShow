@@ -14,7 +14,6 @@ import domain.GuestSession
 import domain.Imdb
 import domain.ListaSeries
 import domain.Movie
-import domain.MovieDb
 import domain.PersonPopular
 import domain.ReviewsUflixit
 import domain.TvSeasons
@@ -244,9 +243,34 @@ class Api(val context: Context) : ApiSingleton() {
         }
     }
 
-    suspend fun getTrailersFromEn(movieId: Int): BaseRequest<Videos> { // Todo Validar erros
+    suspend fun getTvshow(idTvshow: Int): BaseRequest<Tvshow> {
+        return suspendCancellableCoroutine { continuation ->
+            executeCall("${baseUrl3}tv/$idTvshow?api_key=${Config.TMDB_API_KEY}&language=$timeZone&append_to_response=credits,videos,images,release_dates,similar,external_ids&include_image_language=en,null",
+                object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        continuation.resume(Failure(e))
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        try {
+                            if (response.isSuccessful) {
+                                val listMovie = Gson().fromJson(response.body?.string(),
+                                    Tvshow::class.java)
+                                continuation.resume(Success(listMovie))
+                            } else {
+                                continuation.resume(Failure(Exception(response.message)))
+                            }
+                        } catch (e: Exception) {
+                            continuation.resume(Failure(e))
+                        }
+                    }
+                })
+        }
+    }
+
+    suspend fun getTrailersFromEn(movieId: Int, type: String): BaseRequest<Videos> { // Todo Validar erros
         return suspendCancellableCoroutine { cont ->
-            executeCall("${baseUrl3}movie/$movieId/videos?api_key=${Config.TMDB_API_KEY}&language=en-US,null", object : Callback {
+            executeCall("${baseUrl3}$type/$movieId/videos?api_key=${Config.TMDB_API_KEY}&language=en-US,null", object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     cont.resume(Failure(e))
                 }
@@ -904,10 +928,11 @@ class Api(val context: Context) : ApiSingleton() {
         }
     }
 
-    suspend fun ratedMovieGuest(movieDb: MovieDb, guestSession: GuestSession): Any { // Todo Validar erros
+    suspend fun ratedMovieGuest(id: Int, rated: Float,  guestSession: GuestSession, type: String = "movie"): Any { // Todo Validar erros
         return suspendCancellableCoroutine { cont ->
-            executeCall(url = "https://api.themoviedb.org/3/movie/${movieDb.id}/rating?api_key=${Config.TMDB_API_KEY}&guest_session_id=${guestSession.guestSessionId}",
-                postRequest = RequestBody.create("application/json".toMediaTypeOrNull(), "{\"value\":${movieDb.nota}}"),
+
+            executeCall(url = "https://api.themoviedb.org/3/$type/$id/rating?api_key=${Config.TMDB_API_KEY}&guest_session_id=${guestSession.guestSessionId}",
+                postRequest = RequestBody.create("application/json".toMediaTypeOrNull(), "{\"value\":$rated}"),
                 func = object : Callback {
                     override fun onFailure(call: Call, e: IOException) {
                         cont.resumeWithException(e)
@@ -920,7 +945,7 @@ class Api(val context: Context) : ApiSingleton() {
         }
     }
 
-    suspend fun getImdb(id: String): BaseRequest<Imdb> {
+    suspend fun getResquestImdb(id: String): BaseRequest<Imdb> {
         return suspendCancellableCoroutine { cont ->
             executeCall("http://www.omdbapi.com/?i=$id&tomatoes=true&r=json&apikey=${Config.OMDBAPI_API_KEY}",
                 object : Callback {

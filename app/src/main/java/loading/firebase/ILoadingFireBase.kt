@@ -14,4 +14,5 @@ interface ILoadingFireBase {
     fun destroy()
     fun setEventListenerWatch(live: MutableLiveData<DataSnapshot>)
     fun setEventListenerFavorit(live: MutableLiveData<DataSnapshot>)
+    fun isWatching(live: MutableLiveData<DataSnapshot>, idTvshow: Int)
 }

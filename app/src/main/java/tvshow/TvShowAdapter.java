@@ -35,7 +35,6 @@ public class TvShowAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-
             return TvShowFragment.newInstance(R.string.informacoes,  series, color, seguindo);
         }
         if (position == 1) {
