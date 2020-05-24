@@ -18,6 +18,7 @@ import domain.UserTvshow
 import domain.tvshow.Tvshow
 import elenco.ElencoActivity
 import producao.CrewsActivity
+import temporada.TemporadaActivity
 import tvshow.activity.TvShowActivity
 import utils.Constant
 import utils.gone
@@ -30,21 +31,20 @@ import utils.setPicassoWithCache
 
 class TemporadasAdapter(
     val context: FragmentActivity,
-    private val series: Tvshow?,
+    private val series: Tvshow,
     private val onClickListener: TemporadasOnClickListener,
     private val color: Int,
     private val userTvshow: UserTvshow?,
     private val baseStreamAb: BaseStreamAb
-) : RecyclerView.Adapter<TemporadasAdapter.HoldeTemporada>() {
+) : RecyclerView.Adapter<TemporadasAdapter.HoldeSeason>() {
 
     interface TemporadasOnClickListener {
-        fun onClickTemporada(view: View, position: Int, color: Int)
         fun onClickCheckTemporada(view: View, position: Int)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HoldeTemporada {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HoldeSeason {
         val view = LayoutInflater.from(context).inflate(R.layout.season_layout, parent, false)
-        return HoldeTemporada(view)
+        return HoldeSeason(view)
     }
 
     private fun showPopUp(ancoraView: View?, seasonNumber: Int) {
@@ -57,17 +57,17 @@ class TemporadasAdapter(
                 when (item.itemId) {
                     R.id.elenco_temporada -> {
                         val intent = Intent(context, ElencoActivity::class.java)
-                        intent.putExtra(Constant.ID, series?.id)
+                        intent.putExtra(Constant.ID, series.id)
                         intent.putExtra(Constant.TVSEASONS, seasonNumber)
-                        intent.putExtra(Constant.NAME, series?.name)
+                        intent.putExtra(Constant.NAME, series.name)
                         context.startActivity(intent)
                     }
 
                     R.id.producao_temporada -> {
                         val intent = Intent(context, CrewsActivity::class.java)
-                        intent.putExtra(Constant.ID, series?.id)
+                        intent.putExtra(Constant.ID, series.id)
                         intent.putExtra(Constant.TVSEASONS, seasonNumber)
-                        intent.putExtra(Constant.NAME, series?.name)
+                        intent.putExtra(Constant.NAME, series.name)
                         context.startActivity(intent)
                     }
                 }
@@ -77,34 +77,28 @@ class TemporadasAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: HoldeTemporada, position: Int) {
+    override fun onBindViewHolder(holder: HoldeSeason, position: Int) {
 
-        holder.temporada.text = "${context.getString(R.string.temporada)} ${series?.seasons!![position]?.seasonNumber!!}"
-
-        holder.image_temporada.setPicassoWithCache(series.seasons[position]?.posterPath, 4, {
-
-        }, {
-            holder.image_temporada.gone()
-        })
-        holder.data.text = series.seasons[position]?.airDate?.parseDateShot() ?: ""
-        holder.itemView.setOnClickListener { view -> onClickListener.onClickTemporada(view, position, color) }
-
-        holder.popup.setOnClickListener { view -> showPopUp(view, series.seasons[position]?.seasonNumber!!) }
-        holder.bt_seguindo.setOnClickListener { view -> onClickListener.onClickCheckTemporada(view, position) }
+        holder.season.text = "${context.getString(R.string.temporada)} ${series.seasons.getOrNull(position)?.seasonNumber!! ?: ""} "
+        holder.imgSeason.setPicassoWithCache(series.seasons[position].posterPath, 4, {}, { holder.imgSeason.gone() })
+        holder.data.text = series.seasons[position].airDate?.parseDateShot() ?: ""
+        holder.itemView.setOnClickListener { onClickTemporada(position, color) }
+        holder.popup.setOnClickListener { view -> showPopUp(view, series.seasons[position].seasonNumber) }
+        holder.btFallow.setOnClickListener { view -> onClickListener.onClickCheckTemporada(view, position) }
 
         if (userTvshow == null) {
-            holder.bt_seguindo.visibility = View.GONE
+            holder.btFallow.visibility = View.GONE
         } else {
-            if (isVisto(position)) {
-                holder.bt_seguindo.setImageResource(R.drawable.icon_visto)
+            if (isWatch(position)) {
+                holder.btFallow.setImageResource(R.drawable.icon_visto)
             } else {
-                holder.bt_seguindo.setImageResource(R.drawable.icon_movie_now)
+                holder.btFallow.setImageResource(R.drawable.icon_movie_now)
             }
         }
 
         if ((context as TvShowActivity).reelGood != null) {
             val seasson = (context as TvShowActivity).reelGood?.seasons?.find {
-                it.number == series.seasons[position]?.seasonNumber
+                it.number == series.seasons[position].seasonNumber
             }
 
             val listStreams = seasson?.availability?.sources?.map {
@@ -114,34 +108,26 @@ class TemporadasAdapter(
                 }
                 i
             }?.toSortedSet()?.toList()
-            if(listStreams != null)
-                holder.container.adapter = AdapterStream(if (listStreams.isEmpty()) listOf() else listStreams, position )
+            if (listStreams != null)
+                holder.container.adapter = AdapterStream(if (listStreams.isEmpty()) listOf() else listStreams, position)
         }
     }
 
-    private fun isVisto(position: Int): Boolean {
-        if (userTvshow != null) {
-            if (userTvshow.seasons?.size!! > position) {
-                return userTvshow.seasons!![position].isVisto
-            }
-        }
-        return false
+    private fun isWatch(position: Int): Boolean {
+        return if (userTvshow != null && userTvshow.seasons.getOrNull(position) != null) {
+            return userTvshow.seasons[position].isVisto
+        } else false
     }
 
-    override fun getItemCount(): Int {
+    override fun getItemCount() = series.seasons.size
 
-        return if (series?.numberOfSeasons!! > 0) {
-            series.seasons?.size!!
-        } else 0
-    }
+    inner class HoldeSeason(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    inner class HoldeTemporada(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        internal val temporada: TextView = itemView.findViewById(R.id.temporada)
+        internal val season: TextView = itemView.findViewById(R.id.temporada)
         internal val data: TextView = itemView.findViewById(R.id.date_temporada)
-        internal val image_temporada: ImageView = itemView.findViewById(R.id.image_temporada)
+        internal val imgSeason: ImageView = itemView.findViewById(R.id.image_temporada)
         internal val popup: ImageButton = itemView.findViewById(R.id.popup_temporada)
-        internal val bt_seguindo: ImageView = itemView.findViewById(R.id.bt_assistido)
+        internal val btFallow: ImageView = itemView.findViewById(R.id.bt_assistido)
         internal val container: GridView = itemView.findViewById(R.id.container_stream)
     }
 
@@ -149,7 +135,7 @@ class TemporadasAdapter(
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             return ImageView(context).apply {
                 setImageResource(list[position])
-                setOnClickListener { onClickListener.onClickTemporada(it, seasonPosition, color) }
+                setOnClickListener { onClickTemporada(seasonPosition, color) }
             }
         }
 
@@ -158,7 +144,16 @@ class TemporadasAdapter(
         }
 
         override fun getItemId(position: Int) = position.toLong()
-
         override fun getCount() = list.size
+    }
+
+    private fun onClickTemporada(position: Int, color: Int) {
+        context.startActivity(Intent(context, TemporadaActivity::class.java).apply {
+            putExtra(Constant.NAME, "${context.getString(R.string.temporada)} ${series.seasons.getOrNull(position)?.seasonNumber ?: 0}")
+            putExtra(Constant.TEMPORADA_ID, series.seasons.getOrNull(position)?.seasonNumber ?: 0)
+            putExtra(Constant.TEMPORADA_POSITION, position)
+            putExtra(Constant.TVSHOW_ID, series.id)
+            putExtra(Constant.COLOR_TOP, color)
+        })
     }
 }

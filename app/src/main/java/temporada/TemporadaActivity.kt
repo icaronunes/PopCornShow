@@ -39,6 +39,7 @@ import rx.Observer
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import tvshow.viewmodel.TvShowViewModel
 import utils.Api
 import utils.Constant
 import utils.UtilsApp
@@ -52,11 +53,10 @@ import java.util.Locale
  * Created by icaro on 26/08/16.
  */
 class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListener {
-    // TODO adicionar ViewModel
     private var temporada_id: Int = 0
     private var temporada_position: Int = 0
     private var nome_temporada: String? = null
-    private var serie_id: Int = 0
+    private var serieId: Int = 0
     private var color: Int = 0
     private var tvSeason: TvSeasons? = null
     private var seguindo: Boolean = false
@@ -65,6 +65,7 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
     private var myRef: DatabaseReference? = null
     private var postListener: ValueEventListener? = null
     private var subscription: CompositeSubscription? = null
+    private lateinit var model: TvShowViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,12 +73,13 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         getExtras()
+        model = createViewModel(TvShowViewModel::class.java, this)
         supportActionBar?.title = " "
         recycleView_temporada.run {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             itemAnimator = DefaultItemAnimator()
-        }
+        } // todo extension
 
         mAuth = FirebaseAuth.getInstance()
         myRef = FirebaseDatabase.getInstance().getReference("users")
@@ -101,37 +103,48 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
             }.show()
     }
 
-    fun getExtras() {
+    private fun getExtras() {
         if (intent.action == null) {
             temporada_id = intent.getIntExtra(Constant.TEMPORADA_ID, 0)
             temporada_position = intent.getIntExtra(Constant.TEMPORADA_POSITION, 0)
-            serie_id = intent.getIntExtra(Constant.TVSHOW_ID, 0)
+            serieId = intent.getIntExtra(Constant.TVSHOW_ID, 0)
             nome_temporada = intent.getStringExtra(Constant.NAME)
             color = intent.getIntExtra(Constant.COLOR_TOP, resources.getColor(R.color.red))
         } else {
             temporada_id = Integer.parseInt(intent.getStringExtra(Constant.TEMPORADA_ID))
             temporada_position = Integer.parseInt(intent.getStringExtra(Constant.TEMPORADA_POSITION))
-            serie_id = Integer.parseInt(intent.getStringExtra(Constant.TVSHOW_ID))
+            serieId = Integer.parseInt(intent.getStringExtra(Constant.TVSHOW_ID))
             nome_temporada = intent.getStringExtra(Constant.NAME)
             color = Integer.parseInt(intent.getStringExtra(Constant.COLOR_TOP))
         }
     }
 
     override fun onClickVerTemporada(position: Int) {
-        if (seasons != null && seasons!!.userEps!![position].isAssistido) {
-            removeWatch(position)
-        } else {
-            if (isAssistidoAnteriores(position)) {
-                watchBefore(position)
-            } else {
-                addEpWatch(position)
-            }
+        model.watchEp(fillWatchEp(position)) //precisa receber tvshow para criar no firebase
+//        if (seasons != null && seasons?.userEps?.getOrNull(position)?.isAssistido == true) {
+//            removeWatch(position)
+//        } else {
+//            if (isAssistidoAnteriores(position)) {
+//                watchBefore(position)
+//            } else {
+//                fillWatchEp(position)
+//                addEpWatch(position)
+//            }
+//        }
+    }
+
+    private fun fillWatchEp(position: Int, watch: Boolean = true): HashMap<String, Any> {
+        return HashMap<String, Any>().also {
+
+            it["/visto"] = temporadaTodaAssistida(position)
+            it["/$serieId/seasons/$temporada_position/userEps/$position/assistido"] = watch
+
         }
     }
 
     override fun onClickTemporada(position: Int) {
         startActivity(Intent(this@TemporadaActivity, EpsodioActivity::class.java).apply {
-            putExtra(Constant.TVSHOW_ID, serie_id)
+            putExtra(Constant.TVSHOW_ID, serieId)
             putExtra(Constant.POSICAO, position)
             putExtra(Constant.TEMPORADA_POSITION, temporada_position)
             putExtra(Constant.TVSEASONS, tvSeason)
@@ -155,7 +168,7 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
                 .getReference("users")
                 .child(mAuth!!.currentUser!!.uid)
                 .child("seguindo")
-                .child(serie_id.toString())
+                .child(serieId.toString())
                 .child("seasons")
                 .child(temporada_position.toString())
 
@@ -173,9 +186,7 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
                 naoVisto.visibility = View.INVISIBLE
             }
 
-            alertDialog.findViewById<TextView>(R.id.rating_title).let {
-                it.text = ep.name
-            }
+            alertDialog.findViewById<TextView>(R.id.rating_title).text = ep.name
             val ratingBar = alertDialog.findViewById<RatingBar>(R.id.ratingBar_rated).apply {
                 rating = userEp?.nota!!
             }
@@ -268,19 +279,19 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
 
                 val childUpdates = HashMap<String, Any>()
                 for (i in 0..position) {
-                    childUpdates["/$user/seguindo/$serie_id/seasons/$temporada_position/userEps/$i/assistido"] = true
+                    childUpdates["/$user/seguindo/$serieId/seasons/$temporada_position/userEps/$i/assistido"] = true
                 }
 
                 if (position == seasons?.userEps?.size!! - 1) {
-                    childUpdates["/$user/seguindo/$serie_id/seasons/$temporada_position/visto/"] = true
+                    childUpdates["/$user/seguindo/$serieId/seasons/$temporada_position/visto/"] = true
                 } else {
-                    childUpdates["/$user/seguindo/$serie_id/seasons/$temporada_position/visto/"] = temporadaTodaAssistida(position)
+                    childUpdates["/$user/seguindo/$serieId/seasons/$temporada_position/visto/"] = temporadaTodaAssistida(position)
                 }
 
                 myRef!!.updateChildren(childUpdates) { databaseError, databaseReference ->
                     if (databaseError == null) {
                         databaseReference.child(user).child("seguindo")
-                            .child(serie_id.toString()).child("seasons")
+                            .child(serieId.toString()).child("seasons")
                             .child(temporada_position.toString())
                             .child("userEps")
                             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -309,13 +320,13 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
                 val user = mAuth!!.currentUser!!.uid
                 val childUpdates = HashMap<String, Any>()
 
-                childUpdates["/$user/seguindo/$serie_id/seasons/$temporada_position/userEps/$position/assistido"] = true
-                childUpdates["/$user/seguindo/$serie_id/seasons/$temporada_position/visto/"] = temporadaTodaAssistida(position)
+                childUpdates["/$user/seguindo/$serieId/seasons/$temporada_position/userEps/$position/assistido"] = true
+                childUpdates["/$user/seguindo/$serieId/seasons/$temporada_position/visto/"] = temporadaTodaAssistida(position)
 
                 myRef!!.updateChildren(childUpdates) { databaseError, databaseReference ->
                     if (databaseError == null) {
                         databaseReference.child(user).child("seguindo")
-                            .child(serie_id.toString()).child("seasons")
+                            .child(serieId.toString()).child("seasons")
                             .child(temporada_position.toString())
                             .child("userEps").child(position.toString())
                             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -346,13 +357,13 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
 
         val childUpdates = HashMap<String, Any>()
 
-        childUpdates["/$user/seguindo/$serie_id/seasons/$temporada_position/userEps/$position/assistido"] = true
-        childUpdates["/$user/seguindo/$serie_id/seasons/$temporada_position/visto/"] = temporadaTodaAssistida(position)
+        childUpdates["/$user/seguindo/$serieId/seasons/$temporada_position/userEps/$position/assistido"] = true
+        childUpdates["/$user/seguindo/$serieId/seasons/$temporada_position/visto/"] = temporadaTodaAssistida(position)
 
         myRef!!.updateChildren(childUpdates) { databaseError, databaseReference ->
             if (databaseError == null) {
                 databaseReference.child(user).child("seguindo")
-                    .child(serie_id.toString()).child("seasons")
+                    .child(serieId.toString()).child("seasons")
                     .child(temporada_position.toString())
                     .child("userEps").child(position.toString())
                     .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -381,14 +392,13 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
 
         val childUpdates = HashMap<String, Any>()
 
-        childUpdates["/$user/seguindo/$serie_id/seasons/$temporada_position/userEps/$position/assistido"] = false
-        childUpdates["/$user/seguindo/$serie_id/seasons/$temporada_position/visto/"] = false
-
+        childUpdates["/$user/seguindo/$serieId/seasons/$temporada_position/userEps/$position/assistido"] = false
+        childUpdates["/$user/seguindo/$serieId/seasons/$temporada_position/visto/"] = false
         myRef!!.updateChildren(childUpdates) { databaseError, databaseReference ->
             if (databaseError == null) {
                 databaseReference
                     .child(user).child("seguindo")
-                    .child(serie_id.toString()).child("seasons")
+                    .child(serieId.toString()).child("seasons")
                     .child(temporada_position.toString())
                     .child("userEps").child(position.toString())
                     .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -420,7 +430,7 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
     private fun setnotaIMDB(position: Int, ratingBar: Int) {
         val job = GlobalScope.launch(Dispatchers.IO) {
             try {
-                FilmeService.ratedTvshowEpsodioGuest(serie_id, seasons?.seasonNumber!!,
+                FilmeService.ratedTvshowEpsodioGuest(serieId, seasons?.seasonNumber!!,
                     seasons!!.userEps!![position].episodeNumber, ratingBar, applicationContext)
             } catch (ex: Exception) {
             }
@@ -470,7 +480,7 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
 
         myRef!!.child(mAuth!!.currentUser!!.uid)
             .child("seguindo")
-            .child(serie_id.toString())
+            .child(serieId.toString())
             .child("seasons")
             .child(temporada_position.toString())
             .addValueEventListener(postListener!!)
@@ -481,7 +491,7 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
         if (postListener != null) {
             myRef!!.child(mAuth!!.currentUser!!.uid)
                 .child("seguindo")
-                .child(serie_id.toString())
+                .child(serieId.toString())
                 .child("seasons")
                 .child(temporada_position.toString())
                 .removeEventListener(postListener!!)
@@ -501,7 +511,7 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
     }
 
     private fun getDados() {
-        Api(this).getTvSeasons(serie_id, temporada_id, temporada_position)
+        Api(this).getTvSeasons(serieId, temporada_id, temporada_position)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Observer<TvSeasons> {
@@ -515,7 +525,7 @@ class TemporadaActivity : BaseActivity(), TemporadaAdapter.TemporadaOnClickListe
                     if (mAuth!!.currentUser != null) {
                         myRef!!.child(mAuth!!.currentUser!!.uid)
                             .child("seguindo")
-                            .child(serie_id.toString())
+                            .child(serieId.toString())
                             .child("seasons")
                             .child(temporada_position.toString())
                             .addListenerForSingleValueEvent(

@@ -1,6 +1,7 @@
 package domain
 
 import androidx.annotation.Keep
+import domain.tvshow.ExternalIds
 import java.io.Serializable
 
 /**
@@ -19,7 +20,7 @@ data class UserTvshow(
 
     var poster: String? = null,
 
-    var seasons: MutableList<UserSeasons>? = null,
+    var seasons: MutableList<UserSeasons> = mutableListOf(),
 
     var externalIds: ExternalIds? = null,
 

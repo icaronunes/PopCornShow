@@ -23,6 +23,16 @@ public class UserEp implements Serializable{
 
     }
 
+    public UserEp(int id, Integer seasonNumber, int episodeNumber, boolean assistido, float nota, String title, String dataEstreia) {
+        this.id = id;
+        this.seasonNumber = seasonNumber;
+        this.episodeNumber = episodeNumber;
+        this.assistido = assistido;
+        this.nota = nota;
+        this.title = title;
+        this.dataEstreia = dataEstreia;
+    }
+
     public String getTitle() {
         return title;
     }

@@ -24,22 +24,10 @@
             android:paddingStart="14dp"
             android:paddingEnd="@dimen/trade_size_dp_14"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/item_epsodio_numero"
+            app:layout_constraintEnd_toStartOf="@+id/item_epsodio_visto"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="O inverno está chegando O inverno está chegando O inverno está chegando O inverno está chegando" />
-
-        <TextView
-            android:id="@+id/item_epsodio_numero"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginEnd="3dp"
-            android:gravity="center"
-            android:textStyle="bold|italic"
-            app:layout_constraintEnd_toStartOf="@+id/item_epsodio_visto"
-            app:layout_constraintTop_toTopOf="@+id/item_epsodio_visto"
-            tools:text="1004" />
 
 
         <TextView
@@ -83,20 +71,20 @@
 
 
         <TextView
-            android:id="@+id/label_votes"
+            android:id="@+id/label_ep"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginEnd="6dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/vote"
+            android:text="@string/epsodio"
             android:textAllCaps="true"
-            app:layout_constraintEnd_toStartOf="@+id/item_epsodio_votos"
+            app:layout_constraintEnd_toStartOf="@+id/item_epsodio_number"
             app:layout_constraintTop_toTopOf="@+id/item_epsodio_nota" />
 
         <TextView
-            android:id="@+id/item_epsodio_votos"
+            android:id="@+id/item_epsodio_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="6dp"

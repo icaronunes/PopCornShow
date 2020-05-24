@@ -146,10 +146,6 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                 is Loading -> { setLoading(it.loading)}
             }
         })
-
-        model.fallow.observe(this, Observer {
-
-        })
     }
 
     private fun setLoading(loading: Boolean) {
@@ -426,7 +422,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
     }
 
     private fun setupViewPagerTabs(tvshow: Tvshow) {
-        viewPager_tvshow?.offscreenPageLimit = 1
+        viewPager_tvshow?.offscreenPageLimit = 2
         viewPager_tvshow?.adapter = TvShowAdapter(this, supportFragmentManager, tvshow, colorTop, seguindo)
         viewPager_tvshow?.currentItem = 0
         tabLayout.setupWithViewPager(viewPager_tvshow)

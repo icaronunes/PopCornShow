@@ -16,11 +16,12 @@ import loading.api.ILoadingMedia
 import loading.api.LoadingMedia
 import loading.firebase.ILoadingFireBase
 import loading.firebase.LoadingFirebase
+import loading.firebase.LoadingFirebase.Companion.MOVIE
 import utils.Api
 
 class MovieDetatilsViewModel(app: Application, val activity: Activity, val api: Api) : BaseViewModel(app) {
 
-    private val loadingFirebase: ILoadingFireBase = LoadingFirebase("movie")
+    private val loadingFirebase: ILoadingFireBase = LoadingFirebase(MOVIE)
     private val loadingMedia: ILoadingMedia = LoadingMedia(api)
 
     val auth: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -36,10 +37,6 @@ class MovieDetatilsViewModel(app: Application, val activity: Activity, val api: 
     val videos: LiveData<BaseRequest<Videos>> = _videos
     private val _imdb: MutableLiveData<BaseRequest<Imdb>> = MutableLiveData()
     val imdb: LiveData<BaseRequest<Imdb>> = _imdb
-
-    fun destroy() {
-        loadingFirebase.destroy()
-    }
 
     init {
         isAuth()
@@ -67,7 +64,6 @@ class MovieDetatilsViewModel(app: Application, val activity: Activity, val api: 
     fun getDataMovie(idMovie: Int) = loadingMedia.getDataMovie(_movie, idMovie)
     fun getImdb(id: String) = loadingMedia.imdbDate(_imdb, id)
 
-    fun setLoading(boolean: Boolean) {
-        _movie.value = Loading(boolean)
-    }
+    fun setLoading(boolean: Boolean) { _movie.value = Loading(boolean) }
+    fun destroy() { loadingFirebase.destroy() }
 }

@@ -14,8 +14,8 @@ open class BaseFireBase(val type: String) {
         const val FALLOW = "seguindo"
     }
 
-    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
 
     lateinit var myWatch: DatabaseReference
     lateinit var myFavorite: DatabaseReference
@@ -45,8 +45,5 @@ open class BaseFireBase(val type: String) {
     }
 
     fun isAuth() = firebaseAuth.currentUser != null
-
-    fun isFallow(idTv: String) {
-        myFallow.child(idTv)
-    }
+    fun getDatabase() = database
 }

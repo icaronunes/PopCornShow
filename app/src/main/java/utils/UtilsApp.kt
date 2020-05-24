@@ -74,15 +74,15 @@ object UtilsApp {
         }
 
     fun setUserTvShow(serie: Tvshow): UserTvshow {
-        val userTvshow = UserTvshow()
-        userTvshow.poster = serie.posterPath
-        userTvshow.id = serie.id ?: -1
-        userTvshow.nome = serie.originalName
-        // userTvshow.setExternalIds(valoresExternalIds(serie.getExternal_ids()));
-        userTvshow.numberOfEpisodes = serie.numberOfEpisodes ?: 0
-        userTvshow.numberOfSeasons = serie.numberOfSeasons ?: 0
-        userTvshow.seasons = setUserSeasson(serie)
-        return userTvshow
+        return UserTvshow().apply {
+            poster = serie.posterPath
+            id = serie.id ?: -1
+            nome = serie.originalName
+            // userTvshow.setExternalIds(valoresExternalIds(serie.getExternal_ids()));
+            numberOfEpisodes = serie.numberOfEpisodes ?: 0
+            numberOfSeasons = serie.numberOfSeasons ?: 0
+            seasons = setUserSeasson(serie)
+        }
     }
 
     private fun valoresExternalIds(external_ids: ExternalIds): domain.ExternalIds {

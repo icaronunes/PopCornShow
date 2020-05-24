@@ -4,6 +4,20 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import javax.annotation.Generated
 
+fun TvSeasons.fillUserTvshow(userTvshow: UserSeasons?, status: Boolean): UserSeasons {
+    fun findEp(episodes: EpisodesItem?, userTvshow: UserSeasons?): UserEp? {
+        return userTvshow?.userEps?.find { it.id == episodes?.id }?.apply {
+            isAssistido = status
+        }
+    }
+
+    val userEps = this.episodes?.map {
+        findEp(it, userTvshow) ?: UserEp(it?.id!!, it.seasonNumber, it.episodeNumber!!, status, 0.0f, it.name, it.airDate)
+    }?.toMutableList()
+
+    return UserSeasons(id = id!!, seasonNumber = seasonNumber!!, isVisto = status, userEps = userEps)
+}
+
 @Generated("com.robohorse.robopojogenerator")
 data class TvSeasons(
 

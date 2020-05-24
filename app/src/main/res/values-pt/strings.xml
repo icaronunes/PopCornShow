@@ -180,7 +180,7 @@
     <string name="save_conexao">Conexão inteligente</string>
     <string name="compartilhar">Compartilhar</string>
     <string name="season_updated">Temporada Atualizada</string>
-    <string name="ops_seguir_novamente">Oops. Algo deu errado. Se persistir, tente seguir a série novamente.</string>
+    <string name="ops_seguir_novamente">Ops. Algo deu errado. Se persistir, tente seguir a série novamente.</string>
     <string name="title_marcar_ep_anteriores">Marcar episódios anteriores como assistidos?</string>
     <string name="msg_marcar_ep_anteriores">Todos os episódios anteriores serão marcados como vistos.</string>
     <string name="nao_visto">Não Visto</string>

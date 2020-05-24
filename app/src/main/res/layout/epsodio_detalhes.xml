@@ -76,7 +76,7 @@
 
 
         <TextView
-            android:id="@+id/label_votes"
+            android:id="@+id/label_ep"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -97,7 +97,7 @@
             android:textStyle="bold"
             android:layout_marginEnd="25dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/label_votes"
+            app:layout_constraintTop_toTopOf="@+id/label_ep"
             tools:text="21" />
 
         <View

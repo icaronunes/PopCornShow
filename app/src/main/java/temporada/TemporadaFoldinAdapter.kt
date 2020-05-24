@@ -20,11 +20,11 @@ import kotlinx.android.synthetic.main.epsodio_detalhes.view.layout_diretor_nome_
 import kotlinx.android.synthetic.main.epsodio_detalhes.view.wrapper_rating
 import kotlinx.android.synthetic.main.foldin_main.view.folding_cell
 import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_nota
-import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_numero
+import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_number
 import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_titulo
 import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_titulo_resumo
 import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_visto
-import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_votos
+import kotlinx.android.synthetic.main.item_epsodio.view.label_ep
 import kotlinx.android.synthetic.main.layout_diretor.view.director_name
 import kotlinx.android.synthetic.main.layout_diretor.view.grup_director
 import kotlinx.android.synthetic.main.layout_diretor.view.grup_writer
@@ -33,6 +33,7 @@ import kotlinx.android.synthetic.main.layout_diretor.view.writer_img
 import kotlinx.android.synthetic.main.layout_diretor.view.writer_name
 import utils.Constant
 import utils.gone
+import utils.invisible
 import utils.makeToast
 import utils.setPicassoWithCache
 import utils.visible
@@ -56,7 +57,8 @@ class TemporadaFoldinAdapter(
     override fun onBindViewHolder(holder: HoldeTemporada, position: Int) {
         val ep = tvSeason.episodes?.get(position)!!
         val epUser = seasons?.userEps?.get(position)
-        holder.bind(ep, epUser)
+        val watchSeason = seasons?.isVisto ?: false
+        holder.bind(ep, epUser, watchSeason)
     }
 
     override fun getItemCount() = tvSeason.episodes?.size ?: 0
@@ -76,12 +78,13 @@ class TemporadaFoldinAdapter(
     inner class HoldeTemporada(parent: ViewGroup) :
         RecyclerView.ViewHolder(LayoutInflater.from(temporadaActivity).inflate(R.layout.foldin_main, parent, false)) {
 
-        fun bind(ep: EpisodesItem, epUser: UserEp?) = with(itemView) {
+        fun bind(ep: EpisodesItem, epUser: UserEp?, watchSeason: Boolean): Unit = with(itemView) {
             epsodio_detalhes_progress.visibility = if (seguindo) View.VISIBLE else View.GONE
-            item_epsodio_titulo?.apply { text = ep.name }
-            item_epsodio_numero.apply { text = ep.episodeNumber.toString() }
+            item_epsodio_titulo.text = ep.name
             item_epsodio_titulo_resumo.text = ep.overview
-            item_epsodio_votos.text = ep.voteCount.toString()
+            ep.episodeNumber.let {
+                if(it != null) item_epsodio_number.text = it.toString() else label_ep.invisible()
+            }
             epsodio_detalhes_votos.text = ep.voteCount.toString()
             epsodio_detalhes_img.setPicassoWithCache(ep.stillPath, 5, img_erro = R.drawable.empty_popcorn)
             epsodio_detalhes_nota.text = ep.overview
@@ -119,7 +122,7 @@ class TemporadaFoldinAdapter(
 
             layout_diretor_nome_visto.setOnClickListener { temporadaOnClickListener.onClickVerTemporada(layoutPosition) }
             epsodio_detalhes_ler_mais.setOnClickListener { temporadaOnClickListener.onClickTemporada(layoutPosition) }
-            wrapper_rating.setOnClickListener { temporadaOnClickListener.onClickTemporadaNota(epsodio_detalhes_progress, ep, position, epUser) }
+            wrapper_rating.setOnClickListener { temporadaOnClickListener.onClickTemporadaNota(epsodio_detalhes_progress, ep, layoutPosition, epUser) }
 
             folding_cell.setOnClickListener {
                 temporadaOnClickListener.onClickScrool(position)
@@ -132,7 +135,7 @@ class TemporadaFoldinAdapter(
             }
 
             if (seguindo) {
-                when (epUser?.isAssistido) {
+                when (epUser?.isAssistido == true || watchSeason) {
                     true -> {
                         item_epsodio_visto.apply {
                             setBackgroundColor(ContextCompat.getColor(context, R.color.green))
@@ -149,13 +152,10 @@ class TemporadaFoldinAdapter(
                             setBackgroundColor(ContextCompat.getColor(context, R.color.gray_reviews))
                         }
                     }
-                    else -> {
-                    }
                 }
             } else {
                 layout_diretor_nome_visto.gone()
                 epsodio_detalhes_ler_mais.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
-                item_epsodio_votos.gone()
             }
         }
     }

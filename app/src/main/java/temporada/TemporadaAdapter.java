@@ -130,9 +130,6 @@ public class TemporadaAdapter extends RecyclerView.Adapter<TemporadaAdapter.Hold
         if (tvSeason.getEpisodes() != null && !seguindo) {
             return tvSeason.getEpisodes().size();
         }
-        if (seasons.getUserEps() != null && seguindo) {
-            return seasons.getUserEps().size();
-        }
         return 0;
     }
 

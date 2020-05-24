@@ -16,14 +16,16 @@ import loading.api.ILoadingMedia
 import loading.api.LoadingMedia
 import loading.firebase.ILoadingFireBase
 import loading.firebase.LoadingFirebase
+import loading.firebase.LoadingFirebase.Companion.TV
 import utils.Api
 
-class TvShowViewModel(override val app: Application, activity: Activity,val api: Api): BaseViewModel(app) {
+class TvShowViewModel(override val app: Application, activity: Activity, val api: Api) : BaseViewModel(app) {
 
-    private val loadingFirebase: ILoadingFireBase = LoadingFirebase("tvshow")
+    private val loadingFirebase: ILoadingFireBase = LoadingFirebase(TV)
     private val loadingMedia: ILoadingMedia = LoadingMedia(api)
 
     val auth: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isFallow: MutableLiveData<Boolean> = MutableLiveData(false)
     private val _watch: MutableLiveData<DataSnapshot> = MutableLiveData()
     val watch: LiveData<DataSnapshot> = _watch
     private val _favorit: MutableLiveData<DataSnapshot> = MutableLiveData()
@@ -52,7 +54,7 @@ class TvShowViewModel(override val app: Application, activity: Activity,val api:
     private fun setEventListenerRated() = loadingFirebase.setEventListenerRated(_rated)
 
     fun destroy() {
-        loadingFirebase.destroy()
+       // loadingFirebase.destroy()
     }
 
     fun putFavority(add: (DatabaseReference) -> Unit, remove: (DatabaseReference) -> Unit, id: Int) {
@@ -67,14 +69,29 @@ class TvShowViewModel(override val app: Application, activity: Activity,val api:
         loadingFirebase.changeWatch(add, remove, idMedia, _watch.value)
     }
 
+    fun setFallow(idTvshow: Int, add: (DatabaseReference) -> Unit, remove: (DatabaseReference) -> Unit) {
+        loadingFirebase.setFallow(_fallow, add, remove, idTvshow)
+    }
+
+    fun watchEp(childUpdates: HashMap<String, Any>) {
+        loadingFirebase.wathEp(childUpdates)
+    }
+
     fun setRatedOnTheMovieDB(tvshowDB: TvshowDB) {
         loadingMedia.putRated(tvshowDB.id, tvshowDB.nota, "tv")
     }
 
-    fun isFallow(idTvshow: Int) = loadingFirebase.isWatching(_fallow, idTvshow = idTvshow)
+    fun fallow(idTvshow: Int) = loadingFirebase.isWatching(_fallow, idTvshow = idTvshow)
+    fun hasfallow(idTvshow: Int) = loadingFirebase.isFallow(isFallow, idTvshow = idTvshow)
 
     fun getImdb(id: String) = loadingMedia.imdbDate(_imdb, id)
-    fun getTrailerEn(idMovie: Int) = loadingMedia.getTrailerFromEn(_videos, idMovie, "movie")
+    fun getTrailerEn(idMovie: Int) = loadingMedia.getTrailerFromEn(_videos, idMovie, "tv")
     fun getTvshow(idTvshow: Int) = loadingMedia.getDataTvshow(_tvshow, idMovie = idTvshow)
-    fun loading(loading: Boolean) { _tvshow.value = Loading(true) }
+    fun loading(loading: Boolean) {
+        _tvshow.value = Loading(true) //Todo Ta certo?
+    }
+
+    fun fillSeason(childUpdates: HashMap<String, Any>) {
+        loadingFirebase.fillSeason(_fallow, childUpdates)
+    }
 }

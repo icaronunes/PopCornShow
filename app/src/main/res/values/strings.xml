@@ -183,7 +183,7 @@
     <string name="save_conexao">Smart connection</string>
     <string name="compartilhar">To share</string>
     <string name="season_updated">Season Updated</string>
-    <string name="ops_seguir_novamente">Oops. Something went wrong. If it persists, try to follow the Tvshow again.</string>
+    <string name="ops_seguir_novamente">Ops. Something went wrong. If it persists, try to follow the Tvshow again.</string>
     <string name="title_marcar_ep_anteriores">Mark previous episodes as seen?</string>
     <string name="msg_marcar_ep_anteriores">All previous episodes will be marked as seen.</string>
     <string name="corn" translatable="false">Corn</string>

@@ -1,8 +1,20 @@
 package domain.tvshow
 
 import com.google.gson.annotations.SerializedName
+import domain.UserTvshow
 import java.io.Serializable
 import javax.annotation.Generated
+
+fun Tvshow.fillTvshowUser(): UserTvshow {
+    return UserTvshow(id = id,
+        nome = name,
+        numberOfEpisodes = numberOfEpisodes!!,
+        numberOfSeasons = numberOfSeasons!!,
+        poster = posterPath,
+        externalIds = external_ids,
+        desatualizada = false,
+        seasons = mutableListOf())
+}
 
 @Generated("com.robohorse.robopojogenerator")
 data class Tvshow(
@@ -53,7 +65,7 @@ data class Tvshow(
     val similar: Similar? = null,
 
     @field:SerializedName("seasons")
-    val seasons: List<SeasonsItem?>? = null,
+    val seasons: List<SeasonsItem> = listOf(),
 
     @field:SerializedName("images")
     val images: Images? = null,
