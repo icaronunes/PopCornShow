@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference
 import domain.Imdb
 import domain.TvshowDB
 import domain.Videos
+import domain.reelgood.tvshow.ReelGoodTv
 import domain.tvshow.Tvshow
 import loading.api.ILoadingMedia
 import loading.api.LoadingMedia
@@ -40,6 +41,8 @@ class TvShowViewModel(override val app: Application, activity: Activity, val api
     val videos: LiveData<BaseRequest<Videos>> = _videos
     private val _tvshow: MutableLiveData<BaseRequest<Tvshow>> = MutableLiveData()
     val tvshow: LiveData<BaseRequest<Tvshow>> = _tvshow
+    private val _real: MutableLiveData<BaseRequest<ReelGoodTv>> = MutableLiveData()
+    val real: LiveData<BaseRequest<ReelGoodTv>> = _real
 
     init {
         isAuth()
@@ -54,7 +57,7 @@ class TvShowViewModel(override val app: Application, activity: Activity, val api
     private fun setEventListenerRated() = loadingFirebase.setEventListenerRated(_rated)
 
     fun destroy() {
-       // loadingFirebase.destroy()
+        loadingFirebase.destroy()
     }
 
     fun putFavority(add: (DatabaseReference) -> Unit, remove: (DatabaseReference) -> Unit, id: Int) {
@@ -79,6 +82,10 @@ class TvShowViewModel(override val app: Application, activity: Activity, val api
 
     fun setRatedOnTheMovieDB(tvshowDB: TvshowDB) {
         loadingMedia.putRated(tvshowDB.id, tvshowDB.nota, "tv")
+    }
+
+    fun getRealGoodData(idReel: String) {
+        loadingMedia.getDateReel(_realGood = _real, idReel = idReel)
     }
 
     fun fallow(idTvshow: Int) = loadingFirebase.isWatching(_fallow, idTvshow = idTvshow)

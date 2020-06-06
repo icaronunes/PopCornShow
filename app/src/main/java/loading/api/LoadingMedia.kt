@@ -7,6 +7,7 @@ import applicaton.BaseViewModel.BaseRequest.Success
 import domain.Imdb
 import domain.Movie
 import domain.Videos
+import domain.reelgood.tvshow.ReelGoodTv
 import domain.tvshow.Tvshow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -14,11 +15,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import utils.Api
 
-class LoadingMedia(val api: Api): ILoadingMedia {
+class LoadingMedia(val api: Api) : ILoadingMedia {
 
     override fun getDataMovie(_movie: MutableLiveData<BaseRequest<Movie>>, idMovie: Int) {
         GlobalScope.launch {
-                _movie.postValue(withContext(Dispatchers.Default) { api.getMovie(idMovie) })
+            _movie.postValue(withContext(Dispatchers.Default) { api.getMovie(idMovie) })
         }
     }
 
@@ -40,7 +41,7 @@ class LoadingMedia(val api: Api): ILoadingMedia {
     override fun imdbDate(_imdb: MutableLiveData<BaseRequest<Imdb>>, id: String) {
         GlobalScope.launch {
             _imdb.postValue(withContext(Dispatchers.Default) {
-                    api.getResquestImdb(id)
+                api.getResquestImdb(id)
             })
         }
     }
@@ -49,6 +50,17 @@ class LoadingMedia(val api: Api): ILoadingMedia {
         GlobalScope.launch() {
             val guest = withContext(Dispatchers.Default) { api.userGuest() }
             if (guest is Success) api.ratedMovieGuest(id, rated, guest.result, type)
+        }
+    }
+
+    override fun getDateReel(_realGood: MutableLiveData<BaseRequest<ReelGoodTv>>, idReel: String) {
+        try {
+            GlobalScope.launch {
+                val respose = api.getAvaliableShow(idReel)
+                _realGood.postValue(BaseRequest.Success(respose))
+            }
+        } catch (ex: Exception) {
+            _realGood.postValue(BaseRequest.Failure(ex))
         }
     }
 }

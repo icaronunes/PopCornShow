@@ -7,7 +7,6 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -29,6 +28,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import applicaton.BaseViewModel.BaseRequest.Success
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.layout
 import br.com.icaro.filme.R.string.in_production
@@ -36,7 +36,6 @@ import br.com.icaro.filme.R.string.mil
 import com.github.clans.fab.FloatingActionMenu
 import com.google.firebase.database.DataSnapshot
 import configuracao.SettingsActivity
-import customview.stream.BaseStream
 import domain.Imdb
 import domain.UserSeasons
 import domain.UserTvshow
@@ -88,6 +87,7 @@ import site.Site
 import tvshow.TemporadasAdapter
 import tvshow.activity.TvShowActivity
 import tvshow.adapter.SimilaresSerieAdapter
+import tvshow.interfaces.TemporadasOnClickListener
 import tvshow.viewmodel.TvShowViewModel
 import utils.Api
 import utils.ConstFirebase.SEASONS
@@ -125,8 +125,6 @@ class TvShowFragment : FragmentBase() {
     private var progressBarTemporada: ProgressBar? = null
     private var imdbDd: Imdb? = null
 
-    private val baseStream = BaseStream()
-
     companion object {
         @JvmStatic
         fun newInstance(tipo: Int, series: Tvshow, color: Int, seguindo: Boolean): Fragment {
@@ -143,6 +141,7 @@ class TvShowFragment : FragmentBase() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        model = (requireActivity() as TvShowActivity).getModelView()
         arguments.let {
             tipo = arguments?.getInt(Constant.ABA)!!
             series = arguments?.getSerializable(Constant.SERIE) as Tvshow
@@ -150,13 +149,8 @@ class TvShowFragment : FragmentBase() {
         }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        model = (requireActivity() as TvShowActivity).getModelView()
-    }
-
     private fun observersInformacation() {
-        model.auth.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        model.auth.observe(viewLifecycleOwner, Observer {
             isSeguindo(it)
         })
 
@@ -166,8 +160,23 @@ class TvShowFragment : FragmentBase() {
     }
 
     private fun observersSeason() {
-        model.fallow.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        model.fallow.observe(viewLifecycleOwner, Observer {
             fillAdapter(it.child(series.id.toString()))
+        })
+    }
+
+    private fun observersStream() {
+        model.real.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Success -> {
+                    if (isInitAdapter()) {
+                        (recyclerViewTemporada.adapter as TemporadasAdapter).addStream(it.result)
+                    } else {
+                        initAdapter()
+                        (recyclerViewTemporada.adapter as TemporadasAdapter).addStream(it.result)
+                    }
+                }
+            }
         })
     }
 
@@ -202,15 +211,22 @@ class TvShowFragment : FragmentBase() {
         } else {
             observersSeason()
             model.fallow(series.id)
+            observersStream()
         }
+    }
+
+    private fun initAdapter() {
+        recyclerViewTemporada.adapter = TemporadasAdapter(requireActivity(), series, onClickListener(), color)
     }
 
     private fun getViewTemporadas(inflater: LayoutInflater, container: ViewGroup?): View {
         return inflater.inflate(layout.temporadas, container, false).apply {
             progressBarTemporada = findViewById(R.id.progressBarTemporadas)
-            recyclerViewTemporada = findViewById<RecyclerView>(R.id.temporadas_recycler).patternRecyler(false).apply {
-                setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
-            }
+            recyclerViewTemporada = findViewById<RecyclerView>(R.id.temporadas_recycler)
+                .patternRecyler(false).apply {
+                    setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
+                }
+            initAdapter()
         }
     }
 
@@ -355,18 +371,18 @@ class TvShowFragment : FragmentBase() {
     private fun fillAdapter(dataSnapshot: DataSnapshot) {
         if (dataSnapshot.exists()) {
             try {
-                userTvshow = dataSnapshot.getValue(UserTvshow::class.java)
-                if (view != null) {
-                    recyclerViewTemporada.adapter = TemporadasAdapter(requireActivity(), series, onClickListener(), color, userTvshow, baseStream)
+                if (view != null && isInitAdapter()) {
+                    userTvshow = dataSnapshot.getValue(UserTvshow::class.java)
+                    (recyclerViewTemporada.adapter as TemporadasAdapter).addUserTvShow(userTvshow!!)
                 }
             } catch (e: Exception) {
-                activity?.makeToast(R.string.ops_seguir_novamente)
+                requireActivity().makeToast(R.string.ops_seguir_novamente)
             }
-        } else if (view != null) {
-            recyclerViewTemporada.adapter = TemporadasAdapter(requireActivity(), series, onClickListener(), color, null, baseStream)
         }
         progressBarTemporada?.gone()
     }
+
+    private fun isInitAdapter() = recyclerViewTemporada.adapter != null
 
     private fun setStatus() {
         series.status?.let {
@@ -405,8 +421,8 @@ class TvShowFragment : FragmentBase() {
         }
     }
 
-    private fun onClickListener(): TemporadasAdapter.TemporadasOnClickListener {
-        return object : TemporadasAdapter.TemporadasOnClickListener {
+    private fun onClickListener(): TemporadasOnClickListener {
+        return object : TemporadasOnClickListener {
             override fun onClickCheckTemporada(view: View, position: Int) {
                 changeEps(position)
             }
@@ -435,7 +451,6 @@ class TvShowFragment : FragmentBase() {
     }
 
     private fun changeEps(position: Int) {
-
         GlobalScope.launch {
             val season: UserSeasons = withContext(Dispatchers.Default) {
                 Api(requireContext()).getTvSeasons(id = series.id, id_season = position)
@@ -446,33 +461,6 @@ class TvShowFragment : FragmentBase() {
             childUpdates["${series.id}/$SEASONS/$position"] = season
             model.fillSeason(childUpdates)
         }
-
-/*        UserTvshow(id = id,
-//            nome = name,
-//            numberOfEpisodes = numberOfEpisodes!!,
-//            numberOfSeasons = numberOfSeasons!!,
-//            poster = posterPath,
-//            externalIds = external_ids,
-//            desatualizada = false,
-//            seasons = mutableListOf())
-
-//        if (seasonUser != null) {
-//
-//        } else {
-//            userTvshow?.seasons?.get(position)?.userEps?.forEachIndexed { index, ep ->
-//                childUpdates["${series.id}/$SEASONS/$position/$USEREPS/$index/$ASSISTIDO"] = true
-//                childUpdates["${series.id}/$SEASONS/$position/$USEREPS/$index/$EPNUMBER"] = ep.episodeNumber
-//                childUpdates["${series.id}/$SEASONS/$position/$USEREPS/$index/$NOTA"] = true
-//                childUpdates["${series.id}/$SEASONS/$position/$USEREPS/$index/$ASSISTIDO"] = true
-//            }
-//        }
-//
-//        assistido: true
-//        episodeNumber: 1
-//        id: 1308268
-//        nota: 0
-//        seasonNumber: 1
-*/
     }
 
     private fun onClickSeguir(): OnClickListener {
@@ -717,7 +705,7 @@ class TvShowFragment : FragmentBase() {
         if (series.similar?.results?.isNotEmpty()!!) {
             recycle_tvshow_similares.patternRecyler().apply {
                 adapter = SimilaresSerieAdapter(requireActivity(), series.similar?.results)
-                setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
+                setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
             }
             text_similares.visible()
         } else {
@@ -741,7 +729,6 @@ class TvShowFragment : FragmentBase() {
     private fun setTrailer() {
         if (series.videos?.results?.isNotEmpty()!!) {
             recycle_tvshow_trailer.apply {
-                setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
                 adapter = TrailerAdapter(series.videos?.results, series.overview ?: "")

@@ -64,6 +64,7 @@ import utils.Constant
 import utils.UtilsApp
 import utils.UtilsApp.setEp2
 import utils.animeRotation
+import utils.createIdReal
 import utils.getNameTypeReel
 import utils.gone
 import utils.makeToast
@@ -85,9 +86,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
     private var idReel: String = ""
     private var colorTop: Int = 0
     private var series: Tvshow? = null
-
     private var seguindo: Boolean = false
-
     private var mAuth: FirebaseAuth? = null
     private var numberRated: Float = 0.0f
     private var database: FirebaseDatabase? = null
@@ -103,7 +102,9 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
         model = createViewModel(TvShowViewModel::class.java, this)
         observers()
 
-        if (idReel.isNotEmpty()) getDateReel(idReel)
+        if (idReel.isNotEmpty()) {
+            model.getRealGoodData(idReel)
+        }
 
         if (UtilsApp.isNetWorkAvailable(baseContext)) {
             getDataTvshow()
@@ -133,17 +134,35 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
         })
 
         model.tvshow.observe(this, Observer {
-            when(it) {
+            when (it) {
                 is Success -> {
                     series = it.result
-                    setupViewPagerTabs(it.result)
-                    setImageTop(it.result.backdropPath ?: "")
+                    setupViewPagerTabs(series!!)
+                    setImageTop(series?.backdropPath ?: "")
                     setFab()
                     atualizarRealDate()
                     model.loading(false)
+                    if (idReel.isEmpty()) model.getRealGoodData(series?.createIdReal() ?: "")
                 }
-                is Failure -> { ops() }
-                is Loading -> { setLoading(it.loading)}
+                is Failure -> {
+                    ops()
+                }
+                is Loading -> {
+                    setLoading(it.loading)
+                }
+            }
+        })
+
+        model.real.observe(this, Observer {
+            when (it) {
+                is Success -> {
+                    streamview_tv.fillStream(series?.originalName?.getNameTypeReel()
+                        ?: "", it.result.sources)
+                    setAnimated()
+                }
+                is Failure -> {
+                    streamview_tv.error = true
+                }
             }
         })
     }
@@ -430,7 +449,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
     }
 
     private fun setImageTop(path: String) {
-        img_top_tvshow.setPicassoWithCache(path, 5, {}, {}, R.drawable.top_empty )
+        img_top_tvshow.setPicassoWithCache(path, 5, {}, {}, R.drawable.top_empty)
         AnimatorSet().apply {
             playTogether(ObjectAnimator.ofFloat(img_top_tvshow, View.X, -100f, 0.0f)
                 .setDuration(1000))
@@ -515,8 +534,8 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
             ?.addOnCompleteListener { task ->
                 if (task.isComplete) {
                     seguindo = true
-                  //  setupViewPagerTabs(it)
-                   // setImageTop()
+                    //  setupViewPagerTabs(it)
+                    // setImageTop()
                 }
             }
 
@@ -550,8 +569,8 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                                         atualizarRealDate()
                                     }
                                 } catch (e: Exception) {
-                                //    setupViewPagerTabs(it)
-                                  //  setImageTop()
+                                    //    setupViewPagerTabs(it)
+                                    //  setImageTop()
                                     Toast.makeText(this@TvShowActivity, resources.getString(R.string
                                         .ops_seguir_novamente), Toast.LENGTH_LONG).show()
                                     Crashlytics.logException(e)
@@ -566,8 +585,8 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                     })
         } else {
             seguindo = false
-          //  setupViewPagerTabs(it)
-           // setImageTop()
+            //  setupViewPagerTabs(it)
+            // setImageTop()
         }
     }
 
