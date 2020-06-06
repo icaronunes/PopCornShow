@@ -143,6 +143,14 @@ class TemporadasAdapter(
         notifyDataSetChanged()
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     private fun isWatch(position: Int): Boolean {
         return if (userTvshow != null && userTvshow?.seasons?.getOrNull(position) != null) {
             return userTvshow?.seasons!![position].isVisto
