@@ -22,6 +22,7 @@ import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import domain.reelgood.movie.Availability
+import domain.tvshow.Tvshow
 import java.text.DateFormat
 import java.text.Normalizer
 import java.text.SimpleDateFormat
@@ -213,6 +214,10 @@ fun String.getNameTypeReel(): String {
         .replace("--", "-")
         .toLowerCase()
 }
+
+fun Tvshow.createIdReal() = createIdReal(this.name ?: "", this.firstAirDate ?: "")
+
+private fun createIdReal(originalName: String, data: String) = "${originalName.getNameTypeReel()}-${data.yearDate()}"
 
 /**
  * RECYCLER
