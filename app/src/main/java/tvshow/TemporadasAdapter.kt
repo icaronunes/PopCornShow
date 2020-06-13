@@ -25,6 +25,7 @@ import temporada.TemporadaActivity
 import tvshow.interfaces.TemporadasOnClickListener
 import utils.Constant
 import utils.gone
+import utils.invisible
 import utils.parseDateShot
 import utils.setPicassoWithCache
 import utils.visible
@@ -40,6 +41,7 @@ class TemporadasAdapter(
     private val color: Int
 ) : RecyclerView.Adapter<TemporadasAdapter.HoldeSeason>() {
 
+    private var fallow: Boolean = false
     var reelGood: ReelGoodTv? = null
     var userTvshow: UserTvshow? = null
     private val baseStreamAb = BaseStream()
@@ -71,9 +73,10 @@ class TemporadasAdapter(
         }
 
         private fun handleIconFallow() {
-            if (userTvshow == null) {
-                btFallow.visible()
+            if (userTvshow == null || !fallow) {
+                btFallow.invisible()
             } else {
+                btFallow.visible()
                 if (isWatch(adapterPosition)) {
                     btFallow.setImageResource(drawable.icon_visto)
                 } else {
@@ -140,6 +143,11 @@ class TemporadasAdapter(
 
     fun addUserTvShow(userTvshow: UserTvshow) {
         this.userTvshow = userTvshow
+        notifyDataSetChanged()
+    }
+
+    fun addFallow(fallow: Boolean) {
+        this.fallow = fallow
         notifyDataSetChanged()
     }
 

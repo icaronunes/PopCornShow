@@ -115,707 +115,746 @@ import java.util.Locale
 
 class TvShowFragment : FragmentBase() {
 
-    private lateinit var model: TvShowViewModel
-    private lateinit var recyclerViewTemporada: RecyclerView
-    private var tipo: Int = 0
-    private var color: Int = 0
-    private var mediaNotas: Float = 0f
-    private lateinit var series: Tvshow
-    private var userTvshow: UserTvshow? = null
-    private var progressBarTemporada: ProgressBar? = null
-    private var imdbDd: Imdb? = null
+	private lateinit var model: TvShowViewModel
+	private var recyclerViewTemporada: RecyclerView? = null
+	private var tipo: Int = 0
+	private var color: Int = 0
+	private var mediaNotas: Float = 0f
+	private lateinit var series: Tvshow
+	private var userTvshow: UserTvshow? = null
+	private var progressBarTemporada: ProgressBar? = null
+	private var imdbDd: Imdb? = null
 
-    companion object {
-        @JvmStatic
-        fun newInstance(tipo: Int, series: Tvshow, color: Int, seguindo: Boolean): Fragment {
-            return TvShowFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(Constant.SERIE, series)
-                    putInt(Constant.COLOR_TOP, color)
-                    putInt(Constant.ABA, tipo)
-                    putSerializable(Constant.USER, seguindo)
-                }
-            }
-        }
-    }
+	companion object {
+		@JvmStatic
+		fun newInstance(tipo: Int, series: Tvshow, color: Int, seguindo: Boolean): Fragment {
+			return TvShowFragment().apply {
+				arguments = Bundle().apply {
+					putSerializable(Constant.SERIE, series)
+					putInt(Constant.COLOR_TOP, color)
+					putInt(Constant.ABA, tipo)
+					putSerializable(Constant.USER, seguindo)
+				}
+			}
+		}
+	}
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        model = (requireActivity() as TvShowActivity).getModelView()
-        arguments.let {
-            tipo = arguments?.getInt(Constant.ABA)!!
-            series = arguments?.getSerializable(Constant.SERIE) as Tvshow
-            color = arguments?.getInt(Constant.COLOR_TOP)!!
-        }
-    }
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		model = (requireActivity() as TvShowActivity).getModelView()
+		arguments.let {
+			tipo = arguments?.getInt(Constant.ABA)!!
+			series = arguments?.getSerializable(Constant.SERIE) as Tvshow
+			color = arguments?.getInt(Constant.COLOR_TOP)!!
+		}
+	}
 
-    private fun observersInformacation() {
-        model.auth.observe(viewLifecycleOwner, Observer {
-            isSeguindo(it)
-        })
+	private fun observerAuth() {
+		model.auth.observe(viewLifecycleOwner, Observer {
+			isSeguindo(it)
+		})
+	}
 
-        model.isFallow.observe(viewLifecycleOwner, Observer {
-            setFalow(it)
-        })
-    }
+	private fun observerIsFallow() {
+		model.isFallow.observe(viewLifecycleOwner, Observer {
+			setFalow(it)
+			addSeguindo(it)
+		})
+	}
 
-    private fun observersSeason() {
-        model.fallow.observe(viewLifecycleOwner, Observer {
-            fillAdapter(it.child(series.id.toString()))
-        })
-    }
+	private fun addSeguindo(it: Boolean) {
+		if (isInitAdapter()) {
+			(recyclerViewTemporada?.adapter as? TemporadasAdapter)?.addFallow(it)
+		} else {
+			initAdapter()
+			(recyclerViewTemporada?.adapter as? TemporadasAdapter)?.addFallow(it)
+		}
+	}
 
-    private fun observersStream() {
-        model.real.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is Success -> {
-                    if (isInitAdapter()) {
-                        (recyclerViewTemporada.adapter as TemporadasAdapter).addStream(it.result)
-                    } else {
-                        initAdapter()
-                        (recyclerViewTemporada.adapter as TemporadasAdapter).addStream(it.result)
-                    }
-                }
-            }
-        })
-    }
+	private fun observersSeason() {
+		model.fallow.observe(viewLifecycleOwner, Observer {
+			fillAdapter(it.child(series.id.toString()))
+		})
+	}
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        if (tipo == R.string.informacoes) {
-            setTitulo()
-            setCategoria()
-            setLancamento()
-            setProdutora()
-            setHome()
-            setOriginalTitle()
-            setProductionCountries()
-            setPopularity()
-            setTemporada()
-            setElenco()
-            setProducao()
-            setSimilares()
-            setTrailer()
-            setPoster()
-            setStatus()
-            setAnimacao()
-            getImdb()
-            setVotoMedia()
-            setListeners()
-            setNomeUltimoEp()
-            setUltimoEpDate()
-            setSinopse()
-            setAdMob(adView)
-            observersInformacation()
-            model.hasfallow(series.id)
+	private fun observersStream() {
+		model.real.observe(viewLifecycleOwner, Observer {
+			when (it) {
+				is Success -> {
+					if (isInitAdapter()) {
+						(recyclerViewTemporada?.adapter as TemporadasAdapter).addStream(it.result)
+					} else {
+						initAdapter()
+						(recyclerViewTemporada?.adapter as TemporadasAdapter).addStream(it.result)
+					}
+				}
+			}
+		})
+	}
+
+	override fun onActivityCreated(savedInstanceState: Bundle?) {
+		super.onActivityCreated(savedInstanceState)
+		if (tipo == R.string.informacoes) {
+			setTitulo()
+			setCategoria()
+			setLancamento()
+			setProdutora()
+			setHome()
+			setOriginalTitle()
+			setProductionCountries()
+			setPopularity()
+			setTemporada()
+			setElenco()
+			setProducao()
+			setSimilares()
+			setTrailer()
+			setPoster()
+			setStatus()
+			setAnimacao()
+			getImdb()
+			setVotoMedia()
+			setListeners()
+			setNomeUltimoEp()
+			setUltimoEpDate()
+			setSinopse()
+			setAdMob(adView)
+            observerAuth()
+			observerIsFallow()
+			model.hasfallow(series.id)
         } else {
             observersSeason()
-            model.fallow(series.id)
             observersStream()
-        }
-    }
+			observerIsFallow()
+			model.fallow(series.id)
+			model.hasfallow(series.id)
+		}
+	}
 
     private fun initAdapter() {
-        recyclerViewTemporada.adapter = TemporadasAdapter(requireActivity(), series, onClickListener(), color)
-    }
-
-    private fun getViewTemporadas(inflater: LayoutInflater, container: ViewGroup?): View {
-        return inflater.inflate(layout.temporadas, container, false).apply {
-            progressBarTemporada = findViewById(R.id.progressBarTemporadas)
-            recyclerViewTemporada = findViewById<RecyclerView>(R.id.temporadas_recycler)
-                .patternRecyler(false).apply {
-                    setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
-                }
-            initAdapter()
-        }
-    }
-
-    private fun getViewInformacoes(inflater: LayoutInflater?, container: ViewGroup?): View? {
-        val view = inflater?.inflate(R.layout.tvshow_info, container, false)
-        view?.findViewById<Button>(R.id.seguir)?.setOnClickListener(onClickSeguir())
-        return view
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        when (tipo) {
-            R.string.temporadas -> {
-                return getViewTemporadas(inflater, container)
-            }
-            R.string.informacoes -> {
-                return getViewInformacoes(inflater, container)
-            }
-        }
-        return null
-    }
-
-    private fun setUltimoEpDate() {
-        proximo_ep_date.text = series.lastEpisodeAir?.airDate
-    }
-
-    private fun setNomeUltimoEp() {
-        series.lastEpisodeAir?.let {
-            ultimo_ep_name.text = it.name ?: ""
-        }
-    }
-
-    private fun setFalow(fallow: Boolean) {
-        seguir?.setTextColor(color)
-        if (fallow) {
-            seguir?.setText(R.string.seguindo)
-        } else {
-            seguir?.setText(R.string.seguir)
-        }
-    }
-
-    private fun setListeners() {
-        icon_site?.setOnClickListener {
-            if (!series.homepage.isNullOrBlank()) {
-                startActivity(Intent(context, Site::class.java).apply {
-                    putExtra(Constant.SITE, series.homepage)
-                })
-            } else {
-                snack(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu), getString(R.string.no_site))
-            }
-        }
-
-        imdb_site?.setOnClickListener {
-            series.external_ids?.imdbId?.let {
-                startActivity(Intent(activity, Site::class.java).apply {
-                    putExtra(Constant.SITE, "${IMDB}$it")
-                })
-            }
-        }
-
-        tmdb_site?.setOnClickListener {
-            startActivity(Intent(activity, Site::class.java).apply {
-                putExtra(Constant.SITE, "${BASEMOVIEDB_TV}${series.id}")
-            })
-        }
-
-        img_star?.setOnClickListener {
-            clickStarsNote()
-        }
-    }
-
-    @SuppressLint("InflateParams")
-    private fun clickStarsNote() {
-        if (mediaNotas > 0) {
-            val builder = AlertDialog.Builder(requireActivity())
-            val inflater = requireActivity().layoutInflater
-            val layout = inflater.inflate(R.layout.layout_notas, null)
-
-            imdbDd?.let { imdb ->
-                imdb.imdbRating?.let {
-                    (layout
-                        ?.findViewById<View>(R.id.nota_imdb) as TextView).text = String.format(getString(R.string.bar_ten), it)
-                }
-
-                imdb.metascore?.let {
-                    if (!it.contains("N/A"))
-                        (layout.findViewById<View>(R.id.nota_metacritic) as TextView).text = String.format(getString(R.string.bar_hundred), it)
-                }
-
-                imdb.tomatoRating?.let {
-                    if (!it.contains("N/A", true))
-                        (layout.findViewById<View>(R.id.nota_tomatoes) as TextView).text = String.format(getString(R.string.bar_ten), it)
-                }
-            }
-
-            series.voteAverage?.let {
-                if (!it.equals(0.0))
-                    (layout?.findViewById<View>(R.id.nota_tmdb) as TextView).text = String.format(getString(R.string.bar_ten), it)
-            }
-
-            layout.findViewById<View>(R.id.image_metacritic).setOnClickListener {
-                imdbDd?.let {
-                    val nome = it.title.replace(" ", "-").toLowerCase(Locale.ROOT).removerAcentos()
-                    val url = "$METACRITICTV$nome"
-                    startActivity(Intent(activity, Site::class.java).apply {
-                        putExtra(Constant.SITE, url)
-                    })
-                }
-            }
-
-            layout.findViewById<View>(R.id.image_tomatoes).setOnClickListener {
-                imdbDd?.let {
-                    val nome = it.title.replace(" ", "_").toLowerCase(Locale.ROOT).removerAcentos()
-                    startActivity(Intent(activity, Site::class.java).apply {
-                        putExtra(Constant.SITE, "$ROTTENTOMATOESTV$nome")
-                    })
-                }
-            }
-
-            layout.findViewById<View>(R.id.image_imdb).setOnClickListener {
-                startActivity(Intent(activity, Site::class.java).apply {
-                    putExtra(Constant.SITE, "$IMDB${imdbDd?.imdbID}")
-                })
-            }
-
-            layout.findViewById<View>(R.id.image_tmdb).setOnClickListener {
-                startActivity(Intent(activity, Site::class.java).apply {
-                    putExtra(Constant.SITE, "$BASEMOVIEDB_TV${series.id!!}")
-                })
-            }
-
-            builder.setView(layout)
-            builder.show()
-        } else {
-            snack(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu), getString(R.string.no_vote))
-        }
-    }
-
-    private fun isSeguindo(auth: Boolean) {
-        if (!auth) setStatusButton()
-    }
-
-    private fun fillAdapter(dataSnapshot: DataSnapshot) {
-        if (dataSnapshot.exists()) {
-            try {
-                if (view != null && isInitAdapter()) {
-                    userTvshow = dataSnapshot.getValue(UserTvshow::class.java)
-                    (recyclerViewTemporada.adapter as TemporadasAdapter).addUserTvShow(userTvshow!!)
-                }
-            } catch (e: Exception) {
-                requireActivity().makeToast(R.string.ops_seguir_novamente)
-            }
-        }
-        progressBarTemporada?.gone()
-    }
-
-    private fun isInitAdapter() = recyclerViewTemporada.adapter != null
-
-    private fun setStatus() {
-        series.status?.let {
-            status.setTextColor(color)
-
-            val tradutor = PreferenceManager.getDefaultSharedPreferences(activity)
-                .getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true)
-            if (tradutor) {
-                when (it) {
-                    "Returning Series" -> status?.setText(R.string.returnin_series)
-                    "Ended" -> status!!.setText(R.string.ended)
-                    "Canceled" -> status?.setText(R.string.canceled)
-                    "In Production" -> status?.setText(in_production)
-                    else -> status?.text = it
-                }
-            } else {
-                status?.text = it
-            }
-        }
-    }
-
-    private fun setStatusButton() {
-        seguir?.isEnabled = false
-        val tradutor = PreferenceManager.getDefaultSharedPreferences(activity)
-            .getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true)
-        if (tradutor) {
-            seguir?.text = resources.getText(R.string.sem_login)
-        } else {
-            seguir?.text = series.status
-        }
-    }
-
-    private fun setTemporada() {
-        if (series.numberOfSeasons!! > 0) {
-            temporadas?.text = series.numberOfSeasons.toString()
-        }
-    }
-
-    private fun onClickListener(): TemporadasOnClickListener {
-        return object : TemporadasOnClickListener {
-            override fun onClickCheckTemporada(view: View, position: Int) {
-                changeEps(position)
-            }
-        }
-    }
-
-    private fun isVisto(position: Int): Boolean {
-        return if (userTvshow?.seasons != null) {
-            if (userTvshow?.seasons?.getOrNull(position) != null) {
-                return userTvshow?.seasons?.get(position)?.isVisto ?: false
-            } else {
-                false
-            }
-        } else {
-            false
-        }
-    }
-
-    private fun setStatusEps(position: Int, status: Boolean) {
-        if (userTvshow != null) {
-            if (userTvshow?.seasons?.get(position)?.userEps != null)
-                for (i in 0 until userTvshow?.seasons?.get(position)?.userEps?.size!!) {
-                    userTvshow?.seasons?.get(position)?.userEps?.get(position)?.isAssistido = status
-                }
-        }
-    }
-
-    private fun changeEps(position: Int) {
-        GlobalScope.launch {
-            val season: UserSeasons = withContext(Dispatchers.Default) {
-                Api(requireContext()).getTvSeasons(id = series.id, id_season = position)
-            }.fillUserTvshow(userTvshow?.seasons?.find { it.id == position }, !isVisto(position))
-
-            val childUpdates = HashMap<String, Any>()
-            childUpdates["${series.id}/desatualizada"] = true
-            childUpdates["${series.id}/$SEASONS/$position"] = season
-            model.fillSeason(childUpdates)
-        }
-    }
-
-    private fun onClickSeguir(): OnClickListener {
-        return OnClickListener { view ->
-            if (view != null) {
-                progressBarTemporada = view.rootView?.findViewById<View>(R.id.progressBarTemporadas) as ProgressBar
-                progressBarTemporada?.visible()
-            }
-
-            model.setFallow(series.id,
-                add = {
-                    it.child("${series.id}")
-                        .setValue(setUserTvShow(series))
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                seguir?.setText(R.string.seguindo)
-                            } else {
-                                requireActivity().makeToast(R.string.erro_seguir)
-                            }
-                        }
-                }, remove = {
-                AlertDialog.Builder(context!!)
-                    .setTitle(R.string.title_delete)
-                    .setMessage(R.string.msg_parar_seguir)
-                    .setNegativeButton(R.string.no, null)
-                    .setOnDismissListener { progressBarTemporada?.visibility = View.GONE }
-                    .setPositiveButton(R.string.ok) { _, _ ->
-                        it.child("${series.id}")
-                            .removeValue()
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    seguir?.setText(R.string.seguir)
-                                } else {
-                                    requireActivity().makeToast(R.string.erro_seguir)
-                                }
-                            }
-                        progressBarTemporada?.visibility = View.GONE
-                    }.create().show()
-            })
-
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        model.destroy()
-    }
-
-    private fun setSinopse() {
-
-        if (series.overview.isNullOrBlank()) {
-            descricao.text = getString(R.string.sem_sinopse)
-        } else {
-            descricao.text = series.overview
-        }
-    }
-
-    private fun setAnimacao() {
-        AnimatorSet().apply {
-            playTogether(
-                ObjectAnimator.ofFloat(img_star, View.ALPHA, 0.0f, 1.0f).setDuration(2000),
-                ObjectAnimator.ofFloat(voto_media, View.ALPHA, 0.0f, 1.0f).setDuration(2300),
-                ObjectAnimator.ofFloat(icon_site, View.ALPHA, 0.0f, 1.0f).setDuration(3000)
-            )
-        }.start()
-    }
-
-    private fun setPoster() {
-        img_poster?.setPicasso(series.posterPath, 4, img_erro = R.drawable.poster_empty)
-        val posters = series.images?.posters
-
-        img_poster?.setOnClickListener {
-            if (posters != null && posters.isNotEmpty()) {
-                val intent = Intent(context, PosterGridActivity::class.java).apply {
-                    putExtra(Constant.POSTER, posters as Serializable)
-                    putExtra(Constant.NAME, series.name)
-                }
-                val compat = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation(requireActivity(),
-                        img_poster,
-                        getString(R.string.poster_transition))
-                ActivityCompat.startActivity(requireActivity(), intent, compat.toBundle())
-            } else {
-                requireActivity().makeToast(R.string.poster_empty)
-            }
-        }
-
-        card_poster.setCardBackgroundColor(color)
-    }
-
-    private fun setProdutora() {
-        series.productionCompanies?.let {
-            val production = series.productionCompanies?.getOrNull(0)
-            produtora?.setTextColor(color)
-            if (production?.name.isNullOrBlank()) {
-                produtora.gone()
-                production_label.gone()
-            } else {
-                produtora?.text = production?.name
-            }
-
-            produtora?.setOnClickListener {
-                if (production != null) {
-                    context?.startActivity(Intent(context, ProdutoraActivity::class.java).apply {
-                        putExtra(Constant.PRODUTORA_ID, production.id)
-                    })
-                } else {
-                    Toast.makeText(context, getString(R.string.sem_informacao_company), Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
-    private fun setCategoria() {
-        categoria_tvshow?.text = StringBuilder().apply {
-            series.genres?.forEachIndexed { index, it ->
-                if (index != 0) append(" | ")
-                append("${it?.name}")
-            }
-        }.toString()
-    }
-
-    private fun setVotoMedia() {
-        mediaNotas = getMedia()
-        if (mediaNotas > 0) {
-            img_star?.setImageResource(R.drawable.icon_star)
-            val formatter = DecimalFormat("0.0")
-            formatter.format(mediaNotas)?.let {
-                voto_media?.text = it
-                frame_nota.contentDescription = it
-            }
-        } else {
-            img_star?.setImageResource(R.drawable.icon_star_off)
-            voto_media?.setText(R.string.valor_zero)
-            voto_media?.setTextColor(ContextCompat.getColor(context!!, R.color.blue))
-        }
-    }
-
-    private fun setTitulo() {
-        series.name?.let {
-            titulo_tvshow?.text = it
-        }
-    }
-
-    private fun setOriginalTitle() {
-        if (series.originalName != null) {
-            original_title?.text = series.originalName
-        } else {
-            original_title?.text = getString(R.string.original_title)
-        }
-    }
-
-    private fun setProductionCountries() {
-        series.originCountry?.getOrNull(0)?.let {
-            production_countries?.text = it
-        }
-    }
-
-    private fun setPopularity() {
-        // Todo refazer metodo
-        if (series.popularity != null) {
-            ValueAnimator.ofFloat(1.0f, series.popularity!!.toFloat()).apply {
-                addUpdateListener { valueAnimator ->
-                    val valor = valueAnimator.animatedValue as Float
-                    var popularidade = valor.toString()
-
-                    if (popularidade[0] == '0' && isAdded) {
-                        popularidade = popularidade.substring(2, popularidade.length)
-                        popularity?.text = "$popularidade  ${getString(mil)}"
-                    } else {
-
-                        val posicao = popularidade.indexOf(".") + 2
-                        popularidade = popularidade.substring(0, posicao)
-                        var milhoes = ""
-                        if (isAdded) {
-                            milhoes = getString(R.string.milhoes)
-                        }
-                        popularidade += (" $milhoes")
-                        popularity?.text = popularidade
-                    }
-                }
-                duration = 900
-                setTarget(popularity)
-            }.start()
-        }
-    }
-
-    private fun setElenco() {
-
-        textview_elenco?.setOnClickListener {
-            startActivity(Intent(context, ElencoActivity::class.java).apply {
-                putExtra(Constant.ELENCO, series.credits?.cast as Serializable)
-                putExtra(Constant.NAME, series.name)
-            })
-        }
-
-        if (series.credits?.cast?.isNotEmpty()!!) {
-            textview_elenco?.visible()
-            recycle_tvshow_elenco.patternRecyler(true).apply {
-                adapter = CastAdapter(requireActivity(), series.credits?.cast ?: listOf())
-                setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
-            }
-        } else {
-            textview_elenco.gone()
-            recycle_tvshow_elenco.apply {
-                layoutParams.height = 1
-                importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
-                isFocusable = false
-            }
-        }
-    }
-
-    private fun setProducao() {
-
-        textview_crews?.setOnClickListener {
-            startActivity(Intent(context, CrewsActivity::class.java).apply {
-                putExtra(Constant.PRODUCAO, series.credits?.crew as Serializable)
-                putExtra(Constant.NAME, series.name)
-            })
-        }
-
-        if (series.credits?.crew?.isNotEmpty()!!) {
-            textview_crews?.visibility = View.VISIBLE
-            recycle_tvshow_producao.patternRecyler(true).apply {
-                adapter = CrewAdapter(requireActivity(), series.credits?.crew ?: listOf())
-                setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
-            }
-        } else {
-            textview_crews.gone()
-            recycle_tvshow_producao.minHeight()
-        }
-    }
-
-    private fun setSimilares() {
-        text_similares.setOnClickListener {
-            startActivity(Intent(context, SimilaresActivity::class.java).apply {
-                putExtra(Constant.SIMILARES_TVSHOW, series.similar?.results as Serializable)
-                putExtra(Constant.NAME, series.name)
-            })
-        }
-
-        if (series.similar?.results?.isNotEmpty()!!) {
-            recycle_tvshow_similares.patternRecyler().apply {
-                adapter = SimilaresSerieAdapter(requireActivity(), series.similar?.results)
-                setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
-            }
-            text_similares.visible()
-        } else {
-            text_similares.gone()
-            recycle_tvshow_similares.minHeight()
-        }
-    }
-
-    private fun setLancamento() {
-        var inicio = ""
-        if (series.firstAirDate != null) {
-            inicio = series.firstAirDate?.subSequence(0, 4) as String
-        }
-        if (series.lastAirDate != null) {
-            lancamento?.text = "$inicio - ${series.lastAirDate?.substring(0, 4)}"
-        } else {
-            lancamento?.text = getString(R.string.nao_informado)
-        }
-    }
-
-    private fun setTrailer() {
-        if (series.videos?.results?.isNotEmpty()!!) {
-            recycle_tvshow_trailer.apply {
-                itemAnimator = DefaultItemAnimator()
-                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                adapter = TrailerAdapter(series.videos?.results, series.overview ?: "")
-                setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
-            }
-        } else {
-            recycle_tvshow_trailer.minHeight()
-        }
-    }
-
-    private fun setHome() {
-        if (series.homepage != null) {
-            if (series.homepage?.length!! > 5) {
-                icon_site?.setImageResource(R.drawable.site_on)
-            } else {
-                icon_site?.setImageResource(R.drawable.site_off)
-            }
-        } else {
-            icon_site?.setImageResource(R.drawable.site_off)
-        }
-    }
-
-    fun getImdb() {
-        subscriptions.add(Api(context!!).getOmdbpi(series.external_ids?.imdbId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : rx.Observer<Imdb> {
-                override fun onCompleted() {
-                }
-
-                override fun onError(e: Throwable) {
-                    requireActivity().makeToast(R.string.ops)
-                }
-
-                override fun onNext(imdb: Imdb) {
-                    imdbDd = imdb
-                }
-            }))
-    }
-
-    private fun getMedia(): Float {
-        // Todo - refazer metodo
-        var imdb = 0f
-        var tmdb = 0f
-        var metascore = 0f
-        var tomato = 0f
-        var tamanho = 0
-
-        if (series.voteAverage != null)
-            if (series.voteAverage!! > 0) {
-                try {
-                    tmdb = series.voteAverage!!.toFloat()
-                    tamanho++
-                } catch (e: Exception) {
-                }
-            }
-
-        if (imdbDd != null) {
-
-            if (imdbDd?.imdbRating.isNullOrBlank()) {
-                try {
-                    imdb = java.lang.Float.parseFloat(imdbDd?.imdbRating!!)
-                    tamanho++
-                } catch (e: Exception) {
-                }
-            }
-
-            if (imdbDd?.metascore.isNullOrEmpty()) {
-
-                try {
-                    val meta = java.lang.Float.parseFloat(imdbDd?.metascore!!)
-                    val nota = meta / 10
-                    metascore = nota
-                    tamanho++
-                } catch (e: Exception) {
-                }
-            }
-
-            if (imdbDd?.tomatoRating.isNullOrEmpty()) {
-
-                try {
-                    tomato = java.lang.Float.parseFloat(imdbDd?.tomatoRating!!)
-                    tamanho++
-                } catch (e: Exception) {
-                }
-            }
-        }
-        return (tmdb + imdb + metascore + tomato) / tamanho
-    }
+		recyclerViewTemporada?.adapter =
+			TemporadasAdapter(requireActivity(), series, onClickListener(), color)
+	}
+
+	private fun getViewTemporadas(inflater: LayoutInflater, container: ViewGroup?): View {
+		return inflater.inflate(layout.temporadas, container, false).apply {
+			progressBarTemporada = findViewById(R.id.progressBarTemporadas)
+			recyclerViewTemporada = findViewById<RecyclerView>(R.id.temporadas_recycler)
+				.patternRecyler(false).apply {
+					setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
+				}
+			initAdapter()
+
+		}
+	}
+
+	private fun getViewInformacoes(inflater: LayoutInflater?, container: ViewGroup?): View? {
+		val view = inflater?.inflate(R.layout.tvshow_info, container, false)
+		view?.findViewById<Button>(R.id.seguir)?.setOnClickListener(onClickSeguir())
+		return view
+	}
+
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View? {
+		when (tipo) {
+			R.string.temporadas -> {
+				return getViewTemporadas(inflater, container)
+			}
+			R.string.informacoes -> {
+				return getViewInformacoes(inflater, container)
+			}
+		}
+		return null
+	}
+
+	private fun setUltimoEpDate() {
+		proximo_ep_date.text = series.lastEpisodeAir?.airDate
+	}
+
+	private fun setNomeUltimoEp() {
+		series.lastEpisodeAir?.let {
+			ultimo_ep_name.text = it.name ?: ""
+		}
+	}
+
+	private fun setFalow(fallow: Boolean) {
+		seguir?.setTextColor(color)
+		if (fallow) {
+			seguir?.setText(R.string.seguindo)
+		} else {
+			seguir?.setText(R.string.seguir)
+		}
+	}
+
+	private fun setListeners() {
+		icon_site?.setOnClickListener {
+			if (!series.homepage.isNullOrBlank()) {
+				startActivity(Intent(context, Site::class.java).apply {
+					putExtra(Constant.SITE, series.homepage)
+				})
+			} else {
+				snack(
+					requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu),
+					getString(R.string.no_site)
+				)
+			}
+		}
+
+		imdb_site?.setOnClickListener {
+			series.external_ids?.imdbId?.let {
+				startActivity(Intent(activity, Site::class.java).apply {
+					putExtra(Constant.SITE, "${IMDB}$it")
+				})
+			}
+		}
+
+		tmdb_site?.setOnClickListener {
+			startActivity(Intent(activity, Site::class.java).apply {
+				putExtra(Constant.SITE, "${BASEMOVIEDB_TV}${series.id}")
+			})
+		}
+
+		img_star?.setOnClickListener {
+			clickStarsNote()
+		}
+	}
+
+	@SuppressLint("InflateParams")
+	private fun clickStarsNote() {
+		if (mediaNotas > 0) {
+			val builder = AlertDialog.Builder(requireActivity())
+			val inflater = requireActivity().layoutInflater
+			val layout = inflater.inflate(R.layout.layout_notas, null)
+
+			imdbDd?.let { imdb ->
+				imdb.imdbRating?.let {
+					(layout
+						?.findViewById<View>(R.id.nota_imdb) as TextView).text =
+						String.format(getString(R.string.bar_ten), it)
+				}
+
+				imdb.metascore?.let {
+					if (!it.contains("N/A"))
+						(layout.findViewById<View>(R.id.nota_metacritic) as TextView).text =
+							String.format(getString(R.string.bar_hundred), it)
+				}
+
+				imdb.tomatoRating?.let {
+					if (!it.contains("N/A", true))
+						(layout.findViewById<View>(R.id.nota_tomatoes) as TextView).text =
+							String.format(getString(R.string.bar_ten), it)
+				}
+			}
+
+			series.voteAverage?.let {
+				if (!it.equals(0.0))
+					(layout?.findViewById<View>(R.id.nota_tmdb) as TextView).text =
+						String.format(getString(R.string.bar_ten), it)
+			}
+
+			layout.findViewById<View>(R.id.image_metacritic).setOnClickListener {
+				imdbDd?.let {
+					val nome = it.title.replace(" ", "-").toLowerCase(Locale.ROOT).removerAcentos()
+					val url = "$METACRITICTV$nome"
+					startActivity(Intent(activity, Site::class.java).apply {
+						putExtra(Constant.SITE, url)
+					})
+				}
+			}
+
+			layout.findViewById<View>(R.id.image_tomatoes).setOnClickListener {
+				imdbDd?.let {
+					val nome = it.title.replace(" ", "_").toLowerCase(Locale.ROOT).removerAcentos()
+					startActivity(Intent(activity, Site::class.java).apply {
+						putExtra(Constant.SITE, "$ROTTENTOMATOESTV$nome")
+					})
+				}
+			}
+
+			layout.findViewById<View>(R.id.image_imdb).setOnClickListener {
+				startActivity(Intent(activity, Site::class.java).apply {
+					putExtra(Constant.SITE, "$IMDB${imdbDd?.imdbID}")
+				})
+			}
+
+			layout.findViewById<View>(R.id.image_tmdb).setOnClickListener {
+				startActivity(Intent(activity, Site::class.java).apply {
+					putExtra(Constant.SITE, "$BASEMOVIEDB_TV${series.id!!}")
+				})
+			}
+
+			builder.setView(layout)
+			builder.show()
+		} else {
+			snack(
+				requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu),
+				getString(R.string.no_vote)
+			)
+		}
+	}
+
+	private fun isSeguindo(auth: Boolean) {
+		if (!auth) setStatusButton()
+	}
+
+	private fun fillAdapter(dataSnapshot: DataSnapshot) {
+		if (dataSnapshot.exists()) {
+			try {
+				if (view != null && isInitAdapter()) {
+					userTvshow = dataSnapshot.getValue(UserTvshow::class.java)
+					(recyclerViewTemporada?.adapter as TemporadasAdapter).addUserTvShow(userTvshow!!)
+				}
+			} catch (e: Exception) {
+				requireActivity().makeToast(R.string.ops_seguir_novamente)
+			}
+		}
+		progressBarTemporada?.gone()
+	}
+
+	private fun isInitAdapter() = recyclerViewTemporada?.adapter != null
+
+	private fun setStatus() {
+		series.status?.let {
+			status.setTextColor(color)
+
+			val tradutor = PreferenceManager.getDefaultSharedPreferences(activity)
+				.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true)
+			if (tradutor) {
+				when (it) {
+					"Returning Series" -> status?.setText(R.string.returnin_series)
+					"Ended" -> status!!.setText(R.string.ended)
+					"Canceled" -> status?.setText(R.string.canceled)
+					"In Production" -> status?.setText(in_production)
+					else -> status?.text = it
+				}
+			} else {
+				status?.text = it
+			}
+		}
+	}
+
+	private fun setStatusButton() {
+		seguir?.isEnabled = false
+		val tradutor = PreferenceManager.getDefaultSharedPreferences(activity)
+			.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true)
+		if (tradutor) {
+			seguir?.text = resources.getText(R.string.sem_login)
+		} else {
+			seguir?.text = series.status
+		}
+	}
+
+	private fun setTemporada() {
+		if (series.numberOfSeasons!! > 0) {
+			temporadas?.text = series.numberOfSeasons.toString()
+		}
+	}
+
+	private fun onClickListener(): TemporadasOnClickListener {
+		return object : TemporadasOnClickListener {
+			override fun onClickCheckTemporada(view: View, position: Int) {
+				changeEps(position)
+			}
+		}
+	}
+
+	private fun isVisto(position: Int): Boolean {
+		return if (userTvshow?.seasons != null) {
+			if (userTvshow?.seasons?.getOrNull(position) != null) {
+				return userTvshow?.seasons?.get(position)?.isVisto ?: false
+			} else {
+				false
+			}
+		} else {
+			false
+		}
+	}
+
+	private fun setStatusEps(position: Int, status: Boolean) {
+		if (userTvshow != null) {
+			if (userTvshow?.seasons?.get(position)?.userEps != null)
+				for (i in 0 until userTvshow?.seasons?.get(position)?.userEps?.size!!) {
+					userTvshow?.seasons?.get(position)?.userEps?.get(position)?.isAssistido = status
+				}
+		}
+	}
+
+	private fun changeEps(position: Int) {
+		GlobalScope.launch {
+			val season: UserSeasons = withContext(Dispatchers.Default) {
+				Api(requireContext()).getTvSeasons(id = series.id, id_season = position)
+			}.fillUserTvshow(userTvshow?.seasons?.find { it.id == position }, !isVisto(position))
+
+			val childUpdates = HashMap<String, Any>()
+			childUpdates["${series.id}/desatualizada"] = true
+			childUpdates["${series.id}/$SEASONS/$position"] = season
+			model.fillSeason(childUpdates)
+		}
+	}
+
+	private fun onClickSeguir(): OnClickListener {
+		return OnClickListener { view ->
+			if (view != null) {
+				progressBarTemporada =
+					view.rootView?.findViewById<View>(R.id.progressBarTemporadas) as ProgressBar
+				progressBarTemporada?.visible()
+			}
+
+			model.setFallow(series.id,
+				add = {
+					it.child("${series.id}")
+						.setValue(setUserTvShow(series))
+						.addOnCompleteListener { task ->
+							if (task.isSuccessful) {
+								seguir?.setText(R.string.seguindo)
+							} else {
+								requireActivity().makeToast(R.string.erro_seguir)
+							}
+						}
+				}, remove = {
+					AlertDialog.Builder(context!!)
+						.setTitle(R.string.title_delete)
+						.setMessage(R.string.msg_parar_seguir)
+						.setNegativeButton(R.string.no, null)
+						.setOnDismissListener { progressBarTemporada?.visibility = View.GONE }
+						.setPositiveButton(R.string.ok) { _, _ ->
+							it.child("${series.id}")
+								.removeValue()
+								.addOnCompleteListener { task ->
+									if (task.isSuccessful) {
+										seguir?.setText(R.string.seguir)
+									} else {
+										requireActivity().makeToast(R.string.erro_seguir)
+									}
+								}
+							progressBarTemporada?.visibility = View.GONE
+						}.create().show()
+				})
+
+		}
+	}
+
+	override fun onDestroy() {
+		super.onDestroy()
+		model.destroy()
+	}
+
+	private fun setSinopse() {
+
+		if (series.overview.isNullOrBlank()) {
+			descricao.text = getString(R.string.sem_sinopse)
+		} else {
+			descricao.text = series.overview
+		}
+	}
+
+	private fun setAnimacao() {
+		AnimatorSet().apply {
+			playTogether(
+				ObjectAnimator.ofFloat(img_star, View.ALPHA, 0.0f, 1.0f).setDuration(2000),
+				ObjectAnimator.ofFloat(voto_media, View.ALPHA, 0.0f, 1.0f).setDuration(2300),
+				ObjectAnimator.ofFloat(icon_site, View.ALPHA, 0.0f, 1.0f).setDuration(3000)
+			)
+		}.start()
+	}
+
+	private fun setPoster() {
+		img_poster?.setPicasso(series.posterPath, 4, img_erro = R.drawable.poster_empty)
+		val posters = series.images?.posters
+
+		img_poster?.setOnClickListener {
+			if (posters != null && posters.isNotEmpty()) {
+				val intent = Intent(context, PosterGridActivity::class.java).apply {
+					putExtra(Constant.POSTER, posters as Serializable)
+					putExtra(Constant.NAME, series.name)
+				}
+				val compat = ActivityOptionsCompat
+					.makeSceneTransitionAnimation(
+						requireActivity(),
+						img_poster,
+						getString(R.string.poster_transition)
+					)
+				ActivityCompat.startActivity(requireActivity(), intent, compat.toBundle())
+			} else {
+				requireActivity().makeToast(R.string.poster_empty)
+			}
+		}
+
+		card_poster.setCardBackgroundColor(color)
+	}
+
+	private fun setProdutora() {
+		series.productionCompanies?.let {
+			val production = series.productionCompanies?.getOrNull(0)
+			produtora?.setTextColor(color)
+			if (production?.name.isNullOrBlank()) {
+				produtora.gone()
+				production_label.gone()
+			} else {
+				produtora?.text = production?.name
+			}
+
+			produtora?.setOnClickListener {
+				if (production != null) {
+					context?.startActivity(Intent(context, ProdutoraActivity::class.java).apply {
+						putExtra(Constant.PRODUTORA_ID, production.id)
+					})
+				} else {
+					Toast.makeText(
+						context,
+						getString(R.string.sem_informacao_company),
+						Toast.LENGTH_SHORT
+					).show()
+				}
+			}
+		}
+	}
+
+	private fun setCategoria() {
+		categoria_tvshow?.text = StringBuilder().apply {
+			series.genres?.forEachIndexed { index, it ->
+				if (index != 0) append(" | ")
+				append("${it?.name}")
+			}
+		}.toString()
+	}
+
+	private fun setVotoMedia() {
+		mediaNotas = getMedia()
+		if (mediaNotas > 0) {
+			img_star?.setImageResource(R.drawable.icon_star)
+			val formatter = DecimalFormat("0.0")
+			formatter.format(mediaNotas)?.let {
+				voto_media?.text = it
+				frame_nota.contentDescription = it
+			}
+		} else {
+			img_star?.setImageResource(R.drawable.icon_star_off)
+			voto_media?.setText(R.string.valor_zero)
+			voto_media?.setTextColor(ContextCompat.getColor(context!!, R.color.blue))
+		}
+	}
+
+	private fun setTitulo() {
+		series.name?.let {
+			titulo_tvshow?.text = it
+		}
+	}
+
+	private fun setOriginalTitle() {
+		if (series.originalName != null) {
+			original_title?.text = series.originalName
+		} else {
+			original_title?.text = getString(R.string.original_title)
+		}
+	}
+
+	private fun setProductionCountries() {
+		series.originCountry?.getOrNull(0)?.let {
+			production_countries?.text = it
+		}
+	}
+
+	private fun setPopularity() {
+		// Todo refazer metodo
+		if (series.popularity != null) {
+			ValueAnimator.ofFloat(1.0f, series.popularity!!.toFloat()).apply {
+				addUpdateListener { valueAnimator ->
+					val valor = valueAnimator.animatedValue as Float
+					var popularidade = valor.toString()
+
+					if (popularidade[0] == '0' && isAdded) {
+						popularidade = popularidade.substring(2, popularidade.length)
+						popularity?.text = "$popularidade  ${getString(mil)}"
+					} else {
+
+						val posicao = popularidade.indexOf(".") + 2
+						popularidade = popularidade.substring(0, posicao)
+						var milhoes = ""
+						if (isAdded) {
+							milhoes = getString(R.string.milhoes)
+						}
+						popularidade += (" $milhoes")
+						popularity?.text = popularidade
+					}
+				}
+				duration = 900
+				setTarget(popularity)
+			}.start()
+		}
+	}
+
+	private fun setElenco() {
+
+		textview_elenco?.setOnClickListener {
+			startActivity(Intent(context, ElencoActivity::class.java).apply {
+				putExtra(Constant.ELENCO, series.credits?.cast as Serializable)
+				putExtra(Constant.NAME, series.name)
+			})
+		}
+
+		if (series.credits?.cast?.isNotEmpty()!!) {
+			textview_elenco?.visible()
+			recycle_tvshow_elenco.patternRecyler(true).apply {
+				adapter = CastAdapter(requireActivity(), series.credits?.cast ?: listOf())
+				setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
+			}
+		} else {
+			textview_elenco.gone()
+			recycle_tvshow_elenco.apply {
+				layoutParams.height = 1
+				importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
+				isFocusable = false
+			}
+		}
+	}
+
+	private fun setProducao() {
+
+		textview_crews?.setOnClickListener {
+			startActivity(Intent(context, CrewsActivity::class.java).apply {
+				putExtra(Constant.PRODUCAO, series.credits?.crew as Serializable)
+				putExtra(Constant.NAME, series.name)
+			})
+		}
+
+		if (series.credits?.crew?.isNotEmpty()!!) {
+			textview_crews?.visibility = View.VISIBLE
+			recycle_tvshow_producao.patternRecyler(true).apply {
+				adapter = CrewAdapter(requireActivity(), series.credits?.crew ?: listOf())
+				setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
+			}
+		} else {
+			textview_crews.gone()
+			recycle_tvshow_producao.minHeight()
+		}
+	}
+
+	private fun setSimilares() {
+		text_similares.setOnClickListener {
+			startActivity(Intent(context, SimilaresActivity::class.java).apply {
+				putExtra(Constant.SIMILARES_TVSHOW, series.similar?.results as Serializable)
+				putExtra(Constant.NAME, series.name)
+			})
+		}
+
+		if (series.similar?.results?.isNotEmpty()!!) {
+			recycle_tvshow_similares.patternRecyler().apply {
+				adapter = SimilaresSerieAdapter(requireActivity(), series.similar?.results)
+				setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
+			}
+			text_similares.visible()
+		} else {
+			text_similares.gone()
+			recycle_tvshow_similares.minHeight()
+		}
+	}
+
+	private fun setLancamento() {
+		var inicio = ""
+		if (series.firstAirDate != null) {
+			inicio = series.firstAirDate?.subSequence(0, 4) as String
+		}
+		if (series.lastAirDate != null) {
+			lancamento?.text = "$inicio - ${series.lastAirDate?.substring(0, 4)}"
+		} else {
+			lancamento?.text = getString(R.string.nao_informado)
+		}
+	}
+
+	private fun setTrailer() {
+		if (series.videos?.results?.isNotEmpty()!!) {
+			recycle_tvshow_trailer.apply {
+				itemAnimator = DefaultItemAnimator()
+				layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+				adapter = TrailerAdapter(series.videos?.results, series.overview ?: "")
+				setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
+			}
+		} else {
+			recycle_tvshow_trailer.minHeight()
+		}
+	}
+
+	private fun setHome() {
+		if (series.homepage != null) {
+			if (series.homepage?.length!! > 5) {
+				icon_site?.setImageResource(R.drawable.site_on)
+			} else {
+				icon_site?.setImageResource(R.drawable.site_off)
+			}
+		} else {
+			icon_site?.setImageResource(R.drawable.site_off)
+		}
+	}
+
+	fun getImdb() {
+		subscriptions.add(Api(context!!).getOmdbpi(series.external_ids?.imdbId)
+			.subscribeOn(Schedulers.io())
+			.observeOn(AndroidSchedulers.mainThread())
+			.subscribe(object : rx.Observer<Imdb> {
+				override fun onCompleted() {
+				}
+
+				override fun onError(e: Throwable) {
+					requireActivity().makeToast(R.string.ops)
+				}
+
+				override fun onNext(imdb: Imdb) {
+					imdbDd = imdb
+				}
+			})
+		)
+	}
+
+	private fun getMedia(): Float {
+		// Todo - refazer metodo
+		var imdb = 0f
+		var tmdb = 0f
+		var metascore = 0f
+		var tomato = 0f
+		var tamanho = 0
+
+		if (series.voteAverage != null)
+			if (series.voteAverage!! > 0) {
+				try {
+					tmdb = series.voteAverage!!.toFloat()
+					tamanho++
+				} catch (e: Exception) {
+				}
+			}
+
+		if (imdbDd != null) {
+
+			if (imdbDd?.imdbRating.isNullOrBlank()) {
+				try {
+					imdb = java.lang.Float.parseFloat(imdbDd?.imdbRating!!)
+					tamanho++
+				} catch (e: Exception) {
+				}
+			}
+
+			if (imdbDd?.metascore.isNullOrEmpty()) {
+
+				try {
+					val meta = java.lang.Float.parseFloat(imdbDd?.metascore!!)
+					val nota = meta / 10
+					metascore = nota
+					tamanho++
+				} catch (e: Exception) {
+				}
+			}
+
+			if (imdbDd?.tomatoRating.isNullOrEmpty()) {
+
+				try {
+					tomato = java.lang.Float.parseFloat(imdbDd?.tomatoRating!!)
+					tamanho++
+				} catch (e: Exception) {
+				}
+			}
+		}
+		return (tmdb + imdb + metascore + tomato) / tamanho
+	}
 }
