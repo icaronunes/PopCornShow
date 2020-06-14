@@ -158,12 +158,12 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                 is Success -> {
                     streamview_tv.fillStream(series?.originalName?.getNameTypeReel()
                         ?: "", it.result.sources)
-                    setAnimated()
                 }
                 is Failure -> {
                     streamview_tv.error = true
                 }
             }
+	        setAnimated()
         })
     }
 
@@ -177,22 +177,6 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
             fab_menu.visible()
         } else {
             fab_menu.gone()
-        }
-    }
-
-    private fun getDateReel(idReel: String = getIdStream()) {
-        GlobalScope.launch(Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, erro ->
-            Handler(Looper.getMainLooper()).post {
-                streamview_tv.error = true
-                setAnimated()
-            }
-        }) {
-            reelGood = withContext(Dispatchers.Default) {
-                Api(this@TvShowActivity).getAvaliableShow(idReel)
-            }
-            streamview_tv.fillStream(series?.originalName?.getNameTypeReel()
-                ?: "", reelGood?.sources!!)
-            setAnimated()
         }
     }
 

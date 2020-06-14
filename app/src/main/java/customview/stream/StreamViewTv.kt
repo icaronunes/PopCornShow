@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.bottom_streaming.view.title_streaming
 import kotlinx.android.synthetic.main.bottom_streaming_tv.view.stream_error
 import kotlinx.android.synthetic.main.bottom_streaming_tv.view.tvRc
 import utils.gone
+import utils.patternRecyler
 import utils.visible
 import kotlin.properties.Delegates
 
@@ -87,9 +88,7 @@ class StreamViewTv : FrameLayout {
         } else {
             error = false
             tvRc.apply {
-                setHasFixedSize(true)
-                itemAnimator = DefaultItemAnimator()
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                patternRecyler(false)
                 adapter = StreamTvDelegatesAdapter(true, titleMedia = name).apply {
                     addStream(listStream.map {
                         Availability().apply {
@@ -118,7 +117,7 @@ class StreamViewTv : FrameLayout {
         title_streaming.text = title
     }
 
-    private var labelStream: String? by Delegates.observable(context.getString(R.string.stream)) { _, _, title ->
+    private var labelStream: String by Delegates.observable(context.getString(R.string.stream)) { _, _, title ->
         label_stream.text = title
         invalidate()
         requestLayout()

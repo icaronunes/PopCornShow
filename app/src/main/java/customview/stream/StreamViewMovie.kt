@@ -151,19 +151,19 @@ class StreamViewMovie : FrameLayout {
         title_streaming.text = title
     }
 
-    private var labelStream: String? by Delegates.observable(context.getString(R.string.stream)) { _, _, title ->
+    private var labelStream: String? by Delegates.observable<String?>(context.getString(R.string.stream)) { _, _, title ->
         label_stream.text = title
         invalidate()
         requestLayout()
     }
 
-    private var labelRent: String? by Delegates.observable(context.getString(R.string.rent)) { _, _, title ->
+    private var labelRent: String? by Delegates.observable<String?>(context.getString(R.string.rent)) { _, _, title ->
         label_rent.text = title
         invalidate()
         requestLayout()
     }
 
-    private var labelBay: String? by Delegates.observable(context.getString(R.string.purchase)) { _, _, title ->
+    private var labelBay: String? by Delegates.observable<String?>(context.getString(R.string.purchase)) { _, _, title ->
         label_bay.text = title
         invalidate()
         requestLayout()

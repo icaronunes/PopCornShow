@@ -15,62 +15,64 @@ import kotlin.properties.Delegates
 
 class SourceItem : FrameLayout {
 
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    )
+	constructor(context: Context) : super(context)
+	constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+	constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+		context,
+		attrs,
+		defStyleAttr
+	)
 
-    init {
-        inflate(context, R.layout.sources_item_layout, this)
-    }
+	init {
+		inflate(context, R.layout.sources_item_layout, this)
+	}
 
-    var sourceSd: String by Delegates.observable<String>("") { _, old: String, new: String ->
-        if (new.isNotBlank() && new != "SD: 0.0") {
-            source_sd.apply {
-                text = new
-            }
-        } else {
-            source_sd.text = "SD: --"
-        }
-    }
+	var sourceSd: String by Delegates.observable<String>("") { _, old: String, new: String ->
+		if (new.isNotBlank() && new != "SD: 0.0") {
+			source_sd.apply {
+				text = new
+			}
+		} else {
+			source_sd.text = "SD: --"
+		}
+	}
 
-    var sourceHd: String by Delegates.observable("") { _, old: String, new: String ->
-        if (new.isNotBlank() && new != "HD: 0.0") {
-            source_hd.apply {
-                text = new
-            }
-        } else {
-            source_hd.text = "HD: --"
-        }
-    }
+	var sourceHd: String by Delegates.observable("") { _, old: String, new: String ->
+		if (new.isNotBlank() && new != "HD: 0.0") {
+			source_hd.apply {
+				text = new
+			}
+		} else {
+			source_hd.text = "HD: --"
+		}
+	}
 
-    var iconSource: Drawable? by Delegates.observable<Drawable?>(null) { _, _, newIcon ->
-        icon_source.setImageDrawable(newIcon)
-    }
+	var iconSource: Drawable? by Delegates.observable<Drawable?>(null) { _, _, newIcon ->
+		icon_source.setImageDrawable(newIcon)
+	}
 
-    fun callAppOrWeb(
-        availability: Availability?,
-        packagerCall: String,
-        callActivity: (Availability?) -> Unit
-    ) {
-        val pack = if(packagerCall.isNotEmpty()) context.packageManager.getLaunchIntentForPackage(packagerCall) else null
-        if (pack != null) {
-            try {
-                val intent = Intent(Intent.ACTION_MAIN)
-                intent.setClassName(
-                    pack.component.packageName,
-                    pack.component.className
-                )
-                intent.data = Uri.parse(availability?.sourceData!!.links!!.android)
-                context.startActivity(intent)
-            } catch (e: Exception) {
-                callActivity(availability)
-            }
-        } else {
-            callActivity(availability)
-        }
-    }
+	fun callAppOrWeb(
+		availability: Availability?,
+		packagerCall: String,
+		callActivity: (Availability?) -> Unit
+	) {
+		val pack = if (packagerCall.isNotEmpty()) context.packageManager.getLaunchIntentForPackage(
+			packagerCall
+		) else null
+		if (pack != null) {
+			try {
+				val intent = Intent(Intent.ACTION_MAIN)
+				intent.setClassName(
+					pack.component?.packageName ?: "",
+					pack.component?.className ?: ""
+				)
+				intent.data = Uri.parse(availability?.sourceData!!.links!!.android)
+				context.startActivity(intent)
+			} catch (e: Exception) {
+				callActivity(availability)
+			}
+		} else {
+			callActivity(availability)
+		}
+	}
 }

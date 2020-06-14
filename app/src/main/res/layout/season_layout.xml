@@ -21,7 +21,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/trade_size_dp_5"
-            android:layout_marginTop="@dimen/trade_size_dp_12"
+            android:layout_marginTop="@dimen/trade_size_dp_16"
             android:focusable="false"
             android:importantForAccessibility="no"
             android:numColumns="auto_fit"
