@@ -19,13 +19,13 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.firebase.firebase-perf'
 
 
-android {\
+android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "br.com.icaro.filme"
-        minSdkVersion 14
+        minSdkVersion    14
         targetSdkVersion 28
         versionCode 84
         versionName "8.4"
@@ -114,6 +114,15 @@ android {\
     dexOptions {
         jumboMode true
         javaMaxHeapSize "4g"
+    }
+
+    compileOptions {
+        sourceCompatibility "1.8"
+        targetCompatibility "1.8"
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
 }
