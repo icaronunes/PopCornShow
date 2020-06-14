@@ -813,7 +813,9 @@ class Api(val context: Context) : ApiSingleton() {
 
     suspend fun getAvaliableShow(id: String): ReelGoodTv {
         return suspendCancellableCoroutine { continuation ->
-            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
+            val client = OkHttpClient.Builder()
+                .addInterceptor(LoggingInterceptor())
+                  .build()
             val request = Request.Builder()
                 .url("https://api.reelgood.com/v1/show/$id?sources=amazon_prime%2Chbo%2Chulu_plus%2Cnetflix%2Cstarz%2Cgoogle_plus&free=false")
                 .get()
@@ -830,7 +832,7 @@ class Api(val context: Context) : ApiSingleton() {
                             val lista = Gson().fromJson(json, ReelGoodTv::class.java)
                             continuation.resume(lista)
                         } else {
-                            continuation.resumeWithException(Exception(response.message))
+                            continuation.resumeWithException(Exception("Failure"))
                         }
                     } catch (ex: Exception) {
                         continuation.resumeWithException(ex)
