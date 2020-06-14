@@ -34,19 +34,19 @@ open class ApiSingleton {
                 }
 				Http2Reader.logger.info("Sending request ${request.url} with Method - ${request.method}")
 				when (response.code) {
-					400 -> {
-						//Show Bad Request Error Message
-					}
-					401 -> {
-						//Show UnauthorizedError Message
-					}
-
-					403 -> {
-						//Show Forbidden Message
-					}
-
-					404 -> {
-						//Show NotFound Message
+					in 400..499 -> {
+						val jsonObject = JSONObject()
+						try {
+							jsonObject.put("code", response.code)
+							jsonObject.put("status", "Failure")
+							jsonObject.put("message", "Failure")
+							val contentType: MediaType? = response.body!!.contentType()
+							val body: ResponseBody =
+								ResponseBody.create(contentType, jsonObject.toString())
+							Http2Reader.logger.info(body.string())
+						} catch (e: JSONException) {
+							e.printStackTrace()
+						}
 					}
 					200 -> {
 						val jsonObject = JSONObject()
