@@ -6,8 +6,6 @@ import android.animation.ObjectAnimator
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -50,12 +48,8 @@ import kotlinx.android.synthetic.main.tvserie_activity.streamview_tv
 import kotlinx.android.synthetic.main.tvserie_activity.tabLayout
 import kotlinx.android.synthetic.main.tvserie_activity.toolbar
 import kotlinx.android.synthetic.main.tvserie_activity.viewPager_tvshow
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import rx.schedulers.Schedulers
 import tvshow.TvShowAdapter
 import tvshow.viewmodel.TvShowViewModel
@@ -80,7 +74,6 @@ import java.util.Locale
 class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : BaseActivityAb() {
 
     private val EMPTY_RATED: Float = 0.0f
-    var reelGood: ReelGoodTv? = null
     private lateinit var model: TvShowViewModel
     private var idTvshow: Int = 0
     private var idReel: String = ""
@@ -244,6 +237,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 
     override fun onDestroy() {
         model.destroy()
+	    Log.d(this.localClassName, "onDestroy")
         super.onDestroy()
     }
 

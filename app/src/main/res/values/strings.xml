@@ -234,6 +234,7 @@
     <string name="beta" translatable="false">**beta</string>
     <string name="valid_us">Valid for USA</string>
     <string name="wiki">Wikipidia</string>
+    <string name="ep_nao_lancado">Epsode not yet released</string>
 
 
 </resources>

@@ -12,7 +12,7 @@ fun TvSeasons.fillUserTvshow(userTvshow: UserSeasons?, status: Boolean): UserSea
     }
 
     val userEps = this.episodes?.map {
-        findEp(it, userTvshow) ?: UserEp(it?.id!!, it.seasonNumber, it.episodeNumber!!, status, 0.0f, it.name, it.airDate)
+        findEp(it, userTvshow) ?: UserEp(it.id!!, it.seasonNumber, it.episodeNumber!!, status, 0.0f, it.name, it.airDate)
     }?.toMutableList()
 
     return UserSeasons(id = id!!, seasonNumber = seasonNumber!!, isVisto = status, userEps = userEps)
@@ -40,7 +40,7 @@ data class TvSeasons(
     val id: Int? = null,
 
     @field:SerializedName("episodes")
-    val episodes: List<EpisodesItem?>? = null,
+    val episodes: List<EpisodesItem>? = null,
 
     @field:SerializedName("poster_path")
     val posterPath: String? = null

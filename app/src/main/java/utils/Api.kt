@@ -930,10 +930,32 @@ class Api(val context: Context) : ApiSingleton() {
         }
     }
 
-    suspend fun ratedMovieGuest(id: Int, rated: Float,  guestSession: GuestSession, type: String = "movie"): Any { // Todo Validar erros
+    suspend fun ratedMediaGuest(id: Int, rated: Float, guestSession: GuestSession, type: String = "movie"): Any {
         return suspendCancellableCoroutine { cont ->
 
             executeCall(url = "https://api.themoviedb.org/3/$type/$id/rating?api_key=${Config.TMDB_API_KEY}&guest_session_id=${guestSession.guestSessionId}",
+                postRequest = RequestBody.create("application/json".toMediaTypeOrNull(), "{\"value\":$rated}"),
+                func = object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        cont.resumeWithException(e)
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        cont.resume(Any())
+                    }
+                })
+        }
+    }
+
+    suspend fun ratedTvEpsodeeGuest(
+        id: Int,
+        seasonNumber: Int,
+        episodeNumber: Int,
+        rated: Float,
+        idGuest: String
+    ): Any {
+        return suspendCancellableCoroutine { cont ->
+            executeCall(url = "${baseUrl3}tv/$id/season/$seasonNumber/episode/$episodeNumber/rating?api_key=${Config.TMDB_API_KEY}&guest_session_id=$idGuest",
                 postRequest = RequestBody.create("application/json".toMediaTypeOrNull(), "{\"value\":$rated}"),
                 func = object : Callback {
                     override fun onFailure(call: Call, e: IOException) {

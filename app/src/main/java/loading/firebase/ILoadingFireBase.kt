@@ -22,4 +22,5 @@ interface ILoadingFireBase {
 
     fun setEpWatched(fallow: MutableLiveData<DataSnapshot>, add: (DatabaseReference) -> Unit, remove: (DatabaseReference) -> Unit, id: Int)
     fun fillSeason(_watch: MutableLiveData<DataSnapshot>, season: HashMap<String, Any>)
+    fun fillSeasons(idTvshow: Int, seasonNumber: Int, _seasons: MutableLiveData<DataSnapshot>)
 }

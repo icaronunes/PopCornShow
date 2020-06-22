@@ -165,7 +165,7 @@
             >
 
         <RatingBar
-            android:id="@+id/epsodio_detalhes_progress"
+            android:id="@+id/epsodio_star"
             style="@style/CustomRatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

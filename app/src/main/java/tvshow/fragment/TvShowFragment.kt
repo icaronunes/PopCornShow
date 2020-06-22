@@ -7,6 +7,7 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -87,7 +88,6 @@ import site.Site
 import tvshow.TemporadasAdapter
 import tvshow.activity.TvShowActivity
 import tvshow.adapter.SimilaresSerieAdapter
-import tvshow.interfaces.TemporadasOnClickListener
 import tvshow.viewmodel.TvShowViewModel
 import utils.Api
 import utils.ConstFirebase.SEASONS
@@ -141,12 +141,16 @@ class TvShowFragment : FragmentBase() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		model = (requireActivity() as TvShowActivity).getModelView()
 		arguments.let {
 			tipo = arguments?.getInt(Constant.ABA)!!
 			series = arguments?.getSerializable(Constant.SERIE) as Tvshow
 			color = arguments?.getInt(Constant.COLOR_TOP)!!
 		}
+	}
+
+	override fun onAttach(context: Context) {
+		super.onAttach(context)
+		model = (requireActivity() as TvShowActivity).getModelView()
 	}
 
 	private fun observerAuth() {
@@ -232,8 +236,10 @@ class TvShowFragment : FragmentBase() {
 
     private fun initAdapter() {
 		recyclerViewTemporada?.adapter =
-			TemporadasAdapter(requireActivity(), series, onClickListener(), color)
-	}
+			TemporadasAdapter(requireActivity(), series, color) { position, numberSeason ->
+				changeEps(position = position, numberSeason =  numberSeason)
+			}
+    }
 
 	private fun getViewTemporadas(inflater: LayoutInflater, container: ViewGroup?): View {
 		return inflater.inflate(layout.temporadas, container, false).apply {
@@ -452,14 +458,6 @@ class TvShowFragment : FragmentBase() {
 		}
 	}
 
-	private fun onClickListener(): TemporadasOnClickListener {
-		return object : TemporadasOnClickListener {
-			override fun onClickCheckTemporada(view: View, position: Int) {
-				changeEps(position)
-			}
-		}
-	}
-
 	private fun isVisto(position: Int): Boolean {
 		return if (userTvshow?.seasons != null) {
 			if (userTvshow?.seasons?.getOrNull(position) != null) {
@@ -481,10 +479,10 @@ class TvShowFragment : FragmentBase() {
 		}
 	}
 
-	private fun changeEps(position: Int) {
+	private fun changeEps(position: Int, numberSeason: Int) {
 		GlobalScope.launch {
 			val season: UserSeasons = withContext(Dispatchers.Default) {
-				Api(requireContext()).getTvSeasons(id = series.id, id_season = position)
+				Api(requireContext()).getTvSeasons(id = series.id, id_season = numberSeason)
 			}.fillUserTvshow(userTvshow?.seasons?.find { it.id == position }, !isVisto(position))
 
 			val childUpdates = HashMap<String, Any>()
@@ -514,7 +512,7 @@ class TvShowFragment : FragmentBase() {
 							}
 						}
 				}, remove = {
-					AlertDialog.Builder(context!!)
+					AlertDialog.Builder(requireContext())
 						.setTitle(R.string.title_delete)
 						.setMessage(R.string.msg_parar_seguir)
 						.setNegativeButton(R.string.no, null)
@@ -633,7 +631,7 @@ class TvShowFragment : FragmentBase() {
 		} else {
 			img_star?.setImageResource(R.drawable.icon_star_off)
 			voto_media?.setText(R.string.valor_zero)
-			voto_media?.setTextColor(ContextCompat.getColor(context!!, R.color.blue))
+			voto_media?.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
 		}
 	}
 
@@ -689,7 +687,7 @@ class TvShowFragment : FragmentBase() {
 	private fun setElenco() {
 
 		textview_elenco?.setOnClickListener {
-			startActivity(Intent(context, ElencoActivity::class.java).apply {
+			startActivity(Intent(requireContext(), ElencoActivity::class.java).apply {
 				putExtra(Constant.ELENCO, series.credits?.cast as Serializable)
 				putExtra(Constant.NAME, series.name)
 			})
@@ -714,7 +712,7 @@ class TvShowFragment : FragmentBase() {
 	private fun setProducao() {
 
 		textview_crews?.setOnClickListener {
-			startActivity(Intent(context, CrewsActivity::class.java).apply {
+			startActivity(Intent(requireContext(), CrewsActivity::class.java).apply {
 				putExtra(Constant.PRODUCAO, series.credits?.crew as Serializable)
 				putExtra(Constant.NAME, series.name)
 			})
@@ -734,7 +732,7 @@ class TvShowFragment : FragmentBase() {
 
 	private fun setSimilares() {
 		text_similares.setOnClickListener {
-			startActivity(Intent(context, SimilaresActivity::class.java).apply {
+			startActivity(Intent(requireContext(), SimilaresActivity::class.java).apply {
 				putExtra(Constant.SIMILARES_TVSHOW, series.similar?.results as Serializable)
 				putExtra(Constant.NAME, series.name)
 			})
@@ -790,7 +788,7 @@ class TvShowFragment : FragmentBase() {
 	}
 
 	fun getImdb() {
-		subscriptions.add(Api(context!!).getOmdbpi(series.external_ids?.imdbId)
+		subscriptions.add(Api(requireContext()).getOmdbpi(series.external_ids?.imdbId)
 			.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())
 			.subscribe(object : rx.Observer<Imdb> {

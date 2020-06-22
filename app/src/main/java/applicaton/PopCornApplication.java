@@ -24,8 +24,6 @@ import onsignal.CustomNotificationReceivedHandler;
 public class PopCornApplication extends MultiDexApplication {
 
     private static PopCornApplication instance = null;
-    private Bus bus = new Bus();
-
     public static PopCornApplication getInstance() {
         return instance;
     }
@@ -69,10 +67,6 @@ public class PopCornApplication extends MultiDexApplication {
     @Override
     public void onTerminate() {
         super.onTerminate();
-    }
-
-    public Bus getBus() {
-        return bus;
     }
 
 }

@@ -17,6 +17,7 @@ class LoadingFirebase(type: String) : BaseFireBase(type), ILoadingFireBase {
     private lateinit var valueEventRated: ValueEventListener
     private lateinit var valueEventFavorite: ValueEventListener
     private lateinit var valueEventFallow: ValueEventListener
+    private lateinit var valueEventSeason: ValueEventListener
 
     override fun isAuth(live: MutableLiveData<Boolean>) {
         live.value = isAuth()
@@ -63,7 +64,7 @@ class LoadingFirebase(type: String) : BaseFireBase(type), ILoadingFireBase {
     override fun fillSeason(_fallow: MutableLiveData<DataSnapshot>, season: HashMap<String, Any>) {
         myFallow.updateChildren(season).addOnCompleteListener {
             it
-        }.addOnFailureListener {
+        }.addOnFailureListener {//TODO precisa disso?
             it
         }
     }
@@ -137,4 +138,33 @@ class LoadingFirebase(type: String) : BaseFireBase(type), ILoadingFireBase {
     override fun changeRated(add: (DatabaseReference) -> Unit, idMovie: Int) {
         add(myRated)
     }
+
+    override fun fillSeasons(idTvshow: Int, seasonNumber: Int, _seasons: MutableLiveData<DataSnapshot>) {
+        valueEventSeason = object : ValueEventListener {
+            override fun onCancelled(dataSnapshot: DatabaseError) {
+
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                _seasons.value = dataSnapshot
+            }
+        }
+
+        myFallow.child("$idTvshow").child("seasons").child("$seasonNumber")
+            .addValueEventListener(valueEventSeason)
+    }
+
+//    override fun changeEpWatch(idTvshow: Int, seasonNumber: Int, ) {
+//        val valueEventEp = object : ValueEventListener {
+//            override fun onCancelled(p0: DatabaseError) {
+//
+//            }
+//
+//            override fun onDataChange(p0: DataSnapshot) {
+//
+//            }
+//        }
+//        myFallow.child("$idTvshow").child("seasons").child("$seasonNumber")
+//
+//    }
 }

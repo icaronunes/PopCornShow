@@ -9,7 +9,9 @@ import applicaton.BaseViewModel.BaseRequest.Loading
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import domain.Imdb
+import domain.TvSeasons
 import domain.TvshowDB
+import domain.UserEp
 import domain.Videos
 import domain.reelgood.tvshow.ReelGoodTv
 import domain.tvshow.Tvshow
@@ -41,7 +43,11 @@ class TvShowViewModel(override val app: Application, activity: Activity, val api
     val videos: LiveData<BaseRequest<Videos>> = _videos
     private val _tvshow: MutableLiveData<BaseRequest<Tvshow>> = MutableLiveData()
     val tvshow: LiveData<BaseRequest<Tvshow>> = _tvshow
+    private val _tvSeason: MutableLiveData<BaseRequest<TvSeasons>> = MutableLiveData()
+    val tvSeason: LiveData<BaseRequest<TvSeasons>> = _tvSeason
     private val _real: MutableLiveData<BaseRequest<ReelGoodTv>> = MutableLiveData()
+    private val _seasons: MutableLiveData<DataSnapshot> = MutableLiveData()
+    val seasons: LiveData<DataSnapshot> = _seasons
     val real: LiveData<BaseRequest<ReelGoodTv>> = _real
 
     init {
@@ -84,6 +90,10 @@ class TvShowViewModel(override val app: Application, activity: Activity, val api
         loadingMedia.putRated(tvshowDB.id, tvshowDB.nota, "tv")
     }
 
+    fun setRatedTvShowOnTheMovieDB(epRated: UserEp) {
+        loadingMedia.putTvEpRated(epRated.id, epRated.seasonNumber, epRated.episodeNumber, epRated.nota)
+    }
+
     fun getRealGoodData(idReel: String) {
         loadingMedia.getDateReel(_realGood = _real, idReel = idReel)
     }
@@ -101,4 +111,7 @@ class TvShowViewModel(override val app: Application, activity: Activity, val api
     fun fillSeason(childUpdates: HashMap<String, Any>) {
         loadingFirebase.fillSeason(_fallow, childUpdates)
     }
+
+    fun getSeasonFire(idTvshow: Int, seasonNumber: Int) = loadingFirebase.fillSeasons(idTvshow, seasonNumber, _seasons)
+    fun getSeason(idTvshow: Int, seasonNumber: Int) = loadingMedia.getSeason(_tvSeason, idTvshow, seasonNumber)
 }

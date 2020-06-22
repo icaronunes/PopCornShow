@@ -22,7 +22,6 @@ import domain.tvshow.Tvshow
 import elenco.ElencoActivity
 import producao.CrewsActivity
 import temporada.TemporadaActivity
-import tvshow.interfaces.TemporadasOnClickListener
 import utils.Constant
 import utils.gone
 import utils.invisible
@@ -37,8 +36,8 @@ import utils.visible
 class TemporadasAdapter(
     val context: FragmentActivity,
     private val series: Tvshow,
-    private val onClickListener: TemporadasOnClickListener,
-    private val color: Int
+    private val color: Int,
+    private val changeEps: (position: Int, numberSeason: Int) -> Unit
 ) : RecyclerView.Adapter<TemporadasAdapter.HoldeSeason>() {
 
     private var fallow: Boolean = false
@@ -67,7 +66,7 @@ class TemporadasAdapter(
             data.text = seasonsItem.airDate?.parseDateShot() ?: ""
             itemView.setOnClickListener { onClickTemporada(adapterPosition, color) }
             popup.setOnClickListener { view -> showPopUp(view, seasonsItem.seasonNumber) }
-            btFallow.setOnClickListener { view -> onClickListener.onClickCheckTemporada(view, adapterPosition) }
+            btFallow.setOnClickListener { changeEps(adapterPosition, seasonsItem.seasonNumber) }
             handleIconFallow()
             handleReelGood(adapterPosition, this@HoldeSeason)
         }
