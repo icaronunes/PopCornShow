@@ -31,6 +31,7 @@ import domain.EpisodesItem
 import domain.TvSeasons
 import domain.UserEp
 import domain.UserSeasons
+import domain.fillUserTvshow
 import episodio.EpsodioActivity
 import kotlinx.android.synthetic.main.temporada_layout.recycleView_temporada
 import rx.subscriptions.CompositeSubscription
@@ -55,12 +56,11 @@ class TemporadaActivity(override var layout: Int = R.layout.temporada_layout) : 
 	private var nome_temporada: String? = null
 	private var serieId: Int = 0
 	private var color: Int = 0
-	private var tvSeason: TvSeasons? = null
+	private lateinit var tvSeason: TvSeasons
 	private var seguindo: Boolean = false
 	private var seasons: UserSeasons? = null
 	private var mAuth: FirebaseAuth? = null
 	private var myRef: DatabaseReference? = null
-	private var postListener: ValueEventListener? = null
 	private var subscription: CompositeSubscription? = null
 	private lateinit var model: TvShowViewModel
 
@@ -131,15 +131,13 @@ class TemporadaActivity(override var layout: Int = R.layout.temporada_layout) : 
 	}
 
 	override fun onClickVerTemporada(position: Int) {
-		model.watchEp(fillWatchEp(position)) //precisa receber tvshow para criar no firebase
+		model.watchEp(fillWatchEp(position))
 	}
 
 	private fun fillWatchEp(position: Int, watch: Boolean = true): HashMap<String, Any> {
 		return HashMap<String, Any>().also {
-
 			it["/visto"] = temporadaTodaAssistida(position)
-			it["/$serieId/seasons/$temporada_position/userEps/$position/assistido"] = watch
-
+			it["/$serieId/seasons/$temporada_position/userEps"] = tvSeason.fillUserTvshow(seasons, watch).userEps
 		}
 	}
 
@@ -432,22 +430,14 @@ class TemporadaActivity(override var layout: Int = R.layout.temporada_layout) : 
 
 	private fun setnotaIMDB(epRated: UserEp) {
 		model.setRatedTvShowOnTheMovieDB(epRated)
-//		val job = GlobalScope.launch(Dispatchers.IO) {
-//			try {
-//				FilmeService.ratedTvshowEpsodioGuest(
-//					serieId, seasons?.seasonNumber!!,
-//					seasons!!.userEps!![position].episodeNumber, ratingBar, applicationContext
-//				)
-//			} catch (ex: Exception) {
-//			}
-//		}
-//		job.cancel()
 	}
 
 	private fun temporadaTodaAssistida(position: Int): Boolean {
 
-		for (userEp in seasons!!.userEps!!) {
-			if (seasons!!.userEps!![position] != userEp) {
+		if(seasons?.userEps?.size!! > tvSeason.episodes.size) return false
+		if(seasons?.userEps == null && seasons?.userEps?.isEmpty()!!) return false
+		for (userEp in seasons?.userEps ?: listOf<UserEp>()) {
+			if (seasons?.userEps?.get(position) != userEp) {
 				if (!userEp.isAssistido) {
 					return false
 				}
@@ -458,7 +448,7 @@ class TemporadaActivity(override var layout: Int = R.layout.temporada_layout) : 
 
 	private fun isAssistidoAnteriores(position: Int): Boolean {
 		for (i in 0 until position) {
-			if (!seasons!!.userEps!![i].isAssistido) {
+			if (!seasons!!.userEps[i].isAssistido) {
 				return true
 			}
 		}
@@ -493,9 +483,9 @@ class TemporadaActivity(override var layout: Int = R.layout.temporada_layout) : 
 				is Success -> {
 					tvSeason = it.result
 					supportActionBar!!.title =
-						if (tvSeason?.name?.isNotEmpty()!!) tvSeason?.name else nome_temporada
+						if (tvSeason.name?.isNotEmpty()!!) tvSeason.name else nome_temporada
 					(recycleView_temporada.adapter as TemporadaFoldinAdapter).addTvSeason(
-						tvSeason?.episodes ?: listOf()
+						tvSeason.episodes ?: listOf()
 					)
 				}
 				is Failure -> {

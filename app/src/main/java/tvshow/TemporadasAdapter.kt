@@ -37,7 +37,7 @@ class TemporadasAdapter(
     val context: FragmentActivity,
     private val series: Tvshow,
     private val color: Int,
-    private val changeEps: (position: Int, numberSeason: Int) -> Unit
+    private val changeEps: (position: Int, idSeason: Int, numberSeason: Int) -> Unit
 ) : RecyclerView.Adapter<TemporadasAdapter.HoldeSeason>() {
 
     private var fallow: Boolean = false
@@ -61,12 +61,12 @@ class TemporadasAdapter(
         internal val container: GridView = itemView.findViewById(R.id.container_stream)
 
         fun bind(seasonsItem: SeasonsItem) = with(itemView) {
-            season.text = "${context.getString(R.string.temporada)} ${seasonsItem?.seasonNumber!! ?: ""} "
+            season.text = "${context.getString(R.string.temporada)} ${seasonsItem.seasonNumber } "
             imgSeason.setPicassoWithCache(seasonsItem.posterPath, 4, {}, { imgSeason.gone() })
             data.text = seasonsItem.airDate?.parseDateShot() ?: ""
             itemView.setOnClickListener { onClickTemporada(adapterPosition, color) }
             popup.setOnClickListener { view -> showPopUp(view, seasonsItem.seasonNumber) }
-            btFallow.setOnClickListener { changeEps(adapterPosition, seasonsItem.seasonNumber) }
+            btFallow.setOnClickListener { changeEps(adapterPosition, seasonsItem.id, seasonsItem.seasonNumber) }
             handleIconFallow()
             handleReelGood(adapterPosition, this@HoldeSeason)
         }

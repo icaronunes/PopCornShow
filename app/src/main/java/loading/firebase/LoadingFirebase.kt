@@ -30,6 +30,7 @@ class LoadingFirebase(type: String) : BaseFireBase(type), ILoadingFireBase {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
+                databaseError
             }
         }
         myFallow.addValueEventListener(valueEventFallow)
@@ -153,18 +154,4 @@ class LoadingFirebase(type: String) : BaseFireBase(type), ILoadingFireBase {
         myFallow.child("$idTvshow").child("seasons").child("$seasonNumber")
             .addValueEventListener(valueEventSeason)
     }
-
-//    override fun changeEpWatch(idTvshow: Int, seasonNumber: Int, ) {
-//        val valueEventEp = object : ValueEventListener {
-//            override fun onCancelled(p0: DatabaseError) {
-//
-//            }
-//
-//            override fun onDataChange(p0: DataSnapshot) {
-//
-//            }
-//        }
-//        myFallow.child("$idTvshow").child("seasons").child("$seasonNumber")
-//
-//    }
 }

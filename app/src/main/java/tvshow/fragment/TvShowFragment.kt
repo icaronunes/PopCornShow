@@ -29,6 +29,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import applicaton.BaseViewModel.BaseRequest
 import applicaton.BaseViewModel.BaseRequest.Success
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.layout
@@ -81,8 +82,6 @@ import kotlinx.coroutines.withContext
 import poster.PosterGridActivity
 import producao.CrewsActivity
 import produtora.activity.ProdutoraActivity
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import similares.SimilaresActivity
 import site.Site
 import tvshow.TemporadasAdapter
@@ -199,6 +198,7 @@ class TvShowFragment : FragmentBase() {
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
 		if (tipo == R.string.informacoes) {
+			setAdMob(adView)
 			setTitulo()
 			setCategoria()
 			setLancamento()
@@ -215,15 +215,14 @@ class TvShowFragment : FragmentBase() {
 			setPoster()
 			setStatus()
 			setAnimacao()
-			getImdb()
-			setVotoMedia()
 			setListeners()
 			setNomeUltimoEp()
 			setUltimoEpDate()
 			setSinopse()
-			setAdMob(adView)
-            observerAuth()
+			observerAuth()
 			observerIsFallow()
+			observerImdb()
+			model.getImdb(series.external_ids?.imdbId ?: "")
 			model.hasfallow(series.id)
         } else {
             observersSeason()
@@ -234,10 +233,22 @@ class TvShowFragment : FragmentBase() {
 		}
 	}
 
-    private fun initAdapter() {
+	private fun observerImdb() {
+		model.imdb.observe(viewLifecycleOwner, Observer {
+			when(it) {
+				is Success -> {
+					imdbDd = it.result
+					setVotoMedia()
+				}
+				is BaseRequest.Failure -> requireActivity().makeToast(R.string.ops)
+			}
+		})
+	}
+
+	private fun initAdapter() {
 		recyclerViewTemporada?.adapter =
-			TemporadasAdapter(requireActivity(), series, color) { position, numberSeason ->
-				changeEps(position = position, numberSeason =  numberSeason)
+			TemporadasAdapter(requireActivity(), series, color) { position, idSeason, numberSeason ->
+				changeEps(position = position, idSeason = idSeason,  numberSeason =  numberSeason)
 			}
     }
 
@@ -249,7 +260,6 @@ class TvShowFragment : FragmentBase() {
 					setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
 				}
 			initAdapter()
-
 		}
 	}
 
@@ -479,11 +489,11 @@ class TvShowFragment : FragmentBase() {
 		}
 	}
 
-	private fun changeEps(position: Int, numberSeason: Int) {
+	private fun changeEps(position: Int, idSeason: Int, numberSeason: Int) {
 		GlobalScope.launch {
 			val season: UserSeasons = withContext(Dispatchers.Default) {
 				Api(requireContext()).getTvSeasons(id = series.id, id_season = numberSeason)
-			}.fillUserTvshow(userTvshow?.seasons?.find { it.id == position }, !isVisto(position))
+			}.fillUserTvshow(userTvshow?.seasons?.find { it.id == idSeason }, !isVisto(position))
 
 			val childUpdates = HashMap<String, Any>()
 			childUpdates["${series.id}/desatualizada"] = true
@@ -785,25 +795,6 @@ class TvShowFragment : FragmentBase() {
 		} else {
 			icon_site?.setImageResource(R.drawable.site_off)
 		}
-	}
-
-	fun getImdb() {
-		subscriptions.add(Api(requireContext()).getOmdbpi(series.external_ids?.imdbId)
-			.subscribeOn(Schedulers.io())
-			.observeOn(AndroidSchedulers.mainThread())
-			.subscribe(object : rx.Observer<Imdb> {
-				override fun onCompleted() {
-				}
-
-				override fun onError(e: Throwable) {
-					requireActivity().makeToast(R.string.ops)
-				}
-
-				override fun onNext(imdb: Imdb) {
-					imdbDd = imdb
-				}
-			})
-		)
 	}
 
 	private fun getMedia(): Float {

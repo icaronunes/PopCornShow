@@ -48,7 +48,7 @@ class LoadingMedia(val api: Api) : ILoadingMedia {
 	}
 
 	override fun imdbDate(_imdb: MutableLiveData<BaseRequest<Imdb>>, id: String) {
-		GlobalScope.launch {
+		GlobalScope.launch(handle(_imdb)) {
 			_imdb.postValue(withContext(Dispatchers.Default) {
 				api.getResquestImdb(id)
 			})

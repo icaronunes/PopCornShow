@@ -465,7 +465,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
                     }
 
                     override fun onNext(tvshow: TvSeasons) {
-                        userTvshow?.seasons?.get(index)?.userEps = setEp2(tvshow)?.toMutableList()
+                        userTvshow?.seasons?.get(index)?.userEps = setEp2(tvshow)?.toMutableList() ?: mutableListOf()
                     }
                 })
 

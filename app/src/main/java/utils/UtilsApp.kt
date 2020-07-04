@@ -98,10 +98,10 @@ object UtilsApp {
     private fun setUserSeasson(serie: Tvshow): MutableList<UserSeasons> {
         val list = ArrayList<UserSeasons>()
         return try {
-            for (tvSeason in serie.seasons!!) {
-                val userSeasons = UserSeasons()
-                userSeasons.id = tvSeason?.id!!
-                userSeasons.seasonNumber = tvSeason.seasonNumber!!
+            for (tvSeason in serie.seasons) {
+                val userSeasons = UserSeasons(userEps = mutableListOf())
+                userSeasons.id = tvSeason.id
+                userSeasons.seasonNumber = tvSeason.seasonNumber
                 list.add(userSeasons)
             }
             list

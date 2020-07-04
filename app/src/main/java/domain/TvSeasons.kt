@@ -6,14 +6,15 @@ import javax.annotation.Generated
 
 fun TvSeasons.fillUserTvshow(userTvshow: UserSeasons?, status: Boolean): UserSeasons {
     fun findEp(episodes: EpisodesItem?, userTvshow: UserSeasons?): UserEp? {
+        if(userTvshow != null && userTvshow.userEps.isNullOrEmpty()) return null
         return userTvshow?.userEps?.find { it.id == episodes?.id }?.apply {
             isAssistido = status
         }
     }
 
-    val userEps = this.episodes?.map {
+    val userEps = this.episodes.map {
         findEp(it, userTvshow) ?: UserEp(it.id!!, it.seasonNumber, it.episodeNumber!!, status, 0.0f, it.name, it.airDate)
-    }?.toMutableList()
+    }.toMutableList()
 
     return UserSeasons(id = id!!, seasonNumber = seasonNumber!!, isVisto = status, userEps = userEps)
 }
@@ -40,7 +41,7 @@ data class TvSeasons(
     val id: Int? = null,
 
     @field:SerializedName("episodes")
-    val episodes: List<EpisodesItem>? = null,
+    val episodes: List<EpisodesItem> = listOf(),
 
     @field:SerializedName("poster_path")
     val posterPath: String? = null

@@ -8,7 +8,7 @@ import java.io.Serializable
  */
 @Keep
 data class UserSeasons(
-    var userEps: MutableList<UserEp>? = null,
+    var userEps: MutableList<UserEp> = mutableListOf(),
     var id: Int = 0,
     var seasonNumber: Int = 0,
     var isVisto: Boolean = false

@@ -116,26 +116,6 @@ class Api(val context: Context) : ApiSingleton() {
         }
     }
 
-    fun getOmdbpi(id: String?): Observable<Imdb> {
-        return Observable.create { subscriber ->
-            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-            val gson = Gson()
-            val request = Request.Builder()
-                .url("http://www.omdbapi.com/?i=$id&tomatoes=true&r=json&apikey=${Config.OMDBAPI_API_KEY}") // Api de alguem)
-                .get()
-                .build()
-            val response = client.newCall(request).execute()
-            if (response.isSuccessful) {
-                val json = response.body?.string()
-                val imdb = gson.fromJson(json, Imdb::class.java)
-                subscriber.onNext(imdb)
-                subscriber.onCompleted()
-            } else {
-                subscriber.onError(Throwable(response.message))
-            }
-        }
-    }
-
     fun getCompany(id_produtora: Int): Observable<Company> {
         return Observable.create { subscriber ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
