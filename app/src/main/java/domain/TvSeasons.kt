@@ -4,19 +4,35 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import javax.annotation.Generated
 
-fun TvSeasons.fillUserTvshow(userTvshow: UserSeasons?, status: Boolean): UserSeasons {
-    fun findEp(episodes: EpisodesItem?, userTvshow: UserSeasons?): UserEp? {
-        if(userTvshow != null && userTvshow.userEps.isNullOrEmpty()) return null
-        return userTvshow?.userEps?.find { it.id == episodes?.id }?.apply {
+fun TvSeasons.fillAllUserEpTvshow(userTvshow: UserSeasons?, status: Boolean): UserSeasons {
+    fun findEp(episodes: EpisodesItem, userTvshow: UserSeasons?): UserEp? {
+        if(userTvshow == null || userTvshow.userEps.isNullOrEmpty()) return null
+        return userTvshow.userEps.find { it.id == episodes.id }?.apply {
             isAssistido = status
         }
     }
 
     val userEps = this.episodes.map {
-        findEp(it, userTvshow) ?: UserEp(it.id!!, it.seasonNumber, it.episodeNumber!!, status, 0.0f, it.name, it.airDate)
+        findEp(it, userTvshow) ?: UserEp(it.id, it.seasonNumber, it.episodeNumber!!, status, 0.0f, it.name, it.airDate)
     }.toMutableList()
 
     return UserSeasons(id = id!!, seasonNumber = seasonNumber!!, isVisto = status, userEps = userEps)
+}
+
+fun TvSeasons.fillEpUserTvshow(userTvshow: UserSeasons?, status: Boolean, idEp: Int): UserSeasons {
+    fun findEp(episodes: EpisodesItem, userTvshow: UserSeasons?): UserEp? {
+        if(userTvshow == null || userTvshow.userEps.isNullOrEmpty()) return null
+        return userTvshow.userEps.find { it.id == episodes.id }
+    }
+
+    val allEps = episodes.map {
+        findEp(it, userTvshow) ?: UserEp(it.id, it.seasonNumber, it.episodeNumber!!, false, 0.0f, it.name, it.airDate)
+    }.map {
+        if(it.id == idEp) it.isAssistido = status
+        it
+    }.toMutableList()
+
+    return UserSeasons(id = id!!, seasonNumber = seasonNumber!!, isVisto = status, userEps = allEps)
 }
 
 @Generated("com.robohorse.robopojogenerator")
@@ -72,7 +88,7 @@ data class EpisodesItem(
     val seasonNumber: Int? = null,
 
     @field:SerializedName("id")
-    val id: Int? = null,
+    val id: Int,
 
     @field:SerializedName("still_path")
     val stillPath: String? = null,

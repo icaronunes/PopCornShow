@@ -5,7 +5,7 @@ import domain.EpisodesItem
 import domain.UserEp
 
 interface TemporadaOnClickListener {
-	fun onClickVerTemporada(position: Int)
+	fun onClickVerTemporada(status: Boolean, id: Int)
 	fun onClickTemporada(position: Int)
 	fun onClickTemporadaNota(
 		view: View?,

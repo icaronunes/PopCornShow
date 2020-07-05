@@ -151,7 +151,8 @@ class TemporadaFoldinAdapter(
 
 			layout_diretor_nome_visto.setOnClickListener {
 				temporadaOnClickListener.onClickVerTemporada(
-					layoutPosition
+					if( epUser != null) !epUser.isAssistido else false,
+					ep.id
 				)
 			}
 			epsodio_detalhes_ler_mais.setOnClickListener {
@@ -180,7 +181,7 @@ class TemporadaFoldinAdapter(
 			}
 
 			if (fallow) {
-				when (epUser?.isAssistido == true || watchSeason) {
+				when (epUser?.isAssistido == true) {
 					true -> {
 						item_epsodio_visto.apply {
 							setBackgroundColor(ContextCompat.getColor(context, R.color.green))

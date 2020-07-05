@@ -87,7 +87,7 @@ class LoadingMedia(val api: Api) : ILoadingMedia {
 		}
 	}
 
-	private fun <T>handle(_live: MutableLiveData<BaseRequest<T>>) = Dispatchers.Default + SupervisorJob() + CoroutineExceptionHandler { _, erro ->
+	private fun <T>handle(_live: MutableLiveData<BaseRequest<T>> = MutableLiveData()) = Dispatchers.Default + SupervisorJob() + CoroutineExceptionHandler { _, erro ->
 		Handler(Looper.getMainLooper()).post {
 			_live.postValue(BaseRequest.Failure(java.lang.Exception(erro.cause)))
 		}

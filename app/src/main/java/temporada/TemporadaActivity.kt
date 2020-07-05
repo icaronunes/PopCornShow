@@ -31,7 +31,7 @@ import domain.EpisodesItem
 import domain.TvSeasons
 import domain.UserEp
 import domain.UserSeasons
-import domain.fillUserTvshow
+import domain.fillEpUserTvshow
 import episodio.EpsodioActivity
 import kotlinx.android.synthetic.main.temporada_layout.recycleView_temporada
 import rx.subscriptions.CompositeSubscription
@@ -130,15 +130,21 @@ class TemporadaActivity(override var layout: Int = R.layout.temporada_layout) : 
 		}
 	}
 
-	override fun onClickVerTemporada(position: Int) {
-		model.watchEp(fillWatchEp(position))
-	}
-
-	private fun fillWatchEp(position: Int, watch: Boolean = true): HashMap<String, Any> {
-		return HashMap<String, Any>().also {
-			it["/visto"] = temporadaTodaAssistida(position)
-			it["/$serieId/seasons/$temporada_position/userEps"] = tvSeason.fillUserTvshow(seasons, watch).userEps
+	override fun onClickVerTemporada(status: Boolean, id: Int) {
+		fun isWatchAll(eps: MutableList<UserEp>): Boolean {
+			fun containsEpNotWatch() = eps.find { !it.isAssistido }
+			return containsEpNotWatch() == null
 		}
+
+		fun fillWatchEp(watch: Boolean): HashMap<String, Any> {
+			return HashMap<String, Any>().also {
+				val eps = tvSeason.fillEpUserTvshow(seasons, watch, id).userEps
+				it["/$serieId/seasons/$temporada_position/visto"] = if(status) isWatchAll(eps) else false
+				it["/$serieId/seasons/$temporada_position/userEps"] = eps
+			}
+		}
+
+		model.watchEp(fillWatchEp(status))
 	}
 
 	override fun onClickTemporada(position: Int) {

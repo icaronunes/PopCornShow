@@ -55,8 +55,8 @@ class ListFollowFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            tipo = arguments!!.getInt(Constant.ABA)
-            userTvshows = arguments!!.getSerializable(Constant.SEGUINDO) as MutableList<UserTvshow>
+            tipo = requireArguments().getInt(Constant.ABA)
+            userTvshows = requireArguments().getSerializable(Constant.SEGUINDO) as MutableList<UserTvshow>
         }
     }
 
@@ -112,8 +112,8 @@ class ListFollowFragment : BaseFragment() {
             try {
                 GlobalScope.launch(coroutineContext) {
                     // Pegar serie atualizada do Server. Enviar para o metodo para atualizar baseado nela
-                    val serie = async(IO) { Api(context = context!!).getTvShowLiteC(it.second.id) }
-                    val ep = async(IO) { Api(context = context!!).getTvShowEpC(it.second.id, it.first.seasonNumber, it.first.episodeNumber) }
+                    val serie = async(IO) { Api(context = requireContext()).getTvShowLiteC(it.second.id) }
+                    val ep = async(IO) { Api(context = requireContext()).getTvShowEpC(it.second.id, it.first.seasonNumber, it.first.episodeNumber) }
                     val ultima = async { MutablePair(ep.await(), serie.await()) }.await()
                     launch {
                         adapterProximo?.addAtual(ultima)
@@ -131,7 +131,7 @@ class ListFollowFragment : BaseFragment() {
                 rotina = GlobalScope.launch(coroutineContext) {
                     val serie = async(IO) {
                         delay(600)
-                        Api(context = context!!).getTvShowLiteC(tvFire.id)
+                        Api(context = requireContext()).getTvShowLiteC(tvFire.id)
 
                     }.await()
                     if (serie.numberOfEpisodes != null) {

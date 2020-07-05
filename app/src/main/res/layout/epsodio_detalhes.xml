@@ -102,7 +102,7 @@
 
         <View
             android:id="@+id/layout_diretor_nome_visto"
-            android:layout_width="20dp"
+            android:layout_width="@dimen/trade_size_dp_50"
             android:layout_height="0dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@+id/epsodio_detalhes_img"

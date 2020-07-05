@@ -41,7 +41,7 @@ import configuracao.SettingsActivity
 import domain.Imdb
 import domain.UserSeasons
 import domain.UserTvshow
-import domain.fillUserTvshow
+import domain.fillAllUserEpTvshow
 import domain.tvshow.Tvshow
 import elenco.ElencoActivity
 import fragment.FragmentBase
@@ -493,7 +493,7 @@ class TvShowFragment : FragmentBase() {
 		GlobalScope.launch {
 			val season: UserSeasons = withContext(Dispatchers.Default) {
 				Api(requireContext()).getTvSeasons(id = series.id, id_season = numberSeason)
-			}.fillUserTvshow(userTvshow?.seasons?.find { it.id == idSeason }, !isVisto(position))
+			}.fillAllUserEpTvshow(userTvshow?.seasons?.find { it.id == idSeason }, !isVisto(position))
 
 			val childUpdates = HashMap<String, Any>()
 			childUpdates["${series.id}/desatualizada"] = true
