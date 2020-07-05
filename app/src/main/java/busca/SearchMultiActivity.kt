@@ -93,7 +93,7 @@ class SearchMultiActivity : BaseActivityKt() {
 			if (isNetWorkAvailable(baseContext)) {
 				model.fetchData(query)
 			} else {
-				snack(adView, getString(R.string.tryagain)) {
+				snack(adView) {
 					model.fetchData(query)
 				}
 			}

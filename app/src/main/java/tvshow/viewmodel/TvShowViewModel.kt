@@ -90,8 +90,8 @@ class TvShowViewModel(override val app: Application, activity: Activity, val api
         loadingMedia.putRated(tvshowDB.id, tvshowDB.nota, "tv")
     }
 
-    fun setRatedTvShowOnTheMovieDB(epRated: UserEp) {
-        loadingMedia.putTvEpRated(epRated.id, epRated.seasonNumber, epRated.episodeNumber, epRated.nota)
+    fun setRatedTvShowOnTheMovieDB(tvshowId: Int, epRated: UserEp) {
+        loadingMedia.putTvEpRated(tvshowId, epRated.seasonNumber, epRated.episodeNumber, epRated.nota)
     }
 
     fun getRealGoodData(idReel: String) {

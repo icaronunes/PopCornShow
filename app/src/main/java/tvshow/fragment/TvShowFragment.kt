@@ -176,7 +176,7 @@ class TvShowFragment : FragmentBase() {
 
 	private fun observersSeason() {
 		model.fallow.observe(viewLifecycleOwner, Observer {
-			fillAdapter(it.child(series.id.toString()))
+			fillAdapter(it)
 		})
 	}
 

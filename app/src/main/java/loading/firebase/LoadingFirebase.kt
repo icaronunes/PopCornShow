@@ -33,7 +33,7 @@ class LoadingFirebase(type: String) : BaseFireBase(type), ILoadingFireBase {
                 databaseError
             }
         }
-        myFallow.addValueEventListener(valueEventFallow)
+        myFallow.child("$idTvshow").addValueEventListener(valueEventFallow)
     }
 
     override fun isFallow(hasFallow: MutableLiveData<Boolean>, idTvshow: Int) {

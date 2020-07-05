@@ -24,8 +24,8 @@ open class BaseActivityKt : BaseActivity() {
         Toast.makeText(baseContext, getString(R.string.ops), Toast.LENGTH_LONG).show()
     }
 
-    fun snack(anchor: View, txt: String,  block: () -> Unit = {}) {
-        Snackbar.make(anchor, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+    fun snack(anchor: View, txt: String = getString(R.string.no_internet), block: () -> Unit = {}) {
+        Snackbar.make(anchor, txt, Snackbar.LENGTH_INDEFINITE)
             .setAction(R.string.retry) { block() }.show()
     }
 }

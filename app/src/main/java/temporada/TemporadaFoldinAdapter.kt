@@ -76,9 +76,8 @@ class TemporadaFoldinAdapter(
 		notifyItemChanged(position)
 	}
 
-	fun addSeasonFire(seasons: UserSeasons?, fallow: Boolean) {
+	fun addSeasonFire(seasons: UserSeasons?) {
 		this.seasons = seasons
-		this.fallow = fallow
 		if (seasons != null && listEp.isNotEmpty()) notifyDataSetChanged()
 	}
 
@@ -87,6 +86,12 @@ class TemporadaFoldinAdapter(
 		notifyDataSetChanged()
 	}
 
+	fun changeFallow(fallow: Boolean) {
+		if(this.fallow != fallow) {
+			this.fallow = fallow
+			notifyDataSetChanged()
+		}
+	}
 	fun changeTvWithRated(episode: UserEp) {
 		seasons?.userEps?.map {
 			if (it.id == episode.id) {
@@ -151,9 +156,7 @@ class TemporadaFoldinAdapter(
 
 			layout_diretor_nome_visto.setOnClickListener {
 				temporadaOnClickListener.onClickVerTemporada(
-					if( epUser != null) !epUser.isAssistido else false,
-					ep.id
-				)
+					if( epUser != null) !epUser.isAssistido else false, ep.id)
 			}
 			epsodio_detalhes_ler_mais.setOnClickListener {
 				temporadaOnClickListener.onClickTemporada(layoutPosition)

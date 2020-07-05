@@ -22,7 +22,10 @@ fun TvSeasons.fillAllUserEpTvshow(userTvshow: UserSeasons?, status: Boolean): Us
 fun TvSeasons.fillEpUserTvshow(userTvshow: UserSeasons?, status: Boolean, idEp: Int): UserSeasons {
     fun findEp(episodes: EpisodesItem, userTvshow: UserSeasons?): UserEp? {
         if(userTvshow == null || userTvshow.userEps.isNullOrEmpty()) return null
-        return userTvshow.userEps.find { it.id == episodes.id }
+        return userTvshow.userEps.find { it.id == episodes.id }?.apply {
+            dataEstreia = episodes.airDate
+            title = episodes.name
+        }
     }
 
     val allEps = episodes.map {

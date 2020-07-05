@@ -294,3 +294,14 @@ fun BottomSheetBehavior<View>.setAnimation(container: View, viewHeight: View) {
     }
 }
 
+/**
+ * MutableList
+ */
+fun <T> MutableList<T>.replaceItemList(item: T, predicate: (T) -> Boolean): MutableList<T> {
+    return this.map {
+        if (predicate(it)) item else it
+    }.toMutableList()
+}
+
+
+
