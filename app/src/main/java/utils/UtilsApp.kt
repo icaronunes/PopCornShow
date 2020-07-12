@@ -6,6 +6,8 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
 import android.os.Environment
 import android.preference.PreferenceManager
 import android.telephony.TelephonyManager
@@ -307,14 +309,11 @@ object UtilsApp {
     }
 
     fun getUriDownloadImage(context: Context, file: File): Uri {
-        val uri: Uri
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(context, context.packageName + ".provider", file)
+        return if (VERSION.SDK_INT >= VERSION_CODES.N) {
+            FileProvider.getUriForFile(context, context.packageName + ".provider", file)
         } else {
-            uri = Uri.fromFile(file)
+            Uri.fromFile(file)
         }
-
-        return uri
     }
 
     fun saveImagemSearch(context: Context, enderecoImagem: String?) {

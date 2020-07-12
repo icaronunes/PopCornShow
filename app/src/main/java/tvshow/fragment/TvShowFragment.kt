@@ -126,12 +126,12 @@ class TvShowFragment : FragmentBase() {
 
 	companion object {
 		@JvmStatic
-		fun newInstance(tipo: Int, series: Tvshow, color: Int, seguindo: Boolean): Fragment {
+		fun newInstance(type: Int, series: Tvshow, color: Int, seguindo: Boolean): Fragment {
 			return TvShowFragment().apply {
 				arguments = Bundle().apply {
 					putSerializable(Constant.SERIE, series)
 					putInt(Constant.COLOR_TOP, color)
-					putInt(Constant.ABA, tipo)
+					putInt(Constant.ABA, type)
 					putSerializable(Constant.USER, seguindo)
 				}
 			}

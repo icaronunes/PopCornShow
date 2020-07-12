@@ -16,12 +16,12 @@ import loading.api.ILoadingMedia
 import loading.api.LoadingMedia
 import loading.firebase.ILoadingFireBase
 import loading.firebase.LoadingFirebase
-import loading.firebase.LoadingFirebase.Companion.MOVIE
+import loading.firebase.TypeMediaFireBase
 import utils.Api
 
 class MovieDetatilsViewModel(app: Application, val activity: Activity, val api: Api) : BaseViewModel(app) {
 
-    private val loadingFirebase: ILoadingFireBase = LoadingFirebase(MOVIE)
+    private val loadingFirebase: ILoadingFireBase = LoadingFirebase(TypeMediaFireBase.MOVIE)
     private val loadingMedia: ILoadingMedia = LoadingMedia(api)
 
     val auth: MutableLiveData<Boolean> = MutableLiveData(false)

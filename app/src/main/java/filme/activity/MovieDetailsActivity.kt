@@ -75,10 +75,6 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
     private var movieDb: Movie? = null
     private var addRated = true
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing Api.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {

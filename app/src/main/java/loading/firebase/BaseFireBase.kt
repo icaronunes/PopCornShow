@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-open class BaseFireBase(val type: String) {
+open class BaseFireBase(val mediaFireBase: TypeMediaFireBase) {
 
     companion object {
         const val WATCH = "watch"
@@ -30,15 +30,15 @@ open class BaseFireBase(val type: String) {
 
             myWatch = database.getReference(USERS).child(firebaseAuth.currentUser
                 ?.uid ?: "").child(WATCH)
-                .child(type)
+                .child(mediaFireBase.type())
 
             myFavorite = database.getReference(USERS).child(firebaseAuth.currentUser
                 ?.uid ?: "").child(FAVORITY)
-                .child(type)
+                .child(mediaFireBase.type())
 
             myRated = database.getReference(USERS).child(firebaseAuth.currentUser
                 ?.uid ?: "").child(RATED)
-                .child(type)
+                .child(mediaFireBase.type())
 
              myFallow = database.getReference(USERS).child(firebaseAuth.currentUser
                  ?.uid ?: "").child(FALLOW)

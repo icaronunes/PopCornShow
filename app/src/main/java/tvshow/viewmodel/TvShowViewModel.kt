@@ -19,12 +19,12 @@ import loading.api.ILoadingMedia
 import loading.api.LoadingMedia
 import loading.firebase.ILoadingFireBase
 import loading.firebase.LoadingFirebase
-import loading.firebase.LoadingFirebase.Companion.TV
+import loading.firebase.TypeMediaFireBase
 import utils.Api
 
 class TvShowViewModel(override val app: Application, activity: Activity, val api: Api) : BaseViewModel(app) {
 
-    private val loadingFirebase: ILoadingFireBase = LoadingFirebase(TV)
+    private val loadingFirebase: ILoadingFireBase = LoadingFirebase(TypeMediaFireBase.TVSHOW)
     private val loadingMedia: ILoadingMedia = LoadingMedia(api)
 
     val auth: MutableLiveData<Boolean> = MutableLiveData(false)

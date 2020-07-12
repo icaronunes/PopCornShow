@@ -5,13 +5,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
+import loading.firebase.TypeMediaFireBase.TVSHOW
 
-class LoadingFirebase(type: String) : BaseFireBase(type), ILoadingFireBase {
-
-    companion object {
-        const val TV = "tv"
-        const val MOVIE = "movie"
-    }
+class LoadingFirebase(type: TypeMediaFireBase) : BaseFireBase(type), ILoadingFireBase {
 
     private lateinit var valueEventWatch: ValueEventListener
     private lateinit var valueEventRated: ValueEventListener
@@ -78,7 +74,7 @@ class LoadingFirebase(type: String) : BaseFireBase(type), ILoadingFireBase {
         myWatch.removeEventListener(valueEventWatch)
         myRated.removeEventListener(valueEventRated)
         myFavorite.removeEventListener(valueEventFavorite)
-        if (type == TV) myFallow.removeEventListener(valueEventFallow)
+        if (mediaFireBase == TVSHOW) myFallow.removeEventListener(valueEventFallow)
     }
 
     override fun setEventListenerWatch(live: MutableLiveData<DataSnapshot>) {

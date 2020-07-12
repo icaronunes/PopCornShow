@@ -4,21 +4,19 @@
 
     <item
         android:id="@+id/search"
-        android:checkable="false"
-        android:icon="@drawable/icon_find"
-        android:title="@string/search"
-        android:focusableInTouchMode="true"
-        android:iconifiedByDefault="true"
-        app:iconifiedByDefault="true"
-        app:showAsAction="ifRoom"
         android:background="@color/white"
-        />
+        android:checkable="false"
+        android:focusableInTouchMode="true"
+        android:icon="@drawable/icon_find"
+        android:iconifiedByDefault="true"
+        android:title="@string/search"
+        app:iconifiedByDefault="true"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/share"
         android:icon="@android:drawable/ic_menu_share"
         android:title="@string/compartilhar"
         app:showAsAction="always" />
-
 
 </menu>
