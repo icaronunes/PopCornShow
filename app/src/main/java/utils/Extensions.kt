@@ -25,7 +25,11 @@ import domain.reelgood.movie.Availability
 import domain.tvshow.Tvshow
 import java.text.DateFormat
 import java.text.Normalizer
+import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 /**
  * Created by icaro on 03/09/17.
@@ -35,64 +39,78 @@ import java.text.SimpleDateFormat
  * IMAGEVIEW
  */
 
-fun ImageView.setPicasso(stillPath: String?, patten: Int = 4, sucesso: () -> Unit = {}, error: () -> Unit = {}, img_erro: Int = R.drawable.poster_empty): ImageView {
-    Picasso.get()
-        .load(UtilsApp
-            .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, patten)) + stillPath)
-        .error(img_erro)
-        .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-        .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-        .into(this, object : Callback {
-            override fun onSuccess() {
-                sucesso()
-            }
+fun ImageView.setPicasso(
+	stillPath: String?,
+	patten: Int = 4,
+	sucesso: () -> Unit = {},
+	error: () -> Unit = {},
+	img_erro: Int = R.drawable.poster_empty
+): ImageView {
+	Picasso.get()
+		.load(
+			UtilsApp
+				.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, patten)) + stillPath
+		)
+		.error(img_erro)
+		.memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
+		.networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
+		.into(this, object : Callback {
+			override fun onSuccess() {
+				sucesso()
+			}
 
-            override fun onError(e: java.lang.Exception?) {
-                error()
-            }
-        })
-    return this
+			override fun onError(e: java.lang.Exception?) {
+				error()
+			}
+		})
+	return this
 }
 
-fun ImageView.setPicassoWithCache(stillPath: String?, patten: Int = 4,
-    sucesso: () -> Unit = {},
-    error: () -> Unit = {},
-    img_erro: Int = R.drawable.poster_empty): ImageView {
-    Picasso.get()
-        .load(UtilsApp
-            .getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, patten)) + stillPath)
-        .error(img_erro)
-        .into(this, object : Callback {
-            override fun onSuccess() {
-                sucesso()
-            }
+fun ImageView.setPicassoWithCache(
+	stillPath: String?, patten: Int = 4,
+	sucesso: () -> Unit = {},
+	error: () -> Unit = {},
+	img_erro: Int = R.drawable.poster_empty
+): ImageView {
+	Picasso.get()
+		.load(
+			UtilsApp
+				.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, patten)) + stillPath
+		)
+		.error(img_erro)
+		.into(this, object : Callback {
+			override fun onSuccess() {
+				sucesso()
+			}
 
-            override fun onError(e: java.lang.Exception?) {
-                error()
-            }
-        })
-    return this
+			override fun onError(e: java.lang.Exception?) {
+				error()
+			}
+		})
+	return this
 }
 
-fun ImageView.setPicassoWithCacheAndHolder(stillPath: String?, patten: Int = 4,
-    sucesso: () -> Unit = {},
-    error: () -> Unit = {},
-    img_erro: Int = R.drawable.poster_empty,
-    holder: Int): ImageView {
-    Picasso.get()
-        .load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, patten)) + stillPath)
-        .placeholder(holder)
-        .error(img_erro)
-        .into(this, object : Callback {
-            override fun onSuccess() {
-                sucesso()
-            }
+fun ImageView.setPicassoWithCacheAndHolder(
+	stillPath: String?, patten: Int = 4,
+	sucesso: () -> Unit = {},
+	error: () -> Unit = {},
+	img_erro: Int = R.drawable.poster_empty,
+	holder: Int
+): ImageView {
+	Picasso.get()
+		.load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, patten)) + stillPath)
+		.placeholder(holder)
+		.error(img_erro)
+		.into(this, object : Callback {
+			override fun onSuccess() {
+				sucesso()
+			}
 
-            override fun onError(e: java.lang.Exception?) {
-                error()
-            }
-        })
-    return this
+			override fun onError(e: java.lang.Exception?) {
+				error()
+			}
+		})
+	return this
 }
 
 /**
@@ -100,11 +118,11 @@ fun ImageView.setPicassoWithCacheAndHolder(stillPath: String?, patten: Int = 4,
  */
 
 fun Activity.makeToast(restText: Int, time: Int = Toast.LENGTH_SHORT) {
-    this.makeToast(this.getString(restText), time)
+	this.makeToast(this.getString(restText), time)
 }
 
 fun Activity.makeToast(text: String?, time: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(this, text, time).show()
+	Toast.makeText(this, text, time).show()
 }
 
 /**
@@ -112,27 +130,29 @@ fun Activity.makeToast(text: String?, time: Int = Toast.LENGTH_SHORT) {
  */
 
 fun View.gone() {
-    this.visibility = View.GONE
+	this.visibility = View.GONE
 }
 
 fun View.visible() {
-    this.visibility = View.VISIBLE
+	this.visibility = View.VISIBLE
 }
 
 fun View.invisible() {
-    this.visibility = View.INVISIBLE
+	this.visibility = View.INVISIBLE
 }
 
 fun View.animeRotation() {
-    ObjectAnimator
-        .ofPropertyValuesHolder(this,
-            PropertyValuesHolder.ofFloat(View.SCALE_X, 1.0f, 0.2f),
-            PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.0f, 0.2f),
-            PropertyValuesHolder.ofFloat(View.SCALE_X, 0.0f, 1.0f),
-            PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.0f, 1.0f))
-        .apply {
-            duration = 1600
-        }.start()
+	ObjectAnimator
+		.ofPropertyValuesHolder(
+			this,
+			PropertyValuesHolder.ofFloat(View.SCALE_X, 1.0f, 0.2f),
+			PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.0f, 0.2f),
+			PropertyValuesHolder.ofFloat(View.SCALE_X, 0.0f, 1.0f),
+			PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.0f, 1.0f)
+		)
+		.apply {
+			duration = 1600
+		}.start()
 }
 
 /**
@@ -140,12 +160,12 @@ fun View.animeRotation() {
  */
 
 fun Any.putString(cxt: Context): String = when (this) {
-    is String -> this
-    is Int -> cxt.getString(this)
-    else -> {
-        require(false) { "Need R.string.id or string" }
-        ""
-    }
+	is String -> this
+	is Int -> cxt.getString(this)
+	else -> {
+		require(false) { "Need R.string.id or string" }
+		""
+	}
 }
 
 /**
@@ -153,126 +173,150 @@ fun Any.putString(cxt: Context): String = when (this) {
  */
 
 fun String.removerAcentos(): String {
-    this.replace(".", "")
-    this.replace(":", "")
-    this.replace("/", "")
-    this.replace(";", "")
-    return Normalizer.normalize(this, Normalizer.Form.NFD).replace("[^\\p{ASCII}]".toRegex(), "")
+	this.replace(".", "")
+	this.replace(":", "")
+	this.replace("/", "")
+	this.replace(";", "")
+	return Normalizer.normalize(this, Normalizer.Form.NFD).replace("[^\\p{ASCII}]".toRegex(), "")
 }
 
-@Throws(Exception::class)
+
 fun String.parseDate(): String {
 
-    return try {
-        val sim = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-        val data = sim.parse(this)
-        DateFormat.getDateInstance(DateFormat.SHORT).format(data)
-    } catch (ex: Exception) {
-        "N/A"
-    }
+	return try {
+		val sim = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+		val data = sim.parse(this)
+		DateFormat.getDateInstance(DateFormat.SHORT).format(data)
+	} catch (ex: Exception) {
+		"-/-"
+	}
 }
 
-@Throws(Exception::class)
 fun String.parseDateShot(): String {
-    return try {
-        val sim = SimpleDateFormat("yyyy-MM-dd")
-        val data = sim.parse(this)
-        DateFormat.getDateInstance(DateFormat.SHORT).format(data)
-    } catch (ex: Exception) {
-        "N/A"
-    }
+	return try {
+		val sim = SimpleDateFormat("yyyy-MM-dd")
+		val data = sim.parse(this)
+		DateFormat.getDateInstance(DateFormat.SHORT).format(data)
+	} catch (ex: Exception) {
+		"-/-"
+	}
+}
+
+
+fun verifyLaunch(air_date: Date?): Boolean {
+	if (air_date == null) return false
+	val now = Calendar.getInstance().time
+	return if (air_date.before(now)) { true } else !air_date.after(now)
+}
+
+fun String.getDate(format: String = "yyyy-MM-dd"): Date? {
+	return try {
+		let {
+			val sdf = SimpleDateFormat(format, Locale.getDefault())
+			sdf.parse(it)
+		}
+	} catch (e: ParseException) {
+		e.printStackTrace()
+		null
+	}
+}
+
+fun String.released(): Boolean {
+	val data = getDate()
+	return verifyLaunch(data)
 }
 
 @Throws(Exception::class)
 fun String.yearDate(): String {
-    return this.substring(0, 4)
+	return this.substring(0, 4)
 }
 
 fun String.getNameTypeReel(): String {
-    return replace(":", "-")
-        .replace(" ", "-")
-        .replace("&", "and")
-        .replace(".", "")
-        .replace("é", "e")
-        .replace("ẽ", "e")
-        .replace("è", "e")
-        .replace("ë", "e")
-        .replace("ç", "c")
-        .replace("â", "a")
-        .replace("ã", "a")
-        .replace("á", "a")
-        .replace("à", "a")
-        .replace("ä", "a")
-        .replace("ä", "a")
-        .replace("'", "")
-        .replace("\"", "")
-        .replace("´", "")
-        .replace("~", "")
-        .replace("^", "")
-        .replace("---", "-")
-        .replace("----", "-")
-        .replace("--", "-")
-        .toLowerCase()
+	return replace(":", "-")
+		.replace(" ", "-")
+		.replace("&", "and")
+		.replace(".", "")
+		.replace("é", "e")
+		.replace("ẽ", "e")
+		.replace("è", "e")
+		.replace("ë", "e")
+		.replace("ç", "c")
+		.replace("â", "a")
+		.replace("ã", "a")
+		.replace("á", "a")
+		.replace("à", "a")
+		.replace("ä", "a")
+		.replace("ä", "a")
+		.replace("'", "")
+		.replace("\"", "")
+		.replace("´", "")
+		.replace("~", "")
+		.replace("^", "")
+		.replace("---", "-")
+		.replace("----", "-")
+		.replace("--", "-")
+		.toLowerCase()
 }
 
 fun Tvshow.createIdReal() = createIdReal(this.name ?: "", this.firstAirDate ?: "")
 
-private fun createIdReal(originalName: String, data: String) = "${originalName.getNameTypeReel()}-${data.yearDate()}"
+private fun createIdReal(originalName: String, data: String) =
+	"${originalName.getNameTypeReel()}-${data.yearDate()}"
 
 /**
  * RECYCLER
  */
 
 fun RecyclerView.setScrollInvisibleFloatMenu(floatButton: FloatingActionMenu) {
-    addOnScrollListener(object : RecyclerView.OnScrollListener() {
+	addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
-        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            when (newState) {
-                RecyclerView.SCROLL_STATE_IDLE -> floatButton.visible()
-                RecyclerView.SCROLL_STATE_DRAGGING -> floatButton.invisible()
-                RecyclerView.SCROLL_STATE_SETTLING -> floatButton.invisible()
-            }
-        }
-    })
+		override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+			when (newState) {
+				RecyclerView.SCROLL_STATE_IDLE -> floatButton.visible()
+				RecyclerView.SCROLL_STATE_DRAGGING -> floatButton.invisible()
+				RecyclerView.SCROLL_STATE_SETTLING -> floatButton.invisible()
+			}
+		}
+	})
 }
 
 fun RecyclerView.patternRecyler(horizont: Boolean = true): RecyclerView {
-    val typeOrient = if (horizont) LinearLayoutManager.HORIZONTAL else LinearLayoutManager.VERTICAL
-    layoutManager = LinearLayoutManager(context, typeOrient, false)
-    itemAnimator = DefaultItemAnimator()
-    setHasFixedSize(true)
-    return this
+	val typeOrient = if (horizont) LinearLayoutManager.HORIZONTAL else LinearLayoutManager.VERTICAL
+	layoutManager = LinearLayoutManager(context, typeOrient, false)
+	itemAnimator = DefaultItemAnimator()
+	setHasFixedSize(true)
+	return this
 }
 
 fun RecyclerView.patternRecyclerGrid(quant: Int = 2): RecyclerView {
-    layoutManager = GridLayoutManager(context, quant)
-    setHasFixedSize(true)
-    itemAnimator = DefaultItemAnimator()
-    return this
+	layoutManager = GridLayoutManager(context, quant)
+	setHasFixedSize(true)
+	itemAnimator = DefaultItemAnimator()
+	return this
 }
 
 fun RecyclerView.minHeight(): RecyclerView {
-        layoutParams.height = 1
-        importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
-        isFocusable = false
-    return this
+	layoutParams.height = 1
+	importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+	isFocusable = false
+	return this
 }
 
 /**
  * AVAILABILITY
  */
 fun Availability.getPricePurchase(): String {
-    val less = purchaseCostSd?.let { purchaseCostHd?.coerceAtMost(it) }
-    val biggest = purchaseCostSd?.let { purchaseCostHd?.coerceAtLeast(it) }
-    if (less == biggest) return less.toString()
-    return "${if (less != 0.0) less.toString() else "--"} - ${if (biggest != 0.0) biggest.toString() else "--"}"
+	val less = purchaseCostSd?.let { purchaseCostHd?.coerceAtMost(it) }
+	val biggest = purchaseCostSd?.let { purchaseCostHd?.coerceAtLeast(it) }
+	if (less == biggest) return less.toString()
+	return "${if (less != 0.0) less.toString() else "--"} - ${if (biggest != 0.0) biggest.toString() else "--"}"
 }
 
 fun Availability.getPriceRental(): String {
-    val less = rentalCostSd?.let { rentalCostHd?.coerceAtMost(it) }
-    val biggest = rentalCostSd?.let { rentalCostHd?.coerceAtLeast(it) }
-    if (less == biggest) return less.toString()
-    return "${if (less != 0.0) less.toString() else "--"} - ${if (biggest != 0.0) biggest.toString() else "--"}"
+	val less = rentalCostSd?.let { rentalCostHd?.coerceAtMost(it) }
+	val biggest = rentalCostSd?.let { rentalCostHd?.coerceAtLeast(it) }
+	if (less == biggest) return less.toString()
+	return "${if (less != 0.0) less.toString() else "--"} - ${if (biggest != 0.0) biggest.toString() else "--"}"
 }
 
 /**
@@ -280,27 +324,27 @@ fun Availability.getPriceRental(): String {
  */
 fun BottomSheetBehavior<View>.setAnimation(container: View, viewHeight: View) {
 
-    ValueAnimator.ofInt(container.measuredHeight, viewHeight.marginTop).apply {
-        addUpdateListener {
-            peekHeight = it.animatedValue as Int
-        }
-        duration = 500
-    }.start()
+	ValueAnimator.ofInt(container.measuredHeight, viewHeight.marginTop).apply {
+		addUpdateListener {
+			peekHeight = it.animatedValue as Int
+		}
+		duration = 500
+	}.start()
 
-    container.post {
-        val newLayoutParams = (container.layoutParams as? MarginLayoutParams)
-        newLayoutParams?.setMargins(0, 0, 0, viewHeight.marginTop + 1)
-        container.layoutParams = newLayoutParams
-    }
+	container.post {
+		val newLayoutParams = (container.layoutParams as? MarginLayoutParams)
+		newLayoutParams?.setMargins(0, 0, 0, viewHeight.marginTop + 1)
+		container.layoutParams = newLayoutParams
+	}
 }
 
 /**
  * MutableList
  */
 fun <T> MutableList<T>.replaceItemList(item: T, predicate: (T) -> Boolean): MutableList<T> {
-    return this.map {
-        if (predicate(it)) item else it
-    }.toMutableList()
+	return this.map {
+		if (predicate(it)) item else it
+	}.toMutableList()
 }
 
 

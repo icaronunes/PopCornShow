@@ -39,12 +39,9 @@ import utils.Constant
 import utils.UtilsApp
 import utils.makeToast
 import utils.patternRecyler
+import utils.released
 import utils.replaceItemList
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.HashMap
-import java.util.Locale
 
 /**
  * Created by icaro on 26/08/16.
@@ -198,16 +195,7 @@ class TemporadaActivity(override var layout: Int = R.layout.temporada_layout) : 
 		userEp: UserEp?,
 		notifyItemChanged: () -> Unit
 	) {
-		var date: Date? = null
-
-		val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-		try {
-			ep.airDate?.let { date = sdf.parse(it) }
-		} catch (e: ParseException) {
-			e.printStackTrace()
-		}
-
-		if (UtilsApp.verifyLaunch(date)) {
+		if (ep.airDate?.released() == true) {
 			Dialog(this@TemporadaActivity).apply {
 				requestWindowFeature(Window.FEATURE_NO_TITLE)
 				setContentView(R.layout.dialog_custom_rated)

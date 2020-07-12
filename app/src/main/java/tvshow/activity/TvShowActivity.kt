@@ -49,14 +49,11 @@ import utils.createIdReal
 import utils.getNameTypeReel
 import utils.gone
 import utils.makeToast
+import utils.released
 import utils.setAnimation
 import utils.setPicassoWithCache
 import utils.visible
 import java.io.File
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : BaseActivityAb() {
 
@@ -290,7 +287,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 		poster = series.posterPath
 	}
 
-	private fun addOrRemoveWatch() = View.OnClickListener {
+	private fun addOrRemoveWatch() {
 		menu_item_watchlist.animeRotation()
 		model.chanceWatch(add = {
 			it.child("$idTvshow").setValue(makeTvshiwDb())
@@ -306,11 +303,9 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 		this@TvShowActivity.fab_menu.close(true)
 	}
 
-	private fun addOrRemoveFavorite() = View.OnClickListener {
+	private fun addOrRemoveFavorite() {
 		menu_item_favorite.animeRotation()
-		if (!UtilsApp.verifyLaunch(getDateTvshow())) {
-			makeToast(R.string.tvshow_nao_lancado)
-		} else {
+		if (series.firstAirDate?.released() == true) {
 			model.putFavority(
 				add = {
 					it.child(idTvshow.toString()).setValue(null)
@@ -337,17 +332,13 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 			)
 
 			this@TvShowActivity.fab_menu.close(true)
+		} else {
+			makeToast(R.string.tvshow_nao_lancado)
 		}
 	}
 
 	private fun ratedMovie() = View.OnClickListener {
-		if (!UtilsApp.verifyLaunch(getDateTvshow())) {
-			Toast.makeText(
-				this@TvShowActivity,
-				getString(R.string.tvshow_nao_lancado),
-				Toast.LENGTH_SHORT
-			).show()
-		} else {
+		if (series.firstAirDate?.released() == true) {
 			Dialog(this@TvShowActivity).apply {
 				requestWindowFeature(Window.FEATURE_NO_TITLE)
 				setContentView(R.layout.dialog_custom_rated)
@@ -376,6 +367,8 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 				}
 				show()
 			}
+		} else {
+			makeToast(R.string.tvshow_nao_lancado)
 		}
 	}
 
@@ -402,29 +395,18 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 		}
 	}
 
-	private fun getDateTvshow(): Date? {
-		return try {
-			series.firstAirDate?.let {
-				val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-				sdf.parse(it)
-			}
-		} catch (e: ParseException) {
-			e.printStackTrace()
-			null
+	private fun setupViewPagerTabs(tvshow: Tvshow) {
+		viewPager_tvshow.apply {
+			offscreenPageLimit = 2
+			adapter = TvShowAdapter(context, supportFragmentManager, tvshow, colorTop)
+			currentItem = 0
+			tabLayout.setupWithViewPager(this)
+			tabLayout.setSelectedTabIndicatorColor(colorTop)
 		}
 	}
 
-	private fun setupViewPagerTabs(tvshow: Tvshow) {
-		viewPager_tvshow?.offscreenPageLimit = 2
-		viewPager_tvshow?.adapter =
-			TvShowAdapter(this, supportFragmentManager, tvshow, colorTop, seguindo)
-		viewPager_tvshow?.currentItem = 0
-		tabLayout.setupWithViewPager(viewPager_tvshow)
-		tabLayout.setSelectedTabIndicatorColor(colorTop)
-	}
-
 	private fun setImageTop(path: String) {
-		img_top_tvshow.setPicassoWithCache(path, 5, {}, {}, R.drawable.top_empty)
+		img_top_tvshow.setPicassoWithCache(path, 5, img_erro = R.drawable.top_empty)
 		AnimatorSet().apply {
 			playTogether(
 				ObjectAnimator.ofFloat(img_top_tvshow, View.X, -100f, 0.0f)
@@ -442,9 +424,9 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 	}
 
 	private fun setFab() {
-		menu_item_watchlist.setOnClickListener(addOrRemoveWatch())
-		menu_item_favorite.setOnClickListener(addOrRemoveFavorite())
-		menu_item_rated.setOnClickListener(ratedMovie())
+		menu_item_watchlist.setOnClickListener { addOrRemoveWatch() }
+		menu_item_favorite.setOnClickListener { addOrRemoveFavorite() }
+		menu_item_rated.setOnClickListener { ratedMovie() }
 	}
 
 	fun getModelView() = model

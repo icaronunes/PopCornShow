@@ -604,7 +604,7 @@ class MovieFragment : FragmentBase() {
     }
 
     private fun setLancamento() {
-        if (movieDb.releaseDates?.resultsReleaseDates?.isNotEmpty()!!) {
+        if (movieDb.releaseDates?.resultsReleaseDates?.isNotEmpty() == true) {
             val date = movieDb.releaseDates?.resultsReleaseDates?.let {
                 it.firstOrNull { releaseDateItem ->
                     releaseDateItem?.iso31661.equals(Locale.getDefault().country, ignoreCase = true)

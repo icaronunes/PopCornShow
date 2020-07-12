@@ -56,6 +56,7 @@ import utils.animeRotation
 import utils.getNameTypeReel
 import utils.gone
 import utils.makeToast
+import utils.released
 import utils.setAnimation
 import utils.visible
 import utils.yearDate
@@ -315,9 +316,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 
     private fun ratedFilme() = View.OnClickListener {
 
-        if (!UtilsApp.verifyLaunch(getDateMovie())) {
-            makeToast(R.string.filme_nao_lancado)
-        } else {
+        if (movieDb?.releaseDate?.released() == true) {
             openDialog().apply {
                 findViewById<TextView>(R.id.rating_title).text = movieDb?.title ?: ""
                 val ratingBar = findViewById<RatingBar>(R.id.ratingBar_rated).apply { rating = (numberRated / 2) }
@@ -338,6 +337,8 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
                     }
                 }
             }
+        } else {
+            makeToast(R.string.filme_nao_lancado)
         }
     }
 
@@ -375,9 +376,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
     private fun addOrRemoveFavorite(): View.OnClickListener {
         return View.OnClickListener {
             menu_item_favorite.animeRotation()
-            if (!UtilsApp.verifyLaunch(getDateMovie())) {
-                makeToast( R.string.filme_nao_lancado)
-            } else {
+            if (movieDb?.releaseDate?.released() == true) {
                 model.executeFavority({
                     it.child(idMovie.toString()).setValue(null)
                         .addOnCompleteListener {
@@ -391,6 +390,8 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
                             this@MovieDetailsActivity.fab_menu.close(true)
                         }
                 }, idMovie)
+            } else {
+                makeToast( R.string.filme_nao_lancado)
             }
         }
     }
@@ -400,18 +401,6 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
         idImdb = movieDb?.imdbId
         title = movieDb?.title
         poster = movieDb?.posterPath
-    }
-
-    private fun getDateMovie(): Date? {
-        return try {
-            movieDb?.releaseDate?.let {
-                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                sdf.parse(movieDb?.releaseDate)
-            }
-        } catch (e: ParseException) {
-            e.printStackTrace()
-            null
-        }
     }
 
     private fun addOrRemoveWatch(): View.OnClickListener {

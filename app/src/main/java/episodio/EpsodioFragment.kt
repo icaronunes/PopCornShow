@@ -47,13 +47,9 @@ import utils.ConstFirebase.USER
 import utils.ConstFirebase.USEREPS
 import utils.ConstFirebase.VISTO
 import utils.Constant
-import utils.UtilsApp
 import utils.parseDateShot
+import utils.released
 import utils.setPicasso
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 /**
  * Created by icaro on 27/08/16.
@@ -200,16 +196,7 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
     }
 
     private fun setButtonRating(available: String?) {
-        var date: Date? = null
-
-        try {
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            if (available != null) date = sdf.parse(available)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-
-        if (UtilsApp.verifyLaunch(date) && seguindo) {
+        if (available?.released() == true && seguindo) {
             ep_rating_button.setOnClickListener {
                 dialogSetRating()
             }
@@ -223,7 +210,7 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
     }
 
     private fun dialogSetRating() {
-        val alertDialog = Dialog(context!!)
+        val alertDialog = Dialog(requireContext())
         alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         alertDialog.setContentView(R.layout.dialog_custom_rated)
 
@@ -337,7 +324,7 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
     }
 
     private fun setName() {
-        ep_title?.text = if (episode?.name?.isNotEmpty()!!) episode?.name else context!!.getString(R.string.sem_nome)
+        ep_title?.text = if (episode?.name?.isNotEmpty()!!) episode?.name else requireContext().getString(R.string.sem_nome)
     }
 
     companion object {

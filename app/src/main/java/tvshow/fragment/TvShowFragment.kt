@@ -116,7 +116,7 @@ class TvShowFragment : FragmentBase() {
 
 	private lateinit var model: TvShowViewModel
 	private var recyclerViewTemporada: RecyclerView? = null
-	private var tipo: Int = 0
+	private var type: Int = 0
 	private var color: Int = 0
 	private var mediaNotas: Float = 0f
 	private lateinit var series: Tvshow
@@ -126,13 +126,12 @@ class TvShowFragment : FragmentBase() {
 
 	companion object {
 		@JvmStatic
-		fun newInstance(type: Int, series: Tvshow, color: Int, seguindo: Boolean): Fragment {
+		fun newInstance(type: Int, series: Tvshow, color: Int): Fragment {
 			return TvShowFragment().apply {
 				arguments = Bundle().apply {
 					putSerializable(Constant.SERIE, series)
 					putInt(Constant.COLOR_TOP, color)
 					putInt(Constant.ABA, type)
-					putSerializable(Constant.USER, seguindo)
 				}
 			}
 		}
@@ -141,7 +140,7 @@ class TvShowFragment : FragmentBase() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		arguments.let {
-			tipo = arguments?.getInt(Constant.ABA)!!
+			type = arguments?.getInt(Constant.ABA)!!
 			series = arguments?.getSerializable(Constant.SERIE) as Tvshow
 			color = arguments?.getInt(Constant.COLOR_TOP)!!
 		}
@@ -197,7 +196,7 @@ class TvShowFragment : FragmentBase() {
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
-		if (tipo == R.string.informacoes) {
+		if (type == R.string.informacoes) {
 			setAdMob(adView)
 			setTitulo()
 			setCategoria()
@@ -274,7 +273,7 @@ class TvShowFragment : FragmentBase() {
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View? {
-		when (tipo) {
+		when (type) {
 			R.string.temporadas -> {
 				return getViewTemporadas(inflater, container)
 			}

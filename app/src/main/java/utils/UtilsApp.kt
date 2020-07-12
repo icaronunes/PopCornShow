@@ -141,12 +141,6 @@ object UtilsApp {
         }
     }
 
-    fun verifyLaunch(air_date: Date?): Boolean {
-        if (air_date == null) return false
-        val now = Calendar.getInstance().time
-        return if (air_date.before(now)) { true } else !air_date.after(now)
-    }
-
     fun verificaDataProximaLancamento(air_date: Date?): Boolean {
 
         if (air_date == null) return false
@@ -271,17 +265,16 @@ object UtilsApp {
         if (info.type == ConnectivityManager.TYPE_WIFI)
             return "forte" // WIFI
         if (info.type == ConnectivityManager.TYPE_MOBILE) {
-            val networkType = info.subtype
-            when (networkType) {
+           return when (info.subtype) {
                 TelephonyManager.NETWORK_TYPE_GPRS, TelephonyManager.NETWORK_TYPE_EDGE, TelephonyManager.NETWORK_TYPE_CDMA, TelephonyManager.NETWORK_TYPE_1xRTT, TelephonyManager.NETWORK_TYPE_IDEN // api<8 : troque por 11
-                -> return "fraca" // 2G
+                ->  "fraca" // 2G
                 TelephonyManager.NETWORK_TYPE_UMTS, TelephonyManager.NETWORK_TYPE_EVDO_0, TelephonyManager.NETWORK_TYPE_EVDO_A, TelephonyManager.NETWORK_TYPE_HSDPA, TelephonyManager.NETWORK_TYPE_HSUPA, TelephonyManager.NETWORK_TYPE_HSPA, TelephonyManager.NETWORK_TYPE_EVDO_B, // api<9 : troque por 14
                 TelephonyManager.NETWORK_TYPE_EHRPD, // api<11 : troque por 12
                 TelephonyManager.NETWORK_TYPE_HSPAP // api<13 : troque por 15
-                -> return "fraca" // 3G
+                ->  "fraca" // 3G
                 TelephonyManager.NETWORK_TYPE_LTE // api<11 : troque por 13
-                -> return "forte" // 4G
-                else -> return "?"
+                ->  "forte" // 4G
+                else -> "?"
             }
         }
         return "?"
