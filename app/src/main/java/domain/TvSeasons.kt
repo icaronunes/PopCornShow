@@ -66,6 +66,17 @@ data class TvSeasons(
     val posterPath: String? = null
 ) : Serializable
 
+fun EpisodesItem.createUserEp(): UserEp {
+    return UserEp(
+        id,
+        seasonNumber,
+        episodeNumber ?: -1,
+        true,
+        0.0f,
+        name,
+        airDate)
+}
+
 @Generated("com.robohorse.robopojogenerator")
 data class EpisodesItem(
 

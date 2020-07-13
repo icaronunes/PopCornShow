@@ -160,7 +160,7 @@
         </activity>
 
         <activity
-            android:name="temporada.TemporadaActivity"
+            android:name="temporada.SeasonActivity"
             android:parentActivityName="main.MainActivity">
 
             <meta-data

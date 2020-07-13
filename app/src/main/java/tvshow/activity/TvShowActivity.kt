@@ -106,7 +106,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 					setupViewPagerTabs(series)
 					setImageTop(series.backdropPath ?: "")
 					setFab()
-					model.loading(false)
+					model.loadingMedia(false)
 					if (idReel.isEmpty()) model.getRealGoodData(series.createIdReal())
 				}
 				is Failure -> {
@@ -135,7 +135,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 	}
 
 	private fun setLoading(loading: Boolean) {
-		progress_horizontal.visibility = if (loading) View.GONE else View.GONE
+		if(loading) progress_horizontal.visible() else progress_horizontal.gone()
 	}
 
 	private fun setFabVisible(visible: Boolean) {

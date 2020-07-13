@@ -21,7 +21,7 @@ import domain.tvshow.SeasonsItem
 import domain.tvshow.Tvshow
 import elenco.ElencoActivity
 import producao.CrewsActivity
-import temporada.TemporadaActivity
+import temporada.SeasonActivity
 import utils.Constant
 import utils.gone
 import utils.invisible
@@ -167,7 +167,7 @@ class TemporadasAdapter(
     override fun getItemCount() = series.seasons.size
 
     private fun onClickTemporada(position: Int, color: Int) {
-        context.startActivity(Intent(context, TemporadaActivity::class.java).apply {
+        context.startActivity(Intent(context, SeasonActivity::class.java).apply {
             putExtra(Constant.NAME, "${context.getString(R.string.temporada)} ${series.seasons.getOrNull(position)?.seasonNumber ?: 0}")
             putExtra(Constant.TEMPORADA_ID, series.seasons.getOrNull(position)?.seasonNumber ?: 0)
             putExtra(Constant.TEMPORADA_POSITION, position)

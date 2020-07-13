@@ -21,7 +21,7 @@ import producao.CrewsActivity
 import produtora.activity.ProdutoraActivity
 import similares.SimilaresActivity
 import site.Site
-import temporada.TemporadaActivity
+import temporada.SeasonActivity
 import trailer.TrailerActivity
 import tvshow.activity.TvShowActivity
 import utils.Constant
@@ -137,14 +137,14 @@ class CustomNotificationOpenedHandler : NotificationOpenedHandler {
 
     private fun callSeason(context: Context, jsonObject: JSONObject) { //todo feito
         if (jsonObject.has(TEMPORADA_ID) && jsonObject.has(TVSHOW_ID)) {
-            val intent = Intent(context, TemporadaActivity::class.java).apply {
+            val intent = Intent(context, SeasonActivity::class.java).apply {
                 putExtra(TVSHOW_ID, jsonObject.getInt(TVSHOW_ID))
                 putExtra(TEMPORADA_ID, jsonObject.getInt(TEMPORADA_ID))
                 putExtra(NAME, jsonObject.getString(NAME))
                 putExtra(COLOR_TOP, jsonObject.getString(COLOR_TOP))
             }
             TaskStackBuilder.create(context).apply {
-                addParentStack(TemporadaActivity::class.java)
+                addParentStack(SeasonActivity::class.java)
                 addNextIntent(intent)
                 startActivities()
             }

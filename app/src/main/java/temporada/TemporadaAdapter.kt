@@ -4,7 +4,7 @@ import android.view.View
 import domain.EpisodesItem
 import domain.UserEp
 
-interface TemporadaOnClickListener {
+interface SeasonOnClickListener {
 	fun onClickVerTemporada(status: Boolean, id: Int)
 	fun onClickTemporada(position: Int)
 	fun onClickTemporadaNota(

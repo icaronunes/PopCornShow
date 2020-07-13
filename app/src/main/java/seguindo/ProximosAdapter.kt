@@ -18,7 +18,7 @@ import domain.UserTvshow
 import domain.tvshow.Tvshow
 import org.apache.commons.lang3.tuple.MutablePair
 import seguindo.ProximosAdapter.CalendarViewHolder
-import temporada.TemporadaActivity
+import temporada.SeasonActivity
 import tvshow.activity.TvShowActivity
 import utils.Constant
 import utils.UtilsApp
@@ -100,7 +100,7 @@ class ProximosAdapter(private val context: FragmentActivity) :
         }
 
         view.itemView.setOnClickListener { _ ->
-            context.startActivity(Intent(context, TemporadaActivity::class.java).apply {
+            context.startActivity(Intent(context, SeasonActivity::class.java).apply {
                 putExtra(Constant.TVSHOW_ID, old.second.id)
                 putExtra(Constant.TEMPORADA_ID, old.first.seasonNumber)
                 putExtra(Constant.TEMPORADA_POSITION, temporadaZero(old?.second?.seasons?.get(0)?.seasonNumber, old.first.seasonNumber)) // old.first.episodeNumber)

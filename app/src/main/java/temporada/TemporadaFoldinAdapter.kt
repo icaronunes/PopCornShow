@@ -42,8 +42,8 @@ import utils.visible
  */
 
 class TemporadaFoldinAdapter(
-	val temporadaActivity: TemporadaActivity,
-	private val temporadaOnClickListener: TemporadaOnClickListener
+	val temporadaActivity: SeasonActivity,
+	private val temporadaOnClickListener: SeasonOnClickListener
 ) :
 	RecyclerView.Adapter<TemporadaFoldinAdapter.HoldeTemporada>() {
 

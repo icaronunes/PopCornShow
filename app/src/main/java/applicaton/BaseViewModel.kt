@@ -45,6 +45,6 @@ open class BaseViewModel(open val app: Application) : AndroidViewModel(app), Lif
     sealed class BaseRequest<in T> {
         class Failure<T>(val error: Exception) : BaseRequest<T>()
         class Success<T>(val result: T) : BaseRequest<T>()
-        class Loading<T>(val loading: Boolean) : BaseRequest<T>()
+        class Loading<T>(val loading: Boolean) : BaseRequest<T>() // Toodo remover
     }
 }
