@@ -61,21 +61,15 @@ import utils.setAnimation
 import utils.visible
 import utils.yearDate
 import java.io.File
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) : BaseActivityAb() {
-    private val EMPTY_RATED = 0.0f
-    private var numberRated: Float = EMPTY_RATED
+    private val EMPTYRATED = 0.0f
+    private var numberRated: Float = EMPTYRATED
     private lateinit var model: MovieDetatilsViewModel
 
     private var color: Int = 0
     private var idMovie: Int = 0
     private var movieDb: Movie? = null
-    private var addRated = true
-
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,12 +110,9 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 
         model.movie.observe(this, Observer {
             when (it) {
-                is Success -> {
-                    fillData(it.result)
-                    setLoading(false)
-                }
-                is Failure -> ops()
+                is Success -> fillData(it.result)
                 is Loading -> setLoading(it.loading)
+                is Failure -> ops()
             }
         })
     }
@@ -151,11 +142,12 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
     }
 
     private fun fillData(movie: Movie) {
+        setLoading(false)
         movieDb = movie
         title = movie.title
         setupTopFragment(movie)
         setFragmentInfo()
-        setStream() // Chamar antes de detalhes se possivel
+        setStream()
     }
 
     private fun setupTopFragment(movie: Movie) {
@@ -172,7 +164,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 
     private fun setRatedValue(it: DataSnapshot) {
         numberRated = it.child(idMovie.toString()).child("nota").value?.toString()?.toFloat()
-            ?: EMPTY_RATED
+            ?: EMPTYRATED
     }
 
     private fun getData() {
@@ -190,7 +182,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
     }
 
     private fun setStream() {
-        GlobalScope.launch(Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, erro ->
+        GlobalScope.launch(Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, _ ->
             Handler(Looper.getMainLooper()).post {
                 streamview_movie.error = true
                 setAnimated()
