@@ -25,7 +25,7 @@ android {
 
     defaultConfig {
         applicationId "br.com.icaro.filme"
-        minSdkVersion    14
+        minSdkVersion    16
         targetSdkVersion 28
         versionCode 84
         versionName "8.4"
@@ -47,6 +47,24 @@ android {
                 manifestPlaceholders = [onesignal_app_id               : "52e564f3-2422-428e-abc9-307c1027be58",
                                         onesignal_google_project_number: "101446616560"]
             }
+
+            signingConfigs {
+                release {
+                    storeFile file('../app/keystore.jks')
+                    storePassword ""
+                    keyAlias ""
+                    keyPassword ""
+                }
+            }
+            packagingOptions {
+
+                exclude 'META-INF/DEPENDENCIES'
+                exclude 'META-INF/NOTICE'
+                exclude 'META-INF/LICENSE'
+                exclude 'META-INF/LICENSE.txt'
+                exclude 'META-INF/NOTICE.txt'
+            }
+
             buildTypes {
                 debug {
                     debuggable true
@@ -68,31 +86,9 @@ android {
                 }
 
             }
-            signingConfigs {
-                release {
-                    storeFile file('../app/keystore.jks')
-                    storePassword ""
-                    keyAlias ""
-                    keyPassword ""
-                }
-            }
-            packagingOptions {
 
-                exclude 'META-INF/DEPENDENCIES'
-                exclude 'META-INF/NOTICE'
-                exclude 'META-INF/LICENSE'
-                exclude 'META-INF/LICENSE.txt'
-                exclude 'META-INF/NOTICE.txt'
-            }
             flavorDimensions "color"
-            productFlavors {
-                flavor21 {
-                    minSdkVersion 21
-                 //   targetSdkVersion 27
-                   // dimension "color"
-                    resConfigs('pt', 'hdpi')
-                }
-            }
+
             repositories {
                 google()
                 maven { url "https://jitpack.io" }
@@ -140,7 +136,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-database:19.2.0'
     implementation 'com.google.firebase:firebase-dynamic-links:19.0.0'
-    implementation 'com.google.firebase:firebase-perf:19.0.2'
+    implementation 'com.google.firebase:firebase-perf:19.0.7'
     implementation 'com.google.firebase:firebase-messaging:20.0.1'
     //Android
     implementation 'androidx.appcompat:appcompat:1.1.0'
