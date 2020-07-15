@@ -1,5 +1,7 @@
 package temporada
 
+import Color
+import Layout
 import activity.BaseActivityAb
 import android.app.Dialog
 import android.content.Intent
@@ -11,6 +13,7 @@ import android.view.Window
 import android.widget.Button
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import applicaton.BaseViewModel.BaseRequest.Failure
@@ -29,6 +32,7 @@ import kotlinx.android.synthetic.main.temporada_layout.recycleView_temporada
 import tvshow.viewmodel.TvShowViewModel
 import utils.Constant
 import utils.UtilsApp
+import utils.bindBundle
 import utils.gone
 import utils.makeToast
 import utils.patternRecyler
@@ -40,32 +44,37 @@ import java.util.HashMap
 /**
  * Created by icaro on 26/08/16.
  */
-class SeasonActivity(override var layout: Int = R.layout.temporada_layout) : BaseActivityAb(),
+class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseActivityAb(),
 	SeasonOnClickListener {
-	private var seasonId: Int = 0
-	private var seasonPosition: Int = 0
-	private lateinit var titleSeason: String
-	private var tvshowId: Int = 0
-	private var color: Int = 0
-	private lateinit var tvSeason: TvSeasons
+	private val ZERO: Float = 0.0f
+
+	private val seasonId: Int by bindBundle(Constant.TEMPORADA_ID)
+	private val seasonPosition: Int by bindBundle(Constant.TEMPORADA_POSITION)
+	private val tvShowId: Int by bindBundle(Constant.TVSHOW_ID)
+	private val titleSeason: String by bindBundle(Constant.NAME)
+	private val color: Int by bindBundle(Constant.COLOR_TOP, Color.primary)
 	private var fallow: Boolean = false
 	private var seasons: UserSeasons? = null
-	private lateinit var model: TvShowViewModel
+	private lateinit var tvSeason: TvSeasons
+	private val model: TvShowViewModel by lazy {
+		createViewModel(
+			TvShowViewModel::class.java,
+			this
+		)
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		handleTitle()
-		getExtras()
-		model = createViewModel(TvShowViewModel::class.java, this)
 		initAdapter()
 
 		if (UtilsApp.isNetWorkAvailable(this)) {
-			model.hasfallow(tvshowId)
-			model.getSeason(tvshowId, seasonId)
+			model.hasfallow(tvShowId)
+			model.getSeason(tvShowId, seasonId)
 		} else {
 			snack(recycleView_temporada) {
 				if (UtilsApp.isNetWorkAvailable(baseContext)) {
-					model.getSeason(tvshowId, seasonId)
+					model.getSeason(tvShowId, seasonId)
 				} else {
 					snack(recycleView_temporada)
 				}
@@ -75,7 +84,7 @@ class SeasonActivity(override var layout: Int = R.layout.temporada_layout) : Bas
 
 	private fun initAdapter() {
 		recycleView_temporada.patternRecyler(false).apply {
-			adapter = TemporadaFoldinAdapter(
+			adapter = SeasonFoldinAdapter(
 				this@SeasonActivity, this@SeasonActivity
 			)
 		}
@@ -96,16 +105,17 @@ class SeasonActivity(override var layout: Int = R.layout.temporada_layout) : Bas
 	private fun observerSeasonFire() {
 
 		model.isFallow.observe(this, Observer {
-			(recycleView_temporada.adapter as TemporadaFoldinAdapter).changeFallow(it)
-			if (it) model.getSeasonFire(idTvshow = tvshowId, seasonNumber = seasonPosition)
+			(recycleView_temporada.adapter as SeasonFoldinAdapter).changeFallow(it)
+			fallow = it
+			if (it) model.getSeasonFire(idTvshow = tvShowId, seasonNumber = seasonPosition)
 		})
 
 		model.seasons.observe(this, androidx.lifecycle.Observer {
 			if (it.exists()) {
 				seasons = it.getValue(UserSeasons::class.java)
-				(recycleView_temporada.adapter as TemporadaFoldinAdapter).addSeasonFire(seasons)
+				(recycleView_temporada.adapter as SeasonFoldinAdapter).addSeasonFire(seasons)
 			} else {
-				(recycleView_temporada.adapter as TemporadaFoldinAdapter).addSeasonFire(null)
+				(recycleView_temporada.adapter as SeasonFoldinAdapter).addSeasonFire(null)
 			}
 		})
 	}
@@ -117,50 +127,33 @@ class SeasonActivity(override var layout: Int = R.layout.temporada_layout) : Bas
 					tvSeason = it.result
 					supportActionBar?.title =
 						if (tvSeason.name?.isNotEmpty() == true) tvSeason.name else titleSeason
-					(recycleView_temporada.adapter as TemporadaFoldinAdapter).addTvSeason(tvSeason.episodes)
+					(recycleView_temporada.adapter as SeasonFoldinAdapter).addTvSeason(tvSeason.episodes)
 					model.loadingView(false)
 				}
 				is Failure -> {
 					model.loadingView(false)
 					ops()
 				}
-				is Loading -> {}
+				is Loading -> {
+				}
 			}
 		})
 
-		model.loadingView.observe(this, Observer {
-			setLoading(it)
-		})
+		model.loadingView.observe(this, Observer { setLoading(it) })
 	}
 
 	private fun setLoading(loading: Boolean) {
-		if(loading) progress_horizontal.visible() else  progress_horizontal.gone()
+		if (loading) progress_horizontal.visible() else progress_horizontal.gone()
 	}
 
-	private fun getExtras() {
-		if (intent.action == null) {
-			seasonId = intent.getIntExtra(Constant.TEMPORADA_ID, 0)
-			seasonPosition = intent.getIntExtra(Constant.TEMPORADA_POSITION, 0)
-			tvshowId = intent.getIntExtra(Constant.TVSHOW_ID, 0)
-			titleSeason = intent.getStringExtra(Constant.NAME)
-			color = intent.getIntExtra(Constant.COLOR_TOP, resources.getColor(R.color.red))
-		} else {
-			seasonId = Integer.parseInt(intent.getStringExtra(Constant.TEMPORADA_ID))
-			seasonPosition =
-				Integer.parseInt(intent.getStringExtra(Constant.TEMPORADA_POSITION))
-			tvshowId = Integer.parseInt(intent.getStringExtra(Constant.TVSHOW_ID))
-			titleSeason = intent.getStringExtra(Constant.NAME)
-			color = Integer.parseInt(intent.getStringExtra(Constant.COLOR_TOP))
-		}
-	}
 
 	override fun onClickVerTemporada(status: Boolean, id: Int) {
 		fun fillWatchEp(watch: Boolean): HashMap<String, Any> {
 			return HashMap<String, Any>().also {
 				val eps = tvSeason.fillEpUserTvshow(seasons, watch, id).userEps
-				it["/$tvshowId/seasons/$seasonPosition/visto"] =
+				it["/$tvShowId/seasons/$seasonPosition/visto"] =
 					if (status) isWatchAll(eps) else false
-				it["/$tvshowId/seasons/$seasonPosition/userEps"] = eps
+				it["/$tvShowId/seasons/$seasonPosition/userEps"] = eps
 			}
 		}
 
@@ -174,17 +167,20 @@ class SeasonActivity(override var layout: Int = R.layout.temporada_layout) : Bas
 
 	override fun onClickTemporada(position: Int) {
 		startActivity(Intent(this@SeasonActivity, EpsodioActivity::class.java).apply {
-			putExtra(Constant.TVSHOW_ID, tvshowId)
-			putExtra(Constant.POSICAO, position)
-			putExtra(Constant.TEMPORADA_POSITION, seasonPosition)
-			putExtra(Constant.TVSEASONS, tvSeason)
-			putExtra(Constant.COLOR_TOP, color)
-			putExtra(Constant.SEGUINDO, fallow)
+			putExtras(
+				bundleOf(
+					Constant.TVSHOW_ID to tvShowId,
+					Constant.POSICAO to position,
+					Constant.TEMPORADA_POSITION to seasonPosition,
+					Constant.TVSEASONS to tvSeason,
+					Constant.COLOR_TOP to color,
+					Constant.SEGUINDO to fallow
+				)
+			)
 		})
 	}
 
-	override fun onClickTemporadaNota(
-		view: View?,
+	override fun onClickSeasonReated(
 		ep: EpisodesItem,
 		position: Int,
 		userEp: UserEp?,
@@ -193,14 +189,14 @@ class SeasonActivity(override var layout: Int = R.layout.temporada_layout) : Bas
 		if (ep.airDate?.released() == true) {
 			Dialog(this@SeasonActivity).apply {
 				requestWindowFeature(Window.FEATURE_NO_TITLE)
-				setContentView(R.layout.dialog_custom_rated)
+				setContentView(Layout.dialog_custom_rated)
 				val width = resources.getDimensionPixelSize(R.dimen.popup_width)
 				val height = resources.getDimensionPixelSize(R.dimen.popup_height_rated)
 				window!!.setLayout(width, height)
 
 				findViewById<TextView>(R.id.rating_title).text = ep.name
 				val ratingBar = findViewById<RatingBar>(R.id.ratingBar_rated).apply {
-					rating = userEp?.nota ?: 0.0f
+					rating = userEp?.nota ?: ZERO
 				}
 
 				findViewById<Button>(R.id.cancel_rated).apply {
@@ -209,12 +205,12 @@ class SeasonActivity(override var layout: Int = R.layout.temporada_layout) : Bas
 					setOnClickListener {
 						val episode = ep.createUserEp().apply {
 							isAssistido = false
-							nota = 0.0f
+							nota = ZERO
 						}
 
 						val childUpdates = HashMap<String, Any>()
-						childUpdates["$tvshowId/seasons/$seasonPosition/visto/"] = false
-						childUpdates["$tvshowId/seasons/$seasonPosition/userEps/$position/"] =
+						childUpdates["$tvShowId/seasons/$seasonPosition/visto/"] = false
+						childUpdates["$tvShowId/seasons/$seasonPosition/userEps/$position/"] =
 							episode
 						model.watchEp(childUpdates)
 						dismiss()
@@ -233,8 +229,8 @@ class SeasonActivity(override var layout: Int = R.layout.temporada_layout) : Bas
 							.replaceItemList(epRated) { it.id == epRated.id }
 
 						val childUpdates = HashMap<String, Any>().apply {
-							this["$tvshowId/seasons/$seasonPosition/visto"] = isWatchAll(eps)
-							this["$tvshowId/seasons/$seasonPosition/userEps/$position/"] = epRated
+							this["$tvShowId/seasons/$seasonPosition/visto"] = isWatchAll(eps)
+							this["$tvShowId/seasons/$seasonPosition/userEps/$position/"] = epRated
 						}
 						model.watchEp(childUpdates)
 						setnotaIMDB(epRated)
@@ -258,12 +254,10 @@ class SeasonActivity(override var layout: Int = R.layout.temporada_layout) : Bas
 	}
 
 	private fun setnotaIMDB(epRated: UserEp) {
-		model.setRatedTvShowOnTheMovieDB(tvshowId, epRated)
+		model.setRatedTvShowOnTheMovieDB(tvShowId, epRated)
 	}
 
-	override fun onCreateOptionsMenu(menu: Menu): Boolean {
-		return true
-	}
+	override fun onCreateOptionsMenu(menu: Menu) = true
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		if (item.itemId == android.R.id.home) {

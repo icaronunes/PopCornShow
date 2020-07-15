@@ -1,14 +1,12 @@
 package temporada
 
-import android.view.View
 import domain.EpisodesItem
 import domain.UserEp
 
 interface SeasonOnClickListener {
 	fun onClickVerTemporada(status: Boolean, id: Int)
 	fun onClickTemporada(position: Int)
-	fun onClickTemporadaNota(
-		view: View?,
+	fun onClickSeasonReated(
 		ep: EpisodesItem,
 		position: Int,
 		userEp: UserEp?,
