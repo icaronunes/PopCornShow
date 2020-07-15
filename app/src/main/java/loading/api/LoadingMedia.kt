@@ -22,16 +22,16 @@ import utils.Api
 
 class LoadingMedia(val api: Api) : ILoadingMedia {
 
-	override fun getDataMovie(_movie: MutableLiveData<BaseRequest<Movie>>, idMovie: Int) {
+	override fun getDataMovie(liveData: MutableLiveData<BaseRequest<Movie>>, idMovie: Int) {
 		GlobalScope.launch {
-			_movie.postValue(withContext(Dispatchers.Default) { api.getMovie(idMovie) })
+			liveData.postValue(withContext(Dispatchers.Default) { api.getMovie(idMovie) })
 		}
 	}
 
-	override fun getDataTvshow(_tvshow: MutableLiveData<BaseRequest<Tvshow>>, idMovie: Int) {
-		_tvshow.postValue(Loading(true))
+	override fun getDataTvshow(liveData: MutableLiveData<BaseRequest<Tvshow>>, idMovie: Int) {
+		liveData.postValue(Loading(true))
 		GlobalScope.launch {
-			_tvshow.postValue(withContext(Dispatchers.Default) { api.getTvshow(idMovie) })
+			liveData.postValue(withContext(Dispatchers.Default) { api.getTvshow(idMovie) })
 		}
 	}
 

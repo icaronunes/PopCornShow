@@ -11,10 +11,10 @@ import domain.tvshow.Tvshow
 
 interface ILoadingMedia {
 
-    fun getDataMovie(_movie: MutableLiveData<BaseRequest<Movie>>, idMovie: Int)
+    fun getDataMovie(liveData: MutableLiveData<BaseRequest<Movie>>, idMovie: Int)
     fun imdbDate(_imdb: MutableLiveData<BaseRequest<Imdb>>, id: String)
     fun putRated(id: Int, rated: Float, type: String)
-    fun getDataTvshow(_movie: MutableLiveData<BaseRequest<Tvshow>>, idMovie: Int)
+    fun getDataTvshow(liveData: MutableLiveData<BaseRequest<Tvshow>>, idMovie: Int)
     fun getTrailerFromEn(_video: MutableLiveData<BaseRequest<Videos>>, id: Int, type: String)
     fun getDateReel(_realGood: MutableLiveData<BaseRequest<ReelGoodTv>>, idReel: String)
 	fun getSeason(
