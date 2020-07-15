@@ -1,5 +1,6 @@
 package episodio
 
+import Txt
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -47,6 +48,7 @@ import utils.ConstFirebase.USER
 import utils.ConstFirebase.USEREPS
 import utils.ConstFirebase.VISTO
 import utils.Constant
+import utils.notNullOrEmpty
 import utils.parseDateShot
 import utils.released
 import utils.setPicasso
@@ -61,7 +63,6 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
     private var position: Int = 0
     private var temporadaPosition: Int = 0
     private var numeroRated: Float = 0.toFloat()
-
     private var episode: EpisodesItem? = null
     private var userEp: UserEp? = null
     private var seguindo: Boolean = false
@@ -324,7 +325,10 @@ class EpsodioFragment : BaseFragment(), ValueEventListener {
     }
 
     private fun setName() {
-        ep_title?.text = if (episode?.name?.isNotEmpty()!!) episode?.name else requireContext().getString(R.string.sem_nome)
+        ep_title?.text =
+            if (episode?.name?.notNullOrEmpty() == true) episode?.name else requireContext().getString(
+                Txt.sem_nome
+            )
     }
 
     companion object {
