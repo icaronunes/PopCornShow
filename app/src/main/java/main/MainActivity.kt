@@ -1,5 +1,8 @@
 package main
 
+import Color
+import ID
+import Layout
 import activity.BaseActivityAb
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -26,159 +29,190 @@ import kotlinx.android.synthetic.main.activity_main.viewPager_main
 import kotlinx.android.synthetic.main.activity_main.viewpage_top_main
 import utils.UtilsApp
 
-class MainActivity(override var layout: Int = R.layout.activity_main) : BaseActivityAb() {
+class MainActivity(override var layout: Int = Layout.activity_main) : BaseActivityAb() {
 
-    private lateinit var model: MainViewModel
+	private val model: MainViewModel by lazy { createViewModel(MainViewModel::class.java, this) }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        model = createViewModel(MainViewModel::class.java, this)
-        setUpToolBar()
-        setupNavDrawer()
-        setDefaultKeyMode(Activity.DEFAULT_KEYS_SEARCH_LOCAL)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setUpToolBar()
+		setupNavDrawer()
+		setDefaultKeyMode(Activity.DEFAULT_KEYS_SEARCH_LOCAL)
+		supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        animation()
-        setObservers()
-        if (UtilsApp.isNetWorkAvailable(this)) {
-            model.getTopList()
-        } else {
-            snack()
-        }
-        setupViewBotton()
-        model.news()
-    }
+		animation()
+		setObservers()
+		if (UtilsApp.isNetWorkAvailable(this)) {
+			model.getTopList()
+		} else {
+			snack()
+		}
+		setupViewBotton()
+		model.news()
+	}
 
-    private fun setObservers() {
-        model.data.observe(this, Observer {
-            when (it) {
-                is MainViewModel.MainModel.Data -> mescla(it.data.first, it.data.second)
-                is MainViewModel.MainModel.News -> news()
-                is MainViewModel.MainModel.VisibleAnimed -> visibleAnimed(it)
-            }
-        })
-    }
+	private fun setObservers() {
+		model.data.observe(this, Observer {
+			when (it) {
+				is MainViewModel.MainModel.Data -> mescla(it.data.first, it.data.second)
+				is MainViewModel.MainModel.News -> news()
+				is MainViewModel.MainModel.VisibleAnimed -> visibleAnimed(it)
+			}
+		})
+	}
 
-    private fun visibleAnimed(it: MainViewModel.MainModel.VisibleAnimed) {
-        if (it.visible) {
-            activity_main_img?.visibility = View.VISIBLE
-        } else {
-            activity_main_img?.visibility = View.GONE
-        }
-    }
+	private fun visibleAnimed(it: MainViewModel.MainModel.VisibleAnimed) {
+		if (it.visible) {
+			activity_main_img?.visibility = View.VISIBLE
+		} else {
+			activity_main_img?.visibility = View.GONE
+		}
+	}
 
-    private fun news() {
-        AlertDialog.Builder(this)
-            .setIcon(R.drawable.ic_popcorn2)
-            .setTitle(R.string.novidades_title)
-            .setMessage(R.string.novidades_text)
-            .setPositiveButton(R.string.ok) { _, _ ->
-                val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
-                val editor = sharedPref.edit()
-                editor.putBoolean(BuildConfig.VERSION_CODE.toString(), false)
-                editor.remove((BuildConfig.VERSION_CODE - 1).toString())
-                editor.apply()
-            }.create().show()
-    }
+	private fun news() {
+		AlertDialog.Builder(this)
+			.setIcon(R.drawable.ic_popcorn2)
+			.setTitle(R.string.novidades_title)
+			.setMessage(R.string.novidades_text)
+			.setPositiveButton(R.string.ok) { _, _ ->
+				val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
+				val editor = sharedPref.edit()
+				editor.putBoolean(BuildConfig.VERSION_CODE.toString(), false)
+				editor.remove((BuildConfig.VERSION_CODE - 1).toString())
+				editor.apply()
+			}.create().show()
+	}
 
-    private fun animation() {
-        AnimatorSet().apply {
-            play(ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 0.1f, 1f)).apply {
-                with(ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 1f, 0.1f))
-                with(ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 0.1f, 1f))
-            }
-            duration = 500
-            interpolator = AccelerateDecelerateInterpolator()
-            start()
-        }
-    }
+	private fun animation() {
+		AnimatorSet().apply {
+			play(ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 0.1f, 1f)).apply {
+				with(ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 1f, 0.1f))
+				with(ObjectAnimator.ofFloat(activity_main_img, View.ALPHA, 0.1f, 1f))
+			}
+			duration = 500
+			interpolator = AccelerateDecelerateInterpolator()
+			start()
+		}
+	}
 
-    private fun snack() {
-        Snackbar.make(viewpage_top_main, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-            .setAction(R.string.retry) {
-                if (UtilsApp.isNetWorkAvailable(baseContext)) {
-                    model.getTopList()
-                    setupViewBotton()
-                } else {
-                    snack()
-                }
-            }.show()
-    }
+	private fun snack() {
+		Snackbar.make(viewpage_top_main, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+			.setAction(R.string.retry) {
+				if (UtilsApp.isNetWorkAvailable(baseContext)) {
+					model.getTopList()
+					setupViewBotton()
+				} else {
+					snack()
+				}
+			}.show()
+	}
 
-    private fun setupViewPagerTabs(multi: MutableList<TopMain>) {
-        viewpage_top_main.offscreenPageLimit = 2
-        viewpage_top_main.adapter = ViewPageMainTopFragment(supportFragmentManager, multi)
-        indication_main.setViewPager(viewpage_top_main)
-        model.animation(false)
-    }
+	private fun setupViewPagerTabs(multi: MutableList<TopMain>) {
+		viewpage_top_main.offscreenPageLimit = 2
+		viewpage_top_main.adapter = ViewPageMainTopFragment(supportFragmentManager, multi)
+		indication_main.setViewPager(viewpage_top_main)
+		model.animation(false)
+	}
 
-    private fun setupViewBotton() {
+	private fun setupViewBotton() {
+		viewPager_main.apply {
+			offscreenPageLimit = 2
+			currentItem = 0
+			adapter = MainAdapter(this@MainActivity, supportFragmentManager)
+		}
+		tabLayout.apply {
+			setupWithViewPager(viewPager_main)
+			setSelectedTabIndicatorColor(
+				ContextCompat.getColor(
+					this@MainActivity,
+					Color.blue_main
+				)
+			)
+			setTabTextColors(
+				ContextCompat.getColor(this@MainActivity, Color.red),
+				ContextCompat.getColor(this@MainActivity, Color.white)
+			)
+		}
 
-        viewPager_main.offscreenPageLimit = 2
-        viewPager_main.currentItem = 0
-        viewPager_main.adapter = MainAdapter(this, supportFragmentManager)
-        tabLayout.setupWithViewPager(viewPager_main)
+		viewPager_main.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+			override fun onPageSelected(position: Int) {
+				if (position == 0) {
+					tabLayout.setSelectedTabIndicatorColor(
+						ContextCompat.getColor(
+							baseContext,
+							Color.blue_main
+						)
+					)
+					tabLayout.setTabTextColors(
+						ContextCompat.getColor(baseContext, Color.red),
+						ContextCompat.getColor(baseContext, Color.white)
+					)
+				} else {
+					tabLayout.setSelectedTabIndicatorColor(
+						ContextCompat.getColor(
+							baseContext,
+							Color.red
+						)
+					)
+					tabLayout.setTabTextColors(
+						ContextCompat.getColor(
+							baseContext,
+							Color.blue_main
+						), ContextCompat.getColor(baseContext, Color.white)
+					)
+				}
+			}
 
-        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.blue_main))
-        tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.red), ContextCompat.getColor(this, R.color.white))
+			override fun onPageScrolled(
+				position: Int,
+				positionOffset: Float,
+				positionOffsetPixels: Int
+			) {
+			}
 
-        viewPager_main.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-            }
+			override fun onPageScrollStateChanged(state: Int) {}
+		})
+	}
 
-            override fun onPageSelected(position: Int) {
-                if (position == 0) {
-                    tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(baseContext, R.color.blue_main))
-                    tabLayout.setTabTextColors(ContextCompat.getColor(baseContext, R.color.red), ContextCompat.getColor(baseContext, R.color.white))
-                } else {
-                    tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(baseContext, R.color.red))
-                    tabLayout.setTabTextColors(ContextCompat.getColor(baseContext, R.color.blue_main), ContextCompat.getColor(baseContext, R.color.white))
-                }
-            }
+	override fun onResume() {
+		super.onResume()
+		setCheckable(ID.menu_drav_home)
+	}
 
-            override fun onPageScrollStateChanged(state: Int) {}
-        })
-    }
+	private fun mescla(tmdbMovies: ListaFilmes, tmdbTv: ListaSeries) {
 
-    override fun onResume() {
-        super.onResume()
-        setCheckable(R.id.menu_drav_home)
-    }
+		val listaFilmes = tmdbMovies.results.filter {
+			!it?.backdropPath.isNullOrBlank() && !it?.releaseDate.isNullOrBlank()
+		}
 
-    private fun mescla(tmdbMovies: ListaFilmes, tmdbTv: ListaSeries) {
+		val listaTv = tmdbTv.results.filter {
+			!it.backdropPath.isNullOrBlank()
+		}
 
-        val listaFilmes = tmdbMovies.results.filter {
-            !it?.backdropPath.isNullOrBlank() && !it?.releaseDate.isNullOrBlank()
-        }
-
-        val listaTv = tmdbTv.results.filter {
-            !it.backdropPath.isNullOrBlank()
-        }
-
-        val multi = mutableListOf<TopMain>().apply {
-            for (index in 0..15) {
-                val topMain = TopMain() // criar class utilitaria
-                if (index % 2 == 0) {
-                    if (index <= listaFilmes.size) {
-                        val movieDb = listaFilmes[index]!!
-                        topMain.id = movieDb.id
-                        topMain.nome = movieDb.title
-                        topMain.mediaType = "movie"
-                        topMain.imagem = movieDb.backdropPath
-                        add(topMain)
-                    }
-                } else {
-                    if (index <= listaTv.size) {
-                        val tv = listaTv[index]
-                        topMain.id = tv.id!!
-                        topMain.nome = tv.name
-                        topMain.mediaType = "tv"
-                        topMain.imagem = tv.backdropPath
-                        add(topMain)
-                    }
-                }
-            }
-        }
-        setupViewPagerTabs(multi)
-    }
+		val multi = mutableListOf<TopMain>().apply {
+			for (index in 0..15) {
+				val topMain = TopMain() // criar class utilitaria
+				if (index % 2 == 0) {
+					if (index <= listaFilmes.size) {
+						val movieDb = listaFilmes[index]!!
+						topMain.id = movieDb.id
+						topMain.nome = movieDb.title
+						topMain.mediaType = "movie"
+						topMain.imagem = movieDb.backdropPath
+						add(topMain)
+					}
+				} else {
+					if (index <= listaTv.size) {
+						val tv = listaTv[index]
+						topMain.id = tv.id!!
+						topMain.nome = tv.name
+						topMain.mediaType = "tv"
+						topMain.imagem = tv.backdropPath
+						add(topMain)
+					}
+				}
+			}
+		}
+		setupViewPagerTabs(multi)
+	}
 }
