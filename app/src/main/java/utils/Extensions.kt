@@ -1,15 +1,19 @@
 package utils
 
+import android.animation.Animator
+import android.animation.Animator.AnimatorListener
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.view.marginTop
+import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -113,6 +117,23 @@ fun ImageView.setPicassoWithCacheAndHolder(
 	return this
 }
 
+fun ImageView.loadPallet(): Int? {
+	val color = (drawable as? BitmapDrawable)?.run {
+		Palette.Builder(this.bitmap).generate().swatches.first().rgb
+	}
+	return color ?: 0
+}
+
+fun loadPalette(view: ImageView): Int { // Todo Usar ext
+
+	val imageView = view as ImageView
+	val drawable = imageView.drawable as? BitmapDrawable
+	if (drawable != null) {
+		return Palette.Builder(drawable.bitmap).generate().swatches.last().rgb
+	}
+	return 0
+}
+
 /**
  * ACTIVITY
  */
@@ -141,7 +162,12 @@ fun View.invisible() {
 	this.visibility = View.INVISIBLE
 }
 
-fun View.animeRotation() {
+fun View.animeRotation(
+	end: () -> Unit = {},
+	cancel: () -> Unit = {},
+	start: () -> Unit = {},
+	repeat: () -> Unit = {}
+) {
 	ObjectAnimator
 		.ofPropertyValuesHolder(
 			this,
@@ -151,7 +177,13 @@ fun View.animeRotation() {
 			PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.0f, 1.0f)
 		)
 		.apply {
-			duration = 1600
+			duration = 790
+			addListener(object : AnimatorListener {
+				override fun onAnimationRepeat(animation: Animator?) { repeat() }
+				override fun onAnimationEnd(animation: Animator?) { end() }
+				override fun onAnimationCancel(animation: Animator?) { cancel() }
+				override fun onAnimationStart(animation: Animator?) { start() }
+			})
 		}.start()
 }
 
@@ -180,7 +212,6 @@ fun String.removerAcentos(): String {
 	return Normalizer.normalize(this, Normalizer.Form.NFD).replace("[^\\p{ASCII}]".toRegex(), "")
 }
 
-
 fun String.parseDate(): String {
 
 	return try {
@@ -201,7 +232,6 @@ fun String.parseDateShot(): String {
 		"-/-"
 	}
 }
-
 
 fun verifyLaunch(air_date: Date?): Boolean {
 	if (air_date == null) return false
@@ -257,6 +287,8 @@ fun String.getNameTypeReel(): String {
 		.replace("--", "-")
 		.toLowerCase()
 }
+
+fun String?.notNullOrEmpty() = !this.isNullOrEmpty()
 
 fun Tvshow.createIdReal() = createIdReal(this.name ?: "", this.firstAirDate ?: "")
 
