@@ -25,43 +25,53 @@ import utils.setPicassoWithCache
 
 class ListasDelegateAdapter : ViewTypeDelegateAdapter {
 
-    override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            ListViewHolder(parent)
+	override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
+		ListViewHolder(parent)
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType?, context: Context?) {
-        (holder as ListViewHolder).bind(item as ListaItemFilme)
-    }
+	override fun onBindViewHolder(
+		holder: RecyclerView.ViewHolder,
+		item: ViewType?,
+		context: Context?
+	) {
+		(holder as ListViewHolder).bind(item as ListaItemFilme)
+	}
 
-    inner class ListViewHolder(parent: ViewGroup) :
-            RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.lista, parent, false)) {
+	inner class ListViewHolder(parent: ViewGroup) :
+		RecyclerView.ViewHolder(
+			LayoutInflater.from(parent.context).inflate(R.layout.lista, parent, false)
+		) {
 
-        fun bind(item: ListaItemFilme) = with(itemView) {
+		fun bind(item: ListaItemFilme) = with(itemView) {
 
-            img_lista.setPicassoWithCache(item.posterPath, 3)
-            when (item.mediaType) {
-                "tv" -> date_oscar.text = if (!item.first_air_date.isNullOrEmpty() && item.first_air_date.length > 3)
-                    item.first_air_date.subSequence(0, 4) else "-"
-                "movie" -> date_oscar.text = if (!item.releaseDate.isNullOrEmpty() && item.releaseDate.length > 3)
-                    item.releaseDate.subSequence(0, 4) else "-"
-            }
+			img_lista.setPicassoWithCache(item.posterPath, 3)
+			when (item.mediaType) {
+				"tv" -> date_oscar.text =
+					if (!item.first_air_date.isNullOrEmpty() && item.first_air_date.length > 3)
+						item.first_air_date.subSequence(0, 4) else "-"
+				"movie" -> date_oscar.text =
+					if (!item.releaseDate.isNullOrEmpty() && item.releaseDate.length > 3)
+						item.releaseDate.subSequence(0, 4) else "-"
+			}
 
-            progress.visibility = View.GONE
-            itemView.setOnClickListener {
-                when (item.mediaType) {
-                    "tv" -> {
-                        val intent = Intent(context, TvShowActivity::class.java)
-                        intent.putExtra(Constant.TVSHOW_ID, item.id)
-                        intent.putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_lista))
-                        context.startActivity(intent)
-                    }
-                    "movie" -> {
-                        val intent = Intent(context, MovieDetailsActivity::class.java)
-                        intent.putExtra(Constant.FILME_ID, item.id)
-                        intent.putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_lista))
-                        context.startActivity(intent)
-                    }
-                }
-            }
-        }
-    }
+			progress.visibility = View.GONE
+			itemView.setOnClickListener {
+				when (item.mediaType) {
+					"tv" -> {
+						val intent = Intent(context, TvShowActivity::class.java).apply {
+							putExtra(Constant.TVSHOW_ID, item.id)
+							putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_lista))
+						}
+						context.startActivity(intent)
+					}
+					"movie" -> {
+						val intent = Intent(context, MovieDetailsActivity::class.java).apply {
+							putExtra(Constant.FILME_ID, item.id)
+							putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_lista))
+						}
+						context.startActivity(intent)
+					}
+				}
+			}
+		}
+	}
 }
