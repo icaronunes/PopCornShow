@@ -1,16 +1,15 @@
 package busca
 
+import Layout
+import activity.BaseActivityAb
 import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import applicaton.BaseViewModel.BaseRequest
 import br.com.icaro.filme.R
-import br.com.icaro.filme.R.layout
 import busca.adapter.SearchDelegateAdapter
 import domain.search.SearchMulti
 import filme.activity.MovieDetailsActivity
@@ -20,46 +19,42 @@ import kotlinx.android.synthetic.main.search_layout.recycleView_search
 import kotlinx.android.synthetic.main.search_layout.text_search_empty
 import pessoa.activity.PersonActivity
 import tvshow.activity.TvShowActivity
-import utils.BaseActivityKt
 import utils.Constant
 import utils.UtilsApp.isNetWorkAvailable
 import utils.enums.EnumTypeMedia.MOVIE
 import utils.enums.EnumTypeMedia.PERSON
 import utils.enums.EnumTypeMedia.TV
 import utils.gone
+import utils.patternRecyler
 import utils.visible
 
 /**
  * Created by icaro on 08/07/16.
  */
-class SearchMultiActivity : BaseActivityKt() {
-	//Colocar paginação na lista
-	private val recyclerView: RecyclerView by lazy {
-		recycleView_search.apply {
-			layoutManager = LinearLayoutManager(context)
-			itemAnimator = DefaultItemAnimator()
-			setHasFixedSize(true)
-		}
-	}
+class SearchMultiActivity(override var layout: Int = Layout.search_layout) : BaseActivityAb() {
+
+	private val recyclerView: RecyclerView by lazy { recycleView_search.patternRecyler(false) }
 	private val model: SearchMultiModelView by lazy {
-		createViewModel(SearchMultiModelView::class.java, this)
+		createViewModel(
+			SearchMultiModelView::class.java,
+			this
+		)
 	}
 	private var query = ""
 
 	public override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		setContentView(layout.search_layout)
 		setUpToolBar()
 		setupNavDrawer()
-		supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+		handleTitle()
 		query = intent.getStringExtra(SearchManager.QUERY)
-		supportActionBar!!.title = query
 		observers()
 		if (Intent.ACTION_VIEW == intent.action) { //TODO pra que server isso?
 			when {
 				intent.data?.lastPathSegment.equals(MOVIE.type, ignoreCase = true) -> {
 					startActivity(Intent(this, MovieDetailsActivity::class.java).apply {
-						val id = intent?.extras?.getString(SearchManager.EXTRA_DATA_KEY)?.toInt() ?: -1
+						val id =
+							intent?.extras?.getString(SearchManager.EXTRA_DATA_KEY)?.toInt() ?: -1
 						intent.putExtra(Constant.FILME_ID, id)
 						intent.flags = Intent.FLAG_ACTIVITY_FORWARD_RESULT
 					})
@@ -98,6 +93,11 @@ class SearchMultiActivity : BaseActivityKt() {
 				}
 			}
 		}
+	}
+
+	private fun handleTitle() {
+		supportActionBar?.setDisplayHomeAsUpEnabled(true)
+		supportActionBar?.title = query
 	}
 
 	private fun observers() {
