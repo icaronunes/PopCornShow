@@ -22,8 +22,8 @@ import loading.firebase.LoadingFirebase
 import loading.firebase.TypeMediaFireBase
 import utils.Api
 
-class TvShowViewModel(override val app: Application, activity: Activity, val api: Api) : BaseViewModel(app) {
-
+class TvShowViewModel(override val app: Application, val api: Api) : BaseViewModel(app) {
+    private val TV = "tv"
     private val loadingFirebase: ILoadingFireBase = LoadingFirebase(TypeMediaFireBase.TVSHOW)
     private val loadingMedia: ILoadingMedia = LoadingMedia(api)
 
@@ -43,7 +43,7 @@ class TvShowViewModel(override val app: Application, activity: Activity, val api
     private val _videos: MutableLiveData<BaseRequest<Videos>> = MutableLiveData()
     val videos: LiveData<BaseRequest<Videos>> = _videos
     private val _tvshow: MutableLiveData<BaseRequest<Tvshow>> = MutableLiveData()
-    val tvshow: LiveData<BaseRequest<Tvshow>> = _tvshow
+    val tvShow: LiveData<BaseRequest<Tvshow>> = _tvshow
     private val _tvSeason: MutableLiveData<BaseRequest<TvSeasons>> = MutableLiveData()
     val tvSeason: LiveData<BaseRequest<TvSeasons>> = _tvSeason
     private val _real: MutableLiveData<BaseRequest<ReelGoodTv>> = MutableLiveData()
@@ -87,17 +87,14 @@ class TvShowViewModel(override val app: Application, activity: Activity, val api
         loadingFirebase.wathEp(childUpdates)
     }
 
-    fun setRatedOnTheMovieDB(tvshowDB: TvshowDB) {
-        loadingMedia.putRated(tvshowDB.id, tvshowDB.nota, "tv")
-    }
-
+    fun setRatedOnTheMovieDB(tvshowDB: TvshowDB) { loadingMedia.putRated(tvshowDB.id, tvshowDB.nota, TV) }
     fun setRatedTvShowOnTheMovieDB(tvshowId: Int, epRated: UserEp) {
         loadingMedia.putTvEpRated(tvshowId, epRated.seasonNumber, epRated.episodeNumber, epRated.nota)
     }
     fun getRealGoodData(idReel: String) { loadingMedia.getDateReel(_realGood = _real, idReel = idReel) }
 
     fun getImdb(id: String) = loadingMedia.imdbDate(_imdb, id)
-    fun getTrailerEn(idMovie: Int) = loadingMedia.getTrailerFromEn(_videos, idMovie, "tv")
+    fun getTrailerEn(idMovie: Int) = loadingMedia.getTrailerFromEn(_videos, idMovie, TV)
     fun getTvshow(idTvshow: Int) = loadingMedia.getDataTvshow(_tvshow, idMovie = idTvshow)
     fun getSeason(idTvshow: Int, seasonNumber: Int) = loadingMedia.getSeason(_tvSeason, idTvshow, seasonNumber)
     fun loadingMedia(loading: Boolean) { _tvshow.value = Loading(loading) }
