@@ -45,34 +45,34 @@ import tvshow.viewmodel.TvShowViewModel
 import utils.Constant
 import utils.UtilsApp
 import utils.animeRotation
+import utils.bindBundle
+import utils.bundleOrNull
 import utils.createIdReal
 import utils.getNameTypeReel
 import utils.gone
 import utils.makeToast
+import utils.notNullOrEmpty
 import utils.released
 import utils.setAnimation
 import utils.setPicassoWithCache
 import utils.visible
 import java.io.File
 
-class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : BaseActivityAb() {
+class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseActivityAb() {
 
 	private val EMPTYRATED: Float = 0.0f
-	private lateinit var model: TvShowViewModel
-	private var idTvshow: Int = 0
-	private var idReel: String = ""
-	private var colorTop: Int = 0
+	private val idTvshow: Int by bindBundle(Constant.TVSHOW_ID)
+	private val idReel: String? by bundleOrNull(Constant.ID_REEL)
+	private val colorTop: Int by bindBundle(Constant.COLOR_TOP, Color.colorFAB)
 	private lateinit var series: Tvshow
-	private var seguindo: Boolean = false
+	private val model: TvShowViewModel by lazy { createViewModel(TvShowViewModel::class.java, this) }
 	private var numberRated: Float = 0.0f
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setUpToolBar()
 		setupNavDrawer()
-		getExtras()
 		setTitleAndDisableTalk()
-		model = createViewModel(TvShowViewModel::class.java, this)
 		observers()
 		if (UtilsApp.isNetWorkAvailable(baseContext)) {
 			getDataTvshow()
@@ -99,7 +99,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 			setEventListenerWatch(it.child("$idTvshow").exists())
 		})
 
-		model.tvshow.observe(this, Observer {
+		model.tvShow.observe(this, Observer {
 			when (it) {
 				is Success -> {
 					series = it.result
@@ -107,7 +107,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 					setImageTop(series.backdropPath ?: "")
 					setFab()
 					model.loadingMedia(false)
-					if (idReel.isEmpty()) model.getRealGoodData(series.createIdReal())
+					if (idReel?.isEmpty() == true) model.getRealGoodData(series.createIdReal())
 				}
 				is Failure -> {
 					ops()
@@ -167,10 +167,8 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 	}
 
 	private fun getDataTvshow() {
-		if (idReel.isNotEmpty()) model.getRealGoodData(idReel)
-		GlobalScope.launch {
-			model.getTvshow(idTvshow)
-		}
+		if (idReel.notNullOrEmpty()) model.getRealGoodData(idReel!!)
+		GlobalScope.launch { model.getTvshow(idTvshow) }
 	}
 
 	private fun setEventListenerWatch(boolean: Boolean) {
@@ -205,22 +203,6 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 	override fun onDestroy() {
 		model.destroy()
 		super.onDestroy()
-	}
-
-	private fun getExtras() {
-		if (intent.action == null) {
-			colorTop = intent.getIntExtra(Constant.COLOR_TOP, R.color.colorFAB)
-			idTvshow = intent.getIntExtra(Constant.TVSHOW_ID, 0)
-			if (intent.hasExtra(Constant.ID_REEL)) {
-				idReel = intent.getStringExtra(Constant.ID_REEL)
-			}
-		} else {
-			colorTop = Integer.parseInt(intent.getStringExtra(Constant.COLOR_TOP))
-			idTvshow = Integer.parseInt(intent.getStringExtra(Constant.TVSHOW_ID))
-			if (intent.hasExtra(Constant.ID_REEL)) {
-				idReel = intent.getStringExtra(Constant.ID_REEL)
-			}
-		}
 	}
 
 	private fun snack() {
@@ -288,7 +270,7 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 	}
 
 	private fun addOrRemoveWatch() {
-		menu_item_watchlist.animeRotation()
+		menu_item_watchlist.animeRotation(end = { this@TvShowActivity.fab_menu.close(true) })
 		model.chanceWatch(add = {
 			it.child("$idTvshow").setValue(makeTvshiwDb())
 				.addOnCompleteListener {
@@ -300,11 +282,10 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 					makeToast(R.string.tvshow_watch_remove)
 				}
 		}, idMedia = idTvshow)
-		this@TvShowActivity.fab_menu.close(true)
 	}
 
 	private fun addOrRemoveFavorite() {
-		menu_item_favorite.animeRotation()
+		menu_item_favorite.animeRotation(end = { this@TvShowActivity.fab_menu.close(true) })
 		if (series.firstAirDate?.released() == true) {
 			model.putFavority(
 				add = {
@@ -330,14 +311,12 @@ class TvShowActivity(override var layout: Int = R.layout.tvserie_activity) : Bas
 				},
 				id = idTvshow
 			)
-
-			this@TvShowActivity.fab_menu.close(true)
 		} else {
 			makeToast(R.string.tvshow_nao_lancado)
 		}
 	}
 
-	private fun ratedMovie() = View.OnClickListener {
+	private fun ratedMovie() {
 		if (series.firstAirDate?.released() == true) {
 			Dialog(this@TvShowActivity).apply {
 				requestWindowFeature(Window.FEATURE_NO_TITLE)
