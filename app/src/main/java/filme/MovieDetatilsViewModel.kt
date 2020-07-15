@@ -1,6 +1,5 @@
 package filme
 
-import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,8 +18,8 @@ import loading.firebase.LoadingFirebase
 import loading.firebase.TypeMediaFireBase
 import utils.Api
 
-class MovieDetatilsViewModel(app: Application, val activity: Activity, val api: Api) : BaseViewModel(app) {
-
+class MovieDetatilsViewModel(app: Application, val api: Api) : BaseViewModel(app) {
+    private val MOVIE = "movie"
     private val loadingFirebase: ILoadingFireBase = LoadingFirebase(TypeMediaFireBase.MOVIE)
     private val loadingMedia: ILoadingMedia = LoadingMedia(api)
 
@@ -50,20 +49,36 @@ class MovieDetatilsViewModel(app: Application, val activity: Activity, val api: 
     private fun setEventListenerFavorit() = loadingFirebase.setEventListenerFavorit(_favorit)
     private fun setEventListenerRated() = loadingFirebase.setEventListenerRated(_rated)
 
-    fun chanceWatch(add: (DatabaseReference) -> Unit, remove: (DatabaseReference) -> Unit, idMedia: Int) {
+    fun chanceWatch(
+        add: (DatabaseReference) -> Unit,
+        remove: (DatabaseReference) -> Unit,
+        idMedia: Int
+    ) {
         loadingFirebase.changeWatch(add, remove, idMedia, _watch.value)
     }
 
-    fun executeFavority(remove: (DatabaseReference) -> Unit, add: (DatabaseReference) -> Unit, idMovie: Int) {
+    fun executeFavority(
+        remove: (DatabaseReference) -> Unit,
+        add: (DatabaseReference) -> Unit,
+        idMovie: Int
+    ) {
         loadingFirebase.changeFavority(remove, add, idMovie, _favorit.value)
     }
 
-    fun changeRated(change: (DatabaseReference) -> Unit, idMovie: Int) = loadingFirebase.changeRated(change, idMovie)
-    fun setRatedOnTheMovieDB(movieDate: MovieDb) = loadingMedia.putRated(movieDate.id, movieDate.nota, "movie")
-    fun getTrailerEn(idMovie: Int) = loadingMedia.getTrailerFromEn(_videos, idMovie, "movie")
+    fun changeRated(change: (DatabaseReference) -> Unit, idMovie: Int) =
+        loadingFirebase.changeRated(change, idMovie)
+
+    fun setRatedOnTheMovieDB(movieDate: MovieDb) =
+        loadingMedia.putRated(movieDate.id, movieDate.nota, MOVIE)
+
+    fun getTrailerEn(idMovie: Int) = loadingMedia.getTrailerFromEn(_videos, idMovie, MOVIE)
     fun getDataMovie(idMovie: Int) = loadingMedia.getDataMovie(_movie, idMovie)
     fun getImdb(id: String) = loadingMedia.imdbDate(_imdb, id)
+    fun setLoading(boolean: Boolean) {
+        _movie.value = Loading(boolean)
+    }
 
-    fun setLoading(boolean: Boolean) { _movie.value = Loading(boolean) }
-    fun destroy() { loadingFirebase.destroy() }
+    fun destroy() {
+        loadingFirebase.destroy()
+    }
 }
