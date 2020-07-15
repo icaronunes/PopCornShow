@@ -78,9 +78,8 @@ object UtilsApp {
     fun setUserTvShow(serie: Tvshow): UserTvshow {
         return UserTvshow().apply {
             poster = serie.posterPath
-            id = serie.id ?: -1
+            id = serie.id
             nome = serie.originalName
-            // userTvshow.setExternalIds(valoresExternalIds(serie.getExternal_ids()));
             numberOfEpisodes = serie.numberOfEpisodes ?: 0
             numberOfSeasons = serie.numberOfSeasons ?: 0
             seasons = setUserSeasson(serie)
@@ -241,18 +240,13 @@ object UtilsApp {
             conectivtyManager.activeNetworkInfo.isConnected)
     }
 
-    fun loadPalette(view: ImageView): Int {
+    fun loadPalette(view: ImageView): Int { // Todo Usar ext
 
         val imageView = view as ImageView
         val drawable = imageView.drawable as? BitmapDrawable
         if (drawable != null) {
-            val bitmap = drawable.bitmap
-            val builder = Palette.Builder(bitmap)
-            val palette = builder.generate()
-            for (swatch in palette.swatches) {
-                return swatch.rgb
-            }
-        } //Todo verificar o uso de swatch para fazer textos
+            return Palette.Builder(drawable.bitmap).generate().swatches.last().rgb
+        }
         return 0
     }
 
