@@ -11,15 +11,6 @@ import rx.subscriptions.CompositeSubscription
  * Created by icaro on 27/08/17.
  */
 open class BaseActivityKt : BaseActivity() {
-
-    var subscriptions = CompositeSubscription()
-
-    override fun onPause() {
-        super.onPause()
-        subscriptions.clear()
-        subscriptions.unsubscribe()
-    }
-
     fun ops() {
         Toast.makeText(baseContext, getString(R.string.ops), Toast.LENGTH_LONG).show()
     }
