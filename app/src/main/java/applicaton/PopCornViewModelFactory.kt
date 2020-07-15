@@ -26,8 +26,8 @@ class PopCornViewModelFactory constructor(
                 isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(app = application)
                 isAssignableFrom(PersonViewModel::class.java) -> PersonViewModel(app = application, activity = activity)
                 isAssignableFrom(SearchMultiModelView::class.java) -> SearchMultiModelView(app = application)
-                isAssignableFrom(MovieDetatilsViewModel::class.java) -> MovieDetatilsViewModel(app = application, activity = activity, api = api)
-                isAssignableFrom(TvShowViewModel::class.java) -> TvShowViewModel(app = application, activity = activity, api = api)
+                isAssignableFrom(MovieDetatilsViewModel::class.java) -> MovieDetatilsViewModel(app = application, api = api)
+                isAssignableFrom(TvShowViewModel::class.java) -> TvShowViewModel(app = application, api = api)
                 else -> throw IllegalArgumentException("Class Desconhecida...")
             }
         } as T
