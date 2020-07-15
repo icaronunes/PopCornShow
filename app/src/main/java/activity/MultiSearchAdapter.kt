@@ -18,6 +18,7 @@ import utils.Constant
 import utils.UtilsApp
 import utils.enums.EnumTypeMedia
 import utils.getNameTypeReel
+import utils.loadPallet
 import utils.setPicassoWithCache
 import utils.yearDate
 
@@ -33,7 +34,7 @@ class MultiSearchAdapter(val application: Context, private val multiReturn: Mult
                 holder.poster.setPicassoWithCache(item.posterPath, 1)
                 holder.itemView.setOnClickListener {
                     application.startActivity(Intent(application, MovieDetailsActivity::class.java).apply {
-                        putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(holder.poster))
+                        putExtra(Constant.COLOR_TOP, holder.poster.loadPallet())
                         putExtra(Constant.FILME_ID, item.id)
                         putExtra(Constant.NOME_FILME, item.title)
                     })
