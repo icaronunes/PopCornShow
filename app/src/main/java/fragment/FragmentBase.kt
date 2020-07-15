@@ -2,6 +2,7 @@ package fragment
 
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import br.com.icaro.filme.R
 import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
@@ -9,7 +10,7 @@ import rx.subscriptions.CompositeSubscription
 import utils.UtilsKt
 import utils.putString
 
-open class FragmentBase : Fragment() {
+open class FragmentBase : Fragment(), LifecycleOwner {
 
     protected var subscriptions = CompositeSubscription()
 
