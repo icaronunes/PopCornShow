@@ -1,5 +1,6 @@
 package tvshow.fragment
 
+import Layout
 import adapter.CastAdapter
 import adapter.CrewAdapter
 import adapter.TrailerAdapter
@@ -14,7 +15,6 @@ import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
@@ -96,6 +96,7 @@ import utils.Constant.IMDB
 import utils.Constant.METACRITICTV
 import utils.Constant.ROTTENTOMATOESTV
 import utils.UtilsApp.setUserTvShow
+import utils.bindArgument
 import utils.gone
 import utils.makeToast
 import utils.minHeight
@@ -116,10 +117,10 @@ class TvShowFragment : FragmentBase() {
 
 	private lateinit var model: TvShowViewModel
 	private var recyclerViewTemporada: RecyclerView? = null
-	private var type: Int = 0
-	private var color: Int = 0
-	private var mediaNotas: Float = 0f
-	private lateinit var series: Tvshow
+	private val type: Int by bindArgument(Constant.ABA)
+	private val color: Int by bindArgument(Constant.COLOR_TOP)
+	private val series: Tvshow by bindArgument(Constant.SERIE)
+	private var mediaNotas: Float = 0.0f
 	private var userTvshow: UserTvshow? = null
 	private var progressBarTemporada: ProgressBar? = null
 	private var imdbDd: Imdb? = null
@@ -134,15 +135,6 @@ class TvShowFragment : FragmentBase() {
 					putInt(Constant.ABA, type)
 				}
 			}
-		}
-	}
-
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		arguments.let {
-			type = arguments?.getInt(Constant.ABA)!!
-			series = arguments?.getSerializable(Constant.SERIE) as Tvshow
-			color = arguments?.getInt(Constant.COLOR_TOP)!!
 		}
 	}
 
@@ -223,9 +215,9 @@ class TvShowFragment : FragmentBase() {
 			observerImdb()
 			model.getImdb(series.external_ids?.imdbId ?: "")
 			model.hasfallow(series.id)
-        } else {
-            observersSeason()
-            observersStream()
+		} else {
+			observersSeason()
+			observersStream()
 			observerIsFallow()
 			model.fallow(series.id)
 			model.hasfallow(series.id)
@@ -234,7 +226,7 @@ class TvShowFragment : FragmentBase() {
 
 	private fun observerImdb() {
 		model.imdb.observe(viewLifecycleOwner, Observer {
-			when(it) {
+			when (it) {
 				is Success -> {
 					imdbDd = it.result
 					setVotoMedia()
@@ -246,10 +238,14 @@ class TvShowFragment : FragmentBase() {
 
 	private fun initAdapter() {
 		recyclerViewTemporada?.adapter =
-			TemporadasAdapter(requireActivity(), series, color) { position, idSeason, numberSeason ->
-				changeEps(position = position, idSeason = idSeason,  numberSeason =  numberSeason)
+			TemporadasAdapter(
+				requireActivity(),
+				series,
+				color
+			) { position, idSeason, numberSeason ->
+				changeEps(position = position, idSeason = idSeason, numberSeason = numberSeason)
 			}
-    }
+	}
 
 	private fun getViewTemporadas(inflater: LayoutInflater, container: ViewGroup?): View {
 		return inflater.inflate(layout.temporadas, container, false).apply {
@@ -263,8 +259,9 @@ class TvShowFragment : FragmentBase() {
 	}
 
 	private fun getViewInformacoes(inflater: LayoutInflater?, container: ViewGroup?): View? {
-		val view = inflater?.inflate(R.layout.tvshow_info, container, false)
-		view?.findViewById<Button>(R.id.seguir)?.setOnClickListener(onClickSeguir())
+		val view = inflater?.inflate(Layout.tvshow_info, container, false)
+		progressBarTemporada = view?.findViewById<ProgressBar>(R.id.progressBarTemporadas)
+		view?.findViewById<Button>(R.id.seguir)?.setOnClickListener { onClickSeguir() }
 		return view
 	}
 
@@ -492,7 +489,10 @@ class TvShowFragment : FragmentBase() {
 		GlobalScope.launch {
 			val season: UserSeasons = withContext(Dispatchers.Default) {
 				Api(requireContext()).getTvSeasons(id = series.id, id_season = numberSeason)
-			}.fillAllUserEpTvshow(userTvshow?.seasons?.find { it.id == idSeason }, !isVisto(position))
+			}.fillAllUserEpTvshow(
+				userTvshow?.seasons?.find { it.id == idSeason },
+				!isVisto(position)
+			)
 
 			val childUpdates = HashMap<String, Any>()
 			childUpdates["${series.id}/desatualizada"] = true
@@ -501,46 +501,38 @@ class TvShowFragment : FragmentBase() {
 		}
 	}
 
-	private fun onClickSeguir(): OnClickListener {
-		return OnClickListener { view ->
-			if (view != null) {
-				progressBarTemporada =
-					view.rootView?.findViewById<View>(R.id.progressBarTemporadas) as ProgressBar
-				progressBarTemporada?.visible()
-			}
-
-			model.setFallow(series.id,
-				add = {
-					it.child("${series.id}")
-						.setValue(setUserTvShow(series))
-						.addOnCompleteListener { task ->
-							if (task.isSuccessful) {
-								seguir?.setText(R.string.seguindo)
-							} else {
-								requireActivity().makeToast(R.string.erro_seguir)
-							}
+	private fun onClickSeguir() {
+		progressBarTemporada?.visible()
+		model.setFallow(series.id,
+			add = {
+				it.child("${series.id}")
+					.setValue(setUserTvShow(series))
+					.addOnCompleteListener { task ->
+						if (task.isSuccessful) {
+							seguir?.setText(R.string.seguindo)
+						} else {
+							requireActivity().makeToast(R.string.erro_seguir)
 						}
-				}, remove = {
-					AlertDialog.Builder(requireContext())
-						.setTitle(R.string.title_delete)
-						.setMessage(R.string.msg_parar_seguir)
-						.setNegativeButton(R.string.no, null)
-						.setOnDismissListener { progressBarTemporada?.visibility = View.GONE }
-						.setPositiveButton(R.string.ok) { _, _ ->
-							it.child("${series.id}")
-								.removeValue()
-								.addOnCompleteListener { task ->
-									if (task.isSuccessful) {
-										seguir?.setText(R.string.seguir)
-									} else {
-										requireActivity().makeToast(R.string.erro_seguir)
-									}
+					}
+			}, remove = {
+				AlertDialog.Builder(requireContext())
+					.setTitle(R.string.title_delete)
+					.setMessage(R.string.msg_parar_seguir)
+					.setNegativeButton(R.string.no, null)
+					.setOnDismissListener { progressBarTemporada?.visibility = View.GONE }
+					.setPositiveButton(R.string.ok) { _, _ ->
+						it.child("${series.id}")
+							.removeValue()
+							.addOnCompleteListener { task ->
+								if (task.isSuccessful) {
+									seguir?.setText(R.string.seguir)
+								} else {
+									requireActivity().makeToast(R.string.erro_seguir)
 								}
-							progressBarTemporada?.visibility = View.GONE
-						}.create().show()
-				})
-
-		}
+							}
+						progressBarTemporada?.visibility = View.GONE
+					}.create().show()
+			})
 	}
 
 	override fun onDestroy() {
