@@ -3,7 +3,6 @@ package utils
 import android.content.Context
 import android.preference.PreferenceManager
 import android.util.Log
-import android.widget.Toast
 import br.com.icaro.filme.R
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
@@ -12,36 +11,10 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.formats.NativeAdOptions
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import configuracao.SettingsActivity
-import domain.UserTvshow
-import domain.tvshow.Tvshow
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 class UtilsKt {
 
     companion object {
-
-        fun atualizarSerie(context: Context?, serie: Tvshow): UserTvshow {
-            val userTvshow = UtilsApp.setUserTvShow(serie)
-            var rotina: Job = Job()
-            serie.seasons?.forEachIndexed { index, seasonsItem ->
-                try {
-                    rotina = GlobalScope.launch(Dispatchers.Main) {
-                        val season = async(Dispatchers.IO) { Api(context = context!!).getTvSeasons(serie.id!!, seasonsItem?.seasonNumber!!) }.await()
-                        val userEp = UtilsApp.setEp2(season)
-                        if (userEp != null)
-                            userTvshow.seasons!![index].userEps = userEp.toMutableList()
-                    }
-                } catch (ex: Exception) {
-                    Toast.makeText(context, context?.getString(R.string.ops), Toast.LENGTH_SHORT).show()
-                }
-            }
-            if (rotina.isActive || rotina.isCompleted) rotina.cancel()
-            return userTvshow
-        }
 
         fun getIdiomaEscolhido(context: Context?): String {
 
