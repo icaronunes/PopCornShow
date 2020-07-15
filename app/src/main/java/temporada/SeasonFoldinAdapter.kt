@@ -1,11 +1,14 @@
 package temporada
 
+import Color
+import Drawable
+import Layout
+import Txt
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import br.com.icaro.filme.R
 import domain.EpisodesItem
 import domain.UserEp
 import domain.UserSeasons
@@ -41,11 +44,11 @@ import utils.visible
  * Created by root on 27/02/18.
  */
 
-class TemporadaFoldinAdapter(
-	val temporadaActivity: SeasonActivity,
-	private val temporadaOnClickListener: SeasonOnClickListener
+class SeasonFoldinAdapter(
+	val seasonActivity: SeasonActivity,
+	private val seasonOnClickListener: SeasonOnClickListener
 ) :
-	RecyclerView.Adapter<TemporadaFoldinAdapter.HoldeTemporada>() {
+	RecyclerView.Adapter<SeasonFoldinAdapter.HoldeTemporada>() {
 
 	private var listEp: List<EpisodesItem> = listOf()
 	private var seasons: UserSeasons? = null
@@ -57,8 +60,7 @@ class TemporadaFoldinAdapter(
 	override fun onBindViewHolder(holder: HoldeTemporada, position: Int) {
 		val ep = listEp[position]
 		val epUser = seasons?.userEps?.find { ep.id == it.id }
-		val watchSeason = seasons?.isVisto ?: false
-		holder.bind(ep, epUser, watchSeason)
+		holder.bind(ep, epUser)
 	}
 
 	override fun getItemCount() = listEp.size
@@ -71,11 +73,6 @@ class TemporadaFoldinAdapter(
 
 	private fun registerUnfold(position: Int) = unfoldedIndexes.add(position)
 
-	fun notificarMudanca(ep: UserEp?, position: Int) {
-		seasons?.userEps?.set(position, ep!!)
-		notifyItemChanged(position)
-	}
-
 	fun addSeasonFire(seasons: UserSeasons?) {
 		this.seasons = seasons
 		if (seasons != null && listEp.isNotEmpty()) notifyDataSetChanged()
@@ -87,28 +84,18 @@ class TemporadaFoldinAdapter(
 	}
 
 	fun changeFallow(fallow: Boolean) {
-		if(this.fallow != fallow) {
+		if (this.fallow != fallow) {
 			this.fallow = fallow
 			notifyDataSetChanged()
 		}
 	}
-	fun changeTvWithRated(episode: UserEp) {
-		seasons?.userEps?.map {
-			if (it.id == episode.id) {
-				episode
-			} else {
-				it
-			}
-		}
-		notifyDataSetChanged()
-	}
 
 	inner class HoldeTemporada(parent: ViewGroup) :
 		RecyclerView.ViewHolder(
-			LayoutInflater.from(temporadaActivity).inflate(R.layout.foldin_main, parent, false)
+			LayoutInflater.from(seasonActivity).inflate(Layout.foldin_main, parent, false)
 		) {
 
-		fun bind(ep: EpisodesItem, epUser: UserEp?, watchSeason: Boolean): Unit = with(itemView) {
+		fun bind(ep: EpisodesItem, epUser: UserEp?): Unit = with(itemView) {
 			epsodio_star.visibility = if (fallow) View.VISIBLE else View.GONE
 			item_epsodio_titulo.text = ep.name
 			item_epsodio_titulo_resumo.text = ep.overview
@@ -119,7 +106,7 @@ class TemporadaFoldinAdapter(
 			epsodio_detalhes_img.setPicassoWithCache(
 				ep.stillPath,
 				5,
-				img_erro = R.drawable.empty_popcorn
+				img_erro = Drawable.empty_popcorn
 			)
 			epsodio_detalhes_nota.text = ep.overview
 
@@ -140,13 +127,13 @@ class TemporadaFoldinAdapter(
 			ep.crew?.firstOrNull { it?.job == Constant.DIRECTOR }?.let {
 				grup_director.visible()
 				director_name.text = it.name
-				img_director.setPicassoWithCache(it.profilePath, 3, img_erro = R.drawable.person)
+				img_director.setPicassoWithCache(it.profilePath, 3, img_erro = Drawable.person)
 			}
 
 			ep.crew?.firstOrNull { it?.job == Constant.WRITER }?.let {
 				grup_writer.visible()
 				writer_name.text = it.name
-				writer_img.setPicassoWithCache(it.profilePath, 3, img_erro = R.drawable.person)
+				writer_img.setPicassoWithCache(it.profilePath, 3, img_erro = Drawable.person)
 			}
 
 			epUser?.nota?.let {
@@ -155,31 +142,27 @@ class TemporadaFoldinAdapter(
 			}
 
 			layout_diretor_nome_visto.setOnClickListener {
-				temporadaOnClickListener.onClickVerTemporada(
-					if( epUser != null) !epUser.isAssistido else false, ep.id)
+				seasonOnClickListener.onClickVerTemporada(
+					if (epUser != null) !epUser.isAssistido else false, ep.id
+				)
 			}
 			epsodio_detalhes_ler_mais.setOnClickListener {
-				temporadaOnClickListener.onClickTemporada(layoutPosition)
+				seasonOnClickListener.onClickTemporada(layoutPosition)
 			}
 
 			wrapper_rating.setOnClickListener {
-				temporadaOnClickListener.onClickTemporadaNota(
-					wrapper_rating,
-					ep,
-					layoutPosition,
-					epUser
-				) {
+				seasonOnClickListener.onClickSeasonReated(ep, layoutPosition, epUser) {
 					notifyItemChanged(layoutPosition)
 				}
 			}
 
 			folding_cell.setOnClickListener {
-				temporadaOnClickListener.onClickScrool(layoutPosition)
+				seasonOnClickListener.onClickScrool(layoutPosition)
 				try {
 					folding_cell.toggle(false)
 					registerToggle(layoutPosition)
 				} catch (ex: IllegalStateException) {
-					temporadaActivity.makeToast(R.string.ops)
+					seasonActivity.makeToast(Txt.ops)
 				}
 			}
 
@@ -187,10 +170,10 @@ class TemporadaFoldinAdapter(
 				when (epUser?.isAssistido == true) {
 					true -> {
 						item_epsodio_visto.apply {
-							setBackgroundColor(ContextCompat.getColor(context, R.color.green))
+							setBackgroundColor(ContextCompat.getColor(context, Color.green))
 						}
 						layout_diretor_nome_visto.apply {
-							setBackgroundColor(ContextCompat.getColor(context, R.color.green))
+							setBackgroundColor(ContextCompat.getColor(context, Color.green))
 						}
 					}
 					false -> {
@@ -198,7 +181,7 @@ class TemporadaFoldinAdapter(
 							setBackgroundColor(
 								ContextCompat.getColor(
 									context,
-									R.color.gray_reviews
+									Color.gray_reviews
 								)
 							)
 						}
@@ -206,7 +189,7 @@ class TemporadaFoldinAdapter(
 							setBackgroundColor(
 								ContextCompat.getColor(
 									context,
-									R.color.gray_reviews
+									Color.gray_reviews
 								)
 							)
 						}
