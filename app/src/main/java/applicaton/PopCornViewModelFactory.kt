@@ -10,6 +10,7 @@ import login.LoginViewModel
 import main.MainFragViewModel
 import main.MainViewModel
 import pessoa.modelview.PersonViewModel
+import seguindo.FallowModel
 import tvshow.viewmodel.TvShowViewModel
 import utils.Api
 
@@ -27,8 +28,12 @@ class PopCornViewModelFactory constructor(
                 isAssignableFrom(PersonViewModel::class.java) -> PersonViewModel(app = application, activity = activity)
                 isAssignableFrom(SearchMultiModelView::class.java) -> SearchMultiModelView(app = application)
                 isAssignableFrom(MovieDetatilsViewModel::class.java) -> MovieDetatilsViewModel(app = application, api = api)
-                isAssignableFrom(TvShowViewModel::class.java) -> TvShowViewModel(app = application, api = api)
-                else -> throw IllegalArgumentException("Class Desconhecida...")
+	            isAssignableFrom(TvShowViewModel::class.java) -> TvShowViewModel(
+		            app = application,
+		            api = api
+	            )
+	            isAssignableFrom(FallowModel::class.java) -> FallowModel(application = application)
+	            else -> throw IllegalArgumentException("Class Desconhecida...")
             }
         } as T
 }

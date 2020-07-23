@@ -121,7 +121,7 @@ data class EpisodesItem(
 	val name: String? = null,
 
 	@field:SerializedName("season_number")
-	val seasonNumber: Int? = null,
+	val seasonNumber: Int,
 
 	@field:SerializedName("id")
 	val id: Int,

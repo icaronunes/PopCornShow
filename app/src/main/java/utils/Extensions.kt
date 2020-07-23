@@ -261,6 +261,11 @@ fun String.yearDate(): String {
 	return this.substring(0, 4)
 }
 
+fun String.periodLaunch(): Boolean {
+	val oneWeekBack = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -7) }.time
+	return getDate() != null && getDate()!!.after(oneWeekBack) //valida data
+}
+
 fun String.getNameTypeReel(): String {
 	return replace(":", "-")
 		.replace(" ", "-")
@@ -290,7 +295,7 @@ fun String.getNameTypeReel(): String {
 
 fun String?.notNullOrEmpty() = !this.isNullOrEmpty()
 
-fun Tvshow.createIdReal() = createIdReal(this.name ?: "", this.firstAirDate ?: "")
+fun Tvshow.createIdReal() = createIdReal(this.originalName ?: "", this.firstAirDate ?: "")
 
 private fun createIdReal(originalName: String, data: String) =
 	"${originalName.getNameTypeReel()}-${data.yearDate()}"

@@ -167,44 +167,6 @@ public class FilmeService {
         return imdb;
     }
 
-    public static ReviewsUflixit getReviews(String id, String type) {
-        try {
-            final String url = "https://uflixit.p.mashape.com/movie/reviews/" + id;
-            OkHttpClient client = new OkHttpClient.Builder()
-                    .connectTimeout(10, TimeUnit.SECONDS)
-                    .readTimeout(30, TimeUnit.SECONDS)
-                    .build();
-            Request request = new Request.Builder()
-                    .url(url)
-                    .addHeader("Accept", "application/json")
-                    .addHeader("X-Mashape-Key", "BHZzlw5fvGmshgVcYJEYyRfFjEvcp1j3XVrjsndTOINYyd0z47")
-                    .build(); // Teste - BHZzlw5fvGmshgVcYJEYyRfFjEvcp1j3XVrjsndTOINYyd0z47 - 2m7eCR43FVmshfyoDP78TZNfNtgsp1Z0lyAjsnRX3PMQElsJA9
-            // These code snippets use an open-source library.
-
-            Response response = client.newCall(request).execute();
-            //  Log.d(TAG, "getReviews: "+ response.body().toString());
-            return parseJSONReviws(response);
-
-        } catch (IOException e) {
-
-            Crashlytics.logException(e);
-        }
-        return null;
-
-    }
-
-    private static ReviewsUflixit parseJSONReviws(Response response) {
-        Gson gson = new GsonBuilder().create();
-        ReviewsUflixit reviewsUflixit = null;
-        try {
-            reviewsUflixit = gson.fromJson(response.body().string(), ReviewsUflixit.class);
-
-        } catch (Exception e) {
-            Crashlytics.logException(e);
-        }
-        return reviewsUflixit;
-    }
-
     public static PersonCredits getPersonCreditsCombinado(int personId) {
         ApiUrl apiUrl = new ApiUrl(TMDB_METHOD_PERSON, personId, "tv_credits");
         return mapJsonResult(apiUrl, PersonCredits.class);

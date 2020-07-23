@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_epsodios.adView
 import kotlinx.android.synthetic.main.activity_epsodios.tabLayout_epsodio
 import kotlinx.android.synthetic.main.activity_epsodios.viewpager_epsodio
 import utils.Constant
-import utils.bindBundle
+import utils.kotterknife.bindBundle
 
 /**
  * Created by icaro on 27/08/16.

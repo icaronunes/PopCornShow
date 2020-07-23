@@ -22,21 +22,22 @@ import utils.visible
 /**
  * Created by icaro on 02/12/16.
  */
-class SeguindoRecycleAdapter(private val context: FragmentActivity?, private val userTvshows: MutableList<UserTvshow>) :
-    RecyclerView.Adapter<SeguindoViewHolder>() {
+class SeguindoRecycleAdapter(private val context: FragmentActivity?) :
+	RecyclerView.Adapter<SeguindoViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SeguindoViewHolder(parent)
+	private var userTvshows: MutableList<UserTvshow> = mutableListOf()
 
-    override fun onBindViewHolder(holder: SeguindoViewHolder, position: Int) = holder.bind(userTvshows[position])
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SeguindoViewHolder(parent)
+	override fun onBindViewHolder(holder: SeguindoViewHolder, position: Int) =
+		holder.bind(userTvshows[position])
 
-    override fun getItemCount() = userTvshows.size
+	override fun getItemCount() = userTvshows.size
+	override fun getItemViewType(position: Int) = position
 
-    override fun getItemViewType(position: Int) = position
-
-    fun add(tvFire: UserTvshow) {
-        userTvshows.add(tvFire)
-        notifyItemInserted(userTvshows.size - 1)
-    }
+	fun add(tvFire: UserTvshow) {
+		userTvshows.add(tvFire)
+		notifyItemInserted(userTvshows.size - 1)
+	}
 
     inner class SeguindoViewHolder(parent: ViewGroup) :
         RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.seguindo_tvshow, parent, false)) {

@@ -3,7 +3,6 @@ package loading.firebase
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
-import kotlin.collections.HashMap
 
 interface ILoadingFireBase {
 
@@ -19,8 +18,13 @@ interface ILoadingFireBase {
     fun isFallow(hasFallow: MutableLiveData<Boolean>, idTvshow: Int)
     fun setFallow(fallow: MutableLiveData<DataSnapshot>, add: (DatabaseReference) -> Unit, remove: (DatabaseReference) -> Unit, id: Int)
     fun wathEp(childUpdates: HashMap<String, Any>)
-
-    fun setEpWatched(fallow: MutableLiveData<DataSnapshot>, add: (DatabaseReference) -> Unit, remove: (DatabaseReference) -> Unit, id: Int)
+	fun allFallow(fallow: MutableLiveData<DataSnapshot>)
+	fun setEpWatched(
+		fallow: MutableLiveData<DataSnapshot>,
+		add: (DatabaseReference) -> Unit,
+		remove: (DatabaseReference) -> Unit,
+		id: Int
+	)
     fun fillSeason(_watch: MutableLiveData<DataSnapshot>, season: HashMap<String, Any>)
     fun fillSeasons(idTvshow: Int, seasonNumber: Int, _seasons: MutableLiveData<DataSnapshot>)
 }

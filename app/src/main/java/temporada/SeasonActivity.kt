@@ -32,8 +32,8 @@ import kotlinx.android.synthetic.main.temporada_layout.recycleView_temporada
 import tvshow.viewmodel.TvShowViewModel
 import utils.Constant
 import utils.UtilsApp
-import utils.bindBundle
 import utils.gone
+import utils.kotterknife.bindBundle
 import utils.makeToast
 import utils.patternRecyler
 import utils.released

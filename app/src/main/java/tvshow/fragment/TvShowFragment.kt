@@ -96,8 +96,8 @@ import utils.Constant.IMDB
 import utils.Constant.METACRITICTV
 import utils.Constant.ROTTENTOMATOESTV
 import utils.UtilsApp.setUserTvShow
-import utils.bindArgument
 import utils.gone
+import utils.kotterknife.bindArgument
 import utils.makeToast
 import utils.minHeight
 import utils.patternRecyler
@@ -249,7 +249,7 @@ class TvShowFragment : FragmentBase() {
 
 	private fun getViewTemporadas(inflater: LayoutInflater, container: ViewGroup?): View {
 		return inflater.inflate(layout.temporadas, container, false).apply {
-			progressBarTemporada = findViewById(R.id.progressBarTemporadas)
+			progressBarTemporada = findViewById(R.id.progress_temporadas)
 			recyclerViewTemporada = findViewById<RecyclerView>(R.id.temporadas_recycler)
 				.patternRecyler(false).apply {
 					setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
@@ -260,7 +260,7 @@ class TvShowFragment : FragmentBase() {
 
 	private fun getViewInformacoes(inflater: LayoutInflater?, container: ViewGroup?): View? {
 		val view = inflater?.inflate(Layout.tvshow_info, container, false)
-		progressBarTemporada = view?.findViewById<ProgressBar>(R.id.progressBarTemporadas)
+		progressBarTemporada = view?.findViewById<ProgressBar>(R.id.progress_temporadas)
 		view?.findViewById<Button>(R.id.seguir)?.setOnClickListener { onClickSeguir() }
 		return view
 	}

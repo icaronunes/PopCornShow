@@ -253,7 +253,7 @@ public class ListaWatchlistFragment extends Fragment {
 
     private View getViewMovie(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.temporadas, container, false); // Criar novo layout
-        view.findViewById(R.id.progressBarTemporadas).setVisibility(View.GONE);
+        view.findViewById(R.id.progress_temporadas).setVisibility(View.GONE);
         recyclerViewFilme = view.findViewById(R.id.temporadas_recycler);
         recyclerViewFilme.setHasFixedSize(true);
         recyclerViewFilme.setItemAnimator(new DefaultItemAnimator());
@@ -270,7 +270,7 @@ public class ListaWatchlistFragment extends Fragment {
 
     private View getViewTvShow(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.temporadas, container, false);// Criar novo layout
-        view.findViewById(R.id.progressBarTemporadas).setVisibility(View.GONE);
+        view.findViewById(R.id.progress_temporadas).setVisibility(View.GONE);
         recyclerViewTvShow = view.findViewById(R.id.temporadas_recycler);
         recyclerViewTvShow.setHasFixedSize(true);
         recyclerViewTvShow.setItemAnimator(new DefaultItemAnimator());

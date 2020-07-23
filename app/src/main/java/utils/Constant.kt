@@ -54,6 +54,7 @@ object Constant {
 	const val USER = "user"
 	const val SEGUINDO = "seguindo"
 	const val TEMPORADA_POSITION = "temporada_position"
+	const val EP_POSITION_FIRE = "position_ep_fire"
 	const val TWITTER_URL = "@appopcorn"
 	const val PRODUCAO = "producao"
 	const val POSTER = "poster"

@@ -52,9 +52,9 @@ import utils.Api
 import utils.Constant
 import utils.UtilsApp
 import utils.animeRotation
-import utils.bindBundle
 import utils.getNameTypeReel
 import utils.gone
+import utils.kotterknife.bindBundle
 import utils.makeToast
 import utils.released
 import utils.setAnimation

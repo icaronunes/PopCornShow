@@ -339,12 +339,14 @@ class Api(val context: Context) : ApiSingleton() {
         }
     }
 
-    suspend fun getTvShowLiteC(id: Int): Tvshow { // Usado em "Seguindo"
+    suspend fun getTvShowLiteC(id: Int): Tvshow {
         return suspendCancellableCoroutine { cont ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
-                .url("${baseUrl3}tv/$id?api_key=${Config.TMDB_API_KEY}" + "&language=$timeZone" +
-                    "&append_to_response=release_dates,external_ids&include_image_language=en,null")
+                .url(
+                    "${baseUrl3}tv/$id?api_key=${Config.TMDB_API_KEY}&language=$timeZone" +
+                            "&append_to_response=release_dates,external_ids&include_image_language=en,null"
+                )
                 .get()
                 .build()
 
@@ -374,7 +376,7 @@ class Api(val context: Context) : ApiSingleton() {
         return suspendCancellableCoroutine { cont ->
             val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
             val request = Request.Builder()
-                .url("${baseUrl3}tv/$id/season/$idTemp/episode/$idEp?api_key=${getKey()}" + "&language=$timeZone")
+                .url("${baseUrl3}tv/$id/season/$idTemp/episode/$idEp?api_key=${getKey()}&language=$timeZone")
                 .get()
                 .build()
             client.newCall(request).enqueue(object : Callback {

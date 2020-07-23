@@ -60,25 +60,37 @@ class LoadingFirebase(type: TypeMediaFireBase) : BaseFireBase(type), ILoadingFir
 
     override fun fillSeason(_fallow: MutableLiveData<DataSnapshot>, season: HashMap<String, Any>) {
         myFallow.updateChildren(season).addOnCompleteListener {
-            it
+	        it
         }.addOnFailureListener {//TODO precisa disso?
-            it
+	        it
         }
     }
 
-    override fun wathEp(childUpdates: HashMap<String, Any>) {
-        myFallow.updateChildren(childUpdates)
-    }
+	override fun wathEp(childUpdates: HashMap<String, Any>) {
+		myFallow.updateChildren(childUpdates)
+	}
 
-    override fun destroy() {
-        myWatch.removeEventListener(valueEventWatch)
-        myRated.removeEventListener(valueEventRated)
-        myFavorite.removeEventListener(valueEventFavorite)
-        if (mediaFireBase == TVSHOW) myFallow.removeEventListener(valueEventFallow)
-    }
+	override fun allFallow(fallow: MutableLiveData<DataSnapshot>) {
+		myFallow.addValueEventListener(object : ValueEventListener {
+			override fun onCancelled(dataSnapshot: DatabaseError) {
 
-    override fun setEventListenerWatch(live: MutableLiveData<DataSnapshot>) {
-        valueEventWatch = object : ValueEventListener {
+			}
+
+			override fun onDataChange(dataSnapshot: DataSnapshot) {
+				fallow.value = dataSnapshot
+			}
+		})
+	}
+
+	override fun destroy() {
+		myWatch.removeEventListener(valueEventWatch)
+		myRated.removeEventListener(valueEventRated)
+		myFavorite.removeEventListener(valueEventFavorite)
+		if (mediaFireBase == TVSHOW) myFallow.removeEventListener(valueEventFallow)
+	}
+
+	override fun setEventListenerWatch(live: MutableLiveData<DataSnapshot>) {
+		valueEventWatch = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 live.value = dataSnapshot
             }

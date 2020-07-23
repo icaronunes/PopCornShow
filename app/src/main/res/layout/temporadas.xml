@@ -5,10 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/temporadas_recycler"
+    <ProgressBar
+        android:id="@+id/progress_temporadas"
+        style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/trade_size_dp_50"
+        android:indeterminate="false" />
 
     <TextView
         android:id="@+id/text_search_empty"
@@ -20,13 +23,10 @@
         tools:visibility="visible"
         tools:text="Empty"
         android:visibility="gone" />
-    <ProgressBar
-        android:id="@+id/progressBarTemporadas"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/trade_size_dp_50"
-        android:indeterminate="false" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/temporadas_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </FrameLayout>

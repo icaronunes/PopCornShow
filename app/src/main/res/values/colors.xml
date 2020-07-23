@@ -31,4 +31,7 @@
     <color name="blue_main">#ef0f0ffc</color>
     <color name="color_botton_main">#df531812</color>
 
+    <color name="gray_by_shimmer">#80EFE9E5</color>
+    <color name="light_by_shimmer">#dddddd</color>
+
 </resources>

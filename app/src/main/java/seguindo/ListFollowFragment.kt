@@ -1,5 +1,6 @@
 package seguindo
 
+import Layout
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -7,29 +8,31 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import applicaton.BaseFragment
 import br.com.icaro.filme.R
+import com.google.firebase.database.DataSnapshot
+import domain.EpisodesItem
 import domain.UserEp
 import domain.UserTvshow
+import domain.fistNotWatch
+import domain.tvshow.Fallow
+import domain.tvshow.Tvshow
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.apache.commons.lang3.tuple.MutablePair
 import utils.Api
-import utils.Constant
-import java.io.Serializable
+import utils.gone
+import java.util.ArrayList
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -37,158 +40,104 @@ import kotlin.coroutines.CoroutineContext
  */
 class ListFollowFragment : BaseFragment() {
 
-    private var userTvshows: MutableList<UserTvshow>? = null
-    private var tipo: Int = 0
-    private var rotina: Job? = null
-    private var adapterProximo: ProximosAdapter? = null
-    private var adapterSeguindo: SeguindoRecycleAdapter? = null
+	private lateinit var progress: ProgressBar
+	private var fallowAdapterDelegates: FallowAdapterDelegates? = null
 
-    private val coroutineContext: CoroutineContext
-        get() = Main + SupervisorJob() + CoroutineExceptionHandler { coroutineContext, throwable ->
-            Handler(Looper.getMainLooper()).post {
-                Toast
-                    .makeText(requireActivity(),
-                        requireActivity().getString(R.string.ops), Toast.LENGTH_LONG).show()
-            }
-        }
+	private var listTvShow: MutableList<Tvshow> = mutableListOf()
+	private var listEp: MutableList<EpisodesItem> = mutableListOf()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            tipo = requireArguments().getInt(Constant.ABA)
-            userTvshows = requireArguments().getSerializable(Constant.SEGUINDO) as MutableList<UserTvshow>
-        }
-    }
+	private val model: FallowModel by lazy { createViewModel(FallowModel::class.java) }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        when (tipo) {
+	private val coroutineContext: CoroutineContext
+		get() = Main + SupervisorJob() + CoroutineExceptionHandler { coroutineContext, throwable ->
+			Handler(Looper.getMainLooper()).post {
+				Toast
+					.makeText(
+						requireActivity(),
+						requireActivity().getString(R.string.ops), Toast.LENGTH_LONG
+					).show()
+			}
+		}
 
-            0 -> {
-                return getViewMissing(inflater, container)
-            }
-            1 -> {
-                return getViewSeguindo(inflater, container)
-            }
-        }
-        return null
-    }
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View {
+		return getViewMissing(inflater, container)
+	}
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        when (tipo) {
-            0 -> {
-                verificarProximoEp()
-            }
-            1 -> {
-                verificarSerieCoroutine()
-            }
-        }
-    }
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+		observers()
+	}
 
-    private fun verificarProximoEp() {
-        val series = mutableListOf<Pair<UserEp, UserTvshow>>()
-        userTvshows?.forEach eps@{ userTvshow ->
-            userTvshow.seasons?.forEach {
-                if (it.seasonNumber != 0)
-                    it.userEps?.forEach { userEp ->
-                        if (!userEp.isAssistido) {
-                            val pair = Pair(userEp, userTvshow)
-                            series.add(pair)
-                            adapterProximo?.addSeries(pair)
-                            return@eps
-                        }
-                    }
-            }
-        }
-        atualizar(series)
-    }
+	private fun observers() {
+		model.fallow.observe(viewLifecycleOwner, Observer {
+			setDataFallow(it)
+		})
+	}
 
-    private fun atualizar(series: MutableList<Pair<UserEp, UserTvshow>>) {
-        series.forEach {
-            try {
-                GlobalScope.launch(coroutineContext) {
-                    // Pegar serie atualizada do Server. Enviar para o metodo para atualizar baseado nela
-                    val serie = async(IO) { Api(context = requireContext()).getTvShowLiteC(it.second.id) }
-                    val ep = async(IO) { Api(context = requireContext()).getTvShowEpC(it.second.id, it.first.seasonNumber, it.first.episodeNumber) }
-                    val ultima = async { MutablePair(ep.await(), serie.await()) }.await()
-                    launch {
-                        adapterProximo?.addAtual(ultima)
-                    }
-                }
-            } catch (ex: Exception) {
-                Log.d(this.javaClass.name, ex.toString())
-            }
-        }
-    }
+	private fun setDataFallow(dataSnapshot: DataSnapshot) {
+		val userTvshowFire = ArrayList<UserTvshow>()
+		if (dataSnapshot.exists()) {
+			try {
+				dataSnapshot.children
+					.asSequence()
+					.map {
+						it.getValue(UserTvshow::class.java)
+					}
+					.forEach { userTvshowFire.add(it!!) }
+			} catch (e: Exception) {
+				Log.d(this.javaClass.name, e.toString())
+				Toast.makeText(requireContext(), e.toString(), Toast.LENGTH_SHORT).show()
+			}
+		}
+		val notWatch = userTvshowFire.mapNotNull {
+			val ep = it.fistNotWatch()
+			if (ep == null) null else Pair(it, ep)
+		}
+		fetchMedia(notWatch)
+	}
 
-    private fun verificarSerieCoroutine() {
-        try {
-            userTvshows?.forEach { tvFire ->
-                rotina = GlobalScope.launch(coroutineContext) {
-                    val serie = async(IO) {
-                        delay(600)
-                        Api(context = requireContext()).getTvShowLiteC(tvFire.id)
+	private fun fetchMedia(series: List<Pair<UserTvshow, UserEp>>) {
+		fallowAdapterDelegates?.clearList()
+		series.forEach { pair ->
+			val (tvShow, epUser) = pair
+			GlobalScope.launch(coroutineContext) {
+				val tvShowUpdated = listTvShow.find { it.id == tvShow.id } ?: async(IO) {
+					Api(
+						context = requireContext()
+					).getTvShowLiteC(tvShow.id)
 
-                    }.await()
-                    if (serie.numberOfEpisodes != null) {
-                        tvFire.desatualizada = serie.numberOfEpisodes != tvFire.numberOfEpisodes
-                        adapterSeguindo?.add(tvFire)
-                    } else {
-                        tvFire.desatualizada = false
-                        adapterSeguindo?.add(tvFire)
-                    }
-                }
-            }
-        } catch (ex: Exception) {
-            ex.message
-        }
-    }
+				}.await()
+				listTvShow.add(tvShowUpdated)
+				val ep = listEp.find { it.id == epUser.id } ?: async(IO) {
+					Api(context = requireContext()).getTvShowEpC(
+						tvShow.id,
+						epUser.seasonNumber,
+						epUser.episodeNumber
+					)
+				}.await()
+				listEp.add(ep)
+				val updater = Fallow(tvShowUpdated, tvShow, ep)
+				//Todo enviar atualização pro firebase - chamar no destroy se possivel
+				fallowAdapterDelegates?.add(updater)
+			}
+		}
+		progress.gone()
+	}
 
-    private fun getViewMissing(inflater: LayoutInflater, container: ViewGroup?): View {
-        val view = inflater.inflate(R.layout.temporadas, container, false) // Criar novo layout
-        view.findViewById<View>(R.id.progressBarTemporadas).visibility = View.GONE
-        adapterProximo = ProximosAdapter(requireActivity())
-        view.findViewById<RecyclerView>(R.id.temporadas_recycler).apply {
-            setHasFixedSize(true)
-            itemAnimator = DefaultItemAnimator()
-            layoutManager = LinearLayoutManager(context)
-            adapter = adapterProximo
-        }
-        return view
-    }
-
-    private fun getViewSeguindo(inflater: LayoutInflater, container: ViewGroup?): View {
-        val view = inflater.inflate(R.layout.seguindo, container, false) // Criar novo layout
-        view.findViewById<View>(R.id.progressBarTemporadas).visibility = View.GONE
-        adapterSeguindo = SeguindoRecycleAdapter(activity, mutableListOf())
-        view.findViewById<RecyclerView>(R.id.seguindo_recycle).apply {
-            setHasFixedSize(true)
-            itemAnimator = DefaultItemAnimator()
-            layoutManager = GridLayoutManager(context, 4)
-            adapter = adapterSeguindo
-        }
-        return view
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (rotina != null) {
-            rotina!!.cancel()
-        }
-    }
-
-    companion object {
-        fun newInstance(tipo: Int, userTvshows: List<UserTvshow>): Fragment {
-            return ListFollowFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(Constant.SEGUINDO, userTvshows as Serializable)
-                    putInt(Constant.ABA, tipo)
-                }
-            }
-        }
-    }
+	private fun getViewMissing(inflater: LayoutInflater, container: ViewGroup?): View {
+		return with(inflater.inflate(Layout.temporadas, container, false)) {
+			progress = findViewById(R.id.progress_temporadas)
+			fallowAdapterDelegates = FallowAdapterDelegates(context)
+			findViewById<RecyclerView>(R.id.temporadas_recycler).apply {
+				setHasFixedSize(true)
+				itemAnimator = DefaultItemAnimator()
+				layoutManager = LinearLayoutManager(context)
+				adapter = fallowAdapterDelegates
+			}
+		}
+	}
 }

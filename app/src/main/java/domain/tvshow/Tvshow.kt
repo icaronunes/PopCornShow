@@ -6,33 +6,41 @@ import java.io.Serializable
 import javax.annotation.Generated
 
 fun Tvshow.fillTvshowUser(): UserTvshow {
-    return UserTvshow(id = id,
-        nome = name,
-        numberOfEpisodes = numberOfEpisodes!!,
-        numberOfSeasons = numberOfSeasons!!,
-        poster = posterPath,
-        externalIds = external_ids,
-        desatualizada = false,
-        seasons = mutableListOf())
+	return UserTvshow(
+		id = id,
+		nome = name,
+		numberOfEpisodes = numberOfEpisodes!!,
+		numberOfSeasons = numberOfSeasons!!,
+		poster = posterPath,
+		externalIds = external_ids,
+		desatualizada = false,
+		seasons = mutableListOf()
+	)
 }
+
+fun Tvshow.sumNotWatch(seasonNumber: Int, epNumber: Int) = seasons.sumBy {
+	if (it.seasonNumber != 0 && it.seasonNumber < seasonNumber) {
+		it.episodeCount!!
+	} else 0
+}.plus(epNumber)
 
 @Generated("com.robohorse.robopojogenerator")
 data class Tvshow(
 
-    @field:SerializedName("original_language")
-    val originalLanguage: String? = null,
+	@field:SerializedName("original_language")
+	val originalLanguage: String? = null,
 
-    @field:SerializedName("number_of_episodes")
-    val numberOfEpisodes: Int? = null,
+	@field:SerializedName("number_of_episodes")
+	val numberOfEpisodes: Int,
 
-    @field:SerializedName("videos")
-    val videos: Videos? = null,
+	@field:SerializedName("videos")
+	val videos: Videos? = null,
 
-    @field:SerializedName("networks")
-    val networks: List<NetworksItem?>? = null,
+	@field:SerializedName("networks")
+	val networks: List<NetworksItem?>? = null,
 
-    @field:SerializedName("type")
-    val type: String? = null,
+	@field:SerializedName("type")
+	val type: String? = null,
 
     @field:SerializedName("backdrop_path")
     val backdropPath: String? = null,

@@ -1,5 +1,7 @@
 package tvshow.activity
 
+import Color
+import Layout
 import activity.BaseActivityAb
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -45,11 +47,11 @@ import tvshow.viewmodel.TvShowViewModel
 import utils.Constant
 import utils.UtilsApp
 import utils.animeRotation
-import utils.bindBundle
-import utils.bundleOrNull
 import utils.createIdReal
 import utils.getNameTypeReel
 import utils.gone
+import utils.kotterknife.bindBundle
+import utils.kotterknife.bundleOrNull
 import utils.makeToast
 import utils.notNullOrEmpty
 import utils.released
@@ -107,7 +109,9 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 					setImageTop(series.backdropPath ?: "")
 					setFab()
 					model.loadingMedia(false)
-					if (idReel?.isEmpty() == true) model.getRealGoodData(series.createIdReal())
+					if (idReel.isNullOrEmpty()) {
+						model.getRealGoodData(series.createIdReal())
+					}
 				}
 				is Failure -> {
 					ops()

@@ -1,6 +1,5 @@
 package tvshow.viewmodel
 
-import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -327,7 +327,7 @@
         </activity>
 
         <activity
-            android:name="seguindo.SeguindoActivity"
+            android:name="seguindo.FallowingActivity"
             android:parentActivityName="main.MainActivity">
 
             <meta-data

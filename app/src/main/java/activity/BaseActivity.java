@@ -76,7 +76,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-import seguindo.SeguindoActivity;
+import seguindo.FallowingActivity;
 import utils.Api;
 import utils.Constant;
 import utils.UtilsApp;
@@ -305,7 +305,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
 
             case R.id.seguindo:
 
-                intent = new Intent(this, SeguindoActivity.class);
+                intent = new Intent(this, FallowingActivity.class);
                 intent.putExtra(Constant.LISTA_ID, BuildConfig.VERSION_CODE - 1);
                 intent.putExtra(Constant.LISTA_NOME, R.string.oscar);
                 startActivity(intent);

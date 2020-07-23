@@ -22,13 +22,6 @@
             android:layout_width="match_parent"
             android:id="@+id/viewpage_usuario"
             android:layout_height="match_parent"/>
-
-        <include layout="@layout/include_progress"
-            android:visibility="visible"
-            android:id="@+id/progress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
     </FrameLayout>
 
 </LinearLayout>

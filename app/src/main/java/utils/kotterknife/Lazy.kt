@@ -1,4 +1,4 @@
-package utils
+package utils.kotterknife
 
 import androidx.lifecycle.Lifecycle.Event.ON_STOP
 import androidx.lifecycle.LifecycleObserver
@@ -30,5 +30,7 @@ class Lazy<T, W>(private val block: (T, KProperty<*>) -> W) : ReadOnlyProperty<T
 	}
 
 	@OnLifecycleEvent(ON_STOP)
-	fun destroy() { value = NOTHING }
+	fun destroy() {
+		value = NOTHING
+	}
 }
