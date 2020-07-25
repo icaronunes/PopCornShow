@@ -18,8 +18,8 @@ class ListUserAdapter(private val context: Context) : RecyclerView.Adapter<Recyc
     private val delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     init {
-        delegateAdapters.put(Constant.BuscaConstants.LOADING, LoadingDelegateAdapter())
-        delegateAdapters.put(Constant.BuscaConstants.NEWS, ListasDelegateAdapter())
+        delegateAdapters.put(Constant.ViewTypesIds.LOADING, LoadingDelegateAdapter())
+        delegateAdapters.put(Constant.ViewTypesIds.NEWS, ListasDelegateAdapter())
         listaResult.add(loading)
     }
 
@@ -57,7 +57,7 @@ class ListUserAdapter(private val context: Context) : RecyclerView.Adapter<Recyc
 
         private val loading = object : ViewType {
             override fun getViewType(): Int {
-                return Constant.BuscaConstants.LOADING
+                return Constant.ViewTypesIds.LOADING
             }
         }
     }

@@ -24,5 +24,5 @@ data class ListaFilmes(
     @field:SerializedName("total_results")
     val totalResults: Int = 0
 ) : ViewType {
-    override fun getViewType() = Constant.BuscaConstants.NEWS
+    override fun getViewType() = Constant.ViewTypesIds.NEWS
 }

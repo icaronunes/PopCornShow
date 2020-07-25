@@ -162,4 +162,8 @@ class LoadingFirebase(type: TypeMediaFireBase) : BaseFireBase(type), ILoadingFir
         myFallow.child("$idTvshow").child("seasons").child("$seasonNumber")
             .addValueEventListener(valueEventSeason)
     }
+
+    override fun upDateTvDetails(idTvshow: Int, updated: HashMap<String, Any?>) {
+        myFallow.child("$idTvshow").updateChildren(updated)
+    }
 }

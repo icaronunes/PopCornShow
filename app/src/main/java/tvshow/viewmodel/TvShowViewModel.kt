@@ -101,6 +101,10 @@ class TvShowViewModel(override val app: Application, val api: Api) : BaseViewMod
     fun fallow(idTvshow: Int) = loadingFirebase.isWatching(_fallow, idTvshow = idTvshow)
     fun hasfallow(idTvshow: Int) = loadingFirebase.isFallow(isFallow, idTvshow = idTvshow)
     fun fillSeason(childUpdates: HashMap<String, Any>) { loadingFirebase.fillSeason(_fallow, childUpdates) }
-    fun getSeasonFire(idTvshow: Int, seasonNumber: Int) = loadingFirebase.fillSeasons(idTvshow, seasonNumber, _seasons)
+    fun getSeasonFire(idTvshow: Int, seasonNumber: Int) =
+        loadingFirebase.fillSeasons(idTvshow, seasonNumber, _seasons)
 
+    fun update(id: Int, childUpdates: HashMap<String, Any?>) {
+        loadingFirebase.upDateTvDetails(id, childUpdates)
+    }
 }

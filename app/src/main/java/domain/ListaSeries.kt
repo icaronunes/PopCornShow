@@ -19,7 +19,7 @@ data class ListaSeries(
     @field:SerializedName("total_results")
     val totalResults: Int? = null
 ) : ViewType {
-    override fun getViewType() = Constant.BuscaConstants.NEWS
+    override fun getViewType() = Constant.ViewTypesIds.NEWS
 }
 
 data class ListaItemSerie(
@@ -63,5 +63,5 @@ data class ListaItemSerie(
     @field:SerializedName("vote_count")
     val voteCount: Int? = null
 ) : ViewType {
-    override fun getViewType() = Constant.BuscaConstants.NEWS
+	override fun getViewType() = Constant.ViewTypesIds.NEWS
 }

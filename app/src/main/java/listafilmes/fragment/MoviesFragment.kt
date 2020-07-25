@@ -89,10 +89,14 @@ class MoviesFragment : FragmentBase() {
 
                         UtilsKt.getAnuncio(requireContext(), 2) {
                             if (recycle_listas != null &&
-                                (recycle_listas.adapter as ListaFilmesAdapter).itemCount > 0 &&
-                                (recycle_listas.adapter as ListaFilmesAdapter)
-                                    .getItemViewType((recycle_listas.adapter as ListaFilmesAdapter).itemCount - 1) != Constant.BuscaConstants.AD)
-                                (recycle_listas.adapter as ListaFilmesAdapter).addAd(it, totalPagina)
+	                            (recycle_listas.adapter as ListaFilmesAdapter).itemCount > 0 &&
+	                            (recycle_listas.adapter as ListaFilmesAdapter)
+		                            .getItemViewType((recycle_listas.adapter as ListaFilmesAdapter).itemCount - 1) != Constant.ViewTypesIds.AD
+                            )
+	                            (recycle_listas.adapter as ListaFilmesAdapter).addAd(
+		                            it,
+		                            totalPagina
+	                            )
                         }
                     }
                 }

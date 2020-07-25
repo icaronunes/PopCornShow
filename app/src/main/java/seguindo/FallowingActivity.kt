@@ -19,7 +19,6 @@ class FallowingActivity(override var layout: Int = Layout.activity_usuario_list)
 	private val viewPager: ViewPager by findView(R.id.viewpage_usuario)
 	private val tabView: TabLayout by findView(R.id.tabLayout)
 
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setUpToolBar()
@@ -28,19 +27,7 @@ class FallowingActivity(override var layout: Int = Layout.activity_usuario_list)
 		setupViewPagerTabs()
 	}
 
-	override fun onOptionsItemSelected(item: MenuItem): Boolean {
-		if (item.itemId == android.R.id.home) {
-			finish()
-			return true
-		}
-		return super.onOptionsItemSelected(item)
-	}
-
 	private fun setupViewPagerTabs() {
-//        TabLayoutMediator(tabView, viewPager) { tab: Tab, i: Int ->
-//
-//        }.attach()
-
 		viewPager.apply {
 			offscreenPageLimit = 1
 			currentItem = 2
@@ -53,5 +40,13 @@ class FallowingActivity(override var layout: Int = Layout.activity_usuario_list)
 			)
 			adapter = FollowingAdapater(this@FallowingActivity, supportFragmentManager)
 		}
+	}
+
+	override fun onOptionsItemSelected(item: MenuItem): Boolean {
+		if (item.itemId == android.R.id.home) {
+			finish()
+			return true
+		}
+		return super.onOptionsItemSelected(item)
 	}
 }

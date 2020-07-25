@@ -19,7 +19,7 @@ class FollowingAdapater(
 		return if (position == 0) {
 			ListFollowFragment()
 		} else {
-			ListFollowFragment2.newInstance(position)
+			ListAllFollowFragment()
 		}
 	}
 

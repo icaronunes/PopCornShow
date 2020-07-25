@@ -63,10 +63,12 @@ object Constant {
 
 	val ELENCO = "elenco"
 
-	object BuscaConstants {
+	object ViewTypesIds {
 		val NEWS = 1
 		val LOADING = 2
 		val AD = 3
+		val TVSHOW = 4
+		val FALLOW = 5
 	}
 
 	object ReelGood {

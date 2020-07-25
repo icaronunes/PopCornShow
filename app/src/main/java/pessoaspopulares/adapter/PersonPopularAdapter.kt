@@ -17,14 +17,14 @@ class PersonPopularAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     private val loadingItem = object : ViewType {
-        override fun getViewType() = Constant.BuscaConstants.LOADING
+        override fun getViewType() = Constant.ViewTypesIds.LOADING
     }
 
     init {
-        delegateAdapters.put(Constant.BuscaConstants.LOADING, LoadingDelegateAdapter())
-        delegateAdapters.put(Constant.BuscaConstants.NEWS, PersonDelegateAdapter())
-        personResultsPage = ArrayList()
-        personResultsPage.add(loadingItem)
+	    delegateAdapters.put(Constant.ViewTypesIds.LOADING, LoadingDelegateAdapter())
+	    delegateAdapters.put(Constant.ViewTypesIds.NEWS, PersonDelegateAdapter())
+	    personResultsPage = ArrayList()
+	    personResultsPage.add(loadingItem)
     }
 
     fun addPersonPopular(personResults: List<PersonItem>) {

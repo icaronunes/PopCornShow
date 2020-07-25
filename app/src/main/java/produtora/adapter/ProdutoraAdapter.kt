@@ -16,14 +16,14 @@ class ProdutoraAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     private val loadingItem = object : ViewType {
-        override fun getViewType() = Constant.BuscaConstants.LOADING
+        override fun getViewType() = Constant.ViewTypesIds.LOADING
     }
 
     init {
-        delegateAdapters.put(Constant.BuscaConstants.LOADING, LoadingDelegateAdapter())
-        delegateAdapters.put(Constant.BuscaConstants.NEWS, ProdutoraMovieAdapter())
-        produtoraResultsPage = ArrayList()
-        produtoraResultsPage.add(loadingItem)
+	    delegateAdapters.put(Constant.ViewTypesIds.LOADING, LoadingDelegateAdapter())
+	    delegateAdapters.put(Constant.ViewTypesIds.NEWS, ProdutoraMovieAdapter())
+	    produtoraResultsPage = ArrayList()
+	    produtoraResultsPage.add(loadingItem)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

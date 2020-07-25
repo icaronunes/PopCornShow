@@ -98,11 +98,14 @@ class TvShowsFragment : FragmentBase() {
                         ++pagina
                         UtilsKt.getAnuncio(context!!, 2) { nativeAd: UnifiedNativeAd ->
                             if (recycle_listas != null &&
-                                (recycle_listas.adapter as ListaSeriesAdapter)
-                                    .getItemViewType((recycle_listas.adapter as ListaSeriesAdapter).itemCount - 1)
-                                != Constant.BuscaConstants.AD) {
-                                (recycle_listas.adapter as ListaSeriesAdapter).addAd(nativeAd)
-                                (recycle_listas.adapter as ListaSeriesAdapter).addLoading(totalResults = it.totalResults)
+	                            (recycle_listas.adapter as ListaSeriesAdapter)
+		                            .getItemViewType((recycle_listas.adapter as ListaSeriesAdapter).itemCount - 1)
+	                            != Constant.ViewTypesIds.AD
+                            ) {
+	                            (recycle_listas.adapter as ListaSeriesAdapter).addAd(nativeAd)
+	                            (recycle_listas.adapter as ListaSeriesAdapter).addLoading(
+		                            totalResults = it.totalResults
+	                            )
                             }
                         }
                     }

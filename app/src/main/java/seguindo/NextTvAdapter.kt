@@ -33,7 +33,7 @@ import utils.setPicassoWithCache
 /**
  * Created by icaro on 25/11/16.
  */
-class ProximosAdapter : ViewTypeDelegateAdapter {
+class NextTvAdapter : ViewTypeDelegateAdapter {
 	//TODO validar com Diff... para não chamar novamente as apis
 	private var list: MutableList<Triple<Tvshow, UserTvshow, EpisodesItem>> = mutableListOf()
 	private var colorTop: Int = 0

@@ -19,7 +19,7 @@ data class PersonPopular(
     @field:SerializedName("total_results")
     val totalResults: Int? = null
 ) : ViewType {
-    override fun getViewType() = Constant.BuscaConstants.NEWS
+    override fun getViewType() = Constant.ViewTypesIds.NEWS
 }
 
 @Generated("com.robohorse.robopojogenerator")
@@ -43,7 +43,7 @@ data class PersonItem(
     @field:SerializedName("adult")
     val adult: Boolean? = null
 ) : ViewType {
-    override fun getViewType() = Constant.BuscaConstants.NEWS
+	override fun getViewType() = Constant.ViewTypesIds.NEWS
 }
 
 @Generated("com.robohorse.robopojogenerator")
@@ -94,5 +94,5 @@ data class KnownForItem(
     @field:SerializedName("vote_count")
     val voteCount: Int? = null
 ) : ViewType {
-    override fun getViewType() = Constant.BuscaConstants.NEWS
+	override fun getViewType() = Constant.ViewTypesIds.NEWS
 }

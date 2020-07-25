@@ -5,5 +5,5 @@ import domain.ViewType
 import utils.Constant
 
 data class ListAd(val unifiedNativeAd: UnifiedNativeAd) : ViewType {
-    override fun getViewType() = Constant.BuscaConstants.AD
+    override fun getViewType() = Constant.ViewTypesIds.AD
 }

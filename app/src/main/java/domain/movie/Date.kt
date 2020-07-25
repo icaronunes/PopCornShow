@@ -12,5 +12,5 @@ data class Date(
     @field:SerializedName("minimum")
     val minimum: String? = null
 ) : ViewType {
-    override fun getViewType() = Constant.BuscaConstants.NEWS
+    override fun getViewType() = Constant.ViewTypesIds.NEWS
 }

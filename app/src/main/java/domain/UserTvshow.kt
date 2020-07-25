@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.annotation.Keep
 import domain.tvshow.ExternalIds
 import kotlinx.android.parcel.Parcelize
+import utils.Constant
 
 fun UserTvshow.fistNotWatch(): UserEp? {
 	val season = this.seasons.firstOrNull {
@@ -31,4 +32,6 @@ data class UserTvshow(
 	var seasons: MutableList<UserSeasons> = mutableListOf(),
 	var externalIds: ExternalIds? = null,
 	var desatualizada: Boolean = false
-) : Parcelable
+) : Parcelable, ViewType {
+	override fun getViewType() = Constant.ViewTypesIds.TVSHOW
+}

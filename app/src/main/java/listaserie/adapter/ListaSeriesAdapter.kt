@@ -19,10 +19,10 @@ class ListaSeriesAdapter(private val context: Context) : RecyclerView.Adapter<Re
     private val delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     init {
-        delegateAdapters.put(Constant.BuscaConstants.LOADING, LoadingDelegateAdapter())
-        delegateAdapters.put(Constant.BuscaConstants.NEWS, ListasSeriesDelegateAdapter())
-        delegateAdapters.put(Constant.BuscaConstants.AD, AdDelegateAdapter())
-        listaResult.add(loading)
+	    delegateAdapters.put(Constant.ViewTypesIds.LOADING, LoadingDelegateAdapter())
+	    delegateAdapters.put(Constant.ViewTypesIds.NEWS, ListasSeriesDelegateAdapter())
+	    delegateAdapters.put(Constant.ViewTypesIds.AD, AdDelegateAdapter())
+	    listaResult.add(loading)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
@@ -36,20 +36,20 @@ class ListaSeriesAdapter(private val context: Context) : RecyclerView.Adapter<Re
 
     fun addSeries(listaMedia: List<ListaItemSerie?>?) {
         // TODO fix metodo
-        if (itemCount != 0 && listaResult[itemCount - 1].getViewType() == Constant.BuscaConstants.LOADING) {
-            this.listaResult.removeAt(itemCount - 1)
-            notifyItemRemoved(itemCount)
-        }
+	    if (itemCount != 0 && listaResult[itemCount - 1].getViewType() == Constant.ViewTypesIds.LOADING) {
+		    this.listaResult.removeAt(itemCount - 1)
+		    notifyItemRemoved(itemCount)
+	    }
         val before = listaResult.size
         this.listaResult.addAll(listaMedia as List<ViewType>)
         notifyItemRangeInserted(before, this.listaResult.size - 1 /* plus loading item */)
     }
 
     fun addAd(ad: UnifiedNativeAd) {
-        if (itemCount != 0 && listaResult[itemCount - 1].getViewType() == Constant.BuscaConstants.LOADING) {
-            this.listaResult.removeAt(itemCount - 1)
-            notifyItemRemoved(itemCount)
-        }
+	    if (itemCount != 0 && listaResult[itemCount - 1].getViewType() == Constant.ViewTypesIds.LOADING) {
+		    this.listaResult.removeAt(itemCount - 1)
+		    notifyItemRemoved(itemCount)
+	    }
 
         val before = itemCount
         listaResult.add(ListAd(ad))
@@ -67,7 +67,7 @@ class ListaSeriesAdapter(private val context: Context) : RecyclerView.Adapter<Re
 
     companion object {
         private val loading = object : ViewType {
-            override fun getViewType(): Int = Constant.BuscaConstants.LOADING
+	        override fun getViewType(): Int = Constant.ViewTypesIds.LOADING
         }
     }
 }

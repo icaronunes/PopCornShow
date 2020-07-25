@@ -59,6 +59,7 @@ import utils.setAnimation
 import utils.setPicassoWithCache
 import utils.visible
 import java.io.File
+import java.util.HashMap
 
 class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseActivityAb() {
 
@@ -108,6 +109,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 					setupViewPagerTabs(series)
 					setImageTop(series.backdropPath ?: "")
 					setFab()
+					setUpdateFromFire()
 					model.loadingMedia(false)
 					if (idReel.isNullOrEmpty()) {
 						model.getRealGoodData(series.createIdReal())
@@ -138,8 +140,17 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 		})
 	}
 
+	private fun setUpdateFromFire() {
+		val childUpdates = HashMap<String, Any?>()
+		childUpdates["nome"] = series.name
+		childUpdates["numberOfEpisodes"] = series.numberOfEpisodes
+		childUpdates["numberOfSeasons"] = series.numberOfSeasons
+		childUpdates["poster"] = series.posterPath
+		model.update(series.id, childUpdates)
+	}
+
 	private fun setLoading(loading: Boolean) {
-		if(loading) progress_horizontal.visible() else progress_horizontal.gone()
+		if (loading) progress_horizontal.visible() else progress_horizontal.gone()
 	}
 
 	private fun setFabVisible(visible: Boolean) {

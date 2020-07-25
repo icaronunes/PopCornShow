@@ -17,7 +17,7 @@ interface ILoadingFireBase {
     fun isWatching(live: MutableLiveData<DataSnapshot>, idTvshow: Int)
     fun isFallow(hasFallow: MutableLiveData<Boolean>, idTvshow: Int)
     fun setFallow(fallow: MutableLiveData<DataSnapshot>, add: (DatabaseReference) -> Unit, remove: (DatabaseReference) -> Unit, id: Int)
-    fun wathEp(childUpdates: HashMap<String, Any>)
+	fun wathEp(childUpdates: HashMap<String, Any>)
 	fun allFallow(fallow: MutableLiveData<DataSnapshot>)
 	fun setEpWatched(
 		fallow: MutableLiveData<DataSnapshot>,
@@ -25,6 +25,9 @@ interface ILoadingFireBase {
 		remove: (DatabaseReference) -> Unit,
 		id: Int
 	)
-    fun fillSeason(_watch: MutableLiveData<DataSnapshot>, season: HashMap<String, Any>)
-    fun fillSeasons(idTvshow: Int, seasonNumber: Int, _seasons: MutableLiveData<DataSnapshot>)
+
+	fun fillSeason(_watch: MutableLiveData<DataSnapshot>, season: HashMap<String, Any>)
+	fun fillSeasons(idTvshow: Int, seasonNumber: Int, _seasons: MutableLiveData<DataSnapshot>)
+	fun upDateTvDetails(idTvshow: Int, updated: HashMap<String, Any?>)
+
 }

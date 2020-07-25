@@ -179,10 +179,21 @@ fun View.animeRotation(
 		.apply {
 			duration = 790
 			addListener(object : AnimatorListener {
-				override fun onAnimationRepeat(animation: Animator?) { repeat() }
-				override fun onAnimationEnd(animation: Animator?) { end() }
-				override fun onAnimationCancel(animation: Animator?) { cancel() }
-				override fun onAnimationStart(animation: Animator?) { start() }
+				override fun onAnimationRepeat(animation: Animator?) {
+					repeat()
+				}
+
+				override fun onAnimationEnd(animation: Animator?) {
+					end()
+				}
+
+				override fun onAnimationCancel(animation: Animator?) {
+					cancel()
+				}
+
+				override fun onAnimationStart(animation: Animator?) {
+					start()
+				}
 			})
 		}.start()
 }
@@ -236,7 +247,9 @@ fun String.parseDateShot(): String {
 fun verifyLaunch(air_date: Date?): Boolean {
 	if (air_date == null) return false
 	val now = Calendar.getInstance().time
-	return if (air_date.before(now)) { true } else !air_date.after(now)
+	return if (air_date.before(now)) {
+		true
+	} else !air_date.after(now)
 }
 
 fun String.getDate(format: String = "yyyy-MM-dd"): Date? {
@@ -382,6 +395,18 @@ fun <T> MutableList<T>.replaceItemList(item: T, predicate: (T) -> Boolean): Muta
 	return this.map {
 		if (predicate(it)) item else it
 	}.toMutableList()
+}
+
+fun <T> Any.listSize(item: T, size: Int): ArrayList<T> {
+	return if (size <= 0) {
+		arrayListOf()
+	} else {
+		arrayListOf<T>().apply {
+			for (i in 0 until size) {
+				add(item)
+			}
+		}
+	}
 }
 
 

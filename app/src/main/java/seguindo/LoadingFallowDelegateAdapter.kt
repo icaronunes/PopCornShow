@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
-import customview.LoadingShimmer.PaymentLoadingsType.CalendarTv
+import customview.LoadingShimmer.PaymentLoadingsType
 import domain.ViewType
 import kotlinx.android.synthetic.main.fallow_loading.view.shimmer_fallow
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 
-class LoadingFallowDelegateAdapter : ViewTypeDelegateAdapter {
+class LoadingFallowDelegateAdapter(vararg val list: PaymentLoadingsType) : ViewTypeDelegateAdapter {
 
 	override fun onCreateViewHolder(parent: ViewGroup) = LoadingViewHolder(parent)
 
@@ -19,7 +19,7 @@ class LoadingFallowDelegateAdapter : ViewTypeDelegateAdapter {
 		item: ViewType?,
 		context: Context?
 	) {
-		(holder as LoadingViewHolder).bind()
+		(holder as LoadingViewHolder).bind(*list)
 	}
 
 	class LoadingViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
@@ -27,8 +27,8 @@ class LoadingFallowDelegateAdapter : ViewTypeDelegateAdapter {
 			.inflate(R.layout.fallow_loading, parent, false)
 	) {
 
-		fun bind() = with(itemView) {
-			shimmer_fallow.createCustomLoading(CalendarTv)
+		fun bind(vararg list: PaymentLoadingsType) = with(itemView) {
+			shimmer_fallow.createCustomLoading(*list)
 		}
 	}
 }

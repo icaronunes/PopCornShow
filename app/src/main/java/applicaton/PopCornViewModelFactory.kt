@@ -22,17 +22,26 @@ class PopCornViewModelFactory constructor(
     override fun <T : ViewModel> create(modelClass: Class<T>): T =
         with(modelClass) {
             when {
-                isAssignableFrom(MainFragViewModel::class.java) -> MainFragViewModel(application = application)
-                isAssignableFrom(MainViewModel::class.java) -> MainViewModel(application)
-                isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(app = application)
-                isAssignableFrom(PersonViewModel::class.java) -> PersonViewModel(app = application, activity = activity)
-                isAssignableFrom(SearchMultiModelView::class.java) -> SearchMultiModelView(app = application)
-                isAssignableFrom(MovieDetatilsViewModel::class.java) -> MovieDetatilsViewModel(app = application, api = api)
+	            isAssignableFrom(MainFragViewModel::class.java) -> MainFragViewModel(application = application)
+	            isAssignableFrom(MainViewModel::class.java) -> MainViewModel(application)
+	            isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(app = application)
+	            isAssignableFrom(PersonViewModel::class.java) -> PersonViewModel(
+		            app = application,
+		            activity = activity
+	            )
+	            isAssignableFrom(SearchMultiModelView::class.java) -> SearchMultiModelView(app = application)
+	            isAssignableFrom(MovieDetatilsViewModel::class.java) -> MovieDetatilsViewModel(
+		            app = application,
+		            api = api
+	            )
 	            isAssignableFrom(TvShowViewModel::class.java) -> TvShowViewModel(
 		            app = application,
 		            api = api
 	            )
-	            isAssignableFrom(FallowModel::class.java) -> FallowModel(application = application)
+	            isAssignableFrom(FallowModel::class.java) -> FallowModel(
+		            application = application,
+		            activity = activity
+	            )
 	            else -> throw IllegalArgumentException("Class Desconhecida...")
             }
         } as T

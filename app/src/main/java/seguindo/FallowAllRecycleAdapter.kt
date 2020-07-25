@@ -1,62 +1,55 @@
 package seguindo
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
 import domain.UserTvshow
+import domain.ViewType
 import kotlinx.android.synthetic.main.seguindo_tvshow.view.follow_poster
 import kotlinx.android.synthetic.main.seguindo_tvshow.view.follow_title
-import kotlinx.android.synthetic.main.seguindo_tvshow.view.follow_update
-import seguindo.SeguindoRecycleAdapter.SeguindoViewHolder
+import loading.firebase.ILoadingFireBase
+import loading.firebase.LoadingFirebase
+import loading.firebase.TypeMediaFireBase.TVSHOW
+import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import tvshow.activity.TvShowActivity
 import utils.Constant
 import utils.UtilsApp
-import utils.gone
 import utils.setPicassoWithCache
 import utils.visible
 
 /**
  * Created by icaro on 02/12/16.
  */
-class SeguindoRecycleAdapter(private val context: FragmentActivity?) :
-	RecyclerView.Adapter<SeguindoViewHolder>() {
+class FallowAllRecycleAdapter : ViewTypeDelegateAdapter {
 
-	private var userTvshows: MutableList<UserTvshow> = mutableListOf()
+    override fun onBindViewHolder(holder: ViewHolder, item: ViewType?, context: Context?) {
+        (holder as SeguindoViewHolder).bind(item as UserTvshow)
+    }
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SeguindoViewHolder(parent)
-	override fun onBindViewHolder(holder: SeguindoViewHolder, position: Int) =
-		holder.bind(userTvshows[position])
-
-	override fun getItemCount() = userTvshows.size
-	override fun getItemViewType(position: Int) = position
-
-	fun add(tvFire: UserTvshow) {
-		userTvshows.add(tvFire)
-		notifyItemInserted(userTvshows.size - 1)
-	}
+    private val loadingFirebase: ILoadingFireBase = LoadingFirebase(TVSHOW)
+    override fun onCreateViewHolder(parent: ViewGroup) = SeguindoViewHolder(parent)
 
     inner class SeguindoViewHolder(parent: ViewGroup) :
-        RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.seguindo_tvshow, parent, false)) {
+        RecyclerView.ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.seguindo_tvshow, parent, false)
+        ) {
 
         fun bind(item: UserTvshow) = with(itemView) {
-
             follow_poster.setPicassoWithCache(item.poster, 3, {
-
             }, {
                 follow_title.apply {
                     text = item.nome
                     visible()
                 }
-            }, img_erro = R.drawable.poster_empty)
+            })
 
             itemView.contentDescription = item.nome
             itemView.importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_YES
-
-            if (item.desatualizada) follow_update.visible() else follow_update.gone()
 
             itemView.setOnClickListener {
                 context?.startActivity(Intent(context, TvShowActivity::class.java).apply {

@@ -1,26 +1,24 @@
 package seguindo
 
+import adapter.delegateAdapters
 import android.content.Context
 import android.view.ViewGroup
-import androidx.collection.SparseArrayCompat
 import androidx.recyclerview.widget.RecyclerView
+import customview.LoadingShimmer.PaymentLoadingsType
 import domain.ViewType
-import domain.tvshow.Fallow
-import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constant
+import utils.listSize
 
 /**
  * Created by icaro on 14/08/16.
  */
-class FallowAdapterDelegates(private val context: Context) :
+class FallowAdapterDelegates(private val context: Context, vararg val list: PaymentLoadingsType) :
 	RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-	private val listaResult = ArrayList<ViewType>()
-	private val delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
+
+	private val listaResult: ArrayList<ViewType> = listSize(loading, 25)
 
 	init {
-		delegateAdapters.put(Constant.BuscaConstants.LOADING, LoadingFallowDelegateAdapter())
-		delegateAdapters.put(Constant.BuscaConstants.NEWS, ProximosAdapter())
-		listaResult.addAll(arrayListOf(loading, loading, loading, loading, loading))
+		delegateAdapters.put(Constant.ViewTypesIds.LOADING, LoadingFallowDelegateAdapter(*list))
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -39,7 +37,7 @@ class FallowAdapterDelegates(private val context: Context) :
 		listaResult.clear()
 	}
 
-	fun add(updater: Fallow) {
+	fun add(updater: ViewType) {
 		this.listaResult.add(updater)
 		notifyDataSetChanged()
 	}
@@ -47,7 +45,7 @@ class FallowAdapterDelegates(private val context: Context) :
 	companion object {
 		private val loading = object : ViewType {
 			override fun getViewType(): Int {
-				return Constant.BuscaConstants.LOADING
+				return Constant.ViewTypesIds.LOADING
 			}
 		}
 	}

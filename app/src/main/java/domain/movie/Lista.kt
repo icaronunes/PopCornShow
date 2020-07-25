@@ -65,7 +65,7 @@ data class Lista(
     @field:SerializedName("results")
     val results: List<ListaItemFilme?>? = null
 ) : ViewType {
-    override fun getViewType() = Constant.BuscaConstants.NEWS
+    override fun getViewType() = Constant.ViewTypesIds.NEWS
 }
 
 @Generated("com.robohorse.robopojogenerator")
@@ -83,5 +83,5 @@ data class CreatedBy(
     @field:SerializedName("username")
     val username: String? = null
 ) : ViewType {
-    override fun getViewType() = Constant.BuscaConstants.NEWS
+	override fun getViewType() = Constant.ViewTypesIds.NEWS
 }

@@ -19,9 +19,9 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
     private val delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     init {
-        delegateAdapters.put(Constant.BuscaConstants.LOADING, LoadingDelegateAdapter())
-        delegateAdapters.put(Constant.BuscaConstants.NEWS, ListasFilmesDelegateAdapter())
-        delegateAdapters.put(Constant.BuscaConstants.AD, AdDelegateAdapter())
+	    delegateAdapters.put(Constant.ViewTypesIds.LOADING, LoadingDelegateAdapter())
+	    delegateAdapters.put(Constant.ViewTypesIds.NEWS, ListasFilmesDelegateAdapter())
+	    delegateAdapters.put(Constant.ViewTypesIds.AD, AdDelegateAdapter())
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
@@ -31,14 +31,15 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
         delegateAdapters.get(getItemViewType(position))?.onBindViewHolder(holder, listaResult[position]!!, context)
     }
 
-    override fun getItemViewType(position: Int): Int = listaResult[position]?.getViewType() ?: Constant.BuscaConstants.LOADING
+	override fun getItemViewType(position: Int): Int =
+		listaResult[position]?.getViewType() ?: Constant.ViewTypesIds.LOADING
 
     fun addFilmes(listaMedia: List<ListaItemFilme?>?, totalPagina: Int) {
         if (listaMedia?.isNotEmpty()!!) {
             val initPosition = listaResult.size - 1
-            if (listaResult.isNotEmpty() && listaResult[listaResult.size - 1]?.getViewType() == Constant.BuscaConstants.LOADING) {
-                this.listaResult.removeAt(listaResult.size - 1)
-            }
+	        if (listaResult.isNotEmpty() && listaResult[listaResult.size - 1]?.getViewType() == Constant.ViewTypesIds.LOADING) {
+		        this.listaResult.removeAt(listaResult.size - 1)
+	        }
 
             this.listaResult.addAll(listaMedia as List<ViewType>)
             this.listaResult.sortedBy {
@@ -57,9 +58,9 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
     override fun getItemCount(): Int = listaResult.size
 
     fun addAd(ad: UnifiedNativeAd, totalPagina: Int) {
-        if (listaResult[listaResult.size - 1]?.getViewType() == Constant.BuscaConstants.LOADING) {
-            this.listaResult.removeAt(listaResult.size - 1)
-        }
+	    if (listaResult[listaResult.size - 1]?.getViewType() == Constant.ViewTypesIds.LOADING) {
+		    this.listaResult.removeAt(listaResult.size - 1)
+	    }
         listaResult.add(ListAd(ad))
         notifyItemInserted(listaResult.size - 1)
         if (listaResult.size < totalPagina) {
@@ -71,7 +72,7 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
     companion object {
 
         private val loading = object : ViewType {
-            override fun getViewType(): Int = Constant.BuscaConstants.LOADING
+	        override fun getViewType(): Int = Constant.ViewTypesIds.LOADING
         }
     }
 }

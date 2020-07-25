@@ -22,14 +22,6 @@
         tools:ignore="ContentDescription"
         tools:scaleType="fitXY" />
 
-    <ImageView
-        android:id="@+id/follow_update"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@drawable/update"
-        android:visibility="gone"
-        android:importantForAccessibility="no" />
-
     <TextView
         android:id="@+id/follow_title"
         android:layout_width="wrap_content"
