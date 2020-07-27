@@ -8,7 +8,6 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -29,6 +28,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import applicaton.BaseFragment
 import applicaton.BaseViewModel.BaseRequest
 import applicaton.BaseViewModel.BaseRequest.Success
 import br.com.icaro.filme.R
@@ -44,7 +44,6 @@ import domain.UserTvshow
 import domain.fillAllUserEpTvshow
 import domain.tvshow.Tvshow
 import elenco.ElencoActivity
-import fragment.FragmentBase
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.card_poster
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.img_poster
 import kotlinx.android.synthetic.main.tvshow_info.adView
@@ -79,13 +78,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import loading.firebase.TypeDataRef
 import poster.PosterGridActivity
 import producao.CrewsActivity
 import produtora.activity.ProdutoraActivity
 import similares.SimilaresActivity
 import site.Site
 import tvshow.TemporadasAdapter
-import tvshow.activity.TvShowActivity
 import tvshow.adapter.SimilaresSerieAdapter
 import tvshow.viewmodel.TvShowViewModel
 import utils.Api
@@ -113,9 +112,9 @@ import java.util.Locale
  * Created by icaro on 23/08/16.
  */
 
-class TvShowFragment : FragmentBase() {
+class TvShowFragment : BaseFragment() {
 
-	private lateinit var model: TvShowViewModel
+	private val model: TvShowViewModel by lazy { createViewModel(TvShowViewModel::class.java) }
 	private var recyclerViewTemporada: RecyclerView? = null
 	private val type: Int by bindArgument(Constant.ABA)
 	private val color: Int by bindArgument(Constant.COLOR_TOP)
@@ -138,11 +137,6 @@ class TvShowFragment : FragmentBase() {
 		}
 	}
 
-	override fun onAttach(context: Context) {
-		super.onAttach(context)
-		model = (requireActivity() as TvShowActivity).getModelView()
-	}
-
 	private fun observerAuth() {
 		model.auth.observe(viewLifecycleOwner, Observer {
 			isSeguindo(it)
@@ -153,7 +147,18 @@ class TvShowFragment : FragmentBase() {
 		model.isFallow.observe(viewLifecycleOwner, Observer {
 			setFalow(it)
 			addSeguindo(it)
+			if (it) setUpdateFromFire()
 		})
+	}
+
+	private fun setUpdateFromFire() {
+		val childUpdates = java.util.HashMap<String, Any?>()
+		childUpdates["nome"] = series.name
+		childUpdates["numberOfEpisodes"] = series.numberOfEpisodes
+		childUpdates["numberOfSeasons"] = series.numberOfSeasons
+		childUpdates["poster"] = series.posterPath
+		series.external_ids?.imdbId?.let { childUpdates["idImdb"] = it }
+		model.update(series.id, childUpdates, TypeDataRef.FALLOW)
 	}
 
 	private fun addSeguindo(it: Boolean) {
@@ -215,6 +220,7 @@ class TvShowFragment : FragmentBase() {
 			observerImdb()
 			model.getImdb(series.external_ids?.imdbId ?: "")
 			model.hasfallow(series.id)
+			updates()
 		} else {
 			observersSeason()
 			observersStream()
@@ -222,6 +228,38 @@ class TvShowFragment : FragmentBase() {
 			model.fallow(series.id)
 			model.hasfallow(series.id)
 		}
+	}
+
+	private fun updates() {
+		val childUpdates = java.util.HashMap<String, Any?>()
+		childUpdates["title"] = series.name
+		childUpdates["poster"] = series.posterPath
+		series.external_ids?.imdbId?.let { childUpdates["idImdb"] = it }
+
+		model.favorit.observe(viewLifecycleOwner, Observer {
+			if (it.child("${series.id}").exists()) model.update(
+				series.id,
+				childUpdates,
+				TypeDataRef.FAVORITY
+			)
+		})
+
+		model.rated.observe(viewLifecycleOwner, Observer { dataSnapshot ->
+			series.external_ids?.let { childUpdates["externalIds"] = it }
+			if (dataSnapshot.child("${series.id}").exists()) model.update(
+				series.id,
+				childUpdates,
+				TypeDataRef.RATED
+			)
+		})
+
+		model.watch.observe(viewLifecycleOwner, Observer {
+			if (it.child("${series.id}").exists()) model.update(
+				series.id,
+				childUpdates,
+				TypeDataRef.WATCH
+			)
+		})
 	}
 
 	private fun observerImdb() {
@@ -764,7 +802,7 @@ class TvShowFragment : FragmentBase() {
 	}
 
 	private fun setTrailer() {
-		if (series.videos?.results?.isNotEmpty()!!) {
+		if (series.videos?.results?.isNotEmpty() == true) {
 			recycle_tvshow_trailer.apply {
 				itemAnimator = DefaultItemAnimator()
 				layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)

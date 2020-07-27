@@ -19,7 +19,7 @@ import kotlin.coroutines.CoroutineContext
 open class BaseViewModel(open val app: Application) : AndroidViewModel(app), LifecycleObserver {
 
    open val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, _ ->
+        get() = Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, throwable ->
             Handler(Looper.getMainLooper()).post {
                 ops()
             }

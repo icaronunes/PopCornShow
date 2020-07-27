@@ -261,6 +261,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
 
                 intent = new Intent(this, MainActivity.class);
                 intent.putExtra(Constant.ABA, R.id.menu_drav_home);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 break;
 

@@ -3,6 +3,7 @@ package main
 import Color
 import ID
 import Layout
+import Txt
 import activity.BaseActivityAb
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
+import applicaton.BaseViewModel.BaseRequest
 import br.com.icaro.filme.BuildConfig
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
@@ -28,6 +30,8 @@ import kotlinx.android.synthetic.main.activity_main.tabLayout
 import kotlinx.android.synthetic.main.activity_main.viewPager_main
 import kotlinx.android.synthetic.main.activity_main.viewpage_top_main
 import utils.UtilsApp
+import utils.gone
+import utils.visible
 
 class MainActivity(override var layout: Int = Layout.activity_main) : BaseActivityAb() {
 
@@ -35,37 +39,40 @@ class MainActivity(override var layout: Int = Layout.activity_main) : BaseActivi
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		lifecycle.addObserver(model)
 		setUpToolBar()
 		setupNavDrawer()
 		setDefaultKeyMode(Activity.DEFAULT_KEYS_SEARCH_LOCAL)
 		supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
 		animation()
-		setObservers()
-		if (UtilsApp.isNetWorkAvailable(this)) {
-			model.getTopList()
-		} else {
-			snack()
-		}
 		setupViewBotton()
-		model.news()
+		setObservers()
 	}
 
 	private fun setObservers() {
-		model.data.observe(this, Observer {
+		model.topo.observe(this, Observer {
 			when (it) {
-				is MainViewModel.MainModel.Data -> mescla(it.data.first, it.data.second)
-				is MainViewModel.MainModel.News -> news()
-				is MainViewModel.MainModel.VisibleAnimed -> visibleAnimed(it)
+				is BaseRequest.Success -> mescla(it.result.first, it.result.second)
+				is BaseRequest.Failure -> snack(viewpage_top_main, getString(Txt.erro_seguir)) {
+					model.fetchAll()
+				}
 			}
+		})
+
+		model.new.observe(this, Observer {
+			if (it) news()
+		})
+
+		model.animed.observe(this, Observer {
+			logonAnimated(it)
 		})
 	}
 
-	private fun visibleAnimed(it: MainViewModel.MainModel.VisibleAnimed) {
-		if (it.visible) {
-			activity_main_img?.visibility = View.VISIBLE
+	private fun logonAnimated(it: Boolean) {
+		if (it) {
+			activity_main_img?.visible()
 		} else {
-			activity_main_img?.visibility = View.GONE
+			activity_main_img?.gone()
 		}
 	}
 
@@ -99,8 +106,7 @@ class MainActivity(override var layout: Int = Layout.activity_main) : BaseActivi
 		Snackbar.make(viewpage_top_main, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
 			.setAction(R.string.retry) {
 				if (UtilsApp.isNetWorkAvailable(baseContext)) {
-					model.getTopList()
-					setupViewBotton()
+					model.fetchAll()
 				} else {
 					snack()
 				}
@@ -181,20 +187,20 @@ class MainActivity(override var layout: Int = Layout.activity_main) : BaseActivi
 
 	private fun mescla(tmdbMovies: ListaFilmes, tmdbTv: ListaSeries) {
 
-		val listaFilmes = tmdbMovies.results.filter {
+		val listMovie = tmdbMovies.results.filter {
 			!it?.backdropPath.isNullOrBlank() && !it?.releaseDate.isNullOrBlank()
 		}
 
-		val listaTv = tmdbTv.results.filter {
+		val listTv = tmdbTv.results.filter {
 			!it.backdropPath.isNullOrBlank()
 		}
 
 		val multi = mutableListOf<TopMain>().apply {
 			for (index in 0..15) {
-				val topMain = TopMain() // criar class utilitaria
+				val topMain = TopMain()
 				if (index % 2 == 0) {
-					if (index <= listaFilmes.size) {
-						val movieDb = listaFilmes[index]!!
+					if (index <= listMovie.size) {
+						val movieDb = listMovie[index]!!
 						topMain.id = movieDb.id
 						topMain.nome = movieDb.title
 						topMain.mediaType = "movie"
@@ -202,8 +208,8 @@ class MainActivity(override var layout: Int = Layout.activity_main) : BaseActivi
 						add(topMain)
 					}
 				} else {
-					if (index <= listaTv.size) {
-						val tv = listaTv[index]
+					if (index <= listTv.size) {
+						val tv = listTv[index]
 						topMain.id = tv.id!!
 						topMain.nome = tv.name
 						topMain.mediaType = "tv"

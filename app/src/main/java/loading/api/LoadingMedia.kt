@@ -7,9 +7,11 @@ import applicaton.BaseViewModel.BaseRequest
 import applicaton.BaseViewModel.BaseRequest.Loading
 import applicaton.BaseViewModel.BaseRequest.Success
 import domain.Imdb
+import domain.ListaSeries
 import domain.Movie
 import domain.TvSeasons
 import domain.Videos
+import domain.movie.ListaFilmes
 import domain.reelgood.tvshow.ReelGoodTv
 import domain.tvshow.Tvshow
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -73,7 +75,11 @@ class LoadingMedia(val api: Api) : ILoadingMedia {
 		}
 	}
 
-	override fun getSeason(_season: MutableLiveData<BaseRequest<TvSeasons>>, serieId: Int, season_id: Int) {
+	override fun getSeason(
+		_season: MutableLiveData<BaseRequest<TvSeasons>>,
+		serieId: Int,
+		season_id: Int
+	) {
 		GlobalScope.launch(handle(_season)) {
 			val response = api.getTvSeasons(serieId, season_id)
 			_season.postValue(Success(response))
@@ -83,13 +89,42 @@ class LoadingMedia(val api: Api) : ILoadingMedia {
 	override fun putTvEpRated(id: Int, seasonNumber: Int, episodeNumber: Int, rated: Float) {
 		GlobalScope.launch {
 			val guest = withContext(Dispatchers.Default) { api.userGuest() }
-			if (guest is Success) api.ratedTvEpsodeeGuest(id, seasonNumber, episodeNumber, rated, guest.result.guestSessionId)
+			if (guest is Success) api.ratedTvEpsodeeGuest(
+				id,
+				seasonNumber,
+				episodeNumber,
+				rated,
+				guest.result.guestSessionId
+			)
 		}
 	}
 
-	private fun <T>handle(_live: MutableLiveData<BaseRequest<T>> = MutableLiveData()) = Dispatchers.Default + SupervisorJob() + CoroutineExceptionHandler { _, erro ->
-		Handler(Looper.getMainLooper()).post {
-			_live.postValue(BaseRequest.Failure(java.lang.Exception(erro.cause)))
+
+	override fun getUpComing(_movie: MutableLiveData<BaseRequest<ListaFilmes>>) {
+		GlobalScope.launch(handle(_movie)) {
+			val upComing = api.getUpcoming()
+			_movie.postValue(Success(upComing))
 		}
 	}
+
+	override fun getMoviePopular(_movie: MutableLiveData<BaseRequest<ListaFilmes>>) {
+		GlobalScope.launch(handle(_movie)) {
+			val popular = api.getMoviePopular()
+			_movie.postValue(Success(popular))
+		}
+	}
+
+	override fun getTvPopular(_tvshow: MutableLiveData<BaseRequest<ListaSeries>>) {
+		GlobalScope.launch(handle(_tvshow)) {
+			val popular = api.getPopularTv()
+			_tvshow.postValue(Success(popular))
+		}
+	}
+
+	private fun <T> handle(_live: MutableLiveData<BaseRequest<T>> = MutableLiveData()) =
+		Dispatchers.Default + SupervisorJob() + CoroutineExceptionHandler { _, erro ->
+			Handler(Looper.getMainLooper()).post {
+				_live.postValue(BaseRequest.Failure(java.lang.Exception(erro.cause)))
+			}
+		}
 }

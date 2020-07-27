@@ -1,11 +1,15 @@
 package applicaton
 
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProviders
+import br.com.icaro.filme.R
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.google.android.material.snackbar.Snackbar
+import utils.putString
 
 open class BaseFragment : Fragment(), LifecycleOwner {
 
@@ -23,5 +27,10 @@ open class BaseFragment : Fragment(), LifecycleOwner {
 			// .addTestDevice("8515241CF1F20943DD64804BD3C06CCB")  // An example device ID
 			.build()
 		adView.loadAd(adRequest)
+	}
+
+	fun snack(anchor: View, txt: Any, block: () -> Unit = {}) {
+		Snackbar.make(anchor, txt.putString(requireContext()), Snackbar.LENGTH_INDEFINITE)
+			.setAction(R.string.ok) { block() }.show()
 	}
 }

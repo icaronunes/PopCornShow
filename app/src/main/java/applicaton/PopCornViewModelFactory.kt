@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import busca.SearchMultiModelView
 import filme.MovieDetatilsViewModel
 import login.LoginViewModel
-import main.MainFragViewModel
 import main.MainViewModel
 import pessoa.modelview.PersonViewModel
 import seguindo.FallowModel
@@ -22,8 +21,7 @@ class PopCornViewModelFactory constructor(
     override fun <T : ViewModel> create(modelClass: Class<T>): T =
         with(modelClass) {
             when {
-	            isAssignableFrom(MainFragViewModel::class.java) -> MainFragViewModel(application = application)
-	            isAssignableFrom(MainViewModel::class.java) -> MainViewModel(application)
+	            isAssignableFrom(MainViewModel::class.java) -> MainViewModel(application, api)
 	            isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(app = application)
 	            isAssignableFrom(PersonViewModel::class.java) -> PersonViewModel(
 		            app = application,

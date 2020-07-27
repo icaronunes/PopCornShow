@@ -569,15 +569,17 @@ class MovieFragment : FragmentBase() {
     }
 
     private fun setTrailer() {
-        if (movieDb.videos?.results?.isNullOrEmpty()!!) {
+        if (movieDb.videos?.results?.isNullOrEmpty() == true) {
             hasTrailer()
         } else {
             recycle_filme_trailer?.patternRecyler()?.apply {
-                adapter = TrailerAdapter(movieDb.videos?.results
-                    ?: mutableListOf(),
+                adapter = TrailerAdapter(
+                    movieDb.videos?.results
+                        ?: mutableListOf(),
                     movieDb.overview
-                        ?: "")
-                setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
+                        ?: ""
+                )
+                setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
             }
         }
     }
@@ -591,8 +593,9 @@ class MovieFragment : FragmentBase() {
             recycle_filme_similares?.apply {
                 setHasFixedSize(true)
                 itemAnimator = DefaultItemAnimator()
-                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                adapter = SimilaresFilmesAdapter(activity!!, movieDb.similar?.resultsSimilar)
+                layoutManager =
+                    LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+                adapter = SimilaresFilmesAdapter(requireActivity(), movieDb.similar?.resultsSimilar)
             }
 
             recycle_filme_similares.setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))

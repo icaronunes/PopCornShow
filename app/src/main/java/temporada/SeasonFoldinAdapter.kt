@@ -26,7 +26,6 @@ import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_number
 import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_titulo
 import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_titulo_resumo
 import kotlinx.android.synthetic.main.item_epsodio.view.item_epsodio_visto
-import kotlinx.android.synthetic.main.item_epsodio.view.label_ep
 import kotlinx.android.synthetic.main.layout_diretor.view.director_name
 import kotlinx.android.synthetic.main.layout_diretor.view.grup_director
 import kotlinx.android.synthetic.main.layout_diretor.view.grup_writer
@@ -35,7 +34,6 @@ import kotlinx.android.synthetic.main.layout_diretor.view.writer_img
 import kotlinx.android.synthetic.main.layout_diretor.view.writer_name
 import utils.Constant
 import utils.gone
-import utils.invisible
 import utils.makeToast
 import utils.setPicassoWithCache
 import utils.visible
@@ -99,9 +97,7 @@ class SeasonFoldinAdapter(
 			epsodio_star.visibility = if (fallow) View.VISIBLE else View.GONE
 			item_epsodio_titulo.text = ep.name
 			item_epsodio_titulo_resumo.text = ep.overview
-			ep.episodeNumber.let {
-				if (it != null) item_epsodio_number.text = it.toString() else label_ep.invisible()
-			}
+			ep.episodeNumber.let { item_epsodio_number.text = it.toString() }
 			epsodio_detalhes_votos.text = ep.voteCount.toString()
 			epsodio_detalhes_img.setPicassoWithCache(
 				ep.stillPath,

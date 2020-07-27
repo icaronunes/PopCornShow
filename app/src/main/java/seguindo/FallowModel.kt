@@ -19,7 +19,6 @@ import loading.firebase.ILoadingFireBase
 import loading.firebase.LoadingFirebase
 import loading.firebase.TypeMediaFireBase.TVSHOW
 import utils.Api
-import java.util.HashMap
 
 class FallowModel(application: Application, val activity: Activity) : BaseViewModel(application) {
 
@@ -62,19 +61,6 @@ class FallowModel(application: Application, val activity: Activity) : BaseViewMo
 				_update.value = updater
 			}
 		}
-	}
-
-	override fun onCleared() {
-		listTvShow.forEach {
-			val childUpdates = HashMap<String, Any?>()
-			childUpdates["nome"] = it.name
-			childUpdates["numberOfEpisodes"] = it.numberOfEpisodes
-			childUpdates["numberOfSeasons"] = it.numberOfSeasons
-			childUpdates["poster"] = it.posterPath
-			loadingFirebase.upDateTvDetails(it.id, childUpdates)
-		}
-//		loadingFirebase.destroy()
-		super.onCleared()
 	}
 
 }

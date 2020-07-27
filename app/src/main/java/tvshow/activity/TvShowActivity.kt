@@ -59,17 +59,22 @@ import utils.setAnimation
 import utils.setPicassoWithCache
 import utils.visible
 import java.io.File
-import java.util.HashMap
 
 class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseActivityAb() {
 
 	private val EMPTYRATED: Float = 0.0f
+	private var numberRated: Float = 0.0f
+
+	private val model: TvShowViewModel by lazy {
+		createViewModel(
+			TvShowViewModel::class.java,
+			this
+		)
+	}
 	private val idTvshow: Int by bindBundle(Constant.TVSHOW_ID)
 	private val idReel: String? by bundleOrNull(Constant.ID_REEL)
 	private val colorTop: Int by bindBundle(Constant.COLOR_TOP, Color.colorFAB)
 	private lateinit var series: Tvshow
-	private val model: TvShowViewModel by lazy { createViewModel(TvShowViewModel::class.java, this) }
-	private var numberRated: Float = 0.0f
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -85,6 +90,10 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 	}
 
 	private fun observers() {
+		model.auth.observe(this, Observer {
+			setFabVisible(it)
+		})
+
 		model.favorit.observe(this, Observer {
 			setEventListenerFavorite(it.child("$idTvshow").exists())
 		})
@@ -92,10 +101,6 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 		model.rated.observe(this, Observer {
 			setEventListenerRated(it.child("$idTvshow").exists())
 			setRatedValue(it)
-		})
-
-		model.auth.observe(this, Observer {
-			setFabVisible(it)
 		})
 
 		model.watch.observe(this, Observer {
@@ -109,7 +114,6 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 					setupViewPagerTabs(series)
 					setImageTop(series.backdropPath ?: "")
 					setFab()
-					setUpdateFromFire()
 					model.loadingMedia(false)
 					if (idReel.isNullOrEmpty()) {
 						model.getRealGoodData(series.createIdReal())
@@ -138,15 +142,6 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 			}
 			setAnimated()
 		})
-	}
-
-	private fun setUpdateFromFire() {
-		val childUpdates = HashMap<String, Any?>()
-		childUpdates["nome"] = series.name
-		childUpdates["numberOfEpisodes"] = series.numberOfEpisodes
-		childUpdates["numberOfSeasons"] = series.numberOfSeasons
-		childUpdates["poster"] = series.posterPath
-		model.update(series.id, childUpdates)
 	}
 
 	private fun setLoading(loading: Boolean) {
@@ -213,11 +208,6 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 	private fun setRatedValue(it: DataSnapshot) {
 		numberRated = it.child(idTvshow.toString()).child("nota").value?.toString()?.toFloat()
 			?: EMPTYRATED
-	}
-
-	override fun onDestroy() {
-		model.destroy()
-		super.onDestroy()
 	}
 
 	private fun snack() {
@@ -400,7 +390,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 	}
 
 	private fun setImageTop(path: String) {
-		img_top_tvshow.setPicassoWithCache(path, 5, img_erro = R.drawable.top_empty)
+		img_top_tvshow.setPicassoWithCache(path, 6, img_erro = R.drawable.top_empty)
 		AnimatorSet().apply {
 			playTogether(
 				ObjectAnimator.ofFloat(img_top_tvshow, View.X, -100f, 0.0f)

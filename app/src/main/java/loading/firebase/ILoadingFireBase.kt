@@ -28,6 +28,6 @@ interface ILoadingFireBase {
 
 	fun fillSeason(_watch: MutableLiveData<DataSnapshot>, season: HashMap<String, Any>)
 	fun fillSeasons(idTvshow: Int, seasonNumber: Int, _seasons: MutableLiveData<DataSnapshot>)
-	fun upDateTvDetails(idTvshow: Int, updated: HashMap<String, Any?>)
+	fun upDateTvDetails(id: Int, updated: HashMap<String, Any?>, type: TypeDataRef)
 
 }

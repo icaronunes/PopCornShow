@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 
 import androidx.viewpager.widget.ViewPager;
 
@@ -31,7 +30,6 @@ public class WatchListActivity extends BaseActivity {
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private LinearLayout linearLayout;
-    private ProgressBar progressBar;
     private List<MovieDb> movieDbs = new ArrayList<>();
     private List<TvshowDB> tvSeries = new ArrayList<>();
     private DatabaseReference favoriteMovie, favoriteTv;
@@ -46,7 +44,6 @@ public class WatchListActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         viewPager = findViewById(R.id.viewpage_usuario);
         tabLayout = findViewById(R.id.tabLayout);
-        progressBar = findViewById(R.id.progress);
         linearLayout = findViewById(R.id.linear_usuario_list);
 
         if (UtilsApp.INSTANCE.isNetWorkAvailable(this)){
@@ -146,7 +143,6 @@ public class WatchListActivity extends BaseActivity {
                 }
 
                 setupViewPagerTabs();
-                progressBar.setVisibility(View.GONE);
             }
 
             @Override

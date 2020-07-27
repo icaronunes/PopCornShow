@@ -48,6 +48,9 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import loading.firebase.TypeDataRef.FAVORITY
+import loading.firebase.TypeDataRef.RATED
+import loading.firebase.TypeDataRef.WATCH
 import utils.Api
 import utils.Constant
 import utils.UtilsApp
@@ -61,6 +64,7 @@ import utils.setAnimation
 import utils.visible
 import utils.yearDate
 import java.io.File
+import java.util.HashMap
 
 class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) : BaseActivityAb() {
 	private val EMPTYRATED = 0.0f
@@ -82,7 +86,6 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 		setTitleAndDisableTalk()
 		setupViewPager()
 		observers()
-
 		if (UtilsApp.isNetWorkAvailable(this)) {
 			getData()
 		} else {
@@ -91,29 +94,42 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 	}
 
 	private fun observers() {
-		model.watch.observe(this, Observer {
-			setEventListenerWatch(it.child("$idMovie").exists())
-		})
-
-		model.rated.observe(this, Observer {
-			setEventListenerRated(it.child("$idMovie").exists())
-			setRatedValue(it)
-		})
-
-		model.favorit.observe(this, Observer {
-			setEventListenerFavorite(it.child("$idMovie").exists())
-		})
-
 		model.auth.observe(this, Observer {
 			setFAB(it)
 		})
 
 		model.movie.observe(this, Observer {
 			when (it) {
-				is Success -> fillData(it.result)
+				is Success -> {
+					fillData(it.result)
+					observerFire()
+				}
 				is Loading -> setLoading(it.loading)
 				is Failure -> ops()
 			}
+		})
+	}
+
+	private fun observerFire() {
+		val childUpdates = HashMap<String, Any?>()
+		childUpdates["title"] = movieDb.title
+		childUpdates["poster"] = movieDb.posterPath
+		childUpdates["idImdb"] = movieDb.imdbId
+
+		model.watch.observe(this, Observer {
+			setEventListenerWatch(it.child("$idMovie").exists())
+			if (it.child("$idMovie").exists()) model.updateMovie(idMovie, childUpdates, WATCH)
+		})
+
+		model.rated.observe(this, Observer {
+			setEventListenerRated(it.child("$idMovie").exists())
+			setRatedValue(it)
+			if (it.child("$idMovie").exists()) model.updateMovie(idMovie, childUpdates, RATED)
+		})
+
+		model.favorit.observe(this, Observer {
+			setEventListenerFavorite(it.child("$idMovie").exists())
+			if (it.child("$idMovie").exists()) model.updateMovie(idMovie, childUpdates, FAVORITY)
 		})
 	}
 
@@ -443,18 +459,11 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 				putInt(Constant.COLOR_TOP, color)
 			}
 		}
-		if (!isDestroyed && !isFinishing) {
-			supportFragmentManager
-				.beginTransaction()
-				.add(R.id.filme_container, movieFragment, null)
-				.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-				.commitAllowingStateLoss()
-		}
-	}
-
-	override fun onDestroy() {
-		model.destroy()
-		super.onDestroy()
+		supportFragmentManager
+			.beginTransaction()
+			.add(R.id.filme_container, movieFragment, null)
+			.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+			.commitAllowingStateLoss()
 	}
 
 	private inner class ImagemTopFragment(

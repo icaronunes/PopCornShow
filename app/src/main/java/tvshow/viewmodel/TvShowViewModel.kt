@@ -18,6 +18,7 @@ import loading.api.ILoadingMedia
 import loading.api.LoadingMedia
 import loading.firebase.ILoadingFireBase
 import loading.firebase.LoadingFirebase
+import loading.firebase.TypeDataRef
 import loading.firebase.TypeMediaFireBase
 import utils.Api
 
@@ -95,16 +96,29 @@ class TvShowViewModel(override val app: Application, val api: Api) : BaseViewMod
     fun getImdb(id: String) = loadingMedia.imdbDate(_imdb, id)
     fun getTrailerEn(idMovie: Int) = loadingMedia.getTrailerFromEn(_videos, idMovie, TV)
     fun getTvshow(idTvshow: Int) = loadingMedia.getDataTvshow(_tvshow, idMovie = idTvshow)
-    fun getSeason(idTvshow: Int, seasonNumber: Int) = loadingMedia.getSeason(_tvSeason, idTvshow, seasonNumber)
-    fun loadingMedia(loading: Boolean) { _tvshow.value = Loading(loading) }
-    fun loadingView(loading: Boolean) { loadingView.value = loading }
+    fun getSeason(idTvshow: Int, seasonNumber: Int) =
+        loadingMedia.getSeason(_tvSeason, idTvshow, seasonNumber)
+
+    fun loadingMedia(loading: Boolean) {
+        _tvshow.value = Loading(loading)
+    }
+
+    fun loadingView(loading: Boolean) {
+        loadingView.value = loading
+    }
+
     fun fallow(idTvshow: Int) = loadingFirebase.isWatching(_fallow, idTvshow = idTvshow)
     fun hasfallow(idTvshow: Int) = loadingFirebase.isFallow(isFallow, idTvshow = idTvshow)
-    fun fillSeason(childUpdates: HashMap<String, Any>) { loadingFirebase.fillSeason(_fallow, childUpdates) }
+    fun fillSeason(childUpdates: HashMap<String, Any>) {
+        loadingFirebase.fillSeason(_fallow, childUpdates)
+    }
+
     fun getSeasonFire(idTvshow: Int, seasonNumber: Int) =
         loadingFirebase.fillSeasons(idTvshow, seasonNumber, _seasons)
 
-    fun update(id: Int, childUpdates: HashMap<String, Any?>) {
-        loadingFirebase.upDateTvDetails(id, childUpdates)
+    fun update(
+        id: Int, childUpdates: HashMap<String, Any?>, type: TypeDataRef
+    ) {
+        loadingFirebase.upDateTvDetails(id, childUpdates, type)
     }
 }
