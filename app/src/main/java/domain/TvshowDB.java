@@ -2,13 +2,16 @@ package domain;
 
 import androidx.annotation.Keep;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
  * Created by icaro on 20/11/16.
  */
 @Keep
-public class TvshowDB implements Serializable {
+public class TvshowDB implements Serializable, IMedia {
 
 
     private String poster;
@@ -61,5 +64,28 @@ public class TvshowDB implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public int id() {
+        return getId();
+    }
+
+    @Nullable
+    @Override
+    public Float rated() {
+        return getNota();
+    }
+
+    @NotNull
+    @Override
+    public String poster() {
+        return getPoster();
+    }
+
+    @NotNull
+    @Override
+    public String name() {
+        return getTitle();
     }
 }

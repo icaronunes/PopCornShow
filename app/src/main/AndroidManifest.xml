@@ -360,6 +360,7 @@
         </activity>
 
         <activity android:name="desenvolvimento.Desenvolvimento" />
+        <activity android:name="favority.YourListActivity" />
 
         <service
             android:name="onsignal.CustomNotificationExtenderService"

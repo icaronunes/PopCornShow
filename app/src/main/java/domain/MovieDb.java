@@ -2,13 +2,15 @@ package domain;
 
 import androidx.annotation.Keep;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 /**
  * Created by icaro on 20/11/16.
  */
 @Keep
-public class MovieDb implements Serializable {
+public class MovieDb implements Serializable, IMedia {
 
     private String poster;
     private String idImdb;
@@ -21,6 +23,7 @@ public class MovieDb implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
+
     public float getNota() {
         return nota;
     }
@@ -57,5 +60,27 @@ public class MovieDb implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public int id() {
+        return getId();
+    }
+
+    @Override
+    public Float rated() {
+        return getNota();
+    }
+
+    @NotNull
+    @Override
+    public String poster() {
+        return getPoster();
+    }
+
+    @NotNull
+    @Override
+    public String name() {
+        return getTitle();
     }
 }

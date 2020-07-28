@@ -67,19 +67,36 @@ class TvShowViewModel(override val app: Application, val api: Api) : BaseViewMod
         loadingFirebase.destroy()
     }
 
-    fun putFavority(add: (DatabaseReference) -> Unit, remove: (DatabaseReference) -> Unit, id: Int) {
-        loadingFirebase.changeFavority(add = add, remove = remove, idMedia = id, _favorit = _favorit.value)
+    fun putFavority(
+        add: (DatabaseReference) -> Unit,
+        remove: (DatabaseReference) -> Unit,
+        id: Int
+    ) {
+        loadingFirebase.changeFavority(
+            add = add,
+            remove = remove,
+            idMedia = id,
+            _favorit = _favorit.value
+        )
     }
 
-    fun setRated(id: Int, change: (DatabaseReference) -> Unit) {
-        loadingFirebase.changeRated(change, id)
+    fun setRated(change: (DatabaseReference) -> Unit) {
+        loadingFirebase.changeRated(change)
     }
 
-    fun chanceWatch(add: (DatabaseReference) -> Unit, remove: (DatabaseReference) -> Unit, idMedia: Int) {
+    fun chanceWatch(
+        add: (DatabaseReference) -> Unit,
+        remove: (DatabaseReference) -> Unit,
+        idMedia: Int
+    ) {
         loadingFirebase.changeWatch(add, remove, idMedia, _watch.value)
     }
 
-    fun setFallow(idTvshow: Int, add: (DatabaseReference) -> Unit, remove: (DatabaseReference) -> Unit) {
+    fun setFallow(
+        idTvshow: Int,
+        add: (DatabaseReference) -> Unit,
+        remove: (DatabaseReference) -> Unit
+    ) {
         loadingFirebase.setFallow(_fallow, add, remove, idTvshow)
     }
 

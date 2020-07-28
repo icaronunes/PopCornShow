@@ -358,18 +358,18 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 	}
 
 	private fun removeRated() {
-		model.changeRated({
+		model.changeRated {
 			it.child(idMovie.toString()).setValue(null)
 				.addOnCompleteListener {
 					makeToast(string.remover_rated)
 				}
 			this@MovieDetailsActivity.fab_menu.close(true)
-		}, idMovie = idMovie)
+		}
 	}
 
 	private fun addRated(ratingBar: RatingBar) {
 		val movieDate = makeMovieDb().apply { nota = ratingBar.rating * 2 }
-		model.changeRated({ databaseReference ->
+		model.changeRated { databaseReference ->
 			databaseReference.child(idMovie.toString()).setValue(movieDate)
 				.addOnCompleteListener {
 					if (it.isSuccessful) {
@@ -383,7 +383,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 					}
 				}
 			model.setRatedOnTheMovieDB(movieDate)
-		}, idMovie)
+		}
 	}
 
 	private fun openDialog() = Dialog(this@MovieDetailsActivity).apply {
@@ -405,7 +405,6 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 				it.child(idMovie.toString()).setValue(makeMovieDb())
 					.addOnCompleteListener {
 						makeToast(R.string.filme_add_favorite)
-
 					}
 			}, idMovie)
 		} else {

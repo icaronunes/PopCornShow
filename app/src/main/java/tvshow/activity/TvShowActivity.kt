@@ -358,7 +358,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 
 	private fun addRated(ratingBar: RatingBar) {
 		val tvshowDB = makeTvshiwDb().apply { nota = ratingBar.rating * 2 }
-		model.setRated(idTvshow) { database ->
+		model.setRated { database ->
 			database.child(idTvshow.toString()).setValue(tvshowDB)
 				.addOnCompleteListener {
 					makeToast("${getString(R.string.tvshow_rated)} - ${tvshowDB.nota}")
@@ -370,7 +370,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 	}
 
 	private fun removeRated() {
-		model.setRated(idTvshow) { database ->
+		model.setRated { database ->
 			database.child(idTvshow.toString()).setValue(null)
 				.addOnCompleteListener {
 					makeToast(string.tvshow_remove_rated)
@@ -412,6 +412,4 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 		menu_item_favorite.setOnClickListener { addOrRemoveFavorite() }
 		menu_item_rated.setOnClickListener { ratedMovie() }
 	}
-
-	fun getModelView() = model
 }

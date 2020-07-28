@@ -65,11 +65,16 @@ class MovieDetatilsViewModel(app: Application, val api: Api) : BaseViewModel(app
 		add: (DatabaseReference) -> Unit,
 		idMovie: Int
 	) {
-		loadingFirebase.changeFavority(remove, add, idMovie, _favorit.value)
+		loadingFirebase.changeFavority(
+			remove = remove,
+			add = add,
+			idMedia = idMovie,
+			_favorit = _favorit.value
+		)
 	}
 
-	fun changeRated(change: (DatabaseReference) -> Unit, idMovie: Int) =
-		loadingFirebase.changeRated(change, idMovie)
+	fun changeRated(change: (DatabaseReference) -> Unit) =
+		loadingFirebase.changeRated(change)
 
 	fun setRatedOnTheMovieDB(movieDate: MovieDb) =
 		loadingMedia.putRated(movieDate.id, movieDate.nota, MOVIE)

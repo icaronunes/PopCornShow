@@ -66,7 +66,7 @@ class LoadingFirebase(type: TypeMediaFireBase) : BaseFireBase(type), ILoadingFir
 		}
 	}
 
-	override fun fillSeason(_fallow: MutableLiveData<DataSnapshot>, season: HashMap<String, Any>) {
+	override fun fillSeason(_live: MutableLiveData<DataSnapshot>, season: HashMap<String, Any>) {
 		myFallow.updateChildren(season)
 	}
 
@@ -155,7 +155,7 @@ class LoadingFirebase(type: TypeMediaFireBase) : BaseFireBase(type), ILoadingFir
 		}
 	}
 
-	override fun changeRated(add: (DatabaseReference) -> Unit, idMovie: Int) {
+	override fun changeRated(add: (DatabaseReference) -> Unit) {
 		add(myRated)
 	}
 
@@ -165,10 +165,7 @@ class LoadingFirebase(type: TypeMediaFireBase) : BaseFireBase(type), ILoadingFir
 		_seasons: MutableLiveData<DataSnapshot>
 	) {
 		valueEventSeason = object : ValueEventListener {
-			override fun onCancelled(dataSnapshot: DatabaseError) {
-
-			}
-
+			override fun onCancelled(dataSnapshot: DatabaseError) {}
 			override fun onDataChange(dataSnapshot: DataSnapshot) {
 				_seasons.value = dataSnapshot
 			}

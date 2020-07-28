@@ -24,6 +24,8 @@ import activity.BaseActivity;
 import br.com.icaro.filme.R;
 import domain.MovieDb;
 import domain.TvshowDB;
+import favority.FavoriteAdapater;
+import loading.firebase.TypeDataRef;
 import utils.UtilsApp;
 
 public class FavoriteActivity extends BaseActivity {
@@ -108,7 +110,7 @@ public class FavoriteActivity extends BaseActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.accent));
         viewPager.setAdapter(new FavoriteAdapater(FavoriteActivity.this, getSupportFragmentManager(),
-                movieDbs, tvSeries));
+                movieDbs, tvSeries, TypeDataRef.FALLOW));
     }
 
     private void setEventListenerFavorite() {

@@ -59,18 +59,17 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import applicaton.PopCornViewModelFactory;
-import avaliado.RatedActivity;
 import br.com.icaro.filme.BuildConfig;
 import br.com.icaro.filme.R;
 import busca.SearchMultiActivity;
 import configuracao.SettingsActivity;
 import domain.busca.MultiSearch;
-import favorito.FavoriteActivity;
+import favority.YourListActivity;
+import loading.firebase.TypeDataRef;
 import login.LoginActivity;
 import main.MainActivity;
 import oscar.OscarActivity;
 import pessoaspopulares.PersonPopularActivity;
-import queroassistir.WatchListActivity;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -271,19 +270,22 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
                 startActivity(intent);
                 break;
             case R.id.favorite:
-
-                intent = new Intent(this, FavoriteActivity.class);
+                intent = new Intent(this, YourListActivity.class);
+                intent.putExtra(Constant.ABA, getString(R.string.favorite));
+                intent.putExtra(Constant.MEDIATYPE, TypeDataRef.FAVORITY);
                 startActivity(intent);
 
                 break;
             case R.id.rated:
-
-                intent = new Intent(this, RatedActivity.class);
+                intent = new Intent(this, YourListActivity.class);
+                intent.putExtra(Constant.ABA, getString(R.string.avaliados));
+                intent.putExtra(Constant.MEDIATYPE, TypeDataRef.RATED);
                 startActivity(intent);
                 break;
             case R.id.watchlist:
-
-                intent = new Intent(this, WatchListActivity.class);
+                intent = new Intent(this, YourListActivity.class);
+                intent.putExtra(Constant.ABA, getString(R.string.quero_assistir));
+                intent.putExtra(Constant.MEDIATYPE, TypeDataRef.WATCH);
                 startActivity(intent);
                 break;
 
