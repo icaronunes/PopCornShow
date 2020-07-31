@@ -65,11 +65,15 @@ jobs:
           java-version: 1.8
 
       - name: Build with Gradle
-        run: ./gradlew build
-          OMDBAPI_API_KEY: ${{ secrets.OMDBAPI_API_KEY }}
-          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
-          TMDB_API_KEY2: ${{ secrets.TMDB_API_KEY2 }}
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: ./gradlew build    
+      - name: OMDB api
+        run:  export OMDBAPI_API_KEY:${{ secrets.OMDBAPI_API_KEY }}      
+      - name: OMDB api
+        run:  export TMDB_API_KEY:${{ secrets.TMDB_API_KEY }}
+      - name: OMDB api
+        run:  export TMDB_API_KEY2:${{ secrets.TMDB_API_KEY2 }}
+      - name: OMDB api
+        run:  export YOUTUBE_API_KEY:${{ secrets.YOUTUBE_API_KEY }}
 
 
   apk:
