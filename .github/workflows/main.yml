@@ -24,10 +24,10 @@ jobs:
 
       - name: Build with Gradle
         run: |
-         export OMDBAPI_API_KEY:${{ secrets.OMDBAPI_API_KEY }}      
-         export TMDB_API_KEY:${{ secrets.TMDB_API_KEY }}
-         export TMDB_API_KEY2:${{ secrets.TMDB_API_KEY2 }}
-         export YOUTUBE_API_KEY:${{ secrets.YOUTUBE_API_KEY }}
+         export OMDBAPI_API_KEY=${{ secrets.OMDBAPI_API_KEY }}      
+         export TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}
+         export TMDB_API_KEY2=${{ secrets.TMDB_API_KEY2 }}
+         export YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }}
          ./gradlew build       
 
   apk:
