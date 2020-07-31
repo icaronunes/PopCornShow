@@ -4,13 +4,10 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import br.com.icaro.filme.R.string
-import domain.MovieDb
-import domain.TvshowDB
+import br.com.icaro.filme.R.*
 import loading.firebase.TypeDataRef
-import loading.firebase.TypeDataRef.FAVORITY
-import loading.firebase.TypeMediaFireBase.MOVIE
-import loading.firebase.TypeMediaFireBase.TVSHOW
+import loading.firebase.TypeDataRef.*
+import loading.firebase.TypeMediaFireBase.*
 
 /**
  * Created by icaro on 23/08/16.
@@ -18,8 +15,6 @@ import loading.firebase.TypeMediaFireBase.TVSHOW
 class FavoriteAdapater(
 	private val context: Context,
 	supportFragmentManager: FragmentManager?,
-	private val movies: List<MovieDb>,
-	private val series: List<TvshowDB>,
 	val type: TypeDataRef = FAVORITY
 ) : FragmentPagerAdapter(
 	supportFragmentManager!!,

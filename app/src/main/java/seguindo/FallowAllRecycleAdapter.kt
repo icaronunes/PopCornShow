@@ -12,9 +12,6 @@ import domain.UserTvshow
 import domain.ViewType
 import kotlinx.android.synthetic.main.seguindo_tvshow.view.follow_poster
 import kotlinx.android.synthetic.main.seguindo_tvshow.view.follow_title
-import loading.firebase.ILoadingFireBase
-import loading.firebase.LoadingFirebase
-import loading.firebase.TypeMediaFireBase.TVSHOW
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import tvshow.activity.TvShowActivity
 import utils.Constant
@@ -31,7 +28,6 @@ class FallowAllRecycleAdapter : ViewTypeDelegateAdapter {
         (holder as SeguindoViewHolder).bind(item as UserTvshow)
     }
 
-    private val loadingFirebase: ILoadingFireBase = LoadingFirebase(TVSHOW)
     override fun onCreateViewHolder(parent: ViewGroup) = SeguindoViewHolder(parent)
 
     inner class SeguindoViewHolder(parent: ViewGroup) :

@@ -4,7 +4,9 @@ import Color
 import ID
 import Layout
 import activity.BaseActivityAb
+import android.R.*
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
@@ -35,12 +37,15 @@ class YourListActivity(override var layout: Int = Layout.activity_usuario_list) 
 			tabLayout.setupWithViewPager(viewPager)
 			tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(context, Color.accent))
 			viewPager.adapter =
-				FavoriteAdapater(
-					this@YourListActivity,
-					supportFragmentManager,
-					listOf(),
-					listOf(), type
-				)
+				FavoriteAdapater(this@YourListActivity, supportFragmentManager, type)
 		}
+	}
+
+	override fun onOptionsItemSelected(item: MenuItem): Boolean {
+		if (item.itemId == id.home) {
+			finish()
+			return true
+		}
+		return super.onOptionsItemSelected(item)
 	}
 }

@@ -110,7 +110,7 @@ public class FavoriteActivity extends BaseActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.accent));
         viewPager.setAdapter(new FavoriteAdapater(FavoriteActivity.this, getSupportFragmentManager(),
-                movieDbs, tvSeries, TypeDataRef.FALLOW));
+                TypeDataRef.FALLOW));
     }
 
     private void setEventListenerFavorite() {

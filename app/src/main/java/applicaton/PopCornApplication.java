@@ -9,13 +9,13 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.android.gms.ads.MobileAds;
 import com.onesignal.OneSignal;
-import com.squareup.otto.Bus;
 
 import br.com.icaro.filme.BuildConfig;
 import br.com.icaro.filme.R;
 import io.fabric.sdk.android.Fabric;
 import onsignal.CustomNotificationOpenedHandler;
 import onsignal.CustomNotificationReceivedHandler;
+
 
 /**
  * Created by icaro on 01/08/16.
@@ -39,7 +39,6 @@ public class PopCornApplication extends MultiDexApplication {
                 .setNotificationReceivedHandler(new CustomNotificationReceivedHandler())
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .init();
-
 
         Fabric.with(this, new Crashlytics.Builder()
                 .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())

@@ -1,11 +1,13 @@
 package favority
 
-import ID
-import Layout
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
@@ -19,27 +21,32 @@ import domain.TvshowDB
 import loading.firebase.TypeDataRef
 import loading.firebase.TypeMediaFireBase
 import utils.Constant
+import utils.gone
 import utils.kotterknife.bindArgument
 import utils.patternRecyclerGrid
+import utils.visible
 
 class ListYourFragment : BaseFragment() {
-
 	val model: YourListViewModel by lazy { createViewModel(YourListViewModel::class.java) }
-
 	private val typeDataRef: String by bindArgument(Constant.MEDIATYPE)
 	private val type: String by bindArgument(Constant.ABA)
-	lateinit var recyclerViewFilme: RecyclerView
-
+	private lateinit var empty: TextView
+	private lateinit var sad: ImageView
+	private lateinit var progress: ProgressBar
+	lateinit var recyclerView: RecyclerView
+	lateinit var recyclerView2: RecyclerView
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View? {
 		super.onCreateView(inflater, container, savedInstanceState)
-		return with(inflater.inflate(Layout.temporadas, container, false)) {
-			findViewById<View>(ID.progress_temporadas).visibility = View.GONE
-			recyclerViewFilme = findViewById(R.id.temporadas_recycler)
-			recyclerViewFilme.patternRecyclerGrid(2).apply {
+		return with(inflater.inflate(R.layout.temporadas, container, false)) {
+			progress = findViewById(R.id.progress_temporadas)
+			recyclerView = findViewById(R.id.temporadas_recycler)
+			empty = findViewById(R.id.text_search_empty)
+			sad = findViewById(R.id.img_error)
+			recyclerView.patternRecyclerGrid(2).apply {
 				adapter = YourListAdapter(requireContext(), typeDataRef, type) { id ->
 					model.removeMedia(id, type, typeDataRef)
 				}
@@ -56,31 +63,66 @@ class ListYourFragment : BaseFragment() {
 	private fun observers() {
 		if (type == TypeMediaFireBase.TVSHOW.type()) {
 			model.tv.observe(viewLifecycleOwner, Observer {
+				progress.gone()
 				it.ref.addListenerForSingleValueEvent(object : ValueEventListener {
-					override fun onCancelled(p0: DatabaseError) {}
+					override fun onCancelled(p0: DatabaseError) {
+						error()
+					}
+
 					override fun onDataChange(snapshot: DataSnapshot) {
 						snapshot.children.mapNotNull { child ->
 							child.getValue(TvshowDB::class.java)
 						}.let { list ->
-							(recyclerViewFilme.adapter as YourListAdapter).addList(list)
+							if (list.isNotEmpty()) {
+								(recyclerView.adapter as YourListAdapter).addList(list)
+								sad.gone()
+								empty.gone()
+							} else {
+								empty()
+							}
 						}
 					}
 				})
 			})
 		} else {
 			model.movie.observe(viewLifecycleOwner, Observer {
+				progress.gone()
 				it.ref.addListenerForSingleValueEvent(object : ValueEventListener {
-					override fun onCancelled(p0: DatabaseError) {}
+					override fun onCancelled(p0: DatabaseError) {
+						error()
+					}
+
 					override fun onDataChange(snapshot: DataSnapshot) {
 						snapshot.children.mapNotNull { child ->
 							child.getValue(MovieDb::class.java)
 						}.let { list ->
-							(recyclerViewFilme.adapter as YourListAdapter).addList(list)
+							if (list.isNotEmpty()) {
+								recyclerView.gone()
+								(recyclerView2.adapter as YourListAdapter).addList(list)
+								sad.gone()
+								empty.gone()
+							} else {
+								empty()
+							}
 						}
 					}
 				})
 			})
 		}
+	}
+
+	fun empty() {
+		empty.apply {
+			visible()
+			text = getString(R.string.empty)
+		}
+		Log.d(this.javaClass.name, "empty")
+	}
+
+	fun error() {
+		empty()
+		sad.visibility = View.VISIBLE
+		Log.d(this.javaClass.name, "error")
 	}
 
 	companion object {
