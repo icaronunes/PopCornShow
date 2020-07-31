@@ -52,11 +52,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - env:
-          OMDBAPI_API_KEY: ${{ secrets.OMDBAPI_API_KEY }}
-          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
-          TMDB_API_KEY2: ${{ secrets.TMDB_API_KEY2 }}
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+      - user: variavel
+          -
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -69,6 +66,10 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
+          OMDBAPI_API_KEY: ${{ secrets.OMDBAPI_API_KEY }}
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+          TMDB_API_KEY2: ${{ secrets.TMDB_API_KEY2 }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
 
   apk:
     name: Debug APK
