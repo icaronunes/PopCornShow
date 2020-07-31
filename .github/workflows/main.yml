@@ -28,7 +28,7 @@ jobs:
          export TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}
          export TMDB_API_KEY2=${{ secrets.TMDB_API_KEY2 }}
          export YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }}
-         ./gradlew build       
+          ./gradlew build --stacktrace --info --debug
 
   apk:
     name: Debug APK

@@ -68,6 +68,7 @@ android {
             buildTypes {
 
                 debug {
+                    minifyEnabled false
                     debuggable true
                     ext.enableCrashlytics = false
                     ext.alwaysUpdateBuildId = false
