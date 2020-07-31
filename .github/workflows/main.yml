@@ -6,54 +6,12 @@ on:
     branches: master
 
 jobs:
-  unit-tests:
-    name: Unit Tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1
-
-      - name: Set up JDK
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-
-      - name: Run unit tests
-        run: ./gradlew test
-
-  instrumented-tests:
-    name: Instrumented Tests
-    runs-on: macos-latest
-
-    strategy:
-      matrix:
-        api-level: [ 21, 24, 26, 30 ]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1
-
-      - name: Run instrumented tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          target: google_apis
-          script: ./gradlew connectedAndroidTest
-
+  
   build:
     name: Build
     runs-on: ubuntu-latest
 
-    steps:
-      - user: variavel
-          -
+    steps:  
       - name: Checkout
         uses: actions/checkout@v2
 
