@@ -14,7 +14,6 @@ import domain.Imdb
 import domain.ListaSeries
 import domain.Movie
 import domain.PersonPopular
-import domain.ReviewsUflixit
 import domain.TvSeasons
 import domain.Videos
 import domain.busca.MultiSearch
@@ -25,8 +24,6 @@ import domain.reelgood.movie.ReelGood
 import domain.reelgood.tvshow.ReelGoodTv
 import domain.search.SearchMulti
 import domain.tvshow.Tvshow
-import io.github.cdimascio.dotenv.Dotenv
-import io.github.cdimascio.dotenv.dotenv
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
 import okhttp3.Callback
@@ -73,11 +70,12 @@ class Api(val context: Context) : ApiSingleton() {
     }
 
     private fun getKey(): String {
-        val dotenv = dotenv {
-            directory = "/assets"
-            filename = "env" // tell dotenv to use the filename 'env', instead of '.env'
-        }
-        return if (Random(2).nextInt() % 2 == 0)  dotenv["TMDB_API_KEY2"] ?: "" else dotenv["TMDB_API_KEY2"] ?: ""
+        // val dotenv = dotenv {
+        //     directory = "/assets"
+        //     filename = "env" // tell dotenv to use the filename 'env', instead of '.env'
+        // }
+        return if (Random(2).nextInt() % 2 == 0) System.getenv("TMDB_API_KEY")
+            ?: "" else System.getenv("TMDB_API_KEY2") ?: ""
     }
 
     fun personPopular(pagina: Int): Observable<PersonPopular> {
@@ -581,28 +579,6 @@ class Api(val context: Context) : ApiSingleton() {
         }
     }
 
-    fun reviewsFilme(idImdb: String?): Observable<ReviewsUflixit> {
-        // TODO usar para buscar reviews no the movie
-        return Observable.create { subscriber ->
-            val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-            val gson = Gson()
-            val request = Request.Builder()
-                .url("https://uflixit.p.mashape.com/movie/reviews/$idImdb")
-                .header("Accept", "application/json")
-                .header("X-Mashape-Key", Config.UFLIXI)
-                .build()
-            val response = client.newCall(request).execute()
-            if (response.isSuccessful) {
-                val json = response.body?.string()
-                val reviews = gson.fromJson(json, ReviewsUflixit::class.java)
-                subscriber.onNext(reviews)
-                subscriber.onCompleted()
-            } else {
-                subscriber.onError(Throwable(response.message))
-            }
-        }
-    }
-
     fun procuraMulti(query: String?): Observable<MultiSearch> {
         return Observable
             .create { subscriber ->
@@ -972,7 +948,8 @@ class Api(val context: Context) : ApiSingleton() {
 
     suspend fun getResquestImdb(id: String): BaseRequest<Imdb> {
         return suspendCancellableCoroutine { cont ->
-            executeCall("http://www.omdbapi.com/?i=$id&tomatoes=true&r=json&apikey=${Config.OMDBAPI_API_KEY}",
+            executeCall(
+                "http://www.omdbapi.com/?i=$id&tomatoes=true&r=json&apikey=${System.getenv("OMDBAPI_API_KEY")}",
                 object : Callback {
                     override fun onResponse(call: Call, response: Response) {
                         if (response.isSuccessful) {

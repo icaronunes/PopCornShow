@@ -189,7 +189,7 @@ dependencies {
     //Teste
     testImplementation "io.mockk:mockk:$mockk"
 
-    implementation 'io.github.cdimascio:java-dotenv:5.2.1'
+//    implementation 'io.github.cdimascio:java-dotenv:5.2.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

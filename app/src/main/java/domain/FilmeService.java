@@ -33,13 +33,11 @@ import info.movito.themoviedbapi.model.people.PersonCredits;
 import info.movito.themoviedbapi.tools.ApiUrl;
 import info.movito.themoviedbapi.tools.MovieDbException;
 import info.movito.themoviedbapi.tools.RequestMethod;
-import io.github.cdimascio.dotenv.Dotenv;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import utils.Config;
 
 import static info.movito.themoviedbapi.TmdbPeople.TMDB_METHOD_PERSON;
 
@@ -50,7 +48,7 @@ import static info.movito.themoviedbapi.TmdbPeople.TMDB_METHOD_PERSON;
 @Keep
 public class FilmeService {
 
-    private final static String TMDBAPI = Dotenv.load().get("TMDB_API_KEY2");
+    private final static String TMDBAPI = System.getenv("TMDB_API_KEY2");
 
     private static final Collection<Integer> SUCCESS_STATUS_CODES = Arrays.asList(
             1, // Success

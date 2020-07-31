@@ -52,12 +52,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - env:
+          OMDBAPI_API_KEY: ${{ secrets.OMDBAPI_API_KEY }}
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+          TMDB_API_KEY2: ${{ secrets.TMDB_API_KEY2 }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
-
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
