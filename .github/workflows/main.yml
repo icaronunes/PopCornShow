@@ -1,7 +1,10 @@
 language: android
 jdk: oraclejdk8
 dist: trusty
-  
+on:
+  push:
+    branches:
+    - master
 android:
   components:
     # Uncomment the lines below if you want to
