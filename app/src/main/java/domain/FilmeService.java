@@ -33,6 +33,7 @@ import info.movito.themoviedbapi.model.people.PersonCredits;
 import info.movito.themoviedbapi.tools.ApiUrl;
 import info.movito.themoviedbapi.tools.MovieDbException;
 import info.movito.themoviedbapi.tools.RequestMethod;
+import io.github.cdimascio.dotenv.Dotenv;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -49,6 +50,8 @@ import static info.movito.themoviedbapi.TmdbPeople.TMDB_METHOD_PERSON;
 @Keep
 public class FilmeService {
 
+    private final static String TMDBAPI = Dotenv.load().get("TMDB_API_KEY2");
+
     private static final Collection<Integer> SUCCESS_STATUS_CODES = Arrays.asList(
             1, // Success
             12, // The item/record was updated successfully.
@@ -57,46 +60,47 @@ public class FilmeService {
     private final String TAG = FilmeService.class.getName();
 
     public static TmdbLists getTmdbList() {
-        return new TmdbApi(Config.TMDB_API_KEY).getLists();
+        return new TmdbApi(TMDBAPI).getLists();
         //Metodo não aceita TVShow
     }
 
     public static List<Timezone> getTimeZone() {
-        return new TmdbApi(Config.TMDB_API_KEY).getTimezones();
+        return new TmdbApi(TMDBAPI).getTimezones();
         //Metodo não aceita TVShow
     }
 
     public static TmdbSearch getTmdbSearch() {
-        return new TmdbApi(Config.TMDB_API_KEY).getSearch();
+        return new TmdbApi(TMDBAPI).getSearch();
     }
 
     public static TmdbTV getTmdbTvShow() {
-        return new TmdbApi(Config.TMDB_API_KEY).getTvSeries();
+        return new TmdbApi(TMDBAPI).getTvSeries();
     }
 
     public static TmdbTvSeasons getTmdbTvSeasons() {
-        return new TmdbApi(Config.TMDB_API_KEY).getTvSeasons();
+        return new TmdbApi(TMDBAPI).getTvSeasons();
     }
 
     public static TmdbTvEpisodes getTmdbTvEpisodes() {
-        return new TmdbApi(Config.TMDB_API_KEY).getTvEpisodes();
+
+        return new TmdbApi(TMDBAPI).getTvEpisodes();
     }
 
 
     public static TmdbMovies getTmdbMovies() {
-        return new TmdbApi(Config.TMDB_API_KEY).getMovies();
+        return new TmdbApi(TMDBAPI).getMovies();
     }
 
     public static TmdbCompany getTmdbCompany() {
-        return new TmdbApi(Config.TMDB_API_KEY).getCompany();
+        return new TmdbApi(TMDBAPI).getCompany();
     }
 
     public static TmdbPeople getTmdbPerson() {
-        return new TmdbApi(Config.TMDB_API_KEY).getPeople();
+        return new TmdbApi(TMDBAPI).getPeople();
     }
 
     public static TmdbCollections getTmdbCollections() {
-        TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
+        TmdbApi tmdbApi = new TmdbApi(TMDBAPI);
         return tmdbApi.getCollections();
     }
 
@@ -107,7 +111,7 @@ public class FilmeService {
                 .readTimeout(30, TimeUnit.SECONDS)
                 .build();
         String url = "https://api.themoviedb.org/3/list/" + stringExtra +
-                "?api_key=" + Config.TMDB_API_KEY + "&language=en-US&sort_by=release.date.desc";
+                "?api_key=" + TMDBAPI + "&language=en-US&sort_by=release.date.desc";
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -185,7 +189,7 @@ public class FilmeService {
 
     private static <T> T mapJsonResult(ApiUrl apiUrl, Class<T> someClass, String
             jsonBody, RequestMethod requestMethod) {
-        TmdbApi tmdbApi = new TmdbApi(Config.TMDB_API_KEY);
+        TmdbApi tmdbApi = new TmdbApi(TMDBAPI);
         final ObjectMapper jsonMapper = new ObjectMapper();
         String webpage = tmdbApi.requestWebPage(apiUrl, jsonBody, requestMethod);
 
@@ -223,7 +227,7 @@ public class FilmeService {
             if (guestSession != null) {
 
                 String URL = "https://api.themoviedb.org/3/movie/" + movioId + "/rating?api_key="
-                        + Config.TMDB_API_KEY + "&guest_session_id=" + guestSession.getGuestSessionId();
+                        + TMDBAPI + "&guest_session_id=" + guestSession.getGuestSessionId();
                 MediaType mediaType = MediaType.parse("application/json");
                 OkHttpClient client = new OkHttpClient.Builder()
                         .connectTimeout(10, TimeUnit.SECONDS)
@@ -251,7 +255,7 @@ public class FilmeService {
             if (guestSession != null) {
 
                 String URL = "https://api.themoviedb.org/3/tv/" + tvshowId + "/rating?api_key="
-                        + Config.TMDB_API_KEY + "&guest_session_id=" + guestSession.getGuestSessionId();
+                        + TMDBAPI + "&guest_session_id=" + guestSession.getGuestSessionId();
                 MediaType mediaType = MediaType.parse("application/json");
                 OkHttpClient client = new OkHttpClient.Builder()
                         .readTimeout(10, TimeUnit.SECONDS)
@@ -280,7 +284,7 @@ public class FilmeService {
 
                 String URL = "https://api.themoviedb.org/3/tv/"
                         + tvshowId + "/season/" + temporada + "/episode/" + ep + "/rating?api_key="
-                        + Config.TMDB_API_KEY + "&guest_session_id=" + guestSession.getGuestSessionId();
+                        + TMDBAPI + "&guest_session_id=" + guestSession.getGuestSessionId();
                 MediaType mediaType = MediaType.parse("application/json");
                 OkHttpClient client = new OkHttpClient.Builder()
                         .connectTimeout(10, TimeUnit.SECONDS)
@@ -303,7 +307,7 @@ public class FilmeService {
 
     private static GuestSession getGuestSession(Context context) {
         String URL = "https://api.themoviedb.org/3/authentication/guest_session/new?api_key=";
-        URL += Config.TMDB_API_KEY;
+        URL += TMDBAPI;
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)

@@ -66,6 +66,7 @@ android {
             }
 
             buildTypes {
+
                 debug {
                     debuggable true
                     ext.enableCrashlytics = false
@@ -119,6 +120,13 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+    sourceSets {
+        main {
+            assets {
+                srcDirs 'src/main/assets'
+            }
+        }
     }
 
 }
@@ -180,6 +188,8 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
     //Teste
     testImplementation "io.mockk:mockk:$mockk"
+
+    implementation 'io.github.cdimascio:java-dotenv:5.2.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
