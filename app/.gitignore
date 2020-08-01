@@ -75,4 +75,5 @@ fastlane/readme.md
 
 projectFilesBackup/*
 projectFilesBackup/.idea/*
-
+reports/*
+PopCornShow.iml
