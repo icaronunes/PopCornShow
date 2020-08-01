@@ -10,7 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
-import android.view.WindowManager.LayoutParams
+import android.view.WindowManager.*
 import android.widget.Button
 import android.widget.RatingBar
 import android.widget.TextView
@@ -19,11 +19,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
-import applicaton.BaseViewModel.BaseRequest.Failure
-import applicaton.BaseViewModel.BaseRequest.Loading
-import applicaton.BaseViewModel.BaseRequest.Success
+import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
-import br.com.icaro.filme.R.string
+import br.com.icaro.filme.R.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
@@ -48,9 +46,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import loading.firebase.TypeDataRef.FAVORITY
-import loading.firebase.TypeDataRef.RATED
-import loading.firebase.TypeDataRef.WATCH
+import loading.firebase.TypeDataRef.*
 import utils.Api
 import utils.Constant
 import utils.UtilsApp
@@ -180,8 +176,8 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 
 	private fun getIdStream(): String {
 		return try {
-			"${movieDb?.originalTitle?.getNameTypeReel()
-				?: ""}-${movieDb?.releaseDate?.yearDate()}"
+			"${movieDb.originalTitle?.getNameTypeReel()
+				?: ""}-${movieDb.releaseDate?.yearDate()}"
 		} catch (ex: java.lang.Exception) {
 			""
 		}
@@ -199,7 +195,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 			}
 
 			if (reelGood.availability.isNotEmpty()) {
-				streamview_movie.titleMovie = movieDb?.originalTitle ?: ""
+				streamview_movie.titleMovie = movieDb.originalTitle ?: ""
 				streamview_movie.stream = reelGood.availability.filter {
 					it.accessType == 2
 				}

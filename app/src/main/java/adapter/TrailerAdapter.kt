@@ -19,6 +19,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.FirebaseAnalytics.*
 import domain.ResultsVideosItem
 import trailer.TrailerActivity
+import utils.Api
 import utils.Constant
 import utils.visible
 
@@ -34,11 +35,12 @@ class TrailerAdapter(private val videos: MutableList<ResultsVideosItem?>?, priva
     inner class TrailerViewHolder(parent: ViewGroup)
         : RecyclerView.ViewHolder(LayoutInflater.from(parent.context)
         .inflate(layout.scroll_trailer, parent, false)) {
+        private val YOUTUBE_KEY by lazy { Api(context = parent.context).getKey("YOUTUBE_API_KEY") }
 
         fun bind(video: ResultsVideosItem) = with(itemView)  {
             contentDescription = video.name
             findViewById<YouTubeThumbnailView>(R.id.youtube_view_thumbnail)
-                .initialize(System.getenv("YOUTUBE_API_KEY"), object : OnInitializedListener {
+                .initialize(YOUTUBE_KEY, object : OnInitializedListener {
                     override fun onInitializationSuccess(
                         youTubeThumbnailView: YouTubeThumbnailView,
                         youTubeThumbnailLoader: YouTubeThumbnailLoader
