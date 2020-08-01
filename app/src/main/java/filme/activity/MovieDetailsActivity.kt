@@ -180,8 +180,8 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 
 	private fun getIdStream(): String {
 		return try {
-			"${movieDb?.originalTitle?.getNameTypeReel()
-				?: ""}-${movieDb?.releaseDate?.yearDate()}"
+			"${movieDb.originalTitle?.getNameTypeReel()
+				?: ""}-${movieDb.releaseDate?.yearDate()}"
 		} catch (ex: java.lang.Exception) {
 			""
 		}
@@ -396,17 +396,17 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 	private fun addOrRemoveFavorite() {
 		menu_item_favorite.animeRotation(end = { this@MovieDetailsActivity.fab_menu.close(true) })
 		if (movieDb.releaseDate?.released() == true) {
-			model.executeFavority({
+			model.executeFavority( remove = {
 				it.child(idMovie.toString()).setValue(null)
 					.addOnCompleteListener {
 						makeToast(R.string.filme_remove_favorite)
 					}
-			}, {
+			}, add = {
 				it.child(idMovie.toString()).setValue(makeMovieDb())
 					.addOnCompleteListener {
 						makeToast(R.string.filme_add_favorite)
 					}
-			}, idMovie)
+			}, idMovie =  idMovie)
 		} else {
 			makeToast(R.string.filme_nao_lancado)
 		}

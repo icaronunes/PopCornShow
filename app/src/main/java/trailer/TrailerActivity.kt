@@ -15,7 +15,7 @@ import com.google.android.youtube.player.YouTubePlayerView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.FirebaseAnalytics.Event
 import com.google.firebase.analytics.FirebaseAnalytics.Param
-import utils.Config
+import utils.Api
 import utils.Constant
 import kotlinx.android.synthetic.main.youtube_layout.trailer_sinopse as sinopse
 
@@ -25,14 +25,15 @@ import kotlinx.android.synthetic.main.youtube_layout.trailer_sinopse as sinopse
 class TrailerActivity : YouTubeBaseActivity(), OnInitializedListener {
 
     private lateinit var idYoutube: String
-    
+    private val YOUTUBE_KEY by lazy { Api(context = this).getKey("YOUTUBE_API_KEY") }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layout.youtube_layout)
         val youTubeView: YouTubePlayerView = findViewById(id.youtube_view)
         idYoutube = intent.getStringExtra(Constant.YOU_TUBE_KEY)
         sinopse.text = intent.getStringExtra(Constant.SINOPSE)
-        youTubeView.initialize(Config.YOUTUBE_API_KEY, this)
+        youTubeView.initialize(YOUTUBE_KEY, this)
     }
 
     override fun onInitializationSuccess(provider: Provider, player: YouTubePlayer, wasRestored: Boolean) {

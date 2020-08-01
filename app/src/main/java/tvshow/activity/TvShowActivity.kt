@@ -293,7 +293,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 		menu_item_favorite.animeRotation(end = { this@TvShowActivity.fab_menu.close(true) })
 		if (series.firstAirDate?.released() == true) {
 			model.putFavority(
-				add = {
+				remove = {
 					it.child(idTvshow.toString()).setValue(null)
 						.addOnCompleteListener {
 							Toast.makeText(
@@ -303,7 +303,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 							).show()
 						}
 				},
-				remove = {
+				add = {
 					it.child(idTvshow.toString()).setValue(makeTvshiwDb())
 						.addOnCompleteListener {
 							Toast.makeText(

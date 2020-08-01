@@ -67,6 +67,7 @@ android {
 
             buildTypes {
                 debug {
+                    minifyEnabled false
                     debuggable true
                     ext.enableCrashlytics = false
                     ext.alwaysUpdateBuildId = false
@@ -178,6 +179,8 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation 'com.facebook.android:facebook-android-sdk:5.8.0'
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    implementation 'io.github.cdimascio:java-dotenv:5.2.1'
+
     //Teste
     testImplementation "io.mockk:mockk:$mockk"
 }

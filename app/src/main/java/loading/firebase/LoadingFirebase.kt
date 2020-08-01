@@ -149,9 +149,9 @@ class LoadingFirebase(type: TypeMediaFireBase) : BaseFireBase(type), ILoadingFir
 		_favorit: DataSnapshot?
 	) {
 		if (_favorit?.child("$idMedia")?.exists() == true) {
-			add(myFavorite)
-		} else {
 			remove(myFavorite)
+		} else {
+			add(myFavorite)
 		}
 	}
 

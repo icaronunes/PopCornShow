@@ -6,8 +6,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
+import android.os.Build.*
 import android.os.Environment
 import android.preference.PreferenceManager
 import android.telephony.TelephonyManager
@@ -17,7 +16,6 @@ import androidx.core.content.FileProvider
 import androidx.palette.graphics.Palette
 import com.crashlytics.android.Crashlytics
 import configuracao.SettingsActivity
-import domain.FilmeService
 import domain.TvSeasons
 import domain.UserEp
 import domain.UserSeasons
@@ -25,7 +23,6 @@ import domain.UserTvshow
 import domain.busca.ResultsItem
 import domain.tvshow.ExternalIds
 import domain.tvshow.Tvshow
-import info.movito.themoviedbapi.model.config.Timezone
 import info.movito.themoviedbapi.model.tv.TvSeason
 import utils.enums.EnumTypeMedia
 import java.io.File
@@ -63,16 +60,6 @@ object UtilsApp {
             Locale.getDefault().toLanguageTag()
         } else {
             Locale.getDefault().language + "-" + Locale.getDefault().country
-        }
-
-    val timezone: Timezone
-        get() {
-            for (timezone in FilmeService.getTimeZone()) {
-                if (timezone.country == Locale.getDefault().country) {
-                    return timezone
-                }
-            }
-            return Timezone("US", "US")
         }
 
     fun setUserTvShow(serie: Tvshow): UserTvshow {
