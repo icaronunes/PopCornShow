@@ -2,20 +2,15 @@ package trailer
 
 import android.os.Bundle
 import android.widget.Toast
-import br.com.icaro.filme.R.id
-import br.com.icaro.filme.R.layout
-import br.com.icaro.filme.R.string
+import br.com.icaro.filme.R.*
 import com.crashlytics.android.Crashlytics
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
-import com.google.android.youtube.player.YouTubePlayer.OnInitializedListener
-import com.google.android.youtube.player.YouTubePlayer.Provider
+import com.google.android.youtube.player.YouTubePlayer.*
 import com.google.android.youtube.player.YouTubePlayerView
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.FirebaseAnalytics.Event
-import com.google.firebase.analytics.FirebaseAnalytics.Param
-import utils.Config
+import com.google.firebase.analytics.FirebaseAnalytics.*
 import utils.Constant
 import kotlinx.android.synthetic.main.youtube_layout.trailer_sinopse as sinopse
 
@@ -32,7 +27,7 @@ class TrailerActivity : YouTubeBaseActivity(), OnInitializedListener {
         val youTubeView: YouTubePlayerView = findViewById(id.youtube_view)
         idYoutube = intent.getStringExtra(Constant.YOU_TUBE_KEY)
         sinopse.text = intent.getStringExtra(Constant.SINOPSE)
-        youTubeView.initialize(Config.YOUTUBE_API_KEY, this)
+        youTubeView.initialize(System.getenv("YOUTUBE_API_KEY"), this)
     }
 
     override fun onInitializationSuccess(provider: Provider, player: YouTubePlayer, wasRestored: Boolean) {
