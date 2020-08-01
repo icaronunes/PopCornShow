@@ -88,3 +88,6 @@ fastlane/test_output
 fastlane/readme.md
 
 gradle/wrapper/gradle-wrapper\.properties
+
+projectFilesBackup/*
+projectFilesBackup/.idea/workspace.xml
