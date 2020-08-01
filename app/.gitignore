@@ -5,6 +5,7 @@ app/keystore.jks
 filme.iml
 .gradle/wrapper/gradle-wrapper.properties
 .idea/misc.xml
+app/src/main/assets/env
 
 /build
 # Built application files
@@ -75,4 +76,5 @@ fastlane/readme.md
 
 projectFilesBackup/*
 projectFilesBackup/.idea/*
-
+reports/*
+PopCornShow.iml
