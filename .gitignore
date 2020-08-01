@@ -7,7 +7,7 @@ filme.iml
 .gradle/wrapper/gradle-wrapper.properties
 .idea/misc.xml
 ktlint-report-in-checkstyle-format.xml
-
+app/src/main/assets/env
 
 /build
 # Built application files
