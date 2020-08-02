@@ -37,7 +37,7 @@ class TvShowsFragment : FragmentBase() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            this.abaEscolhida = arguments!!.getString(Constant.NAV_DRAW_ESCOLIDO, "")
+            this.abaEscolhida = requireArguments().getString(Constant.NAV_DRAW_ESCOLIDO, "")
         }
     }
 
@@ -85,8 +85,8 @@ class TvShowsFragment : FragmentBase() {
 
     fun getListaSereies() {
 
-        val inscricao = Api(context!!)
-            .buscaDeSeries(abaEscolhida, pagina = pagina, local = getIdiomaEscolhido(context!!))
+        val inscricao = Api(requireContext())
+            .buscaDeSeries(abaEscolhida, pagina = pagina, local = getIdiomaEscolhido(requireContext()))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .debounce(2, TimeUnit.SECONDS)
@@ -96,7 +96,7 @@ class TvShowsFragment : FragmentBase() {
                         (recycle_listas.adapter as ListaSeriesAdapter).addSeries(it.results)
                         pagina = it.page
                         ++pagina
-                        UtilsKt.getAnuncio(context!!, 2) { nativeAd: UnifiedNativeAd ->
+                        UtilsKt.getAnuncio(requireContext(), 2) { nativeAd: UnifiedNativeAd ->
                             if (recycle_listas != null &&
 	                            (recycle_listas.adapter as ListaSeriesAdapter)
 		                            .getItemViewType((recycle_listas.adapter as ListaSeriesAdapter).itemCount - 1)

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import br.com.icaro.filme.R
 import com.facebook.AccessToken
@@ -298,7 +299,7 @@ class LoginActivity : BaseActivity() {
 					putString(FirebaseAnalytics.Param.ITEM_NAME, "anonimo")
 				})
 
-				this@LoginActivity.makeToast(R.string.anonimo_alerta)
+				this@LoginActivity.makeToast(R.string.anonimo_alerta, Toast.LENGTH_LONG)
 				if (!task.isSuccessful) {
 					this.makeToast("Authentication failed.")
 				}

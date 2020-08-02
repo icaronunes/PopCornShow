@@ -4,25 +4,27 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import applicaton.BaseViewModel
-import applicaton.BaseViewModel.BaseRequest.Loading
+import applicaton.BaseViewModel.BaseRequest.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import domain.Imdb
 import domain.Movie
 import domain.MovieDb
 import domain.Videos
+import domain.colecao.Colecao
 import loading.api.ILoadingMedia
 import loading.api.LoadingMedia
 import loading.firebase.ILoadingFireBase
 import loading.firebase.LoadingFirebase
 import loading.firebase.TypeDataRef
-import loading.firebase.TypeDataRef.FALLOW
+import loading.firebase.TypeDataRef.*
 import loading.firebase.TypeMediaFireBase
 import utils.Api
 import java.util.HashMap
 
 class MovieDetatilsViewModel(app: Application, val api: Api) : BaseViewModel(app) {
 	private val MOVIE = "movie"
+
 	private val loadingFirebase: ILoadingFireBase = LoadingFirebase(TypeMediaFireBase.MOVIE)
 	private val loadingMedia: ILoadingMedia = LoadingMedia(api)
 
@@ -35,6 +37,8 @@ class MovieDetatilsViewModel(app: Application, val api: Api) : BaseViewModel(app
 	val rated: LiveData<DataSnapshot> = _rated
 	private val _movie: MutableLiveData<BaseRequest<Movie>> = MutableLiveData()
 	val movie: LiveData<BaseRequest<Movie>> = _movie
+	private val _collection: MutableLiveData<BaseRequest<Colecao>> = MutableLiveData()
+	val collection: LiveData<BaseRequest<Colecao>> = _collection
 	private val _videos: MutableLiveData<BaseRequest<Videos>> = MutableLiveData()
 	val videos: LiveData<BaseRequest<Videos>> = _videos
 	private val _imdb: MutableLiveData<BaseRequest<Imdb>> = MutableLiveData()
@@ -88,5 +92,8 @@ class MovieDetatilsViewModel(app: Application, val api: Api) : BaseViewModel(app
 
 	fun updateMovie(idMovie: Int, childUpdates: HashMap<String, Any?>, type: TypeDataRef) {
 		if (type != FALLOW) loadingFirebase.upDateTvDetails(idMovie, childUpdates, type)
+	}
+	fun fetchCollection(id: Int) {
+		loadingMedia.fetchCollection(id, _collection)
 	}
 }

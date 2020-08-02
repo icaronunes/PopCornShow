@@ -3,14 +3,14 @@ package loading.api
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.MutableLiveData
-import applicaton.BaseViewModel.BaseRequest
-import applicaton.BaseViewModel.BaseRequest.Loading
-import applicaton.BaseViewModel.BaseRequest.Success
+import applicaton.BaseViewModel.*
+import applicaton.BaseViewModel.BaseRequest.*
 import domain.Imdb
 import domain.ListaSeries
 import domain.Movie
 import domain.TvSeasons
 import domain.Videos
+import domain.colecao.Colecao
 import domain.movie.ListaFilmes
 import domain.reelgood.tvshow.ReelGoodTv
 import domain.tvshow.Tvshow
@@ -23,7 +23,7 @@ import kotlinx.coroutines.withContext
 import utils.Api
 
 class LoadingMedia(val api: Api) : ILoadingMedia {
-
+	// Remover esses PostValue ... pode causar leak
 	override fun getDataMovie(liveData: MutableLiveData<BaseRequest<Movie>>, idMovie: Int) {
 		GlobalScope.launch {
 			liveData.postValue(withContext(Dispatchers.Default) { api.getMovie(idMovie) })
@@ -118,6 +118,12 @@ class LoadingMedia(val api: Api) : ILoadingMedia {
 		GlobalScope.launch(handle(_tvshow)) {
 			val popular = api.getPopularTv()
 			_tvshow.postValue(Success(popular))
+		}
+	}
+	override fun fetchCollection(id: Int, _collection: MutableLiveData<BaseRequest<Colecao>>) {
+		GlobalScope.launch(handle(_collection)) {
+			val colection = api.getCollection(id)
+			_collection.postValue((Success(colection)))
 		}
 	}
 

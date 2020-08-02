@@ -1,5 +1,6 @@
 package filme.activity
 
+import ID
 import activity.BaseActivityAb
 import android.app.Dialog
 import android.content.Intent
@@ -47,6 +48,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import loading.firebase.TypeDataRef.*
+import safely
 import utils.Api
 import utils.Constant
 import utils.UtilsApp
@@ -68,13 +70,11 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 	private val model: MovieDetatilsViewModel by lazy {
 		createViewModel(MovieDetatilsViewModel::class.java, this)
 	}
-
 	private val color: Int by bindBundle(Constant.COLOR_TOP, R.color.primary)
 	private val idMovie: Int by bindBundle(Constant.FILME_ID)
 
 	//Todo receber Reel id
 	private lateinit var movieDb: Movie
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setUpToolBar()
@@ -154,7 +154,13 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 	}
 
 	private fun setupTopFragment(movie: Movie) {
-		top_img_viewpager?.adapter = ImagemTopFragment(supportFragmentManager, movie)
+		val listPaths = mutableListOf<String>().apply {
+			movie.backdropPath.safely { add(it) }
+			movie.images?.backdrops?.forEach { backDropItem ->
+				backDropItem?.safely { it.filePath?.let { path -> add(path) } }
+			}
+		}
+		top_img_viewpager?.adapter = ImagemTopFragment(supportFragmentManager, listPaths)
 	}
 
 	private fun setLoading(boolean: Boolean) {
@@ -393,7 +399,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 	private fun addOrRemoveFavorite() {
 		menu_item_favorite.animeRotation(end = { this@MovieDetailsActivity.fab_menu.close(true) })
 		if (movieDb.releaseDate?.released() == true) {
-			model.executeFavority( remove = {
+			model.executeFavority(remove = {
 				it.child(idMovie.toString()).setValue(null)
 					.addOnCompleteListener {
 						makeToast(R.string.filme_remove_favorite)
@@ -403,11 +409,10 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 					.addOnCompleteListener {
 						makeToast(R.string.filme_add_favorite)
 					}
-			}, idMovie =  idMovie)
+			}, idMovie = idMovie)
 		} else {
 			makeToast(R.string.filme_nao_lancado)
 		}
-
 	}
 
 	private fun makeMovieDb() = MovieDb().apply {
@@ -457,32 +462,17 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 		}
 		supportFragmentManager
 			.beginTransaction()
-			.add(R.id.filme_container, movieFragment, null)
+			.add(ID.filme_container, movieFragment, null)
 			.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
 			.commitAllowingStateLoss()
 	}
 
 	private inner class ImagemTopFragment(
 		supportFragmentManager: FragmentManager,
-		val movie: Movie
+		val list: MutableList<String>
 	) : FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-
-		override fun getItem(position: Int): Fragment {
-			return if (movie.images?.backdrops != null) {
-				if (position == 0) {
-					ImagemTopFilmeScrollFragment.newInstance(movieDb.backdropPath)
-				} else ImagemTopFilmeScrollFragment.newInstance(movieDb.images?.backdrops!![position]?.filePath)
-			} else Fragment()
-		}
-
-		override fun getCount(): Int {
-			if (movieDb.images?.backdrops != null) {
-				val size = movieDb.images?.backdrops?.size!!
-				return if (size > 0) size else 1
-			}
-			return 0
-		}
+		override fun getItem(position: Int): Fragment =
+			ImagemTopFilmeScrollFragment.newInstance(list[position])
+		override fun getCount() = list.size
 	}
-
-	fun getModelView() = model
 }

@@ -25,7 +25,7 @@ class ImagemTopFilmeScrollFragment : Fragment() {
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
-	) = inflater.inflate(R.layout.page_scroll_viewpage_top, container, false).apply {
+	): View = inflater.inflate(R.layout.page_scroll_viewpage_top, container, false).apply {
 		val img = findViewById<ImageView>(R.id.img_top_viewpager)
 		img.setPicassoWithCache(path, 6, img_erro = R.drawable.top_empty, sucesso = {
 			AnimatorSet().apply {

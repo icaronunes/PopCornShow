@@ -1,12 +1,13 @@
 package loading.api
 
 import androidx.lifecycle.MutableLiveData
-import applicaton.BaseViewModel.BaseRequest
+import applicaton.BaseViewModel.*
 import domain.Imdb
 import domain.ListaSeries
 import domain.Movie
 import domain.TvSeasons
 import domain.Videos
+import domain.colecao.Colecao
 import domain.movie.ListaFilmes
 import domain.reelgood.tvshow.ReelGoodTv
 import domain.tvshow.Tvshow
@@ -29,4 +30,5 @@ interface ILoadingMedia {
 	fun getMoviePopular(_movie: MutableLiveData<BaseRequest<ListaFilmes>>)
 	fun getUpComing(_movie: MutableLiveData<BaseRequest<ListaFilmes>>)
 	fun getTvPopular(_tvshow: MutableLiveData<BaseRequest<ListaSeries>>)
+	fun fetchCollection(id: Int, _collection: MutableLiveData<BaseRequest<Colecao>>)
 }

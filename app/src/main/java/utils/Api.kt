@@ -365,24 +365,27 @@ class Api(val context: Context) : ApiSingleton() {
 		}
 	}
 
-	fun getColecao(id: Int): Observable<Colecao> {
-		return Observable.create { subscriber ->
-			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val gson = Gson()
-			val request = Request.Builder()
-				.url("${baseUrl3}collection/$id?api_key=${TMDBAPI}&language=$timeZone,en")
-				.get()
-				.build()
-			val response = client.newCall(request).execute()
-			if (response.isSuccessful) {
-				val json = response.body?.string()
-				val colecao = gson.fromJson(json, Colecao::class.java)
-
-				subscriber.onNext(colecao)
-				subscriber.onCompleted()
-			} else {
-				subscriber.onError(Throwable(response.message))
-			}
+	suspend fun getCollection(id: Int): Colecao {
+		return suspendCancellableCoroutine { cont ->
+			executeCall("${baseUrl3}collection/$id?api_key=${TMDBAPI}&language=$timeZone,en", func = object :
+				Callback {
+				override fun onFailure(call: Call, e: IOException) {
+					cont.resumeWithException(Throwable(e.message))
+				}
+				override fun onResponse(call: Call, response: Response) {
+					try {
+						if (response.isSuccessful) {
+							val json = response.body?.string()
+							val collection = gson.fromJson(json, Colecao::class.java)
+							cont.resume(collection)
+						} else {
+							cont.cancel(null)
+						}
+					} catch (ex: Exception) {
+						cont.resumeWithException(Throwable(ex.message))
+					}
+				}
+			})
 		}
 	}
 
