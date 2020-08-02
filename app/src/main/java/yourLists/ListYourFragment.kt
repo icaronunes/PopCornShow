@@ -1,7 +1,6 @@
-package favority
+package yourLists
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +33,6 @@ class ListYourFragment : BaseFragment() {
 	private lateinit var sad: ImageView
 	private lateinit var progress: ProgressBar
 	lateinit var recyclerView: RecyclerView
-	lateinit var recyclerView2: RecyclerView
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -51,6 +49,7 @@ class ListYourFragment : BaseFragment() {
 					model.removeMedia(id, type, typeDataRef)
 				}
 			}
+			this
 		}
 	}
 
@@ -64,7 +63,7 @@ class ListYourFragment : BaseFragment() {
 		if (type == TypeMediaFireBase.TVSHOW.type()) {
 			model.tv.observe(viewLifecycleOwner, Observer {
 				progress.gone()
-				it.ref.addListenerForSingleValueEvent(object : ValueEventListener {
+				it.ref.addValueEventListener(object : ValueEventListener {
 					override fun onCancelled(p0: DatabaseError) {
 						error()
 					}
@@ -75,8 +74,7 @@ class ListYourFragment : BaseFragment() {
 						}.let { list ->
 							if (list.isNotEmpty()) {
 								(recyclerView.adapter as YourListAdapter).addList(list)
-								sad.gone()
-								empty.gone()
+								successView()
 							} else {
 								empty()
 							}
@@ -87,7 +85,7 @@ class ListYourFragment : BaseFragment() {
 		} else {
 			model.movie.observe(viewLifecycleOwner, Observer {
 				progress.gone()
-				it.ref.addListenerForSingleValueEvent(object : ValueEventListener {
+				it.ref.addValueEventListener(object : ValueEventListener {
 					override fun onCancelled(p0: DatabaseError) {
 						error()
 					}
@@ -97,10 +95,8 @@ class ListYourFragment : BaseFragment() {
 							child.getValue(MovieDb::class.java)
 						}.let { list ->
 							if (list.isNotEmpty()) {
-								recyclerView.gone()
-								(recyclerView2.adapter as YourListAdapter).addList(list)
-								sad.gone()
-								empty.gone()
+								(recyclerView.adapter as YourListAdapter).addList(list)
+								successView()
 							} else {
 								empty()
 							}
@@ -111,18 +107,23 @@ class ListYourFragment : BaseFragment() {
 		}
 	}
 
+	private fun successView() {
+		sad.gone()
+		empty.gone()
+		recyclerView.visible()
+	}
+
 	fun empty() {
+		recyclerView.gone()
 		empty.apply {
 			visible()
-			text = getString(R.string.empty)
+			text = context.getString(R.string.empty)
 		}
-		Log.d(this.javaClass.name, "empty")
 	}
 
 	fun error() {
 		empty()
 		sad.visibility = View.VISIBLE
-		Log.d(this.javaClass.name, "error")
 	}
 
 	companion object {

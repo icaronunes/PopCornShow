@@ -1,4 +1,4 @@
-package favority
+package yourLists
 
 import Color
 import ID
@@ -37,7 +37,7 @@ class YourListActivity(override var layout: Int = Layout.activity_usuario_list) 
 			tabLayout.setupWithViewPager(viewPager)
 			tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(context, Color.accent))
 			viewPager.adapter =
-				FavoriteAdapater(this@YourListActivity, supportFragmentManager, type)
+				YoutListAdapater(this@YourListActivity, supportFragmentManager, type)
 		}
 	}
 

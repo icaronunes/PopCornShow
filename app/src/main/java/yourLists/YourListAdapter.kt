@@ -1,16 +1,15 @@
-package favority
+package yourLists
 
 import Txt
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog.Builder
+import androidx.appcompat.app.AlertDialog.*
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
-import br.com.icaro.filme.R.drawable
-import br.com.icaro.filme.R.string
+import br.com.icaro.filme.R.*
 import domain.IMedia
 import filme.activity.MovieDetailsActivity
 import kotlinx.android.synthetic.main.include_progress.view.progress
