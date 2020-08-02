@@ -3,39 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="br.com.icaro.filme">
 
-    <uses-sdk
-        tools:overrideLibrary="com.facebook, com.onesignal, android.support.customtabs"
-        tools:ignore="MultipleUsesSdk" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-
     <application
         android:name="applicaton.PopCornApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme.NoActionBar">
-
-        <meta-data
-            android:name="com.onesignal.NotificationOpened.DEFAULT"
-            android:value="DISABLE" />
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_application_id" />
-
-        <meta-data
-            android:name="firebase_crash_collection_enabled"
-            android:value="false" />
-
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7639270198633263~5648600833"/>
+        android:theme="@style/AppTheme.NoActionBar"
+        android:usesCleartextTraffic="true">
 
         <activity
             android:name="main.MainActivity"
@@ -48,10 +23,10 @@
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
         </activity>
-
-        <activity android:name="login.LoginActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:fitsSystemWindows="true">
+        <activity
+            android:name="login.LoginActivity"
+            android:fitsSystemWindows="true"
+            android:windowSoftInputMode="adjustPan">
 
         </activity>
 
@@ -97,23 +72,6 @@
                 android:value="activity.SearchMultiActivity" />
         </activity>
 
-
-        <activity android:name="favorito.FavoriteActivity">
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="activity.SearchMultiActivity" />
-        </activity>
-        <activity android:name="avaliado.RatedActivity">
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="activity.SearchMultiActivity" />
-        </activity>
         <activity android:name="pessoaspopulares.PersonPopularActivity">
             <meta-data
                 android:name="android.app.searchable"
@@ -171,7 +129,6 @@
 
         <activity android:name="episodio.EpsodioActivity" />
 
-
         <activity
             android:name="trailer.TrailerActivity"
             android:parentActivityName="main.MainActivity">
@@ -192,7 +149,6 @@
 
         </activity>
 
-
         <activity
             android:name="elenco.ElencoActivity"
             android:parentActivityName="main.MainActivity">
@@ -203,7 +159,6 @@
                 android:value="main.MainActivity" />
 
         </activity>
-
 
         <activity
             android:name="producao.CrewsActivity"
@@ -233,32 +188,22 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
 
-        <activity android:name="queroassistir.WatchListActivity">
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="activity.SearchMultiActivity" />
-        </activity>
 
         <activity
             android:name="produtora.activity.ProdutoraActivity"
             android:parentActivityName="main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="main.MainActivity" />
 
         </activity>
+
 
         <activity
             android:name="similares.SimilaresActivity"
@@ -317,6 +262,7 @@
                 android:value="activity.SearchMultiActivity" />
         </activity>
 
+
         <activity
             android:name="site.Site"
             android:parentActivityName="main.MainActivity">
@@ -348,8 +294,10 @@
         <activity android:name="activity.DynamicLink">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="br.com.icaro.filme"
                     android:scheme="http" />
@@ -360,28 +308,24 @@
         </activity>
 
         <activity android:name="desenvolvimento.Desenvolvimento" />
-        <activity android:name="favority.YourListActivity" />
 
-        <service
-            android:name="onsignal.CustomNotificationExtenderService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.onesignal.NotificationExtender" />
-            </intent-filter>
-        </service>
+        <activity android:name="yourLists.YourListActivity" />
 
-        <provider
-            android:name="provider.SuggestionRecentProvider"
-            android:authorities="br.com.icaro.filme.search2" />
+        <meta-data
+            android:name="com.onesignal.NotificationOpened.DEFAULT"
+            android:value="DISABLE" />
 
-        <provider
-            android:name="provider.SuggestionProvider"
-            android:authorities="br.com.icaro.filme.search"
-            android:enabled="true"
-            android:exported="false" />
-        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_application_id" />
+
+        <meta-data
+            android:name="firebase_crash_collection_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7639270198633263~5648600833" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -393,7 +337,17 @@
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
             android:value="${crashlyticsCollectionEnabled}" />
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <provider
+            android:name="provider.SuggestionRecentProvider"
+            android:authorities="br.com.icaro.filme.search2" />
 
+        <provider
+            android:name="provider.SuggestionProvider"
+            android:authorities="br.com.icaro.filme.search"
+            android:enabled="true"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -405,6 +359,26 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+
+        <service
+            android:name="onsignal.CustomNotificationExtenderService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE">
+            <intent-filter>
+                <action android:name="com.onesignal.NotificationExtender" />
+            </intent-filter>
+        </service>
+
     </application>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-sdk
+        tools:ignore="MultipleUsesSdk"
+        tools:overrideLibrary="com.facebook, com.onesignal, android.support.customtabs" />
 
 </manifest>

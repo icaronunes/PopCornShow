@@ -5,7 +5,6 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import busca.SearchMultiModelView
-import favority.YourListViewModel
 import filme.MovieDetatilsViewModel
 import login.LoginViewModel
 import main.MainViewModel
@@ -13,6 +12,7 @@ import pessoa.modelview.PersonViewModel
 import seguindo.FallowModel
 import tvshow.viewmodel.TvShowViewModel
 import utils.Api
+import yourLists.YourListViewModel
 
 class PopCornViewModelFactory constructor(
 	private val application: Application,
