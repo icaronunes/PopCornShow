@@ -41,36 +41,29 @@ import utils.visible
 /**
  * Created by root on 27/02/18.
  */
-
 class SeasonFoldinAdapter(
 	val seasonActivity: SeasonActivity,
 	private val seasonOnClickListener: SeasonOnClickListener
 ) :
 	RecyclerView.Adapter<SeasonFoldinAdapter.HoldeTemporada>() {
-
 	private var listEp: List<EpisodesItem> = listOf()
 	private var seasons: UserSeasons? = null
 	private var fallow: Boolean = false
-
 	private var unfoldedIndexes = HashSet<Int>()
-
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = HoldeTemporada(parent)
 	override fun onBindViewHolder(holder: HoldeTemporada, position: Int) {
 		val ep = listEp[position]
-		val epUser = seasons?.userEps?.find { ep.id == it.id }
+		val epUser = seasons?.userEps?.firstOrNull { ep.id == it.id }
 		holder.bind(ep, epUser)
 	}
 
 	override fun getItemCount() = listEp.size
-
 	private fun registerToggle(position: Int) =
 		if (unfoldedIndexes.contains(position)) registerFold(position)
 		else registerUnfold(position)
 
 	private fun registerFold(position: Int) = unfoldedIndexes.remove(position)
-
 	private fun registerUnfold(position: Int) = unfoldedIndexes.add(position)
-
 	fun addSeasonFire(seasons: UserSeasons?) {
 		this.seasons = seasons
 		if (seasons != null && listEp.isNotEmpty()) notifyDataSetChanged()
@@ -92,7 +85,6 @@ class SeasonFoldinAdapter(
 		RecyclerView.ViewHolder(
 			LayoutInflater.from(seasonActivity).inflate(Layout.foldin_main, parent, false)
 		) {
-
 		fun bind(ep: EpisodesItem, epUser: UserEp?): Unit = with(itemView) {
 			epsodio_star.visibility = if (fallow) View.VISIBLE else View.GONE
 			item_epsodio_titulo.text = ep.name

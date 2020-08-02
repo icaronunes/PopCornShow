@@ -21,7 +21,7 @@ class EpsodioAdapter(
 	override fun getItem(position: Int): Fragment {
 		return EpsodioFragment.newInstance(
 			tvSeason.episodes[position],
-			tvShowId, color, fallow, position, seasonPosition
+			tvShowId, color, fallow, position, seasonPosition, tvSeason
 		)
 	}
 

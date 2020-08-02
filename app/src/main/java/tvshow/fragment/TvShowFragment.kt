@@ -13,7 +13,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
+import android.view.View.*
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
@@ -29,12 +29,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import applicaton.BaseFragment
-import applicaton.BaseViewModel.BaseRequest
-import applicaton.BaseViewModel.BaseRequest.Success
+import applicaton.BaseViewModel.*
+import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
-import br.com.icaro.filme.R.layout
-import br.com.icaro.filme.R.string.in_production
-import br.com.icaro.filme.R.string.mil
+import br.com.icaro.filme.R.*
+import br.com.icaro.filme.R.string.*
 import com.github.clans.fab.FloatingActionMenu
 import com.google.firebase.database.DataSnapshot
 import configuracao.SettingsActivity
@@ -111,9 +110,7 @@ import java.util.Locale
 /**
  * Created by icaro on 23/08/16.
  */
-
 class TvShowFragment : BaseFragment() {
-
 	private val model: TvShowViewModel by lazy { createViewModel(TvShowViewModel::class.java) }
 	private var recyclerViewTemporada: RecyclerView? = null
 	private val type: Int by bindArgument(Constant.ABA)
@@ -464,11 +461,9 @@ class TvShowFragment : BaseFragment() {
 	}
 
 	private fun isInitAdapter() = recyclerViewTemporada?.adapter != null
-
 	private fun setStatus() {
 		series.status?.let {
 			status.setTextColor(color)
-
 			val tradutor = PreferenceManager.getDefaultSharedPreferences(activity)
 				.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true)
 			if (tradutor) {
@@ -531,7 +526,6 @@ class TvShowFragment : BaseFragment() {
 				userTvshow?.seasons?.find { it.id == idSeason },
 				!isVisto(position)
 			)
-
 			val childUpdates = HashMap<String, Any>()
 			childUpdates["${series.id}/desatualizada"] = true
 			childUpdates["${series.id}/$SEASONS/$position"] = season
@@ -579,7 +573,6 @@ class TvShowFragment : BaseFragment() {
 	}
 
 	private fun setSinopse() {
-
 		if (series.overview.isNullOrBlank()) {
 			descricao.text = getString(R.string.sem_sinopse)
 		} else {
@@ -706,7 +699,6 @@ class TvShowFragment : BaseFragment() {
 						popularidade = popularidade.substring(2, popularidade.length)
 						popularity?.text = "$popularidade  ${getString(mil)}"
 					} else {
-
 						val posicao = popularidade.indexOf(".") + 2
 						popularidade = popularidade.substring(0, posicao)
 						var milhoes = ""
@@ -724,7 +716,6 @@ class TvShowFragment : BaseFragment() {
 	}
 
 	private fun setElenco() {
-
 		textview_elenco?.setOnClickListener {
 			startActivity(Intent(requireContext(), ElencoActivity::class.java).apply {
 				putExtra(Constant.ELENCO, series.credits?.cast as Serializable)
@@ -749,7 +740,6 @@ class TvShowFragment : BaseFragment() {
 	}
 
 	private fun setProducao() {
-
 		textview_crews?.setOnClickListener {
 			startActivity(Intent(requireContext(), CrewsActivity::class.java).apply {
 				putExtra(Constant.PRODUCAO, series.credits?.crew as Serializable)
@@ -844,7 +834,6 @@ class TvShowFragment : BaseFragment() {
 			}
 
 		if (imdbDd != null) {
-
 			if (imdbDd?.imdbRating.isNullOrBlank()) {
 				try {
 					imdb = java.lang.Float.parseFloat(imdbDd?.imdbRating!!)
@@ -854,7 +843,6 @@ class TvShowFragment : BaseFragment() {
 			}
 
 			if (imdbDd?.metascore.isNullOrEmpty()) {
-
 				try {
 					val meta = java.lang.Float.parseFloat(imdbDd?.metascore!!)
 					val nota = meta / 10
@@ -865,7 +853,6 @@ class TvShowFragment : BaseFragment() {
 			}
 
 			if (imdbDd?.tomatoRating.isNullOrEmpty()) {
-
 				try {
 					tomato = java.lang.Float.parseFloat(imdbDd?.tomatoRating!!)
 					tamanho++
