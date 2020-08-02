@@ -60,7 +60,7 @@ class MoviesFragment : FragmentBase() {
             itemAnimator = DefaultItemAnimator()
             setHasFixedSize(true)
             addOnScrollListener(InfiniteScrollStaggeredListener({ }, { getListaFilmes() }, layoutManager))
-            adapter = ListaFilmesAdapter(activity!!)
+            adapter = ListaFilmesAdapter(requireActivity())
         }
 
         if (!UtilsApp.isNetWorkAvailable(requireContext())) {

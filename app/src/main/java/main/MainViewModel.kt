@@ -60,9 +60,6 @@ class MainViewModel(override val app: Application, val api: Api) : BaseViewModel
 	fun news() = business.setNews()
 
 	@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-	fun fetchPopularMovie() = loadingMedia.getMoviePopular(_popularMovie)
-
-	@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
 	fun fetchPopularTv() = loadingMedia.getTvPopular(_popularTv)
 
 	@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
@@ -87,7 +84,6 @@ class MainViewModel(override val app: Application, val api: Api) : BaseViewModel
 	fun fetchAll() {
 		fetchTopo()
 		fetchPopularTv()
-		fetchPopularMovie()
 		fetchUpComingMovie()
 	}
 }

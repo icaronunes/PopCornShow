@@ -19,7 +19,7 @@ data class ListaFilmes(
     val dates: Date? = null,
 
     @field:SerializedName("results")
-    val results: List<ListaItemFilme?> = mutableListOf<ListaItemFilme>(),
+    val results: List<ListaItemFilme> = mutableListOf(),
 
     @field:SerializedName("total_results")
     val totalResults: Int = 0

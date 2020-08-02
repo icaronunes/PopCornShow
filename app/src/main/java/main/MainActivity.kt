@@ -16,7 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
-import applicaton.BaseViewModel.BaseRequest
+import applicaton.BaseViewModel.*
 import br.com.icaro.filme.BuildConfig
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
@@ -34,9 +34,7 @@ import utils.gone
 import utils.visible
 
 class MainActivity(override var layout: Int = Layout.activity_main) : BaseActivityAb() {
-
 	private val model: MainViewModel by lazy { createViewModel(MainViewModel::class.java, this) }
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		lifecycle.addObserver(model)
@@ -113,7 +111,7 @@ class MainActivity(override var layout: Int = Layout.activity_main) : BaseActivi
 			}.show()
 	}
 
-	private fun setupViewPagerTabs(multi: MutableList<TopMain>) {
+	private fun setupViewPagerTabs(multi: List<TopMain>) {
 		viewpage_top_main.offscreenPageLimit = 2
 		viewpage_top_main.adapter = ViewPageMainTopFragment(supportFragmentManager, multi)
 		indication_main.setViewPager(viewpage_top_main)
@@ -186,39 +184,32 @@ class MainActivity(override var layout: Int = Layout.activity_main) : BaseActivi
 	}
 
 	private fun mescla(tmdbMovies: ListaFilmes, tmdbTv: ListaSeries) {
-
 		val listMovie = tmdbMovies.results.filter {
-			!it?.backdropPath.isNullOrBlank() && !it?.releaseDate.isNullOrBlank()
+			!it.backdropPath.isNullOrBlank() && !it.releaseDate.isNullOrBlank()
 		}
-
 		val listTv = tmdbTv.results.filter {
 			!it.backdropPath.isNullOrBlank()
 		}
-
-		val multi = mutableListOf<TopMain>().apply {
-			for (index in 0..15) {
+		val newList = mutableListOf<TopMain>().apply {
+			listMovie.zip(listTv).forEach { pair ->
 				val topMain = TopMain()
-				if (index % 2 == 0) {
-					if (index <= listMovie.size) {
-						val movieDb = listMovie[index]!!
-						topMain.id = movieDb.id
-						topMain.nome = movieDb.title
-						topMain.mediaType = "movie"
-						topMain.imagem = movieDb.backdropPath
-						add(topMain)
-					}
-				} else {
-					if (index <= listTv.size) {
-						val tv = listTv[index]
-						topMain.id = tv.id!!
-						topMain.nome = tv.name
-						topMain.mediaType = "tv"
-						topMain.imagem = tv.backdropPath
-						add(topMain)
-					}
+				pair.first.apply {
+					topMain.id = id
+					topMain.nome = title
+					topMain.mediaType = "movie"
+					topMain.imagem = backdropPath
 				}
+				add(topMain)
+				val topMainTv = TopMain()
+				pair.second.apply {
+					topMainTv.id = id
+					topMainTv.nome = name
+					topMainTv.mediaType = "tv"
+					topMainTv.imagem = backdropPath
+				}
+				add(topMainTv)
 			}
 		}
-		setupViewPagerTabs(multi)
+		setupViewPagerTabs(newList)
 	}
 }

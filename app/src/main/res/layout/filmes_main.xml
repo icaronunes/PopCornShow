@@ -75,14 +75,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/trade_size_dp_6"
         android:layout_marginLeft="@dimen/trade_size_dp_6"
-        android:text="@string/populares"
+        android:text="@string/now_playing"
         android:textColor="@color/red"
         android:textSize="@dimen/trade_txt_size_sp_16"
         android:textStyle="normal|bold"
         android:typeface="serif" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_movie_popular_main"
+        android:id="@+id/recycle_movie_now_playing_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center"

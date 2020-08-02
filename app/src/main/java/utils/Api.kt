@@ -50,7 +50,6 @@ class Api(val context: Context) : ApiSingleton() {
 	private var region: String = Locale.getDefault().country
 	private val baseUrl3 = "https://api.themoviedb.org/3/"
 	private val baseUrl4 = "https://api.themoviedb.org/4/"
-
 	private val TMDBAPI by lazy { getKeyTMDB() }
 	private val OMDBAPI by lazy { getKey("OMDBAPI_API_KEY") }
 
@@ -304,73 +303,6 @@ class Api(val context: Context) : ApiSingleton() {
 		}
 	}
 
-	fun getTvshowVideos(id: Int): Observable<Videos> {
-		return Observable.create { subscriber ->
-			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val gson = Gson()
-			val request = Request.Builder()
-				.url("${baseUrl3}tv/$id/videos?api_key=${TMDBAPI}&language=en-US,null")
-				.get()
-				.build()
-			val response = client.newCall(request).execute()
-			if (response.isSuccessful) {
-				val json = response.body?.string()
-				val videos = gson.fromJson(json, Videos::class.java)
-
-				subscriber.onNext(videos)
-				subscriber.onCompleted()
-			} else {
-				subscriber.onError(Throwable(response.message))
-			}
-		}
-	}
-
-	fun getTvShow(id: Int): Observable<Tvshow> {
-		return Observable.create { subscriber ->
-			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val gson = Gson()
-			val request = Request.Builder()
-				.url(
-					"${baseUrl3}tv/$id?api_key=${TMDBAPI}" + "&language=$timeZone" +
-						"&append_to_response=credits,videos,images,release_dates,similar,external_ids&include_image_language=en,null"
-				)
-				.get()
-				.build()
-			val response = client.newCall(request).execute()
-			if (response.isSuccessful) {
-				val json = response.body?.string()
-				val tvshow = gson.fromJson(json, Tvshow::class.java)
-				subscriber.onNext(tvshow)
-				subscriber.onCompleted()
-			} else {
-				subscriber.onError(Throwable(response.message))
-			}
-		}
-	}
-
-	fun getTvShowLite(id: Int): Observable<Tvshow> { // Usado em "Seguindo"
-		return Observable.create { subscriber ->
-			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val gson = Gson()
-			val request = Request.Builder()
-				.url(
-					"${baseUrl3}tv/$id?api_key=${TMDBAPI}" + "&language=$timeZone" +
-						"&append_to_response=release_dates,external_ids&include_image_language=en,null"
-				)
-				.get()
-				.build()
-			val response = client.newCall(request).execute()
-			if (response.isSuccessful) {
-				val json = response.body?.string()
-				val tvshow = gson.fromJson(json, Tvshow::class.java)
-				subscriber.onNext(tvshow)
-				subscriber.onCompleted()
-			} else {
-				subscriber.onError(Throwable(response.message))
-			}
-		}
-	}
-
 	suspend fun getTvShowLiteC(id: Int): Tvshow {
 		return suspendCancellableCoroutine { cont ->
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
@@ -447,79 +379,6 @@ class Api(val context: Context) : ApiSingleton() {
 				val colecao = gson.fromJson(json, Colecao::class.java)
 
 				subscriber.onNext(colecao)
-				subscriber.onCompleted()
-			} else {
-				subscriber.onError(Throwable(response.message))
-			}
-		}
-	}
-
-//    fun loadMovieComVideo(id: Int): Observable<Movie> {
-//        return getMovie(id)
-//            .flatMap { it ->
-//                Observable.just(it)
-//                    .flatMap { video -> Observable.just(video.videos) }
-//                    .flatMap { videos ->
-//                        if (videos?.results?.isEmpty()!!) {
-//                            Observable.zip(Observable.just(it), getMovieVideos(id)
-//                                .flatMap { video ->
-//                                    if (video.results?.isNotEmpty()!!) {
-//                                        it.videos?.results?.addAll(video.results)
-//                                        Observable.from(video.results)
-//                                    } else {
-//                                        Observable.just(it)
-//                                    }
-//                                }
-//                            ) { movie, _ ->
-//                                movie
-//                            }
-//                        } else {
-//                            Observable.just(it)
-//                        }
-//                    }
-//            }
-//    }
-	fun loadTvshowComVideo(id: Int): Observable<Tvshow> {
-		return getTvShow(id)
-			.flatMap { it ->
-				Observable.just(it)
-					.flatMap { video -> Observable.just(video.videos) }
-					.flatMap { videos ->
-						if (videos?.results?.isEmpty()!!) {
-							Observable.zip(
-								Observable.just(it),
-								getTvshowVideos(id)
-									.flatMap { video ->
-										if (video.results?.isNotEmpty()!!) {
-											it.videos?.results?.addAll(video.results)
-											Observable.from(video.results)
-										} else {
-											Observable.just(it)
-										}
-									}
-							) { movie, _ ->
-								movie
-							}
-						} else {
-							Observable.just(it)
-						}
-					}
-			}
-	}
-
-	fun getTvSeasons(id: Int, id_season: Int, pagina: Int = 1): Observable<TvSeasons> {
-		return Observable.create { subscriber ->
-			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val gson = Gson()
-			val request = Request.Builder()
-				.url("${baseUrl3}tv/$id/season/$id_season?api_key=${TMDBAPI}&language=$timeZone,en")
-				.get()
-				.build()
-			val response = client.newCall(request).execute()
-			if (response.isSuccessful) {
-				val json = response.body?.string()
-				val lista = gson.fromJson(json, TvSeasons::class.java)
-				subscriber.onNext(lista)
 				subscriber.onCompleted()
 			} else {
 				subscriber.onError(Throwable(response.message))
@@ -631,7 +490,7 @@ class Api(val context: Context) : ApiSingleton() {
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
 			val idioma = getIdiomaEscolhido(context)
 			val request = Request.Builder()
-				.url("${baseUrl3}movie/now_playing?api_key=${TMDBAPI}&language=$idioma&page=1")
+				.url("${baseUrl3}movie/now_playing?api_key=${TMDBAPI}&language=$idioma&page=1&region=$region")
 				.get()
 				.build()
 			client.newCall(request).enqueue(object : Callback {
@@ -665,7 +524,7 @@ class Api(val context: Context) : ApiSingleton() {
 				.url(
 					"${baseUrl3}movie/popular?api_key=${TMDBAPI}&language=${getIdiomaEscolhido(
 						context
-					)}&page=1"
+					)}&page=1&region=$region"
 				)
 				.get()
 				.build()
@@ -698,7 +557,7 @@ class Api(val context: Context) : ApiSingleton() {
 				.url(
 					"${baseUrl3}movie/upcoming?api_key=${TMDBAPI}&language=${getIdiomaEscolhido(
 						context
-					)}&page=1"
+					)}&page=1&region=$region"
 				)
 				.get()
 				.build()
@@ -731,7 +590,7 @@ class Api(val context: Context) : ApiSingleton() {
 				.url(
 					"${baseUrl3}tv/airing_today?api_key=${TMDBAPI}&language=${getIdiomaEscolhido(
 						context
-					)}&page=1"
+					)}&page=1&region=$region"
 				)
 				.get()
 				.build()
@@ -766,7 +625,7 @@ class Api(val context: Context) : ApiSingleton() {
 				.url(
 					"${baseUrl3}tv/popular?api_key=${TMDBAPI}&language=${getIdiomaEscolhido(
 						context
-					)}&page=1"
+					)}&page=1&region=$region"
 				)
 				.get()
 				.build()

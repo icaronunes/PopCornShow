@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import applicaton.BaseFragment
-import applicaton.BaseViewModel.BaseRequest.Failure
-import applicaton.BaseViewModel.BaseRequest.Loading
-import applicaton.BaseViewModel.BaseRequest.Success
+import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
 import domain.ListaSeries
 import domain.movie.ListaFilmes
@@ -35,7 +33,7 @@ class MainFragment : BaseFragment() {
 	private lateinit var recyclerTodayTv: RecyclerView
 	private lateinit var recyclerPopularTv: RecyclerView
 	private lateinit var recyclerUpcomingmovie: RecyclerView
-	private lateinit var recyclerPopularMovie: RecyclerView
+	private lateinit var recyclerNowPlaingMovie: RecyclerView
 	private val tipo: Int by bindArgument(Constant.ABA)
 	private val model: MainViewModel by lazy { createViewModel(MainViewModel::class.java) }
 
@@ -69,9 +67,9 @@ class MainFragment : BaseFragment() {
 			}
 		})
 
-		model.popularMovie.observe(viewLifecycleOwner, Observer {
+		model.nowPlayingMovie.observe(viewLifecycleOwner, Observer {
 			when (it) {
-				is Success -> setScrollMoviePopular(it.result)
+				is Success -> setScrollMovieNowPaying(it.result)
 				is Failure -> {
 				}
 				is Loading -> {
@@ -136,8 +134,8 @@ class MainFragment : BaseFragment() {
 	}
 
 	private fun inflaterMoviePopular(view: View) {
-		recyclerPopularMovie =
-			view.findViewById<RecyclerView>(R.id.recycle_movie_popular_main).apply {
+		recyclerNowPlaingMovie =
+			view.findViewById<RecyclerView>(R.id.recycle_movie_now_playing_main).apply {
 				setHasFixedSize(true)
 				itemAnimator = DefaultItemAnimator()
 				layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -237,8 +235,8 @@ class MainFragment : BaseFragment() {
 		recyclerPopularTv.adapter = TvShowMainAdapter(requireActivity(), popularTvShow)
 	}
 
-	private fun setScrollMoviePopular(popular: ListaFilmes) {
-		recyclerPopularMovie.adapter = MovieMainAdapter(requireActivity(), popular)
+	private fun setScrollMovieNowPaying(popular: ListaFilmes) {
+		recyclerNowPlaingMovie.adapter = MovieMainAdapter(requireActivity(), popular)
 	}
 
 	private fun setScrollUpComing(airDay: ListaFilmes) {
