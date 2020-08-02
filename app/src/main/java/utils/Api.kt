@@ -1,9 +1,8 @@
 package utils
 
 import android.content.Context
-import applicaton.BaseViewModel.BaseRequest
-import applicaton.BaseViewModel.BaseRequest.Failure
-import applicaton.BaseViewModel.BaseRequest.Success
+import applicaton.BaseViewModel.*
+import applicaton.BaseViewModel.BaseRequest.*
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import domain.Company
@@ -73,13 +72,13 @@ class Api(val context: Context) : ApiSingleton() {
 
 	fun getKey(key: String) = dotenv {
 		directory = "/assets"
-		filename = "env" // tell dotenv to use the filename 'env', instead of '.env'
+		filename = "env"
 	}[key]
 
 	private fun getKeyTMDB(): String {
 		val dotenv = dotenv {
 			directory = "/assets"
-			filename = "env" // tell dotenv to use the filename 'env', instead of '.env'
+			filename = "env"
 		}
 		return if (Random(2).nextInt() % 2 == 0) dotenv["TMDB_API_KEY"]
 			?: "" else dotenv["TMDB_API_KEY2"] ?: ""
