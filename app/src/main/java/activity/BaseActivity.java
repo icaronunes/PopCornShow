@@ -6,13 +6,10 @@ import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,12 +34,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
@@ -53,7 +48,6 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -64,7 +58,6 @@ import br.com.icaro.filme.R;
 import busca.SearchMultiActivity;
 import configuracao.SettingsActivity;
 import domain.busca.MultiSearch;
-import favority.YourListActivity;
 import loading.firebase.TypeDataRef;
 import login.LoginActivity;
 import main.MainActivity;
@@ -80,6 +73,7 @@ import utils.Api;
 import utils.Constant;
 import utils.UtilsApp;
 import utils.UtilsKt;
+import yourLists.YourListActivity;
 
 /**
  * Created by icaro on 24/06/16.
@@ -105,37 +99,9 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-    protected <T extends AndroidViewModel> T createViewModel(Class<T> classViewModel,@NonNull Activity activity) {
+    protected <T extends AndroidViewModel> T createViewModel(Class<T> classViewModel, @NonNull Activity activity) {
         PopCornViewModelFactory model = new PopCornViewModelFactory(this.getApplication(), new Api(getBaseContext()), activity);
         return ViewModelProviders.of(this, model).get(classViewModel);
-    }
-
-    public void SnackBar(final View view, String msg) {
-        Snackbar.make(view, msg
-                , Snackbar.LENGTH_SHORT).setCallback(new Snackbar.Callback() {
-            @Override
-            public void onShown(Snackbar snackbar) {
-                super.onShown(snackbar);
-                view.setAlpha(0);
-            }
-
-            @Override
-            public void onDismissed(Snackbar snackbar, int event) {
-                super.onDismissed(snackbar, event);
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
-                    view.setAlpha(1);
-                }
-            }
-        }).show();
-    }
-
-    static public String getLocale() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return Locale.getDefault().toLanguageTag();
-        } else {
-            return Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry();
-        }
     }
 
     protected void setUpToolBar() {
@@ -526,16 +492,6 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
 
     public boolean validatePassword(String password) {
         return password.length() > 5;
-    }
-
-    protected boolean getIdioma() {
-        try {
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-            return sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true);
-        } catch (Exception e) {
-            Crashlytics.logException(e);
-            return false;
-        }
     }
 
     public interface SalvarImageShare {
