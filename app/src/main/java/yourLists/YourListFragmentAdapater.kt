@@ -12,7 +12,7 @@ import loading.firebase.TypeMediaFireBase.*
 /**
  * Created by icaro on 23/08/16.
  */
-class YoutListAdapater(
+class YourListFragmentAdapater(
 	private val context: Context,
 	supportFragmentManager: FragmentManager?,
 	val type: TypeDataRef = FAVORITY

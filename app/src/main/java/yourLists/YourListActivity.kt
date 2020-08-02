@@ -37,7 +37,7 @@ class YourListActivity(override var layout: Int = Layout.activity_usuario_list) 
 			tabLayout.setupWithViewPager(viewPager)
 			tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(context, Color.accent))
 			viewPager.adapter =
-				YoutListAdapater(this@YourListActivity, supportFragmentManager, type)
+				YourListFragmentAdapater(this@YourListActivity, supportFragmentManager, type)
 		}
 	}
 
