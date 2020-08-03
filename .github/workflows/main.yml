@@ -56,10 +56,14 @@ jobs:
         -   name: Run Lint
             run: ./gradlew lint
         -   name: Copy file
-            uses: canastro/copy-action@0.0.2
-            with:
-                name: lint-arq
-                # Source file
-                source: lint-results
-                # Target file
-                target: app/build/reports/lint-results.html
+#            uses: canastro/copy-action@0.0.2
+#            with:
+#                name: lint-arq
+#                # Source file
+#                source: lint-results
+#                # Target file
+#                target: app/build/reports/lint-results.html
+            uses: actions/upload-artifact@v1
+                with:
+                    name: lint-results
+                    path: app/build/reports/lint-results.html
