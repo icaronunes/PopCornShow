@@ -64,6 +64,6 @@ jobs:
 #                # Target file
 #                target: app/build/reports/lint-results.html
             uses: actions/upload-artifact@v1
-                with:
-                    name: lint-results
-                    path: app/build/reports/lint-results.html
+            with:
+                name: lint-results
+                path: app/build/reports/lint-results.html
