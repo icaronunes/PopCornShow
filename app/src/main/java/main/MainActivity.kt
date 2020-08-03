@@ -15,9 +15,9 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.multidex.BuildConfig
 import androidx.viewpager.widget.ViewPager
 import applicaton.BaseViewModel.*
-import br.com.icaro.filme.BuildConfig
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
 import domain.ListaSeries

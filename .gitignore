@@ -8,6 +8,7 @@ filme.iml
 .idea/misc.xml
 ktlint-report-in-checkstyle-format.xml
 app/src/main/assets/env
+.env
 
 /build
 # Built application files

@@ -1,5 +1,5 @@
 name: Android CI
-true:
+on:
     push:
         branches: master
     pull_request:
@@ -18,10 +18,11 @@ jobs:
             with:
                 java-version: 1.8
         -   name: Build with Gradle
-            run: "export OMDBAPI_API_KEY=${{ secrets.OMDBAPI_API_KEY }}      \nexport\
-                \ TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}\nexport TMDB_API_KEY2=${{\
-                \ secrets.TMDB_API_KEY2 }}\nexport YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY\
-                \ }}\n ./gradlew build --stacktrace\n"
+            run: export OMDBAPI_API_KEY=${{ secrets.OMDBAPI_API_KEY }}
+            export TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}
+            export TMDB_API_KEY2=${{secrets.TMDB_API_KEY2 }}
+            export YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY
+            ./gradlew build --stacktrace
     apk:
         name: Debug APK
         runs-on: ubuntu-latest
@@ -43,7 +44,7 @@ jobs:
                 path: app/build/outputs/apk/debug/app-debug.apk
     lint:
         name: Lint
-        runs-on: ubutun-latest
+        runs-on: ubuntu-latest
         steps:
         -   name: Checkout
             uses: actions/checkout@v2
@@ -56,10 +57,14 @@ jobs:
         -   name: Run Lint
             run: ./gradlew lint
         -   name: Copy file
-            uses: canastro/copy-action@0.0.2
+#            uses: canastro/copy-action@0.0.2
+#            with:
+#                name: lint-arq
+#                # Source file
+#                source: lint-results
+#                # Target file
+#                target: app/build/reports/lint-results.html
+            uses: actions/upload-artifact@v1
             with:
-                name: lint-arq
-                # Source file
-                source: lint-results
-                # Target file
-                target: app/build/reports/lint-results.html
+                name: lint-results
+                path: app/build/reports/lint-results.html
