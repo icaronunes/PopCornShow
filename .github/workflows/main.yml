@@ -1,5 +1,5 @@
 name: Android CI
-true:
+on:
     push:
         branches: master
     pull_request:
