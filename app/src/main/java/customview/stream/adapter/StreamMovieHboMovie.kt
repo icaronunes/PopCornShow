@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
@@ -31,7 +32,7 @@ class StreamAbMovieHboAdapter(val subscription: Boolean = false,
 
     inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
         fun bind(availability: Availability?) = with(itemView.source_item) {
-            iconSource = resources.getDrawable(R.drawable.hbo, null)
+            iconSource = ContextCompat.getDrawable(context, R.drawable.hbo)
             setOnClickListener {
                 try {
                     callAppOrWeb(availability, typeStream) {

@@ -66,7 +66,7 @@ class SourceItem : FrameLayout {
 					pack.component?.packageName ?: "",
 					pack.component?.className ?: ""
 				)
-				intent.data = Uri.parse(availability?.sourceData!!.links!!.android)
+				intent.data = Uri.parse(availability?.sourceData?.links?.android)
 				context.startActivity(intent)
 			} catch (e: Exception) {
 				callActivity(availability)

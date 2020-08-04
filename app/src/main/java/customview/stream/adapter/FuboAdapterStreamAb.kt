@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
 import customview.stream.BaseStreamAb
@@ -16,9 +17,7 @@ import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 
 class FuboAdapterStreamAb(
     val subscription: Boolean = false,
-    val purchase: Boolean = false,
-    private val titleMovie: String? = "",
-    type: TypeEnumStream
+    val purchase: Boolean = false
 ) : BaseStreamAb(),  ViewTypeDelegateAdapter {
 
     override val typeStream: String = ""
@@ -29,7 +28,7 @@ class FuboAdapterStreamAb(
     }
     inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
         fun bind(availability: Availability?) = with(itemView.source_item) {
-            iconSource = resources.getDrawable(R.drawable.fubo_tv, null)
+            iconSource = ContextCompat.getDrawable(context, R.drawable.fubo_tv)
             if (!subscription) {
                 sourceSd = if (purchase) "SD: ${availability?.purchaseCostSd
                     ?: "--"}" else "SD: ${availability?.rentalCostSd ?: "--"}"
