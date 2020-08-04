@@ -8,6 +8,7 @@ import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.ImageView
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import com.github.clans.fab.FloatingActionMenu
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.gson.Gson
 import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
@@ -307,6 +309,14 @@ fun String.getNameTypeReel(): String {
 }
 
 fun String?.notNullOrEmpty() = !this.isNullOrEmpty()
+
+fun <T> Gson.fromJsonWithLog(json: String?, classOfT: Class<T>): T {
+	return this.fromJson<T>(json, classOfT).apply {
+		this.toString().log(classOfT.name)
+	}
+}
+
+fun String.log(tag: String) = Log.d(tag, this)
 
 fun Tvshow.createIdReal() = createIdReal(this.originalName ?: "", this.firstAirDate ?: "")
 
