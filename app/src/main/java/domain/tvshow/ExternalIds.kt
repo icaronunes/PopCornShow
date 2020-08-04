@@ -1,9 +1,11 @@
 package domain.tvshow
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import javax.annotation.Generated
 
+@Keep
 @Generated("com.robohorse.robopojogenerator")
 data class ExternalIds(
 

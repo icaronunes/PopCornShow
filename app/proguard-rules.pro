@@ -54,6 +54,7 @@
 -keep class com.google.** {*;}
 -keep class android.** {*;}
 -keep class okhttp3.** { *; }
+-keep class com.google.firebase.example.fireeats.model.** { *; }
 -keeppackagenames com.google.**
 -keeppackagenames info.movito.**
 -keeppackagenames okhttp3.**
