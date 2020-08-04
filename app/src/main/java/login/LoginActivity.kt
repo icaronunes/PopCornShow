@@ -1,12 +1,15 @@
 package login
 
 import activity.BaseActivity
-import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import br.com.icaro.filme.R
@@ -28,29 +31,26 @@ import kotlinx.android.synthetic.main.activity_login.pass
 import kotlinx.android.synthetic.main.activity_login.recuperar_senha
 import kotlinx.android.synthetic.main.activity_login.vincular_login
 import main.MainActivity
+import utils.kotterknife.findView
 import utils.makeToast
 import java.util.Arrays
 
 /**
  * Created by icaro on 06/11/16.
  */
-
 class LoginActivity : BaseActivity() {
-	private var progressDialog: Lazy<ProgressDialog> = lazy {
-		createDialog()
-	}
 	private val TAG = this.javaClass.name
 	private var mAuth: FirebaseAuth? = null
 	private var mCallbackManager: CallbackManager? = null
 	private var mFirebaseAnalytics: FirebaseAnalytics? = null
 	private val model: LoginViewModel by lazy { createViewModel(LoginViewModel::class.java, this) }
-
+	private val send: EditText by findView(R.id.pass)
 	private val authStateListener: FirebaseAuth.AuthStateListener
 		get() = FirebaseAuth.AuthStateListener {
 			val user = it.currentUser
 			if (user != null) {
 				startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-				finishAffinity()
+				finish()
 			} else {
 				Log.d(TAG, "não logou... ")
 			}
@@ -69,6 +69,17 @@ class LoginActivity : BaseActivity() {
 		}
 		recuperar_senha.setOnClickListener {
 			createDialgoResetPass()
+		}
+
+		send.setOnEditorActionListener { _, actionId, _ ->
+			when (actionId) {
+				EditorInfo.IME_ACTION_SEND -> {
+					hideSoftKeyboard()
+					logarComEmail()
+					true
+				}
+				else -> false
+			}
 		}
 	}
 
@@ -100,7 +111,6 @@ class LoginActivity : BaseActivity() {
 			.setView(R.layout.create_login)
 			.create()
 		dialog.show()
-
 		val login = dialog.findViewById<TextInputLayout>(R.id.create_login)
 		val senha = dialog.findViewById<TextInputLayout>(R.id.criar_pass)
 		val repetirSenha = dialog.findViewById<TextInputLayout>(R.id.criar_repetir_pass)
@@ -115,14 +125,6 @@ class LoginActivity : BaseActivity() {
 			} else {
 				makeToast(R.string.ops)
 			}
-		}
-	}
-
-	private fun createDialog(): ProgressDialog {
-		return ProgressDialog(this).apply {
-			setTitle("Loading")
-			setMessage("Authenticating with PopCorn Show...")
-			setCancelable(false)
 		}
 	}
 
@@ -172,7 +174,6 @@ class LoginActivity : BaseActivity() {
 
 	private fun logarComEmail() {
 		if (pass?.text.toString().length > 4 && login.text.toString().length > 4) {
-			progressDialog.value.show()
 			mAuth?.signInWithEmailAndPassword(login.text.toString(), pass?.text.toString())
 				?.addOnCompleteListener(this) { task ->
 					/*  Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
@@ -183,18 +184,12 @@ class LoginActivity : BaseActivity() {
 					if (!task.isSuccessful) {
 						makeToast(R.string.ops)
 					}
-					if (!isDestroyed)
-						progressDialog.value.dismiss()
 				}?.addOnFailureListener {
+					makeToast(R.string.ops)
 					Log.w(TAG, "signInWithEmail:failed " + it.message)
-					if (!isDestroyed)
-						progressDialog.value.dismiss()
 				}
 		} else {
-			if (!isDestroyed) {
-				makeToast(R.string.ops)
-				progressDialog.value.dismiss()
-			}
+			makeToast(R.string.ops)
 		}
 	}
 
@@ -212,9 +207,7 @@ class LoginActivity : BaseActivity() {
 	}
 
 	private fun accessLoginData(provider: String, vararg tokens: String) {
-		progressDialog.value.show()
 		if (tokens.isNotEmpty()) {
-
 			var credential = FacebookAuthProvider.getCredential(tokens[0])
 			credential =
 				if (provider.equals("google", ignoreCase = true)) GoogleAuthProvider.getCredential(
@@ -226,29 +219,19 @@ class LoginActivity : BaseActivity() {
 					if (!task.isSuccessful) {
 						makeToast(R.string.ops)
 					}
-					if (!isDestroyed) {
-						progressDialog.value.dismiss()
-					}
 				}
 				.addOnFailureListener { e ->
-					if (!isDestroyed) {
-						makeToast(e.message)
-						progressDialog.value.dismiss()
-					}
+					makeToast(e.message)
 				}
 		} else {
 			if (mAuth?.currentUser != null) {
 				mAuth?.signOut()
 			}
-			if (!isDestroyed)
-				progressDialog.value.dismiss()
 		}
 	}
 
 	private fun criarLoginEmail(email: String, pass: String) {
-		progressDialog.value.show()
 		mAuth?.createUserWithEmailAndPassword(email, pass)?.addOnCompleteListener(this) { task ->
-
 			/* If sign in fails, display a message to the user. If sign in succeeds
 			// the auth state listener will be notified and logic to handle the
 			// signed in user can be handled in the listener.*/
@@ -261,20 +244,9 @@ class LoginActivity : BaseActivity() {
 			} else {
 				makeToast(R.string.ops)
 			}
-			if (!isDestroyed)
-				progressDialog.value.dismiss()
 		}?.addOnFailureListener { e ->
-			if (!isDestroyed) {
-				makeToast(e.message)
-				progressDialog.value.dismiss()
-			}
+			makeToast(e.message)
 		}
-	}
-
-	override fun onDestroy() {
-		if (progressDialog.isInitialized() && progressDialog.value.isShowing)
-			progressDialog.value.dismiss()
-		super.onDestroy()
 	}
 
 	override fun onStart() {
@@ -287,8 +259,16 @@ class LoginActivity : BaseActivity() {
 		mAuth?.removeAuthStateListener(authStateListener)
 	}
 
+	override fun onDestroy() {
+		if (currentFocus != null) {
+			val imm: InputMethodManager =
+				getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+			imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+		}
+		super.onDestroy()
+	}
+
 	fun logarAnonimous() {
-		progressDialog.value.show()
 		mAuth?.signInAnonymously()
 			?.addOnCompleteListener(this) { task ->
 				/*  Log.d(TAG, "signInAnonymously:onComplete:" + task.isSuccessful());
@@ -299,12 +279,10 @@ class LoginActivity : BaseActivity() {
 					putString(FirebaseAnalytics.Param.ITEM_NAME, "anonimo")
 				})
 
-				this@LoginActivity.makeToast(R.string.anonimo_alerta, Toast.LENGTH_LONG)
+				makeToast(R.string.anonimo_alerta, Toast.LENGTH_LONG)
 				if (!task.isSuccessful) {
 					this.makeToast("Authentication failed.")
 				}
-				if (!isDestroyed)
-					progressDialog.value.dismiss()
 			}
 	}
 }
