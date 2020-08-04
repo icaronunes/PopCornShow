@@ -316,7 +316,7 @@ fun <T> Gson.fromJsonWithLog(json: String?, classOfT: Class<T>): T {
 	}
 }
 
-fun String.log(tag: String) = Log.d(tag, this)
+fun String.log(tag: String) = Log.i(tag, this)
 
 fun Tvshow.createIdReal() = createIdReal(this.originalName ?: "", this.firstAirDate ?: "")
 

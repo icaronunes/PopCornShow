@@ -3,7 +3,6 @@ package utils
 import android.content.Context
 import applicaton.BaseViewModel.*
 import applicaton.BaseViewModel.BaseRequest.*
-import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import domain.Company
 import domain.CompanyFilmes
@@ -94,7 +93,7 @@ class Api(val context: Context) : ApiSingleton() {
 					override fun onResponse(call: Call, response: Response) {
 						if (response.isSuccessful) {
 							val json = response.body?.string()
-							val person = gson.fromJson(json, PersonPopular::class.java)
+							val person = gson.fromJsonWithLog(json, PersonPopular::class.java)
 							subscriber.onNext(person)
 							subscriber.onCompleted()
 						} else {
@@ -108,7 +107,6 @@ class Api(val context: Context) : ApiSingleton() {
 	fun getLista(id: String, pagina: Int = 1): Observable<ListaFilmes> {
 		return Observable.create { subscriber ->
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val gson = Gson()
 			val request = Request.Builder()
 				.url("${baseUrl4}list/" + id + "?page=" + pagina + "&api_key=" + TMDBAPI)
 				.get()
@@ -116,7 +114,7 @@ class Api(val context: Context) : ApiSingleton() {
 			val response = client.newCall(request).execute()
 			if (response.isSuccessful) {
 				val json = response.body?.string()
-				val lista = gson.fromJson(json, ListaFilmes::class.java)
+				val lista = gson.fromJsonWithLog(json, ListaFilmes::class.java)
 				subscriber.onNext(lista)
 				subscriber.onCompleted()
 			} else {
@@ -128,7 +126,6 @@ class Api(val context: Context) : ApiSingleton() {
 	fun getCompany(id_produtora: Int): Observable<Company> {
 		return Observable.create { subscriber ->
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val gson = Gson()
 			val request = Request.Builder()
 				.url("${baseUrl3}company/$id_produtora?api_key=" + TMDBAPI)
 				.get()
@@ -136,7 +133,7 @@ class Api(val context: Context) : ApiSingleton() {
 			val response = client.newCall(request).execute()
 			if (response.isSuccessful) {
 				val json = response.body?.string()
-				val company = gson.fromJson(json, Company::class.java)
+				val company = gson.fromJsonWithLog(json, Company::class.java)
 				subscriber.onNext(company)
 				subscriber.onCompleted()
 			} else {
@@ -148,7 +145,6 @@ class Api(val context: Context) : ApiSingleton() {
 	fun getCompanyFilmes(company_id: Int, pagina: Int = 1): Observable<CompanyFilmes> {
 		return Observable.create { subscriber ->
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val gson = Gson()
 			val request = Request.Builder()
 				.url("${baseUrl3}company/$company_id/movies?page=$pagina&api_key=${TMDBAPI}&language=$timeZone")
 				.get()
@@ -156,7 +152,7 @@ class Api(val context: Context) : ApiSingleton() {
 			val response = client.newCall(request).execute()
 			if (response.isSuccessful) {
 				val json = response.body?.string()
-				val companyFilmes = gson.fromJson(json, CompanyFilmes::class.java)
+				val companyFilmes = gson.fromJsonWithLog(json, CompanyFilmes::class.java)
 				subscriber.onNext(companyFilmes)
 				subscriber.onCompleted()
 			} else {
@@ -181,7 +177,7 @@ class Api(val context: Context) : ApiSingleton() {
 			val response = client.newCall(request).execute()
 			if (response.isSuccessful) {
 				val json = response.body?.string()
-				val lista = Gson().fromJson(json, ListaFilmes::class.java)
+				val lista = gson.fromJsonWithLog(json, ListaFilmes::class.java)
 				subscriber.onNext(lista)
 				subscriber.onCompleted()
 			} else {
@@ -205,7 +201,7 @@ class Api(val context: Context) : ApiSingleton() {
 			val response = client.newCall(request).execute()
 			if (response.isSuccessful) {
 				val json = response.body?.string()
-				val lista = Gson().fromJson(json, ListaSeries::class.java)
+				val lista = gson.fromJsonWithLog(json, ListaSeries::class.java)
 				lista.results
 				subscriber.onNext(lista)
 				subscriber.onCompleted()
@@ -227,7 +223,7 @@ class Api(val context: Context) : ApiSingleton() {
 					override fun onResponse(call: Call, response: Response) {
 						try {
 							if (response.isSuccessful) {
-								val listMovie = Gson().fromJson(
+								val listMovie = gson.fromJsonWithLog(
 									response.body?.string(),
 									Movie::class.java
 								)
@@ -254,7 +250,7 @@ class Api(val context: Context) : ApiSingleton() {
 					override fun onResponse(call: Call, response: Response) {
 						try {
 							if (response.isSuccessful) {
-								val listMovie = Gson().fromJson(
+								val listMovie = gson.fromJsonWithLog(
 									response.body?.string(),
 									Tvshow::class.java
 								)
@@ -286,7 +282,7 @@ class Api(val context: Context) : ApiSingleton() {
 						try {
 							if (response.isSuccessful) {
 								val json = response.body?.string()
-								val videos = gson.fromJson(json, Videos::class.java)
+								val videos = gson.fromJsonWithLog(json, Videos::class.java)
 								cont.resume(Success(videos))
 							} else {
 								cont.resume(Failure(java.lang.Exception(response.code.toString())))
@@ -323,7 +319,7 @@ class Api(val context: Context) : ApiSingleton() {
 					try {
 						if (response.isSuccessful) {
 							val json = response.body?.string()
-							val tvshow = Gson().fromJson(json, Tvshow::class.java)
+							val tvshow = gson.fromJsonWithLog(json, Tvshow::class.java)
 							cont.resume(tvshow)
 						} else {
 							cont.cancel(null)
@@ -352,7 +348,7 @@ class Api(val context: Context) : ApiSingleton() {
 					try {
 						if (response.isSuccessful) {
 							val json = response.body?.string()
-							val ep = Gson().fromJson(json, EpisodesItem::class.java)
+							val ep = gson.fromJsonWithLog(json, EpisodesItem::class.java)
 							cont.resume(ep)
 						} else {
 							cont.cancel(null)
@@ -376,7 +372,7 @@ class Api(val context: Context) : ApiSingleton() {
 					try {
 						if (response.isSuccessful) {
 							val json = response.body?.string()
-							val collection = gson.fromJson(json, Colecao::class.java)
+							val collection = gson.fromJsonWithLog(json, Colecao::class.java)
 							cont.resume(collection)
 						} else {
 							cont.cancel(null)
@@ -406,7 +402,7 @@ class Api(val context: Context) : ApiSingleton() {
 					try {
 						if (response.isSuccessful) {
 							val json = response.body?.string()
-							val tvshow = Gson().fromJson(json, TvSeasons::class.java)
+							val tvshow = gson.fromJsonWithLog(json, TvSeasons::class.java)
 							cont.resume(tvshow)
 						} else {
 							cont.cancel(null)
@@ -422,7 +418,6 @@ class Api(val context: Context) : ApiSingleton() {
 	fun getTvCreditosTemporada(id: Int, id_season: Int): Observable<Credits> {
 		return Observable.create { subscriber ->
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val gson = Gson()
 			val request = Request.Builder()
 				.url("${baseUrl3}tv/$id/season/$id_season/credits?api_key=${TMDBAPI}&language=en-US")
 				.get()
@@ -430,7 +425,7 @@ class Api(val context: Context) : ApiSingleton() {
 			val response = client.newCall(request).execute()
 			if (response.isSuccessful) {
 				val json = response.body?.string()
-				val lista = gson.fromJson(json, Credits::class.java)
+				val lista = gson.fromJsonWithLog(json, Credits::class.java)
 				subscriber.onNext(lista)
 				subscriber.onCompleted()
 			} else {
@@ -454,7 +449,7 @@ class Api(val context: Context) : ApiSingleton() {
 						try {
 							if (response.isSuccessful) {
 								val json = response.body?.string()
-								val person = Gson().fromJson(json, Person::class.java)
+								val person = gson.fromJsonWithLog(json, Person::class.java)
 								continuation.resume(Success(person))
 							} else {
 								continuation.resumeWithException(Exception("Failure"))
@@ -479,7 +474,7 @@ class Api(val context: Context) : ApiSingleton() {
 				val response = client.newCall(request).execute()
 				if (response.isSuccessful) {
 					val json = response.body?.string()
-					val multi = Gson().fromJson(json, MultiSearch::class.java)
+					val multi = gson.fromJsonWithLog(json, MultiSearch::class.java)
 					subscriber.onNext(multi)
 					subscriber.onCompleted()
 				} else {
@@ -504,7 +499,7 @@ class Api(val context: Context) : ApiSingleton() {
 				override fun onResponse(call: Call, response: Response) {
 					try {
 						if (response.isSuccessful) {
-							val listMovie = Gson().fromJson(
+							val listMovie = gson.fromJsonWithLog(
 								response.body?.string(),
 								ListaFilmes::class.java
 							)
@@ -540,7 +535,7 @@ class Api(val context: Context) : ApiSingleton() {
 					try {
 						if (response.isSuccessful) {
 							val json = response.body?.string()
-							val listaTv = Gson().fromJson(json, ListaFilmes::class.java)
+							val listaTv = gson.fromJsonWithLog(json, ListaFilmes::class.java)
 							continuation.resume(listaTv)
 						} else {
 							continuation.resumeWithException(Exception("Failure"))
@@ -573,7 +568,7 @@ class Api(val context: Context) : ApiSingleton() {
 					try {
 						if (response.isSuccessful) {
 							val json = response.body?.string()
-							val listaTv = Gson().fromJson(json, ListaFilmes::class.java)
+							val listaTv = gson.fromJsonWithLog(json, ListaFilmes::class.java)
 							continuation.resume(listaTv)
 						} else {
 							continuation.resumeWithException(Exception("Failure"))
@@ -605,7 +600,7 @@ class Api(val context: Context) : ApiSingleton() {
 				override fun onResponse(call: Call, response: Response) {
 					try {
 						if (response.isSuccessful) {
-							val list = Gson().fromJson(
+							val list = gson.fromJsonWithLog(
 								response.body?.string(),
 								ListaSeries::class.java
 							)
@@ -642,7 +637,7 @@ class Api(val context: Context) : ApiSingleton() {
 					try {
 						if (response.isSuccessful) {
 							val json = response.body?.string()
-							val listaTv = Gson().fromJson(json, ListaSeries::class.java)
+							val listaTv = gson.fromJsonWithLog(json, ListaSeries::class.java)
 							continuation.resume(listaTv)
 						} else {
 							continuation.resumeWithException(Exception("Failure"))
@@ -671,7 +666,7 @@ class Api(val context: Context) : ApiSingleton() {
 					try {
 						if (response.isSuccessful) {
 							val json = response.body?.string()
-							val lista = Gson().fromJson(json, ReelGood::class.java)
+							val lista = gson.fromJsonWithLog(json, ReelGood::class.java)
 							continuation.resume(lista)
 						} else {
 							continuation.resumeWithException(Exception("Failure"))
@@ -702,7 +697,7 @@ class Api(val context: Context) : ApiSingleton() {
 					try {
 						if (response.isSuccessful) {
 							val json = response.body?.string()
-							val lista = Gson().fromJson(json, ReelGoodTv::class.java)
+							val lista = gson.fromJsonWithLog(json, ReelGoodTv::class.java)
 							continuation.resume(lista)
 						} else {
 							continuation.resumeWithException(Exception("Failure"))
@@ -718,7 +713,6 @@ class Api(val context: Context) : ApiSingleton() {
 	suspend fun getTmdbSearch(query: String, page: Int = 1): SearchMulti {
 		return suspendCancellableCoroutine { cont ->
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val gson = Gson()
 			val request = Request.Builder()
 				.url(
 					"${baseUrl3}search/multi?api_key=${TMDBAPI}&language=${getIdiomaEscolhido(
@@ -736,7 +730,7 @@ class Api(val context: Context) : ApiSingleton() {
 					try {
 						if (response.isSuccessful) {
 							val json = response.body?.string()
-							val lista = gson.fromJson(json, SearchMulti::class.java)
+							val lista = gson.fromJsonWithLog(json, SearchMulti::class.java)
 							cont.resume(lista)
 						} else {
 							cont.resumeWithException(Exception("Failure"))
@@ -756,7 +750,6 @@ class Api(val context: Context) : ApiSingleton() {
 	suspend fun getTvSeasonsCd(id: Int, id_season: Int): TvSeasons {
 		return suspendCancellableCoroutine { cont ->
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val gson = Gson()
 			val request = Request.Builder()
 				.url("${baseUrl3}tv/$id/season/$id_season?api_key=${TMDBAPI}&language=$timeZone,en")
 				.get()
@@ -769,7 +762,7 @@ class Api(val context: Context) : ApiSingleton() {
 				override fun onResponse(call: Call, response: Response) {
 					try {
 						val json = response.body?.string()
-						val lista = gson.fromJson(json, TvSeasons::class.java)
+						val lista = gson.fromJsonWithLog(json, TvSeasons::class.java)
 						cont.resume(lista)
 					} catch (e: JsonSyntaxException) {
 						cont.resumeWithException(e)
@@ -796,7 +789,7 @@ class Api(val context: Context) : ApiSingleton() {
 						if (response.isSuccessful) {
 							try {
 								val json = response.body?.string()
-								val guestSession = gson.fromJson(json, GuestSession::class.java)
+								val guestSession = gson.fromJsonWithLog(json, GuestSession::class.java)
 								cont.resume(Success(guestSession))
 							} catch (ex: Exception) {
 								cont.resume(Failure(ex))
@@ -867,7 +860,7 @@ class Api(val context: Context) : ApiSingleton() {
 						if (response.isSuccessful) {
 							try {
 								val json = response.body?.string()
-								val imdb = gson.fromJson(json, Imdb::class.java)
+								val imdb = gson.fromJsonWithLog(json, Imdb::class.java)
 								cont.resume(Success(imdb))
 							} catch (ex: Exception) {
 								cont.resume(Failure(Exception(ex.message)))
