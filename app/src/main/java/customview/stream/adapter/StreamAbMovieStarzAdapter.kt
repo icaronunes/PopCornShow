@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
 import customview.stream.BaseStreamAb
-import customview.stream.TypeEnumStream
 import domain.ViewType
 import domain.reelgood.movie.Availability
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item

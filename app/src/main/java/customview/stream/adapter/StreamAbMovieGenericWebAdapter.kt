@@ -7,12 +7,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.*
 import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
 import customview.stream.BaseStreamAb
-import customview.stream.TypeEnumStream
 import domain.ViewType
 import domain.reelgood.movie.Availability
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
@@ -57,22 +55,19 @@ class StreamAbMovieGenericWebAdapter(
 
 	fun callWeb(availability: Availability?, context: Context) {
 		try {
-			startActivity(
-				context,
+			context.startActivity(
 				Intent(Intent.ACTION_VIEW, Uri.parse(getLink(availability))).apply {
 					addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-				},
-				null
+				}
 			)
 		} catch (e: Exception) {
 			Crashlytics.log("Error no Stream - ${title.getNameTypeReel()} ${availability.toString()}")
-			startActivity(context, Intent(
+			context.startActivity(Intent(
 				Intent.ACTION_VIEW,
 				Uri.parse("https://www.google.com/search?q=$title ${availability?.sourceName ?: ""}")
 			).apply {
 				addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-			}, null
-			)
+			})
 		}
 	}
 

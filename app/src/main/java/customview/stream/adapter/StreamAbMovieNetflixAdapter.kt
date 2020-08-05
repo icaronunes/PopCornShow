@@ -5,15 +5,14 @@ import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
 import customview.stream.BaseStreamAb
 import customview.stream.TypeEnumStream
-import customview.stream.TypeEnumStream.EP
-import customview.stream.TypeEnumStream.MOVIE
-import customview.stream.TypeEnumStream.TV
+import customview.stream.TypeEnumStream.*
 import domain.ViewType
 import domain.reelgood.movie.Availability
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
@@ -36,11 +35,13 @@ class StreamAbMovieNetflixAdapter(val subscription: Boolean = false,
             setOnClickListener {
                 try {
                     callAppOrWeb(availability = availability, packagerCall = typeStream) {
+                        Toast.makeText(context, "ACTION_VIEW", Toast.LENGTH_LONG).show()
                         val intent = Intent(Intent.ACTION_VIEW)
                         intent.data = Uri.parse(getSomeLink(availability, getLinkGeneric(availability)))
                         context.startActivity(intent)
                     }
                 } catch (ex: Exception) {
+                    Toast.makeText(context, "ERROR - ACTION_VIEW - $ex", Toast.LENGTH_SHORT).show()
                     Crashlytics.log("Erro no Stream - ${availability.toString()}")
                 }
             }

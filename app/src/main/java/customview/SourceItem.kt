@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import android.widget.Toast
 import br.com.icaro.filme.R
 import domain.reelgood.movie.Availability
 import kotlinx.android.synthetic.main.sources_item_layout.view.icon_source
@@ -61,14 +62,17 @@ class SourceItem : FrameLayout {
 		) else null
 		if (pack != null) {
 			try {
+				Toast.makeText(context, "pack - $pack", Toast.LENGTH_SHORT).show()
 				val intent = Intent(Intent.ACTION_MAIN)
 				intent.setClassName(
 					pack.component?.packageName ?: "",
 					pack.component?.className ?: ""
 				)
+				intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 				intent.data = Uri.parse(availability?.sourceData?.links?.android)
 				context.startActivity(intent)
 			} catch (e: Exception) {
+				Toast.makeText(context, "pack Error- ${e}", Toast.LENGTH_SHORT).show()
 				callActivity(availability)
 			}
 		} else {
