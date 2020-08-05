@@ -8,7 +8,6 @@
     android:background="@drawable/stream_customview"
     android:fitsSystemWindows="true"
     android:focusable="false"
-    android:nestedScrollingEnabled="true"
     android:overScrollMode="ifContentScrolls">
 
     <ImageView
@@ -27,7 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:contentDescription="beta"
+        android:layout_marginLeft="20dp"
+        android:contentDescription="@string/beta"
         android:text="@string/beta"
         android:textColor="@color/black_transparente_produtora"
         android:textSize="8sp"
@@ -38,7 +38,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Veja mais nos detalhes da temprorada"
+        android:text="@string/more_details_tv_stream"
         android:textColor="@color/black_transparente_produtora"
         android:textSize="8sp"
         app:layout_constraintStart_toStartOf="@id/beta"
@@ -49,6 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:text="@string/valid_us"
         android:textColor="@color/black"
         android:textSize="8sp"
@@ -83,8 +84,8 @@
         android:textSize="@dimen/trade_txt_size_sp_16"
         android:textStyle="bold"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_streaming"
         tools:visibility="visible" />
 
@@ -103,6 +104,8 @@
         android:id="@+id/tvRc"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/label_stream"
         app:layout_constraintStart_toStartOf="@id/label_stream"
