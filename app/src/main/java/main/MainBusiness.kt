@@ -3,7 +3,7 @@ package main
 import android.app.Application
 import android.preference.PreferenceManager
 import applicaton.BaseViewModel
-import applicaton.BaseViewModel.BaseRequest.Success
+import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.BuildConfig
 import domain.ListaSeries
 import domain.movie.ListaFilmes
@@ -31,7 +31,7 @@ class MainBusiness(
 
 	fun setNews() {
 		val sharedPref = PreferenceManager.getDefaultSharedPreferences(app)
-		if (sharedPref.getBoolean(BuildConfig.VERSION_CODE.toString(), true)) {
+		if (sharedPref.getBoolean(BuildConfig.VERSION_CODE.toString(), false)) {
 			listener.setNovidade(true)
 		}
 	}

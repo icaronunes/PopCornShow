@@ -6,8 +6,9 @@ import domain.ViewType
 import kotlinx.android.parcel.Parcelize
 import utils.Constant
 
+@Suppress("PLUGIN_WARNING")
 @Parcelize
-class   Availability : ViewType, Parcelable {
+class Availability : ViewType, Parcelable {
     override fun getViewType(): Int {
         return when (sourceName) {
             "starz" -> Constant.ReelGood.STARZ

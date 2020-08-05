@@ -1,16 +1,17 @@
 package customview.stream.adapter
 
+import Txt
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
 import customview.stream.BaseStreamAb
-import customview.stream.TypeEnumStream
 import domain.ViewType
 import domain.reelgood.movie.Availability
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
@@ -47,6 +48,7 @@ class StreamAbGoogleAdapter(
 						context.startActivity(intent)
 					}
 				} catch (ex: Exception) {
+					Toast.makeText(context, context.getString(Txt.ops), Toast.LENGTH_SHORT).show()
 					Crashlytics.log("Erro no Stream - ${availability.toString()}")
 				}
 			}

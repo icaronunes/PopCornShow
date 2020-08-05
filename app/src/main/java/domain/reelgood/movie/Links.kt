@@ -1,8 +1,12 @@
 package domain.reelgood.movie
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-class Links {
+@Suppress("PLUGIN_WARNING")
+@Parcelize
+class Links: Parcelable {
     @SerializedName("web")
     val web: String? = null // http://movies.netflix.com/Movie/81078819" ("web")
     @SerializedName("ios")

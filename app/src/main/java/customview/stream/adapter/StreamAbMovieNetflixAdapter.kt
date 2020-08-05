@@ -1,5 +1,8 @@
 package customview.stream.adapter
 
+import Drawable
+import Layout
+import Txt
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -8,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView.*
-import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
 import customview.stream.BaseStreamAb
 import customview.stream.TypeEnumStream
@@ -29,19 +31,18 @@ class StreamAbMovieNetflixAdapter(val subscription: Boolean = false,
         (holder as StreamMovieHolder).bind(item as? Availability)
     }
 
-    inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
+    inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(Layout.sources_item_view, parent, false)) {
         fun bind(availability: Availability?) = with(itemView.source_item) {
-            iconSource = ContextCompat.getDrawable(context, R.drawable.netflix_stream)
+            iconSource = ContextCompat.getDrawable(context, Drawable.netflix_stream)
             setOnClickListener {
                 try {
                     callAppOrWeb(availability = availability, packagerCall = typeStream) {
-                        Toast.makeText(context, "ACTION_VIEW", Toast.LENGTH_LONG).show()
                         val intent = Intent(Intent.ACTION_VIEW)
                         intent.data = Uri.parse(getSomeLink(availability, getLinkGeneric(availability)))
                         context.startActivity(intent)
                     }
                 } catch (ex: Exception) {
-                    Toast.makeText(context, "ERROR - ACTION_VIEW - $ex", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(Txt.ops), Toast.LENGTH_SHORT).show()
                     Crashlytics.log("Erro no Stream - ${availability.toString()}")
                 }
             }

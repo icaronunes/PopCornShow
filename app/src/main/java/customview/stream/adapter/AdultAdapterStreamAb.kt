@@ -1,10 +1,12 @@
 package customview.stream.adapter
 
+import Txt
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
@@ -51,6 +53,7 @@ class AdultAdapterStreamAb(
 						context.startActivity(intent)
 					}
 				} catch (ex: Exception) {
+					Toast.makeText(context, context.getString(Txt.ops), Toast.LENGTH_SHORT).show()
 					Crashlytics.log("Erro no Stream - ${availability.toString()}")
 				}
 			}
