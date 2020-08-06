@@ -8,18 +8,17 @@ import activity.BaseActivityAb
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.multidex.BuildConfig
 import androidx.viewpager.widget.ViewPager
 import applicaton.BaseViewModel.*
+import br.com.icaro.filme.BuildConfig
 import br.com.icaro.filme.R
-import com.google.android.material.snackbar.Snackbar
 import domain.ListaSeries
 import domain.TopMain
 import domain.movie.ListaFilmes
@@ -29,7 +28,6 @@ import kotlinx.android.synthetic.main.activity_main.indication_main
 import kotlinx.android.synthetic.main.activity_main.tabLayout
 import kotlinx.android.synthetic.main.activity_main.viewPager_main
 import kotlinx.android.synthetic.main.activity_main.viewpage_top_main
-import utils.UtilsApp
 import utils.gone
 import utils.visible
 
@@ -75,17 +73,18 @@ class MainActivity(override var layout: Int = Layout.activity_main) : BaseActivi
 	}
 
 	private fun news() {
-		AlertDialog.Builder(this)
+		val dialog = AlertDialog.Builder(this)
 			.setIcon(R.drawable.ic_popcorn2)
 			.setTitle(R.string.novidades_title)
 			.setMessage(R.string.novidades_text)
 			.setPositiveButton(R.string.ok) { _, _ ->
-				val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
+				val sharedPref = getPreferences(Context.MODE_PRIVATE)
 				val editor = sharedPref.edit()
-				editor.putBoolean(BuildConfig.VERSION_CODE.toString(), false)
+				editor.putBoolean((BuildConfig.VERSION_CODE).toString(), false)
 				editor.remove((BuildConfig.VERSION_CODE - 1).toString())
 				editor.apply()
-			}.create().show()
+			}.create()
+		dialog.show()
 	}
 
 	private fun animation() {
@@ -98,17 +97,6 @@ class MainActivity(override var layout: Int = Layout.activity_main) : BaseActivi
 			interpolator = AccelerateDecelerateInterpolator()
 			start()
 		}
-	}
-
-	private fun snack() {
-		Snackbar.make(viewpage_top_main, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-			.setAction(R.string.retry) {
-				if (UtilsApp.isNetWorkAvailable(baseContext)) {
-					model.fetchAll()
-				} else {
-					snack()
-				}
-			}.show()
 	}
 
 	private fun setupViewPagerTabs(multi: List<TopMain>) {

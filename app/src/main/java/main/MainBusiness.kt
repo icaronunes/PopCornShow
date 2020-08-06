@@ -1,7 +1,7 @@
 package main
 
 import android.app.Application
-import android.preference.PreferenceManager
+import android.content.Context
 import applicaton.BaseViewModel
 import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.BuildConfig
@@ -19,7 +19,6 @@ class MainBusiness(
 	private val mainViewModel: BaseViewModel,
 	private val listener: MainBusinessListener
 ) {
-
 	fun setTopList() {
 		GlobalScope.launch(mainViewModel.coroutineContext) {
 			val movies = async(Dispatchers.IO) { api.getNowPlayingMovies() as Success<ListaFilmes> }
@@ -29,10 +28,8 @@ class MainBusiness(
 		}
 	}
 
-	fun setNews() {
-		val sharedPref = PreferenceManager.getDefaultSharedPreferences(app)
-		if (sharedPref.getBoolean(BuildConfig.VERSION_CODE.toString(), false)) {
-			listener.setNovidade(true)
-		}
+	fun setNews(activity: MainActivity) {
+		val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
+		listener.setNovidade(sharedPref.getBoolean((BuildConfig.VERSION_CODE).toString(), true))
 	}
 }

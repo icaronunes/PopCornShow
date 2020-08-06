@@ -23,7 +23,7 @@ class PopCornViewModelFactory constructor(
 	override fun <T : ViewModel> create(modelClass: Class<T>): T =
 		with(modelClass) {
 			when {
-				isAssignableFrom(MainViewModel::class.java) -> MainViewModel(application, api)
+				isAssignableFrom(MainViewModel::class.java) -> MainViewModel(application, api, activity)
 				isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(app = application)
 				isAssignableFrom(PersonViewModel::class.java) -> PersonViewModel(
 					app = application,

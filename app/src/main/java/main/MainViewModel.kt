@@ -1,5 +1,6 @@
 package main
 
+import android.app.Activity
 import android.app.Application
 import android.os.Handler
 import android.os.Looper
@@ -17,7 +18,11 @@ import loading.api.LoadingMedia
 import utils.Api
 import kotlin.coroutines.CoroutineContext
 
-class MainViewModel(override val app: Application, val api: Api) : BaseViewModel(app),
+class MainViewModel(
+	override val app: Application,
+	val api: Api,
+	val activity: Activity
+) : BaseViewModel(app),
 	MainBusinessListener {
 
 	override val coroutineContext: CoroutineContext
@@ -47,7 +52,7 @@ class MainViewModel(override val app: Application, val api: Api) : BaseViewModel
 	private val _popularTv = MutableLiveData<BaseRequest<ListaSeries>>()
 	val popularTv: LiveData<BaseRequest<ListaSeries>> = _popularTv
 
-	private val _new = MutableLiveData<Boolean>()
+	private val _new = MutableLiveData<Boolean>(false)
 	val new: LiveData<Boolean> = _new
 	private val _animed = MutableLiveData<Boolean>()
 	val animed: LiveData<Boolean> = _animed
@@ -56,8 +61,8 @@ class MainViewModel(override val app: Application, val api: Api) : BaseViewModel
 	@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
 	fun fetchTopo() = business.setTopList()
 
-	@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-	fun news() = business.setNews()
+	@OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+	fun news() = business.setNews(activity as MainActivity)
 
 	@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
 	fun fetchPopularTv() = loadingMedia.getTvPopular(_popularTv)
