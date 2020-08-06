@@ -48,14 +48,6 @@ android {
                                         onesignal_google_project_number: "101446616560"]
             }
 
-            signingConfigs {
-                release {
-                    storeFile file('../app/keystore.jks')
-                    storePassword ""
-                    keyAlias ""
-                    keyPassword ""
-                }
-            }
             packagingOptions {
 
                 exclude 'META-INF/DEPENDENCIES'
@@ -63,28 +55,6 @@ android {
                 exclude 'META-INF/LICENSE'
                 exclude 'META-INF/LICENSE.txt'
                 exclude 'META-INF/NOTICE.txt'
-            }
-
-            buildTypes {
-                debug {
-                    minifyEnabled false
-                    debuggable true
-                    ext.enableCrashlytics = false
-                    ext.alwaysUpdateBuildId = false
-                    crunchPngs false
-                    manifestPlaceholders = [crashlyticsCollectionEnabled: "false"]
-                }
-
-                release {
-                    ext.enableCrashlytics = true
-                    minifyEnabled true
-                    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-                    shrinkResources true
-                    zipAlignEnabled true
-                    //proguard com restrição ao log.ver
-                    debuggable false
-                    manifestPlaceholders = [crashlyticsCollectionEnabled: "true"]
-                }
             }
 
             flavorDimensions "color"
@@ -119,6 +89,28 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            debuggable true
+            ext.enableCrashlytics = false
+            ext.alwaysUpdateBuildId = false
+            crunchPngs false
+            manifestPlaceholders = [crashlyticsCollectionEnabled: "false"]
+        }
+
+        release {
+            ext.enableCrashlytics = true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            shrinkResources true
+            zipAlignEnabled true
+            //proguard com restrição ao log.ver
+            debuggable false
+            manifestPlaceholders = [crashlyticsCollectionEnabled: "true"]
+        }
     }
 
 }
