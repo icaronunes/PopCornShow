@@ -33,8 +33,8 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.Response
 import rx.Observable
-import utils.Api.TYPESEARCH.FILME
-import utils.Api.TYPESEARCH.SERIE
+import utils.Api.TYPESEARCH.MOVIE
+import utils.Api.TYPESEARCH.TVSHOW
 import utils.ApiSingleton.Companion.LoggingInterceptor
 import utils.UtilsKt.Companion.getIdiomaEscolhido
 import java.io.IOException
@@ -53,14 +53,14 @@ class Api(val context: Context) : ApiSingleton() {
 	private val OMDBAPI by lazy { getKey("OMDBAPI_API_KEY") }
 
 	object TYPESEARCH {
-		object FILME {
+		object MOVIE {
 			const val popular: String = "popular"
 			const val now: String = "now_playing"
 			const val upComing: String = "upcoming"
 			const val bestScore: String = "top_rated"
 		}
 
-		object SERIE {
+		object TVSHOW {
 			const val toDay: String = "airing_today"
 			const val week: String = "on_the_air"
 			const val popular: String = "popular"
@@ -162,7 +162,7 @@ class Api(val context: Context) : ApiSingleton() {
 	}
 
 	fun buscaDeFilmes(
-		tipoDeBusca: String? = FILME.now,
+		tipoDeBusca: String? = MOVIE.now,
 		pagina: Int = 1,
 		local: String = "US"
 	): Observable<ListaFilmes> {
@@ -187,7 +187,7 @@ class Api(val context: Context) : ApiSingleton() {
 	}
 
 	fun buscaDeSeries(
-		tipoDeBusca: String? = SERIE.popular,
+		tipoDeBusca: String? = TVSHOW.popular,
 		pagina: Int = 1,
 		local: String = "US"
 	): Observable<ListaSeries> {
@@ -363,25 +363,28 @@ class Api(val context: Context) : ApiSingleton() {
 
 	suspend fun getCollection(id: Int): Colecao {
 		return suspendCancellableCoroutine { cont ->
-			executeCall("${baseUrl3}collection/$id?api_key=${TMDBAPI}&language=$timeZone,en", func = object :
-				Callback {
-				override fun onFailure(call: Call, e: IOException) {
-					cont.resumeWithException(Throwable(e.message))
-				}
-				override fun onResponse(call: Call, response: Response) {
-					try {
-						if (response.isSuccessful) {
-							val json = response.body?.string()
-							val collection = gson.fromJsonWithLog(json, Colecao::class.java)
-							cont.resume(collection)
-						} else {
-							cont.cancel(null)
-						}
-					} catch (ex: Exception) {
-						cont.resumeWithException(Throwable(ex.message))
+			executeCall(
+				"${baseUrl3}collection/$id?api_key=${TMDBAPI}&language=$timeZone,en",
+				func = object :
+					Callback {
+					override fun onFailure(call: Call, e: IOException) {
+						cont.resumeWithException(Throwable(e.message))
 					}
-				}
-			})
+
+					override fun onResponse(call: Call, response: Response) {
+						try {
+							if (response.isSuccessful) {
+								val json = response.body?.string()
+								val collection = gson.fromJsonWithLog(json, Colecao::class.java)
+								cont.resume(collection)
+							} else {
+								cont.cancel(null)
+							}
+						} catch (ex: Exception) {
+							cont.resumeWithException(Throwable(ex.message))
+						}
+					}
+				})
 		}
 	}
 
@@ -789,7 +792,8 @@ class Api(val context: Context) : ApiSingleton() {
 						if (response.isSuccessful) {
 							try {
 								val json = response.body?.string()
-								val guestSession = gson.fromJsonWithLog(json, GuestSession::class.java)
+								val guestSession =
+									gson.fromJsonWithLog(json, GuestSession::class.java)
 								cont.resume(Success(guestSession))
 							} catch (ex: Exception) {
 								cont.resume(Failure(ex))
