@@ -1,5 +1,7 @@
 package busca.adapter
 
+import ID
+import Txt
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -41,9 +43,9 @@ class SearchPersonAdapter : ViewTypeDelegateAdapter {
         : RecyclerView.ViewHolder(LayoutInflater.from(parent.context)
         .inflate(R.layout.search_list_person_adapter, parent, false)) {
 
-        private val poster: ImageView = itemView.findViewById(R.id.img_search)
-        private val searchNome: TextView = itemView.findViewById(R.id.search_name)
-        private val linear: LinearLayoutCompat = itemView.findViewById(R.id.container_know)
+        private val poster: ImageView = itemView.findViewById(ID.img_search)
+        private val searchNome: TextView = itemView.findViewById(ID.search_name)
+        private val linear: LinearLayoutCompat = itemView.findViewById(ID.container_know)
 
         fun bind(person: Result) = with(itemView) {
             poster.setPicassoWithCache(person.profilePath, 4, img_erro = drawable.person)
@@ -51,7 +53,7 @@ class SearchPersonAdapter : ViewTypeDelegateAdapter {
                 searchNome.text = it
                 contentDescription = it
             }
-            contentDescription = "$contentDescription - ${context.getString(R.string.know_for)}"
+            contentDescription = "$contentDescription - ${context.getString(Txt.know_for)}"
             itemView.setOnClickListener {
                 context.startActivity(Intent(context, PersonActivity::class.java).apply {
                     putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
