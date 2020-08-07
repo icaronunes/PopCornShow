@@ -1,31 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/acorntv">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="355dp"
-        android:layout_height="567dp"
-        android:contentDescription="@string/ops"
-        android:padding="@dimen/trade_size_dp_60"
-        app:layout_constraintBottom_toTopOf="@+id/try_again"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/fragment_error_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:padding="10dp"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="30dp" />
+
+    <TextView
+        android:id="@+id/fragment_error_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:padding="16dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_error_close"
+        tools:text="ixi, deu pau!"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/fragment_error_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/fragment_error_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:importantForAccessibility="no"
+        android:focusable="false"
+        app:layout_constraintTop_toBottomOf="@id/fragment_error_msg"
         app:srcCompat="@drawable/sad" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/try_again"
+        android:id="@+id/fragment_error_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_visto"
-        android:text="@string/tryagain"
         android:layout_marginBottom="45dp"
+        android:text="@string/tryagain"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
