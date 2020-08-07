@@ -39,10 +39,10 @@ class TvShowsActivity : BaseActivity() {
 
     private fun getTitleChoose() {
         supportActionBar!!.title = when (intent.getStringExtra(Constant.NAV_DRAW_ESCOLIDO)) {
-            Api.TYPESEARCH.SERIE.toDay -> getString(R.string.today)
-            Api.TYPESEARCH.SERIE.week -> getString(R.string.air_date_main)
-            Api.TYPESEARCH.SERIE.popular -> getString(R.string.populares)
-            Api.TYPESEARCH.SERIE.bestScore -> getString(R.string.top_rated)
+            Api.TYPESEARCH.TVSHOW.toDay -> getString(R.string.today)
+            Api.TYPESEARCH.TVSHOW.week -> getString(R.string.air_date_main)
+            Api.TYPESEARCH.TVSHOW.popular -> getString(R.string.populares)
+            Api.TYPESEARCH.TVSHOW.bestScore -> getString(R.string.top_rated)
             else -> getString(R.string.app_name)
         }
     }

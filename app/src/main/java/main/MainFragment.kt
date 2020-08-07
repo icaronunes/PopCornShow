@@ -20,8 +20,8 @@ import kotlinx.android.synthetic.main.tvshow_main.chip_group_tvshow
 import listafilmes.activity.MoviesActivity
 import listaserie.activity.TvShowsActivity
 import tvshow.TvShowMainAdapter
-import utils.Api.TYPESEARCH.FILME
-import utils.Api.TYPESEARCH.SERIE
+import utils.Api.TYPESEARCH.MOVIE
+import utils.Api.TYPESEARCH.TVSHOW
 import utils.Constant
 import utils.kotterknife.bindArgument
 
@@ -174,25 +174,25 @@ class MainFragment : BaseFragment() {
 			when (id) {
 				R.id.chip_now_playing -> {
 					startActivity(Intent(activity, MoviesActivity::class.java).apply {
-						putExtra(Constant.NAV_DRAW_ESCOLIDO, FILME.now)
+						putExtra(Constant.NAV_DRAW_ESCOLIDO, MOVIE.now)
 					})
 				}
 
 				R.id.chip_upcoming -> {
 					startActivity(Intent(activity, MoviesActivity::class.java).apply {
-						putExtra(Constant.NAV_DRAW_ESCOLIDO, FILME.upComing)
+						putExtra(Constant.NAV_DRAW_ESCOLIDO, MOVIE.upComing)
 					})
 				}
 
 				R.id.chip_populares -> {
 					startActivity(Intent(activity, MoviesActivity::class.java).apply {
-						putExtra(Constant.NAV_DRAW_ESCOLIDO, FILME.popular)
+						putExtra(Constant.NAV_DRAW_ESCOLIDO, MOVIE.popular)
 					})
 				}
 
 				R.id.chip_top_rated -> {
 					startActivity(Intent(activity, MoviesActivity::class.java).apply {
-						putExtra(Constant.NAV_DRAW_ESCOLIDO, FILME.bestScore)
+						putExtra(Constant.NAV_DRAW_ESCOLIDO, MOVIE.bestScore)
 					})
 				}
 			}
@@ -204,23 +204,23 @@ class MainFragment : BaseFragment() {
 			when (id) {
 				R.id.chip_air_data -> {
 					val intent = Intent(activity, TvShowsActivity::class.java)
-					intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, SERIE.week)
+					intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, TVSHOW.week)
 					startActivity(intent)
 				}
 				R.id.chip_today -> {
 					val intent = Intent(activity, TvShowsActivity::class.java)
-					intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, SERIE.toDay)
+					intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, TVSHOW.toDay)
 					startActivity(intent)
 				}
 				R.id.chip_populares_tvshow -> {
 					val intent = Intent(activity, TvShowsActivity::class.java)
-					intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, SERIE.popular)
+					intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, TVSHOW.popular)
 					startActivity(intent)
 				}
 
 				R.id.chip_top_rated_tvshow -> {
 					val intent = Intent(activity, TvShowsActivity::class.java)
-					intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, SERIE.bestScore)
+					intent.putExtra(Constant.NAV_DRAW_ESCOLIDO, TVSHOW.bestScore)
 					startActivity(intent)
 				}
 			}

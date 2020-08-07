@@ -3,8 +3,7 @@ package listafilmes.activity
 import activity.BaseActivity
 import android.os.Bundle
 import br.com.icaro.filme.R
-import br.com.icaro.filme.R.id
-import br.com.icaro.filme.R.layout
+import br.com.icaro.filme.R.*
 import listafilmes.fragment.MoviesFragment
 import utils.Api
 import utils.Constant
@@ -28,10 +27,10 @@ class MoviesActivity : BaseActivity() {
 
     private fun getTitleChoose() {
         supportActionBar!!.title = when (intent.getStringExtra(Constant.NAV_DRAW_ESCOLIDO)) {
-            Api.TYPESEARCH.FILME.now -> getString(R.string.now_playing)
-            Api.TYPESEARCH.FILME.upComing -> getString(R.string.upcoming)
-            Api.TYPESEARCH.FILME.popular -> getString(R.string.populares)
-            Api.TYPESEARCH.FILME.bestScore -> getString(R.string.top_rated)
+            Api.TYPESEARCH.MOVIE.now -> getString(R.string.now_playing)
+            Api.TYPESEARCH.MOVIE.upComing -> getString(R.string.upcoming)
+            Api.TYPESEARCH.MOVIE.popular -> getString(R.string.populares)
+            Api.TYPESEARCH.MOVIE.bestScore -> getString(R.string.top_rated)
             else -> getString(R.string.app_name)
         }
     }
