@@ -1,7 +1,7 @@
 name: Android CI
 on:
   push:
-    branches: master
+    branches: yml
   pull_request:
     branches: master
 jobs:
@@ -37,7 +37,12 @@ jobs:
         with:
           java-version: 1.8
       - name: Build debug APK
-        run: ./gradlew assembleDebug
+        run: |
+          export OMDBAPI_API_KEY=${{ secrets.OMDBAPI_API_KEY }}
+          export TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}
+          export TMDB_API_KEY2=${{secrets.TMDB_API_KEY2 }}
+          export YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }}
+          ./gradlew assembleDebug
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
