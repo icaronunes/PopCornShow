@@ -2,7 +2,6 @@ package adapter
 
 import adapter.TrailerAdapter.TrailerViewHolder
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -15,8 +14,6 @@ import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubeThumbnailLoader
 import com.google.android.youtube.player.YouTubeThumbnailView
 import com.google.android.youtube.player.YouTubeThumbnailView.OnInitializedListener
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.FirebaseAnalytics.Event
 import domain.ResultsVideosItem
 import trailer.TrailerActivity
 import utils.Api
@@ -57,10 +54,6 @@ class TrailerAdapter(private val videos: MutableList<ResultsVideosItem?>?, priva
                     }
                 })
             setOnClickListener {
-                FirebaseAnalytics.getInstance(context).logEvent(Event.SELECT_CONTENT, Bundle().apply {
-                    putString(Event.SELECT_CONTENT, TrailerActivity::class.java.name)
-                    putString("URL", video.key)
-                })
                 context.startActivity(Intent(context, TrailerActivity::class.java).apply {
                     putExtra(Constant.YOU_TUBE_KEY, video.key)
                     putExtra(Constant.SINOPSE, sinopse)

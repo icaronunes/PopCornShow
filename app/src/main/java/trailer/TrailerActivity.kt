@@ -12,9 +12,6 @@ import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayer.OnInitializedListener
 import com.google.android.youtube.player.YouTubePlayer.Provider
 import com.google.android.youtube.player.YouTubePlayerView
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.FirebaseAnalytics.Event
-import com.google.firebase.analytics.FirebaseAnalytics.Param
 import utils.Api
 import utils.Constant
 import kotlinx.android.synthetic.main.youtube_layout.trailer_sinopse as sinopse
@@ -44,11 +41,6 @@ class TrailerActivity : YouTubeBaseActivity(), OnInitializedListener {
                     addFullscreenControlFlag(1)
                     play()
                 }
-                FirebaseAnalytics.getInstance(this)
-                    .logEvent(Event.SELECT_CONTENT,  Bundle().apply {
-                    putString(Event.SELECT_CONTENT, "Play_youTube")
-                    putString(Param.ITEM_ID, idYoutube)
-                })
         } catch (e: Exception) {
             Crashlytics.logException(e)
             if (!isFinishing) Toast.makeText(this, string.ops, Toast.LENGTH_LONG).show()

@@ -22,7 +22,6 @@ import com.facebook.login.LoginResult
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.FirebaseApp
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
@@ -42,7 +41,6 @@ class LoginActivity : BaseActivity() {
 	private val TAG = this.javaClass.name
 	private var mAuth: FirebaseAuth? = null
 	private var mCallbackManager: CallbackManager? = null
-	private var mFirebaseAnalytics: FirebaseAnalytics? = null
 	private val model: LoginViewModel by lazy { createViewModel(LoginViewModel::class.java, this) }
 	private val send: EditText by findView(R.id.pass)
 	private val authStateListener: FirebaseAuth.AuthStateListener
@@ -59,7 +57,6 @@ class LoginActivity : BaseActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		FirebaseApp.initializeApp(baseContext)
-		mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 		mAuth = FirebaseAuth.getInstance()
 		setContentView(R.layout.activity_login)
 		hideSoftKeyboard()
@@ -198,9 +195,6 @@ class LoginActivity : BaseActivity() {
 			super.onActivityResult(requestCode, resultCode, data)
 			// Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
 			mCallbackManager?.onActivityResult(requestCode, resultCode, data)
-			mFirebaseAnalytics?.logEvent(FirebaseAnalytics.Event.LOGIN, Bundle().apply {
-				putString(FirebaseAnalytics.Param.ITEM_NAME, "facebook")
-			})
 		} catch (E: Exception) {
 			makeToast(R.string.ops)
 		}
@@ -235,10 +229,6 @@ class LoginActivity : BaseActivity() {
 			/* If sign in fails, display a message to the user. If sign in succeeds
 			// the auth state listener will be notified and logic to handle the
 			// signed in user can be handled in the listener.*/
-			mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.LOGIN, Bundle().apply {
-				putString(FirebaseAnalytics.Param.ITEM_NAME, email)
-			})
-
 			if (task.isSuccessful) {
 				makeToast(R.string.success)
 			} else {
@@ -275,9 +265,6 @@ class LoginActivity : BaseActivity() {
 				// If sign in fails, display a message to the user. If sign in succeeds
 				// the auth state listener will be notified and logic to handle the
 				// signed in user can be handled in the listener.*/
-				mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.LOGIN, Bundle().apply {
-					putString(FirebaseAnalytics.Param.ITEM_NAME, "anonimo")
-				})
 
 				makeToast(R.string.anonimo_alerta, Toast.LENGTH_LONG)
 				if (!task.isSuccessful) {
