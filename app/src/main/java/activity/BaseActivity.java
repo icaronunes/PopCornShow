@@ -283,7 +283,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
         }
     }
 
-    private void getParametrosDoRemoteConfig() {
+    private void getParametrosDoRemoteConfig() { // TOOD remover essa configuração
 
         final Intent intent = new Intent(this, ListGenericActivity.class);
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
