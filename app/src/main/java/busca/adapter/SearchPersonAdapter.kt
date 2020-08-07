@@ -1,5 +1,6 @@
 package busca.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -10,9 +11,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
-import br.com.icaro.filme.R.drawable
+import br.com.icaro.filme.R.*
 import domain.ViewType
 import domain.search.KnownFor
 import domain.search.Result
@@ -24,6 +25,7 @@ import utils.Constant
 import utils.UtilsApp
 import utils.enums.EnumTypeMedia
 import utils.getNameTypeReel
+import utils.notNullOrEmpty
 import utils.setPicasso
 import utils.setPicassoWithCache
 import utils.yearDate
@@ -45,7 +47,7 @@ class SearchPersonAdapter : ViewTypeDelegateAdapter {
 
         fun bind(person: Result) = with(itemView) {
             poster.setPicassoWithCache(person.profilePath, 4, img_erro = drawable.person)
-            person.name.let {
+            person.name?.let {
                 searchNome.text = it
                 contentDescription = it
             }
@@ -62,10 +64,11 @@ class SearchPersonAdapter : ViewTypeDelegateAdapter {
             this
         }
 
+        @SuppressLint("InflateParams")
         private fun setKnow(person: Result) {
             linear.removeAllViews() // Por que precisa disso?
             if (!person.knownFor.isNullOrEmpty())
-            person.knownFor.filter { !it.posterPath!!.isBlank() }
+            person.knownFor.filter { it.posterPath.notNullOrEmpty() }
                 .take(3).forEach { media ->
                     fun getNameByType() = when (media.mediaType) {
                         EnumTypeMedia.MOVIE.type -> {
@@ -79,11 +82,12 @@ class SearchPersonAdapter : ViewTypeDelegateAdapter {
                     itemView.contentDescription = "${itemView.contentDescription} ${getNameByType()}"
                     Log.d("person", media.name)
                     val poster = LayoutInflater.from(parent.context).inflate(R.layout.poster_person, null, false)
-                    val img = poster.findViewById<ImageView>(R.id.img_poster_grid).setPicasso(media.posterPath, 2).apply {
+                    poster.findViewById<ImageView>(R.id.img_poster_grid).setPicasso(media.posterPath, 2).apply {
                         importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
                         isFocusableInTouchMode = false
+                        setOnClickListener { callIntent(linear.context, media) }
+
                     }
-                    poster.setOnClickListener { callIntent(parent.context, media) }
                     linear.addView(poster)
                 }
         }

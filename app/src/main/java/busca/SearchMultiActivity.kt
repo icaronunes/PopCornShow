@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import applicaton.BaseViewModel.BaseRequest
+import applicaton.BaseViewModel.*
 import br.com.icaro.filme.R
 import busca.adapter.SearchDelegateAdapter
 import domain.search.SearchMulti
@@ -21,10 +21,9 @@ import pessoa.activity.PersonActivity
 import tvshow.activity.TvShowActivity
 import utils.Constant
 import utils.UtilsApp.isNetWorkAvailable
-import utils.enums.EnumTypeMedia.MOVIE
-import utils.enums.EnumTypeMedia.PERSON
-import utils.enums.EnumTypeMedia.TV
+import utils.enums.EnumTypeMedia.*
 import utils.gone
+import utils.kotterknife.bindBundle
 import utils.patternRecyler
 import utils.visible
 
@@ -40,14 +39,13 @@ class SearchMultiActivity(override var layout: Int = Layout.search_layout) : Bas
 			this
 		)
 	}
-	private var query = ""
+	private val query: String by bindBundle(SearchManager.QUERY)
 
 	public override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setUpToolBar()
 		setupNavDrawer()
 		handleTitle()
-		query = intent.getStringExtra(SearchManager.QUERY)
 		observers()
 		if (Intent.ACTION_VIEW == intent.action) { //TODO pra que server isso?
 			when {

@@ -24,7 +24,7 @@ data class Result(
     @SerializedName("media_type")
     val mediaType: String = "",
     @SerializedName("name")
-    val name: String = "",
+    val name: String? = "",
     @SerializedName("origin_country")
     val originCountry: List<String> = listOf(),
     @SerializedName("original_language")
