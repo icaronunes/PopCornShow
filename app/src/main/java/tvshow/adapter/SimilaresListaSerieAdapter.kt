@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.tvshow.ResultsItem
-import kotlinx.android.synthetic.main.adapter_similares.view.img_similares
-import kotlinx.android.synthetic.main.adapter_similares.view.similares_data_lancamento
-import kotlinx.android.synthetic.main.adapter_similares.view.similares_nome
+import kotlinx.android.synthetic.main.adapter_similares.view.similares_date_avaliable
+import kotlinx.android.synthetic.main.adapter_similares.view.similares_img
+import kotlinx.android.synthetic.main.adapter_similares.view.similares_name
+import kotlinx.android.synthetic.main.adapter_similares.view.similares_rated
 import kotlinx.android.synthetic.main.adapter_similares.view.similares_title_original
-import kotlinx.android.synthetic.main.adapter_similares.view.similares_voto_media
 import similares.SimilaresActivity
 import tvshow.activity.TvShowActivity
 import utils.Constant
@@ -44,15 +44,15 @@ class SimilaresListaSerieAdapter(
     inner class SimilareViewHolde(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: ResultsItem) = with(itemView) {
-            item.name?.let { similares_nome.text = item.name }
-            item.firstAirDate?.let { similares_data_lancamento.text = it.parseDateShot() }
+            item.name?.let { similares_name.text = item.name }
+            item.firstAirDate?.let { similares_date_avaliable.text = it.parseDateShot() }
             item.originalName?.let { similares_title_original.text = it }
-            item.voteAverage?.let { similares_voto_media.text = it.toString() }
-            img_similares.setPicassoWithCache(item.posterPath, 3, img_erro = R.drawable.poster_empty)
+            item.voteAverage?.let { similares_rated.text = it.toString() }
+            similares_img.setPicassoWithCache(item.posterPath, 3, img_erro = R.drawable.poster_empty)
 
             setOnClickListener {
                 activity.startActivity(Intent(activity, TvShowActivity::class.java).apply {
-                    putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_similares))
+                    putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(similares_img))
                     putExtra(Constant.TVSHOW_ID, item.id)
 
                 })

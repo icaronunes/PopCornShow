@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.ResultsSimilarItem
 import filme.activity.MovieDetailsActivity
-import kotlinx.android.synthetic.main.adapter_similares.view.img_similares
-import kotlinx.android.synthetic.main.adapter_similares.view.similares_data_lancamento
-import kotlinx.android.synthetic.main.adapter_similares.view.similares_nome
+import kotlinx.android.synthetic.main.adapter_similares.view.similares_date_avaliable
+import kotlinx.android.synthetic.main.adapter_similares.view.similares_img
+import kotlinx.android.synthetic.main.adapter_similares.view.similares_name
+import kotlinx.android.synthetic.main.adapter_similares.view.similares_rated
 import kotlinx.android.synthetic.main.adapter_similares.view.similares_title_original
-import kotlinx.android.synthetic.main.adapter_similares.view.similares_voto_media
 import utils.Constant
 import utils.UtilsApp
 import utils.parseDateShot
@@ -43,15 +43,15 @@ class SimilaresListaFilmeAdapter(
     inner class SimilareViewHolde(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: ResultsSimilarItem) = with(itemView) {
-            item.title?.let { similares_nome.text = it }
-            item.releaseDate?.let { similares_data_lancamento.text = it.parseDateShot() }
+            item.title?.let { similares_name.text = it }
+            item.releaseDate?.let { similares_date_avaliable.text = it.parseDateShot() }
             item.originalTitle?.let { similares_title_original.text = it }
-            item.voteAverage?.let { similares_voto_media.text = it.toString() }
-            img_similares.setPicassoWithCache(item.posterPath, 2)
+            item.voteAverage?.let { similares_rated.text = it.toString() }
+            similares_img.setPicassoWithCache(item.posterPath, 2)
 
             itemView.setOnClickListener {
                 activity.startActivity(Intent(activity, MovieDetailsActivity::class.java).apply {
-                    putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_similares))
+                    putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(similares_img))
                     putExtra(Constant.FILME_ID, item.id)
                     putExtra(Constant.NOME_FILME, item.title)
                 })
