@@ -1,16 +1,17 @@
 package utils
 
 import android.animation.Animator
-import android.animation.Animator.AnimatorListener
+import android.animation.Animator.*
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup.MarginLayoutParams
+import android.view.ViewGroup.*
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.view.marginTop
@@ -340,6 +341,7 @@ fun RecyclerView.setScrollInvisibleFloatMenu(floatButton: FloatingActionMenu) {
 	})
 }
 
+@SuppressLint("WrongConstant")
 fun RecyclerView.patternRecyler(horizont: Boolean = true): RecyclerView {
 	val typeOrient = if (horizont) LinearLayoutManager.HORIZONTAL else LinearLayoutManager.VERTICAL
 	layoutManager = LinearLayoutManager(context, typeOrient, false)
