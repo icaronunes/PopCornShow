@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import applicaton.BaseFragment
 import br.com.icaro.filme.R
-import kotlinx.android.synthetic.main.fragment_error.view.try_again
 import utils.CallBackError
 
 class FragmentError : BaseFragment() {
@@ -17,7 +16,7 @@ class FragmentError : BaseFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         require(requireActivity() is CallBackError) { Log.e(this.javaClass.name, "Error - Para usar essa class, sua activity precisa ser uma CallBackError") }
 
-        try_again.setOnClickListener { (requireActivity() as? CallBackError)?.tryAgain() }
+        // try_again.setOnClickListener { (requireActivity() as? CallBackError)?.tryAgain() }
         this
     }
 }
