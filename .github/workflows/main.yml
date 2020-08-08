@@ -18,12 +18,7 @@ jobs:
         with:
           java-version: 1.8
       - name: Build with Gradle
-        run: |
-          export OMDBAPI_API_KEY=${{ secrets.OMDBAPI_API_KEY }}
-          export TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}
-          export TMDB_API_KEY2=${{secrets.TMDB_API_KEY2 }}
-          export YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }}
-          ./gradlew build --stacktrace
+        run: ./gradlew build --stacktrace
   apk:
     name: Debug APK
     runs-on: ubuntu-latest
