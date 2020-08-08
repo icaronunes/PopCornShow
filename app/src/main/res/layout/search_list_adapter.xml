@@ -19,62 +19,62 @@
             android:minWidth="@dimen/trade_size_dp_100"
             android:minHeight="@dimen/trade_size_dp_147"
             android:scaleType="centerCrop"
-            tools:src="@drawable/person"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/person" />
 
-
-        <TextView
-            android:id="@+id/search_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:textSize="@dimen/trade_txt_size_sp_24"
-            android:maxLines="3"
-            android:ellipsize="end"
-            app:layout_constraintEnd_toEndOf="parent"
+        <ImageView
+            android:id="@+id/star"
+            android:layout_width="@dimen/trade_size_dp_42"
+            android:layout_height="@dimen/trade_size_dp_42"
+            android:focusable="false"
+            android:importantForAccessibility="no"
+            android:src="@android:drawable/star_big_on"
+            android:visibility="visible"
             app:layout_constraintStart_toEndOf="@+id/img_search"
-            app:layout_constraintTop_toTopOf="@+id/img_search"
-            tools:text="Matrix Relodiando" />
+            app:layout_constraintTop_toBottomOf="@+id/search_data_lancamento"
+            app:tint="@color/yellow" />
 
         <TextView
             android:id="@+id/search_data_lancamento"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
             android:textSize="@dimen/trade_txt_size_sp_14"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_search"
             app:layout_constraintTop_toBottomOf="@+id/search_name"
             tools:text="2014" />
 
-
-        <ImageView
-            android:id="@+id/star"
-            android:layout_width="@dimen/trade_size_dp_42"
-            android:layout_height="@dimen/trade_size_dp_42"
-            android:src="@android:drawable/star_big_on"
-            android:tint="@color/yellow"
-            android:importantForAccessibility="no"
-            android:focusable="false"
+        <TextView
+            android:id="@+id/search_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textSize="@dimen/trade_txt_size_sp_24"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_search"
-            app:layout_constraintTop_toBottomOf="@+id/search_data_lancamento"
-            android:visibility="visible" />
+            app:layout_constraintTop_toTopOf="@+id/img_search"
+            tools:text="Matrix Relodiando" />
 
         <TextView
             android:id="@+id/search_voto_media"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal|center"
-            app:layout_constraintStart_toStartOf="@+id/star"
-            app:layout_constraintEnd_toEndOf="@+id/star"
-            app:layout_constraintTop_toTopOf="@id/star"
-            app:layout_constraintBottom_toBottomOf="@id/star"
-            tools:text="6.9"
-            android:importantForAccessibility="no"
             android:focusable="false"
-            android:textStyle="bold" />
+            android:importantForAccessibility="no"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/star"
+            app:layout_constraintEnd_toEndOf="@+id/star"
+            app:layout_constraintStart_toStartOf="@+id/star"
+            app:layout_constraintTop_toTopOf="@id/star"
+            tools:text="6.9" />
 
         <TextView
             android:id="@+id/search_title_original"
@@ -82,8 +82,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/trade_size_dp_4"
-            app:layout_constraintTop_toTopOf="@+id/search_voto_media"
+            android:layout_marginLeft="@dimen/trade_size_dp_4"
             app:layout_constraintStart_toEndOf="@id/star"
+            app:layout_constraintTop_toTopOf="@+id/search_voto_media"
             tools:text="Matrix Recarregando" />
 
         <androidx.constraintlayout.widget.Group
@@ -91,8 +92,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            tools:visibility="visible"
-            app:constraint_referenced_ids="star,search_voto_media" />
+            app:constraint_referenced_ids="star,search_voto_media"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

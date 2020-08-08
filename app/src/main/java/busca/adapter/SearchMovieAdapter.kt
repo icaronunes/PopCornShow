@@ -8,9 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
-import br.com.icaro.filme.R.drawable
+import br.com.icaro.filme.R.*
 import domain.ViewType
 import domain.search.Result
 import filme.activity.MovieDetailsActivity
@@ -38,18 +38,21 @@ class SearchMovieAdapter : ViewTypeDelegateAdapter {
         private val searchVotoMedia: TextView = itemView.findViewById(R.id.search_voto_media)
         private val searchTitleOriginal: TextView = itemView.findViewById(R.id.search_title_original)
         private val groupStar: Group = itemView.findViewById(R.id.group_star)
-
         fun bind(movie: Result) = with(itemView) {
             poster.setPicassoWithCache(movie.posterPath, 4, img_erro = drawable.poster_empty)
             movie.title.let { searchNome.text = it }
             movie.originalTitle.let { searchTitleOriginal.text = it }
 
             itemView.setOnClickListener {
-                context.startActivity(Intent(itemView.context, MovieDetailsActivity::class.java).apply {
-                    putExtra(Constant.COLOR_TOP, poster.loadPallet())
-                    putExtra(Constant.FILME_ID, movie.id)
-                    putExtra(Constant.NOME_FILME, movie.title)
-                })
+                context.startActivity(
+                    Intent(
+                        itemView.context,
+                        MovieDetailsActivity::class.java
+                    ).apply {
+                        putExtra(Constant.COLOR_TOP, poster.loadPallet())
+                        putExtra(Constant.FILME_ID, movie.id)
+                        putExtra(Constant.NOME_FILME, movie.title)
+                    })
             }
 
             movie.voteAverage.let {
