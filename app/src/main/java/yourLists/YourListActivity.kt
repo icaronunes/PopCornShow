@@ -4,7 +4,6 @@ import Color
 import ID
 import Layout
 import activity.BaseActivityAb
-import android.R.*
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
@@ -42,7 +41,7 @@ class YourListActivity(override var layout: Int = Layout.activity_usuario_list) 
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
-		if (item.itemId == id.home) {
+		if (item.itemId == ID.home) {
 			finish()
 			return true
 		}

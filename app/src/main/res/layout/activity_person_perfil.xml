@@ -53,7 +53,8 @@
                 android:text="@string/apelido"
                 android:focusable="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nome_person" />
+                app:layout_constraintTop_toBottomOf="@+id/nome_person"
+                android:layout_marginLeft="@dimen/trade_size_dp_2" />
 
             <TextView
                 android:id="@+id/aka"
@@ -66,7 +67,8 @@
                 app:layout_constraintStart_toEndOf="@id/conhecido"
                 app:layout_constraintTop_toTopOf="@id/conhecido"
                 app:layout_constraintEnd_toStartOf="@id/image_person"
-                tools:text="nike" />
+                tools:text="nike"
+                android:layout_marginLeft="@dimen/trade_size_dp_8" />
 
             <TextView
                 android:id="@+id/birthday"
@@ -77,7 +79,8 @@
                 android:focusable="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/aka"
-                tools:text="01*01*2011" />
+                tools:text="01*01*2011"
+                android:layout_marginLeft="@dimen/trade_size_dp_2" />
 
             <TextView
                 android:id="@+id/dead"
@@ -88,7 +91,8 @@
                 android:focusable="false"
                 app:layout_constraintStart_toEndOf="@id/birthday"
                 app:layout_constraintTop_toTopOf="@id/birthday"
-                tools:text="01/01/0121" />
+                tools:text="01/01/0121"
+                android:layout_marginLeft="@dimen/trade_size_dp_8" />
 
             <TextView
                 android:id="@+id/nome_person"
@@ -100,7 +104,8 @@
                 android:focusable="false"
                 app:layout_constraintEnd_toStartOf="@+id/image_person"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="@dimen/trade_size_dp_2" />
 
             <TextView
                 android:id="@+id/place_of_birth"
@@ -111,7 +116,8 @@
                 android:focusable="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/birthday"
-                tools:text="na quebrada" />
+                tools:text="na quebrada"
+                android:layout_marginLeft="@dimen/trade_size_dp_2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

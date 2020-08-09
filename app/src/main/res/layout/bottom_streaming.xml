@@ -11,6 +11,8 @@
     android:nestedScrollingEnabled="true"
     android:overScrollMode="ifContentScrolls">
 
+<!--    Arruma para funcionar em api 16 -->
+
     <ImageView
         android:id="@+id/stream_error"
         android:layout_width="match_parent"
@@ -32,7 +34,8 @@
         android:textSize="8sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SmallSp" />
+        tools:ignore="HardcodedText,SmallSp"
+        android:layout_marginLeft="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -43,7 +46,8 @@
         android:textSize="8sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SmallSp" />
+        tools:ignore="SmallSp"
+        android:layout_marginRight="20dp" />
 
     <TextView
         android:id="@+id/title_streaming"

@@ -5,8 +5,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    card_view:cardCornerRadius="@dimen/cardview_default_radius"
-    card_view:cardElevation="@dimen/cardview_default_elevation"
+    card_view:cardCornerRadius="@dimen/trade_size_dp_2"
+    card_view:cardElevation="@dimen/trade_size_dp_2"
     card_view:cardPreventCornerOverlap="true"
     card_view:cardUseCompatPadding="true">
 
@@ -23,6 +23,34 @@
             android:minHeight="0dp"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/ad_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:adjustViewBounds="true"
+                android:paddingEnd="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp"
+                card_view:layout_constraintStart_toEndOf="@+id/ad_attribution"
+                card_view:layout_constraintTop_toBottomOf="@+id/ad_headline"
+                tools:ignore="RtlSymmetry" />
+
+            <RatingBar
+                android:id="@+id/ad_stars"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:rating="4"
+                android:stepSize="0.5"
+                card_view:layout_constraintStart_toEndOf="@+id/ad_icon"
+                card_view:layout_constraintTop_toTopOf="@+id/ad_icon" />
+
+
             <TextView
                 android:id="@+id/ad_attribution"
                 android:layout_width="wrap_content"
@@ -31,22 +59,11 @@
                 android:width="15dp"
                 android:height="15dp"
                 android:background="#FFCC66"
-                tools:text="Ad"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/ad_icon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="4dp"
-                android:adjustViewBounds="true"
-                android:paddingEnd="5dp"
-                android:paddingBottom="5dp"
-                card_view:layout_constraintStart_toEndOf="@+id/ad_attribution"
-                card_view:layout_constraintTop_toBottomOf="@+id/ad_headline" />
+                card_view:layout_constraintTop_toTopOf="parent"
+                tools:text="Ad" />
 
 
             <TextView
@@ -54,7 +71,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
                 android:maxLength="25"
                 android:maxLines="2"
                 android:textColor="#0000FF"
@@ -64,20 +83,6 @@
                 card_view:layout_constraintStart_toEndOf="@+id/ad_attribution"
                 card_view:layout_constraintTop_toTopOf="parent"
                 tools:text=" 25 caracteres 25 caracteres" />
-
-
-            <RatingBar
-                android:id="@+id/ad_stars"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:isIndicator="true"
-                android:numStars="5"
-                android:rating="4"
-                android:stepSize="0.5"
-                card_view:layout_constraintStart_toEndOf="@+id/ad_icon"
-                card_view:layout_constraintTop_toTopOf="@+id/ad_icon" />
 
 
             <TextView
@@ -96,23 +101,6 @@
                 card_view:layout_constraintTop_toBottomOf="@+id/ad_icon"
                 tools:text="90 caracteres 90 caracteres 90 caracteres 90 caracteres 90 caracteres 90 caracteres 90 caracteres 90 caracteres 90 caracteres" />
 
-            <com.google.android.gms.ads.formats.MediaView
-                android:id="@+id/ad_media"
-                android:layout_width="wrap_content"
-                android:layout_height="90dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginRight="4dp"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/ad_body">
-
-            </com.google.android.gms.ads.formats.MediaView>
-
-
             <TextView
                 android:id="@+id/ad_advertiser"
                 android:layout_width="0dp"
@@ -130,6 +118,7 @@
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/ad_media"
                 tools:text="25 caracteres 25 caracteres 25 caracteres 25 caracteres 25 caracteres" />
+
 
             <TextView
                 android:id="@+id/ad_price"
@@ -166,14 +155,32 @@
                 card_view:layout_constraintTop_toBottomOf="@+id/ad_stars"
                 tools:text="15 caracteres 15 caracteres" />
 
+            <com.google.android.gms.ads.formats.MediaView
+                android:id="@+id/ad_media"
+                android:layout_width="wrap_content"
+                android:layout_height="90dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/ad_body">
+
+            </com.google.android.gms.ads.formats.MediaView>
+
             <com.google.android.material.button.MaterialButton
-                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:id="@+id/ad_call_to_action"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginBottom="2dp"
                 android:gravity="center"
                 android:maxLength="15"
