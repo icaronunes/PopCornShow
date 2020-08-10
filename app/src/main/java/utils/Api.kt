@@ -397,7 +397,7 @@ class Api(val context: Context) : ApiSingleton() {
 		return suspendCancellableCoroutine { cont ->
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
 			val request = Request.Builder()
-				.url("${baseUrl3}tv/$id/season/$id_season?api_key=${TMDBAPI}&language=$timeZone,en")
+				.url("${baseUrl3}tv/$id/season/$id_season?api_key=${TMDBAPI}&language=$timeZone")
 				.get()
 				.build()
 
