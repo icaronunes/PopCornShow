@@ -27,9 +27,8 @@ android {
         applicationId "br.com.icaro.filme"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 85
-        versionName "9.0"
-
+        versionCode 87
+        versionName "9.2"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -48,6 +47,14 @@ android {
                                         onesignal_google_project_number: "101446616560"]
             }
 
+            signingConfigs {
+                release {
+                    storeFile file('../app/keystore.jks')
+                    storePassword ""
+                    keyAlias "FILME"
+                    keyPassword ""
+                }
+            }
             packagingOptions {
 
                 exclude 'META-INF/DEPENDENCIES'
@@ -76,6 +83,10 @@ android {
                 disable "UnsafeExperimentalUsageError",
                         "UnsafeExperimentalUsageWarning"
             }
+            storeFile file('/home/icaro/Documentos/workspace/PopCornShow/app/keystore.jks')
+            storePassword ""
+            keyAlias ""
+            keyPassword ""
         }
     }
 
@@ -91,6 +102,13 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.config
+            minifyEnabled true
+            debuggable true
+        }
     }
 
     buildTypes {
@@ -113,6 +131,7 @@ android {
             //proguard com restrição ao log.ver
             debuggable false
             manifestPlaceholders = [crashlyticsCollectionEnabled: "true"]
+            signingConfig signingConfigs.config
         }
     }
 

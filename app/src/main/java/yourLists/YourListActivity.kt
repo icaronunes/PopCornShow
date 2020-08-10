@@ -41,7 +41,7 @@ class YourListActivity(override var layout: Int = Layout.activity_usuario_list) 
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
-		if (item.itemId == ID.home) {
+		if (item.itemId == android.R.id.home) {
 			finish()
 			return true
 		}

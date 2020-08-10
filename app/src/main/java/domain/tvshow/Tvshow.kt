@@ -1,5 +1,6 @@
 package domain.tvshow
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import domain.UserTvshow
 import java.io.Serializable
@@ -25,6 +26,7 @@ fun Tvshow.sumNotWatch(seasonNumber: Int, epNumber: Int) = seasons.sumBy {
 }.plus(epNumber)
 
 @Generated("com.robohorse.robopojogenerator")
+@Keep
 data class Tvshow(
 
 	@field:SerializedName("original_language")

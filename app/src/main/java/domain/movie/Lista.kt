@@ -1,10 +1,12 @@
 package domain.movie
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import domain.ViewType
 import utils.Constant
 import javax.annotation.Generated
 
+@Keep
 @Generated("com.robohorse.robopojogenerator")
 data class Lista(
 

@@ -1,5 +1,6 @@
 package domain
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import javax.annotation.Generated
@@ -60,6 +61,7 @@ fun TvSeasons.fillEpUserTvshow(userTvshow: UserSeasons?, status: Boolean, idEp: 
 }
 
 @Generated("com.robohorse.robopojogenerator")
+@Keep
 data class TvSeasons(
 	@field:SerializedName("air_date")
 	val airDate: String? = null,
@@ -92,6 +94,7 @@ fun EpisodesItem.createUserEp(): UserEp {
 }
 
 @Generated("com.robohorse.robopojogenerator")
+@Keep
 data class EpisodesItem(
 	@field:SerializedName("production_code")
 	val productionCode: String? = null,
@@ -120,6 +123,7 @@ data class EpisodesItem(
 ) : Serializable
 
 @Generated("com.robohorse.robopojogenerator")
+@Keep
 data class CrewItem(
 	@field:SerializedName("gender")
 	val gender: Int? = null,
@@ -138,6 +142,7 @@ data class CrewItem(
 ) : Serializable
 
 @Generated("com.robohorse.robopojogenerator")
+@Keep
 data class GuestStarsItem(
 	@field:SerializedName("character")
 	val character: String? = null,

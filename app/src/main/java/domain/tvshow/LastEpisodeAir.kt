@@ -1,8 +1,10 @@
 package domain.tvshow
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+@Keep
 data class LastEpisodeAir(
     @field:SerializedName("air_date")
     val airDate: String?,

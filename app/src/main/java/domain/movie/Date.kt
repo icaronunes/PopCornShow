@@ -1,9 +1,11 @@
 package domain.movie
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import domain.ViewType
 import utils.Constant
 
+@Keep
 data class Date(
 
     @field:SerializedName("maximum")

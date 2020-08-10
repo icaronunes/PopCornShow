@@ -23,13 +23,13 @@
 -keepattributes *Annotation*
 -keepattributes *Annotation*,Signature
 -keepattributes SourceFile,LineNumberTable
--keep class com.crashlytics.** { *; }
+-keep class com.crashlytics.* { *; }
 -dontwarn com.crashlytics.**
 -keep public class * extends java.lang.Exception
 
 -keeppackagenames br.com.icaro.**
--keep class br.com.icaro.** {*;}
--keepclassmembers class ** {
+-keep class br.com.icaro.* {*;}
+-keepclassmembers class * {
     @com.squareup.otto.Subscribe public *;
     @com.squareup.otto.Produce public *;
 }
@@ -38,26 +38,26 @@
   public static final android.os.AsyncTask *;
 }
 
--keep class android.support.** {*;}
+-keepclassmembers class android.support.*
+-keep class android.support.* {*;}
 -keep class android.support.v7** {*;}
--keep class android.content.** {*;}
--keep class java.nio.** {*;}
--keepclassmembers class android.support.**
--keep class android.support.v7.widget.SearchView { *; }
--keep class com.fasterxml.jackson.** {*;}
--keep class com.squareup.** {*;}
--keep class java.lang.** {*;}
--keep class android.content.** {*;}
-
--keep class info.movito.** {*;}
--keep class com.facebook.** {*;}
--keep class com.google.** {*;}
--keep class android.** {*;}
--keep class okhttp3.** { *; }
--keep class com.google.firebase.example.fireeats.model.** { *; }
+-keep class android.content.* {*;}
+-keep class java.nio.* {*;}
+-keep class android.support.v7.widget.SearchView.* { *; }
+-keep class com.fasterxml.jackson.* {*;}
+-keep class com.squareup.* {*;}
+-keep class java.lang.* {*;}
+-keep class android.content.* {*;}
+-keep class info.movito.* {*;}
+-keep class com.facebook.* {*;}
+-keep class com.google.* {*;}
+-keep class android.* {*;}
+-keep class okhttp3.* { *; }
+-keep class com.google.firebase.example.fireeats.model.* { *; }
 -keeppackagenames com.google.**
 -keeppackagenames info.movito.**
 -keeppackagenames okhttp3.**
+-keeppackagenames domain.**
 
 -keepclassmembers class **.R$* {
     public static <fields>;
@@ -66,14 +66,12 @@
 -keep class * implements java.io.Serializable {
   public static final java.io.Serializable *;
 }
--keep class * extends android.support.v7.widget.RecyclerView {
-  public static final android.support.v7.widget.RecyclerView *;
-}
 
-
--keep class domain.* {
+-keepclasseswithmembers class domain.* {
   *;
 }
+
+-keepclasseswithmembers class domain.*
 
 -dontwarn android.support.**
 -dontnote android.net.http.**
