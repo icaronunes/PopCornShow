@@ -9,7 +9,7 @@ import applicaton.BaseFragment
 import br.com.icaro.filme.R
 import utils.CallBackError
 
-class FragmentError : BaseFragment() {
+class FragmentError(override val layout: Int = 1) : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
         = with(inflater.inflate(R.layout.fragment_error, container, false)) {

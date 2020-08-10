@@ -1,6 +1,7 @@
 package domain
 
 import android.os.Parcelable
+import android.util.Log
 import androidx.annotation.Keep
 import domain.tvshow.ExternalIds
 import kotlinx.android.parcel.Parcelize
@@ -14,7 +15,6 @@ fun UserTvshow.fistNotWatch(): UserEp? {
 			!it.isVisto
 		}
 	}
-
 	return season?.userEps?.firstOrNull { !it.isAssistido }
 }
 

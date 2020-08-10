@@ -27,20 +27,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import applicaton.BaseFragment
-import applicaton.BaseViewModel.*
 import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
-import br.com.icaro.filme.R.*
 import br.com.icaro.filme.R.string.*
 import com.github.clans.fab.FloatingActionMenu
-import com.google.firebase.database.DataSnapshot
 import configuracao.SettingsActivity
 import domain.Imdb
-import domain.UserSeasons
-import domain.UserTvshow
-import domain.fillAllUserEpTvshow
 import domain.tvshow.Tvshow
 import elenco.ElencoActivity
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.card_poster
@@ -73,21 +66,14 @@ import kotlinx.android.synthetic.main.tvshow_info.titulo_tvshow
 import kotlinx.android.synthetic.main.tvshow_info.tmdb_site
 import kotlinx.android.synthetic.main.tvshow_info.ultimo_ep_name
 import kotlinx.android.synthetic.main.tvshow_info.voto_media
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import loading.firebase.TypeDataRef
 import poster.PosterGridActivity
 import producao.CrewsActivity
 import produtora.activity.ProdutoraActivity
 import similares.SimilaresActivity
 import site.Site
-import tvshow.TemporadasAdapter
 import tvshow.adapter.SimilaresSerieAdapter
 import tvshow.viewmodel.TvShowViewModel
-import utils.Api
-import utils.ConstFirebase.SEASONS
 import utils.Constant
 import utils.Constant.BASEMOVIEDB_TV
 import utils.Constant.IMDB
@@ -110,42 +96,23 @@ import java.util.Locale
 /**
  * Created by icaro on 23/08/16.
  */
-class TvShowFragment : BaseFragment() {
+class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragment() {
 	private val model: TvShowViewModel by lazy { createViewModel(TvShowViewModel::class.java) }
-	private var recyclerViewTemporada: RecyclerView? = null
-	private val type: Int by bindArgument(Constant.ABA)
 	private val color: Int by bindArgument(Constant.COLOR_TOP)
-	private val series: Tvshow by bindArgument(Constant.SERIE)
+	private lateinit var series: Tvshow
 	private var mediaNotas: Float = 0.0f
-	private var userTvshow: UserTvshow? = null
 	private var progressBarTemporada: ProgressBar? = null
 	private var imdbDd: Imdb? = null
 
 	companion object {
 		@JvmStatic
-		fun newInstance(type: Int, series: Tvshow, color: Int): Fragment {
+		fun newInstance(color: Int): Fragment {
 			return TvShowFragment().apply {
 				arguments = Bundle().apply {
-					putSerializable(Constant.SERIE, series)
 					putInt(Constant.COLOR_TOP, color)
-					putInt(Constant.ABA, type)
 				}
 			}
 		}
-	}
-
-	private fun observerAuth() {
-		model.auth.observe(viewLifecycleOwner, Observer {
-			isSeguindo(it)
-		})
-	}
-
-	private fun observerIsFallow() {
-		model.isFallow.observe(viewLifecycleOwner, Observer {
-			setFalow(it)
-			addSeguindo(it)
-			if (it) setUpdateFromFire()
-		})
 	}
 
 	private fun setUpdateFromFire() {
@@ -158,73 +125,60 @@ class TvShowFragment : BaseFragment() {
 		model.update(series.id, childUpdates, TypeDataRef.FALLOW)
 	}
 
-	private fun addSeguindo(it: Boolean) {
-		if (isInitAdapter()) {
-			(recyclerViewTemporada?.adapter as? TemporadasAdapter)?.addFallow(it)
-		} else {
-			initAdapter()
-			(recyclerViewTemporada?.adapter as? TemporadasAdapter)?.addFallow(it)
-		}
+	override fun onActivityCreated(savedInstanceState: Bundle?) {
+		super.onActivityCreated(savedInstanceState)
+		observerTvshow()
+		observerAuth()
+		observerImdb()
 	}
 
-	private fun observersSeason() {
-		model.fallow.observe(viewLifecycleOwner, Observer {
-			fillAdapter(it)
-		})
-	}
-
-	private fun observersStream() {
-		model.real.observe(viewLifecycleOwner, Observer {
+	private fun observerTvshow() {
+		model.tvShow.observe(viewLifecycleOwner, Observer {
 			when (it) {
 				is Success -> {
-					if (isInitAdapter()) {
-						(recyclerViewTemporada?.adapter as TemporadasAdapter).addStream(it.result)
-					} else {
-						initAdapter()
-						(recyclerViewTemporada?.adapter as TemporadasAdapter).addStream(it.result)
-					}
+					series = it.result
+					setAdMob(adView)
+					setTitulo()
+					setCategoria()
+					setLancamento()
+					setProdutora()
+					setHome()
+					setOriginalTitle()
+					setProductionCountries()
+					setPopularity()
+					setTemporada()
+					setElenco()
+					setProducao()
+					setSimilares()
+					setTrailer()
+					setPoster()
+					setStatus()
+					setAnimacao()
+					setListeners()
+					setNomeUltimoEp()
+					setUltimoEpDate()
+					setSinopse()
+					updates()
+					observerIsFallow()
+				}
+				is Failure -> ops()
+				is Loading -> {
 				}
 			}
 		})
 	}
 
-	override fun onActivityCreated(savedInstanceState: Bundle?) {
-		super.onActivityCreated(savedInstanceState)
-		if (type == R.string.informacoes) {
-			setAdMob(adView)
-			setTitulo()
-			setCategoria()
-			setLancamento()
-			setProdutora()
-			setHome()
-			setOriginalTitle()
-			setProductionCountries()
-			setPopularity()
-			setTemporada()
-			setElenco()
-			setProducao()
-			setSimilares()
-			setTrailer()
-			setPoster()
-			setStatus()
-			setAnimacao()
-			setListeners()
-			setNomeUltimoEp()
-			setUltimoEpDate()
-			setSinopse()
-			observerAuth()
-			observerIsFallow()
-			observerImdb()
-			model.getImdb(series.external_ids?.imdbId ?: "")
-			model.hasfallow(series.id)
-			updates()
-		} else {
-			observersSeason()
-			observersStream()
-			observerIsFallow()
-			model.fallow(series.id)
-			model.hasfallow(series.id)
-		}
+	private fun observerAuth() {
+		model.auth.observe(viewLifecycleOwner, Observer {
+			isSeguindo(it)
+		})
+	}
+
+	private fun observerIsFallow() {
+		model.isFallow.observe(viewLifecycleOwner, Observer {
+			setFalow(it)
+			if (it) setUpdateFromFire()
+		})
 	}
 
 	private fun updates() {
@@ -266,36 +220,14 @@ class TvShowFragment : BaseFragment() {
 					imdbDd = it.result
 					setVotoMedia()
 				}
-				is BaseRequest.Failure -> requireActivity().makeToast(R.string.ops)
+				is Failure -> requireActivity().makeToast(R.string.ops)
 			}
 		})
 	}
 
-	private fun initAdapter() {
-		recyclerViewTemporada?.adapter =
-			TemporadasAdapter(
-				requireActivity(),
-				series,
-				color
-			) { position, idSeason, numberSeason ->
-				changeEps(position = position, idSeason = idSeason, numberSeason = numberSeason)
-			}
-	}
-
-	private fun getViewTemporadas(inflater: LayoutInflater, container: ViewGroup?): View {
-		return inflater.inflate(layout.temporadas, container, false).apply {
-			progressBarTemporada = findViewById(R.id.progress_temporadas)
-			recyclerViewTemporada = findViewById<RecyclerView>(R.id.temporadas_recycler)
-				.patternRecyler(false).apply {
-					setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
-				}
-			initAdapter()
-		}
-	}
-
 	private fun getViewInformacoes(inflater: LayoutInflater?, container: ViewGroup?): View? {
-		val view = inflater?.inflate(Layout.tvshow_info, container, false)
-		progressBarTemporada = view?.findViewById<ProgressBar>(R.id.progress_temporadas)
+		val view = inflater?.inflate(layout, container, false)
+		progressBarTemporada = view?.findViewById(R.id.progress_temporadas)
 		view?.findViewById<Button>(R.id.seguir)?.setOnClickListener { onClickSeguir() }
 		return view
 	}
@@ -304,17 +236,7 @@ class TvShowFragment : BaseFragment() {
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
-	): View? {
-		when (type) {
-			R.string.temporadas -> {
-				return getViewTemporadas(inflater, container)
-			}
-			R.string.informacoes -> {
-				return getViewInformacoes(inflater, container)
-			}
-		}
-		return null
-	}
+	): View? = getViewInformacoes(inflater, container)
 
 	private fun setUltimoEpDate() {
 		proximo_ep_date.text = series.lastEpisodeAir?.airDate
@@ -327,7 +249,6 @@ class TvShowFragment : BaseFragment() {
 	}
 
 	private fun setFalow(fallow: Boolean) {
-		seguir?.setTextColor(color)
 		if (fallow) {
 			seguir?.setText(R.string.seguindo)
 		} else {
@@ -446,21 +367,6 @@ class TvShowFragment : BaseFragment() {
 		if (!auth) setStatusButton()
 	}
 
-	private fun fillAdapter(dataSnapshot: DataSnapshot) {
-		if (dataSnapshot.exists()) {
-			try {
-				if (view != null && isInitAdapter()) {
-					userTvshow = dataSnapshot.getValue(UserTvshow::class.java)
-					(recyclerViewTemporada?.adapter as TemporadasAdapter).addUserTvShow(userTvshow!!)
-				}
-			} catch (e: Exception) {
-				requireActivity().makeToast(R.string.ops_seguir_novamente)
-			}
-		}
-		progressBarTemporada?.gone()
-	}
-
-	private fun isInitAdapter() = recyclerViewTemporada?.adapter != null
 	private fun setStatus() {
 		series.status?.let {
 			status.setTextColor(color)
@@ -497,42 +403,6 @@ class TvShowFragment : BaseFragment() {
 		}
 	}
 
-	private fun isVisto(position: Int): Boolean {
-		return if (userTvshow?.seasons != null) {
-			if (userTvshow?.seasons?.getOrNull(position) != null) {
-				return userTvshow?.seasons?.get(position)?.isVisto ?: false
-			} else {
-				false
-			}
-		} else {
-			false
-		}
-	}
-
-	private fun setStatusEps(position: Int, status: Boolean) {
-		if (userTvshow != null) {
-			if (userTvshow?.seasons?.get(position)?.userEps != null)
-				for (i in 0 until userTvshow?.seasons?.get(position)?.userEps?.size!!) {
-					userTvshow?.seasons?.get(position)?.userEps?.get(position)?.isAssistido = status
-				}
-		}
-	}
-
-	private fun changeEps(position: Int, idSeason: Int, numberSeason: Int) {
-		GlobalScope.launch {
-			val season: UserSeasons = withContext(Dispatchers.Default) {
-				Api(requireContext()).getTvSeasons(id = series.id, id_season = numberSeason)
-			}.fillAllUserEpTvshow(
-				userTvshow?.seasons?.find { it.id == idSeason },
-				!isVisto(position)
-			)
-			val childUpdates = HashMap<String, Any>()
-			childUpdates["${series.id}/desatualizada"] = true
-			childUpdates["${series.id}/$SEASONS/$position"] = season
-			model.fillSeason(childUpdates)
-		}
-	}
-
 	private fun onClickSeguir() {
 		progressBarTemporada?.visible()
 		model.setFallow(series.id,
@@ -565,11 +435,6 @@ class TvShowFragment : BaseFragment() {
 						progressBarTemporada?.visibility = View.GONE
 					}.create().show()
 			})
-	}
-
-	override fun onDestroy() {
-		super.onDestroy()
-		model.destroy()
 	}
 
 	private fun setSinopse() {

@@ -28,8 +28,9 @@ import utils.kotterknife.bindArgument
 /**
  * Created by icaro on 23/08/16.
  */
-class MainFragment : BaseFragment() {
+class MainFragment() : BaseFragment() {
 
+	override val layout: Int = 1 // remover na fatoração
 	private lateinit var recyclerTodayTv: RecyclerView
 	private lateinit var recyclerPopularTv: RecyclerView
 	private lateinit var recyclerUpcomingmovie: RecyclerView

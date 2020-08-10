@@ -78,6 +78,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		lifecycle.addObserver(model)
 		setUpToolBar()
 		setupNavDrawer()
 		setTitleAndDisableTalk()
@@ -87,6 +88,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 		} else {
 			snack()
 		}
+
 	}
 
 	private fun observers() {
@@ -114,17 +116,15 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 					setupViewPagerTabs(series)
 					setImageTop(series.backdropPath ?: "")
 					setFab()
-					model.loadingMedia(false)
 					if (idReel.isNullOrEmpty()) {
 						model.getRealGoodData(series.createIdReal())
 					}
+					model.getImdb(series.external_ids?.imdbId ?: "")
+					setLoading(false)
 				}
-				is Failure -> {
-					ops()
-				}
-				is Loading -> {
-					setLoading(it.loading)
-				}
+				is Failure -> ops()
+
+				is Loading -> { }
 			}
 		})
 
@@ -157,6 +157,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 		}
 	}
 
+	@Suppress("UNCHECKED_CAST")
 	private fun setAnimated() {
 		val sheet = BottomSheetBehavior.from(streamview_tv)
 		(sheet as BottomSheetBehavior<View>).setAnimation(
@@ -179,6 +180,8 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 	private fun getDataTvshow() {
 		if (idReel.notNullOrEmpty()) model.getRealGoodData(idReel!!)
 		GlobalScope.launch { model.getTvshow(idTvshow) }
+		model.hasfallow(idTvshow)
+		model.fallow(idTvshow)
 	}
 
 	private fun setEventListenerWatch(boolean: Boolean) {
@@ -382,7 +385,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 	private fun setupViewPagerTabs(tvshow: Tvshow) {
 		viewPager_tvshow.apply {
 			offscreenPageLimit = 2
-			adapter = TvShowAdapter(context, supportFragmentManager, tvshow, colorTop)
+			adapter = TvShowAdapter(context, supportFragmentManager, colorTop)
 			currentItem = 0
 			tabLayout.setupWithViewPager(this)
 			tabLayout.setSelectedTabIndicatorColor(colorTop)

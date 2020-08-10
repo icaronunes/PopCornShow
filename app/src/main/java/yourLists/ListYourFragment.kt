@@ -25,7 +25,7 @@ import utils.kotterknife.bindArgument
 import utils.patternRecyclerGrid
 import utils.visible
 
-class ListYourFragment : BaseFragment() {
+class ListYourFragment(override val layout: Int = Layout.temporadas) : BaseFragment() {
 	val model: YourListViewModel by lazy { createViewModel(YourListViewModel::class.java) }
 	private val typeDataRef: String by bindArgument(Constant.MEDIATYPE)
 	private val type: String by bindArgument(Constant.ABA)
@@ -39,7 +39,7 @@ class ListYourFragment : BaseFragment() {
 		savedInstanceState: Bundle?
 	): View? {
 		super.onCreateView(inflater, container, savedInstanceState)
-		return with(inflater.inflate(R.layout.temporadas, container, false)) {
+		return with(inflater.inflate(layout, container, false)) {
 			progress = findViewById(R.id.progress_temporadas)
 			recyclerView = findViewById(R.id.temporadas_recycler)
 			empty = findViewById(R.id.text_search_empty)

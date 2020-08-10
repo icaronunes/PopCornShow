@@ -12,8 +12,11 @@ class LoadingFirebase(type: TypeMediaFireBase) : BaseFireBase(type), ILoadingFir
 	private lateinit var valueEventWatch: ValueEventListener
 	private lateinit var valueEventRated: ValueEventListener
 	private lateinit var valueEventFavorite: ValueEventListener
-	private lateinit var valueEventFallow: ValueEventListener
 	private lateinit var valueEventSeason: ValueEventListener
+	private var valueEventFallow: ValueEventListener = object : ValueEventListener {
+		override fun onCancelled(error: DatabaseError) {}
+		override fun onDataChange(snapshot: DataSnapshot) {}
+	}
 
 	override fun isAuth(live: MutableLiveData<Boolean>) {
 		live.value = isAuth()

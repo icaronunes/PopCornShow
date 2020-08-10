@@ -90,7 +90,7 @@ import java.util.Locale
 /**
  * Created by icaro on 03/07/16.
  */
-class MovieFragment : BaseFragment() {
+class MovieFragment(override val layout: Int = Layout.movie_details_info) : BaseFragment() {
 	private lateinit var movieDb: Movie
 	private var imdbDd: Imdb? = null
 	private var color: Int = 0
@@ -114,7 +114,7 @@ class MovieFragment : BaseFragment() {
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View? {
-		return inflater.inflate(R.layout.movie_details_info, container, false)
+		return inflater.inflate(layout, container, false)
 	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -383,7 +383,7 @@ class MovieFragment : BaseFragment() {
 	private fun openDialogCollection(collection: List<PartsItem?>?) {
 		Builder(requireActivity()).apply {
 			val dialogCollection =
-				requireActivity().layoutInflater.inflate(layout.dialog_collection, null)
+				requireActivity().layoutInflater.inflate(Layout.dialog_collection, null)
 			setView(dialogCollection).apply {
 				val pager = dialogCollection?.findViewById<ViewPager>(R.id.viewpager_collection)
 				pager?.adapter = CollectionPagerAdapter(collection, requireActivity())

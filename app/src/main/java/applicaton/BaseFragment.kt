@@ -1,6 +1,7 @@
 package applicaton
 
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleOwner
@@ -11,7 +12,9 @@ import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
 import utils.putString
 
-open class BaseFragment : Fragment(), LifecycleOwner {
+abstract class BaseFragment : Fragment(), LifecycleOwner {
+
+	abstract val layout: Int
 
 	fun <T : AndroidViewModel> createViewModel(java: Class<T>): T {
 		val factory = PopCornViewModelFactory(
@@ -32,5 +35,9 @@ open class BaseFragment : Fragment(), LifecycleOwner {
 	fun snack(anchor: View, txt: Any, block: () -> Unit = {}) {
 		Snackbar.make(anchor, txt.putString(requireContext()), Snackbar.LENGTH_INDEFINITE)
 			.setAction(R.string.ok) { block() }.show()
+	}
+
+	fun ops() {
+		Toast.makeText(requireContext(), getString(R.string.ops), Toast.LENGTH_LONG).show()
 	}
 }

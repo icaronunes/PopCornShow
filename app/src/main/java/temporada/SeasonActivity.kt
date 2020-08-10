@@ -128,7 +128,7 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 					supportActionBar?.title =
 						if (tvSeason.name?.isNotEmpty() == true) tvSeason.name else titleSeason
 					(recycleView_temporada.adapter as SeasonFoldinAdapter).addTvSeason(tvSeason.episodes)
-					model.loadingView(false)
+					 model.loadingView(false)
 				}
 				is Failure -> {
 					model.loadingView(false)

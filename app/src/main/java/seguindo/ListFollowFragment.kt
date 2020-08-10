@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import applicaton.BaseFragment
 import br.com.icaro.filme.R
 import com.google.firebase.database.DataSnapshot
-import customview.LoadingShimmer.PaymentLoadingsType
+import customview.LoadingShimmer.*
 import domain.UserTvshow
 import domain.fistNotWatch
 import utils.gone
@@ -25,15 +25,12 @@ import java.util.ArrayList
 /**
  * Created by icaro on 25/11/16.
  */
-class ListFollowFragment : BaseFragment() {
-
+class ListFollowFragment(override val layout: Int = Layout.temporadas) : BaseFragment() {
 	private lateinit var recycler: RecyclerView
 	private var fallowAdapterDelegates: FallowAdapterDelegates? = null
 	private lateinit var sad: ImageView
 	private lateinit var empty: TextView
-
 	private val model: FallowModel by lazy { createViewModel(FallowModel::class.java) }
-
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -58,7 +55,6 @@ class ListFollowFragment : BaseFragment() {
 	}
 
 	private fun setDataFallow(dataSnapshot: DataSnapshot) {
-
 		sad.gone()
 		empty.gone()
 		if (dataSnapshot.exists()) {
@@ -97,7 +93,7 @@ class ListFollowFragment : BaseFragment() {
 	}
 
 	private fun getViewMissing(inflater: LayoutInflater, container: ViewGroup?): View {
-		return with(inflater.inflate(Layout.temporadas, container, false)) {
+		return with(inflater.inflate(layout, container, false)) {
 			fallowAdapterDelegates = FallowAdapterDelegates(context, PaymentLoadingsType.CalendarTv)
 			findViewById<ProgressBar>(R.id.progress_temporadas).apply { gone() }
 			sad = findViewById(R.id.img_error)

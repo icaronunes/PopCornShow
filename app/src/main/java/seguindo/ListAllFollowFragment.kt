@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import applicaton.BaseFragment
 import br.com.icaro.filme.R
-import br.com.icaro.filme.R.layout
 import customview.LoadingShimmer.PaymentLoadingsType
 import domain.UserTvshow
 import utils.gone
@@ -22,7 +21,7 @@ import utils.visible
 /**
  * Created by icaro on 25/11/16.
  */
-class ListAllFollowFragment : BaseFragment() {
+class ListAllFollowFragment(override val layout: Int = Layout.seguindo) : BaseFragment() {
 
 	private lateinit var fallowAdapterDelegates: FallowAdapterDelegates
 	private lateinit var recycler: RecyclerView
@@ -76,7 +75,7 @@ class ListAllFollowFragment : BaseFragment() {
 	}
 
 	private fun getViewSeguindo(inflater: LayoutInflater, container: ViewGroup?): View {
-		return inflater.inflate(layout.seguindo, container, false).apply {
+		return inflater.inflate(layout, container, false).apply {
 			sad = findViewById(R.id.img_error)
 			empty = findViewById(R.id.text_search_empty)
 			findViewById<ProgressBar>(R.id.progress_horizontal).apply { gone() }

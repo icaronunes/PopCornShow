@@ -6,7 +6,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import br.com.icaro.filme.R.string
 import domain.tvshow.Tvshow
-import tvshow.fragment.TvShowFragment.Companion.newInstance
+import tvshow.fragment.TvShowFragment
+import tvshow.fragment.TvShowFragment.*
+import tvshow.fragment.TvShowFragmentSeason
 
 /**
  * Created by icaro on 23/08/16.
@@ -14,15 +16,14 @@ import tvshow.fragment.TvShowFragment.Companion.newInstance
 class TvShowAdapter(
 	private val context: Context,
 	supportFragmentManager: FragmentManager?,
-	private val series: Tvshow,
 	private val color: Int
 ) : FragmentPagerAdapter(
 	supportFragmentManager!!,
 	BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
 ) {
 	override fun getItem(position: Int) = when (position) {
-		0 -> newInstance(string.informacoes, series, color)
-		1 -> newInstance(string.temporadas, series, color)
+		0 -> TvShowFragment.newInstance(color)
+		1 -> TvShowFragmentSeason()
 		else -> Fragment()
 	}
 

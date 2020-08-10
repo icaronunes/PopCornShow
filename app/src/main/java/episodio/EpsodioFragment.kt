@@ -50,7 +50,7 @@ import utils.setPicasso
 /**
  * Created by icaro on 27/08/16.
  */
-class EpsodioFragment : BaseFragment() {
+class EpsodioFragment(override val layout: Int = Layout.epsodio_fragment) : BaseFragment() {
 	private val model: EpsodioViewModel by lazy { createViewModel(EpsodioViewModel::class.java) }
 	private val tvshowId: Int by bindArgument(Constant.TVSHOW_ID)
 	private val temporadaPosition: Int by bindArgument(Constant.TEMPORADA_POSITION)
@@ -64,7 +64,7 @@ class EpsodioFragment : BaseFragment() {
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
-	) = inflater.inflate(R.layout.epsodio_fragment, container, false)
+	) = inflater.inflate(layout, container, false)
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)

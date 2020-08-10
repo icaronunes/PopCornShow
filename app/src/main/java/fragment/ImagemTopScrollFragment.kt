@@ -26,7 +26,7 @@ import utils.setPicasso
 /**
  * Created by icaro on 26/07/16.
  */
-class ImagemTopScrollFragment : BaseFragment() {
+class ImagemTopScrollFragment(override val layout: Int = Layout.page_scroll_image_top) : BaseFragment() {
 	companion object {
 		const val MENUS1_000 = -1000f
 		const val ZERO = 0f
@@ -53,7 +53,7 @@ class ImagemTopScrollFragment : BaseFragment() {
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View? =
-		with(inflater.inflate(layout.page_scroll_image_top, container, false)) {
+		with(inflater.inflate(layout, container, false)) {
 			findViewById<TextView>(R.id.title).text = topMains.nome
 			val img = findViewById<ImageView>(R.id.img_top_scroll)
 

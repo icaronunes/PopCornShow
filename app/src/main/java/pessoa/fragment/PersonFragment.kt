@@ -33,6 +33,7 @@ import utils.visible
  */
 class PersonFragment : BaseFragment() {
 
+    override val layout: Int = 0 // remover na refatoração. Separar fragmetos
     private var namePerson: TextView? = null
     private lateinit var birthday: TextView
     private lateinit var dead: TextView
