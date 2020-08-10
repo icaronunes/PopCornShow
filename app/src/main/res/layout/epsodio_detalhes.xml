@@ -48,7 +48,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divisor_one"
-            tools:text="Our API is available for everyone to use. A TMDb user account is required to request an API key. Professional users are approved on a per application basis." />
+            tools:text="Our API is available for everyone to use. A TMDb user account is required to request an API key. Professional users are approved on a per application basis."
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/label_nota"
@@ -61,7 +62,9 @@
             android:layout_marginStart="25dp"
             android:layout_marginEnd="4dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/epsodio_detalhes_resumo" />
+            app:layout_constraintTop_toBottomOf="@+id/epsodio_detalhes_resumo"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="4dp" />
 
         <TextView
             android:id="@+id/epsodio_detalhes_nota"
@@ -86,7 +89,8 @@
             android:text="@string/vote"
             android:layout_marginEnd="4dp"
             app:layout_constraintEnd_toStartOf="@+id/epsodio_detalhes_votos"
-            app:layout_constraintTop_toTopOf="@+id/label_nota" />
+            app:layout_constraintTop_toTopOf="@+id/label_nota"
+            android:layout_marginRight="4dp" />
 
         <TextView
             android:id="@+id/epsodio_detalhes_votos"
@@ -98,7 +102,8 @@
             android:layout_marginEnd="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/label_ep"
-            tools:text="21" />
+            tools:text="21"
+            android:layout_marginRight="25dp" />
 
         <View
             android:id="@+id/layout_diretor_nome_visto"

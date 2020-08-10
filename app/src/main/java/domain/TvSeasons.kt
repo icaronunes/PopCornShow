@@ -39,7 +39,7 @@ fun TvSeasons.fillEpUserTvshow(userTvshow: UserSeasons?, status: Boolean, idEp: 
 			dataEstreia = episodes.airDate
 			title = episodes.name
 		}
-	}
+	} // Adicionar mecanismo para assistir anteriores
 
 	val allEps = episodes.map {
 		findEp(it, userTvshow) ?: UserEp(

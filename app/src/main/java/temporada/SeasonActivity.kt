@@ -103,7 +103,6 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 	}
 
 	private fun observerSeasonFire() {
-
 		model.isFallow.observe(this, Observer {
 			(recycleView_temporada.adapter as SeasonFoldinAdapter).changeFallow(it)
 			fallow = it

@@ -17,7 +17,6 @@
             android:id="@+id/item_epsodio_titulo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:elegantTextHeight="true"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="2"
@@ -27,7 +26,9 @@
             app:layout_constraintEnd_toStartOf="@+id/item_epsodio_visto"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="O inverno está chegando O inverno está chegando O inverno está chegando O inverno está chegando" />
+            tools:text="O inverno está chegando O inverno está chegando O inverno está chegando O inverno está chegando"
+            android:paddingRight="@dimen/trade_size_dp_14"
+            android:paddingLeft="14dp" />
 
 
         <TextView
@@ -42,7 +43,8 @@
             app:layout_constraintEnd_toStartOf="@+id/item_epsodio_visto"
             app:layout_constraintTop_toBottomOf="@+id/item_epsodio_titulo"
             tools:text="/search - Text based search is the most common way.
-                You provide a query string and we provide the closest match. Searching by text takes into account all original, translated, alternative names and titles." />
+                You provide a query string and we provide the closest match. Searching by text takes into account all original, translated, alternative names and titles."
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/label_nota"
@@ -55,7 +57,8 @@
             android:textAllCaps="true"
             android:layout_marginStart="6dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_epsodio_titulo_resumo" />
+            app:layout_constraintTop_toBottomOf="@+id/item_epsodio_titulo_resumo"
+            android:layout_marginLeft="6dp" />
 
         <TextView
             android:id="@+id/item_epsodio_nota"
@@ -67,7 +70,8 @@
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/label_nota"
             app:layout_constraintTop_toTopOf="@+id/label_nota"
-            tools:text="9.0" />
+            tools:text="9.0"
+            android:layout_marginLeft="6dp" />
 
 
         <TextView
@@ -81,7 +85,8 @@
             android:text="@string/epsodio"
             android:textAllCaps="true"
             app:layout_constraintEnd_toStartOf="@+id/item_epsodio_number"
-            app:layout_constraintTop_toTopOf="@+id/item_epsodio_nota" />
+            app:layout_constraintTop_toTopOf="@+id/item_epsodio_nota"
+            android:layout_marginRight="6dp" />
 
         <TextView
             android:id="@+id/item_epsodio_number"
@@ -92,7 +97,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/item_epsodio_visto"
             app:layout_constraintTop_toTopOf="@+id/label_nota"
-            tools:text="2122" />
+            tools:text="2122"
+            android:layout_marginRight="6dp" />
 
         <View
             android:id="@+id/item_epsodio_visto"
