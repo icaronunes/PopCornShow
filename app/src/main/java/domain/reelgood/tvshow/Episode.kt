@@ -2,11 +2,13 @@ package domain.reelgood.tvshow
 
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import domain.reelgood.movie.Availability
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
+@Keep
 data class Episode(
     @SerializedName("aired_at")
     val airedAt: String = "",

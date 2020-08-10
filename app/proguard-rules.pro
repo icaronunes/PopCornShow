@@ -72,6 +72,7 @@
 }
 
 -keepclasseswithmembers class domain.*
+-keepclasseswithmembers class customview.*
 
 -dontwarn android.support.**
 -dontnote android.net.http.**

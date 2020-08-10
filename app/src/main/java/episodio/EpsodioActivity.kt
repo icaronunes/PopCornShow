@@ -1,5 +1,6 @@
 package episodio
 
+import Color
 import Layout
 import activity.BaseActivityAb
 import android.os.Bundle
@@ -19,7 +20,7 @@ class EpsodioActivity(override var layout: Int = Layout.activity_epsodios) : Bas
 
 	private val tvshowId: Int by bindBundle(Constant.TVSHOW_ID)
 	private val posicao: Int by bindBundle(Constant.POSICAO)
-	private val color: Int by bindBundle(Constant.COLOR_TOP)
+	private val color: Int by bindBundle(Constant.COLOR_TOP,  Color.primary)
 	private val seasonPosition: Int by bindBundle(Constant.TEMPORADA_POSITION)
 	private val fallow: Boolean by bindBundle(Constant.SEGUINDO, false)
 	private val tvSeason: TvSeasons by bindBundle(Constant.TVSEASONS)

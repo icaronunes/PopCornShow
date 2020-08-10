@@ -1,11 +1,13 @@
 package domain.reelgood.movie
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 //Todo criar o mesmo objeto para todos
 @Parcelize
+@Keep
 data class References(
     @SerializedName("web")
     val web: LinkReferences? = null,

@@ -1,5 +1,7 @@
 package episodio
 
+import Color
+import Layout
 import Txt
 import android.app.Dialog
 import android.content.Intent
@@ -55,7 +57,7 @@ class EpsodioFragment(override val layout: Int = Layout.epsodio_fragment) : Base
 	private val tvshowId: Int by bindArgument(Constant.TVSHOW_ID)
 	private val temporadaPosition: Int by bindArgument(Constant.TEMPORADA_POSITION)
 	private val episode: EpisodesItem by bindArgument(Constant.EPSODIO)
-	private val color: Int by bindArgument(Constant.COLOR_TOP)
+	private val color: Int by bindArgument(Constant.COLOR_TOP, Color.primary)
 	private val seguindo: Boolean by bindArgument(Constant.SEGUINDO)
 	private val tvSeason: TvSeasons by bindArgument(Constant.TVSEASONS)
 	private var seasons: UserSeasons? = null
@@ -86,22 +88,20 @@ class EpsodioFragment(override val layout: Int = Layout.epsodio_fragment) : Base
 			userEp = seasons?.userEps?.firstOrNull { userEp ->
 				userEp.id == episode.id
 			}
-			if (userEp != null) {
-				try {
-					if (userEp?.isAssistido!!) {
-						ep_rating_button.text = resources.getText(R.string.classificar_visto)
-						userEp?.nota?.let {
-							ep_rating.rating = it * 2
-						}
-					} else {
-						ep_rating_button.text = resources.getText(R.string.classificar)
-						userEp?.nota?.let {
-							ep_rating.rating = it * 2
-						}
+			try {
+				if (userEp?.isAssistido == true) {
+					ep_rating_button.text = resources.getText(R.string.classificar_visto)
+					userEp?.nota?.let {
+						ep_rating.rating = it * 2
 					}
-				} catch (e: NoSuchMethodError) {
-					Toast.makeText(context, R.string.ops, Toast.LENGTH_SHORT).show()
+				} else {
+					ep_rating_button.text = resources.getText(R.string.classificar)
+					userEp?.nota?.let {
+						ep_rating.rating = it * 2
+					}
 				}
+			} catch (e: NoSuchMethodError) {
+				Toast.makeText(context, R.string.ops, Toast.LENGTH_SHORT).show()
 			}
 		})
 	}

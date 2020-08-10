@@ -18,9 +18,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import applicaton.BaseViewModel.BaseRequest.Failure
-import applicaton.BaseViewModel.BaseRequest.Loading
-import applicaton.BaseViewModel.BaseRequest.Success
+import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.string
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -115,30 +113,29 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 					series = it.result
 					setupViewPagerTabs(series)
 					setImageTop(series.backdropPath ?: "")
-					setFab()
 					if (idReel.isNullOrEmpty()) {
 						model.getRealGoodData(series.createIdReal())
 					}
 					model.getImdb(series.external_ids?.imdbId ?: "")
+					observersReal()
 					setLoading(false)
+					setFab()
 				}
 				is Failure -> ops()
 
 				is Loading -> { }
 			}
 		})
-
+	}
+	private fun observersReal() {
 		model.real.observe(this, Observer {
 			when (it) {
 				is Success -> {
 					streamview_tv.fillStream(
 						series.originalName?.getNameTypeReel()
-							?: "", it.result.sources
-					)
+							?: "", it.result.sources)
 				}
-				is Failure -> {
-					streamview_tv.error = true
-				}
+				is Failure -> streamview_tv.error = true
 			}
 			setAnimated()
 		})

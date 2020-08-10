@@ -1,7 +1,12 @@
 package domain.reelgood.movie
 
+import android.os.Parcelable
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
+@Keep
 data class People(
     @SerializedName("birthdate")
     val birthdate: String, // 1951-06-09T00:00:00
@@ -21,4 +26,4 @@ data class People(
     val roleType: Int, // 5
     @SerializedName("slug")
     val slug: String // james-newton-howard-1951
-)
+): Parcelable

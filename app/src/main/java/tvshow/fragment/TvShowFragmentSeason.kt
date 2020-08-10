@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import applicaton.BaseFragment
@@ -25,7 +24,9 @@ import tvshow.TemporadasAdapter
 import tvshow.viewmodel.TvShowViewModel
 import utils.Api
 import utils.ConstFirebase.SEASONS
+import utils.Constant
 import utils.gone
+import utils.kotterknife.bindArgument
 import utils.makeToast
 import utils.patternRecyler
 import utils.setScrollInvisibleFloatMenu
@@ -35,6 +36,7 @@ import utils.setScrollInvisibleFloatMenu
  */
 class TvShowFragmentSeason(override val layout: Int = Layout.temporadas) : BaseFragment() {
 	private val model: TvShowViewModel by lazy { createViewModel(TvShowViewModel::class.java) }
+	private val color: Int by bindArgument(Constant.COLOR_TOP, R.color.primary)
 	private var recyclerViewTemporada: RecyclerView? = null
 	private var userTvshow: UserTvshow? = null
 	private var progressBarTemporada: ProgressBar? = null
@@ -42,7 +44,11 @@ class TvShowFragmentSeason(override val layout: Int = Layout.temporadas) : BaseF
 
 	companion object {
 		@JvmStatic
-		fun newInstance() = TvShowFragmentSeason();
+		fun newInstance(color: Int) = TvShowFragmentSeason().apply {
+			arguments = Bundle().apply {
+				putInt(Constant.COLOR_TOP, color)
+			}
+		}
 	}
 
 	override fun onCreateView(
@@ -115,7 +121,7 @@ class TvShowFragmentSeason(override val layout: Int = Layout.temporadas) : BaseF
 		recyclerViewTemporada?.adapter =
 			TemporadasAdapter(
 				requireActivity(),
-				1
+				color
 			) { position, idSeason, numberSeason ->
 				changeEps(position = position, idSeason = idSeason, numberSeason = numberSeason)
 			}

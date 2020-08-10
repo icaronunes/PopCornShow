@@ -191,8 +191,9 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 	}
 
 	private fun setStream() {
-		GlobalScope.launch(Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, _ ->
+		GlobalScope.launch(Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, e  ->
 			Handler(Looper.getMainLooper()).post {
+				e.toString()
 				streamview_movie.error = true
 				setAnimated()
 			}

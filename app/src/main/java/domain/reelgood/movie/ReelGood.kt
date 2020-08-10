@@ -1,11 +1,16 @@
 package domain.reelgood.movie
 
+import android.os.Parcelable
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Keep
+@Parcelize
 data class ReelGood(
     @SerializedName("availability")
     val availability: List<Availability>
-    //,
+
 /*    @SerializedName("classification")
 //    val classification: String?, // 13+
 //    @SerializedName("countries")
@@ -60,4 +65,4 @@ data class ReelGood(
 //    val trailer: Trailer,
 //    @SerializedName("watchlisted")
 //    val watchlisted: Boolean // false */
-)
+): Parcelable

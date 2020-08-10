@@ -1,6 +1,7 @@
 package domain.reelgood.movie
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import domain.ViewType
 import kotlinx.android.parcel.Parcelize
@@ -8,6 +9,7 @@ import utils.Constant
 
 @Suppress("PLUGIN_WARNING")
 @Parcelize
+@Keep
 class Availability : ViewType, Parcelable {
     override fun getViewType(): Int {
         return when (sourceName) {
