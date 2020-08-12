@@ -1,23 +1,23 @@
 package adapter
 
-import adapter.TrailerAdapter.TrailerViewHolder
+import adapter.TrailerAdapter.*
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
-import br.com.icaro.filme.R.layout
+import br.com.icaro.filme.R.*
 import com.crashlytics.android.Crashlytics
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubeThumbnailLoader
 import com.google.android.youtube.player.YouTubeThumbnailView
-import com.google.android.youtube.player.YouTubeThumbnailView.OnInitializedListener
+import com.google.android.youtube.player.YouTubeThumbnailView.*
 import domain.ResultsVideosItem
 import trailer.TrailerActivity
-import utils.Api
 import utils.Constant
+import utils.key.ApiKeys
 import utils.visible
 
 /**
@@ -32,7 +32,7 @@ class TrailerAdapter(private val videos: MutableList<ResultsVideosItem?>?, priva
     inner class TrailerViewHolder(parent: ViewGroup)
         : RecyclerView.ViewHolder(LayoutInflater.from(parent.context)
         .inflate(layout.scroll_trailer, parent, false)) {
-        private val YOUTUBE_KEY by lazy { Api(context = parent.context).getKey("YOUTUBE_API_KEY") }
+        private val YOUTUBE_KEY = ApiKeys.YOUTUBE_API_KEY
 
         fun bind(video: ResultsVideosItem) = with(itemView)  {
             contentDescription = video.name

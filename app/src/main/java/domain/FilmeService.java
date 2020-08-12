@@ -17,7 +17,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import utils.Api;
+import utils.key.ApiKeys;
 
 
 /**
@@ -28,7 +28,7 @@ public class FilmeService {
 
     public static boolean ratedTvshowEpsodioGuest(int tvshowId, int temporada, int ep, int nota, Context context) {
         /// id 297762 - mulher maravilha
-        String TMDBAPI = new Api(context).getKey("TMDB_API_KEY");
+        String TMDBAPI = ApiKeys.TMDB_API_KEY;
         try {
             GuestSession guestSession = getGuestSession(context, TMDBAPI);
             if (guestSession != null) {
