@@ -49,13 +49,8 @@ class Api(val context: Context) : ApiSingleton() {
 	private var region: String = Locale.getDefault().country
 	private val baseUrl3 = "https://api.themoviedb.org/3/"
 	private val baseUrl4 = "https://api.themoviedb.org/4/"
-	val TMDBAPI by lazy { getKeyTMDB() }
-	val OMDBAPI by lazy { getKey("OMDBAPI_API_KEY") }
-
-	init {
-		TMDBAPI
-		OMDBAPI
-	}
+	val TMDBAPI = getKeyTMDB()
+	val OMDBAPI = getKey("OMDBAPI_API_KEY")
 
 	object TYPESEARCH {
 		object MOVIE {

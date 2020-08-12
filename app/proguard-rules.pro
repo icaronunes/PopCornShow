@@ -70,9 +70,10 @@
 -keepclasseswithmembers class domain.* {
   *;
 }
-
+-keepclasseswithmembernames class java.nio.*
 -keepclasseswithmembers class domain.*
 -keepclasseswithmembers class customview.*
+-keepclasseswithmembers class io.github.*
 
 -dontwarn android.support.**
 -dontnote android.net.http.**
