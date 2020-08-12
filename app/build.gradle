@@ -27,8 +27,8 @@ android {
         applicationId "br.com.icaro.filme"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 88
-        versionName "9.3"
+        versionCode 89
+        versionName "9.4"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -51,7 +51,7 @@ android {
                 release {
                     storeFile file('../app/keystore.jks')
                     storePassword ""
-                    keyAlias "FILME"
+                    keyAlias ""
                     keyPassword ""
                 }
             }
