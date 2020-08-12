@@ -2,18 +2,15 @@ package trailer
 
 import android.os.Bundle
 import android.widget.Toast
-import br.com.icaro.filme.R.id
-import br.com.icaro.filme.R.layout
-import br.com.icaro.filme.R.string
+import br.com.icaro.filme.R.*
 import com.crashlytics.android.Crashlytics
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
-import com.google.android.youtube.player.YouTubePlayer.OnInitializedListener
-import com.google.android.youtube.player.YouTubePlayer.Provider
+import com.google.android.youtube.player.YouTubePlayer.*
 import com.google.android.youtube.player.YouTubePlayerView
-import utils.Api
 import utils.Constant
+import utils.key.ApiKeys
 import kotlinx.android.synthetic.main.youtube_layout.trailer_sinopse as sinopse
 
 /**
@@ -22,7 +19,7 @@ import kotlinx.android.synthetic.main.youtube_layout.trailer_sinopse as sinopse
 class TrailerActivity : YouTubeBaseActivity(), OnInitializedListener {
 
     private lateinit var idYoutube: String
-    private val YOUTUBE_KEY by lazy { Api(context = this).getKey("YOUTUBE_API_KEY") }
+    private val YOUTUBE_KEY = ApiKeys.YOUTUBE_API_KEY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

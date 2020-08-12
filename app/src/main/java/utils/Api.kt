@@ -23,7 +23,6 @@ import domain.reelgood.movie.ReelGood
 import domain.reelgood.tvshow.ReelGoodTv
 import domain.search.SearchMulti
 import domain.tvshow.Tvshow
-import io.github.cdimascio.dotenv.dotenv
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
 import okhttp3.Callback
@@ -37,6 +36,7 @@ import utils.Api.TYPESEARCH.MOVIE
 import utils.Api.TYPESEARCH.TVSHOW
 import utils.ApiSingleton.Companion.LoggingInterceptor
 import utils.UtilsKt.Companion.getIdiomaEscolhido
+import utils.key.ApiKeys
 import java.io.IOException
 import java.net.SocketTimeoutException
 import java.util.Locale
@@ -50,7 +50,7 @@ class Api(val context: Context) : ApiSingleton() {
 	private val baseUrl3 = "https://api.themoviedb.org/3/"
 	private val baseUrl4 = "https://api.themoviedb.org/4/"
 	val TMDBAPI = getKeyTMDB()
-	val OMDBAPI = getKey("OMDBAPI_API_KEY")
+	val OMDBAPI = ApiKeys.OMDBAPI_API_KEY
 
 	object TYPESEARCH {
 		object MOVIE {
@@ -68,18 +68,9 @@ class Api(val context: Context) : ApiSingleton() {
 		}
 	}
 
-	fun getKey(key: String) = dotenv {
-		directory = "/assets"
-		filename = "env"
-	}[key]
-
 	private fun getKeyTMDB(): String {
-		val dotenv = dotenv {
-			directory = "/assets"
-			filename = "env"
-		}
-		return if (Random(2).nextInt() % 2 == 0) dotenv["TMDB_API_KEY"]
-			?: "" else dotenv["TMDB_API_KEY2"] ?: ""
+		return if (Random(2).nextInt() % 2 == 0) ApiKeys.TMDB_API_KEY
+		else ApiKeys.TMDB_API_KEY2
 	}
 
 	fun personPopular(pagina: Int): Observable<PersonPopular> {

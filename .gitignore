@@ -9,7 +9,9 @@ filme.iml
 ktlint-report-in-checkstyle-format.xml
 app/src/main/assets/env
 .env
-
+app/src/main/java/utils/key/*
+app/src/main/java/utils/key/ApiKeys.kt
+#
 /build
 # Built application files
 *.apk

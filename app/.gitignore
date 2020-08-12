@@ -6,7 +6,7 @@ filme.iml
 .gradle/wrapper/gradle-wrapper.properties
 .idea/misc.xml
 app/src/main/assets/env
-
+app/src/main/java/utils/key/ApiKeys.kt
 /build
 # Built application files
 *.apk
