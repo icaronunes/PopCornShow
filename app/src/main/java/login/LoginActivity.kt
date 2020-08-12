@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -30,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_login.pass
 import kotlinx.android.synthetic.main.activity_login.recuperar_senha
 import kotlinx.android.synthetic.main.activity_login.vincular_login
 import main.MainActivity
+import mehdi.sakout.fancybuttons.FancyButton
 import utils.kotterknife.findView
 import utils.makeToast
 import java.util.Arrays
@@ -43,6 +43,9 @@ class LoginActivity : BaseActivity() {
 	private var mCallbackManager: CallbackManager? = null
 	private val model: LoginViewModel by lazy { createViewModel(LoginViewModel::class.java, this) }
 	private val send: EditText by findView(R.id.pass)
+	private val ok: MaterialButton by findView(R.id.logar)
+	private val facebook: FancyButton by findView(R.id.facebook)
+	private val anonimous: FancyButton by findView(R.id.bt_anonimous)
 	private val authStateListener: FirebaseAuth.AuthStateListener
 		get() = FirebaseAuth.AuthStateListener {
 			val user = it.currentUser
@@ -61,12 +64,12 @@ class LoginActivity : BaseActivity() {
 		setContentView(R.layout.activity_login)
 		hideSoftKeyboard()
 		setFacebook()
-		vincular_login.setOnClickListener {
-			createDialogNewUser()
-		}
-		recuperar_senha.setOnClickListener {
-			createDialgoResetPass()
-		}
+
+		vincular_login.setOnClickListener { createDialogNewUser() }
+		recuperar_senha.setOnClickListener { createDialgoResetPass() }
+		ok.setOnClickListener { logarComEmail() }
+		facebook.setOnClickListener { logarFacebook() }
+		anonimous.setOnClickListener { logarAnonimous() }
 
 		send.setOnEditorActionListener { _, actionId, _ ->
 			when (actionId) {
@@ -144,20 +147,6 @@ class LoginActivity : BaseActivity() {
 
 	private fun accessFacebook(accessToken: AccessToken) {
 		accessLoginData("facebook", accessToken.token)
-	}
-
-	fun onclick(view: View) {
-		when (view.id) {
-			R.id.logar -> {
-				logarComEmail()
-			}
-			R.id.facebook -> {
-				logarFacebook()
-			}
-			R.id.bt_anonimous -> {
-				logarAnonimous()
-			}
-		}
 	}
 
 	private fun logarFacebook() {
