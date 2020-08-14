@@ -33,15 +33,19 @@ class StreamAbMovieGenericWebAdapter(
 			LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)
 		) {
 		fun bind(availability: Availability?) = with(itemView.source_item) {
-			getImgStreamService(
-				availability,
-				onResource = {
-					iconSource = ContextCompat.getDrawable(context, it)
+			try {
+				getImgStreamService(
+					availability,
+					onResource = {
+						iconSource = ContextCompat.getDrawable(context, it)
+					}
+				) {
+					val imageView = ImageView(context)
+					imageView.setImageBitmap(it)
+					iconSource = imageView.drawable
 				}
-			) {
-				val imageView = ImageView(context)
-				imageView.setImageBitmap(it)
-				iconSource = imageView.drawable
+			} catch (ex: Exception) {
+				iconSource = ContextCompat.getDrawable(context, R.drawable.question)
 			}
 			if (!subscription) {
 				sourceSd = if (purchase) "SD: ${availability?.purchaseCostSd

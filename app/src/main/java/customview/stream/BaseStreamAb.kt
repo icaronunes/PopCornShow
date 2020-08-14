@@ -118,7 +118,7 @@ abstract class BaseStreamAb {
             "fubo_tv" -> onResource(R.drawable.fubo_tv)
             else -> {
                 onResource(R.drawable.question)
-                Crashlytics.log("Stream Question - ${sourceName}")
+                Crashlytics.log("Stream Question - $sourceName")
             }
         }
     }
