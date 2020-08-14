@@ -26,7 +26,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import domain.TvshowDB
 import domain.tvshow.Tvshow
-import hasValue
 import kotlinx.android.synthetic.main.fab_float.fab_menu
 import kotlinx.android.synthetic.main.fab_float.menu_item_favorite
 import kotlinx.android.synthetic.main.fab_float.menu_item_rated
@@ -59,10 +58,8 @@ import utils.visible
 import java.io.File
 
 class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseActivityAb() {
-
 	private val EMPTYRATED: Float = 0.0f
 	private var numberRated: Float = 0.0f
-
 	private val model: TvShowViewModel by lazy {
 		createViewModel(
 			TvShowViewModel::class.java,
@@ -73,7 +70,6 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 	private val idReel: String? by bundleOrNull(Constant.ID_REEL)
 	private val colorTop: Int by bindBundle(Constant.COLOR_TOP, Color.colorFAB)
 	private lateinit var series: Tvshow
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		lifecycle.addObserver(model)
@@ -86,7 +82,6 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 		} else {
 			snack()
 		}
-
 	}
 
 	private fun observers() {
@@ -122,18 +117,20 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 					setFab()
 				}
 				is Failure -> ops()
-
-				is Loading -> { }
+				is Loading -> {
+				}
 			}
 		})
 	}
+
 	private fun observersReal() {
 		model.real.observe(this, Observer {
 			when (it) {
 				is Success -> {
 					streamview_tv.fillStream(
 						series.originalName?.getNameTypeReel()
-							?: "", it.result.sources)
+							?: "", it.result.sources
+					)
 				}
 				is Failure -> streamview_tv.error = true
 			}
@@ -222,8 +219,8 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
-		if (series.hasValue) {
-			if (item.itemId == R.id.share) {
+		if (item.itemId == R.id.share) {
+			if (model.tvShow.value is Success)
 				salvaImagemMemoriaCache(this@TvShowActivity, series.posterPath,
 					object : SalvarImageShare {
 						override fun retornaFile(file: File) {
@@ -251,7 +248,6 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 							makeToast(R.string.erro_na_gravacao_imagem)
 						}
 					})
-			}
 		} else {
 			makeToast(R.string.erro_ainda_sem_imagem)
 		}
@@ -331,7 +327,6 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 					WindowManager.LayoutParams.MATCH_PARENT,
 					WindowManager.LayoutParams.WRAP_CONTENT
 				)
-
 				val ratingBar = findViewById<RatingBar>(R.id.ratingBar_rated)
 				ratingBar.rating = numberRated / 2
 
@@ -364,7 +359,6 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 					makeToast("${getString(R.string.tvshow_rated)} - ${tvshowDB.nota}")
 				}
 			model.setRatedOnTheMovieDB(tvshowDB)
-
 		}
 		this@TvShowActivity.fab_menu.close(true)
 	}
