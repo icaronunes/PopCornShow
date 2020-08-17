@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horiz
 
 class PersonActivity : BaseActivityKt(), CallBackError {
 
-    lateinit var person: Person
     private var idPerso: Int = 0
     private var nome: String? = null
     private val model by lazy { createViewModel(PersonViewModel::class.java, this) }
@@ -99,8 +98,7 @@ class PersonActivity : BaseActivityKt(), CallBackError {
         model.response.observe(this, Observer {
             when (it) {
                 is Success -> {
-                    person = it.result as Person
-                    setTitleActionBar(person.name)
+                    setTitleActionBar((it.result as Person).name)
                     setupViewPagerTabs()
                     progress.gone()
                 }
