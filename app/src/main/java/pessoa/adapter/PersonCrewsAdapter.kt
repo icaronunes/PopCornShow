@@ -48,7 +48,7 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
                 return if (date.isNullOrEmpty() ) {
                     "-"
                 } else {
-                    " - ${date.substring(0, 4)}"
+                    return if(date.length >= 4) " - ${date.substring(0, 4)}" else "-"
                 }
             }
 
