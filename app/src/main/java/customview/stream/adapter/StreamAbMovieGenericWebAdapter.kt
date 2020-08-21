@@ -5,8 +5,9 @@ import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
 import com.crashlytics.android.Crashlytics
@@ -37,12 +38,10 @@ class StreamAbMovieGenericWebAdapter(
 				getImgStreamService(
 					availability,
 					onResource = {
-						iconSource = ContextCompat.getDrawable(context, it)
+						iconSource = AppCompatResources.getDrawable(context, it)
 					}
 				) {
-					val imageView = ImageView(context)
-					imageView.setImageBitmap(it)
-					iconSource = imageView.drawable
+					iconSource = it?.toDrawable(resources)?.current ?: AppCompatResources.getDrawable(context, R.drawable.question)
 				}
 			} catch (ex: Exception) {
 				iconSource = ContextCompat.getDrawable(context, R.drawable.question)

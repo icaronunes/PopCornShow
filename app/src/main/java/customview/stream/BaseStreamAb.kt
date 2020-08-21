@@ -52,7 +52,6 @@ abstract class BaseStreamAb {
             "britbox" -> onResource(R.drawable.britbox)
             "cbs_all_access" -> onResource(R.drawable.cbs_all_access)
             "nbc", "nbc_tveverywhere" -> onResource(R.drawable.nbc)
-            "" -> onResource(R.drawable.nbc)
             "fox_tveverywhere" -> onResource(R.drawable.fox)
             "tbs" -> onResource(R.drawable.tbs)
             "abc", "abc_tveverywhere", "abc_family" -> onResource(R.drawable.abc)
@@ -106,7 +105,6 @@ abstract class BaseStreamAb {
             "usa" -> onResource(R.drawable.usa)
             "vh1" -> onResource(R.drawable.vh1)
             "viceland" -> onResource(R.drawable.viceland)
-
             "youtube_premium" -> onResource(R.drawable.youtube_premium)
             "starz" -> onResource(R.drawable.starz)
             "netflix" -> onResource(R.drawable.netflix_stream)

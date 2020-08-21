@@ -2,6 +2,7 @@ package applicaton;
 
 import android.content.Context;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
@@ -31,7 +32,7 @@ public class PopCornApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         instance = this;
 
         OneSignal.startInit(this)
