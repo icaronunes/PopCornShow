@@ -274,7 +274,7 @@ fun String.released(): Boolean {
 
 @Throws(Exception::class)
 fun String.yearDate(): String {
-	return this.substring(0, 4)
+	return if(this.length >= 4) this.substring(0, 4) else ""
 }
 
 fun String.periodLaunch(): Boolean {
