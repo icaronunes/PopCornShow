@@ -220,7 +220,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		if (item.itemId == R.id.share) {
-			if (model.tvShow.value is Success)
+			if (model.tvShow.value is Success) {
 				salvaImagemMemoriaCache(this@TvShowActivity, series.posterPath,
 					object : SalvarImageShare {
 						override fun retornaFile(file: File) {
@@ -248,8 +248,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 							makeToast(R.string.erro_na_gravacao_imagem)
 						}
 					})
-		} else {
-			makeToast(R.string.erro_ainda_sem_imagem)
+			} else makeToast(R.string.erro_ainda_sem_imagem)
 		}
 		return super.onOptionsItemSelected(item)
 	}
