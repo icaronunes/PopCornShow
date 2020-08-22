@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import applicaton.BaseFragment
 import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
-import com.google.android.gms.ads.AdView
 import domain.person.CastItem
 import domain.person.CrewItem
 import domain.person.Person
@@ -112,7 +111,7 @@ class PersonFragment : BaseFragment() {
 
 	private fun getViewPersonTvShow(inflater: LayoutInflater?, container: ViewGroup?): View {
 		return inflater!!.inflate(R.layout.activity_person_tvshow, container, false).apply {
-			sem_serie = findViewById(R.id.sem_tvshow)
+			sem_serie = findViewById(R.id.empty_tvshows)
 			progressBar = findViewById(R.id.progress)
 			recyclerViewTvshow =
 				findViewById<RecyclerView>(R.id.recycleView_person_tvshow).patternRecyclerGrid()
@@ -131,7 +130,7 @@ class PersonFragment : BaseFragment() {
 
 	private fun getViewPersonImage(inflater: LayoutInflater?, container: ViewGroup?): View {
 		return inflater!!.inflate(R.layout.activity_person_imagem, container, false).apply {
-			sem_fotos = findViewById(R.id.sem_fotos)
+			sem_fotos = findViewById(R.id.empty_pics)
 			progressBar = findViewById(R.id.progress)
 			recyclerViewImagem =
 				findViewById<RecyclerView>(R.id.recycleView_person_imagem).patternRecyclerGrid()
@@ -141,7 +140,7 @@ class PersonFragment : BaseFragment() {
 
 	private fun getViewPersonCrews(inflater: LayoutInflater?, container: ViewGroup?): View {
 		return inflater!!.inflate(R.layout.activity_person_crews, container, false).apply {
-			sem_crews = findViewById(R.id.sem_crews)
+			sem_crews = findViewById(R.id.empty)
 			progressBar = findViewById(R.id.progress)
 			recyclerViewCrews =
 				findViewById<RecyclerView>(R.id.recycleView_person_crews).patternRecyclerGrid()

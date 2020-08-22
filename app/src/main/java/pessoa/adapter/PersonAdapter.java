@@ -8,7 +8,11 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import br.com.icaro.filme.R;
 import fragment.FragmentError;
-import pessoa.fragment.PersonFragment;
+import pessoa.fragment.PersonFragmentMovie;
+import pessoa.fragment.PersonFragmentPhoto;
+import pessoa.fragment.PersonFragmentProduction;
+import pessoa.fragment.PersonFragmentProfile;
+import pessoa.fragment.PersonFragmentTv;
 
 /**
  * Created by icaro on 18/08/16.
@@ -28,22 +32,22 @@ public class PersonAdapter extends FragmentPagerAdapter {
         if(error) return new FragmentError();
 
         if (position == 0) {
-            return PersonFragment.Companion.newInstance(R.string.tvshow);
+            return new PersonFragmentTv();
         }
         if (position == 1) {
-            return PersonFragment.Companion.newInstance(R.string.filme);
+            return new PersonFragmentMovie();
         }
         if (position == 2) {
-            return PersonFragment.Companion.newInstance(R.string.person);
+            return new PersonFragmentProfile();
         }
         if (position == 3) {
-            return PersonFragment.Companion.newInstance(R.string.imagem_person);
+            return new PersonFragmentPhoto();
         }
         if (position == 4) {
-            return PersonFragment.Companion.newInstance(R.string.producao);
+            return new PersonFragmentProduction();
         }
 
-        return null;
+        return new PersonFragmentTv();
     }
 
     @Override

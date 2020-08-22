@@ -9,10 +9,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:importantForAccessibility="yes"
-        android:focusable="true"
         android:layout_margin="@dimen/trade_size_dp_1"
         android:layout_marginStart="@dimen/trade_size_dp_4"
+        android:focusable="true"
+        android:importantForAccessibility="yes"
         app:layout_constraintStart_toEndOf="@+id/card_poster"
         app:layout_constraintTop_toBottomOf="@+id/produtora">
 
@@ -20,8 +20,8 @@
             android:id="@+id/img_star"
             android:layout_width="@dimen/trade_size_dp_42"
             android:layout_height="@dimen/trade_size_dp_42"
-            android:importantForAccessibility="no"
             android:focusable="false"
+            android:importantForAccessibility="no"
             tools:src="@drawable/icon_star" />
 
         <TextView
@@ -29,8 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:importantForAccessibility="yes"
             android:focusable="false"
+            android:importantForAccessibility="yes"
             android:textStyle="normal|bold"
             android:typeface="sans"
             tools:text="8.8" />
@@ -64,8 +64,8 @@
         android:layout_width="@dimen/trade_size_dp_42"
         android:layout_height="@dimen/trade_size_dp_42"
         android:layout_gravity="center"
-        android:importantForAccessibility="yes"
         android:contentDescription="@string/cd_collectons"
+        android:importantForAccessibility="yes"
         app:layout_constraintStart_toEndOf="@+id/icon_site"
         app:layout_constraintTop_toTopOf="@+id/icon_site"
         tools:src="@drawable/collection_on" />
@@ -82,8 +82,7 @@
         app:layout_constraintBottom_toTopOf="@+id/descricao"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/frame_nota"
-        app:layout_constraintTop_toBottomOf="@+id/frame_nota"
-        app:layout_constraintVertical_bias="0.47000003">
+        app:layout_constraintTop_toBottomOf="@+id/icon_site">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -175,8 +174,8 @@
                 android:id="@+id/production_countries"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/trade_size_dp_4"
                 android:layout_marginStart="@dimen/trade_size_dp_4"
+                android:layout_marginEnd="@dimen/trade_size_dp_4"
                 android:gravity="end"
                 android:maxLines="2"
                 app:layout_constraintEnd_toEndOf="parent"
