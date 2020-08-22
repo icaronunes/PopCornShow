@@ -311,7 +311,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 							startActivity(
 								Intent.createChooser(
 									intent,
-									resources.getString(R.string.compartilhar) + " " + movieDb.title
+									resources.getString(Txt.compartilhar, movieDb.title)
 								)
 							)
 						}
