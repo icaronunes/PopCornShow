@@ -11,6 +11,7 @@ import com.google.android.youtube.player.YouTubePlayer.*
 import com.google.android.youtube.player.YouTubePlayerView
 import utils.Constant
 import utils.key.ApiKeys
+import utils.makeToast
 import kotlinx.android.synthetic.main.youtube_layout.trailer_sinopse as sinopse
 
 /**
@@ -46,5 +47,7 @@ class TrailerActivity : YouTubeBaseActivity(), OnInitializedListener {
 
     override fun onInitializationFailure(provider: Provider, youTubeInitializationResult: YouTubeInitializationResult) {
         Crashlytics.logException(Exception("Erro em \"onInitializationFailure\" dentro de " + this.javaClass))
+        makeToast(Txt.ops)
     }
+
 }
