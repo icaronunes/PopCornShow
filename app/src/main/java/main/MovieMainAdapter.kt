@@ -38,7 +38,18 @@ class MovieMainAdapter(context: FragmentActivity, private val movieDbs: ListaFil
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movieDb = movieDbs.results[position]
-        holder.bind(movieDb!!)
+        holder.bind(movieDb)
+    }
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+    override fun setHasStableIds(hasStableIds: Boolean) {
+        super.setHasStableIds(true)
     }
 
     override fun getItemCount() = if (movieDbs.results.size < 15) movieDbs.results.size else 15
@@ -49,16 +60,16 @@ class MovieMainAdapter(context: FragmentActivity, private val movieDbs: ListaFil
             img_poster_grid.setBackgroundColor(ActivityCompat.getColor(context, R.color.primary_dark))
             img_poster_grid
                 .setPicassoWithCache(item.posterPath, 3, {
-                        progress_poster_grid.gone()
-                        color = UtilsApp.loadPalette(img_poster_grid)
-                        layout_poster_main.setCardBackgroundColor(color)
-                    }, {
-                        progress_poster_grid.gone()
-                        title_main.apply {
-                            text = item.title
-                            title_main.visible()
-                        }
-                    }, img_erro = R.drawable.poster_empty)
+                progress_poster_grid.gone()
+                color = UtilsApp.loadPalette(img_poster_grid)
+                layout_poster_main.setCardBackgroundColor(color)
+            }, {
+                progress_poster_grid.gone()
+                title_main.apply {
+                    text = item.title
+                    title_main.visible()
+                }
+            }, img_erro = R.drawable.poster_empty)
 
             img_poster_grid.setOnClickListener {
                 context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {

@@ -45,6 +45,18 @@ class TvShowMainAdapter(activity: FragmentActivity, private val popularTvshow: L
 
     override fun getItemCount() = if (popularTvshow.results.size < 15) popularTvshow.results.size else 15
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+    override fun setHasStableIds(hasStableIds: Boolean) {
+        super.setHasStableIds(true)
+    }
+
     inner class TvShowPopularesViewHolder(parent: ViewGroup) :
         RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.poster_main, parent, false)) {
         fun bind(item: ListaItemSerie) = with(itemView) {

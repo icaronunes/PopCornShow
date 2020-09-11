@@ -236,8 +236,8 @@ class MainFragment() : BaseFragment() {
 		recyclerPopularTv.adapter = TvShowMainAdapter(requireActivity(), popularTvShow)
 	}
 
-	private fun setScrollMovieNowPaying(popular: ListaFilmes) {
-		recyclerNowPlaingMovie.adapter = MovieMainAdapter(requireActivity(), popular)
+	private fun setScrollMovieNowPaying(now: ListaFilmes) {
+		recyclerNowPlaingMovie.adapter = MovieMainAdapter(requireActivity(), now)
 	}
 
 	private fun setScrollUpComing(airDay: ListaFilmes) {
