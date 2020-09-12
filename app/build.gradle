@@ -27,8 +27,8 @@ android {
         applicationId "br.com.icaro.filme"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 91
-        versionName "9.6"
+        versionCode 92
+        versionName "9.7"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
