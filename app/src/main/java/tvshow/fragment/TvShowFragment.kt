@@ -176,7 +176,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 
 	private fun observerIsFallow() {
 		model.isFallow.observe(viewLifecycleOwner, Observer {
-			setFalow(it)
+			setFallow(it)
 			if (it) setUpdateFromFire()
 		})
 	}
@@ -225,7 +225,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 		})
 	}
 
-	private fun getViewInformacoes(inflater: LayoutInflater?, container: ViewGroup?): View? {
+	private fun getViewInfo(inflater: LayoutInflater?, container: ViewGroup?): View? {
 		val view = inflater?.inflate(layout, container, false)
 		progressBarTemporada = view?.findViewById(R.id.progress_temporadas)
 		view?.findViewById<Button>(R.id.seguir)?.setOnClickListener { onClickSeguir() }
@@ -236,7 +236,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
-	): View? = getViewInformacoes(inflater, container)
+	): View? = getViewInfo(inflater, container)
 
 	private fun setUltimoEpDate() {
 		proximo_ep_date.text = series.lastEpisodeAir?.airDate
@@ -248,7 +248,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 		}
 	}
 
-	private fun setFalow(fallow: Boolean) {
+	private fun setFallow(fallow: Boolean) {
 		if (fallow) {
 			seguir?.setText(R.string.seguindo)
 		} else {

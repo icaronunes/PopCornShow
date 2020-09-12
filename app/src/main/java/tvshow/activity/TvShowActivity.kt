@@ -69,7 +69,9 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 	private val idTvshow: Int by bindBundle(Constant.TVSHOW_ID)
 	private val idReel: String? by bundleOrNull(Constant.ID_REEL)
 	private val colorTop: Int by bindBundle(Constant.COLOR_TOP, Color.colorFAB)
+
 	private lateinit var series: Tvshow
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		lifecycle.addObserver(model)
