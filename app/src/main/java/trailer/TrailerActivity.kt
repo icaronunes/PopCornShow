@@ -1,5 +1,6 @@
 package trailer
 
+import Txt
 import android.os.Bundle
 import android.widget.Toast
 import br.com.icaro.filme.R.*
@@ -26,7 +27,7 @@ class TrailerActivity : YouTubeBaseActivity(), OnInitializedListener {
         super.onCreate(savedInstanceState)
         setContentView(layout.youtube_layout)
         val youTubeView: YouTubePlayerView = findViewById(id.youtube_view)
-        idYoutube = intent.getStringExtra(Constant.YOU_TUBE_KEY)
+        idYoutube = intent.getStringExtra(Constant.YOU_TUBE_KEY) ?: ""
         sinopse.text = intent.getStringExtra(Constant.SINOPSE)
         youTubeView.initialize(YOUTUBE_KEY, this)
     }
@@ -40,7 +41,6 @@ class TrailerActivity : YouTubeBaseActivity(), OnInitializedListener {
                     play()
                 }
         } catch (e: Exception) {
-            Crashlytics.logException(e)
             if (!isFinishing) Toast.makeText(this, string.ops, Toast.LENGTH_LONG).show()
         }
     }
