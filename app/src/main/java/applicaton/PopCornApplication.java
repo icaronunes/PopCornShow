@@ -48,7 +48,7 @@ public class PopCornApplication extends MultiDexApplication {
         MobileAds.initialize(this, getString(R.string.admob_id_app));
 
         try {
-            if (getExternalCacheDir().exists()) {
+            if (getExternalCacheDir() != null && getExternalCacheDir().exists()) {
                 if (getExternalCacheDir().length() > 1000000 * 3) {
                     getExternalCacheDir().delete();
                 }
