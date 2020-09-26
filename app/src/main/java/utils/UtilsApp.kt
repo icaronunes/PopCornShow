@@ -13,7 +13,7 @@ import android.util.Log
 import android.widget.ImageView
 import androidx.core.content.FileProvider
 import androidx.palette.graphics.Palette
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import configuracao.SettingsActivity
 import domain.UserSeasons
 import domain.UserTvshow
@@ -80,7 +80,7 @@ object UtilsApp {
 			bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
 			out.close()
 		} catch (e: IOException) {
-			Crashlytics.logException(e)
+			FirebaseCrashlytics.getInstance().recordException(e)
 		}
 	}
 

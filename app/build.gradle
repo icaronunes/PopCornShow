@@ -3,7 +3,7 @@ buildscript {
         maven { url 'https://plugins.gradle.org/m2/' }
     }
     dependencies {
-        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.12.2'
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.12.3'
     }
 }
 apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
@@ -13,10 +13,10 @@ repositories {
     mavenCentral()
 }
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'com.google.firebase.crashlytics'
 
 
 android {
@@ -70,7 +70,6 @@ android {
             repositories {
                 google()
                 maven { url "https://jitpack.io" }
-                maven { url 'https://maven.fabric.io/public' }
             }
             compileOptions {
                 sourceCompatibility JavaVersion.VERSION_1_8
@@ -105,18 +104,9 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     buildTypes {
-        release {
-            signingConfig signingConfigs.config
-            minifyEnabled true
-            debuggable true
-        }
-    }
-
-    buildTypes {
         debug {
             minifyEnabled false
             debuggable true
-            ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false
             crunchPngs false
             ext.alwaysUpdateBuildId = false
@@ -124,6 +114,7 @@ android {
         }
 
         release {
+            signingConfig signingConfigs.config
             ext.enableCrashlytics = true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -144,17 +135,19 @@ dependencies {
     //Google
     implementation 'com.google.android.gms:play-services-analytics:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
-    implementation 'com.google.android.gms:play-services-ads:19.3.0'
+    implementation 'com.google.android.gms:play-services-ads:19.4.0'
     //FireBase
     implementation 'com.google.firebase:firebase-auth:19.3.2'
     implementation 'com.google.firebase:firebase-database:19.3.1'
     implementation 'com.google.firebase:firebase-dynamic-links:19.1.0'
     implementation 'com.google.firebase:firebase-perf:19.0.8'
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
+    implementation 'com.google.firebase:firebase-analytics-ktx:17.5.0'
     //Android
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.google.android.material:material:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.palette:palette:1.0.0'
@@ -181,19 +174,18 @@ dependencies {
     implementation 'com.artemzin.rxjava:proguard-rules:1.3.3.0'
     implementation 'io.reactivex:rxandroid:1.2.1'
     implementation 'com.ramotion.foldingcell:folding-cell:1.2.3'
-    implementation('com.crashlytics.sdk.android:crashlytics:2.10.1') {
-        transitive = true
-    }
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.8-1.4.0-rc'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9-native-mt-2'
     implementation 'androidx.fragment:fragment-ktx:1.2.5'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation 'com.facebook.android:facebook-android-sdk:7.1.0'
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
-    implementation 'io.github.cdimascio:java-dotenv:5.2.1'
 
     //Teste
     testImplementation "io.mockk:mockk:$mockk"
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test:rules:1.3.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

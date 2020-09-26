@@ -2,7 +2,7 @@ package customview.stream
 
 import android.graphics.Bitmap
 import br.com.icaro.filme.R
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import domain.reelgood.movie.Availability
 
 abstract class BaseStreamAb {
@@ -116,7 +116,7 @@ abstract class BaseStreamAb {
             "fubo_tv" -> onResource(R.drawable.fubo_tv)
             else -> {
                 onResource(R.drawable.question)
-                Crashlytics.log("Stream Question - $sourceName")
+                FirebaseCrashlytics.getInstance().log("Stream Question - $sourceName")
             }
         }
     }

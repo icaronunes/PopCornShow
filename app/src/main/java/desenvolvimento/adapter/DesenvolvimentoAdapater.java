@@ -5,13 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.crashlytics.android.Crashlytics;
-
 import br.com.icaro.filme.R;
-import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by icaro on 18/12/16.
@@ -23,7 +18,6 @@ public class DesenvolvimentoAdapater extends RecyclerView.Adapter<Desenvolviment
 
     public DesenvolvimentoAdapater(Context desenvolvimento, String[] planets) {
         this.desenvolvimento = desenvolvimento;
-        Fabric.with(desenvolvimento, new Crashlytics());
         this.planets = planets;
     }
 

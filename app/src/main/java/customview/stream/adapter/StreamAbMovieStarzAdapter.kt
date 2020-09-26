@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import customview.stream.BaseStreamAb
 import domain.ViewType
 import domain.reelgood.movie.Availability
@@ -46,7 +46,8 @@ class StreamAbMovieStarzAdapter(
 					}
 				} catch (ex: Exception) {
 					tryWebLink(availability, context)
-					Crashlytics.log("Erro no Stream - ${availability.toString()}")
+					FirebaseCrashlytics.getInstance().log("Erro no Stream - ${availability.toString()}")
+					FirebaseCrashlytics.getInstance().recordException(ex)
 				}
 			}
 		}

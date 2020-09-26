@@ -5,6 +5,9 @@ import android.view.View
 import android.widget.Toast
 import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import rx.subscriptions.CompositeSubscription
 
 /**

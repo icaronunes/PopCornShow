@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.*
-import com.crashlytics.android.Crashlytics
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubeThumbnailLoader
 import com.google.android.youtube.player.YouTubeThumbnailView
 import com.google.android.youtube.player.YouTubeThumbnailView.*
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import domain.ResultsVideosItem
 import trailer.TrailerActivity
 import utils.Constant
@@ -50,7 +50,7 @@ class TrailerAdapter(private val videos: MutableList<ResultsVideosItem?>?, priva
                         youTubeThumbnailView: YouTubeThumbnailView,
                         youTubeInitializationResult: YouTubeInitializationResult
                     ) {
-                        Crashlytics.logException(Exception("Erro em \"onInitializationFailure\" dentro de " + this.javaClass))
+                        FirebaseCrashlytics.getInstance().log("Erro em \"onInitializationFailure\" dentro de " + this.javaClass)
                     }
                 })
             setOnClickListener {

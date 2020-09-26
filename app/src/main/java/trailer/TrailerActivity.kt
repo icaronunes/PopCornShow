@@ -4,12 +4,12 @@ import Txt
 import android.os.Bundle
 import android.widget.Toast
 import br.com.icaro.filme.R.*
-import com.crashlytics.android.Crashlytics
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayer.*
 import com.google.android.youtube.player.YouTubePlayerView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import utils.Constant
 import utils.key.ApiKeys
 import utils.makeToast
@@ -46,7 +46,7 @@ class TrailerActivity : YouTubeBaseActivity(), OnInitializedListener {
     }
 
     override fun onInitializationFailure(provider: Provider, youTubeInitializationResult: YouTubeInitializationResult) {
-        Crashlytics.logException(Exception("Erro em \"onInitializationFailure\" dentro de " + this.javaClass))
+        FirebaseCrashlytics.getInstance().log("Erro em \"onInitializationFailure\" dentro de " + this.javaClass)
         makeToast(Txt.ops)
     }
 

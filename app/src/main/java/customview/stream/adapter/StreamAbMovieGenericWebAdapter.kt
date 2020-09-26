@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import customview.stream.BaseStreamAb
 import domain.ViewType
 import domain.reelgood.movie.Availability
@@ -64,7 +64,8 @@ class StreamAbMovieGenericWebAdapter(
 				}
 			)
 		} catch (e: Exception) {
-			Crashlytics.log("Error no Stream - ${title.getNameTypeReel()} ${availability.toString()}")
+			FirebaseCrashlytics.getInstance().log("Error no Stream - ${title.getNameTypeReel()} ${availability.toString()}")
+			FirebaseCrashlytics.getInstance().recordException(e)
 			context.startActivity(Intent(
 				Intent.ACTION_VIEW,
 				Uri.parse("https://www.google.com/search?q=$title ${availability?.sourceName ?: ""}")

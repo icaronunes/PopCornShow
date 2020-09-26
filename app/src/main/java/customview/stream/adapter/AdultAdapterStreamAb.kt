@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import customview.stream.BaseStreamAb
 import customview.stream.TypeEnumStream
 import customview.stream.TypeEnumStream.*
@@ -54,7 +54,7 @@ class AdultAdapterStreamAb(
 					}
 				} catch (ex: Exception) {
 					Toast.makeText(context, context.getString(Txt.ops), Toast.LENGTH_SHORT).show()
-					Crashlytics.log("Erro no Stream - ${availability.toString()}")
+					FirebaseCrashlytics.getInstance().recordException(ex)
 				}
 			}
 		}

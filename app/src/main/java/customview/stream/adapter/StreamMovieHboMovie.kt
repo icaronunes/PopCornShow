@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.icaro.filme.R
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import customview.stream.BaseStreamAb
 import customview.stream.TypeEnumStream
 import customview.stream.TypeEnumStream.EP
@@ -41,7 +41,8 @@ class StreamAbMovieHboAdapter(val subscription: Boolean = false,
                         context.startActivity(intent)
                     }
                 } catch (ex: Exception) {
-                    Crashlytics.log("Erro no Stream - ${availability.toString()}")
+                    FirebaseCrashlytics.getInstance().log("Erro no Stream - ${availability.toString()}")
+                    FirebaseCrashlytics.getInstance().recordException(ex)
                     tryWebLink(availability,  context)
                 }
             }

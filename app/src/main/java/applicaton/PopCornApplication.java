@@ -5,15 +5,10 @@ import android.content.Context;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
-
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.onesignal.OneSignal;
-
-import br.com.icaro.filme.BuildConfig;
 import br.com.icaro.filme.R;
-import io.fabric.sdk.android.Fabric;
 import onsignal.CustomNotificationOpenedHandler;
 import onsignal.CustomNotificationReceivedHandler;
 
@@ -41,9 +36,7 @@ public class PopCornApplication extends MultiDexApplication {
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .init();
 
-        Fabric.with(this, new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build());
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
 
         MobileAds.initialize(this, getString(R.string.admob_id_app));
 
@@ -53,8 +46,7 @@ public class PopCornApplication extends MultiDexApplication {
                     getExternalCacheDir().delete();
                 }
             }
-        } catch (Exception e) {
-        }
+        } catch (Exception ignored) {}
 
     }
 

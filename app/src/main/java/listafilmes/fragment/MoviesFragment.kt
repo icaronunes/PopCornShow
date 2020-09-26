@@ -105,7 +105,7 @@ class MoviesFragment : FragmentBase() {
                     Toast.makeText(context, getString(R.string.ops), Toast.LENGTH_LONG).show()
                 }
             })
-        subscriptions.add(inscricao)
+        subscriptions.add(inscricao) //Todo coroutines
     }
 
     private fun snack() {
