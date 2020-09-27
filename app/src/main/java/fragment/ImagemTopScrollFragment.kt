@@ -1,5 +1,6 @@
 package fragment
 
+import Layout
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
@@ -17,10 +18,10 @@ import br.com.icaro.filme.R
 import br.com.icaro.filme.R.*
 import domain.TopMain
 import filme.activity.MovieDetailsActivity
-import info.movito.themoviedbapi.model.Multi.MediaType.*
 import tvshow.activity.TvShowActivity
 import utils.Constant
 import utils.UtilsApp.loadPalette
+import utils.enums.EnumTypeMedia.*
 import utils.setPicasso
 
 /**

@@ -36,7 +36,7 @@ class ImagemTopFilmeScrollFragment : Fragment() {
 	}
 
 	companion object {
-		fun newInstance(artwork: String?) = ImagemTopFilmeScrollFragment().apply {
+		fun newInstance(artwork: String) = ImagemTopFilmeScrollFragment().apply {
 			arguments = bundleOf(Constant.ENDERECO to artwork)
 		}
 	}
