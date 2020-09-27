@@ -165,7 +165,6 @@ dependencies {
     implementation "com.ramotion.foldingcell:folding-cell:$other.foldingCell"
 
     //Chamadas de Api
-    implementation group: 'info.movito', name: 'themoviedbapi', version: '1.9'
     implementation "com.squareup.okhttp3:okhttp:$call.okhttp"
     implementation "com.google.code.gson:gson:$call.gson"
     implementation "com.artemzin.rxjava:proguard-rules:$call.proguardRules"
