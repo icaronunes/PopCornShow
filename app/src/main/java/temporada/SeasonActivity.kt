@@ -15,7 +15,6 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
 import domain.EpisodesItem
@@ -45,7 +44,7 @@ import java.util.HashMap
  * Created by icaro on 26/08/16.
  */
 class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseActivityAb() {
-	private val ZERO: Float = 0.0f
+
 	private val seasonId: Int by bindBundle(Constant.TEMPORADA_ID)
 	private val seasonPosition: Int by bindBundle(Constant.TEMPORADA_POSITION)
 	private val tvShowId: Int by bindBundle(Constant.TVSHOW_ID)
@@ -55,10 +54,7 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 	private var seasons: UserSeasons? = null
 	private lateinit var tvSeason: TvSeasons
 	private val model: TvShowViewModel by lazy {
-		createViewModel(
-			TvShowViewModel::class.java,
-			this
-		)
+		createViewModel(TvShowViewModel::class.java, this)
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -186,22 +182,7 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 		return containsEpNotWatch() == null
 	}
 
-	/*override*/ fun onClickTemporada(position: Int) {
-		startActivity(Intent(this@SeasonActivity, EpsodioActivity::class.java).apply {
-			putExtras(
-				bundleOf(
-					Constant.TVSHOW_ID to tvShowId,
-					Constant.POSICAO to position,
-					Constant.TEMPORADA_POSITION to seasonPosition,
-					Constant.TVSEASONS to tvSeason,
-					Constant.COLOR_TOP to color,
-					Constant.SEGUINDO to fallow
-				)
-			)
-		})
-	}
-
-	/*override*/ private fun onClickSeasonReated(
+	private fun onClickSeasonReated(
 		ep: EpisodesItem,
 		position: Int,
 		userEp: UserEp?,
@@ -216,7 +197,7 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 
 				findViewById<TextView>(R.id.rating_title).text = ep.name
 				val ratingBar = findViewById<RatingBar>(R.id.ratingBar_rated).apply {
-					rating = userEp?.nota ?: ZERO
+					rating = userEp?.nota ?: Constant.ZERO
 				}
 
 				findViewById<Button>(R.id.cancel_rated).apply {
@@ -225,7 +206,7 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 					setOnClickListener {
 						val episode = ep.createUserEp().apply {
 							isAssistido = false
-							nota = ZERO
+							nota = Constant.ZERO
 						}
 						val childUpdates = HashMap<String, Any>()
 						childUpdates["$tvShowId/seasons/$seasonPosition/visto/"] = false
@@ -250,7 +231,7 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 							this["$tvShowId/seasons/$seasonPosition/userEps/$position/"] = epRated
 						}
 						model.watchEp(childUpdates)
-						setnotaIMDB(epRated)
+						setRateIMDB(epRated)
 						dismiss()
 					}
 				}
@@ -260,24 +241,13 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 		}
 	}
 
-	/*override*/ fun onClickScrool(position: Int) {
-		scrollToTop(position)
-	}
-
-	private fun scrollToTop(currentCard: Int) {
-		val layoutManager = recycleView_temporada.layoutManager as LinearLayoutManager?
-		layoutManager?.scrollToPositionWithOffset(currentCard, 0)
-	}
-
-	private fun setnotaIMDB(epRated: UserEp) {
+	private fun setRateIMDB(epRated: UserEp) {
 		model.setRatedTvShowOnTheMovieDB(tvShowId, epRated)
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu) = true
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
-		if (item.itemId == android.R.id.home) {
-			finish()
-		}
+		if (item.itemId == android.R.id.home) { finish() }
 		return true
 	}
 }

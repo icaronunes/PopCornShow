@@ -6,6 +6,7 @@ package utils
 
 object Constant {
 
+	const val ZERO: Float = 0.0f
 	const val WIKI = "https://www.wikipedia.org/wiki/"
 	const val BASEMOVIEDB_TV = "https://www.themoviedb.org/tv/"
 	const val BASEMOVIEDB_MOVIE = "https://www.themoviedb.org/movie/"

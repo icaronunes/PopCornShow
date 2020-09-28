@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.adapter_season.view.favorite_season
 import kotlinx.android.synthetic.main.adapter_season.view.title_season
 import kotlinx.android.synthetic.main.adapter_season.view.watch_season
 import temporada.adapter.SeasonAdapter.*
+import utils.Constant
 import utils.invisible
 import utils.parseDateShot
 import utils.setPicassoWithCache
@@ -68,7 +69,7 @@ class SeasonAdapter(
 					}
 					epUser?.let { userEp ->
 						setImageResource(
-							if (userEp.nota != 0f)
+							if (userEp.nota != Constant.ZERO)
 								R.drawable.ic_star
 							else
 								R.drawable.ic_star_off)

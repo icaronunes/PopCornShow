@@ -7,7 +7,7 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
-    android:minHeight="90dp"
+    android:minHeight="120dp"
     app:cardCornerRadius="3dp"
     app:cardUseCompatPadding="true">
 
