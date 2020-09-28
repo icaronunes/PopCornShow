@@ -148,6 +148,13 @@ fun Activity.makeToast(restText: Int, time: Int = Toast.LENGTH_SHORT) {
 fun Activity.makeToast(text: String?, time: Int = Toast.LENGTH_SHORT) {
 	Toast.makeText(this, text, time).show()
 }
+/**
+ * Context
+ */
+
+fun Context.makeToast(text: String?, time: Int = Toast.LENGTH_SHORT) {
+	Toast.makeText(this, text, time).show()
+}
 
 /**
  * VIEW

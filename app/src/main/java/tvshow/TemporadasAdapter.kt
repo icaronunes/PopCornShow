@@ -61,8 +61,8 @@ class TemporadasAdapter(
 			season.text = "${context.getString(R.string.temporada)} ${seasonsItem.seasonNumber} "
 			imgSeason.setPicassoWithCache(seasonsItem.posterPath, 4, {}, { imgSeason.gone() })
 			data.text = seasonsItem.airDate?.parseDateShot() ?: ""
-			itemView.setOnClickListener { onClickTemporada(adapterPosition, color) }
-			popup.setOnClickListener { view -> showPopUp(view, seasonsItem.seasonNumber) }
+			itemView.setOnClickListener { onClickTemporada(adapterPosition, color) } //hight ordem
+			popup.setOnClickListener { view -> showPopUp(view, seasonsItem.seasonNumber) } //hight ordem
 			btFallow.setOnClickListener {
 				changeEps(
 					adapterPosition,

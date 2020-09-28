@@ -1,24 +1,24 @@
 package domain
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.google.gson.annotations.SerializedName
 
 /**
  * Created by icaro on 29/08/17.
  */
 data class Company(
 
-    @JsonProperty("description")
+    @SerializedName("description")
     var description: String? = null,
-    @JsonProperty("headquarters")
+    @SerializedName("headquarters")
     var headquarters: String? = null,
-    @JsonProperty("homepage")
+    @SerializedName("homepage")
     var homepage: String? = null,
-    @JsonProperty("logo_path")
+    @SerializedName("logo_path")
     var logo_path: String? = null,
-    @JsonProperty("id")
+    @SerializedName("id")
     var id: Int? = null,
-    @JsonProperty("name")
+    @SerializedName("name")
     var name: String? = null,
-    @JsonProperty("parent_company")
+    @SerializedName("parent_company")
     var parentCompany: Company? = null
 )

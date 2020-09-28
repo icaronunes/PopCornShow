@@ -16,9 +16,7 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import applicaton.BaseViewModel.BaseRequest.Failure
-import applicaton.BaseViewModel.BaseRequest.Loading
-import applicaton.BaseViewModel.BaseRequest.Success
+import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
 import domain.EpisodesItem
 import domain.TvSeasons
@@ -27,8 +25,10 @@ import domain.UserSeasons
 import domain.createUserEp
 import domain.fillEpUserTvshow
 import episodio.EpsodioActivity
+import ifValid
 import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal
 import kotlinx.android.synthetic.main.temporada_layout.recycleView_temporada
+import temporada.adapter.SeasonAdapter
 import tvshow.viewmodel.TvShowViewModel
 import utils.Constant
 import utils.UtilsApp
@@ -44,10 +44,8 @@ import java.util.HashMap
 /**
  * Created by icaro on 26/08/16.
  */
-class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseActivityAb(),
-	SeasonOnClickListener {
+class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseActivityAb() {
 	private val ZERO: Float = 0.0f
-
 	private val seasonId: Int by bindBundle(Constant.TEMPORADA_ID)
 	private val seasonPosition: Int by bindBundle(Constant.TEMPORADA_POSITION)
 	private val tvShowId: Int by bindBundle(Constant.TVSHOW_ID)
@@ -84,10 +82,46 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 
 	private fun initAdapter() {
 		recycleView_temporada.patternRecyler(false).apply {
-			adapter = SeasonFoldinAdapter(
-				this@SeasonActivity, this@SeasonActivity
+			setHasFixedSize(true)
+			adapter = SeasonAdapter(fallow, { position: Int ->
+				callIntent(position)
+			},
+				{ status: Boolean, id: Int ->
+					watchSeason(status, id)
+				})
+			{ ep: EpisodesItem, position: Int, userEp: UserEp? ->
+				onClickSeasonReated(ep, position, userEp)
+			}
+		}
+	}
+
+	private fun callIntent(position: Int) {
+		val intent = Intent(this@SeasonActivity, EpsodioActivity::class.java).apply {
+			putExtras(
+				bundleOf(
+					Constant.TVSHOW_ID to tvShowId,
+					Constant.POSICAO to position,
+					Constant.TEMPORADA_POSITION to seasonPosition,
+					Constant.TVSEASONS to tvSeason,
+					Constant.COLOR_TOP to color,
+					Constant.SEGUINDO to fallow
+				)
 			)
 		}
+		startActivity(intent)
+	}
+
+	private fun watchSeason(status: Boolean, id: Int) {
+		fun fillWatchEp(watch: Boolean): HashMap<String, Any> {
+			return HashMap<String, Any>().also {
+				val eps = tvSeason.fillEpUserTvshow(seasons, watch, id).userEps
+				it["/$tvShowId/seasons/$seasonPosition/visto"] =
+					if (status) isWatchAll(eps) else false
+				it["/$tvShowId/seasons/$seasonPosition/userEps"] = eps
+			}
+		}
+
+		model.watchEp(fillWatchEp(status))
 	}
 
 	override fun onStart() {
@@ -104,17 +138,19 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 
 	private fun observerSeasonFire() {
 		model.isFallow.observe(this, Observer {
-			(recycleView_temporada.adapter as SeasonFoldinAdapter).changeFallow(it)
-			fallow = it
-			if (it) model.getSeasonFire(idTvshow = tvShowId, seasonNumber = seasonPosition)
+			it.ifValid {
+				(recycleView_temporada.adapter as SeasonAdapter).changeFallow(it)
+				fallow = it
+				model.getSeasonFire(idTvshow = tvShowId, seasonNumber = seasonPosition)
+			}
 		})
 
 		model.seasons.observe(this, androidx.lifecycle.Observer {
 			if (it.exists()) {
 				seasons = it.getValue(UserSeasons::class.java)
-				(recycleView_temporada.adapter as SeasonFoldinAdapter).addSeasonFire(seasons)
+				(recycleView_temporada.adapter as SeasonAdapter).addSeasonFire(seasons)
 			} else {
-				(recycleView_temporada.adapter as SeasonFoldinAdapter).addSeasonFire(null)
+				(recycleView_temporada.adapter as SeasonAdapter).addSeasonFire(null)
 			}
 		})
 	}
@@ -126,8 +162,8 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 					tvSeason = it.result
 					supportActionBar?.title =
 						if (tvSeason.name?.isNotEmpty() == true) tvSeason.name else titleSeason
-					(recycleView_temporada.adapter as SeasonFoldinAdapter).addTvSeason(tvSeason.episodes)
-					 model.loadingView(false)
+					(recycleView_temporada.adapter as SeasonAdapter).addTvSeason(tvSeason.episodes)
+					model.loadingView(false)
 				}
 				is Failure -> {
 					model.loadingView(false)
@@ -145,26 +181,12 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 		if (loading) progress_horizontal.visible() else progress_horizontal.gone()
 	}
 
-
-	override fun onClickVerTemporada(status: Boolean, id: Int) {
-		fun fillWatchEp(watch: Boolean): HashMap<String, Any> {
-			return HashMap<String, Any>().also {
-				val eps = tvSeason.fillEpUserTvshow(seasons, watch, id).userEps
-				it["/$tvShowId/seasons/$seasonPosition/visto"] =
-					if (status) isWatchAll(eps) else false
-				it["/$tvShowId/seasons/$seasonPosition/userEps"] = eps
-			}
-		}
-
-		model.watchEp(fillWatchEp(status))
-	}
-
 	private fun isWatchAll(eps: List<UserEp>): Boolean {
 		fun containsEpNotWatch() = eps.find { !it.isAssistido }
 		return containsEpNotWatch() == null
 	}
 
-	override fun onClickTemporada(position: Int) {
+	/*override*/ fun onClickTemporada(position: Int) {
 		startActivity(Intent(this@SeasonActivity, EpsodioActivity::class.java).apply {
 			putExtras(
 				bundleOf(
@@ -179,11 +201,10 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 		})
 	}
 
-	override fun onClickSeasonReated(
+	/*override*/ private fun onClickSeasonReated(
 		ep: EpisodesItem,
 		position: Int,
 		userEp: UserEp?,
-		notifyItemChanged: () -> Unit
 	) {
 		if (ep.airDate?.released() == true) {
 			Dialog(this@SeasonActivity).apply {
@@ -206,7 +227,6 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 							isAssistido = false
 							nota = ZERO
 						}
-
 						val childUpdates = HashMap<String, Any>()
 						childUpdates["$tvShowId/seasons/$seasonPosition/visto/"] = false
 						childUpdates["$tvShowId/seasons/$seasonPosition/userEps/$position/"] =
@@ -222,11 +242,9 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 							nota = ratingBar.rating
 							this.isAssistido = true
 						}
-
 						val eps = tvSeason
 							.fillEpUserTvshow(seasons, true, id).userEps
 							.replaceItemList(epRated) { it.id == epRated.id }
-
 						val childUpdates = HashMap<String, Any>().apply {
 							this["$tvShowId/seasons/$seasonPosition/visto"] = isWatchAll(eps)
 							this["$tvShowId/seasons/$seasonPosition/userEps/$position/"] = epRated
@@ -236,14 +254,13 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 						dismiss()
 					}
 				}
-
 			}.show()
 		} else {
 			makeToast(getString(R.string.atualizar))
 		}
 	}
 
-	override fun onClickScrool(position: Int) {
+	/*override*/ fun onClickScrool(position: Int) {
 		scrollToTop(position)
 	}
 
@@ -257,7 +274,6 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu) = true
-
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		if (item.itemId == android.R.id.home) {
 			finish()

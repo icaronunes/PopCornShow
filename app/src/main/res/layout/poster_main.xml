@@ -41,7 +41,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
         android:adjustViewBounds="true"
-        android:background="@color/transparent2"
+        android:background="@color/transparent50"
         android:ellipsize="end"
         android:maxLength="18"
         android:textAppearance="@style/AppIntroDefaultHeading"

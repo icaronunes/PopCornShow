@@ -50,7 +50,7 @@
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/transparent2"
+            android:background="@color/transparent50"
             android:ellipsize="end"
             android:maxLines="1"
             android:padding="@dimen/trade_size_dp_4"

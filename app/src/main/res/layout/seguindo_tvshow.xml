@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         tools:text="dieadieadmaeidam"
-        android:background="@color/transparent2"
+        android:background="@color/transparent50"
         android:visibility="gone" />
 
 </androidx.cardview.widget.CardView>

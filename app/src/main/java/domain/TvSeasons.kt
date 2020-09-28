@@ -78,7 +78,7 @@ data class TvSeasons(
 	@field:SerializedName("episodes")
 	val episodes: List<EpisodesItem> = listOf(),
 	@field:SerializedName("poster_path")
-	val posterPath: String? = null
+	val posterPath: String? = null,
 ) : Serializable
 
 fun EpisodesItem.createUserEp(): UserEp {
@@ -119,8 +119,23 @@ data class EpisodesItem(
 	@field:SerializedName("crew")
 	val crew: List<CrewItem?>? = null,
 	@field:SerializedName("guest_stars")
-	val guestStars: List<GuestStarsItem?>? = null
-) : Serializable
+	val guestStars: List<GuestStarsItem?>? = null,
+) : Serializable {
+	fun seasonAndEp(): String {
+		val ep = if (this.episodeNumber <= 9) {
+			"E0$episodeNumber"
+		} else {
+			"E$episodeNumber"
+		}
+		val s = if (this.seasonNumber <= 9) {
+			"S0$seasonNumber"
+		} else {
+			"S$seasonNumber"
+		}
+
+		return "$s | $ep"
+	}
+}
 
 @Generated("com.robohorse.robopojogenerator")
 @Keep
@@ -138,7 +153,7 @@ data class CrewItem(
 	@field:SerializedName("department")
 	val department: String? = null,
 	@field:SerializedName("job")
-	val job: String? = null
+	val job: String? = null,
 ) : Serializable
 
 @Generated("com.robohorse.robopojogenerator")
@@ -157,5 +172,5 @@ data class GuestStarsItem(
 	@field:SerializedName("id")
 	val id: Int? = null,
 	@field:SerializedName("order")
-	val order: Int? = null
+	val order: Int? = null,
 ) : Serializable
