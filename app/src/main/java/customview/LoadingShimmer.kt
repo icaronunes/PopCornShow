@@ -6,23 +6,17 @@ import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import android.view.View
-import android.view.animation.AnimationUtils.loadAnimation
+import android.view.animation.AnimationUtils.*
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import br.com.icaro.filme.R
 import com.facebook.shimmer.ShimmerFrameLayout
-import customview.LoadingShimmer.PaymentLoadingsType.CalendarTv
-import customview.LoadingShimmer.PaymentLoadingsType.Description
-import customview.LoadingShimmer.PaymentLoadingsType.ListDescriptionLabel
-import customview.LoadingShimmer.PaymentLoadingsType.Photo
-import customview.LoadingShimmer.PaymentLoadingsType.Text
-import customview.LoadingShimmer.PaymentLoadingsType.Title
+import customview.LoadingShimmer.PaymentLoadingsType.*
 import utils.kotterknife.findView
 import kotlin.random.Random
 
-
 /**
- * TODO: document your custom view class.
+ *  Shimmer PopCorn
  */
 class LoadingShimmer : ConstraintLayout {
 	//TODO - Criar metodo que receber um layout pronto

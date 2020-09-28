@@ -15,5 +15,5 @@ data class References(
     val android: LinkReferences? = null,
     @SerializedName("ios")
     val ios: LinkReferences? = null
-    //Todo criar o mesmo objeto para todos
+
 ): Parcelable

@@ -29,7 +29,6 @@ import utils.visible
 import kotlin.properties.Delegates
 
 /**
- * TODO: document your custom view class.
  * adicionar
  *   app:behavior_peekHeight="0dp"
 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"

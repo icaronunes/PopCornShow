@@ -47,7 +47,7 @@ class SearchMultiActivity(override var layout: Int = Layout.search_layout) : Bas
 		setupNavDrawer()
 		handleTitle()
 		observers()
-		if (Intent.ACTION_VIEW == intent.action) { //TODO pra que server isso?
+		if (Intent.ACTION_VIEW == intent.action) { //TODO pra que server isso? Que diabo é izolda?
 			when {
 				intent.data?.lastPathSegment.equals(MOVIE.type, ignoreCase = true) -> {
 					startActivity(Intent(this, MovieDetailsActivity::class.java).apply {
