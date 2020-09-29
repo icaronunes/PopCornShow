@@ -87,7 +87,7 @@ class PersonFragment : BaseFragment() {
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
-	): View? {
+	): View {
 		super.onCreateView(inflater, container, savedInstanceState)
 		when (tipo) {
 			R.string.filme -> {
@@ -106,7 +106,7 @@ class PersonFragment : BaseFragment() {
 				return getViewPersonTvShow(inflater, container)
 			}
 		}
-		return null
+		return View(context)
 	}
 
 	private fun getViewPersonTvShow(inflater: LayoutInflater?, container: ViewGroup?): View {

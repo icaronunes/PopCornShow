@@ -1,5 +1,6 @@
 package seguindo
 
+import Layout
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import applicaton.BaseFragment
 import br.com.icaro.filme.R
-import customview.LoadingShimmer.PaymentLoadingsType
+import customview.LoadingShimmer.*
 import domain.UserTvshow
 import utils.gone
 import utils.visible
@@ -34,7 +35,7 @@ class ListAllFollowFragment(override val layout: Int = Layout.seguindo) : BaseFr
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
-	): View? = getViewSeguindo(inflater, container)
+	): View = getViewSeguindo(inflater, container)
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)

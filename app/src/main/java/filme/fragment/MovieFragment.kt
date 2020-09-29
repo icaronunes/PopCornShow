@@ -1,5 +1,6 @@
 package filme.fragment
 
+import Layout
 import adapter.CastAdapter
 import adapter.CrewAdapter
 import adapter.TrailerAdapter
@@ -11,9 +12,7 @@ import android.app.AlertDialog
 import android.app.AlertDialog.*
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
@@ -107,14 +106,6 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 	override fun onResume() {
 		super.onResume()
 		getImdbData()
-	}
-
-	override fun onCreateView(
-		inflater: LayoutInflater,
-		container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View? {
-		return inflater.inflate(layout, container, false)
 	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {

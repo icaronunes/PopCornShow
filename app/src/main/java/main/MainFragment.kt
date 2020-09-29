@@ -105,11 +105,11 @@ class MainFragment() : BaseFragment() {
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
-	): View? {
+	): View {
 		return when (tipo) {
 			R.string.filmes_main -> getViewMovie(inflater, container)
 			R.string.tvshow_main -> getViewTvshow(inflater, container)
-			else -> null
+			else -> View(context)
 		}
 	}
 

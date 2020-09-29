@@ -19,9 +19,8 @@ import utils.gone
 import utils.kotterknife.findView
 import utils.patternRecyclerGrid
 
-class PersonFragmentPhoto : BaseFragment() {
+class PersonFragmentPhoto(override val layout: Int = R.layout.activity_person_imagem) : BaseFragment() {
 	private val model by lazy { createViewModel(PersonViewModel::class.java) }
-	override val layout: Int = 0 // remover na refatoração. Separar fragmetos
 	private val recyclerViewImagem: RecyclerView by findView(R.id.recycleView_person_imagem)
 	private val empty: TextView by findView(R.id.empty_pics)
 	private val progressBar: ProgressBar by findView(R.id.progress)
@@ -42,15 +41,6 @@ class PersonFragmentPhoto : BaseFragment() {
 				else -> { }
 			}
 		})
-	}
-
-	override fun onCreateView(
-		inflater: LayoutInflater,
-		container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View? {
-		super.onCreateView(inflater, container, savedInstanceState)
-		return getViewPersonImage(inflater, container)
 	}
 
 	private fun getViewPersonImage(inflater: LayoutInflater?, container: ViewGroup?): View {

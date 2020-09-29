@@ -1,9 +1,6 @@
 package pessoa.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -21,26 +18,12 @@ import utils.kotterknife.findView
 import utils.patternRecyclerGrid
 import utils.visible
 
-class PersonFragmentMovie : BaseFragment() {
+class PersonFragmentMovie(override val layout: Int = R.layout.activity_person_movies) : BaseFragment() {
 	private val model by lazy { createViewModel(PersonViewModel::class.java) }
 	private val recyclerViewMovie: RecyclerView by findView(R.id.recycleView_person_movies)
 	private val progressBar: ProgressBar by findView(R.id.progress)
 	private val empty: TextView by findView(R.id.empty_tvshows)
 	private val adView: AdView by findView(R.id.adview)
-	override val layout: Int = 0 // remover na refatoração. Separar fragmetos
-
-	override fun onCreateView(
-		inflater: LayoutInflater,
-		container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View? {
-		super.onCreateView(inflater, container, savedInstanceState)
-		return getViewPersonMovie(inflater, container)
-	}
-
-	private fun getViewPersonMovie(inflater: LayoutInflater?, container: ViewGroup?): View {
-		return inflater!!.inflate(R.layout.activity_person_movies, container, false)
-	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)

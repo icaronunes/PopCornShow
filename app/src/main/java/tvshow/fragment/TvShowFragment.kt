@@ -225,18 +225,18 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 		})
 	}
 
-	private fun getViewInfo(inflater: LayoutInflater?, container: ViewGroup?): View? {
-		val view = inflater?.inflate(layout, container, false)
+	private fun getViewInfo(inflater: LayoutInflater, container: ViewGroup?): View {
+		val view = inflater.inflate(layout, container, false)
 		progressBarTemporada = view?.findViewById(R.id.progress_temporadas)
 		view?.findViewById<Button>(R.id.seguir)?.setOnClickListener { onClickSeguir() }
-		return view
+		return view!!
 	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
-	): View? = getViewInfo(inflater, container)
+	): View = getViewInfo(inflater, container)
 
 	private fun setUltimoEpDate() {
 		proximo_ep_date.text = series.lastEpisodeAir?.airDate

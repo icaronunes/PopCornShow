@@ -4,7 +4,6 @@ import android.content.Context
 import applicaton.BaseViewModel.*
 import applicaton.BaseViewModel.BaseRequest.*
 import com.google.gson.JsonSyntaxException
-import domain.Company
 import domain.CompanyFilmes
 import domain.Credits
 import domain.EpisodesItem
@@ -95,6 +94,61 @@ class Api(val context: Context) : ApiSingleton() {
 		}
 	}
 
+	suspend fun getListMovie(id: Int, pagina: Int): BaseRequest<ListaFilmes> {
+		return suspendCancellableCoroutine { continuation ->
+			executeCall("${baseUrl4}list/$id?page=$pagina&api_key=$TMDBAPI&region=$region",
+				object : Callback {
+					override fun onFailure(call: Call, e: IOException) {
+						continuation.resume(Failure(e))
+					}
+
+					override fun onResponse(call: Call, response: Response) {
+						try {
+							if (response.isSuccessful) {
+								val listMovie = gson.fromJsonWithLog(
+									response.body?.string(),
+									ListaFilmes::class.java
+								)
+								continuation.resume(Success(listMovie))
+							} else {
+								continuation.resume(Failure(Exception(response.message)))
+							}
+						} catch (e: Exception) {
+							continuation.resume(Failure(e))
+						}
+					}
+				})
+		}
+	}
+
+	suspend fun getListMovieByType(type: String, page: Int): BaseRequest<ListaFilmes> {
+		return suspendCancellableCoroutine { continuation ->
+			executeCall("${baseUrl3}movie/$type?api_key=${TMDBAPI}&page=$page&region=$region",
+				object : Callback {
+					override fun onFailure(call: Call, e: IOException) {
+						continuation.resume(Failure(e))
+					}
+
+					override fun onResponse(call: Call, response: Response) {
+						try {
+							if (response.isSuccessful) {
+								val listMovie = gson.fromJsonWithLog(
+									response.body?.string(),
+									ListaFilmes::class.java
+								)
+								continuation.resume(Success(listMovie))
+							} else {
+								continuation.resume(Failure(Exception(response.message)))
+							}
+						} catch (e: Exception) {
+							continuation.resume(Failure(e))
+						}
+					}
+				})
+		}
+	}
+
+
 	fun getLista(id: String, pagina: Int = 1): Observable<ListaFilmes> {
 		return Observable.create { subscriber ->
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
@@ -107,25 +161,6 @@ class Api(val context: Context) : ApiSingleton() {
 				val json = response.body?.string()
 				val lista = gson.fromJsonWithLog(json, ListaFilmes::class.java)
 				subscriber.onNext(lista)
-				subscriber.onCompleted()
-			} else {
-				subscriber.onError(Throwable(response.message))
-			}
-		}
-	}
-
-	fun getCompany(id_produtora: Int): Observable<Company> {
-		return Observable.create { subscriber ->
-			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val request = Request.Builder()
-				.url("${baseUrl3}company/$id_produtora?api_key=" + TMDBAPI)
-				.get()
-				.build()
-			val response = client.newCall(request).execute()
-			if (response.isSuccessful) {
-				val json = response.body?.string()
-				val company = gson.fromJsonWithLog(json, Company::class.java)
-				subscriber.onNext(company)
 				subscriber.onCompleted()
 			} else {
 				subscriber.onError(Throwable(response.message))
@@ -155,7 +190,7 @@ class Api(val context: Context) : ApiSingleton() {
 	fun buscaDeFilmes(
 		tipoDeBusca: String? = MOVIE.now,
 		pagina: Int = 1,
-		local: String = "US"
+		local: String = "US",
 	): Observable<ListaFilmes> {
 		return Observable.create { subscriber ->
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
@@ -180,7 +215,7 @@ class Api(val context: Context) : ApiSingleton() {
 	fun buscaDeSeries(
 		tipoDeBusca: String? = TVSHOW.popular,
 		pagina: Int = 1,
-		local: String = "US"
+		local: String = "US",
 	): Observable<ListaSeries> {
 		// Todo Erro na busca da paginacao
 		return Observable.create { subscriber ->
@@ -259,7 +294,7 @@ class Api(val context: Context) : ApiSingleton() {
 
 	suspend fun getTrailersFromEn(
 		movieId: Int,
-		type: String
+		type: String,
 	): BaseRequest<Videos> { // Todo Validar erros
 		return suspendCancellableCoroutine { cont ->
 			executeCall(
@@ -514,9 +549,11 @@ class Api(val context: Context) : ApiSingleton() {
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
 			val request = Request.Builder()
 				.url(
-					"${baseUrl3}movie/popular?api_key=${TMDBAPI}&language=${getIdiomaEscolhido(
-						context
-					)}&page=1&region=$region"
+					"${baseUrl3}movie/popular?api_key=${TMDBAPI}&language=${
+						getIdiomaEscolhido(
+							context
+						)
+					}&page=1&region=$region"
 				)
 				.get()
 				.build()
@@ -547,9 +584,11 @@ class Api(val context: Context) : ApiSingleton() {
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
 			val request = Request.Builder()
 				.url(
-					"${baseUrl3}movie/upcoming?api_key=${TMDBAPI}&language=${getIdiomaEscolhido(
-						context
-					)}&page=1&region=$region"
+					"${baseUrl3}movie/upcoming?api_key=${TMDBAPI}&language=${
+						getIdiomaEscolhido(
+							context
+						)
+					}&page=1&region=$region"
 				)
 				.get()
 				.build()
@@ -580,9 +619,11 @@ class Api(val context: Context) : ApiSingleton() {
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
 			val request = Request.Builder()
 				.url(
-					"${baseUrl3}tv/airing_today?api_key=${TMDBAPI}&language=${getIdiomaEscolhido(
-						context
-					)}&page=1&region=$region"
+					"${baseUrl3}tv/airing_today?api_key=${TMDBAPI}&language=${
+						getIdiomaEscolhido(
+							context
+						)
+					}&page=1&region=$region"
 				)
 				.get()
 				.build()
@@ -615,9 +656,11 @@ class Api(val context: Context) : ApiSingleton() {
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
 			val request = Request.Builder()
 				.url(
-					"${baseUrl3}tv/popular?api_key=${TMDBAPI}&language=${getIdiomaEscolhido(
-						context
-					)}&page=1&region=$region"
+					"${baseUrl3}tv/popular?api_key=${TMDBAPI}&language=${
+						getIdiomaEscolhido(
+							context
+						)
+					}&page=1&region=$region"
 				)
 				.get()
 				.build()
@@ -709,9 +752,11 @@ class Api(val context: Context) : ApiSingleton() {
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
 			val request = Request.Builder()
 				.url(
-					"${baseUrl3}search/multi?api_key=${TMDBAPI}&language=${getIdiomaEscolhido(
-						context
-					)}&query=$query&page=$page&include_adult=false"
+					"${baseUrl3}search/multi?api_key=${TMDBAPI}&language=${
+						getIdiomaEscolhido(
+							context
+						)
+					}&query=$query&page=$page&include_adult=false"
 				)
 				.get()
 				.build()
@@ -801,7 +846,7 @@ class Api(val context: Context) : ApiSingleton() {
 		id: Int,
 		rated: Float,
 		guestSession: GuestSession,
-		type: String = "movie"
+		type: String = "movie",
 	): Any {
 		return suspendCancellableCoroutine { cont ->
 			executeCall(url = "https://api.themoviedb.org/3/$type/$id/rating?api_key=${TMDBAPI}&guest_session_id=${guestSession.guestSessionId}",
@@ -826,7 +871,7 @@ class Api(val context: Context) : ApiSingleton() {
 		seasonNumber: Int,
 		episodeNumber: Int,
 		rated: Float,
-		idGuest: String
+		idGuest: String,
 	): Any {
 		return suspendCancellableCoroutine { cont ->
 			executeCall(url = "${baseUrl3}tv/$id/season/$seasonNumber/episode/$episodeNumber/rating?api_key=${TMDBAPI}&guest_session_id=$idGuest",

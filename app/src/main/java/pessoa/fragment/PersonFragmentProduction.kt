@@ -1,9 +1,6 @@
 package pessoa.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -21,9 +18,8 @@ import utils.kotterknife.findView
 import utils.patternRecyclerGrid
 import utils.visible
 
-class PersonFragmentProduction : BaseFragment() {
+class PersonFragmentProduction(override val layout: Int = R.layout.activity_person_crews) : BaseFragment() {
 	private val model by lazy { createViewModel(PersonViewModel::class.java) }
-	override val layout: Int = 0 // remover na refatoração. Separar fragmetos
 	private val recyclerViewCrews: RecyclerView by findView(R.id.recycleView_person_crews)
 	private val adView: AdView by findView(R.id.adView)
 	private val progressBar: ProgressBar by findView(R.id.progress)
@@ -52,19 +48,6 @@ class PersonFragmentProduction : BaseFragment() {
 				}
 			}
 		})
-	}
-
-	override fun onCreateView(
-		inflater: LayoutInflater,
-		container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View? {
-		super.onCreateView(inflater, container, savedInstanceState)
-		return getViewPersonCrews(inflater, container)
-	}
-
-	private fun getViewPersonCrews(inflater: LayoutInflater?, container: ViewGroup?): View {
-		return inflater!!.inflate(R.layout.activity_person_crews, container, false)
 	}
 
 	private fun setPersonCrews(personCredits: List<CrewItem?>?) {

@@ -1,9 +1,6 @@
 package pessoa.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -21,27 +18,12 @@ import utils.kotterknife.findView
 import utils.patternRecyclerGrid
 import utils.visible
 
-class PersonFragmentTv : BaseFragment() {
+class PersonFragmentTv(override val layout: Int = R.layout.activity_person_tvshow) : BaseFragment() {
 	private val model by lazy { createViewModel(PersonViewModel::class.java) }
 	private val progressBar: ProgressBar by findView(R.id.progress)
 	private val empty: TextView by findView(R.id.empty_tvshows)
 	private val adView: AdView by findView(R.id.adView)
 	private val recyclerViewTvshow: RecyclerView by findView(R.id.recycleView_person_tvshow)
-	override val layout: Int = 0 // remover na refatoração. Separar fragmetos
-
-
-	override fun onCreateView(
-		inflater: LayoutInflater,
-		container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View? {
-		super.onCreateView(inflater, container, savedInstanceState)
-		return getViewPersonTvShow(inflater, container)
-	}
-
-	private fun getViewPersonTvShow(inflater: LayoutInflater?, container: ViewGroup?): View? {
-		return inflater?.inflate(R.layout.activity_person_tvshow, container, false)
-	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)

@@ -53,7 +53,7 @@ class ImagemTopScrollFragment(override val layout: Int = Layout.page_scroll_imag
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
-	): View? =
+	): View =
 		with(inflater.inflate(layout, container, false)) {
 			findViewById<TextView>(R.id.title).text = topMains.nome
 			val img = findViewById<ImageView>(R.id.img_top_scroll)

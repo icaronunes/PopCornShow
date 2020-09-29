@@ -55,7 +55,7 @@ class TvShowFragmentSeason(override val layout: Int = Layout.temporadas) : BaseF
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
-	): View? = getViewSeasons(inflater, container)
+	): View = getViewSeasons(inflater, container)
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)

@@ -11,7 +11,7 @@ import utils.CallBackError
 
 class FragmentError(override val layout: Int = 1) : BaseFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
         = with(inflater.inflate(R.layout.fragment_error, container, false)) {
         super.onCreateView(inflater, container, savedInstanceState)
         require(requireActivity() is CallBackError) { Log.e(this.javaClass.name, "Error - Para usar essa class, sua activity precisa ser uma CallBackError") }

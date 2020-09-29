@@ -1,5 +1,6 @@
 package yourLists
 
+import Layout
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +38,7 @@ class ListYourFragment(override val layout: Int = Layout.temporadas) : BaseFragm
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
-	): View? {
+	): View {
 		super.onCreateView(inflater, container, savedInstanceState)
 		return with(inflater.inflate(layout, container, false)) {
 			progress = findViewById(R.id.progress_temporadas)

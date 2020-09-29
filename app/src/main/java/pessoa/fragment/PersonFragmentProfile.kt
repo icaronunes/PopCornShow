@@ -2,9 +2,7 @@ package pessoa.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -20,9 +18,8 @@ import utils.kotterknife.findView
 import utils.setPicasso
 import utils.visible
 
-class PersonFragmentProfile : BaseFragment() {
+class PersonFragmentProfile(override val layout: Int = R.layout.activity_person_perfil) : BaseFragment() {
 	private val model by lazy { createViewModel(PersonViewModel::class.java) }
-	override val layout: Int = 0 // remover na refatoração. Separar fragmetos
 	private var namePerson: TextView? = null
 	private val birthDay: TextView by findView(R.id.birthday)
 	private val dead: TextView by findView(R.id.dead)
@@ -50,20 +47,6 @@ class PersonFragmentProfile : BaseFragment() {
 				}
 			}
 		})
-	}
-
-	override fun onCreateView(
-		inflater: LayoutInflater,
-		container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View? {
-		super.onCreateView(inflater, container, savedInstanceState)
-		return getViewPerson(inflater, container)
-	}
-
-	private fun getViewPerson(inflater: LayoutInflater?, container: ViewGroup?): View {
-		return inflater?.inflate(R.layout.activity_person_perfil, container, false)!!.apply {
-		}
 	}
 
 	private fun Person.fillViews() {

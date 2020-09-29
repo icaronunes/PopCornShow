@@ -22,11 +22,30 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import utils.Api
 
-class LoadingMedia(val api: Api) : ILoadingMedia {
+class LoadingMedia(val api: Api) : ILoadingMedia { // TODO injetar na viewmodels
 	// Remover esses PostValue ... pode causar leak
 	override fun getDataMovie(liveData: MutableLiveData<BaseRequest<Movie>>, idMovie: Int) {
 		GlobalScope.launch {
 			liveData.postValue(withContext(Dispatchers.Default) { api.getMovie(idMovie) })
+		}
+	}
+
+	override fun getMovieList(
+		liveData: MutableLiveData<BaseRequest<ListaFilmes>>,
+		id: Int,
+		page: Int,
+	) {
+		GlobalScope.launch {
+			liveData.postValue(withContext(Dispatchers.Default) { api.getListMovie(id, page) })
+		}
+	}
+	override fun getMovieListByType(
+		liveData: MutableLiveData<BaseRequest<ListaFilmes>>,
+		type: String,
+		page: Int,
+	) {
+		GlobalScope.launch {
+			liveData.postValue(withContext(Dispatchers.Default) { api.getListMovieByType(type, page) })
 		}
 	}
 
@@ -40,7 +59,7 @@ class LoadingMedia(val api: Api) : ILoadingMedia {
 	override fun getTrailerFromEn(
 		_video: MutableLiveData<BaseRequest<Videos>>,
 		id: Int,
-		type: String
+		type: String,
 	) {
 		GlobalScope.launch {
 			_video.postValue(withContext(Dispatchers.Default) {
@@ -78,7 +97,7 @@ class LoadingMedia(val api: Api) : ILoadingMedia {
 	override fun getSeason(
 		_season: MutableLiveData<BaseRequest<TvSeasons>>,
 		serieId: Int,
-		season_id: Int
+		season_id: Int,
 	) {
 		GlobalScope.launch(handle(_season)) {
 			val response = api.getTvSeasons(serieId, season_id)
@@ -98,7 +117,6 @@ class LoadingMedia(val api: Api) : ILoadingMedia {
 			)
 		}
 	}
-
 
 	override fun getUpComing(_movie: MutableLiveData<BaseRequest<ListaFilmes>>) {
 		GlobalScope.launch(handle(_movie)) {
@@ -120,6 +138,7 @@ class LoadingMedia(val api: Api) : ILoadingMedia {
 			_tvshow.postValue(Success(popular))
 		}
 	}
+
 	override fun fetchCollection(id: Int, _collection: MutableLiveData<BaseRequest<Colecao>>) {
 		GlobalScope.launch(handle(_collection)) {
 			val colection = api.getCollection(id)

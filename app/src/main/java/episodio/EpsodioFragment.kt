@@ -6,9 +6,7 @@ import Txt
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.RatingBar
@@ -62,11 +60,7 @@ class EpsodioFragment(override val layout: Int = Layout.epsodio_fragment) : Base
 	private val tvSeason: TvSeasons by bindArgument(Constant.TVSEASONS)
 	private var seasons: UserSeasons? = null
 	private var userEp: UserEp? = null
-	override fun onCreateView(
-		inflater: LayoutInflater,
-		container: ViewGroup?,
-		savedInstanceState: Bundle?
-	) = inflater.inflate(layout, container, false)
+
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
