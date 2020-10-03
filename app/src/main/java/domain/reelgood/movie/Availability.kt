@@ -18,7 +18,7 @@ class Availability : ViewType, Parcelable {
             "hulu_plus" -> Constant.ReelGood.HULU
             "google_play" -> Constant.ReelGood.GOOGLEPLAY
             "amazon_buy","amazon_prime" -> Constant.ReelGood.AMAZON
-            "hbo" -> Constant.ReelGood.HBO
+            "hbo", "hbo_max" -> Constant.ReelGood.HBO
             "adult_swim_tveverywhere" -> Constant.ReelGood.ADULT_SWIM
             "fubo_tv" -> Constant.ReelGood.FUBO
             else -> Constant.ReelGood.WEB

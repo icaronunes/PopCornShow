@@ -6,14 +6,12 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import customview.stream.BaseStreamAb
 import customview.stream.TypeEnumStream
-import customview.stream.TypeEnumStream.EP
-import customview.stream.TypeEnumStream.MOVIE
-import customview.stream.TypeEnumStream.TV
+import customview.stream.TypeEnumStream.*
 import domain.ViewType
 import domain.reelgood.movie.Availability
 import kotlinx.android.synthetic.main.sources_item_view.view.source_item
@@ -32,7 +30,8 @@ class StreamAbMovieHboAdapter(val subscription: Boolean = false,
 
     inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
         fun bind(availability: Availability?) = with(itemView.source_item) {
-            iconSource = ContextCompat.getDrawable(context, R.drawable.hbo)
+            iconSource = if(availability?.sourceName.equals("hbo_max")) ContextCompat.getDrawable(context, R.drawable.hbo)
+                else ContextCompat.getDrawable(context, R.drawable.hbo_max)
             setOnClickListener {
                 try {
                     callAppOrWeb(availability, typeStream) {
