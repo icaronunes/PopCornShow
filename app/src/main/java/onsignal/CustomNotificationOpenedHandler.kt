@@ -1,6 +1,5 @@
 package onsignal
 
-import activity.ListGenericActivity
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.TaskStackBuilder
@@ -15,6 +14,7 @@ import listaserie.activity.TvShowsActivity
 import main.MainActivity
 import org.json.JSONException
 import org.json.JSONObject
+import activity.ListGenericActivity
 import pessoa.activity.FotoPersonActivity
 import pessoa.activity.PersonActivity
 import producao.CrewsActivity
@@ -274,7 +274,7 @@ class CustomNotificationOpenedHandler : NotificationOpenedHandler {
             val intent = Intent(context, ListGenericActivity::class.java)
             if (jsonObject.has(LISTA_ID)) {
                 intent.putExtra(LISTA_ID, jsonObject.getString(LISTA_ID))
-                if (jsonObject.has(NAME)) intent.putExtra(Constant.LISTA_GENERICA, jsonObject.getString(NAME))
+                if (jsonObject.has(NAME)) intent.putExtra(Constant.LISTA_NOME, jsonObject.getString(NAME))
                 val stackBuilder = TaskStackBuilder.create(context)
                 stackBuilder.addParentStack(ListGenericActivity::class.java)
                 stackBuilder.addNextIntent(intent)

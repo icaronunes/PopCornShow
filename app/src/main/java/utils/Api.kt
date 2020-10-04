@@ -96,7 +96,7 @@ class Api(val context: Context) : ApiSingleton() {
 		}
 	}
 
-	suspend fun getListMovie(id: Int, pagina: Int): BaseRequest<ListaFilmes> {
+	suspend fun getListMovie(id: String, pagina: Int): BaseRequest<ListaFilmes> {
 		return suspendCancellableCoroutine { continuation ->
 			executeCall("${baseUrl4}list/$id?page=$pagina&api_key=$TMDBAPI&region=$region",
 				CallBackApiWithBaseRequest(continuation, ListaFilmes::class.java))

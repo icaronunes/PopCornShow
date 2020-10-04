@@ -33,7 +33,7 @@ class ListByTypeViewModel(app: Application, val api: Api) : BaseViewModel(app) {
 		loadingMedia.getTvListByType(type = type, page = page, liveData = _tvshows)
 	}
 
-	fun fetchListById(id: Int, page: Int) {
+	fun fetchListById(id: String, page: Int) {
 		setLoadingMovieId(true)
 		loadingMedia.getMovieList(_moviesList, id, page )
 	}

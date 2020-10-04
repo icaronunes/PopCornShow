@@ -104,23 +104,13 @@
                 android:value="activity.SearchMultiActivity" />
         </activity>
 
-        <activity
-            android:name="activity.ListGenericActivity"
-            android:parentActivityName="main.MainActivity">
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="main.MainActivity" />
-
-        </activity>
-
-        <activity android:name="oscar.OscarActivity">
+        <activity android:name="activity.ListGenericActivity">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
             <meta-data
-                android:name="android.app.default_searchable"
-                android:value="activity.SearchMultiActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="main.MainActivity" />
         </activity>
 
         <activity

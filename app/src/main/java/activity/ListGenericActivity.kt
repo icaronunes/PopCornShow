@@ -4,119 +4,126 @@ import adapter.ListUserAdapter
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
+import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_lista.linear_lista
 import kotlinx.android.synthetic.main.activity_lista.recycleView_favorite
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
-import rx.subscriptions.CompositeSubscription
-import utils.Api
+import listafilmes.viewmodel.ListByTypeViewModel
 import utils.Constant
 import utils.InfiniteScrollListener
 import utils.UtilsApp
+import utils.kotterknife.bindBundle
 import java.util.Random
 
 /**
  * Created by icaro on 04/10/16.
  */
-class ListGenericActivity : BaseActivity() {
+class ListGenericActivity(override var layout: Int = R.layout.activity_lista) : BaseActivityAb() {
+	val model: ListByTypeViewModel by lazy {
+		createViewModel(ListByTypeViewModel::class.java,
+            this)
+	}
+	private lateinit var listId: String
+	private val title: String by bindBundle(Constant.LISTA_NOME)
+	private lateinit var map: Map<String, String>
+	private var pagina = 1
+	private var totalPagina = 1
 
-    private lateinit var listId: String
-    private var totalPagina: Int = 1
-    private var pagina = 1
-    private lateinit var map: Map<String, String>
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(layout)
+		setUpToolBar()
+		supportActionBar?.setDisplayHomeAsUpEnabled(true)
+		supportActionBar?.title = title
+		listId = intent.getStringExtra(Constant.LISTA_ID) ?: ""
+		if (intent.hasExtra(Constant.BUNDLE)) {
+			map = HashMap()
+			map = intent.getSerializableExtra(Constant.BUNDLE) as Map<String, String>
+		}
+		setupRecycler()
+		observers()
+	}
 
-    private var subscriptions = CompositeSubscription()
+	private fun setupRecycler() {
+		recycleView_favorite.apply {
+			val gridLayout = GridLayoutManager(this@ListGenericActivity, 3)
+			layoutManager = gridLayout
+			itemAnimator = DefaultItemAnimator()
+			addOnScrollListener(InfiniteScrollListener({ getList() }, gridLayout))
+			setHasFixedSize(true)
+			recycleView_favorite.adapter = ListUserAdapter(this@ListGenericActivity)
+		}
+	}
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_lista)
-        setUpToolBar()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = intent.getStringExtra(Constant.LISTA_GENERICA)
-        listId = intent.getStringExtra(Constant.LISTA_ID)
+	private fun observers() {
+		model.moviesList.observe(this, Observer {
+            when (it) {
+                is Success -> {
+                    model.setLoadingMovieId(false)
+                    val result = it.result
+                    (recycleView_favorite.adapter as ListUserAdapter).addItens(result.results,
+                        result.totalResults)
+                    pagina = result.page
+                    totalPagina = result.totalPages
+                    ++pagina
+                }
+                is Failure -> {
+                    ops()
+                    model.setLoadingMovieId(false)
+                }
+            }
+        })
+	}
 
-        if (intent.hasExtra(Constant.BUNDLE)) {
-            map = HashMap()
-            map = intent.getSerializableExtra(Constant.BUNDLE) as Map<String, String>
-        }
-        createRecyler()
-    }
+	override fun onResume() {
+		super.onResume()
+		if (UtilsApp.isNetWorkAvailable(baseContext)) {
+			getList()
+		} else {
+			snack()
+		}
+	}
 
-    private fun createRecyler() {
-        recycleView_favorite.apply {
-            val gridlayout = GridLayoutManager(this@ListGenericActivity, 3)
-            layoutManager = gridlayout
-            itemAnimator = DefaultItemAnimator()
-            setHasFixedSize(true)
-            addOnScrollListener(InfiniteScrollListener({ getLista() }, gridlayout))
-            adapter = ListUserAdapter(this@ListGenericActivity)
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        subscriptions = CompositeSubscription()
-        if (UtilsApp.isNetWorkAvailable(this)) {
-            getLista()
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        subscriptions.clear()
-    }
-
-    private fun getLista() {
-        if (totalPagina >= pagina) {
-            val inscricao = Api(context = this).getLista(id = listId, pagina = pagina)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ listaFilmes ->
-                        val itens = listaFilmes.results.sortedBy { it?.releaseDate }
-                                .reversed()
-                        (recycleView_favorite.adapter as ListUserAdapter)
-                                .addItens(itens, listaFilmes?.totalResults!!)
-                        pagina = listaFilmes.page
-                        totalPagina = listaFilmes.totalPages
-                        ++pagina
-                    }, {
-                        Toast.makeText(this, getString(R.string.ops), Toast.LENGTH_LONG).show()
-                    })
-            subscriptions.add(inscricao)
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+	override fun onOptionsItemSelected(item: MenuItem): Boolean {
+		when (item.itemId) {
             android.R.id.home -> {
                 finish()
-                return true
             }
             R.id.nova_lista -> {
-                createRecyler()
+                setupRecycler()
                 val numero = Random().nextInt(10).toString()
                 supportActionBar?.title = map["title$numero"]
                 listId = map["id$numero"].toString()
                 pagina = 1
                 totalPagina = 1
-                getLista()
+                getList()
             }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+		}
+		return super.onOptionsItemSelected(item)
+	}
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         if (intent.hasExtra(Constant.BUNDLE))
             menuInflater.inflate(R.menu.menu_random_lista, menu)
-
         return true
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (subscriptions.hasSubscriptions()) subscriptions.clear()
-    }
+	private fun snack() {
+		Snackbar.make(linear_lista, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+			.setAction(R.string.retry) {
+				if (UtilsApp.isNetWorkAvailable(baseContext)) {
+					getList()
+				} else {
+					snack()
+				}
+			}.show()
+	}
+
+	private fun getList() {
+		model.fetchListById(listId, pagina)
+	}
 }
