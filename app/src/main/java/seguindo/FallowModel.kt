@@ -17,7 +17,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import loading.firebase.ILoadingFireBase
 import loading.firebase.LoadingFirebase
-import loading.firebase.TypeMediaFireBase.TVSHOW
+import loading.firebase.TypeMediaFireBase.*
 import utils.Api
 
 class FallowModel(application: Application, val activity: Activity) : BaseViewModel(application) {
@@ -40,6 +40,7 @@ class FallowModel(application: Application, val activity: Activity) : BaseViewMo
 		loadingFirebase.allFallow(fallow = _fallow)
 	}
 
+	@Suppress("RedundantAsync")
 	fun fetchMedia(notWatchs: List<Pair<UserTvshow, UserEp>>) {
 		notWatchs.forEach { pair ->
 			val (tvShow, epUser) = pair

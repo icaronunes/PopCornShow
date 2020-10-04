@@ -10,7 +10,7 @@ class PersonBusiness(val app: Application, activity: Activity,val personViewMode
 
     fun getPersonDate(idPerson: Int) {
         GlobalScope.launch(personViewModel.coroutineContext) {
-            val person = Api(app).personDetalhes(idPerson)
+            val person = Api(app).personDetails(idPerson)
             personViewModel.setPerson(person)
         }
     }

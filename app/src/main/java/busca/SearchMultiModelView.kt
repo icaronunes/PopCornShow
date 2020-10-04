@@ -4,9 +4,7 @@ import android.app.Application
 import android.os.Handler
 import android.os.Looper
 import applicaton.BaseViewModel
-import applicaton.BaseViewModel.BaseRequest.Failure
-import applicaton.BaseViewModel.BaseRequest.Loading
-import applicaton.BaseViewModel.BaseRequest.Success
+import applicaton.BaseViewModel.BaseRequest.*
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -37,5 +35,4 @@ class SearchMultiModelView(override val app: Application): BaseViewModel(app) {
     fun setLoading(status: Boolean) {
         _response.value = Loading<Boolean>(status)
     }
-
 }
