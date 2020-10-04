@@ -149,7 +149,7 @@ public class PosterScrollFragment extends Fragment {
                     intent.putExtra(Intent.EXTRA_TEXT, nome + "  -  " + "https://q2p5q.app.goo.gl/3hX6" + " by: " + Constant.TWITTER_URL);
                     intent.setType("image/*");
                     intent.putExtra(Intent.EXTRA_STREAM, UtilsApp.INSTANCE.getUriDownloadImage(getContext(), file));
-                    startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar) + " " + nome));
+                    startActivity(Intent.createChooser(intent, getResources().getString(R.string.compartilhar, nome)));
                 } else {
                     Toast.makeText(getContext(), getResources().getString(R.string.erro_na_gravacao_imagem), Toast.LENGTH_SHORT).show();
                 }
