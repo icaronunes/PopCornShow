@@ -1,4 +1,4 @@
-package listafilmes.viewmodel
+package lista.viewmodel
 
 import ILoadingAd
 import LoadingAd

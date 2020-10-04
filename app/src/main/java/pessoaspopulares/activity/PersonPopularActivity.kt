@@ -1,6 +1,6 @@
-package pessoaspopulares
+package pessoaspopulares.activity
 
-import activity.BaseActivity
+import activity.BaseActivityAb
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.activity_person_popular.recycleView_person
 import pessoaspopulares.adapter.PersonPopularAdapter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import rx.subscriptions.CompositeSubscription
 import utils.Api
 import utils.InfiniteScrollListener
 import utils.UtilsApp
@@ -24,16 +23,16 @@ import utils.UtilsApp
 /**
  * Created by icaro on 04/10/16.
  */
-class PersonPopularActivity : BaseActivity() {
+class PersonPopularActivity(override var layout: Int = Layout.activity_person_popular) : BaseActivityAb() {
 
-    protected var subscriptions = CompositeSubscription()
+    // val model:
 
     private var pagina = 1
     private var totalPagina = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_person_popular)
+        setContentView(layout)
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle(R.string.person_rated)
@@ -75,18 +74,8 @@ class PersonPopularActivity : BaseActivity() {
                         Toast.makeText(this, resources.getString(R.string.ops), Toast.LENGTH_SHORT).show()
                         Log.d(javaClass.simpleName, "Erro " + erro.message)
                     })
-            subscriptions.add(inscricao)
+            // subscriptions.add(inscricao)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        subscriptions = CompositeSubscription()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        subscriptions.clear()
     }
 
     private fun snack() {
@@ -103,14 +92,11 @@ class PersonPopularActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         when (item.itemId) {
-
             android.R.id.home -> {
                 finish()
             }
         }
-
         return super.onOptionsItemSelected(item)
     }
 }

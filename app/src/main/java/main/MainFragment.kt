@@ -17,8 +17,8 @@ import domain.ListaSeries
 import domain.movie.ListaFilmes
 import kotlinx.android.synthetic.main.filmes_main.chip_group_movie
 import kotlinx.android.synthetic.main.tvshow_main.chip_group_tvshow
-import listafilmes.activity.MoviesActivity
-import listaserie.activity.TvShowsActivity
+import lista.movie.activity.MoviesActivity
+import lista.tvshow.activity.TvShowsActivity
 import tvshow.TvShowMainAdapter
 import utils.Api.TYPESEARCH.MOVIE
 import utils.Api.TYPESEARCH.TVSHOW

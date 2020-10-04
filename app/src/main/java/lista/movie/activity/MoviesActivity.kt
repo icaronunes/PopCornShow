@@ -1,10 +1,10 @@
-package listafilmes.activity
+package lista.movie.activity
 
 import activity.BaseActivity
 import android.os.Bundle
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.*
-import listafilmes.fragment.MoviesFragment
+import lista.movie.fragment.MoviesFragment
 import utils.Api
 import utils.Constant
 

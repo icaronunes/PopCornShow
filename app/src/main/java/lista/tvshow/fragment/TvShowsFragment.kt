@@ -1,4 +1,4 @@
-package listafilmes.fragment
+package lista.tvshow.fragment
 
 import android.os.Bundle
 import android.view.View
@@ -16,8 +16,8 @@ import kotlinx.android.synthetic.main.fragment_list_medias.frame_list_filme
 import kotlinx.android.synthetic.main.fragment_list_medias.recycle_listas
 import kotlinx.android.synthetic.main.fragment_list_medias.txt_listas
 import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal
-import listafilmes.adapter.ListaFilmesAdapter
-import listafilmes.viewmodel.ListByTypeViewModel
+import lista.viewmodel.ListByTypeViewModel
+import lista.tvshow.adapter.ListaSeriesAdapter
 import utils.Constant
 import utils.InfiniteScrollStaggeredListener
 import utils.UtilsApp
@@ -26,47 +26,36 @@ import utils.makeToast
 import utils.resolver
 import utils.visible
 
-class MoviesFragment(override val layout: Int = R.layout.fragment_list_medias) : BaseFragment() {
+/**
+ * Created by icaro on 14/09/16.
+ */
+class TvShowsFragment(override val layout: Int = R.layout.fragment_list_medias) : BaseFragment() {
+	val model: ListByTypeViewModel by lazy { createViewModel(ListByTypeViewModel::class.java) }
 	private lateinit var abaEscolhida: String
 	private var pagina = 1
-	private var totalPagina: Int = 0
 	private var listAd: MutableList<UnifiedNativeAd> = mutableListOf()
-	val model: ListByTypeViewModel by lazy { createViewModel(ListByTypeViewModel::class.java) }
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		if (arguments != null) {
-			this.abaEscolhida = arguments?.getString(Constant.NAV_DRAW_ESCOLIDO)
-				?: getString(R.string.now_playing)
+			this.abaEscolhida = requireArguments().getString(Constant.NAV_DRAW_ESCOLIDO, "")
 		}
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		setAdMob(adView)
+		observers()
+		observerAd()
 		setupRecycler()
 
 		if (!UtilsApp.isNetWorkAvailable(requireContext())) {
-			txt_listas?.visibility = View.VISIBLE
-			txt_listas?.text = getString(R.string.no_internet)
+			txt_listas.visibility = View.VISIBLE
+			txt_listas.text = resources.getString(R.string.no_internet)
 			snack()
 		} else {
-			fetchList()
+			fetchListTv()
 		}
-		observerAd()
-		observerMovies()
-	}
 
-	private fun setupRecycler() {
-		recycle_listas.apply {
-			val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-			this.layoutManager = layoutManager
-			itemAnimator = DefaultItemAnimator()
-			setHasFixedSize(true)
-			addOnScrollListener(InfiniteScrollStaggeredListener({ },
-				{ fetchList() },
-				layoutManager))
-			adapter = ListaFilmesAdapter(requireActivity())
-		}
 	}
 
 	override fun onStart() {
@@ -74,33 +63,46 @@ class MoviesFragment(override val layout: Int = R.layout.fragment_list_medias) :
 		model.fillAdNative()
 	}
 
-	private fun observerMovies() {
-		model.movies.observe(viewLifecycleOwner, Observer {
-			it.resolver(requireActivity(), successBlock = { list ->
-				if (pagina == list.page) {
-					val listWithAd = list.results + ListAd.createList(listAd.take(4))
-					(recycle_listas.adapter as ListaFilmesAdapter)
-						.addItems(listWithAd, list.totalResults)
+	private fun setupRecycler() {
+		recycle_listas.apply {
+			val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+			this.layoutManager = layoutManager
+			itemAnimator = DefaultItemAnimator()
+			addOnScrollListener(InfiniteScrollStaggeredListener({},
+				{ fetchListTv() },
+				layoutManager))
+			setHasFixedSize(true)
+			adapter = ListaSeriesAdapter(context)
+		}
+	}
 
-					pagina = list.page
-					totalPagina = list.totalPages
-					++pagina
-					model.fillAdNative()
-				}
-				model.setLoadingMovie(false)
-			},
+	private fun observers() {
+		model.tvshows.observe(viewLifecycleOwner, Observer {
+			it.resolver(requireActivity(),
+				successBlock = { list ->
+						if (pagina == list.page) {
+							val listWithAd = list.results + ListAd.createList(listAd.take(4))
+							(recycle_listas.adapter as ListaSeriesAdapter).addItems(listWithAd)
+							pagina = list.page
+							++pagina
+							model.fillAdNative()
+						}
+						model.setLoadingTv(false)
+				},
 				failureBlock = {
 					requireActivity().makeToast(R.string.ops)
-					model.setLoadingMovie(false)
+					model.setLoadingTv(false)
 				},
-				loadingBlock = { statusLoading -> loading(loading = statusLoading) },
-				genericError = ErrorTryDefault(requireActivity())
-				{ fetchList() }
-			)
+				loadingBlock = { status ->
+					loading(status)
+				},
+				genericError = ErrorTryDefault(requireActivity()) {
+					fetchListTv()
+				})
 		})
 	}
 
-	private fun observerAd() {
+	fun observerAd() {
 		model.ads.observe(viewLifecycleOwner, Observer {
 			it?.let { ads ->
 				listAd = ads
@@ -108,23 +110,23 @@ class MoviesFragment(override val layout: Int = R.layout.fragment_list_medias) :
 		})
 	}
 
-	private fun fetchList() {
-		model.fetchListMovies(abaEscolhida, pagina)
+	fun loading(loading: Boolean) {
+		if (loading) progress_horizontal.visible() else progress_horizontal.gone()
 	}
 
 	private fun snack() {
-		Snackbar.make(frame_list_filme!!, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+		Snackbar.make(frame_list_filme, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
 			.setAction(R.string.retry) {
 				if (UtilsApp.isNetWorkAvailable(requireContext())) {
-					txt_listas?.visibility = View.GONE
-					fetchList()
+					txt_listas.visibility = View.INVISIBLE
+					fetchListTv()
 				} else {
 					snack()
 				}
 			}.show()
 	}
 
-	fun loading(loading: Boolean) {
-		if (loading) progress_horizontal.visible() else progress_horizontal.gone()
+	private fun fetchListTv() {
+		model.fetchListTvshow(abaEscolhida, pagina)
 	}
 }
