@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import applicaton.BaseViewModel
 import applicaton.BaseViewModel.BaseRequest.*
 import domain.ListaSeries
+import domain.PersonPopular
 import domain.movie.ListaFilmes
 import loading.api.ILoadingMedia
 import loading.api.LoadingMedia
@@ -23,6 +24,9 @@ class ListByTypeViewModel(app: Application, val api: Api) : BaseViewModel(app) {
 	private val _moviesList: MutableLiveData<BaseRequest<ListaFilmes>> = MutableLiveData()
 	val moviesList: LiveData<BaseRequest<ListaFilmes>> = _moviesList
 
+	private val _personList: MutableLiveData<BaseRequest<PersonPopular>> = MutableLiveData()
+	val personList: LiveData<BaseRequest<PersonPopular>> = _personList
+
 	fun fetchListMovies(type: String, page: Int) {
 		setLoadingMovie(true)
 		loadingMedia.getMovieListByType(type = type, page = page, liveData = _movies)
@@ -36,6 +40,10 @@ class ListByTypeViewModel(app: Application, val api: Api) : BaseViewModel(app) {
 	fun fetchListById(id: String, page: Int) {
 		setLoadingMovieId(true)
 		loadingMedia.getMovieList(_moviesList, id, page )
+	}
+
+	fun fetchPerson(pager: Int){
+		loadingMedia.personPopula(pager, _personList)
 	}
 
 	fun setLoadingMovieId(loading: Boolean) {

@@ -8,16 +8,16 @@ import javax.annotation.Generated
 data class PersonPopular(
 
     @field:SerializedName("page")
-    val page: Int? = null,
+    val page: Int,
 
     @field:SerializedName("total_pages")
-    val totalPages: Int? = null,
+    val totalPages: Int,
 
     @field:SerializedName("results")
     val results: List<PersonItem>? = null,
 
     @field:SerializedName("total_results")
-    val totalResults: Int? = null
+    val totalResults: Int
 ) : ViewType {
     override fun getViewType() = Constant.ViewTypesIds.NEWS
 }
