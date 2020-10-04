@@ -16,8 +16,12 @@ class ListByTypeViewModel(app: Application, val api: Api) : BaseViewModel(app) {
 
 	private val _movies: MutableLiveData<BaseRequest<ListaFilmes>> = MutableLiveData()
 	val movies: LiveData<BaseRequest<ListaFilmes>> = _movies
+
 	private val _tvshows: MutableLiveData<BaseRequest<ListaSeries>> = MutableLiveData()
 	val tvshows: LiveData<BaseRequest<ListaSeries>> = _tvshows
+
+	private val _moviesList: MutableLiveData<BaseRequest<ListaFilmes>> = MutableLiveData()
+	val moviesList: LiveData<BaseRequest<ListaFilmes>> = _moviesList
 
 	fun fetchListMovies(type: String, page: Int) {
 		setLoadingMovie(true)
@@ -27,6 +31,15 @@ class ListByTypeViewModel(app: Application, val api: Api) : BaseViewModel(app) {
 	fun fetchListTvshow(type: String, page: Int) {
 		setLoadingTv(true)
 		loadingMedia.getTvListByType(type = type, page = page, liveData = _tvshows)
+	}
+
+	fun fetchListById(id: Int, page: Int) {
+		setLoadingMovieId(true)
+		loadingMedia.getMovieList(_moviesList, id, page )
+	}
+
+	fun setLoadingMovieId(loading: Boolean) {
+		_moviesList.value = Loading(loading)
 	}
 
 	fun setLoadingMovie(loading: Boolean) {

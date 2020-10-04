@@ -111,4 +111,8 @@ object Constant {
 		const val FOTOPERSON = "FotoPersonActivity"
 		const val TEMPORADA = "TemporadaActivity"
 	}
+
+	object ListOnTheMovie {
+		const val OSCAR = 28
+	}
 }

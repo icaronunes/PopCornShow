@@ -88,12 +88,12 @@ class MoviesFragment(override val layout: Int = R.layout.fragment_list_medias) :
                                     totalPagina
                                 )
                         }
-	                    model.setLoading(false)
+	                    model.setLoadingMovie(false)
                     }
                 }
                 is Failure -> {
 	                requireActivity().makeToast(R.string.ops)
-	                model.setLoading(false)
+	                model.setLoadingMovie(false)
                 }
                 is Loading -> { loading(it.loading) }
             }
