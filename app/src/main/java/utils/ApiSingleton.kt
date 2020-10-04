@@ -10,13 +10,40 @@ import okhttp3.RequestBody
 import okhttp3.Response
 import okhttp3.ResponseBody
 import okhttp3.internal.http2.Http2Reader
+import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 
 open class ApiSingleton {
 
+	private val logging: HttpLoggingInterceptor by lazy {
+		HttpLoggingInterceptor().apply {
+			setLevel(Level.BODY)
+		}
+	}
 	val gson: Gson = Gson()
+
+	private val client: OkHttpClient by lazy {
+		OkHttpClient.Builder()
+			.addInterceptor(logging)
+			.build()
+	}
+
+	fun executeCall(url: String, func: Callback) = client.newCall(
+		Request.Builder()
+			.url(url)
+			.get()
+			.build()
+	).enqueue(func)
+
+	fun executePostCall(url: String, postRequest: RequestBody, func: Callback) = client.newCall(
+		Request.Builder()
+			.url(url)
+			.post(postRequest)
+			.build()
+	).enqueue(func)
 
 	companion object {
 		class LoggingInterceptor : Interceptor {
@@ -66,25 +93,5 @@ open class ApiSingleton {
 				return response
 			}
 		}
-
-		private val client: OkHttpClient by lazy {
-			OkHttpClient.Builder()
-				.addInterceptor(LoggingInterceptor())
-				.build()
-		}
-
-		fun executeCall(url: String, func: Callback) = client.newCall(
-			Request.Builder()
-				.url(url)
-				.get()
-				.build()
-		).enqueue(func)
-
-		fun executeCall(url: String, postRequest: RequestBody, func: Callback) = client.newCall(
-			Request.Builder()
-				.url(url)
-				.post(postRequest)
-				.build()
-		).enqueue(func)
 	}
 }

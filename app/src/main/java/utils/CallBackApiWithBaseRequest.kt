@@ -13,25 +13,22 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 @ExperimentalCoroutinesApi
-open class CallBackWithErros<T>(
+open class CallBackApiWithBaseRequest<T>(
 	private val cont: CancellableContinuation<BaseRequest<T>>,
-	private val data: Class<T>
+	private val data: Class<T>,
 ) : Callback {
 	override fun onFailure(call: Call, e: IOException) {
 		cont.resumeWithException(e)
 	}
+
 	override fun onResponse(call: Call, response: Response) {
 		try {
 			if (response.isSuccessful) {
 				val json = response.body?.string()
-				// if (response.contaisErro(json)) {
-				// 	cont.resumeWithException(Exception(response.createError(json)))
-				// } else {
-					val data = Gson().fromJsonWithLog(json, data)
-					cont.resume(Success(data))
-				// }
+				val data = Gson().fromJsonWithLog(json, data)
+				cont.resume(Success(data))
 			} else {
-				cont.resumeWithException(Exception(response.message))
+				cont.resume(Failure(java.lang.Exception(response.message)))
 			}
 		} catch (e: Exception) {
 			cont.resumeWithException(e)

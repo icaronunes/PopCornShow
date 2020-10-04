@@ -5,8 +5,6 @@ import android.content.Context
 import applicaton.BaseViewModel
 import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.BuildConfig
-import domain.ListaSeries
-import domain.movie.ListaFilmes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -17,14 +15,14 @@ class MainBusiness(
 	val app: Application,
 	val api: Api,
 	private val mainViewModel: BaseViewModel,
-	private val listener: MainBusinessListener
+	private val listener: MainBusinessListener,
 ) {
 	fun setTopList() {
 		GlobalScope.launch(mainViewModel.coroutineContext) {
-			val movies = async(Dispatchers.IO) { api.getNowPlayingMovies() as Success<ListaFilmes> }
-			val tvshow = async(Dispatchers.IO) { api.getAiringToday() as Success<ListaSeries> }
+			val movies = async(Dispatchers.IO) { api.getNowPlayingMovies() }.await()
+			val tvshow = async(Dispatchers.IO) { api.getAiringToday() }.await()
 			listener.animation(false)
-			listener.setTopList(movies.await().result, tvshow.await().result)
+			listener.setTopList((movies as Success).result, (tvshow as Success).result)
 		}
 	}
 

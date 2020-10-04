@@ -21,12 +21,16 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import utils.Api
+import utils.log
+import kotlin.coroutines.CoroutineContext
 
 class LoadingMedia(val api: Api) : ILoadingMedia { // TODO injetar na viewmodels
 	// Remover esses PostValue ... pode causar leak
 	override fun getDataMovie(liveData: MutableLiveData<BaseRequest<Movie>>, idMovie: Int) {
-		GlobalScope.launch {
-			liveData.postValue(withContext(Dispatchers.Default) { api.getMovie(idMovie) })
+		GlobalScope.launch(handle(liveData)) {
+			liveData.postValue(withContext(Dispatchers.Default) {
+				api.getMovie(idMovie)
+			})
 		}
 	}
 
@@ -35,24 +39,35 @@ class LoadingMedia(val api: Api) : ILoadingMedia { // TODO injetar na viewmodels
 		id: Int,
 		page: Int,
 	) {
-		GlobalScope.launch {
+		GlobalScope.launch(handle(liveData)) {
 			liveData.postValue(withContext(Dispatchers.Default) { api.getListMovie(id, page) })
 		}
 	}
+
 	override fun getMovieListByType(
 		liveData: MutableLiveData<BaseRequest<ListaFilmes>>,
 		type: String,
 		page: Int,
 	) {
-		GlobalScope.launch {
-			liveData.postValue(withContext(Dispatchers.Default) { api.getListMovieByType(type, page) })
+		GlobalScope.launch(handle(liveData)) {
+			liveData.postValue(withContext(Dispatchers.IO) { api.getListMovieByType(type, page) })
+		}
+	}
+
+	override fun getTvListByType(
+		liveData: MutableLiveData<BaseRequest<ListaSeries>>,
+		type: String,
+		page: Int,
+	) {
+		GlobalScope.launch(handle(liveData)) {
+			liveData.postValue(withContext(Dispatchers.IO) { api.getListTvByType(type, page) })
 		}
 	}
 
 	override fun getDataTvshow(liveData: MutableLiveData<BaseRequest<Tvshow>>, idMovie: Int) {
 		liveData.postValue(Loading(true))
-		GlobalScope.launch {
-			liveData.postValue(withContext(Dispatchers.Default) { api.getTvshow(idMovie) })
+		GlobalScope.launch(handle(liveData)) {
+			liveData.postValue(withContext(Dispatchers.IO) { api.getTvshow(idMovie) })
 		}
 	}
 
@@ -61,8 +76,8 @@ class LoadingMedia(val api: Api) : ILoadingMedia { // TODO injetar na viewmodels
 		id: Int,
 		type: String,
 	) {
-		GlobalScope.launch {
-			_video.postValue(withContext(Dispatchers.Default) {
+		GlobalScope.launch(handle(_video)) {
+			_video.postValue(withContext(Dispatchers.IO) {
 				api.getTrailersFromEn(id, type)
 			})
 		}
@@ -77,18 +92,16 @@ class LoadingMedia(val api: Api) : ILoadingMedia { // TODO injetar na viewmodels
 	}
 
 	override fun putRated(id: Int, rated: Float, type: String) {
-		GlobalScope.launch {
+		GlobalScope.launch(CoroutineExceptionHandler { coroutineContext: CoroutineContext, throwable: Throwable ->
+			throwable.message?.log(this.javaClass.name)
+		}) {
 			val guest = withContext(Dispatchers.Default) { api.userGuest() }
 			if (guest is Success) api.ratedMediaGuest(id, rated, guest.result, type)
 		}
 	}
 
 	override fun getDateReel(_realGood: MutableLiveData<BaseRequest<ReelGoodTv>>, idReel: String) {
-		GlobalScope.launch(Dispatchers.Default + SupervisorJob() + CoroutineExceptionHandler { _, erro ->
-			Handler(Looper.getMainLooper()).post {
-				_realGood.postValue(BaseRequest.Failure(java.lang.Exception(erro.cause)))
-			}
-		}) {
+		GlobalScope.launch(handle(_realGood)) {
 			val respose = api.getAvaliableShow(idReel)
 			_realGood.postValue(Success(respose))
 		}
@@ -106,7 +119,9 @@ class LoadingMedia(val api: Api) : ILoadingMedia { // TODO injetar na viewmodels
 	}
 
 	override fun putTvEpRated(id: Int, seasonNumber: Int, episodeNumber: Int, rated: Float) {
-		GlobalScope.launch {
+		GlobalScope.launch(CoroutineExceptionHandler { coroutineContext: CoroutineContext, throwable: Throwable ->
+			throwable.message?.log(this.javaClass.name)
+		}) {
 			val guest = withContext(Dispatchers.Default) { api.userGuest() }
 			if (guest is Success) api.ratedTvEpsodeeGuest(
 				id,
@@ -121,35 +136,35 @@ class LoadingMedia(val api: Api) : ILoadingMedia { // TODO injetar na viewmodels
 	override fun getUpComing(_movie: MutableLiveData<BaseRequest<ListaFilmes>>) {
 		GlobalScope.launch(handle(_movie)) {
 			val upComing = api.getUpcoming()
-			_movie.postValue(Success(upComing))
+			_movie.postValue(upComing)
 		}
 	}
 
 	override fun getMoviePopular(_movie: MutableLiveData<BaseRequest<ListaFilmes>>) {
 		GlobalScope.launch(handle(_movie)) {
 			val popular = api.getMoviePopular()
-			_movie.postValue(Success(popular))
+			_movie.postValue(popular)
 		}
 	}
 
 	override fun getTvPopular(_tvshow: MutableLiveData<BaseRequest<ListaSeries>>) {
 		GlobalScope.launch(handle(_tvshow)) {
 			val popular = api.getPopularTv()
-			_tvshow.postValue(Success(popular))
+			_tvshow.postValue(popular)
 		}
 	}
 
 	override fun fetchCollection(id: Int, _collection: MutableLiveData<BaseRequest<Colecao>>) {
 		GlobalScope.launch(handle(_collection)) {
 			val colection = api.getCollection(id)
-			_collection.postValue((Success(colection)))
+			_collection.postValue(colection)
 		}
 	}
 
 	private fun <T> handle(_live: MutableLiveData<BaseRequest<T>> = MutableLiveData()) =
 		Dispatchers.Default + SupervisorJob() + CoroutineExceptionHandler { _, erro ->
 			Handler(Looper.getMainLooper()).post {
-				_live.postValue(BaseRequest.Failure(java.lang.Exception(erro.cause)))
+				_live.postValue(Failure(java.lang.Exception(erro.cause)))
 			}
 		}
 }
