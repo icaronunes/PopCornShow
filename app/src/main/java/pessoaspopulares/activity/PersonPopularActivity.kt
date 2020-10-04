@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_person_popular.activity_person_popular_no_internet
 import kotlinx.android.synthetic.main.activity_person_popular.linear_person_popular
 import kotlinx.android.synthetic.main.activity_person_popular.recycleView_person_popular
@@ -18,7 +19,6 @@ import pessoaspopulares.adapter.PersonPopularAdapter
 import utils.InfiniteScrollListener
 import utils.UtilsApp
 import utils.gone
-import utils.patternRecyclerGrid
 import utils.visible
 
 /**
@@ -51,14 +51,7 @@ class PersonPopularActivity(override var layout: Int = Layout.activity_person_po
 		if (UtilsApp.isNetWorkAvailable(this)) {
 			fetchPerson()
 		} else {
-			snack(anchor = linear_person_popular) {
-				if (UtilsApp.isNetWorkAvailable(baseContext)) {
-					activity_person_popular_no_internet.visibility = View.GONE
-					fetchPerson()
-				} else {
-					activity_person_popular_no_internet.visibility = View.VISIBLE
-				}
-			}
+			snackPerson()
 		}
 	}
 
@@ -90,6 +83,19 @@ class PersonPopularActivity(override var layout: Int = Layout.activity_person_po
 	}
 
 	private fun fetchPerson() { model.fetchPerson(pagina) }
+
+	private fun snackPerson() {
+		Snackbar.make(linear_person_popular, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+			.setAction(R.string.retry) {
+				if (UtilsApp.isNetWorkAvailable(baseContext)) {
+					activity_person_popular_no_internet.visibility = View.GONE
+					fetchPerson()
+				} else {
+					snackPerson()
+					activity_person_popular_no_internet.visibility = View.VISIBLE
+				}
+			}.show()
+	}
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		when (item.itemId) {
