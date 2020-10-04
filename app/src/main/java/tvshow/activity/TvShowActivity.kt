@@ -37,8 +37,6 @@ import kotlinx.android.synthetic.main.tvserie_activity.streamview_tv
 import kotlinx.android.synthetic.main.tvserie_activity.tabLayout
 import kotlinx.android.synthetic.main.tvserie_activity.toolbar
 import kotlinx.android.synthetic.main.tvserie_activity.viewPager_tvshow
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import tvshow.TvShowAdapter
 import tvshow.viewmodel.TvShowViewModel
 import utils.Constant
@@ -66,7 +64,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 			this
 		)
 	}
-	private val idTvshow: Int by bindBundle(Constant.TVSHOW_ID)
+	private val idTvshow: Int by bindBundle(Constant.TVSHOW_ID, -1)
 	private val idReel: String? by bundleOrNull(Constant.ID_REEL)
 	private val colorTop: Int by bindBundle(Constant.COLOR_TOP, Color.colorFAB)
 
@@ -175,7 +173,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 
 	private fun getDataTvshow() {
 		if (idReel.notNullOrEmpty()) model.getRealGoodData(idReel!!)
-		GlobalScope.launch { model.getTvshow(idTvshow) }
+		model.getTvshow(idTvshow)
 		model.hasfallow(idTvshow)
 		model.fallow(idTvshow)
 	}
