@@ -16,6 +16,7 @@ import domain.UserSeasons
 import domain.UserTvshow
 import domain.fillAllUserEpTvshow
 import domain.tvshow.Tvshow
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -30,6 +31,7 @@ import utils.kotterknife.bindArgument
 import utils.makeToast
 import utils.patternRecyler
 import utils.setScrollInvisibleFloatMenu
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Created by icaro on 23/08/16.
@@ -165,7 +167,9 @@ class TvShowFragmentSeason(override val layout: Int = Layout.temporadas) : BaseF
 	}
 
 	private fun changeEps(position: Int, idSeason: Int, numberSeason: Int) {
-		GlobalScope.launch {
+		GlobalScope.launch(CoroutineExceptionHandler { coroutineContext: CoroutineContext, throwable: Throwable ->
+			ops()
+		}) {
 			val season: UserSeasons = withContext(Dispatchers.Default) {
 				Api(requireContext()).getTvSeasons(id = series.id, id_season = numberSeason)
 			}.fillAllUserEpTvshow(
