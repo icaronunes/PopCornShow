@@ -166,6 +166,7 @@ dependencies {
 
     //Chamadas de Api
     implementation "com.squareup.okhttp3:okhttp:$call.okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$call.loggingInterceptor"
     implementation "com.google.code.gson:gson:$call.gson"
     implementation "com.artemzin.rxjava:proguard-rules:$call.proguardRules"
     implementation "io.reactivex:rxjava:$call.rxjava"
