@@ -1,4 +1,4 @@
-package listaserie.adapter
+package lista.tvshow.adapter
 
 import android.content.Context
 import android.content.Intent

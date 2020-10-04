@@ -9,8 +9,8 @@ import com.onesignal.OSNotificationOpenResult
 import com.onesignal.OneSignal.NotificationOpenedHandler
 import elenco.ElencoActivity
 import filme.activity.MovieDetailsActivity
-import listafilmes.activity.MoviesActivity
-import listaserie.activity.TvShowsActivity
+import lista.movie.activity.MoviesActivity
+import lista.tvshow.activity.TvShowsActivity
 import main.MainActivity
 import org.json.JSONException
 import org.json.JSONObject

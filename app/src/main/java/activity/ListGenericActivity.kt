@@ -12,7 +12,7 @@ import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_lista.linear_lista
 import kotlinx.android.synthetic.main.activity_lista.recycleView_favorite
-import listafilmes.viewmodel.ListByTypeViewModel
+import lista.viewmodel.ListByTypeViewModel
 import utils.Constant
 import utils.InfiniteScrollListener
 import utils.UtilsApp

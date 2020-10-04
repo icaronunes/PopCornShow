@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import busca.SearchMultiModelView
 import episodio.EpsodioViewModel
 import filme.MovieDetatilsViewModel
-import listafilmes.viewmodel.ListByTypeViewModel
+import lista.viewmodel.ListByTypeViewModel
 import login.LoginViewModel
 import main.MainViewModel
 import pessoa.modelview.PersonViewModel

@@ -63,7 +63,7 @@
         </activity>
 
         <activity
-            android:name="listafilmes.activity.MoviesActivity"
+            android:name="lista.movie.activity.MoviesActivity"
             android:parentActivityName="main.MainActivity">
 
             <meta-data
@@ -78,7 +78,7 @@
                 android:value="activity.SearchMultiActivity" />
         </activity>
 
-        <activity android:name="pessoaspopulares.PersonPopularActivity">
+        <activity android:name="pessoaspopulares.activity.PersonPopularActivity">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -243,7 +243,7 @@
         <activity android:name="configuracao.SettingsActivity" />
 
         <activity
-            android:name="listaserie.activity.TvShowsActivity"
+            android:name="lista.tvshow.activity.TvShowsActivity"
             android:parentActivityName="main.MainActivity">
 
             <meta-data

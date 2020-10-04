@@ -1,4 +1,4 @@
-package listafilmes.fragment
+package lista.movie.fragment
 
 import android.os.Bundle
 import android.view.View
@@ -14,8 +14,8 @@ import kotlinx.android.synthetic.main.fragment_list_medias.frame_list_filme
 import kotlinx.android.synthetic.main.fragment_list_medias.recycle_listas
 import kotlinx.android.synthetic.main.fragment_list_medias.txt_listas
 import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal
-import listafilmes.adapter.ListaFilmesAdapter
-import listafilmes.viewmodel.ListByTypeViewModel
+import lista.movie.adapter.ListaFilmesAdapter
+import lista.viewmodel.ListByTypeViewModel
 import utils.Constant
 import utils.InfiniteScrollStaggeredListener
 import utils.UtilsApp

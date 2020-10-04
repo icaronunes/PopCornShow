@@ -1,4 +1,4 @@
-package listafilmes.adapter
+package lista.movie.adapter
 
 import android.content.Context
 import android.content.Intent

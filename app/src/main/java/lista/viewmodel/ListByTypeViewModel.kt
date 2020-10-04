@@ -1,4 +1,4 @@
-package listafilmes.viewmodel
+package lista.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.LiveData

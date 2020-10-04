@@ -3,9 +3,7 @@ package utils
 /**
  * Created by icaro on 02/07/16.
  */
-
 object Constant {
-
 	const val ZERO: Float = 0.0f
 	const val WIKI = "https://www.wikipedia.org/wiki/"
 	const val BASEMOVIEDB_TV = "https://www.themoviedb.org/tv/"
@@ -22,7 +20,6 @@ object Constant {
 	const val ENDERECO = "endereco"
 	const val YOU_TUBE_KEY = "youtube_key"
 	const val SINOPSE = "sinopse"
-
 	const val ID_REEL = "reel_id"
 	const val COLOR_TOP = "color_top"
 	const val COLOR = "color"
@@ -61,7 +58,6 @@ object Constant {
 	const val POSTER = "poster"
 	const val DIRECTOR = "Director"
 	const val WRITER = "Writer"
-
 	val ELENCO = "elenco"
 
 	object ViewTypesIds {

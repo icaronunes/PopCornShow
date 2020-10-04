@@ -1,4 +1,4 @@
-package listaserie.activity
+package lista.tvshow.activity
 
 /**
  * Created by icaro on 14/09/16.
@@ -8,7 +8,7 @@ import activity.BaseActivity
 import android.os.Bundle
 import android.view.Menu
 import br.com.icaro.filme.R
-import listaserie.fragment.TvShowsFragment
+import lista.tvshow.fragment.TvShowsFragment
 import utils.Api
 import utils.Constant
 
