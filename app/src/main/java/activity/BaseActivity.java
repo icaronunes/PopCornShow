@@ -61,7 +61,7 @@ import domain.busca.MultiSearch;
 import loading.firebase.TypeDataRef;
 import login.LoginActivity;
 import main.MainActivity;
-import pessoaspopulares.PersonPopularActivity;
+import pessoaspopulares.activity.PersonPopularActivity;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

@@ -5,6 +5,7 @@ import applicaton.BaseViewModel.*
 import domain.Imdb
 import domain.ListaSeries
 import domain.Movie
+import domain.PersonPopular
 import domain.TvSeasons
 import domain.Videos
 import domain.colecao.Colecao
@@ -34,4 +35,5 @@ interface ILoadingMedia {
 	fun getUpComing(_movie: MutableLiveData<BaseRequest<ListaFilmes>>)
 	fun getTvPopular(_tvshow: MutableLiveData<BaseRequest<ListaSeries>>)
 	fun fetchCollection(id: Int, _collection: MutableLiveData<BaseRequest<Colecao>>)
+	fun personPopula(pager: Int, _collection: MutableLiveData<BaseRequest<PersonPopular>>)
 }

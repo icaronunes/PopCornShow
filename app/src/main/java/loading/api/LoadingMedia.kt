@@ -8,6 +8,7 @@ import applicaton.BaseViewModel.BaseRequest.*
 import domain.Imdb
 import domain.ListaSeries
 import domain.Movie
+import domain.PersonPopular
 import domain.TvSeasons
 import domain.Videos
 import domain.colecao.Colecao
@@ -158,6 +159,13 @@ class LoadingMedia(val api: Api) : ILoadingMedia { // TODO injetar na viewmodels
 		GlobalScope.launch(handle(_collection)) {
 			val colection = api.getCollection(id)
 			_collection.postValue(colection)
+		}
+	}
+
+	override fun personPopula(pager: Int, _person: MutableLiveData<BaseRequest<PersonPopular>>) {
+		GlobalScope.launch(handle(_person)) {
+			val person = api.personPopular(pager)
+			_person.postValue(person)
 		}
 	}
 

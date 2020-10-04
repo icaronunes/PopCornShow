@@ -74,25 +74,10 @@ class Api(val context: Context) : ApiSingleton() {
 		else ApiKeys.TMDB_API_KEY2
 	}
 
-	fun personPopular(pagina: Int): Observable<PersonPopular> {
-		return Observable.create { subscriber ->
+	suspend fun personPopular(pagina: Int): BaseRequest<PersonPopular> {
+		return suspendCancellableCoroutine { cont ->
 			executeCall("${baseUrl3}person/popular?page=$pagina&language=en-US&api_key=${TMDBAPI}",
-				object : Callback {
-					override fun onFailure(call: Call, e: IOException) {
-						subscriber.onError(Throwable(e))
-					}
-
-					override fun onResponse(call: Call, response: Response) {
-						if (response.isSuccessful) {
-							val json = response.body?.string()
-							val person = gson.fromJsonWithLog(json, PersonPopular::class.java)
-							subscriber.onNext(person)
-							subscriber.onCompleted()
-						} else {
-							subscriber.onError(Throwable(response.message))
-						}
-					}
-				})
+				CallBackApiWithBaseRequest(cont, PersonPopular::class.java))
 		}
 	}
 
@@ -117,25 +102,6 @@ class Api(val context: Context) : ApiSingleton() {
 		}
 	}
 
-	fun getLista(id: String, pagina: Int = 1): Observable<ListaFilmes> {
-		return Observable.create { subscriber ->
-			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val request = Request.Builder()
-				.url("${baseUrl4}list/" + id + "?page=" + pagina + "&api_key=" + TMDBAPI)
-				.get()
-				.build()
-			val response = client.newCall(request).execute()
-			if (response.isSuccessful) {
-				val json = response.body?.string()
-				val lista = gson.fromJsonWithLog(json, ListaFilmes::class.java)
-				subscriber.onNext(lista)
-				subscriber.onCompleted()
-			} else {
-				subscriber.onError(Throwable(response.message))
-			}
-		}
-	}
-
 	fun getCompanyFilmes(company_id: Int, pagina: Int = 1): Observable<CompanyFilmes> {
 		return Observable.create { subscriber ->
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
@@ -148,56 +114,6 @@ class Api(val context: Context) : ApiSingleton() {
 				val json = response.body?.string()
 				val companyFilmes = gson.fromJsonWithLog(json, CompanyFilmes::class.java)
 				subscriber.onNext(companyFilmes)
-				subscriber.onCompleted()
-			} else {
-				subscriber.onError(Throwable(response.message))
-			}
-		}
-	}
-
-	fun buscaDeFilmes(
-		tipoDeBusca: String? = MOVIE.now,
-		pagina: Int = 1,
-		local: String = "US",
-	): Observable<ListaFilmes> {
-		return Observable.create { subscriber ->
-			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val url =
-				"${baseUrl3}movie/$tipoDeBusca?api_key=${TMDBAPI}&language=$local&page=$pagina&region=$region"
-			val request = Request.Builder()
-				.url(url)
-				.get()
-				.build()
-			val response = client.newCall(request).execute()
-			if (response.isSuccessful) {
-				val json = response.body?.string()
-				val lista = gson.fromJsonWithLog(json, ListaFilmes::class.java)
-				subscriber.onNext(lista)
-				subscriber.onCompleted()
-			} else {
-				subscriber.onError(Throwable(response.message))
-			}
-		}
-	}
-
-	fun buscaDeSeries(
-		tipoDeBusca: String? = TVSHOW.popular,
-		pagina: Int = 1,
-		local: String = "US",
-	): Observable<ListaSeries> {
-		// Todo Erro na busca da paginacao
-		return Observable.create { subscriber ->
-			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val request = Request.Builder()
-				.url("${baseUrl3}tv/$tipoDeBusca?api_key=${TMDBAPI}&language=$local&page=$pagina")
-				.get()
-				.build()
-			val response = client.newCall(request).execute()
-			if (response.isSuccessful) {
-				val json = response.body?.string()
-				val lista = gson.fromJsonWithLog(json, ListaSeries::class.java)
-				lista.results
-				subscriber.onNext(lista)
 				subscriber.onCompleted()
 			} else {
 				subscriber.onError(Throwable(response.message))
