@@ -44,9 +44,9 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import loading.firebase.TypeDataRef.*
 import safely
 import utils.Api
@@ -198,9 +198,9 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 				setAnimated()
 			}
 		}) {
-			val reelGood = withContext(Dispatchers.IO) {
-				Api(this@MovieDetailsActivity).getAvaliableMovie(getIdStream())
-			}
+			val reelGood = async(Dispatchers.IO)  {
+				Api(context = applicationContext).getAvaliableMovie(getIdStream())
+			}.await()
 
 			if (reelGood.availability.isNotEmpty()) {
 				streamview_movie.titleMovie = movieDb?.originalTitle ?: ""

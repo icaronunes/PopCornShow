@@ -69,6 +69,33 @@ class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<Re
         }
     }
 
+	fun addAllAd(ad: List<UnifiedNativeAd>, totalPagina: Int) {
+		if (listaResult[listaResult.size - 1]?.getViewType() == Constant.ViewTypesIds.LOADING) {
+			this.listaResult.removeAt(listaResult.size - 1)
+		}
+		ad.forEach { listaResult.add(ListAd(it)) }
+		notifyItemInserted(listaResult.size - 1 + ad.size)
+		if (listaResult.size < totalPagina) {
+			listaResult.add(loading)
+			notifyItemInserted(listaResult.size - 1)
+		}
+	}
+
+	fun addAd(ad: List<UnifiedNativeAd>, totalPagina: Int) {
+		if (ad.isNotEmpty()) {
+			val initPosition = listaResult.size - 1
+			if (listaResult.isNotEmpty() && listaResult[listaResult.size - 1]?.getViewType() == Constant.ViewTypesIds.LOADING) {
+				this.listaResult.removeAt(listaResult.size - 1)
+			}
+			this.listaResult.addAll(ListAd.createList(ad))
+			notifyItemRangeChanged(initPosition, this.listaResult.size - 1 /* plus loading item */)
+			if (listaResult.size < totalPagina) {
+				listaResult.add(loading)
+				notifyItemInserted(listaResult.size - 1)
+			}
+		}
+	}
+
     companion object {
 
         private val loading = object : ViewType {

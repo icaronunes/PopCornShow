@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import applicaton.BaseFragment
 import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
+import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_list_medias.adView
 import kotlinx.android.synthetic.main.fragment_list_medias.frame_list_filme
@@ -24,13 +25,14 @@ import utils.gone
 import utils.makeToast
 import utils.visible
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class MoviesFragment(override val layout: Int = R.layout.fragment_list_medias) : BaseFragment() {
 	private lateinit var abaEscolhida: String
 	private var pagina = 1
 	private var totalPagina: Int = 0
+
+	private var listAd: MutableList<UnifiedNativeAd> = mutableListOf()
+
 	val model: ListByTypeViewModel by lazy { createViewModel(ListByTypeViewModel::class.java) }
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -43,6 +45,7 @@ class MoviesFragment(override val layout: Int = R.layout.fragment_list_medias) :
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
         setAdMob(adView)
+		fillAds()
 
         recycle_listas.apply {
             val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -76,32 +79,41 @@ class MoviesFragment(override val layout: Int = R.layout.fragment_list_medias) :
                         pagina = list.page
                         totalPagina = list.totalPages
                         ++pagina
-
-                        UtilsKt.getAnuncio(requireContext(), 2) {
-                            if (recycle_listas != null &&
-                                (recycle_listas.adapter as ListaFilmesAdapter).itemCount > 0 &&
-                                (recycle_listas.adapter as ListaFilmesAdapter)
-                                    .getItemViewType((recycle_listas.adapter as ListaFilmesAdapter).itemCount - 1) != Constant.ViewTypesIds.AD
-                            )
-                                (recycle_listas.adapter as ListaFilmesAdapter).addAd(
-                                    it,
-                                    totalPagina
-                                )
-                        }
-	                    model.setLoading(false)
+	                    (recycle_listas.adapter as ListaFilmesAdapter).addAd(listAd.take(4), totalPagina = pagina)
+	                    fillAds()
+                        // UtilsKt.getAnuncio(requireContext(), 3) {
+                        //     if (recycle_listas != null &&
+                        //         (recycle_listas.adapter as ListaFilmesAdapter).itemCount > 0 &&
+                        //         (recycle_listas.adapter as ListaFilmesAdapter)
+                        //             .getItemViewType((recycle_listas.adapter as ListaFilmesAdapter).itemCount - 1) != Constant.ViewTypesIds.AD
+                        //     )
+                        //         (recycle_listas.adapter as ListaFilmesAdapter).addAd(
+                        //             it,
+                        //             totalPagina
+                        //         )
+                        // }
+	                    model.setLoadingMovie(false)
                     }
                 }
                 is Failure -> {
 	                requireActivity().makeToast(R.string.ops)
-	                model.setLoading(false)
+	                model.setLoadingMovie(false)
                 }
                 is Loading -> { loading(it.loading) }
             }
         })
 	}
 
-	fun fetchList() {
+	private fun fetchList() {
 		model.fetchListMovies(abaEscolhida, pagina)
+	}
+
+	private fun fillAds() {
+		Runnable {
+			UtilsKt.getAnuncio(requireContext(), 4) {
+				listAd.add(it)
+			}
+		}.run()
 	}
 
 	private fun snack() {

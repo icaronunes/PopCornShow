@@ -6,6 +6,9 @@ import domain.ViewType
 import utils.Constant
 
 @Keep
-data class ListAd(val unifiedNativeAd: UnifiedNativeAd) : ViewType {
+data class ListAd(val unifiedNativeAd: UnifiedNativeAd): ViewType {
+    companion object {
+        fun createList(list: List<UnifiedNativeAd>)=  list.map { ListAd(it) }
+    }
     override fun getViewType() = Constant.ViewTypesIds.AD
 }
