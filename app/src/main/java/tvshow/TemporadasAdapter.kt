@@ -19,10 +19,10 @@ import domain.UserTvshow
 import domain.reelgood.tvshow.ReelGoodTv
 import domain.tvshow.SeasonsItem
 import domain.tvshow.Tvshow
-import elenco.ElencoActivity
-import producao.CrewsActivity
+import elenco.WorksActivity
 import temporada.SeasonActivity
 import utils.Constant
+import utils.enums.EnumTypeMedia
 import utils.gone
 import utils.invisible
 import utils.parseDateShot
@@ -35,7 +35,7 @@ import utils.visible
 class TemporadasAdapter(
 	val context: FragmentActivity,
 	private val color: Int,
-	private val changeEps: (position: Int, idSeason: Int, numberSeason: Int) -> Unit
+	private val changeEps: (position: Int, idSeason: Int, numberSeason: Int) -> Unit,
 ) : RecyclerView.Adapter<TemporadasAdapter.HoldeSeason>() {
 	private var fallow: Boolean = false
 	var reelGood: ReelGoodTv? = null
@@ -62,7 +62,10 @@ class TemporadasAdapter(
 			imgSeason.setPicassoWithCache(seasonsItem.posterPath, 4, {}, { imgSeason.gone() })
 			data.text = seasonsItem.airDate?.parseDateShot() ?: ""
 			itemView.setOnClickListener { onClickTemporada(adapterPosition, color) } //hight ordem
-			popup.setOnClickListener { view -> showPopUp(view, seasonsItem.seasonNumber) } //hight ordem
+			popup.setOnClickListener { view ->
+				showPopUp(view,
+					seasonsItem.seasonNumber)
+			} //hight ordem
 			btFallow.setOnClickListener {
 				changeEps(
 					adapterPosition,
@@ -92,26 +95,19 @@ class TemporadasAdapter(
 		if (ancoraView != null) {
 			val popupMenu = PopupMenu(context, ancoraView)
 			popupMenu.inflate(R.menu.menu_popup_temporada)
-
 			popupMenu.setOnMenuItemClickListener { item ->
-				when (item.itemId) {
-					R.id.elenco_temporada -> {
-						val intent = Intent(context, ElencoActivity::class.java).apply {
-							putExtra(Constant.ID, series?.id)
-							putExtra(Constant.TVSEASONS, seasonNumber)
-							putExtra(Constant.NAME, series?.name)
-						}
-						context.startActivity(intent)
-					}
-					R.id.producao_temporada -> {
-						val intent = Intent(context, CrewsActivity::class.java).apply {
-							putExtra(Constant.ID, series?.id)
-							putExtra(Constant.TVSEASONS, seasonNumber)
-							putExtra(Constant.NAME, series?.name)
-						}
-						context.startActivity(intent)
-					}
+				val intent = Intent(context, WorksActivity::class.java).apply {
+					putExtra(Constant.NAME, series?.name)
+					putExtra(Constant.ID, series!!.id)
+					putExtra(Constant.MEDIATYPE, EnumTypeMedia.TV)
+					putExtra(Constant.TVSEASONS, seasonNumber)
+					putExtra(Constant.WORK, when (item.itemId) {
+						R.id.elenco_temporada -> Constant.ViewTypesIds.CAST
+						R.id.producao_temporada -> Constant.ViewTypesIds.CREWS
+						else -> 0
+					})
 				}
+				context.startActivity(intent)
 				true
 			}
 			popupMenu.show()
@@ -171,7 +167,6 @@ class TemporadasAdapter(
 	}
 
 	override fun getItemCount() = series?.seasons?.size ?: 0
-
 	private fun onClickTemporada(position: Int, color: Int) {
 		context.startActivity(Intent(context, SeasonActivity::class.java).apply {
 			putExtra(

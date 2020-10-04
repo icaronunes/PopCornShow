@@ -7,7 +7,6 @@ import applicaton.PopCornApplication
 import com.onesignal.OSNotificationAction.ActionType.ActionTaken
 import com.onesignal.OSNotificationOpenResult
 import com.onesignal.OneSignal.NotificationOpenedHandler
-import elenco.ElencoActivity
 import filme.activity.MovieDetailsActivity
 import lista.movie.activity.MoviesActivity
 import lista.tvshow.activity.TvShowsActivity
@@ -16,7 +15,6 @@ import org.json.JSONException
 import org.json.JSONObject
 import activity.ListGenericActivity
 import pessoa.activity.FotoPersonActivity
-import pessoa.activity.PersonActivity
 import producao.CrewsActivity
 import produtora.activity.ProdutoraActivity
 import similares.SimilaresActivity
@@ -34,7 +32,6 @@ import utils.Constant.NAV_DRAW_ESCOLIDO
 import utils.Constant.NOME_PERSON
 import utils.Constant.POSICAO
 import utils.Constant.Signal.CREWS
-import utils.Constant.Signal.ELENCO
 import utils.Constant.Signal.FOTOPERSON
 import utils.Constant.Signal.LISTGENERIC
 import utils.Constant.Signal.MOVIE
@@ -93,9 +90,6 @@ class CustomNotificationOpenedHandler : NotificationOpenedHandler {
                     }
                     TRAILER, VIDEO-> {
                         callTrailer(context, jsonObject)
-                    }
-                    ELENCO -> { // Não usado
-                        callElenco(context, jsonObject)
                     }
                     CREWS -> { // Não usado
                         callCrews(context, jsonObject)
@@ -232,23 +226,6 @@ class CustomNotificationOpenedHandler : NotificationOpenedHandler {
                 val stackBuilder = TaskStackBuilder.create(context)
                 intent.putExtra("notification", false)
                 stackBuilder.addParentStack(CrewsActivity::class.java)
-                stackBuilder.addNextIntent(intent)
-                stackBuilder.startActivities()
-            } else {
-                callMain()
-            }
-        }
-
-        private fun callElenco(context: Context, jsonObject: JSONObject) {
-            val intent = Intent(context, ElencoActivity::class.java)
-            if (jsonObject.has("nome")) intent.putExtra(NAME, jsonObject.getString("nome"))
-            if (jsonObject.has("mediatype")) intent.putExtra(Constant.MEDIATYPE, jsonObject.getString("mediatype"))
-            if (jsonObject.has("tvseason")) intent.putExtra(Constant.TVSEASONS, jsonObject.getString("tvseason"))
-            if (jsonObject.has("id") && jsonObject.has("mediatype")) {
-                intent.putExtra(Constant.ID, jsonObject.getInt("id"))
-                val stackBuilder = TaskStackBuilder.create(context)
-                intent.putExtra("notification", false)
-                stackBuilder.addParentStack(PersonActivity::class.java)
                 stackBuilder.addNextIntent(intent)
                 stackBuilder.startActivities()
             } else {

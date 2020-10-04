@@ -1,8 +1,6 @@
 package filme.fragment
 
 import Layout
-import adapter.CastAdapter
-import adapter.CrewAdapter
 import adapter.TrailerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -30,7 +28,8 @@ import com.github.clans.fab.FloatingActionMenu
 import domain.Imdb
 import domain.Movie
 import domain.colecao.PartsItem
-import elenco.ElencoActivity
+import elenco.WorksActivity
+import elenco.adapter.WorksAdapter
 import filme.MovieDetatilsViewModel
 import filme.adapter.CollectionPagerAdapter
 import filme.adapter.SimilaresFilmesAdapter
@@ -63,7 +62,6 @@ import kotlinx.android.synthetic.main.movie_details_info.tmdb_site
 import kotlinx.android.synthetic.main.poster_movie_details_layout.card_poster
 import kotlinx.android.synthetic.main.poster_movie_details_layout.img_poster
 import poster.PosterGridActivity
-import producao.CrewsActivity
 import produtora.activity.ProdutoraActivity
 import similares.SimilaresActivity
 import site.Site
@@ -72,6 +70,7 @@ import utils.Constant.BASEMOVIEDB_MOVIE
 import utils.Constant.IMDB
 import utils.Constant.METACRITICMOVIE
 import utils.Constant.ROTTENTOMATOESMOVIE
+import utils.enums.EnumTypeMedia
 import utils.gone
 import utils.makeToast
 import utils.minHeight
@@ -180,16 +179,20 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 		}
 
 		textview_elenco.setOnClickListener {
-			startActivity(Intent(requireActivity(), ElencoActivity::class.java).apply {
-				putExtra(Constant.ELENCO, movieDb.credits?.cast as Serializable)
+			startActivity(Intent(requireActivity(), WorksActivity::class.java).apply {
 				putExtra(Constant.NAME, movieDb.title)
+				putExtra(Constant.ID, movieDb.id)
+				putExtra(Constant.MEDIATYPE, EnumTypeMedia.MOVIE)
+				putExtra(Constant.WORK, Constant.ViewTypesIds.CAST)
 			})
 		}
 
 		textview_crews.setOnClickListener {
-			startActivity(Intent(requireActivity(), CrewsActivity::class.java).apply {
-				putExtra(Constant.PRODUCAO, movieDb.credits?.crew as Serializable)
+			startActivity(Intent(requireActivity(), WorksActivity::class.java).apply {
 				putExtra(Constant.NAME, movieDb.title)
+				putExtra(Constant.ID, movieDb.id)
+				putExtra(Constant.MEDIATYPE, EnumTypeMedia.MOVIE)
+				putExtra(Constant.WORK, Constant.ViewTypesIds.CREWS)
 			})
 		}
 
@@ -566,7 +569,7 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 				recycle_filme_elenco.minHeight()
 			} else {
 				recycle_filme_elenco.patternRecyler().apply {
-					adapter = CastAdapter(requireActivity(), movieDb.credits?.cast ?: listOf())
+					adapter = WorksAdapter(requireActivity(), movieDb.credits?.cast ?: listOf())
 					setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
 				}
 				textview_elenco?.visible()
@@ -576,7 +579,7 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 	private fun setCrews() {
 		if (movieDb.credits?.crew!!.isNotEmpty() && isAdded) {
 			recycle_filme_producao.patternRecyler().apply {
-				adapter = CrewAdapter(requireActivity(), movieDb.credits?.crew ?: listOf())
+				adapter = WorksAdapter(requireActivity(), movieDb.credits?.crew ?: listOf())
 				setScrollInvisibleFloatMenu(requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu))
 			}
 			textview_crews.visible()

@@ -56,7 +56,7 @@ class TvShowFragmentSeason(override val layout: Int = Layout.temporadas) : BaseF
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
-		savedInstanceState: Bundle?
+		savedInstanceState: Bundle?,
 	): View = getViewSeasons(inflater, container)
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -183,5 +183,7 @@ class TvShowFragmentSeason(override val layout: Int = Layout.temporadas) : BaseF
 		}
 	}
 
-	private fun progressGone() { progressBarTemporada?.gone() }
+	private fun progressGone() {
+		progressBarTemporada?.gone()
+	}
 }

@@ -5,6 +5,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import busca.SearchMultiModelView
+import elenco.viewmodel.WorksViewModel
 import episodio.EpsodioViewModel
 import filme.MovieDetatilsViewModel
 import lista.viewmodel.ListByTypeViewModel
@@ -46,6 +47,7 @@ class PopCornViewModelFactory constructor(
 				isAssignableFrom(YourListViewModel::class.java) -> YourListViewModel(app = application)
 				isAssignableFrom(ListByTypeViewModel::class.java) -> ListByTypeViewModel(app = application, api = api)
 				isAssignableFrom(EpsodioViewModel::class.java) -> EpsodioViewModel(app = application)
+				isAssignableFrom(WorksViewModel::class.java) -> WorksViewModel(app = application, api = api)
 				else -> throw IllegalArgumentException("ViewModel Desconhecida...")
 			}
 		} as T

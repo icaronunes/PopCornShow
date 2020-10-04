@@ -2,6 +2,7 @@ package loading.api
 
 import androidx.lifecycle.MutableLiveData
 import applicaton.BaseViewModel.*
+import domain.Credits
 import domain.Imdb
 import domain.ListaSeries
 import domain.Movie
@@ -36,4 +37,6 @@ interface ILoadingMedia {
 	fun getTvPopular(_tvshow: MutableLiveData<BaseRequest<ListaSeries>>)
 	fun fetchCollection(id: Int, _collection: MutableLiveData<BaseRequest<Colecao>>)
 	fun personPopula(pager: Int, _collection: MutableLiveData<BaseRequest<PersonPopular>>)
+	fun fetchSeasonCredits(id: Int, seasonNumber: Int, _credits: MutableLiveData<BaseRequest<Credits>>)
+	fun fetchMovieCredits(id: Int, _credits: MutableLiveData<BaseRequest<Credits>>)
 }

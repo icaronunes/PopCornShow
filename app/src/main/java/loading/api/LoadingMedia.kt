@@ -5,6 +5,7 @@ import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import applicaton.BaseViewModel.*
 import applicaton.BaseViewModel.BaseRequest.*
+import domain.Credits
 import domain.Imdb
 import domain.ListaSeries
 import domain.Movie
@@ -17,6 +18,7 @@ import domain.reelgood.tvshow.ReelGoodTv
 import domain.tvshow.Tvshow
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
@@ -25,6 +27,7 @@ import utils.Api
 import utils.log
 import kotlin.coroutines.CoroutineContext
 
+@ExperimentalCoroutinesApi
 class LoadingMedia(val api: Api) : ILoadingMedia { // TODO injetar na viewmodels
 	// Remover esses PostValue ... pode causar leak
 	override fun getDataMovie(liveData: MutableLiveData<BaseRequest<Movie>>, idMovie: Int) {
@@ -166,6 +169,24 @@ class LoadingMedia(val api: Api) : ILoadingMedia { // TODO injetar na viewmodels
 		GlobalScope.launch(handle(_person)) {
 			val person = api.personPopular(pager)
 			_person.postValue(person)
+		}
+	}
+
+	override fun fetchSeasonCredits(
+		id: Int,
+		seasonNumber: Int,
+		_credits: MutableLiveData<BaseRequest<Credits>>,
+	) {
+		GlobalScope.launch(handle(_credits)) {
+			val credits = api.fetchSeasonCredits(id, seasonNumber)
+			_credits.postValue(credits)
+		}
+	}
+
+	override fun fetchMovieCredits(id: Int, _credits: MutableLiveData<BaseRequest<Credits>>) {
+		GlobalScope.launch(handle(_credits)) {
+			val credits = api.fetchMovieCredits(id)
+			_credits.postValue(credits)
 		}
 	}
 

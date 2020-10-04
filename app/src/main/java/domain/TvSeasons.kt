@@ -2,6 +2,7 @@ package domain
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import utils.Constant
 import java.io.Serializable
 import javax.annotation.Generated
 
@@ -154,7 +155,9 @@ data class CrewItem(
 	val department: String? = null,
 	@field:SerializedName("job")
 	val job: String? = null,
-) : Serializable
+) : Serializable, ViewType {
+	override fun getViewType() = Constant.ViewTypesIds.CREWS
+}
 
 @Generated("com.robohorse.robopojogenerator")
 @Keep

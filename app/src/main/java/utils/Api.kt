@@ -187,6 +187,20 @@ class Api(val context: Context) : ApiSingleton() {
 			}
 		}
 	}
+	suspend fun fetchSeasonCredits(id: Int, seasonNumber: Int): BaseRequest<Credits> {
+		return suspendCancellableCoroutine { cont ->
+			executeCall("${baseUrl3}tv/$id/season/$seasonNumber/credits?api_key=${TMDBAPI}&language=en-US",
+			CallBackApiWithBaseRequest(cont, Credits::class.java))
+		}
+	}
+
+	suspend fun fetchMovieCredits(id: Int): BaseRequest<Credits> {
+		return suspendCancellableCoroutine { cont ->
+			executeCall("${baseUrl3}movie/$id/credits?api_key=${TMDBAPI}&language=en-US",
+				CallBackApiWithBaseRequest(cont, Credits::class.java))
+		}
+	}
+
 
 	suspend fun personDetails(id: Int): BaseRequest<Person> {
 		return suspendCancellableCoroutine { continuation ->

@@ -58,7 +58,12 @@ object Constant {
 	const val POSTER = "poster"
 	const val DIRECTOR = "Director"
 	const val WRITER = "Writer"
-	val ELENCO = "elenco"
+	const val WORK = "work"
+	const val ELENCO = "elenco"
+
+	object MediaType {
+
+	}
 
 	object ViewTypesIds {
 		val NEWS = 1
@@ -66,6 +71,8 @@ object Constant {
 		val AD = 3
 		val TVSHOW = 4
 		val FALLOW = 5
+		val CREWS = 6
+		val CAST = 7
 	}
 
 	object ReelGood {
@@ -99,7 +106,6 @@ object Constant {
 		const val LISTGENERIC = "ListGenericActivity"
 		const val TRAILER = "TrailerActivity"
 		const val VIDEO = "TreilerActivity"
-		const val ELENCO = "ElencoActivity"
 		const val CREWS = "CrewsActivity"
 		const val SITE = "SiteActivity"
 		const val PRODUTORA = "ProdutoraActivity"

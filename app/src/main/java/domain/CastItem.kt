@@ -2,6 +2,7 @@ package domain
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import utils.Constant
 import java.io.Serializable
 import javax.annotation.Generated
 
@@ -32,4 +33,6 @@ data class CastItem(
 
     @field:SerializedName("order")
     val order: Int? = null
-) : Serializable
+) : Serializable, ViewType {
+    override fun getViewType() = Constant.ViewTypesIds.CAST
+}
