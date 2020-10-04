@@ -3,17 +3,13 @@ package poster;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
 import com.viewpagerindicator.LinePageIndicator;
-
 import java.util.List;
-
 import br.com.icaro.filme.R;
 import domain.PostersItem;
 import utils.Constant;
@@ -31,8 +27,6 @@ public class PosterActivity extends AppCompatActivity {
 
     @Override
     public void
-
-
     onCreate(Bundle savedInstanceState) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
@@ -50,8 +44,6 @@ public class PosterActivity extends AppCompatActivity {
     }
 
     private class PosterFragment extends FragmentPagerAdapter {
-
-
         PosterFragment(FragmentManager fm) {
             super(fm);
         }
