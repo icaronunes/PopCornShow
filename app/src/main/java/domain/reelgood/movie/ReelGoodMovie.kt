@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Keep
 @Parcelize
-data class ReelGood(
+data class ReelGoodMovie(
     @SerializedName("availability")
     val availability: List<Availability>
 
