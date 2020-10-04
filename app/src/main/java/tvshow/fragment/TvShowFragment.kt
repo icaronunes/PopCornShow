@@ -1,8 +1,6 @@
 package tvshow.fragment
 
 import Layout
-import adapter.CastAdapter
-import adapter.CrewAdapter
 import adapter.TrailerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -35,7 +33,8 @@ import com.github.clans.fab.FloatingActionMenu
 import configuracao.SettingsActivity
 import domain.Imdb
 import domain.tvshow.Tvshow
-import elenco.ElencoActivity
+import elenco.WorksActivity
+import elenco.adapter.WorksAdapter
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.card_poster
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.img_poster
 import kotlinx.android.synthetic.main.tvshow_info.adView
@@ -68,7 +67,6 @@ import kotlinx.android.synthetic.main.tvshow_info.ultimo_ep_name
 import kotlinx.android.synthetic.main.tvshow_info.voto_media
 import loading.firebase.TypeDataRef
 import poster.PosterGridActivity
-import producao.CrewsActivity
 import produtora.activity.ProdutoraActivity
 import similares.SimilaresActivity
 import site.Site
@@ -80,6 +78,7 @@ import utils.Constant.IMDB
 import utils.Constant.METACRITICTV
 import utils.Constant.ROTTENTOMATOESTV
 import utils.UtilsApp.setUserTvShow
+import utils.enums.EnumTypeMedia
 import utils.gone
 import utils.kotterknife.bindArgument
 import utils.makeToast
@@ -147,8 +146,8 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 					setProductionCountries()
 					setPopularity()
 					setTemporada()
-					setElenco()
-					setProducao()
+					setupCast()
+					setupCrews()
 					setSimilares()
 					setTrailer()
 					setPoster()
@@ -235,7 +234,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
-		savedInstanceState: Bundle?
+		savedInstanceState: Bundle?,
 	): View = getViewInfo(inflater, container)
 
 	private fun setUltimoEpDate() {
@@ -580,18 +579,13 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 		}
 	}
 
-	private fun setElenco() {
-		textview_elenco?.setOnClickListener {
-			startActivity(Intent(requireContext(), ElencoActivity::class.java).apply {
-				putExtra(Constant.ELENCO, series.credits?.cast as Serializable)
-				putExtra(Constant.NAME, series.name)
-			})
-		}
+	private fun setupCast() {
+		textview_elenco?.setOnClickListener { callWorksActivity(Constant.ViewTypesIds.CAST) }
 
 		if (series.credits?.cast?.isNotEmpty()!!) {
 			textview_elenco?.visible()
 			recycle_tvshow_elenco.patternRecyler(true).apply {
-				adapter = CastAdapter(requireActivity(), series.credits?.cast ?: listOf())
+				adapter = WorksAdapter(requireActivity(), series.credits?.cast ?: listOf())
 				setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
 			}
 		} else {
@@ -604,18 +598,23 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 		}
 	}
 
-	private fun setProducao() {
-		textview_crews?.setOnClickListener {
-			startActivity(Intent(requireContext(), CrewsActivity::class.java).apply {
-				putExtra(Constant.PRODUCAO, series.credits?.crew as Serializable)
-				putExtra(Constant.NAME, series.name)
-			})
-		}
+	private fun callWorksActivity(type: Int) {
+		startActivity(Intent(requireContext(), WorksActivity::class.java).apply {
+			putExtra(Constant.NAME, series.name)
+			putExtra(Constant.ID, series.id)
+			putExtra(Constant.MEDIATYPE, EnumTypeMedia.TV)
+			putExtra(Constant.TVSEASONS, series.numberOfSeasons)
+			putExtra(Constant.WORK, type)
+		})
+	}
+
+	private fun setupCrews() {
+		textview_crews?.setOnClickListener { callWorksActivity(Constant.ViewTypesIds.CREWS) }
 
 		if (series.credits?.crew?.isNotEmpty()!!) {
 			textview_crews?.visibility = View.VISIBLE
 			recycle_tvshow_producao.patternRecyler(true).apply {
-				adapter = CrewAdapter(requireActivity(), series.credits?.crew ?: listOf())
+				adapter = WorksAdapter(requireActivity(), series.credits?.crew ?: listOf())
 				setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
 			}
 		} else {

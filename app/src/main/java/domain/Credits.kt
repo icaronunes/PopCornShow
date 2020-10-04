@@ -8,10 +8,12 @@ import javax.annotation.Generated
 @Generated("com.robohorse.robopojogenerator")
 @Keep
 data class Credits(
+    @field:SerializedName("id")
+    val id: Int,
 
     @field:SerializedName("cast")
-    val cast: List<CastItem>? = null,
+    val cast: List<CastItem> = listOf(),
 
     @field:SerializedName("crew")
-    val crew: List<CrewItem>? = null
+    val crew: List<CrewItem> = listOf()
 ) : Serializable

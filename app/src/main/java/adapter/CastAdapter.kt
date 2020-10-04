@@ -39,12 +39,12 @@ class CastAdapter(val activity: FragmentActivity, val casts: List<CastItem>) : A
     }
 
     inner class CastViewHolder(parent: ViewGroup) :
-        ViewHolder(LayoutInflater.from(activity).inflate(layout.scroll_elenco, parent, false)) {
+        ViewHolder(LayoutInflater.from(activity).inflate(layout.works_layout_vertical, parent, false)) {
 
-        private val progressBar: ProgressBar = itemView.findViewById(id.progressBarCast)
-        private val img: ImageView = itemView.findViewById(id.imgPager)
-        private val textCastPersonagem: TextView = itemView.findViewById(id.textCastPersonagem)
-        private val textCastNome: TextView = itemView.findViewById(id.textCastNomes)
+        private val progressBar: ProgressBar = itemView.findViewById(id.progress_work)
+        private val img: ImageView = itemView.findViewById(id.img_work)
+        private val textCastPersonagem: TextView = itemView.findViewById(id.person_work)
+        private val textCastNome: TextView = itemView.findViewById(id.name_work)
 
         fun bind(person: CastItem) = with(itemView) {
             progressBar.visible()
