@@ -2,8 +2,6 @@ package utils
 
 import android.content.Context
 import applicaton.BaseViewModel.*
-import applicaton.BaseViewModel.BaseRequest.*
-import com.google.gson.JsonSyntaxException
 import domain.CompanyFilmes
 import domain.Credits
 import domain.EpisodesItem
@@ -32,13 +30,10 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.Response
 import rx.Observable
-import utils.Api.TYPESEARCH.MOVIE
-import utils.Api.TYPESEARCH.TVSHOW
 import utils.ApiSingleton.Companion.LoggingInterceptor
 import utils.UtilsKt.Companion.getIdiomaEscolhido
 import utils.key.ApiKeys
 import java.io.IOException
-import java.net.SocketTimeoutException
 import java.util.Locale
 import java.util.Random
 import kotlin.coroutines.resume
@@ -125,145 +120,44 @@ class Api(val context: Context) : ApiSingleton() {
 		return suspendCancellableCoroutine { continuation ->
 			val idioma = getIdiomaEscolhido(context)
 			executeCall("${baseUrl3}movie/$idMovie?api_key=${TMDBAPI}&language=$idioma&append_to_response=credits,videos,images,release_dates,similar&include_image_language=en,null",
-				object : Callback {
-					override fun onFailure(call: Call, e: IOException) {
-						continuation.resume(Failure(e))
-					}
-
-					override fun onResponse(call: Call, response: Response) {
-						try {
-							if (response.isSuccessful) {
-								val listMovie = gson.fromJsonWithLog(
-									response.body?.string(),
-									Movie::class.java
-								)
-								continuation.resume(Success(listMovie))
-							} else {
-								continuation.resume(Failure(Exception(response.message)))
-							}
-						} catch (e: Exception) {
-							continuation.resume(Failure(e))
-						}
-					}
-				})
+				CallBackApiWithBaseRequest(continuation, Movie::class.java))
 		}
 	}
 
 	suspend fun getTvshow(idTvshow: Int): BaseRequest<Tvshow> {
 		return suspendCancellableCoroutine { continuation ->
 			executeCall("${baseUrl3}tv/$idTvshow?api_key=${TMDBAPI}&language=$timeZone&append_to_response=credits,videos,images,release_dates,similar,external_ids&include_image_language=en,null",
-				object : Callback {
-					override fun onFailure(call: Call, e: IOException) {
-						continuation.resume(Failure(e))
-					}
-
-					override fun onResponse(call: Call, response: Response) {
-						try {
-							if (response.isSuccessful) {
-								val listMovie = gson.fromJsonWithLog(
-									response.body?.string(),
-									Tvshow::class.java
-								)
-								continuation.resume(Success(listMovie))
-							} else {
-								continuation.resume(Failure(Exception(response.message)))
-							}
-						} catch (e: Exception) {
-							continuation.resume(Failure(e))
-						}
-					}
-				})
+				CallBackApiWithBaseRequest(continuation, Tvshow::class.java))
 		}
 	}
 
 	suspend fun getTrailersFromEn(
-		movieId: Int,
+		id: Int,
 		type: String,
-	): BaseRequest<Videos> { // Todo Validar erros
+	): BaseRequest<Videos> {
 		return suspendCancellableCoroutine { cont ->
-			executeCall(
-				"${baseUrl3}$type/$movieId/videos?api_key=${TMDBAPI}&language=en-US,null",
-				object : Callback {
-					override fun onFailure(call: Call, e: IOException) {
-						cont.resume(Failure(e))
-					}
-
-					override fun onResponse(call: Call, response: Response) {
-						try {
-							if (response.isSuccessful) {
-								val json = response.body?.string()
-								val videos = gson.fromJsonWithLog(json, Videos::class.java)
-								cont.resume(Success(videos))
-							} else {
-								cont.resume(Failure(java.lang.Exception(response.code.toString())))
-							}
-						} catch (ex: JsonSyntaxException) {
-							cont.resume(Failure(ex))
-						} catch (ex: SocketTimeoutException) {
-							cont.resume(Failure(ex))
-						} catch (ex: Exception) {
-							cont.resume(Failure(ex))
-						}
-					}
-				})
+			executeCall("${baseUrl3}$type/$id/videos?api_key=${TMDBAPI}&language=en-US,null",
+				CallBackApiWithBaseRequest(cont, Videos::class.java))
 		}
 	}
 
 	suspend fun getTvShowLiteC(id: Int): Tvshow {
 		return suspendCancellableCoroutine { cont ->
-			executeCall(
-				"${baseUrl3}tv/$id?api_key=${TMDBAPI}&language=$timeZone&append_to_response=release_dates,external_ids&include_image_language=en,null",
-				object : Callback {
-					override fun onFailure(call: Call, e: IOException) {
-						cont.resumeWithException(Throwable(e.message))
-					}
-
-					override fun onResponse(call: Call, response: Response) {
-						try {
-							if (response.isSuccessful) {
-								val json = response.body?.string()
-								val tvshow = gson.fromJsonWithLog(json, Tvshow::class.java)
-								cont.resume(tvshow)
-							} else {
-								cont.cancel(null)
-							}
-						} catch (ex: Exception) {
-							cont.resumeWithException(Throwable(ex.message))
-						}
-					}
-				})
+			executeCall("${baseUrl3}tv/$id?api_key=$TMDBAPI&language=$timeZone&append_to_response=release_dates,external_ids&include_image_language=en,null",
+				CallBackApi(cont, Tvshow::class.java))
 		}
 	}
 
-	suspend fun getTvShowEpC(id: Int, idTemp: Int, idEp: Int): EpisodesItem { // Usado em "Seguindo"
+	suspend fun getTvShowEpC(id: Int, idTemp: Int, idEp: Int): EpisodesItem {
 		return suspendCancellableCoroutine { cont ->
-			executeCall("${baseUrl3}tv/$id/season/$idTemp/episode/$idEp?api_key=${TMDBAPI}&language=$timeZone",
-				object : Callback {
-					override fun onFailure(call: Call, e: IOException) {
-						cont.resumeWithException(Throwable(e.message))
-					}
-
-					override fun onResponse(call: Call, response: Response) {
-						try {
-							if (response.isSuccessful) {
-								val json = response.body?.string()
-								val ep = gson.fromJsonWithLog(json, EpisodesItem::class.java)
-								cont.resume(ep)
-							} else {
-								cont.cancel(null)
-							}
-						} catch (ex: Exception) {
-							cont.resumeWithException(Throwable(ex.message))
-						}
-					}
-				})
+			executeCall("${baseUrl3}tv/$id/season/$idTemp/episode/$idEp?api_key=$TMDBAPI&language=$timeZone",
+				CallBackApi(cont, EpisodesItem::class.java))
 		}
 	}
 
 	suspend fun getCollection(id: Int): BaseRequest<Colecao> {
 		return suspendCancellableCoroutine { cont ->
-			executeCall(
-				"${baseUrl3}collection/$id?api_key=${TMDBAPI}&language=$timeZone,en",
+			executeCall("${baseUrl3}collection/$id?api_key=${TMDBAPI}&language=$timeZone,en",
 				CallBackApiWithBaseRequest(cont, Colecao::class.java))
 		}
 	}
@@ -271,25 +165,7 @@ class Api(val context: Context) : ApiSingleton() {
 	suspend fun getTvSeasons(id: Int, id_season: Int): TvSeasons {
 		return suspendCancellableCoroutine { cont ->
 			executeCall("${baseUrl3}tv/$id/season/$id_season?api_key=${TMDBAPI}&language=$timeZone",
-				object : Callback {
-					override fun onFailure(call: Call, e: IOException) {
-						cont.resumeWithException(Throwable(e.message))
-					}
-
-					override fun onResponse(call: Call, response: Response) {
-						try {
-							if (response.isSuccessful) {
-								val json = response.body?.string()
-								val tvshow = gson.fromJsonWithLog(json, TvSeasons::class.java)
-								cont.resume(tvshow)
-							} else {
-								cont.cancel(null)
-							}
-						} catch (ex: Exception) {
-							cont.resumeWithException(Throwable(ex.message))
-						}
-					}
-				})
+				CallBackApi(cont, TvSeasons::class.java))
 		}
 	}
 
@@ -398,9 +274,15 @@ class Api(val context: Context) : ApiSingleton() {
 
 	suspend fun userGuest(): BaseRequest<GuestSession> {
 		return suspendCancellableCoroutine { cont ->
-			executeCall(
-				"https://api.themoviedb.org/3/authentication/guest_session/new?api_key=${TMDBAPI}",
+			executeCall("https://api.themoviedb.org/3/authentication/guest_session/new?api_key=${TMDBAPI}",
 				CallBackApiWithBaseRequest(cont, GuestSession::class.java))
+		}
+	}
+
+	suspend fun getResquestImdb(id: String): BaseRequest<Imdb> {
+		return suspendCancellableCoroutine { cont ->
+			executeCall("http://www.omdbapi.com/?i=$id&tomatoes=true&r=json&apikey=${OMDBAPI}",
+				CallBackApiWithBaseRequest(cont, Imdb::class.java))
 		}
 	}
 
@@ -450,14 +332,6 @@ class Api(val context: Context) : ApiSingleton() {
 						cont.resume(Any())
 					}
 				})
-		}
-	}
-
-	suspend fun getResquestImdb(id: String): BaseRequest<Imdb> {
-		return suspendCancellableCoroutine { cont ->
-			executeCall(
-				"http://www.omdbapi.com/?i=$id&tomatoes=true&r=json&apikey=${OMDBAPI}",
-				CallBackApiWithBaseRequest(cont, Imdb::class.java))
 		}
 	}
 }
