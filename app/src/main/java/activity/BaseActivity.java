@@ -61,7 +61,6 @@ import domain.busca.MultiSearch;
 import loading.firebase.TypeDataRef;
 import login.LoginActivity;
 import main.MainActivity;
-import oscar.OscarActivity;
 import pessoaspopulares.PersonPopularActivity;
 import rx.Observer;
 import rx.Subscription;
@@ -262,9 +261,9 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
 
             case R.id.menu_drav_oscar:
 
-                intent = new Intent(this, OscarActivity.class);
-                intent.putExtra(Constant.LISTA_ID, getResources().getString(R.string.id_oscar));
-                intent.putExtra(Constant.LISTA_NOME, R.string.oscar);
+                intent = new Intent(this, ListGenericActivity.class);
+                intent.putExtra(Constant.LISTA_ID, Constant.ListOnTheMovie.OSCAR);
+                intent.putExtra(Constant.LISTA_NOME, getString(R.string.oscar));
                 startActivity(intent);
                 break;
 
@@ -314,7 +313,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
                         //Log.d(TAG, "numero : " + numero);
                         //TODO mandar somente o Map e fazer a troca na outra activity
                         intent.putExtra(Constant.LISTA_ID, map.get("id" + numero));
-                        intent.putExtra(Constant.LISTA_GENERICA, map.get("title" + numero));
+                        intent.putExtra(Constant.LISTA_NOME, map.get("title" + numero));
                         intent.putExtra(Constant.BUNDLE, (Serializable) map);
 
                         startActivity(intent);

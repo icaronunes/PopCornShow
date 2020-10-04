@@ -36,7 +36,7 @@ class LoadingMedia(val api: Api) : ILoadingMedia { // TODO injetar na viewmodels
 
 	override fun getMovieList(
 		liveData: MutableLiveData<BaseRequest<ListaFilmes>>,
-		id: Int,
+		id: String,
 		page: Int,
 	) {
 		GlobalScope.launch(handle(liveData)) {

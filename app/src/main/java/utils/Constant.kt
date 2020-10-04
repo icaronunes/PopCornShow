@@ -113,6 +113,6 @@ object Constant {
 	}
 
 	object ListOnTheMovie {
-		const val OSCAR = 28
+		const val OSCAR = "28"
 	}
 }

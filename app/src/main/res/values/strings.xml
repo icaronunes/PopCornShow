@@ -159,7 +159,6 @@
     <string name="deletar_conta_txt">Would you like to delete your account? You have lost all account information.  It will not be possible to recover.</string>
     <string name="conta_deletada">Deleted account</string>
     <string name="falha_delete_conta">Error while trying to delete account. You must have logged in to this process recently.</string>
-    <string name="id_oscar" translatable="false">28</string>
     <string name="proximos">Upcoming</string>
     <string name="new_segiundo">New</string>
     <string name="msg_parar_seguir">If you stop following, you lose all the progress of the Tvshow</string>

@@ -15,7 +15,7 @@ import domain.tvshow.Tvshow
 interface ILoadingMedia {
 
     fun getDataMovie(liveData: MutableLiveData<BaseRequest<Movie>>, idMovie: Int)
-    fun getMovieList(liveData: MutableLiveData<BaseRequest<ListaFilmes>>, id: Int, page:Int)
+    fun getMovieList(liveData: MutableLiveData<BaseRequest<ListaFilmes>>, id: String, page:Int)
     fun getMovieListByType(liveData: MutableLiveData<BaseRequest<ListaFilmes>>, type: String, page:Int)
     fun getTvListByType(liveData: MutableLiveData<BaseRequest<ListaSeries>>, type: String, page:Int)
 	fun imdbDate(_imdb: MutableLiveData<BaseRequest<Imdb>>, id: String)
