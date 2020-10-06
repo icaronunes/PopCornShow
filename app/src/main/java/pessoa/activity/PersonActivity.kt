@@ -13,13 +13,12 @@ import kotlinx.android.synthetic.main.activity_person.viewPager_person
 import pessoa.adapter.PersonAdapter
 import pessoa.modelview.PersonViewModel
 import utils.BaseActivityKt
-import utils.CallBackError
 import utils.Constant
 import utils.UtilsApp
 import utils.gone
 import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal as progress
 
-class PersonActivity : BaseActivityKt(), CallBackError {
+class PersonActivity : BaseActivityKt() {
 
     private var idPerso: Int = 0
     private var nome: String? = null
@@ -75,7 +74,7 @@ class PersonActivity : BaseActivityKt(), CallBackError {
     private fun setupViewPagerTabs() {
         viewPager_person?.apply {
             offscreenPageLimit = 2
-            adapter = PersonAdapter(baseContext, supportFragmentManager, false)
+            adapter = PersonAdapter(baseContext, supportFragmentManager)
             currentItem = 2
         }
         findViewById<TabLayout>(R.id.tabLayout).run {
@@ -85,7 +84,7 @@ class PersonActivity : BaseActivityKt(), CallBackError {
     }
 
     private fun setupViewPagerTabsWithError() {
-        viewPager_person?.adapter = PersonAdapter(baseContext, supportFragmentManager, true)
+        viewPager_person?.adapter = PersonAdapter(baseContext, supportFragmentManager)
         findViewById<TabLayout>(R.id.tabLayout).apply {
             setupWithViewPager(viewPager_person)
             tabMode = TabLayout.MODE_SCROLLABLE
@@ -117,6 +116,4 @@ class PersonActivity : BaseActivityKt(), CallBackError {
         model.response.removeObservers(this)
         super.onDestroy()
     }
-
-    override fun tryAgain() { fetchData(idPerso) }
 }

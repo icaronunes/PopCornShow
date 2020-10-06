@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import br.com.icaro.filme.R.*
-import fragment.FragmentError
 import pessoa.fragment.PersonFragmentMovie
 import pessoa.fragment.PersonFragmentPhoto
 import pessoa.fragment.PersonFragmentProduction
@@ -17,14 +16,12 @@ import pessoa.fragment.PersonFragmentTv
  */
 class PersonAdapter(
 	private val context: Context,
-	supportFragmentManager: FragmentManager?,
-	private val error: Boolean
+	supportFragmentManager: FragmentManager?
 ) : FragmentPagerAdapter(
 	supportFragmentManager!!, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
 ) {
-	override fun getCount() = if (error) 1 else 5
+	override fun getCount() =  5
 	override fun getItem(position: Int): Fragment {
-		if (error) return FragmentError()
 		return when (position) {
 			0 -> PersonFragmentTv()
 			1 -> PersonFragmentMovie()
@@ -36,7 +33,6 @@ class PersonAdapter(
 	}
 
 	override fun getPageTitle(position: Int): CharSequence? {
-		if (error) return "Error :("
 		return when (position) {
 			0 -> context.getString(string.tvshow)
 			1 -> context.getString(string.filme)
