@@ -5,7 +5,6 @@ package utils
  */
 object Constant {
 	const val ZERO: Float = 0.0f
-	const val WIKI = "https://www.wikipedia.org/wiki/"
 	const val BASEMOVIEDB_TV = "https://www.themoviedb.org/tv/"
 	const val BASEMOVIEDB_MOVIE = "https://www.themoviedb.org/movie/"
 	const val IMDB = "https://www.imdb.com/title/"
@@ -42,28 +41,16 @@ object Constant {
 	const val ARTWORKS = "artworks"
 	const val BUNDLE = "bundle"
 	const val NAME = "name"
-	const val TVSEASON_ID = "tvseason_id"
-	const val EPSODIO_ID = "epsodio_id"
 	const val EPSODIO = "epsodio"
 	const val MEDIATYPE = "mediatype"
 	const val ID = "id"
 	const val MAIN = "main"
-	const val LISTA_GENERICA = "generica_nome"
-	const val USER = "user"
 	const val SEGUINDO = "seguindo"
 	const val TEMPORADA_POSITION = "temporada_position"
-	const val EP_POSITION_FIRE = "position_ep_fire"
 	const val TWITTER_URL = "@appopcorn"
 	const val PRODUCAO = "producao"
 	const val POSTER = "poster"
-	const val DIRECTOR = "Director"
-	const val WRITER = "Writer"
 	const val WORK = "work"
-	const val ELENCO = "elenco"
-
-	object MediaType {
-
-	}
 
 	object ViewTypesIds {
 		val NEWS = 1
@@ -106,7 +93,6 @@ object Constant {
 		const val LISTGENERIC = "ListGenericActivity"
 		const val TRAILER = "TrailerActivity"
 		const val VIDEO = "TreilerActivity"
-		const val CREWS = "CrewsActivity"
 		const val SITE = "SiteActivity"
 		const val PRODUTORA = "ProdutoraActivity"
 		const val SIMILARES = "SimilaresActivity"
