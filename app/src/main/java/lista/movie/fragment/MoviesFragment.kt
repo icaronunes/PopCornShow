@@ -24,9 +24,7 @@ import utils.gone
 import utils.makeToast
 import utils.visible
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class MoviesFragment(override val layout: Int = R.layout.fragment_list_medias) : BaseFragment() {
 	private lateinit var abaEscolhida: String
 	private var pagina = 1
@@ -100,7 +98,7 @@ class MoviesFragment(override val layout: Int = R.layout.fragment_list_medias) :
         })
 	}
 
-	fun fetchList() {
+	private fun fetchList() {
 		model.fetchListMovies(abaEscolhida, pagina)
 	}
 
