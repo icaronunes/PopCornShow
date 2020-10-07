@@ -32,12 +32,6 @@ class ListByTypeViewModel(app: Application, val api: Api) : BaseViewModel(app) {
 	private val _personList: MutableLiveData<BaseRequest<PersonPopular>> = MutableLiveData()
 	val personList: LiveData<BaseRequest<PersonPopular>> = _personList
 
-	private val _moviesList: MutableLiveData<BaseRequest<ListaFilmes>> = MutableLiveData()
-	val moviesList: LiveData<BaseRequest<ListaFilmes>> = _moviesList
-
-	private val _personList: MutableLiveData<BaseRequest<PersonPopular>> = MutableLiveData()
-	val personList: LiveData<BaseRequest<PersonPopular>> = _personList
-
 	fun fetchListMovies(type: String, page: Int) {
 		setLoadingMovie(true)
 		loadingMedia.getMovieListByType(type = type, page = page, liveData = _movies)

@@ -6,9 +6,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import applicaton.BaseFragment
-import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
+import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.material.snackbar.Snackbar
+import domain.movie.ListAd
+import error.ErrorTryDefault
 import kotlinx.android.synthetic.main.fragment_list_medias.adView
 import kotlinx.android.synthetic.main.fragment_list_medias.frame_list_filme
 import kotlinx.android.synthetic.main.fragment_list_medias.recycle_listas
@@ -19,16 +21,16 @@ import lista.viewmodel.ListByTypeViewModel
 import utils.Constant
 import utils.InfiniteScrollStaggeredListener
 import utils.UtilsApp
-import utils.UtilsKt
 import utils.gone
 import utils.makeToast
+import utils.resolver
 import utils.visible
-
 
 class MoviesFragment(override val layout: Int = R.layout.fragment_list_medias) : BaseFragment() {
 	private lateinit var abaEscolhida: String
 	private var pagina = 1
 	private var totalPagina: Int = 0
+	private var listAd: MutableList<UnifiedNativeAd> = mutableListOf()
 	val model: ListByTypeViewModel by lazy { createViewModel(ListByTypeViewModel::class.java) }
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -41,7 +43,20 @@ class MoviesFragment(override val layout: Int = R.layout.fragment_list_medias) :
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
         setAdMob(adView)
+		setupRecycler()
 
+		if (!UtilsApp.isNetWorkAvailable(requireContext())) {
+			txt_listas?.visibility = View.VISIBLE
+			txt_listas?.text = getString(R.string.no_internet)
+			snack()
+		} else {
+			fetchList()
+		}
+		observerAd()
+		observerMovies()
+	}
+
+	private fun setupRecycler() {
         recycle_listas.apply {
             val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             this.layoutManager = layoutManager
@@ -52,48 +67,43 @@ class MoviesFragment(override val layout: Int = R.layout.fragment_list_medias) :
                 layoutManager))
             adapter = ListaFilmesAdapter(requireActivity())
         }
+	}
 
-        if (!UtilsApp.isNetWorkAvailable(requireContext())) {
-            txt_listas?.visibility = View.VISIBLE
-            txt_listas?.text = getString(R.string.no_internet)
-            snack()
-        } else {
-            fetchList()
-        }
-        observerMovies()
+	override fun onStart() {
+		super.onStart()
+		model.fillAdNative()
 	}
 
 	private fun observerMovies() {
 		model.movies.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is Success -> {
-                    val list = it.result
+			it.resolver(requireActivity(), successBlock = { list ->
                     if (pagina == list.page) {
+					val listWithAd = list.results + ListAd.createList(listAd.take(4))
                         (recycle_listas.adapter as ListaFilmesAdapter)
-                            .addFilmes(list.results, list.totalResults)
+						.addItems(listWithAd, list.totalResults)
+
                         pagina = list.page
                         totalPagina = list.totalPages
                         ++pagina
-
-                        UtilsKt.getAnuncio(requireContext(), 2) {
-                            if (recycle_listas != null &&
-                                (recycle_listas.adapter as ListaFilmesAdapter).itemCount > 0 &&
-                                (recycle_listas.adapter as ListaFilmesAdapter)
-                                    .getItemViewType((recycle_listas.adapter as ListaFilmesAdapter).itemCount - 1) != Constant.ViewTypesIds.AD
-                            )
-                                (recycle_listas.adapter as ListaFilmesAdapter).addAd(
-                                    it,
-                                    totalPagina
-                                )
+					model.fillAdNative()
                         }
 	                    model.setLoadingMovie(false)
-                    }
-                }
-                is Failure -> {
+			},
+				failureBlock = {
 	                requireActivity().makeToast(R.string.ops)
 	                model.setLoadingMovie(false)
+				},
+				loadingBlock = { statusLoading -> loading(loading = statusLoading) },
+				genericError = ErrorTryDefault(requireActivity())
+				{ fetchList() }
+			)
+		})
                 }
-                is Loading -> { loading(it.loading) }
+
+	private fun observerAd() {
+		model.ads.observe(viewLifecycleOwner, Observer {
+			it?.let { ads ->
+				listAd = ads
             }
         })
 	}
