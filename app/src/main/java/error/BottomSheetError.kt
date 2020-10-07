@@ -25,13 +25,14 @@ class BottomSheetError : BottomSheetDialogFragment() {
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
-		savedInstanceState: Bundle?
+		savedInstanceState: Bundle?,
 	): View? {
 		return inflater.inflate(R.layout.fragment_error, container, false)
 	}
 
 	override fun onStart() {
 		super.onStart()
+		isCancelable = false
 		val sheetContainer = requireView().parent as? ViewGroup ?: return
 		sheetContainer.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
 	}
@@ -50,7 +51,7 @@ class BottomSheetError : BottomSheetDialogFragment() {
 				msg.isFocusable = false
 			}
 		}
-		if (callBack.close()) handleClose() else close.gone()
+		handleClose()
 		if (callBack.hasTry()) {
 			tryAgain.visible()
 			tryAgain.setOnClickListener {
@@ -63,7 +64,9 @@ class BottomSheetError : BottomSheetDialogFragment() {
 	}
 
 	private fun handleClose() {
-		close.setOnClickListener { this@BottomSheetError.dismissAllowingStateLoss() }
+		close.setOnClickListener {
+			if (callBack.close()) callBack.closeFunc() else this@BottomSheetError.dismissAllowingStateLoss()
+		}
 	}
 
 	override fun onResume() {

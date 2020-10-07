@@ -15,11 +15,14 @@ import android.view.ViewGroup.*
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.view.marginTop
+import androidx.fragment.app.FragmentActivity
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import applicaton.BaseViewModel.*
+import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
 import com.github.clans.fab.FloatingActionMenu
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -30,6 +33,8 @@ import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import domain.reelgood.movie.Availability
 import domain.tvshow.Tvshow
+import error.BottomSheetError
+import error.CallBackError
 import java.text.DateFormat
 import java.text.Normalizer
 import java.text.ParseException
@@ -41,17 +46,15 @@ import java.util.Locale
 /**
  * Created by icaro on 03/09/17.
  */
-
 /**
  * IMAGEVIEW
  */
-
 fun ImageView.setPicasso(
 	stillPath: String?,
 	patten: Int = 4,
 	sucesso: () -> Unit = {},
 	error: () -> Unit = {},
-	img_erro: Int = R.drawable.poster_empty
+	img_erro: Int = R.drawable.poster_empty,
 ): ImageView {
 	Picasso.get()
 		.load(
@@ -77,7 +80,7 @@ fun ImageView.setPicassoWithCache(
 	stillPath: String?, patten: Int = 4,
 	sucesso: () -> Unit = {},
 	error: () -> Unit = {},
-	img_erro: Int = R.drawable.poster_empty
+	img_erro: Int = R.drawable.poster_empty,
 ): ImageView {
 	Picasso.get()
 		.load(
@@ -102,7 +105,7 @@ fun ImageView.setPicassoWithCacheAndHolder(
 	sucesso: () -> Unit = {},
 	error: () -> Unit = {},
 	img_erro: Int = R.drawable.poster_empty,
-	holder: Int
+	holder: Int,
 ): ImageView {
 	Picasso.get()
 		.load(UtilsApp.getBaseUrlImagem(UtilsApp.getTamanhoDaImagem(context, patten)) + stillPath)
@@ -128,7 +131,6 @@ fun ImageView.loadPallet(): Int? {
 }
 
 fun loadPalette(view: ImageView): Int { // Todo Usar ext
-
 	val imageView = view as ImageView
 	val drawable = imageView.drawable as? BitmapDrawable
 	if (drawable != null) {
@@ -140,7 +142,6 @@ fun loadPalette(view: ImageView): Int { // Todo Usar ext
 /**
  * ACTIVITY
  */
-
 fun Activity.makeToast(restText: Int, time: Int = Toast.LENGTH_SHORT) {
 	this.makeToast(this.getString(restText), time)
 }
@@ -148,10 +149,10 @@ fun Activity.makeToast(restText: Int, time: Int = Toast.LENGTH_SHORT) {
 fun Activity.makeToast(text: String?, time: Int = Toast.LENGTH_SHORT) {
 	Toast.makeText(this, text, time).show()
 }
+
 /**
  * Context
  */
-
 fun Context.makeToast(text: String?, time: Int = Toast.LENGTH_SHORT) {
 	Toast.makeText(this, text, time).show()
 }
@@ -159,7 +160,6 @@ fun Context.makeToast(text: String?, time: Int = Toast.LENGTH_SHORT) {
 /**
  * VIEW
  */
-
 fun View.gone() {
 	this.visibility = View.GONE
 }
@@ -176,7 +176,7 @@ fun View.animeRotation(
 	end: () -> Unit = {},
 	cancel: () -> Unit = {},
 	start: () -> Unit = {},
-	repeat: () -> Unit = {}
+	repeat: () -> Unit = {},
 ) {
 	ObjectAnimator
 		.ofPropertyValuesHolder(
@@ -211,7 +211,6 @@ fun View.animeRotation(
 /**
  * Any
  */
-
 fun Any.putString(cxt: Context): String = when (this) {
 	is String -> this
 	is Int -> cxt.getString(this)
@@ -224,7 +223,6 @@ fun Any.putString(cxt: Context): String = when (this) {
 /**
  * STRING
  */
-
 fun String.removerAcentos(): String {
 	this.replace(".", "")
 	this.replace(":", "")
@@ -234,7 +232,6 @@ fun String.removerAcentos(): String {
 }
 
 fun String.parseDate(): String {
-
 	return try {
 		val sim = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 		val data = sim.parse(this)
@@ -281,7 +278,7 @@ fun String.released(): Boolean {
 
 @Throws(Exception::class)
 fun String.yearDate(): String {
-	return if(this.length >= 4) this.substring(0, 4) else ""
+	return if (this.length >= 4) this.substring(0, 4) else ""
 }
 
 fun String.periodLaunch(): Boolean {
@@ -317,27 +314,22 @@ fun String.getNameTypeReel(): String {
 }
 
 fun String?.notNullOrEmpty() = !this.isNullOrEmpty()
-
 fun <T> Gson.fromJsonWithLog(json: String?, classOfT: Class<T>): T {
 	return this.fromJson<T>(json, classOfT).apply {
 		this.toString().log(classOfT.name)
 	}
 }
 
-fun String.log(tag: String) = Log.i(tag, this)
-
+fun String.log(tag: String = "") = Log.i(tag, this)
 fun Tvshow.createIdReal() = createIdReal(this.originalName ?: "", this.firstAirDate ?: "")
-
 private fun createIdReal(originalName: String, data: String) =
 	"${originalName.getNameTypeReel()}-${data.yearDate()}"
 
 /**
  * RECYCLER
  */
-
 fun RecyclerView.setScrollInvisibleFloatMenu(floatButton: FloatingActionMenu) {
 	addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
 		override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
 			when (newState) {
 				RecyclerView.SCROLL_STATE_IDLE -> floatButton.visible()
@@ -392,7 +384,6 @@ fun Availability.getPriceRental(): String {
  * BottomSheetBehavior
  */
 fun BottomSheetBehavior<View>.setAnimation(container: View, viewHeight: View) {
-
 	ValueAnimator.ofInt(container.measuredHeight, viewHeight.marginTop).apply {
 		addUpdateListener {
 			peekHeight = it.animatedValue as Int
@@ -428,5 +419,30 @@ fun <T> Any.listSize(item: T, size: Int): ArrayList<T> {
 	}
 }
 
+/**
+ * BaseRequest
+ */
+fun <T> BaseRequest<T>.success() = (this as Success<T>).result
+fun <T> BaseRequest<T>.resolver(
+	activity: FragmentActivity,
+	successBlock: (data: T) -> Unit,
+	failureBlock: (error: Exception) -> Unit = {},
+	loadingBlock: (loading: Boolean) -> Unit = {},
+	genericError: CallBackError? = null,
+) {
+	when (this) {
+		is Success -> successBlock(result)
+		is Loading -> loadingBlock(loading)
+		is Failure -> {
+			error.toString().log()
+			if (genericError != null) {
+				BottomSheetError().newInstance(callBackError = genericError)
+					.show(activity.supportFragmentManager, "")
+			} else {
+				failureBlock(error)
+			}
+		}
+	}
+}
 
 

@@ -1,9 +1,9 @@
 package error
 
 interface CallBackError {
-    fun tryAgain(): Unit
-    fun close():Boolean
+    fun tryAgain(): Unit {}
+    fun close():Boolean = true
     fun text(): String
-    fun hasTry(): Boolean
+    fun hasTry(): Boolean = false
 	fun closeFunc()
 }
