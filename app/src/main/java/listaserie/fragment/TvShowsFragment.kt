@@ -6,10 +6,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import applicaton.BaseFragment
-import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.material.snackbar.Snackbar
+import domain.movie.ListAd
+import error.ErrorTryDefault
 import kotlinx.android.synthetic.main.fragment_list_medias.adView
 import kotlinx.android.synthetic.main.fragment_list_medias.frame_list_filme
 import kotlinx.android.synthetic.main.fragment_list_medias.recycle_listas
@@ -20,9 +21,9 @@ import listaserie.adapter.ListaSeriesAdapter
 import utils.Constant
 import utils.InfiniteScrollStaggeredListener
 import utils.UtilsApp
-import utils.UtilsKt
 import utils.gone
 import utils.makeToast
+import utils.resolver
 import utils.visible
 
 /**
@@ -32,6 +33,7 @@ class TvShowsFragment(override val layout: Int = R.layout.fragment_list_medias) 
 	val model: ListByTypeViewModel by lazy { createViewModel(ListByTypeViewModel::class.java) }
 	private lateinit var abaEscolhida: String
 	private var pagina = 1
+	private var listAd: MutableList<UnifiedNativeAd> = mutableListOf()
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		if (arguments != null) {
@@ -43,17 +45,8 @@ class TvShowsFragment(override val layout: Int = R.layout.fragment_list_medias) 
 		super.onViewCreated(view, savedInstanceState)
 		setAdMob(adView)
 		observers()
-
-		recycle_listas.apply {
-			val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-			this.layoutManager = layoutManager
-			itemAnimator = DefaultItemAnimator()
-			addOnScrollListener(InfiniteScrollStaggeredListener({},
-                { fetchListTv() },
-                layoutManager))
-			setHasFixedSize(true)
-			adapter = ListaSeriesAdapter(context)
-		}
+		observerAd()
+		setupRecycler()
 
 		if (!UtilsApp.isNetWorkAvailable(requireContext())) {
 			txt_listas.visibility = View.VISIBLE
@@ -62,43 +55,59 @@ class TvShowsFragment(override val layout: Int = R.layout.fragment_list_medias) 
 		} else {
 			fetchListTv()
 		}
+
+	}
+
+	override fun onStart() {
+		super.onStart()
+		model.fillAdNative()
+	}
+
+	private fun setupRecycler() {
+		recycle_listas.apply {
+			val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+			this.layoutManager = layoutManager
+			itemAnimator = DefaultItemAnimator()
+			addOnScrollListener(InfiniteScrollStaggeredListener({},
+				{ fetchListTv() },
+				layoutManager))
+			setHasFixedSize(true)
+			adapter = ListaSeriesAdapter(context)
+		}
 	}
 
 	private fun observers() {
 		model.tvshows.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is Success -> {
-                    val list = it.result
-                    if (pagina == list.page) {
-                        if (pagina == list.page) {
-                            (recycle_listas.adapter as ListaSeriesAdapter).addSeries(list.results)
-                            pagina = list.page
-                            ++pagina
-                            UtilsKt.getAnuncio(requireContext(), 3) { nativeAd: UnifiedNativeAd ->
-                                if (recycle_listas != null &&
-                                    (recycle_listas.adapter as ListaSeriesAdapter)
-                                        .getItemViewType((recycle_listas.adapter as ListaSeriesAdapter).itemCount - 1)
-                                    != Constant.ViewTypesIds.AD
-                                ) {
-                                    (recycle_listas.adapter as ListaSeriesAdapter).addAd(nativeAd)
-                                    (recycle_listas.adapter as ListaSeriesAdapter).addLoading(
-                                        totalResults = list.totalResults
-                                    )
-                                }
-                            }
-                        }
-                        model.setLoadingTv(false)
-                    }
-                }
-                is Failure -> {
-                    requireActivity().makeToast(R.string.ops)
-                    model.setLoadingTv(false)
-                }
-                is Loading -> {
-                    loading(it.loading)
-                }
-            }
-        })
+			it.resolver(requireActivity(),
+				successBlock = { list ->
+						if (pagina == list.page) {
+							val listWithAd = list.results + ListAd.createList(listAd.take(4))
+							(recycle_listas.adapter as ListaSeriesAdapter).addItems(listWithAd)
+							pagina = list.page
+							++pagina
+							model.fillAdNative()
+						}
+						model.setLoadingTv(false)
+				},
+				failureBlock = {
+					requireActivity().makeToast(R.string.ops)
+					model.setLoadingTv(false)
+				},
+				loadingBlock = { status ->
+					loading(status)
+				},
+				genericError = ErrorTryDefault(requireActivity()) {
+					fetchListTv()
+				})
+		})
+	}
+
+	fun observerAd() {
+		model.ads.observe(viewLifecycleOwner, Observer {
+			it?.let { ads ->
+				listAd = ads
+			}
+		})
 	}
 
 	fun loading(loading: Boolean) {

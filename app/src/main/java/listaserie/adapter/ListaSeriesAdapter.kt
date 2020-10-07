@@ -34,7 +34,7 @@ class ListaSeriesAdapter(private val context: Context) : RecyclerView.Adapter<Re
 
     override fun getItemViewType(position: Int): Int = listaResult[position].getViewType()
 
-    fun addSeries(listaMedia: List<ListaItemSerie?>?) {
+    fun addItems(listaMedia: List<ViewType?>?) {
         // TODO fix metodo
 	    if (itemCount != 0 && listaResult[itemCount - 1].getViewType() == Constant.ViewTypesIds.LOADING) {
 		    this.listaResult.removeAt(itemCount - 1)
