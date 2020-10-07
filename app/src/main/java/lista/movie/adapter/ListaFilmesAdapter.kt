@@ -12,63 +12,67 @@ import domain.movie.ListaItemFilme
 import pessoaspopulares.adapter.LoadingDelegateAdapter
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
 import utils.Constant
+import java.util.ArrayList
 
-class ListaFilmesAdapter(private val context: Context) :
-	RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-	private val listaResult = arrayListOf<ViewType>()
-	private val delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
+class ListaFilmesAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val listaResult = ArrayList<ViewType?>()
+    private val delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
-	init {
-		delegateAdapters.put(Constant.ViewTypesIds.LOADING, LoadingDelegateAdapter())
-		delegateAdapters.put(Constant.ViewTypesIds.NEWS, ListasFilmesDelegateAdapter())
-		delegateAdapters.put(Constant.ViewTypesIds.AD, AdDelegateAdapter())
-	}
+    init {
+	    delegateAdapters.put(Constant.ViewTypesIds.LOADING, LoadingDelegateAdapter())
+	    delegateAdapters.put(Constant.ViewTypesIds.NEWS, ListasFilmesDelegateAdapter())
+	    delegateAdapters.put(Constant.ViewTypesIds.AD, AdDelegateAdapter())
+    }
 
-	init {
-		listaResult.add(loading)
-	}
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+            delegateAdapters.get(viewType)!!.onCreateViewHolder(parent)
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-		delegateAdapters.get(viewType)!!.onCreateViewHolder(parent)
-
-	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-		delegateAdapters.get(getItemViewType(position))
-			?.onBindViewHolder(holder, listaResult[position]!!, context)
-	}
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        delegateAdapters.get(getItemViewType(position))?.onBindViewHolder(holder, listaResult[position]!!, context)
+    }
 
 	override fun getItemViewType(position: Int): Int =
-		listaResult[position].getViewType() ?: Constant.ViewTypesIds.LOADING
+		listaResult[position]?.getViewType() ?: Constant.ViewTypesIds.LOADING
 
-	fun addItems(listaMedia: List<ViewType?>?, totalPagina: Int) {
-		if (listaMedia?.isNotEmpty() == true) {
-			val initPosition = listaResult.size - 1
-			if (listaResult.last().getViewType() == Constant.ViewTypesIds.LOADING) {
-				this.listaResult.removeAt(listaResult.size - 1)
-			}
+    fun addFilmes(listaMedia: List<ListaItemFilme?>?, totalPagina: Int) {
+        if (listaMedia?.isNotEmpty()!!) {
+            val initPosition = listaResult.size - 1
+	        if (listaResult.isNotEmpty() && listaResult[listaResult.size - 1]?.getViewType() == Constant.ViewTypesIds.LOADING) {
+		        this.listaResult.removeAt(listaResult.size - 1)
+	        }
 
-			if (listaResult.isNotEmpty() && listaResult.last().getViewType() == Constant.ViewTypesIds.AD &&
-				listaMedia.first()?.getViewType() == Constant.ViewTypesIds.AD
-			) return
+            this.listaResult.addAll(listaMedia as List<ViewType>)
+            this.listaResult.sortedBy {
+                if (it is ListaItemFilme) it.releaseDate
+                true
+            }.reversed()
 
-			this.listaResult.addAll(listaMedia as List<ViewType>)
-			this.listaResult.sortedBy {
-				if (it is ListaItemFilme) it.releaseDate
-				true
-			}.reversed()
+            notifyItemRangeChanged(initPosition, this.listaResult.size - 1 /* plus loading item */)
+            if (listaResult.size < totalPagina) {
+                listaResult.add(loading)
+                notifyItemInserted(listaResult.size - 1)
+            }
+        }
+    }
 
-			notifyItemRangeChanged(initPosition, this.listaResult.size - 1 /* plus loading item */)
-			if (listaResult.size < totalPagina) {
-				listaResult.add(loading)
-				notifyItemInserted(listaResult.size - 1)
-			}
-		}
-	}
+    override fun getItemCount(): Int = listaResult.size
 
-	override fun getItemCount(): Int = listaResult.size
+    fun addAd(ad: UnifiedNativeAd, totalPagina: Int) {
+	    if (listaResult[listaResult.size - 1]?.getViewType() == Constant.ViewTypesIds.LOADING) {
+		    this.listaResult.removeAt(listaResult.size - 1)
+	    }
+        listaResult.add(ListAd(ad))
+        notifyItemInserted(listaResult.size - 1)
+        if (listaResult.size < totalPagina) {
+            listaResult.add(loading)
+            notifyItemInserted(listaResult.size - 1)
+        }
+    }
 
-	companion object {
-		private val loading = object : ViewType {
-			override fun getViewType(): Int = Constant.ViewTypesIds.LOADING
-		}
-	}
+    companion object {
+
+        private val loading = object : ViewType {
+	        override fun getViewType(): Int = Constant.ViewTypesIds.LOADING
+        }
+    }
 }
