@@ -157,24 +157,6 @@ class Api(val context: Context) : ApiSingleton() {
 		}
 	}
 
-	fun getTvCreditosTemporada(id: Int, id_season: Int): Observable<Credits> {
-		return Observable.create { subscriber ->
-			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val request = Request.Builder()
-				.url("${baseUrl3}tv/$id/season/$id_season/credits?api_key=${TMDBAPI}&language=en-US")
-				.get()
-				.build()
-			val response = client.newCall(request).execute()
-			if (response.isSuccessful) {
-				val json = response.body?.string()
-				val lista = gson.fromJsonWithLog(json, Credits::class.java)
-				subscriber.onNext(lista)
-				subscriber.onCompleted()
-			} else {
-				subscriber.onError(Throwable(response.message))
-			}
-		}
-	}
 	suspend fun fetchSeasonCredits(id: Int, seasonNumber: Int): BaseRequest<Credits> {
 		return suspendCancellableCoroutine { cont ->
 			executeCall("${baseUrl3}tv/$id/season/$seasonNumber/credits?api_key=${TMDBAPI}&language=en-US",
@@ -188,7 +170,6 @@ class Api(val context: Context) : ApiSingleton() {
 				CallBackApiWithBaseRequest(cont, Credits::class.java))
 		}
 	}
-
 
 	suspend fun personDetails(id: Int): BaseRequest<Person> {
 		return suspendCancellableCoroutine { continuation ->

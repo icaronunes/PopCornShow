@@ -157,18 +157,6 @@
         </activity>
 
         <activity
-            android:name="producao.CrewsActivity"
-            android:parentActivityName="main.MainActivity">
-
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="main.MainActivity" />
-
-        </activity>
-
-
-        <activity
             android:name="poster.PosterGridActivity"
             android:parentActivityName="main.MainActivity">
 
