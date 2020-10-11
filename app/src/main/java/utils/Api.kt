@@ -97,25 +97,6 @@ class Api(val context: Context) : ApiSingleton() {
 		}
 	}
 
-	fun getCompanyFilmes(company_id: Int, pagina: Int = 1): Observable<Company> {
-		return Observable.create { subscriber ->
-			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
-			val request = Request.Builder()
-				.url("${baseUrl3}company/$company_id/movies?page=$pagina&api_key=${TMDBAPI}&language=$timeZone")
-				.get()
-				.build()
-			val response = client.newCall(request).execute()
-			if (response.isSuccessful) {
-				val json = response.body?.string()
-				val companyFilmes = gson.fromJsonWithLog(json, Company::class.java)
-				subscriber.onNext(companyFilmes)
-				subscriber.onCompleted()
-			} else {
-				subscriber.onError(Throwable(response.message))
-			}
-		}
-	}
-
 	suspend fun getCompany(id: Int, page: Int): BaseRequest<Company> {
 		return suspendCancellableCoroutine { cont ->
 				executeCall("${baseUrl3}company/$id/movies?page=$page&api_key=$TMDBAPI&language=$timeZone",

@@ -1,24 +1,19 @@
 package domain
 
 import com.google.gson.annotations.SerializedName
+import domain.movie.ListaItemFilme
+import javax.annotation.Generated
 
-/**
- * Created by icaro on 29/08/17.
- */
+@Generated("com.robohorse.robopojogenerator")
 data class Company(
-
-    @SerializedName("description")
-    var description: String? = null,
-    @SerializedName("headquarters")
-    var headquarters: String? = null,
-    @SerializedName("homepage")
-    var homepage: String? = null,
-    @SerializedName("logo_path")
-    var logo_path: String? = null,
-    @SerializedName("id")
-    var id: Int? = null,
-    @SerializedName("name")
-    var name: String? = null,
-    @SerializedName("parent_company")
-    var parentCompany: Company? = null
+    @field:SerializedName("id")
+    val id: Int,
+    @field:SerializedName("page")
+    val page: Int,
+    @field:SerializedName("total_pages")
+    val totalPages: Int,
+    @field:SerializedName("results")
+    val results: List<ListaItemFilme?>? = null,
+    @field:SerializedName("total_results")
+    val totalResults: Int
 )
