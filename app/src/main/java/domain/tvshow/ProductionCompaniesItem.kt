@@ -11,7 +11,10 @@ data class ProductionCompaniesItem(
 
     @field:SerializedName("name")
     val name: String? = null,
-
     @field:SerializedName("id")
-    val id: Int? = null
+    val id: Int? = null,
+    @field:SerializedName("logo_path")
+    val logo: String? = null,
+    @field:SerializedName("origin_country")
+    val originCountry: String? = null
 ) : Serializable

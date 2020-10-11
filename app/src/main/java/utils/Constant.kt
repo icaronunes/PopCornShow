@@ -22,7 +22,6 @@ object Constant {
 	const val ID_REEL = "reel_id"
 	const val COLOR_TOP = "color_top"
 	const val COLOR = "color"
-	const val PRODUTORA_ID = "produtora_id"
 	const val LISTA_ID = "lista_id"
 	const val LISTA_NOME = "lista_nome"
 	const val NOME_PERSON = "nome_person"

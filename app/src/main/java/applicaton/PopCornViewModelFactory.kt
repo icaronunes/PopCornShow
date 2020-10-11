@@ -12,6 +12,7 @@ import lista.viewmodel.ListByTypeViewModel
 import login.LoginViewModel
 import main.MainViewModel
 import pessoa.modelview.PersonViewModel
+import produtora.viewmodel.ProductionViewModel
 import seguindo.FallowModel
 import tvshow.viewmodel.TvShowViewModel
 import utils.Api
@@ -48,6 +49,7 @@ class PopCornViewModelFactory constructor(
 				isAssignableFrom(ListByTypeViewModel::class.java) -> ListByTypeViewModel(app = application, api = api)
 				isAssignableFrom(EpsodioViewModel::class.java) -> EpsodioViewModel(app = application)
 				isAssignableFrom(WorksViewModel::class.java) -> WorksViewModel(app = application, api = api)
+				isAssignableFrom(ProductionViewModel::class.java) -> ProductionViewModel(app = application, api = api)
 				else -> throw IllegalArgumentException("ViewModel Desconhecida...")
 			}
 		} as T

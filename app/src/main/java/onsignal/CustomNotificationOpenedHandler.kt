@@ -15,7 +15,7 @@ import main.MainActivity
 import org.json.JSONException
 import org.json.JSONObject
 import pessoa.activity.FotoPersonActivity
-import produtora.activity.ProdutoraActivity
+import produtora.activity.ProductionActivity
 import similares.SimilaresActivity
 import site.Site
 import temporada.SeasonActivity
@@ -187,11 +187,11 @@ class CustomNotificationOpenedHandler : NotificationOpenedHandler {
 	}
 
 	private fun callProdutora(context: Context, jsonObject: JSONObject) {
-		val intent = Intent(context, ProdutoraActivity::class.java)
+		val intent = Intent(context, ProductionActivity::class.java)
 		if (jsonObject.has("id")) {
-			intent.putExtra(Constant.PRODUTORA_ID, jsonObject.getInt("id"))
+			intent.putExtra(Constant.ID, jsonObject.getInt("id"))
 			val stackBuilder = TaskStackBuilder.create(context)
-			stackBuilder.addParentStack(ProdutoraActivity::class.java)
+			stackBuilder.addParentStack(ProductionActivity::class.java)
 			stackBuilder.addNextIntent(intent)
 			stackBuilder.startActivities()
 		} else {

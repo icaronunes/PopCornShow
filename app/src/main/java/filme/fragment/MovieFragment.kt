@@ -62,7 +62,7 @@ import kotlinx.android.synthetic.main.movie_details_info.tmdb_site
 import kotlinx.android.synthetic.main.poster_movie_details_layout.card_poster
 import kotlinx.android.synthetic.main.poster_movie_details_layout.img_poster
 import poster.PosterGridActivity
-import produtora.activity.ProdutoraActivity
+import produtora.activity.ProductionActivity
 import similares.SimilaresActivity
 import site.Site
 import utils.Constant
@@ -448,10 +448,10 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 						startActivity(
 							Intent(
 								requireActivity(),
-								ProdutoraActivity::class.java
+								ProductionActivity::class.java
 							).apply {
-								putExtra(Constant.PRODUTORA_ID, production.id)
-								putExtra(Constant.ENDERECO, production.logoPath)
+								putExtra(Constant.ID, production.id)
+								putExtra(Constant.ENDERECO, production.logoPath ?: "")
 								putExtra(Constant.NAME, production.name)
 							})
 					}

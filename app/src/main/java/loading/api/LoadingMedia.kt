@@ -5,6 +5,7 @@ import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import applicaton.BaseViewModel.*
 import applicaton.BaseViewModel.BaseRequest.*
+import domain.Company
 import domain.Credits
 import domain.Imdb
 import domain.ListaSeries
@@ -187,6 +188,16 @@ class LoadingMedia(val api: Api) : ILoadingMedia { // TODO injetar na viewmodels
 		GlobalScope.launch(handle(_credits)) {
 			val credits = api.fetchMovieCredits(id)
 			_credits.postValue(credits)
+		}
+	}
+	override fun fetchCompany(
+		id: Int,
+		pager: Int,
+		_company: MutableLiveData<BaseRequest<Company>>,
+	) {
+		GlobalScope.launch(handle(_company)) {
+			val company = api.getCompany(id, pager)
+			_company.postValue(company)
 		}
 	}
 

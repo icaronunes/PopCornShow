@@ -2,7 +2,7 @@ package utils
 
 import android.content.Context
 import applicaton.BaseViewModel.*
-import domain.CompanyFilmes
+import domain.Company
 import domain.Credits
 import domain.EpisodesItem
 import domain.GuestSession
@@ -45,7 +45,7 @@ class Api(val context: Context) : ApiSingleton() {
 	private var region: String = Locale.getDefault().country
 	private val baseUrl3 = "https://api.themoviedb.org/3/"
 	private val baseUrl4 = "https://api.themoviedb.org/4/"
-	val TMDBAPI = getKeyTMDB()
+	private val TMDBAPI = getKeyTMDB()
 	val OMDBAPI = ApiKeys.OMDBAPI_API_KEY
 
 	object TYPESEARCH {
@@ -97,7 +97,7 @@ class Api(val context: Context) : ApiSingleton() {
 		}
 	}
 
-	fun getCompanyFilmes(company_id: Int, pagina: Int = 1): Observable<CompanyFilmes> {
+	fun getCompanyFilmes(company_id: Int, pagina: Int = 1): Observable<Company> {
 		return Observable.create { subscriber ->
 			val client = OkHttpClient.Builder().addInterceptor(LoggingInterceptor()).build()
 			val request = Request.Builder()
@@ -107,12 +107,19 @@ class Api(val context: Context) : ApiSingleton() {
 			val response = client.newCall(request).execute()
 			if (response.isSuccessful) {
 				val json = response.body?.string()
-				val companyFilmes = gson.fromJsonWithLog(json, CompanyFilmes::class.java)
+				val companyFilmes = gson.fromJsonWithLog(json, Company::class.java)
 				subscriber.onNext(companyFilmes)
 				subscriber.onCompleted()
 			} else {
 				subscriber.onError(Throwable(response.message))
 			}
+		}
+	}
+
+	suspend fun getCompany(id: Int, page: Int): BaseRequest<Company> {
+		return suspendCancellableCoroutine { cont ->
+				executeCall("${baseUrl3}company/$id/movies?page=$page&api_key=$TMDBAPI&language=$timeZone",
+				CallBackApiWithBaseRequest(cont, Company::class.java))
 		}
 	}
 

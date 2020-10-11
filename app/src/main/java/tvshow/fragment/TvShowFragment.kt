@@ -67,7 +67,7 @@ import kotlinx.android.synthetic.main.tvshow_info.ultimo_ep_name
 import kotlinx.android.synthetic.main.tvshow_info.voto_media
 import loading.firebase.TypeDataRef
 import poster.PosterGridActivity
-import produtora.activity.ProdutoraActivity
+import produtora.activity.ProductionActivity
 import similares.SimilaresActivity
 import site.Site
 import tvshow.adapter.SimilaresSerieAdapter
@@ -492,8 +492,9 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 
 			produtora?.setOnClickListener {
 				if (production != null) {
-					context?.startActivity(Intent(context, ProdutoraActivity::class.java).apply {
-						putExtra(Constant.PRODUTORA_ID, production.id)
+					context?.startActivity(Intent(context, ProductionActivity::class.java).apply {
+						putExtra(Constant.ID, production.id)
+						putExtra(Constant.ENDERECO, production.logo ?: "")
 					})
 				} else {
 					Toast.makeText(
