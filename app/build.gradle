@@ -27,8 +27,8 @@ android {
         applicationId "br.com.icaro.filme"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 92
-        versionName "9.7"
+        versionCode 93
+        versionName "9.8"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -103,6 +103,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
     buildTypes {
         debug {
             minifyEnabled false
@@ -127,6 +128,9 @@ android {
         }
     }
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -185,10 +189,16 @@ dependencies {
     implementation "com.facebook.shimmer:shimmer:$support.shimmer"
 
     //Teste
-    testImplementation "io.mockk:mockk:$test.mockk"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$test.espressoCore"
     androidTestImplementation "androidx.test:runner:$test.runner"
     androidTestImplementation "androidx.test:rules:$test.rules"
+
+    testImplementation "androidx.test.ext:truth:$test.truth"
+    testImplementation "io.mockk:mockk:$test.mockK"
+    testImplementation "junit:junit:$test.junit"
+    testImplementation "androidx.arch.core:core-testing:$test.coreTesting"
+    testImplementation "androidx.test:runner:$test.androidxTestRunner"
+    testImplementation "androidx.test.espresso:espresso-core:$test.espressoCore"
+    androidTestImplementation "io.mockk:mockk-android:$test.mockK"
 }
 
 apply plugin: 'com.google.gms.google-services'
