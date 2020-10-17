@@ -119,8 +119,11 @@ class LoginActivity : BaseActivity() {
 			?.setOnClickListener { dialog.dismiss() }
 
 		dialog.findViewById<MaterialButton>(R.id.bt_new_login_ok)?.setOnClickListener {
-			if (model.validarParametros(login!!, senha!!, repetirSenha!!)) {
-				criarLoginEmail(login.editText!!.text.toString(), senha.editText!!.text.toString())
+			if (model.validParamets(login?.editText?.text.toString(),
+					senha?.editText?.text.toString(),
+					repetirSenha?.editText?.text.toString())) {
+				criarLoginEmail(login?.editText?.text.toString(),
+					senha?.editText?.text.toString())
 				dialog.dismiss()
 			} else {
 				makeToast(R.string.ops)

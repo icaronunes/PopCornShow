@@ -321,6 +321,7 @@ fun <T> Gson.fromJsonWithLog(json: String?, classOfT: Class<T>): T {
 }
 
 fun String.log(tag: String = "") = Log.i(tag, this)
+
 fun Tvshow.createIdReal() = createIdReal(this.originalName ?: "", this.firstAirDate ?: "")
 private fun createIdReal(originalName: String, data: String) =
 	"${originalName.getNameTypeReel()}-${data.yearDate()}"
