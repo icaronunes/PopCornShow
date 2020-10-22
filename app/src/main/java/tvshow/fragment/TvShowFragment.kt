@@ -124,8 +124,8 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 		model.update(series.id, childUpdates, TypeDataRef.FALLOW)
 	}
 
-	override fun onActivityCreated(savedInstanceState: Bundle?) {
-		super.onActivityCreated(savedInstanceState)
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
 		observerTvshow()
 		observerAuth()
 		observerImdb()

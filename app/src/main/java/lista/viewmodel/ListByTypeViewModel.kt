@@ -17,7 +17,7 @@ import utils.Api
 
 class ListByTypeViewModel(app: Application, val api: Api) : BaseViewModel(app) {
 	private val loadingMedia: ILoadingMedia = LoadingMedia(api)
-	private val loadingAds: ILoadingAd = LoadingAd(app.baseContext)
+	private val loadingAds: ILoadingAd = LoadingAd(app)
 
 	private val _movies: MutableLiveData<BaseRequest<ListaFilmes>> = MutableLiveData()
 	val movies: LiveData<BaseRequest<ListaFilmes>> = _movies
@@ -33,7 +33,7 @@ class ListByTypeViewModel(app: Application, val api: Api) : BaseViewModel(app) {
 	val personList: LiveData<BaseRequest<PersonPopular>> = _personList
 
 	fun fetchListMovies(type: String, page: Int) {
-		setLoadingMovie(true)
+		// setLoadingMovie(true)
 		loadingMedia.getMovieListByType(type = type, page = page, liveData = _movies)
 	}
 

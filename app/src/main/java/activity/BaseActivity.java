@@ -58,6 +58,7 @@ import br.com.icaro.filme.R;
 import busca.SearchMultiActivity;
 import configuracao.SettingsActivity;
 import domain.busca.MultiSearch;
+import lista.ListGenericActivity;
 import loading.firebase.TypeDataRef;
 import login.LoginActivity;
 import main.MainActivity;

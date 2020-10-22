@@ -19,6 +19,7 @@ class UtilsKt {
         fun getIdiomaEscolhido(context: Context?): String {
 
             val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+            if(sharedPref == null) return "en"
             val idioma = sharedPref.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true)
             return if (idioma) {
                 UtilsApp.locale

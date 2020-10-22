@@ -1,6 +1,6 @@
 package onsignal
 
-import activity.ListGenericActivity
+import lista.ListGenericActivity
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.TaskStackBuilder

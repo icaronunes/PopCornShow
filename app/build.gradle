@@ -130,6 +130,7 @@ android {
 
     testOptions {
         unitTests.returnDefaultValues = true
+        unitTests.includeAndroidResources = true
     }
 }
 dependencies {
@@ -198,7 +199,7 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:$test.coreTesting"
     testImplementation "androidx.test:runner:$test.androidxTestRunner"
     testImplementation "androidx.test.espresso:espresso-core:$test.espressoCore"
-    androidTestImplementation "io.mockk:mockk-android:$test.mockK"
+    testImplementation "io.mockk:mockk-android:$test.mockK"
 }
 
 apply plugin: 'com.google.gms.google-services'
