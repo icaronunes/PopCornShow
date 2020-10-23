@@ -154,7 +154,7 @@ dependencies {
     implementation "com.google.android.material:material:$droid.material"
     implementation "androidx.legacy:legacy-support-v4:$droid.legacy"
     implementation "androidx.cardview:cardview:$droid.cardview"
-    implementation "androidx.palette:palette:$droid.palette"
+    implementation "androidx.palette:palette-ktx:$droid.palette"
     implementation "org.slf4j:slf4j-android:$droid.slf4j"
     implementation "androidx.multidex:multidex:$droid.multidex"
     implementation "javax.annotation:javax.annotation-api:$droid.annotation"
