@@ -8,8 +8,8 @@ buildscript {
             'database'    : '19.4.0',
             'dynamicLinks': '19.1.0',
             'perf'        : '19.0.8',
-            'crashlytics' : '17.2.1',
-            'analyticsKtx': '17.5.0'
+            'crashlytics' : '17.3.0',
+            'analyticsKtx': '18.0.0'
     ]
 
     ext.playService = [
@@ -20,7 +20,7 @@ buildscript {
 
     ext.droid = [
             'appcompat'       : '1.3.0-alpha02',
-            'constraintlayout': '2.0.2',
+            'constraintlayout': '2.0.4',
             'recyclerview'    : '1.1.0',
             'material'        : '1.2.1',
             'legacy'          : '1.0.0',
