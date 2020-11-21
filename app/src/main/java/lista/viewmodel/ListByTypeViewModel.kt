@@ -11,11 +11,12 @@ import com.google.android.gms.ads.formats.UnifiedNativeAd
 import domain.ListaSeries
 import domain.PersonPopular
 import domain.movie.ListaFilmes
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import loading.api.ILoadingMedia
 import loading.api.LoadingMedia
 import utils.Api
 
-class ListByTypeViewModel(app: Application, val api: Api) : BaseViewModel(app) {
+class ListByTypeViewModel @ExperimentalCoroutinesApi constructor(app: Application, val api: Api) : BaseViewModel(app) {
 	private val loadingMedia: ILoadingMedia = LoadingMedia(api)
 	private val loadingAds: ILoadingAd = LoadingAd(app)
 
@@ -33,7 +34,6 @@ class ListByTypeViewModel(app: Application, val api: Api) : BaseViewModel(app) {
 	val personList: LiveData<BaseRequest<PersonPopular>> = _personList
 
 	fun fetchListMovies(type: String, page: Int) {
-		// setLoadingMovie(true)
 		loadingMedia.getMovieListByType(type = type, page = page, liveData = _movies)
 	}
 

@@ -109,6 +109,7 @@ class MoviesFragment(override val layout: Int = R.layout.fragment_list_medias) :
 	}
 
 	private fun fetchList() {
+		model.setLoadingMovie(true)
 		model.fetchListMovies(abaEscolhida, pagina)
 	}
 
