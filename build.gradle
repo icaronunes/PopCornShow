@@ -5,7 +5,7 @@ buildscript {
 
     ext.fire = [
             'auth'        : '19.4.0',
-            'database'    : '19.4.0',
+            'database'    : '19.5.1',
             'dynamicLinks': '19.1.0',
             'perf'        : '19.0.8',
             'crashlytics' : '17.3.0',
