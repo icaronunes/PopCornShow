@@ -4,10 +4,10 @@ buildscript {
     ext.kotlin_version = '1.4.10'
 
     ext.fire = [
-            'auth'        : '19.4.0',
+            'auth'        : '20.0.1',
             'database'    : '19.5.1',
-            'dynamicLinks': '19.1.0',
-            'perf'        : '19.0.8',
+            'dynamicLinks': '19.1.1',
+            'perf'        : '19.0.10',
             'crashlytics' : '17.3.0',
             'analyticsKtx': '18.0.0'
     ]
