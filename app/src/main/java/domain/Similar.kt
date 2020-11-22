@@ -14,7 +14,7 @@ data class Similar(
     val totalPages: Int? = null,
 
     @field:SerializedName("results")
-    val resultsSimilar: List<ResultsSimilarItem?>? = null,
+    val resultsSimilar: List<ResultsSimilarItem>? = null,
 
     @field:SerializedName("total_results")
     val totalResults: Int? = null

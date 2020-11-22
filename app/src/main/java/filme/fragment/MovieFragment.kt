@@ -610,13 +610,13 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 	}
 
 	private fun setSimilares() {
-		if (movieDb.similar?.resultsSimilar?.isNotEmpty()!!) {
+		if (movieDb.similar?.resultsSimilar?.isNullOrEmpty() == false) {
 			recycle_filme_similares?.apply {
 				setHasFixedSize(true)
 				itemAnimator = DefaultItemAnimator()
 				layoutManager =
 					LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-				adapter = SimilaresFilmesAdapter(requireActivity(), movieDb.similar?.resultsSimilar)
+				adapter = SimilaresFilmesAdapter(requireActivity(), movieDb.similar?.resultsSimilar ?: listOf())
 			}
 
 			recycle_filme_similares.setScrollInvisibleFloatMenu(

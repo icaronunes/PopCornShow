@@ -22,18 +22,16 @@ import utils.visible
 /**
  * Created by icaro on 22/02/17.
  */
-class SimilaresFilmesAdapter(val context: FragmentActivity, private val similarItems: List<ResultsSimilarItem?>?) :
+class SimilaresFilmesAdapter(val context: FragmentActivity, val similarItems: List<ResultsSimilarItem>) :
     RecyclerView.Adapter<SimilaresFilmesAdapter.SimilaresViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SimilaresViewHolder(parent)
 
     override fun onBindViewHolder(holder: SimilaresViewHolder, position: Int) {
-        holder.bind(similarItems?.get(position)!!)
+        holder.bind(similarItems[position])
     }
 
-    override fun getItemCount(): Int {
-        return similarItems?.size!!
-    }
+    override fun getItemCount() = similarItems?.size ?: 0
 
     inner class SimilaresViewHolder(parent: ViewGroup) :
         RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.scroll_similares, parent, false)) {
