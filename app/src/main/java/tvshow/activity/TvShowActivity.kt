@@ -133,6 +133,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 					)
 				}
 				is Failure -> streamview_tv.error = true
+				is Loading -> {}
 			}
 			setAnimated()
 		})

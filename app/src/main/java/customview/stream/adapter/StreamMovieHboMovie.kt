@@ -30,8 +30,7 @@ class StreamAbMovieHboAdapter(val subscription: Boolean = false,
 
     inner class StreamMovieHolder(parent: ViewGroup) : ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.sources_item_view, parent, false)) {
         fun bind(availability: Availability?) = with(itemView.source_item) {
-            iconSource = if(availability?.sourceName.equals("hbo_max")) ContextCompat.getDrawable(context, R.drawable.hbo)
-                else ContextCompat.getDrawable(context, R.drawable.hbo_max)
+            iconSource = ContextCompat.getDrawable(context, R.drawable.hbo)
             setOnClickListener {
                 try {
                     callAppOrWeb(availability, typeStream) {
