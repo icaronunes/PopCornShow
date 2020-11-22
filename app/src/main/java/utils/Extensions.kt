@@ -423,7 +423,7 @@ fun <T> Any.listSize(item: T, size: Int): ArrayList<T> {
 /**
  * BaseRequest
  */
-fun <T> BaseRequest<T>.success() = (this as Success<T>).result
+fun <T> BaseRequest<T>.success() = (this as? Success<T>)?.result
 fun <T> BaseRequest<T>.resolver(
 	activity: FragmentActivity,
 	successBlock: (data: T) -> Unit,
