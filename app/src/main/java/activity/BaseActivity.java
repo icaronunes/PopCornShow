@@ -288,15 +288,14 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
         final Intent intent = new Intent(this, ListGenericActivity.class);
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setDeveloperModeEnabled(BuildConfig.DEBUG)
                 .build();
-        mFirebaseRemoteConfig.setConfigSettings(configSettings);
-        mFirebaseRemoteConfig.setDefaults(R.xml.xml_defaults);
+        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
+        mFirebaseRemoteConfig.setDefaultsAsync(R.xml.xml_defaults);
 
         long cacheExpiration = 3600; // 1 hour in seconds.
         // If in developer mode cacheExpiration is set to 0 so each fetch will retrieve values from
         // the server.
-        if (mFirebaseRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {
+        if (BuildConfig.DEBUG) {
             cacheExpiration = 0;
         }
 
@@ -305,7 +304,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            mFirebaseRemoteConfig.activateFetched();
+                            mFirebaseRemoteConfig.fetchAndActivate();
                         }
                         Map<String, String> map = new HashMap<String, String>();
                         map = getListaRemoteConfig();
@@ -318,7 +317,6 @@ public class BaseActivity extends AppCompatActivity implements LifecycleOwner {
                         intent.putExtra(Constant.BUNDLE, (Serializable) map);
 
                         startActivity(intent);
-
                     }
                 });
     }
