@@ -31,6 +31,7 @@ import domain.MovieDb
 import filme.MovieDetatilsViewModel
 import filme.fragment.MovieFragment
 import fragment.ImagemTopFilmeScrollFragment
+import ifValid
 import kotlinx.android.synthetic.main.activity_movie.collapsing_toolbar
 import kotlinx.android.synthetic.main.activity_movie.filme_container
 import kotlinx.android.synthetic.main.activity_movie.streamview_movie
@@ -59,6 +60,7 @@ import utils.kotterknife.bindBundle
 import utils.makeToast
 import utils.released
 import utils.setAnimation
+import utils.success
 import utils.visible
 import utils.yearDate
 import java.io.File
@@ -333,31 +335,33 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 	}
 
 	private fun ratedFilme() {
-		if (movieDb.releaseDate?.released() == true) {
-			openDialog().apply {
-				findViewById<TextView>(R.id.rating_title).text = movieDb?.title ?: ""
-				val ratingBar = findViewById<RatingBar>(R.id.ratingBar_rated).apply {
-					rating = (numberRated / 2)
-				}
-				findViewById<Button>(R.id.ok_rated).apply {
-					setOnClickListener {
-						if (ratingBar.rating == 0.0f) {
-							removeRated()
-						} else {
-							addRated(ratingBar)
+		model.movie.value?.success().ifValid {
+			if (movieDb.releaseDate?.released() == true) {
+				openDialog().apply {
+					findViewById<TextView>(R.id.rating_title).text = movieDb?.title ?: ""
+					val ratingBar = findViewById<RatingBar>(R.id.ratingBar_rated).apply {
+						rating = (numberRated / 2)
+					}
+					findViewById<Button>(R.id.ok_rated).apply {
+						setOnClickListener {
+							if (ratingBar.rating == 0.0f) {
+								removeRated()
+							} else {
+								addRated(ratingBar)
+							}
+							dismiss()
 						}
-						dismiss()
+					}
+					findViewById<Button>(R.id.cancel_rated).apply {
+						setOnClickListener {
+							removeRated()
+							dismiss()
+						}
 					}
 				}
-				findViewById<Button>(R.id.cancel_rated).apply {
-					setOnClickListener {
-						removeRated()
-						dismiss()
-					}
-				}
+			} else {
+				makeToast(R.string.filme_nao_lancado)
 			}
-		} else {
-			makeToast(R.string.filme_nao_lancado)
 		}
 	}
 
@@ -372,21 +376,23 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 	}
 
 	private fun addRated(ratingBar: RatingBar) {
-		val movieDate = makeMovieDb().apply { nota = ratingBar.rating * 2 }
-		model.changeRated { databaseReference ->
-			databaseReference.child(idMovie.toString()).setValue(movieDate)
-				.addOnCompleteListener {
-					if (it.isSuccessful) {
-						makeToast(
-							String.format(
-								resources.getString(string.filme_rated),
-								"${movieDate.nota}"
+		model.movie.value?.success().ifValid {
+			val movieDate = makeMovieDb().apply { nota = ratingBar.rating * 2 }
+			model.changeRated { databaseReference ->
+				databaseReference.child(idMovie.toString()).setValue(movieDate)
+					.addOnCompleteListener {
+						if (it.isSuccessful) {
+							makeToast(
+								String.format(
+									resources.getString(string.filme_rated),
+									"${movieDate.nota}"
+								)
 							)
-						)
-						this@MovieDetailsActivity.fab_menu.close(true)
+							this@MovieDetailsActivity.fab_menu.close(true)
+						}
 					}
-				}
-			model.setRatedOnTheMovieDB(movieDate)
+				model.setRatedOnTheMovieDB(movieDate)
+			}
 		}
 	}
 
@@ -399,20 +405,22 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 
 	private fun addOrRemoveFavorite() {
 		menu_item_favorite.animeRotation(end = { this@MovieDetailsActivity.fab_menu.close(true) })
-		if (movieDb.releaseDate?.released() == true) {
-			model.executeFavority(remove = {
-				it.child(idMovie.toString()).setValue(null)
-					.addOnCompleteListener {
-						makeToast(R.string.filme_remove_favorite)
-					}
-			}, add = {
-				it.child(idMovie.toString()).setValue(makeMovieDb())
-					.addOnCompleteListener {
-						makeToast(R.string.filme_add_favorite)
-					}
-			}, idMovie = idMovie)
-		} else {
-			makeToast(R.string.filme_nao_lancado)
+		model.movie.value?.success().ifValid {
+			if (movieDb.releaseDate?.released() == true) {
+				model.executeFavority(remove = {
+					it.child(idMovie.toString()).setValue(null)
+						.addOnCompleteListener {
+							makeToast(R.string.filme_remove_favorite)
+						}
+				}, add = {
+					it.child(idMovie.toString()).setValue(makeMovieDb())
+						.addOnCompleteListener {
+							makeToast(R.string.filme_add_favorite)
+						}
+				}, idMovie = idMovie)
+			} else {
+				makeToast(R.string.filme_nao_lancado)
+			}
 		}
 	}
 
