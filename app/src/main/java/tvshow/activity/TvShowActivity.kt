@@ -26,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import domain.TvshowDB
 import domain.tvshow.Tvshow
+import ifValid
 import kotlinx.android.synthetic.main.fab_float.fab_menu
 import kotlinx.android.synthetic.main.fab_float.menu_item_favorite
 import kotlinx.android.synthetic.main.fab_float.menu_item_rated
@@ -46,12 +47,11 @@ import utils.createIdReal
 import utils.getNameTypeReel
 import utils.gone
 import utils.kotterknife.bindBundle
-import utils.kotterknife.bundleOrNull
 import utils.makeToast
-import utils.notNullOrEmpty
 import utils.released
 import utils.setAnimation
 import utils.setPicassoWithCache
+import utils.success
 import utils.visible
 import java.io.File
 
@@ -65,7 +65,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 		)
 	}
 	private val idTvshow: Int by bindBundle(Constant.TVSHOW_ID, -1)
-	private val idReel: String? by bundleOrNull(Constant.ID_REEL)
+	private val idReel: String by bindBundle(Constant.ID_REEL, "")
 	private val colorTop: Int by bindBundle(Constant.COLOR_TOP, Color.colorFAB)
 
 	private lateinit var series: Tvshow
@@ -102,11 +102,11 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 			setEventListenerWatch(it.child("$idTvshow").exists())
 		})
 
-		model.tvShow.observe(this, Observer {
-			when (it) {
+		model.tvShow.observe(this, Observer { baseRequest ->
+			when (baseRequest) {
 				is Success -> {
-					series = it.result
-					setupViewPagerTabs(series)
+					series = baseRequest.result
+					setupViewPagerTabs()
 					setImageTop(series.backdropPath ?: "")
 					if (idReel.isNullOrEmpty()) {
 						model.getRealGoodData(series.createIdReal())
@@ -173,7 +173,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 	}
 
 	private fun getDataTvshow() {
-		if (idReel.notNullOrEmpty()) model.getRealGoodData(idReel!!)
+		if (idReel.isNotEmpty()) model.getRealGoodData(idReel)
 		model.getTvshow(idTvshow)
 		model.hasfallow(idTvshow)
 		model.fallow(idTvshow)
@@ -221,7 +221,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		if (item.itemId == R.id.share) {
-			if (model.tvShow.value is Success) {
+			if (model.tvShow.value?.success() != null) {
 				salvaImagemMemoriaCache(this@TvShowActivity, series.posterPath,
 					object : SalvarImageShare {
 						override fun retornaFile(file: File) {
@@ -251,6 +251,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 					})
 			} else makeToast(R.string.erro_ainda_sem_imagem)
 		}
+
 		return super.onOptionsItemSelected(item)
 	}
 
@@ -287,80 +288,86 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 
 	private fun addOrRemoveFavorite() {
 		menu_item_favorite.animeRotation(end = { this@TvShowActivity.fab_menu.close(true) })
-		if (series.firstAirDate?.released() == true) {
-			model.putFavority(
-				remove = {
-					it.child(idTvshow.toString()).setValue(null)
-						.addOnCompleteListener {
-							Toast.makeText(
-								this@TvShowActivity,
-								getString(R.string.tvshow_remove_favorite),
-								Toast.LENGTH_SHORT
-							).show()
-						}
-				},
-				add = {
-					it.child(idTvshow.toString()).setValue(makeTvshiwDb())
-						.addOnCompleteListener {
-							Toast.makeText(
-								this@TvShowActivity,
-								getString(R.string.tvshow_add_favorite),
-								Toast.LENGTH_SHORT
-							)
-								.show()
-						}
-				},
-				id = idTvshow
-			)
-		} else {
-			makeToast(R.string.tvshow_nao_lancado)
+		model.tvShow.value?.success().ifValid {
+			if (series.firstAirDate?.released() == true) {
+				model.putFavority(
+					remove = {
+						it.child(idTvshow.toString()).setValue(null)
+							.addOnCompleteListener {
+								Toast.makeText(
+									this@TvShowActivity,
+									getString(R.string.tvshow_remove_favorite),
+									Toast.LENGTH_SHORT
+								).show()
+							}
+					},
+					add = {
+						it.child(idTvshow.toString()).setValue(makeTvshiwDb())
+							.addOnCompleteListener {
+								Toast.makeText(
+									this@TvShowActivity,
+									getString(R.string.tvshow_add_favorite),
+									Toast.LENGTH_SHORT
+								)
+									.show()
+							}
+					},
+					id = idTvshow
+				)
+			} else {
+				makeToast(R.string.tvshow_nao_lancado)
+			}
 		}
 	}
 
 	private fun ratedMovie() {
-		if (series.firstAirDate?.released() == true) {
-			Dialog(this@TvShowActivity).apply {
-				requestWindowFeature(Window.FEATURE_NO_TITLE)
-				setContentView(R.layout.dialog_custom_rated)
-				findViewById<TextView>(R.id.rating_title).text = series.name ?: ""
-				window?.setLayout(
-					WindowManager.LayoutParams.MATCH_PARENT,
-					WindowManager.LayoutParams.WRAP_CONTENT
-				)
-				val ratingBar = findViewById<RatingBar>(R.id.ratingBar_rated)
-				ratingBar.rating = numberRated / 2
+		model.tvShow.value?.success().ifValid {
+			if (series.firstAirDate?.released() == true) {
+				Dialog(this@TvShowActivity).apply {
+					requestWindowFeature(Window.FEATURE_NO_TITLE)
+					setContentView(R.layout.dialog_custom_rated)
+					findViewById<TextView>(R.id.rating_title).text = series.name ?: ""
+					window?.setLayout(
+						WindowManager.LayoutParams.MATCH_PARENT,
+						WindowManager.LayoutParams.WRAP_CONTENT
+					)
+					val ratingBar = findViewById<RatingBar>(R.id.ratingBar_rated)
+					ratingBar.rating = numberRated / 2
 
-				findViewById<Button>(R.id.cancel_rated)
-					.setOnClickListener {
-						removeRated()
+					findViewById<Button>(R.id.cancel_rated)
+						.setOnClickListener {
+							removeRated()
+							dismiss()
+						}
+
+					findViewById<Button>(R.id.ok_rated).setOnClickListener {
+						if (ratingBar.rating == 0.0f) {
+							removeRated()
+						} else {
+							addRated(ratingBar)
+						}
 						dismiss()
 					}
-
-				findViewById<Button>(R.id.ok_rated).setOnClickListener {
-					if (ratingBar.rating == 0.0f) {
-						removeRated()
-					} else {
-						addRated(ratingBar)
-					}
-					dismiss()
+					show()
 				}
-				show()
+			} else {
+				makeToast(R.string.tvshow_nao_lancado)
 			}
-		} else {
-			makeToast(R.string.tvshow_nao_lancado)
 		}
 	}
 
 	private fun addRated(ratingBar: RatingBar) {
-		val tvshowDB = makeTvshiwDb().apply { nota = ratingBar.rating * 2 }
-		model.setRated { database ->
-			database.child(idTvshow.toString()).setValue(tvshowDB)
-				.addOnCompleteListener {
-					makeToast("${getString(R.string.tvshow_rated)} - ${tvshowDB.nota}")
-				}
-			model.setRatedOnTheMovieDB(tvshowDB)
+		model.tvShow.value?.success().ifValid {
+			val tvshowDB = makeTvshiwDb().apply { nota = ratingBar.rating * 2 }
+			model.setRated { database ->
+				database.child(idTvshow.toString()).setValue(tvshowDB)
+					.addOnCompleteListener {
+						makeToast("${getString(R.string.tvshow_rated)} - ${tvshowDB.nota}")
+					}
+				model.setRatedOnTheMovieDB(tvshowDB)
+			}
+			this@TvShowActivity.fab_menu.close(true)
 		}
-		this@TvShowActivity.fab_menu.close(true)
 	}
 
 	private fun removeRated() {
@@ -373,7 +380,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 		}
 	}
 
-	private fun setupViewPagerTabs(tvshow: Tvshow) {
+	private fun setupViewPagerTabs() {
 		viewPager_tvshow.apply {
 			offscreenPageLimit = 2
 			adapter = TvShowAdapter(context, supportFragmentManager, colorTop)
