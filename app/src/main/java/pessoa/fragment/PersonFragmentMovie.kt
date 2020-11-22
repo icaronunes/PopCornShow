@@ -1,6 +1,7 @@
 package pessoa.fragment
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -22,11 +23,11 @@ class PersonFragmentMovie(override val layout: Int = R.layout.activity_person_mo
 	private val model by lazy { createViewModel(PersonViewModel::class.java) }
 	private val recyclerViewMovie: RecyclerView by findView(R.id.recycleView_person_movies)
 	private val progressBar: ProgressBar by findView(R.id.progress)
-	private val empty: TextView by findView(R.id.empty_tvshows)
+	private val empty: TextView by findView(R.id.sem_filmes)
 	private val adView: AdView by findView(R.id.adview)
 
-	override fun onActivityCreated(savedInstanceState: Bundle?) {
-		super.onActivityCreated(savedInstanceState)
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
 		setAdMob(adView)
 		observers()
 	}
