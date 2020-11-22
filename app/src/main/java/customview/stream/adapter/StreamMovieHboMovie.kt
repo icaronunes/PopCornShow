@@ -48,9 +48,8 @@ class StreamAbMovieHboAdapter(val subscription: Boolean = false,
     }
 
     private fun tryWebLink(availability: Availability?, context: Context) {
-        val linkWeb = availability?.sourceData?.links?.web
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(linkWeb ?: "https://play.hbogo.com/")
+        intent.data = Uri.parse( availability?.sourceData?.links?.web ?: "https://play.hbogo.com/")
         context.startActivity(intent)
     }
 

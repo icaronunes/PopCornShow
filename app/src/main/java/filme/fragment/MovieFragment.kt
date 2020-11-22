@@ -112,7 +112,7 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 		observers()
 		setTitulo()
 		setGenres()
-		setLancamento()
+		setRelease()
 		setTimeFilme()
 		setProducts()
 		setSinopse()
@@ -631,7 +631,7 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 		}
 	}
 
-	private fun setLancamento() {
+	private fun setRelease() {
 		if (movieDb.releaseDates?.resultsReleaseDates?.isNotEmpty() == true) {
 			val date = movieDb.releaseDates?.resultsReleaseDates?.let {
 				it.firstOrNull { releaseDateItem ->
