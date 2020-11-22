@@ -31,8 +31,8 @@ class ProductionActivity(override var layout: Int = Layout.produtora_layout) : B
 
 	private val model: ProductionViewModel by lazy { createViewModel(ProductionViewModel::class.java, this) }
 
-	private val logo: String by bindBundle(Constant.ENDERECO)
-	private val name: String by bindBundle(Constant.NAME)
+	private val logo: String by bindBundle(Constant.ENDERECO, "")
+	private val name: String by bindBundle(Constant.NAME, "")
 	private val idProdutora: Int by bindBundle(Constant.ID, -1)
 
 	private var pager = 1
