@@ -17,11 +17,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import applicaton.BaseFragment
-import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.*
 import com.github.clans.fab.FloatingActionMenu
@@ -33,6 +33,7 @@ import elenco.adapter.WorksAdapter
 import filme.MovieDetatilsViewModel
 import filme.adapter.CollectionPagerAdapter
 import filme.adapter.SimilaresFilmesAdapter
+import ifValid
 import kotlinx.android.synthetic.main.info_details_movie_layout.icon_collection
 import kotlinx.android.synthetic.main.info_details_movie_layout.icon_site
 import kotlinx.android.synthetic.main.info_details_movie_layout.img_budget
@@ -72,12 +73,14 @@ import utils.Constant.METACRITICMOVIE
 import utils.Constant.ROTTENTOMATOESMOVIE
 import utils.enums.EnumTypeMedia
 import utils.gone
+import utils.kotterknife.bindArgument
 import utils.makeToast
 import utils.minHeight
 import utils.parseDate
 import utils.patternRecyler
 import utils.putString
 import utils.removerAcentos
+import utils.resolver
 import utils.setPicasso
 import utils.setScrollInvisibleFloatMenu
 import utils.visible
@@ -90,46 +93,20 @@ import java.util.Locale
  */
 class MovieFragment(override val layout: Int = Layout.movie_details_info) : BaseFragment() {
 	private lateinit var movieDb: Movie
-	private var imdbDd: Imdb? = null
-	private var color: Int = 0
-	private val model: MovieDetatilsViewModel by lazy { createViewModel(MovieDetatilsViewModel::class.java) }
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		if (arguments != null) {
-			val bundle = arguments
-			movieDb = bundle?.getSerializable(Constant.FILME) as Movie
-			color = bundle.getInt(Constant.COLOR_TOP, 0)
-		}
-	}
+	private lateinit var model: MovieDetatilsViewModel
+	private lateinit var imdbDd: Imdb
+	private val color: Int by bindArgument(Constant.COLOR_TOP, 0)
 
 	override fun onResume() {
 		super.onResume()
 		getImdbData()
 	}
 
-	override fun onActivityCreated(savedInstanceState: Bundle?) {
-		super.onActivityCreated(savedInstanceState)
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+		model = ViewModelProvider(requireActivity()).get(MovieDetatilsViewModel::class.java)
 		observers()
-		setTitulo()
-		setGenres()
-		setRelease()
-		setTimeFilme()
-		setProducts()
-		setSinopse()
-		setPoster()
-		setBuget()
-		setHome()
-		setOriginalTitle()
-		setSpokenLanguages()
-		setProductionCountries()
-		setPopularity()
-		setCollectoin()
-		setCast()
-		setCrews()
-		setTrailer()
-		setSimilares()
-		setAnimated()
-		setStatus()
+
 		setAdMob(adView)
 
 		imdb_site.setOnClickListener {
@@ -224,47 +201,64 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 
 	private fun observers() {
 		model.videos.observe(viewLifecycleOwner, Observer {
-			when (it) {
-				is Success -> {
-					if (it.result.results.isNullOrEmpty()) {
-						recycle_filme_trailer.minHeight()
-					} else {
-						recycle_filme_trailer.patternRecyler().apply {
-							adapter = TrailerAdapter(it.result.results, movieDb.overview ?: "")
-						}
+			it.resolver(requireActivity(), { videos ->
+				if (videos.results.isNullOrEmpty()) {
+					recycle_filme_trailer.minHeight()
+				} else {
+					recycle_filme_trailer.patternRecyler().apply {
+						adapter = TrailerAdapter(videos.results, movieDb.overview ?: "")
 					}
 				}
-				is Failure -> recycle_filme_trailer.minHeight()
-			}
+			}, {
+				recycle_filme_trailer.minHeight()
+			})
 		})
 
 		model.imdb.observe(viewLifecycleOwner, Observer {
-			when (it) {
-				is Success -> {
-					if (view != null) {
-						imdbDd = it.result
-						setVotoMedia()
-					}
-				}
-				is Failure -> {
-					voto_media.gone()
-					img_star.gone()
-					requireActivity().makeToast(R.string.ops)
-				}
-			}
+			it.resolver(requireActivity(), { imdb ->
+				imdbDd = imdb
+				setVotoMedia()
+			}, {
+				voto_media.gone()
+				img_star.gone()
+				makeToast(R.string.ops)
+			})
 		})
 
 		model.collection.observe(viewLifecycleOwner, Observer {
-			when (it) {
-				is Success -> {
-					if (view != null) {
-						getCollection(it.result.parts?.sortedBy { part -> part?.releaseDate })
-					}
-				}
-				is Failure -> {
-					requireActivity().makeToast(R.string.ops)
-				}
-			}
+			it.resolver(requireActivity(), { collections ->
+				getCollection(collections.parts?.sortedBy { part -> part?.releaseDate })
+			}, {
+				makeToast(R.string.ops)
+			})
+		})
+
+		model.movie.observe(viewLifecycleOwner, Observer { it ->
+			it.resolver(requireActivity(), { movie ->
+				movieDb = movie
+				setTitulo()
+				setGenres()
+				setRelease()
+				setTimeFilme()
+				setProducts()
+				setSinopse()
+				setPoster()
+				setBuget()
+				setHome()
+				setOriginalTitle()
+				setSpokenLanguages()
+				setProductionCountries()
+				setPopularity()
+				setCollectoin()
+				setCast()
+				setCrews()
+				setTrailer()
+				setSimilares()
+				setAnimated()
+				setStatus()
+			}, {
+				makeToast(R.string.ops)
+			})
 		})
 	}
 
@@ -281,43 +275,45 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 			if (mediaNotas > 0) {
 				val layout = requireActivity().layoutInflater.inflate(R.layout.layout_notas, null)
 				fillDialogRateds(layout)
-
-				layout.findViewById<ImageView>(R.id.image_metacritic)
-					.setOnClickListener {
-						imdbDd?.let {
-							imdbDd?.title?.let {
-								val clenaName =
-									it.replace(" ", "-").toLowerCase(Locale.ROOT).removerAcentos()
-								val url = "$METACRITICMOVIE$clenaName"
-								startActivity(Intent(requireActivity(), Site::class.java).apply {
-									putExtra(Constant.SITE, url)
-								})
+				::imdbDd.isInitialized.ifValid {
+					layout.findViewById<ImageView>(R.id.image_metacritic)
+						.setOnClickListener {
+							imdbDd.let {
+								it.title?.let { title ->
+									val clenaName =
+										title.replace(" ", "-").toLowerCase(Locale.ROOT)
+											.removerAcentos()
+									val url = "$METACRITICMOVIE$clenaName"
+									startActivity(Intent(requireActivity(),
+										Site::class.java).apply {
+										putExtra(Constant.SITE, url)
+									})
+								}
 							}
 						}
-					}
 
-				layout.findViewById<ImageView>(R.id.image_tomatoes)
-					.setOnClickListener {
-						imdbDd?.let {
-							imdbDd?.title?.let {
-								val cleanName =
-									it.replace(" ", "_").toLowerCase(Locale.ROOT).removerAcentos()
-								startActivity(Intent(requireActivity(), Site::class.java).apply {
-									putExtra(Constant.SITE, "$ROTTENTOMATOESMOVIE$cleanName")
-								})
+					layout.findViewById<ImageView>(R.id.image_tomatoes)
+						.setOnClickListener {
+							imdbDd.let {
+								it.title?.let {title ->
+									val cleanName =
+										title.replace(" ", "_").toLowerCase(Locale.ROOT)
+											.removerAcentos()
+									startActivity(Intent(requireActivity(),
+										Site::class.java).apply {
+										putExtra(Constant.SITE, "$ROTTENTOMATOESMOVIE$cleanName")
+									})
+								}
 							}
 						}
-					}
 
-				layout.findViewById<ImageView>(R.id.image_imdb)
-					.setOnClickListener OnClickListener@{
-						imdbDd?.let {
+					layout.findViewById<ImageView>(R.id.image_imdb)
+						.setOnClickListener OnClickListener@{
 							startActivity(Intent(requireActivity(), Site::class.java).apply {
-								putExtra(Constant.SITE, "$IMDB${imdbDd?.imdbID}")
+								putExtra(Constant.SITE, "$IMDB${imdbDd.imdbID}")
 							})
 						}
-					}
-
+				}
 				layout.findViewById<ImageView>(R.id.image_tmdb)
 					.setOnClickListener {
 						val url = "$BASEMOVIEDB_MOVIE${movieDb.id}"
@@ -325,7 +321,7 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 							putExtra(Constant.SITE, url)
 						})
 					}
-				val builder = AlertDialog.Builder(requireActivity())
+				val builder = Builder(requireActivity())
 				builder.setView(layout)
 				builder.show()
 			} else {

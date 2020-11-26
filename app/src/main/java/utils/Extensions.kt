@@ -15,6 +15,7 @@ import android.view.ViewGroup.*
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.view.marginTop
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -142,19 +143,22 @@ fun loadPalette(view: ImageView): Int { // Todo Usar ext
 /**
  * ACTIVITY
  */
-fun Activity.makeToast(restText: Int, time: Int = Toast.LENGTH_SHORT) {
-	this.makeToast(this.getString(restText), time)
+fun Activity.makeToast(text: Any?, time: Int = Toast.LENGTH_SHORT) {
+	Toast.makeText(this, text.putString(this), time).show()
 }
 
-fun Activity.makeToast(text: String?, time: Int = Toast.LENGTH_SHORT) {
-	Toast.makeText(this, text, time).show()
+/**
+ * FRAGMENT
+ */
+fun Fragment.makeToast(text: Any, time: Int = Toast.LENGTH_SHORT) {
+	Toast.makeText(requireContext(), text.putString(requireContext()), time).show()
 }
 
 /**
  * Context
  */
-fun Context.makeToast(text: String?, time: Int = Toast.LENGTH_SHORT) {
-	Toast.makeText(this, text, time).show()
+fun Context.makeToast(text: Any?, time: Int = Toast.LENGTH_SHORT) {
+	Toast.makeText(this, text.putString(this), time).show()
 }
 
 /**
@@ -211,7 +215,7 @@ fun View.animeRotation(
 /**
  * Any
  */
-fun Any.putString(cxt: Context): String = when (this) {
+fun Any?.putString(cxt: Context): String = when (this) {
 	is String -> this
 	is Int -> cxt.getString(this)
 	else -> {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/acorntv">
+    android:background="@color/red2">
 
     <ImageView
         android:id="@+id/fragment_error_close"
@@ -15,8 +15,7 @@
         android:padding="10dp"
         android:src="@android:drawable/ic_menu_close_clear_cancel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="30dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/fragment_error_msg"
@@ -46,8 +45,11 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/fragment_error_btn"
+        android:background="@drawable/button_visto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         android:layout_marginBottom="45dp"
         android:text="@string/tryagain"
         android:textColor="@color/white"

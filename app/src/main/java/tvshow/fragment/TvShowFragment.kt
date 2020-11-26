@@ -23,6 +23,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import applicaton.BaseFragment
@@ -35,6 +36,7 @@ import domain.Imdb
 import domain.tvshow.Tvshow
 import elenco.WorksActivity
 import elenco.adapter.WorksAdapter
+import filme.MovieDetatilsViewModel
 import ifValid
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.card_poster
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.img_poster
@@ -67,6 +69,7 @@ import kotlinx.android.synthetic.main.tvshow_info.tmdb_site
 import kotlinx.android.synthetic.main.tvshow_info.ultimo_ep_name
 import kotlinx.android.synthetic.main.tvshow_info.voto_media
 import loading.firebase.TypeDataRef
+import otherWise
 import poster.PosterGridActivity
 import produtora.activity.ProductionActivity
 import similares.SimilaresActivity
@@ -87,6 +90,7 @@ import utils.makeToast
 import utils.minHeight
 import utils.patternRecyler
 import utils.removerAcentos
+import utils.resolver
 import utils.setPicasso
 import utils.setScrollInvisibleFloatMenu
 import utils.visible
@@ -98,10 +102,10 @@ import java.util.Locale
  * Created by icaro on 23/08/16.
  */
 class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragment() {
-	private val model: TvShowViewModel by lazy { createViewModel(TvShowViewModel::class.java) }
-	private val color: Int by bindArgument(Constant.COLOR_TOP)
+	private lateinit var model: TvShowViewModel
 	private lateinit var series: Tvshow
 	private lateinit var imdbDd: Imdb
+	private val color: Int by bindArgument(Constant.COLOR_TOP)
 	private var mediaNotas: Float = 0.0f
 	private var progressBarTemporada: ProgressBar? = null
 
@@ -128,6 +132,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+		model = ViewModelProvider(requireActivity()).get(TvShowViewModel::class.java)
 		observerTvshow()
 		observerAuth()
 		observerImdb()
@@ -216,13 +221,12 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 
 	private fun observerImdb() {
 		model.imdb.observe(viewLifecycleOwner, Observer {
-			when (it) {
-				is Success -> {
-					imdbDd = it.result
-					setVotoMedia()
-				}
-				is Failure -> requireActivity().makeToast(R.string.ops)
-			}
+			it.resolver(requireActivity(), {imbd ->
+				imdbDd = imbd
+				setVotoMedia()
+			}, {
+				makeToast(R.string.ops)
+			})
 		})
 	}
 
@@ -399,8 +403,10 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 	}
 
 	private fun setTemporada() {
-		if (series.numberOfSeasons!! > 0) {
-			temporadas?.text = series.numberOfSeasons.toString()
+		series.numberOfSeasons.ifValid {
+			if (series.numberOfSeasons!! > 0) {
+				temporadas?.text = series.numberOfSeasons.toString()
+			}
 		}
 	}
 
@@ -414,7 +420,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 						if (task.isSuccessful) {
 							seguir?.setText(R.string.seguindo)
 						} else {
-							requireActivity().makeToast(R.string.erro_seguir)
+							makeToast(R.string.erro_seguir)
 						}
 					}
 			}, remove = {
@@ -430,7 +436,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 								if (task.isSuccessful) {
 									seguir?.setText(R.string.seguir)
 								} else {
-									requireActivity().makeToast(R.string.erro_seguir)
+									makeToast(R.string.erro_seguir)
 								}
 							}
 						progressBarTemporada?.visibility = View.GONE
@@ -686,10 +692,10 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 
 	private fun getMedia(): Float {
 		// Todo - refazer metodo
-		var imdb = 0f
-		var tmdb = 0f
-		var metascore = 0f
-		var tomato = 0f
+		var imdb = 0.0f
+		var tmdb = 0.0f
+		var metascore = 0.0f
+		var tomato = 0.0f
 		var tamanho = 0
 		if (::series.isInitialized)
 			series.voteAverage.ifValid {

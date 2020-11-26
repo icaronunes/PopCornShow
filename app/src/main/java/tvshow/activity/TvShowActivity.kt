@@ -18,7 +18,6 @@ import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.string
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -26,6 +25,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import domain.TvshowDB
 import domain.tvshow.Tvshow
+import error.ErrorTryDefault
 import ifValid
 import kotlinx.android.synthetic.main.fab_float.fab_menu
 import kotlinx.android.synthetic.main.fab_float.menu_item_favorite
@@ -49,6 +49,7 @@ import utils.gone
 import utils.kotterknife.bindBundle
 import utils.makeToast
 import utils.released
+import utils.resolver
 import utils.setAnimation
 import utils.setPicassoWithCache
 import utils.success
@@ -103,38 +104,32 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 		})
 
 		model.tvShow.observe(this, Observer { baseRequest ->
-			when (baseRequest) {
-				is Success -> {
-					series = baseRequest.result
-					setupViewPagerTabs()
-					setImageTop(series.backdropPath ?: "")
-					if (idReel.isNullOrEmpty()) {
-						model.getRealGoodData(series.createIdReal())
-					}
-					model.getImdb(series.external_ids?.imdbId ?: "")
-					observersReal()
-					setLoading(false)
-					setFab()
-				}
-				is Failure -> ops()
-				is Loading -> {
-				}
-			}
+			baseRequest.resolver(this, {
+				series = it
+				setupViewPagerTabs()
+				setImageTop(series.backdropPath ?: "")
+				if (idReel.isNullOrEmpty()) model.getRealGoodData(series.createIdReal())
+				observersReal()
+				model.getImdb(series.external_ids?.imdbId ?: "")
+				setLoading(false)
+				setFab()
+			}, {
+			}, loadingBlock = {
+			}, genericError = ErrorTryDefault(this) {
+				getDataTvshow()
+			})
 		})
 	}
 
 	private fun observersReal() {
 		model.real.observe(this, Observer {
-			when (it) {
-				is Success -> {
-					streamview_tv.fillStream(
-						series.originalName?.getNameTypeReel()
-							?: "", it.result.sources
-					)
-				}
-				is Failure -> streamview_tv.error = true
-				is Loading -> {}
-			}
+			it.resolver(this, successBlock = { real ->
+				val title = if (::series.isInitialized)
+					series.originalName?.getNameTypeReel() ?: "" else ""
+				streamview_tv.fillStream(title, real.sources)
+			}, failureBlock = {
+				streamview_tv.error = true
+			})
 			setAnimated()
 		})
 	}
@@ -288,7 +283,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 
 	private fun addOrRemoveFavorite() {
 		menu_item_favorite.animeRotation(end = { this@TvShowActivity.fab_menu.close(true) })
-		model.tvShow.value?.success().ifValid {
+		::series.isInitialized.ifValid {
 			if (series.firstAirDate?.released() == true) {
 				model.putFavority(
 					remove = {
@@ -321,7 +316,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 	}
 
 	private fun ratedMovie() {
-		model.tvShow.value?.success().ifValid {
+		::series.isInitialized.ifValid {
 			if (series.firstAirDate?.released() == true) {
 				Dialog(this@TvShowActivity).apply {
 					requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -357,7 +352,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 	}
 
 	private fun addRated(ratingBar: RatingBar) {
-		model.tvShow.value?.success().ifValid {
+		::series.isInitialized.ifValid {
 			val tvshowDB = makeTvshiwDb().apply { nota = ratingBar.rating * 2 }
 			model.setRated { database ->
 				database.child(idTvshow.toString()).setValue(tvshowDB)

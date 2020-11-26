@@ -1,6 +1,7 @@
 package filme.activity
 
 import ID
+import Txt
 import activity.BaseActivityAb
 import android.app.Dialog
 import android.content.Intent
@@ -20,7 +21,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
-import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -28,6 +28,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import domain.Movie
 import domain.MovieDb
+import error.ErrorTryDefault
 import filme.MovieDetatilsViewModel
 import filme.fragment.MovieFragment
 import fragment.ImagemTopFilmeScrollFragment
@@ -43,6 +44,7 @@ import kotlinx.android.synthetic.main.fab_float.menu_item_watchlist
 import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
@@ -59,8 +61,8 @@ import utils.gone
 import utils.kotterknife.bindBundle
 import utils.makeToast
 import utils.released
+import utils.resolver
 import utils.setAnimation
-import utils.success
 import utils.visible
 import utils.yearDate
 import java.io.File
@@ -97,14 +99,14 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 		})
 
 		model.movie.observe(this, Observer {
-			when (it) {
-				is Success -> {
-					fillData(it.result)
-					observerFire()
-				}
-				is Loading -> setLoading(it.loading)
-				is Failure -> ops()
-			}
+			it.resolver(this, successBlock = { movie ->
+				fillData(movie)
+				observerFire()
+			}, loadingBlock = { loading ->
+				setLoading(loading)
+			}, genericError = ErrorTryDefault(this) {
+				getData()
+			})
 		})
 	}
 
@@ -192,10 +194,10 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 		}
 	}
 
+	@OptIn(ExperimentalCoroutinesApi::class)
 	private fun setStream() {
 		GlobalScope.launch(Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, e  ->
 			Handler(Looper.getMainLooper()).post {
-				e.toString()
 				streamview_movie.error = true
 				setAnimated()
 			}
@@ -205,7 +207,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 			}.await()
 
 			if (reelGood.availability.isNotEmpty()) {
-				streamview_movie.titleMovie = movieDb?.originalTitle ?: ""
+				streamview_movie.titleMovie = movieDb.originalTitle ?: ""
 				streamview_movie.stream = reelGood.availability.filter {
 					it.accessType == 2
 				}
@@ -292,7 +294,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		if (item.itemId == R.id.share) {
-			if (model.movie.value is Success) {
+			if (::movieDb.isInitialized) {
 				salvaImagemMemoriaCache(
 					this@MovieDetailsActivity,
 					movieDb.posterPath,
@@ -331,11 +333,11 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 
 	fun buildDeepLink(): String {
 		// Get the unique appcode for this app.
-		return "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3Dmovie%26id%3D${movieDb?.id}&apn=br.com.icaro.filme"
+		return "https://q2p5q.app.goo.gl/?link=https://br.com.icaro.filme/?action%3Dmovie%26id%3D${movieDb.id}&apn=br.com.icaro.filme"
 	}
 
 	private fun ratedFilme() {
-		model.movie.value?.success().ifValid {
+		::movieDb.isInitialized.ifValid {
 			if (movieDb.releaseDate?.released() == true) {
 				openDialog().apply {
 					findViewById<TextView>(R.id.rating_title).text = movieDb?.title ?: ""
@@ -376,7 +378,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 	}
 
 	private fun addRated(ratingBar: RatingBar) {
-		model.movie.value?.success().ifValid {
+		::movieDb.isInitialized.ifValid {
 			val movieDate = makeMovieDb().apply { nota = ratingBar.rating * 2 }
 			model.changeRated { databaseReference ->
 				databaseReference.child(idMovie.toString()).setValue(movieDate)
@@ -405,7 +407,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 
 	private fun addOrRemoveFavorite() {
 		menu_item_favorite.animeRotation(end = { this@MovieDetailsActivity.fab_menu.close(true) })
-		model.movie.value?.success().ifValid {
+		::movieDb.isInitialized.ifValid {
 			if (movieDb.releaseDate?.released() == true) {
 				model.executeFavority(remove = {
 					it.child(idMovie.toString()).setValue(null)
@@ -465,7 +467,6 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 	private fun setFragmentInfo() {
 		val movieFragment = MovieFragment().apply {
 			arguments = Bundle().apply {
-				putSerializable(Constant.FILME, movieDb)
 				putInt(Constant.COLOR_TOP, color)
 			}
 		}
