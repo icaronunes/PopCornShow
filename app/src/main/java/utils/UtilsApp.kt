@@ -87,9 +87,9 @@ object UtilsApp {
 	fun isNetWorkAvailable(context: Context?): Boolean {
 		val conectivtyManager =
 			context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-		return (conectivtyManager.activeNetworkInfo != null &&
-			conectivtyManager.activeNetworkInfo.isAvailable &&
-			conectivtyManager.activeNetworkInfo.isConnected)
+		return (conectivtyManager.activeNetworkInfo != null && //Todo - refazer
+			conectivtyManager.activeNetworkInfo!!.isAvailable &&
+			conectivtyManager.activeNetworkInfo!!.isConnected)
 	}
 
 	fun loadPalette(view: ImageView): Int { // Todo Usar ext
@@ -167,7 +167,7 @@ object UtilsApp {
 				output.write(buffer, 0, (input.read(buffer, 0, buffer.size)))
 			}
 		} catch (e: Exception) {
-			Log.d("UtilsApp", e.message)
+			Log.d("UtilsApp", e.message ?: "")
 		} finally {
 			try {
 				input?.close()

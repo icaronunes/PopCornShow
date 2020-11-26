@@ -52,13 +52,16 @@
 
         <TextView
             android:id="@+id/similares_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/trade_txt_size_sp_24"
-            android:layout_marginLeft="4dp"
+            android:textSize="20sp"
             android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             app:layout_constraintStart_toEndOf="@id/similares_img"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:text="Name Traduzido" />
 
         <TextView

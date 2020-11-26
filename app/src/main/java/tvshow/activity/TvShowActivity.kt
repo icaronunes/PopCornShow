@@ -397,10 +397,12 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 	}
 
 	private fun setColorFab(color: Int) {
-		fab_menu?.menuButtonColorNormal = color
-		menu_item_favorite?.colorNormal = color
-		menu_item_watchlist?.colorNormal = color
-		menu_item_rated?.colorNormal = color
+		color.let {
+			fab_menu?.menuButtonColorNormal = it
+			menu_item_favorite?.colorNormal = it
+			menu_item_watchlist?.colorNormal = it
+			menu_item_rated?.colorNormal = it
+		}
 	}
 
 	private fun setFab() {

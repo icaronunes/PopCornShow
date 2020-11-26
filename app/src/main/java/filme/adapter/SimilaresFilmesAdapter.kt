@@ -31,7 +31,7 @@ class SimilaresFilmesAdapter(val context: FragmentActivity, val similarItems: Li
         holder.bind(similarItems[position])
     }
 
-    override fun getItemCount() = similarItems?.size ?: 0
+    override fun getItemCount() = similarItems.size
 
     inner class SimilaresViewHolder(parent: ViewGroup) :
         RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.scroll_similares, parent, false)) {

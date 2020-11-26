@@ -11,16 +11,18 @@ import kotlinx.android.synthetic.main.activity_site.swipeToRefresh
 import kotlinx.android.synthetic.main.activity_site.webView
 import utils.BaseActivityKt
 import utils.Constant
+import utils.kotterknife.bindBundle
 
 /**
  * Created by icaro on 02/08/16.
  */
 class Site : BaseActivityKt() {
 
+    val url: String by bindBundle(Constant.SITE, "")
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_site)
-        val url = intent.getStringExtra(Constant.SITE)
 
         if (url.contains("https://play.google.com/store/apps/details?id=")) {
             val appPackageName = packageName // getPackageName() from Context or Activity object
@@ -33,7 +35,7 @@ class Site : BaseActivityKt() {
             }
         }
 
-        setWebViewClient(webView!!)
+        setWebViewClient(webView)
 
         webView.loadUrl(url)
         configJavascript()

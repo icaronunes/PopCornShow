@@ -11,12 +11,16 @@ import domain.PostersItem
 import kotlinx.android.synthetic.main.poster_grid.adView
 import kotlinx.android.synthetic.main.poster_grid.recycleView_poster_grid
 import utils.Constant
+import utils.kotterknife.bindBundle
 
 /**
  * Created by icaro on 28/07/16.
  */
 
 class PosterGridActivity : BaseActivity() {
+
+    private val titulo: String by bindBundle(Constant.NAME, "")
+    private val posters: List<PostersItem> by bindBundle(Constant.POSTER)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -30,11 +34,6 @@ class PosterGridActivity : BaseActivity() {
             layoutManager = GridLayoutManager(baseContext, 2)
         }
         setAdMob(adView)
-
-        if (intent.hasExtra(Constant.POSTER)) {
-            val posters = intent.getSerializableExtra(Constant.POSTER) as List<PostersItem>
-            val titulo = intent.getStringExtra(Constant.NAME)
-            recycleView_poster_grid.adapter = PosterGridAdapter(this@PosterGridActivity, posters, titulo)
-        }
+        recycleView_poster_grid.adapter = PosterGridAdapter(this@PosterGridActivity, posters, titulo)
     }
 }
