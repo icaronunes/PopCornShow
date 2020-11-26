@@ -51,14 +51,21 @@ object Constant {
 	const val POSTER = "poster"
 	const val WORK = "work"
 
+	object StatusRunninTv {
+		const val RETURN = "Returning Series"
+		const val ENDED = "Ended"
+		const val CANCELED = "Canceled"
+		const val PRODUCTION = "In Production"
+	}
+
 	object ViewTypesIds {
-		val NEWS = 1
-		val LOADING = 2
-		val AD = 3
-		val TVSHOW = 4
-		val FALLOW = 5
-		val CREWS = 6
-		val CAST = 7
+		const val NEWS = 1
+		const val LOADING = 2
+		const val AD = 3
+		const val TVSHOW = 4
+		const val FALLOW = 5
+		const val CREWS = 6
+		const val CAST = 7
 	}
 
 	object ReelGood {

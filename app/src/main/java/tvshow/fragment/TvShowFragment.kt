@@ -35,6 +35,7 @@ import domain.Imdb
 import domain.tvshow.Tvshow
 import elenco.WorksActivity
 import elenco.adapter.WorksAdapter
+import ifValid
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.card_poster
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.img_poster
 import kotlinx.android.synthetic.main.tvshow_info.adView
@@ -77,6 +78,7 @@ import utils.Constant.BASEMOVIEDB_TV
 import utils.Constant.IMDB
 import utils.Constant.METACRITICTV
 import utils.Constant.ROTTENTOMATOESTV
+import utils.Constant.StatusRunninTv
 import utils.UtilsApp.setUserTvShow
 import utils.enums.EnumTypeMedia
 import utils.gone
@@ -99,9 +101,9 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 	private val model: TvShowViewModel by lazy { createViewModel(TvShowViewModel::class.java) }
 	private val color: Int by bindArgument(Constant.COLOR_TOP)
 	private lateinit var series: Tvshow
+	private lateinit var imdbDd: Imdb
 	private var mediaNotas: Float = 0.0f
 	private var progressBarTemporada: ProgressBar? = null
-	private var imdbDd: Imdb? = null
 
 	companion object {
 		@JvmStatic
@@ -140,7 +142,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 					setTitulo()
 					setCategoria()
 					setLancamento()
-					setProdutora()
+					setProduction()
 					setHome()
 					setOriginalTitle()
 					setProductionCountries()
@@ -295,7 +297,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 			val inflater = requireActivity().layoutInflater
 			val layout = inflater.inflate(R.layout.layout_notas, null)
 
-			imdbDd?.let { imdb ->
+			imdbDd.let { imdb ->
 				imdb.imdbRating?.let {
 					(layout
 						?.findViewById<View>(R.id.nota_imdb) as TextView).text =
@@ -315,14 +317,14 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 				}
 			}
 
-			series.voteAverage?.let {
+			series.voteAverage.let {
 				if (!it.equals(0.0))
 					(layout?.findViewById<View>(R.id.nota_tmdb) as TextView).text =
 						String.format(getString(R.string.bar_ten), it)
 			}
 
 			layout.findViewById<View>(R.id.image_metacritic).setOnClickListener {
-				imdbDd?.let {
+				imdbDd.let {
 					val nome = it.title.replace(" ", "-").toLowerCase(Locale.ROOT).removerAcentos()
 					val url = "$METACRITICTV$nome"
 					startActivity(Intent(activity, Site::class.java).apply {
@@ -332,7 +334,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 			}
 
 			layout.findViewById<View>(R.id.image_tomatoes).setOnClickListener {
-				imdbDd?.let {
+				imdbDd.let {
 					val nome = it.title.replace(" ", "_").toLowerCase(Locale.ROOT).removerAcentos()
 					startActivity(Intent(activity, Site::class.java).apply {
 						putExtra(Constant.SITE, "$ROTTENTOMATOESTV$nome")
@@ -342,7 +344,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 
 			layout.findViewById<View>(R.id.image_imdb).setOnClickListener {
 				startActivity(Intent(activity, Site::class.java).apply {
-					putExtra(Constant.SITE, "$IMDB${imdbDd?.imdbID}")
+					putExtra(Constant.SITE, "$IMDB${imdbDd.imdbID}")
 				})
 			}
 
@@ -369,14 +371,14 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 	private fun setStatus() {
 		series.status?.let {
 			status.setTextColor(color)
-			val tradutor = PreferenceManager.getDefaultSharedPreferences(activity)
+			val local = PreferenceManager.getDefaultSharedPreferences(activity)
 				.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true)
-			if (tradutor) {
+			if (local) {
 				when (it) {
-					"Returning Series" -> status?.setText(R.string.returnin_series)
-					"Ended" -> status!!.setText(R.string.ended)
-					"Canceled" -> status?.setText(R.string.canceled)
-					"In Production" -> status?.setText(in_production)
+					StatusRunninTv.RETURN -> status?.setText(R.string.returnin_series)
+					StatusRunninTv.ENDED -> status!!.setText(R.string.ended)
+					StatusRunninTv.CANCELED -> status?.setText(R.string.canceled)
+					StatusRunninTv.PRODUCTION -> status?.setText(in_production)
 					else -> status?.text = it
 				}
 			} else {
@@ -444,12 +446,13 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 		}
 	}
 
+	@SuppressLint("Recycle")
 	private fun setAnimacao() {
 		AnimatorSet().apply {
 			playTogether(
-				ObjectAnimator.ofFloat(img_star, View.ALPHA, 0.0f, 1.0f).setDuration(2000),
-				ObjectAnimator.ofFloat(voto_media, View.ALPHA, 0.0f, 1.0f).setDuration(2300),
-				ObjectAnimator.ofFloat(icon_site, View.ALPHA, 0.0f, 1.0f).setDuration(3000)
+				ObjectAnimator.ofFloat(img_star, ALPHA, 0.0f, 1.0f).setDuration(2000),
+				ObjectAnimator.ofFloat(voto_media, ALPHA, 0.0f, 1.0f).setDuration(2300),
+				ObjectAnimator.ofFloat(icon_site, ALPHA, 0.0f, 1.0f).setDuration(3000)
 			)
 		}.start()
 	}
@@ -479,7 +482,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 		card_poster.setCardBackgroundColor(color)
 	}
 
-	private fun setProdutora() {
+	private fun setProduction() {
 		series.productionCompanies?.let {
 			val production = series.productionCompanies?.getOrNull(0)
 			produtora?.setTextColor(color)
@@ -688,28 +691,29 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 		var metascore = 0f
 		var tomato = 0f
 		var tamanho = 0
+		if (::series.isInitialized)
+			series.voteAverage.ifValid {
+				if (series.voteAverage > 0.0) {
+					try {
+						tmdb = series.voteAverage.toFloat()
+						tamanho++
+					} catch (e: Exception) {
+					}
+				}
+			}
 
-		if (series.voteAverage != null)
-			if (series.voteAverage!! > 0) {
+		if (::imdbDd.isInitialized) {
+			if (imdbDd.imdbRating.isNullOrBlank()) {
 				try {
-					tmdb = series.voteAverage!!.toFloat()
+					imdb = java.lang.Float.parseFloat(imdbDd.imdbRating!!)
 					tamanho++
 				} catch (e: Exception) {
 				}
 			}
 
-		if (imdbDd != null) {
-			if (imdbDd?.imdbRating.isNullOrBlank()) {
+			if (imdbDd.metascore.isNullOrEmpty()) {
 				try {
-					imdb = java.lang.Float.parseFloat(imdbDd?.imdbRating!!)
-					tamanho++
-				} catch (e: Exception) {
-				}
-			}
-
-			if (imdbDd?.metascore.isNullOrEmpty()) {
-				try {
-					val meta = java.lang.Float.parseFloat(imdbDd?.metascore!!)
+					val meta = java.lang.Float.parseFloat(imdbDd.metascore!!)
 					val nota = meta / 10
 					metascore = nota
 					tamanho++
@@ -717,9 +721,9 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 				}
 			}
 
-			if (imdbDd?.tomatoRating.isNullOrEmpty()) {
+			if (imdbDd.tomatoRating.isNullOrEmpty()) {
 				try {
-					tomato = java.lang.Float.parseFloat(imdbDd?.tomatoRating!!)
+					tomato = java.lang.Float.parseFloat(imdbDd.tomatoRating)
 					tamanho++
 				} catch (e: Exception) {
 				}

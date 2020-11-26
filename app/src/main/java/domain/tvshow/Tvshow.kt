@@ -99,7 +99,7 @@ data class Tvshow(
     val originalName: String? = null,
 
     @field:SerializedName("vote_average")
-    val voteAverage: Double? = null,
+    val voteAverage: Double = 0.0,
 
     @field:SerializedName("name")
     val name: String? = null,
