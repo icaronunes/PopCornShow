@@ -14,7 +14,7 @@ import lista.tvshow.activity.TvShowsActivity
 import main.MainActivity
 import org.json.JSONException
 import org.json.JSONObject
-import pessoa.activity.FotoPersonActivity
+import pessoa.activity.PhotoPersonActivity
 import produtora.activity.ProductionActivity
 import similares.SimilaresActivity
 import site.Site
@@ -156,14 +156,14 @@ class CustomNotificationOpenedHandler : NotificationOpenedHandler {
 	}
 
 	private fun callPersonPhoto(context: Context, jsonObject: JSONObject) { // Quebrado
-		val intent = Intent(context, FotoPersonActivity::class.java)
+		val intent = Intent(context, PhotoPersonActivity::class.java)
 		if (jsonObject.has(ID)) {
 			intent.putExtra(Constant.PERSON_ID, jsonObject.getInt(ID))
 			if (jsonObject.has(NOME_PERSON)) intent.putExtra(NOME_PERSON,
                 jsonObject.getString(NOME_PERSON))
 			if (jsonObject.has(POSICAO)) intent.putExtra(POSICAO, jsonObject.getInt(POSICAO))
 			val stackBuilder = TaskStackBuilder.create(context)
-			stackBuilder.addParentStack(FotoPersonActivity::class.java)
+			stackBuilder.addParentStack(PhotoPersonActivity::class.java)
 			stackBuilder.addNextIntent(intent)
 			stackBuilder.startActivities()
 		} else {

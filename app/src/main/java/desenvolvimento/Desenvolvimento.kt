@@ -1,59 +1,44 @@
-package desenvolvimento;
+package desenvolvimento
 
-import android.content.pm.ActivityInfo;
-import android.content.res.Resources;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import activity.BaseActivity;
-import br.com.icaro.filme.R;
-import desenvolvimento.adapter.DesenvolvimentoAdapater;
+import activity.BaseActivity
+import android.R.id
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.recyclerview.widget.RecyclerView
+import br.com.icaro.filme.R
+import br.com.icaro.filme.R.*
+import desenvolvimento.adapter.DesenvolvimentoAdapater
+import utils.kotterknife.findView
+import utils.patternRecyler
 
 /**
  * Created by icaro on 18/12/16.
  */
-public class Desenvolvimento extends BaseActivity {
+class Desenvolvimento(override var layout: Int = Layout.desenvolvimento_layout) : BaseActivity() {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	val recyclerView: RecyclerView by findView(R.id.recycleView_desenvolvimento)
 
-        setContentView(R.layout.desenvolvimento_layout);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        setUpToolBar();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.ajuda_desenvolvimento);
+	public override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setUpToolBar()
+		supportActionBar?.setDisplayHomeAsUpEnabled(true)
+		supportActionBar?.setTitle(string.ajuda_desenvolvimento)
 
-        RecyclerView recyclerView = findViewById(R.id.recycleView_desenvolvimento);
-        recyclerView.setLayoutManager(new LinearLayoutManager(Desenvolvimento.this));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setHasFixedSize(true);
+		recyclerView.patternRecyler(false).apply {
+			val bibliotecas = resources.getStringArray(array.bibliotecas)
+			adapter = DesenvolvimentoAdapater(context, bibliotecas)
+		}
+	}
 
-        Resources res = getResources();
-        String[] bibliotecas = res.getStringArray(R.array.bibliotecas);
+	override fun onCreateOptionsMenu(menu: Menu): Boolean {
+		return true
+	}
 
-        recyclerView.setAdapter(new DesenvolvimentoAdapater(this, bibliotecas));
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (android.R.id.home == item.getItemId()){
-            finish();
-        }
-        return true;
-    }
+	override fun onOptionsItemSelected(item: MenuItem): Boolean {
+		if (id.home == item.itemId) {
+			finish()
+		}
+		return true
+	}
 }

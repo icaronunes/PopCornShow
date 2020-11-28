@@ -102,7 +102,7 @@ class TvShowsFragment(override val layout: Int = R.layout.fragment_list_medias) 
 		})
 	}
 
-	fun observerAd() {
+	private fun observerAd() {
 		model.ads.observe(viewLifecycleOwner, Observer {
 			it?.let { ads ->
 				listAd = ads

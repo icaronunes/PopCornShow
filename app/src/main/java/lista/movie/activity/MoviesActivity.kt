@@ -1,7 +1,7 @@
 package lista.movie.activity
 
 import Layout
-import activity.BaseActivityAb
+import activity.BaseActivity
 import android.os.Bundle
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.*
@@ -11,7 +11,7 @@ import utils.Api
 import utils.Constant
 
 @ExperimentalCoroutinesApi
-class MoviesActivity(override var layout: Int = Layout.activity_list_main) : BaseActivityAb() {
+class MoviesActivity(override var layout: Int = Layout.activity_list_main) : BaseActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(layout)

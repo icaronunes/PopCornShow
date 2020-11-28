@@ -1,7 +1,7 @@
 package elenco
 
 import Layout
-import activity.BaseActivityAb
+import activity.BaseActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_elenco.adView
 import kotlinx.android.synthetic.main.activity_elenco.elenco_recycleview
 import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal
 import utils.Constant
+import utils.Constant.ViewTypesIds
 import utils.enums.EnumTypeMedia
 import utils.kotterknife.bindBundle
 import utils.patternRecyler
@@ -20,7 +21,7 @@ import utils.patternRecyler
 /**
  * Created by icaro on 24/07/16.
  */
-class WorksActivity(override var layout: Int = Layout.activity_elenco) : BaseActivityAb() {
+class WorksActivity(override var layout: Int = Layout.activity_elenco) : BaseActivity() {
 	private val model: WorksViewModel by lazy { createViewModel(WorksViewModel::class.java, this) }
 	private val title: String by bindBundle(Constant.NAME)
 	private val id: Int by bindBundle(Constant.ID, 0)
@@ -43,11 +44,11 @@ class WorksActivity(override var layout: Int = Layout.activity_elenco) : BaseAct
 				is Success -> {
 					elenco_recycleview.patternRecyler(false).apply {
 						when (typeWork) {
-							Constant.ViewTypesIds.CREWS -> {
+							ViewTypesIds.CREWS -> {
 								elenco_recycleview.adapter =
 									WorksAdapter(context, it.result.crew, horizontalLayout = true)
 							}
-							Constant.ViewTypesIds.CAST -> {
+							ViewTypesIds.CAST -> {
 								elenco_recycleview.adapter =
 									WorksAdapter(context, it.result.cast, horizontalLayout = true)
 							}
@@ -59,6 +60,7 @@ class WorksActivity(override var layout: Int = Layout.activity_elenco) : BaseAct
 				is Loading -> {
 					progress_horizontal.visibility = if (it.loading) View.VISIBLE else View.GONE
 				}
+				is Failure -> {}
 			}
 		})
 	}

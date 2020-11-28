@@ -11,6 +11,7 @@ import br.com.icaro.filme.R
 import com.google.android.material.snackbar.Snackbar
 import domain.ResultsSimilarItem
 import domain.tvshow.ResultsItem
+import ifValid
 import kotlinx.android.synthetic.main.activity_similares.adView
 import kotlinx.android.synthetic.main.activity_similares.similares_recyclerview
 import kotlinx.android.synthetic.main.activity_similares.text_similares_no_internet
@@ -18,22 +19,21 @@ import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horiz
 import tvshow.adapter.SimilaresListaSerieAdapter
 import utils.Constant
 import utils.UtilsApp
+import utils.kotterknife.bindBundle
 
 /**
  * Created by icaro on 12/08/16.
  */
-open class SimilaresActivity : BaseActivity() {
+open class SimilaresActivity(override var layout: Int = Layout.activity_similares) : BaseActivity() {
 
-    private var listaFilme: List<ResultsSimilarItem?>? = null
-    private var listaTvshow: List<ResultsItem?>? = null
-    private var title: String? = null
+    private val listaFilme: List<ResultsSimilarItem?>? by bindBundle(Constant.SIMILARES_FILME)
+    private val listaTvshow: List<ResultsItem?>? by bindBundle(Constant.SIMILARES_TVSHOW)
+    private val title: String by bindBundle(Constant.NAME, "")
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_similares)
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        getExtras()
         setAdMob(adView)
 
         supportActionBar?.title = title
@@ -48,10 +48,10 @@ open class SimilaresActivity : BaseActivity() {
 
     private fun setDataRecycler() {
         if (UtilsApp.isNetWorkAvailable(this)) {
-            listaFilme?.let {
+            listaFilme?.ifValid {
                 similares_recyclerview.adapter = SimilaresListaFilmeAdapter(this@SimilaresActivity, listaFilme)
             }
-            listaTvshow?.let {
+            listaTvshow?.ifValid {
                 similares_recyclerview.adapter = SimilaresListaSerieAdapter(this@SimilaresActivity, listaTvshow)
             }
             progress_horizontal.visibility = View.GONE
@@ -59,15 +59,6 @@ open class SimilaresActivity : BaseActivity() {
             text_similares_no_internet.visibility = View.VISIBLE
             snack()
         }
-    }
-
-    private fun getExtras() {
-        if (intent.hasExtra(Constant.SIMILARES_FILME)) {
-            listaFilme = intent.getSerializableExtra(Constant.SIMILARES_FILME) as List<ResultsSimilarItem?>?
-        } else if (intent.hasExtra(Constant.SIMILARES_TVSHOW)) {
-            listaTvshow = intent.getSerializableExtra(Constant.SIMILARES_TVSHOW) as List<ResultsItem?>?
-        }
-        title = intent.getStringExtra(Constant.NAME)
     }
 
     private fun snack() {

@@ -4,7 +4,7 @@ package lista.tvshow.activity
  * Created by icaro on 14/09/16.
  */
 import Layout
-import activity.BaseActivityAb
+import activity.BaseActivity
 import android.os.Bundle
 import android.view.Menu
 import br.com.icaro.filme.R
@@ -14,7 +14,7 @@ import utils.Api
 import utils.Constant
 
 @ExperimentalCoroutinesApi
-class TvShowsActivity(override var layout: Int = Layout.activity_list_main) : BaseActivityAb() {
+class TvShowsActivity(override var layout: Int = Layout.activity_list_main) : BaseActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(layout)

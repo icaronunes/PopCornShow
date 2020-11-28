@@ -1,5 +1,6 @@
 package pessoa.activity
 
+import activity.BaseActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.lifecycle.Observer
@@ -12,41 +13,29 @@ import domain.person.Person
 import kotlinx.android.synthetic.main.activity_person.viewPager_person
 import pessoa.adapter.PersonAdapter
 import pessoa.modelview.PersonViewModel
-import utils.BaseActivityKt
 import utils.Constant
 import utils.UtilsApp
 import utils.gone
+import utils.kotterknife.bindBundle
 import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horizontal as progress
 
-class PersonActivity : BaseActivityKt() {
+class PersonActivity(override var layout: Int = Layout.activity_person) : BaseActivity() {
 
-    private var idPerso: Int = 0
-    private var nome: String? = null
+    private val idPerso: Int by bindBundle(Constant.PERSON_ID, 0)
+    private val nome: String by bindBundle(Constant.NOME_PERSON, "")
     private val model by lazy { createViewModel(PersonViewModel::class.java, this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_person)
         setUpToolBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setTitleActionBar("")
-        getExtras()
         observers()
 
         if (UtilsApp.isNetWorkAvailable(context = baseContext)) {
             fetchData(idPerso)
         } else {
             snack()
-        }
-    }
-
-    private fun getExtras() {
-        if (intent.action == null) {
-            nome = intent.getStringExtra(Constant.NOME_PERSON)
-            idPerso = intent.getIntExtra(Constant.PERSON_ID, 0)
-        } else {
-            nome = intent.getStringExtra(Constant.NOME_PERSON)
-            idPerso = Integer.parseInt(intent.getStringExtra(Constant.PERSON_ID))
         }
     }
 

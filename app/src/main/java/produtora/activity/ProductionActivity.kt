@@ -1,7 +1,7 @@
 package produtora.activity
 
 import Layout
-import activity.BaseActivityAb
+import activity.BaseActivity
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Bundle
@@ -27,7 +27,7 @@ import utils.setPicasso
 /**
  * Created by icaro on 10/08/16.
  */
-class ProductionActivity(override var layout: Int = Layout.produtora_layout) : BaseActivityAb() {
+class ProductionActivity(override var layout: Int = Layout.produtora_layout) : BaseActivity() {
 
 	private val model: ProductionViewModel by lazy { createViewModel(ProductionViewModel::class.java, this) }
 

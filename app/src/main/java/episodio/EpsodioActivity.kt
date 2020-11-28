@@ -2,7 +2,7 @@ package episodio
 
 import Color
 import Layout
-import activity.BaseActivityAb
+import activity.BaseActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -16,7 +16,7 @@ import utils.kotterknife.bindBundle
 /**
  * Created by icaro on 27/08/16.
  */
-class EpsodioActivity(override var layout: Int = Layout.activity_epsodios) : BaseActivityAb() {
+class EpsodioActivity(override var layout: Int = Layout.activity_epsodios) : BaseActivity() {
 
 	private val tvshowId: Int by bindBundle(Constant.TVSHOW_ID)
 	private val posicao: Int by bindBundle(Constant.POSICAO)

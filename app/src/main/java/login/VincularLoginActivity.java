@@ -56,7 +56,7 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(getBaseContext());
-        setContentView(R.layout.activity_login);
+        setContentView(getLayout());
         mAuth = FirebaseAuth.getInstance();
 
         setGoogle();
@@ -344,4 +344,13 @@ public class VincularLoginActivity extends BaseActivity implements GoogleApiClie
                 });
     }
 
+    @Override
+    protected int getLayout() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    protected void setLayout(int layout) {
+
+    }
 }

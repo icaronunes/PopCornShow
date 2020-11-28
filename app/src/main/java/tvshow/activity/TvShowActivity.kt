@@ -2,7 +2,7 @@ package tvshow.activity
 
 import Color
 import Layout
-import activity.BaseActivityAb
+import activity.BaseActivity
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.app.Dialog
@@ -56,7 +56,7 @@ import utils.success
 import utils.visible
 import java.io.File
 
-class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseActivityAb() {
+class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseActivity() {
 	private val EMPTYRATED: Float = 0.0f
 	private var numberRated: Float = 0.0f
 	private val model: TvShowViewModel by lazy {
@@ -217,7 +217,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		if (item.itemId == R.id.share) {
 			if (model.tvShow.value?.success() != null) {
-				salvaImagemMemoriaCache(this@TvShowActivity, series.posterPath,
+				salvaImagemMemoriaCache(this@TvShowActivity, series.posterPath ?: "",
 					object : SalvarImageShare {
 						override fun retornaFile(file: File) {
 							val intent = Intent(Intent.ACTION_SEND).apply {
@@ -250,7 +250,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 		return super.onOptionsItemSelected(item)
 	}
 
-	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+	override fun onCreateOptionsMenu(menu: Menu): Boolean {
 		menuInflater.inflate(R.menu.menu_share, menu) //
 		return true
 	}

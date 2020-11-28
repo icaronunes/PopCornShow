@@ -10,13 +10,12 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
-import androidx.recyclerview.widget.RecyclerView.Adapter
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
 import br.com.icaro.filme.R.id
 import br.com.icaro.filme.R.layout
 import domain.PostersItem
-import poster.PosterGridAdapter.PosterViewHolder
+import poster.PosterGridAdapter.*
 import utils.Constant
 import utils.gone
 import utils.setPicassoWithCache
@@ -25,14 +24,18 @@ import java.io.Serializable
 /**
  * Created by icaro on 28/07/16.
  */
-class PosterGridAdapter(private val context: Context, private val artworks: List<PostersItem>, private val nome: String) : Adapter<PosterViewHolder>() {
-
+class PosterGridAdapter(
+    private val context: Context,
+    private val artworks: List<PostersItem>,
+    private val nome: String,
+) : Adapter<PosterViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PosterViewHolder(parent)
-    override fun onBindViewHolder(holder: PosterViewHolder, position: Int) = holder.bind(artworks[position])
-    override fun getItemCount() = artworks.size
+    override fun onBindViewHolder(holder: PosterViewHolder, position: Int) =
+        holder.bind(artworks[position])
 
+    override fun getItemCount() = artworks.size
     inner class PosterViewHolder(parent: ViewGroup) :
-        ViewHolder(LayoutInflater.from(context).inflate(layout.poster_grid_image, parent, false))  {
+        ViewHolder(LayoutInflater.from(context).inflate(layout.poster_grid_image, parent, false)) {
         private val img: ImageView = itemView.findViewById(id.img_poster_grid)
         private val progressBar: ProgressBar = itemView.findViewById(id.progress_poster_grid)
 
@@ -43,9 +46,7 @@ class PosterGridAdapter(private val context: Context, private val artworks: List
                 sucesso = { progressBar.gone() }
             ).setOnClickListener {
                 val intent = Intent(context, PosterActivity::class.java).apply {
-                    putExtra(Constant.BUNDLE,
-                        Bundle().apply {
-                            putSerializable(Constant.ARTWORKS, artworks as Serializable) })
+                    putExtra(Constant.ARTWORKS, artworks as Serializable)
                     putExtra(Constant.POSICAO, position)
                     putExtra(Constant.NAME, nome)
                 }

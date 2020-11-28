@@ -4,7 +4,7 @@ import Color
 import ID
 import Layout
 import Txt
-import activity.BaseActivityAb
+import activity.BaseActivity
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.app.Activity
@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
 import applicaton.BaseViewModel.*
+import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.BuildConfig
 import br.com.icaro.filme.R
 import domain.ListaSeries
@@ -28,11 +29,15 @@ import kotlinx.android.synthetic.main.activity_main.indication_main
 import kotlinx.android.synthetic.main.activity_main.tabLayout
 import kotlinx.android.synthetic.main.activity_main.viewPager_main
 import kotlinx.android.synthetic.main.activity_main.viewpage_top_main
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import utils.gone
 import utils.visible
 
-class MainActivity(override var layout: Int = Layout.activity_main) : BaseActivityAb() {
+@ExperimentalCoroutinesApi
+class MainActivity(override var layout: Int = Layout.activity_main) : BaseActivity() {
+
 	private val model: MainViewModel by lazy { createViewModel(MainViewModel::class.java, this) }
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		lifecycle.addObserver(model)
@@ -48,10 +53,11 @@ class MainActivity(override var layout: Int = Layout.activity_main) : BaseActivi
 	private fun setObservers() {
 		model.topo.observe(this, Observer {
 			when (it) {
-				is BaseRequest.Success -> mescla(it.result.first, it.result.second)
-				is BaseRequest.Failure -> snack(viewpage_top_main, getString(Txt.erro_seguir)) {
+				is Success -> mescla(it.result.first, it.result.second)
+				is Failure -> snack(viewpage_top_main, getString(Txt.erro_seguir)) {
 					model.fetchAll()
 				}
+				is Loading -> {}
 			}
 		})
 
@@ -74,7 +80,8 @@ class MainActivity(override var layout: Int = Layout.activity_main) : BaseActivi
 
 	private fun news() {
 		val dialog = AlertDialog.Builder(this)
-			.setIcon(R.drawable.ic_popcorn2)
+			.setIcon(R.drawable.ic_popcorn)
+			.setCancelable(false)
 			.setTitle(R.string.novidades_title)
 			.setMessage(R.string.novidades_text)
 			.setPositiveButton(R.string.ok) { _, _ ->

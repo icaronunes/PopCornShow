@@ -37,7 +37,7 @@ import java.util.Arrays
 /**
  * Created by icaro on 06/11/16.
  */
-class LoginActivity : BaseActivity() {
+class LoginActivity(override var layout: Int = Layout.activity_login) : BaseActivity() {
 	private val TAG = this.javaClass.name
 	private var mAuth: FirebaseAuth? = null
 	private var mCallbackManager: CallbackManager? = null
@@ -45,7 +45,7 @@ class LoginActivity : BaseActivity() {
 	private val send: EditText by findView(R.id.pass)
 	private val ok: MaterialButton by findView(R.id.logar)
 	private val facebook: FancyButton by findView(R.id.facebook)
-	private val anonimous: FancyButton by findView(R.id.bt_anonimous)
+	private val anonymous: FancyButton by findView(R.id.bt_anonimous)
 	private val authStateListener: FirebaseAuth.AuthStateListener
 		get() = FirebaseAuth.AuthStateListener {
 			val user = it.currentUser
@@ -61,7 +61,7 @@ class LoginActivity : BaseActivity() {
 		super.onCreate(savedInstanceState)
 		FirebaseApp.initializeApp(baseContext)
 		mAuth = FirebaseAuth.getInstance()
-		setContentView(R.layout.activity_login)
+		setContentView(layout)
 		hideSoftKeyboard()
 		setFacebook()
 
@@ -69,7 +69,7 @@ class LoginActivity : BaseActivity() {
 		recuperar_senha.setOnClickListener { createDialgoResetPass() }
 		ok.setOnClickListener { logarComEmail() }
 		facebook.setOnClickListener { logarFacebook() }
-		anonimous.setOnClickListener { logarAnonimous() }
+		anonymous.setOnClickListener { logarAnonimous() }
 
 		send.setOnEditorActionListener { _, actionId, _ ->
 			when (actionId) {

@@ -1,54 +1,34 @@
-package desenvolvimento.adapter;
+package desenvolvimento.adapter
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.recyclerview.widget.RecyclerView;
-import br.com.icaro.filme.R;
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView.*
+import br.com.icaro.filme.R.*
+import desenvolvimento.adapter.DesenvolvimentoAdapater.*
+import kotlinx.android.synthetic.main.lib_adapter_layout.view.development
 
 /**
  * Created by icaro on 18/12/16.
  */
-public class DesenvolvimentoAdapater extends RecyclerView.Adapter<DesenvolvimentoAdapater.HolderDesenvolvimento> {
+class DesenvolvimentoAdapater(
+	private val context: Context,
+	private val itens: Array<String>
+) : Adapter<HolderDesenvolvimento>() {
 
-    private Context desenvolvimento;
-    private String[] planets;
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = HolderDesenvolvimento(parent)
+	override fun onBindViewHolder(holder: HolderDesenvolvimento, position: Int) {
+		holder.bind(itens[position])
+	}
 
-    public DesenvolvimentoAdapater(Context desenvolvimento, String[] planets) {
-        this.desenvolvimento = desenvolvimento;
-        this.planets = planets;
-    }
+	override fun getItemCount(): Int {
+		return itens.size
+	}
 
-    @Override
-    public HolderDesenvolvimento onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(desenvolvimento).inflate(R.layout.desenvolvimento_adapter_layout, parent, false);
-        DesenvolvimentoAdapater.HolderDesenvolvimento holder = new DesenvolvimentoAdapater.HolderDesenvolvimento(view);
-        return holder;
-
-    }
-
-    @Override
-    public void onBindViewHolder(HolderDesenvolvimento holder, int position) {
-        final String texto = planets[position];
-
-        holder.textView.setText(texto);
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return planets.length;
-    }
-
-    class HolderDesenvolvimento extends RecyclerView.ViewHolder {
-
-        private TextView textView;
-
-        HolderDesenvolvimento(View itemView) {
-            super(itemView);
-            textView = itemView.findViewById(R.id.textview_desenvolvimento);
-        }
-    }
+	inner class HolderDesenvolvimento(parent: ViewGroup) : ViewHolder(LayoutInflater.from(context)
+		.inflate(layout.lib_adapter_layout, parent, false)) {
+		fun bind(item: String) = with(itemView) {
+			development.text = item
+		}
+	}
 }

@@ -1,7 +1,7 @@
 package seguindo
 
 import Layout
-import activity.BaseActivityAb
+import activity.BaseActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.app.ActivityCompat
@@ -14,7 +14,7 @@ import utils.kotterknife.findView
  * Created by icaro on 25/11/16.
  */
 class FallowingActivity(override var layout: Int = Layout.activity_usuario_list) :
-	BaseActivityAb() {
+	BaseActivity() {
 
 	private val viewPager: ViewPager by findView(R.id.viewpage_usuario)
 	private val tabView: TabLayout by findView(R.id.tabLayout)

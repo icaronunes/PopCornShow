@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/trade_size_dp_16"
-        android:src="@drawable/ic_popcorn2"
+        android:src="@drawable/ic_popcorn"
         app:layout_constraintBottom_toTopOf="@+id/intro_subtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

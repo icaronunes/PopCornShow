@@ -1,7 +1,7 @@
 package busca
 
 import Layout
-import activity.BaseActivityAb
+import activity.BaseActivity
 import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
@@ -30,7 +30,7 @@ import utils.visible
 /**
  * Created by icaro on 08/07/16.
  */
-class SearchMultiActivity(override var layout: Int = Layout.search_layout) : BaseActivityAb() {
+class SearchMultiActivity(override var layout: Int = Layout.search_layout) : BaseActivity() {
 
 	private val recyclerView: RecyclerView by lazy { recycleView_search.patternRecyler(false) }
 	private val model: SearchMultiModelView by lazy {

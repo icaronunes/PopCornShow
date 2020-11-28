@@ -3,7 +3,7 @@ package yourLists
 import Color
 import ID
 import Layout
-import activity.BaseActivityAb
+import activity.BaseActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
@@ -14,7 +14,7 @@ import utils.Constant
 import utils.kotterknife.bindBundle
 import utils.kotterknife.findView
 
-class YourListActivity(override var layout: Int = Layout.activity_usuario_list) : BaseActivityAb() {
+class YourListActivity(override var layout: Int = Layout.activity_usuario_list) : BaseActivity() {
 
 	private val title: String by bindBundle(Constant.ABA)
 	private val type: TypeDataRef by bindBundle(Constant.MEDIATYPE)

@@ -2,7 +2,7 @@ package temporada
 
 import Color
 import Layout
-import activity.BaseActivityAb
+import activity.BaseActivity
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -43,7 +43,7 @@ import java.util.HashMap
 /**
  * Created by icaro on 26/08/16.
  */
-class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseActivityAb() {
+class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseActivity() {
 
 	private val seasonId: Int by bindBundle(Constant.TEMPORADA_ID)
 	private val seasonPosition: Int by bindBundle(Constant.TEMPORADA_POSITION)

@@ -1,63 +1,43 @@
-package poster;
+package poster
 
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Window;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import com.viewpagerindicator.LinePageIndicator;
-import java.util.List;
-import br.com.icaro.filme.R;
-import domain.PostersItem;
-import utils.Constant;
-
-import static br.com.icaro.filme.R.id.pager;
+import Layout
+import activity.BaseActivity
+import android.os.Build.*
+import android.os.Bundle
+import android.view.Window
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
+import br.com.icaro.filme.R.*
+import com.viewpagerindicator.LinePageIndicator
+import domain.PostersItem
+import utils.Constant
+import utils.kotterknife.bindBundle
+import utils.kotterknife.findView
 
 /**
  * Created by icaro on 12/07/16.
  */
+class PosterActivity(override var layout: Int = Layout.activity_scroll_poster) : BaseActivity() {
+	private val artworks: List<PostersItem> by bindBundle(Constant.ARTWORKS)
+	private val nome: String by bindBundle(Constant.NAME, "")
+	private val viewPager: ViewPager by findView(id.pager)
+	private val titlePageIndicator: LinePageIndicator by findView(id.indicator)
+	private val position: Int by bindBundle(Constant.POSICAO)
+	public override fun onCreate(savedInstanceState: Bundle?) {
+		if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
+			window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+		}
+		super.onCreate(savedInstanceState)
+		viewPager.adapter = PosterFragment(supportFragmentManager)
+		titlePageIndicator.setViewPager(viewPager)
+		titlePageIndicator.setCurrentItem(position)
+	}
 
-public class PosterActivity extends AppCompatActivity {
-
-    private List<PostersItem> artworks;
-    private String nome;
-
-    @Override
-    public void
-    onCreate(Bundle savedInstanceState) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        }
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scroll_poster);
-        artworks = (List<PostersItem>) getIntent().getBundleExtra(Constant.BUNDLE).getSerializable(Constant.ARTWORKS);
-        nome = getIntent().getStringExtra(Constant.NAME);
-        ViewPager viewPager = findViewById(pager);
-        LinePageIndicator titlePageIndicator = findViewById(R.id.indicator);
-        viewPager.setAdapter(new PosterFragment(getSupportFragmentManager()));
-        titlePageIndicator.setViewPager(viewPager);
-        titlePageIndicator.setCurrentItem(getIntent().getExtras().getInt(Constant.POSICAO));
- 
-    }
-
-    private class PosterFragment extends FragmentPagerAdapter {
-        PosterFragment(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-
-            return new PosterScrollFragment().newInstance(artworks.get(position).getFilePath(), nome);
-        }
-
-        @Override
-        public int getCount() {
-            return artworks.size();
-
-        }
-    }
+	private inner class PosterFragment(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_SET_USER_VISIBLE_HINT) {
+		override fun getItem(position: Int): PosterScrollFragment
+		= PosterScrollFragment.newInstance(artworks[position].filePath, nome)
+		override fun getCount() = artworks.size
+	}
 }

@@ -148,8 +148,6 @@
         <activity
             android:name="elenco.WorksActivity"
             android:parentActivityName="main.MainActivity">
-
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="main.MainActivity" />
@@ -159,8 +157,6 @@
         <activity
             android:name="poster.PosterGridActivity"
             android:parentActivityName="main.MainActivity">
-
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="main.MainActivity" />
@@ -193,8 +189,6 @@
             android:name="similares.SimilaresActivity"
             android:parentActivityName="main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="main.MainActivity" />
@@ -211,18 +205,14 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
-
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="main.MainActivity" />
         </activity>
 
         <activity
-            android:name="pessoa.activity.FotoPersonActivity"
+            android:name="pessoa.activity.PhotoPersonActivity"
             android:parentActivityName="main.MainActivity">
-
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="main.MainActivity" />
@@ -245,7 +235,6 @@
                 android:name="android.app.default_searchable"
                 android:value="activity.SearchMultiActivity" />
         </activity>
-
 
         <activity
             android:name="site.Site"
@@ -319,15 +308,6 @@
             android:value="${crashlyticsCollectionEnabled}" />
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
-        <provider
-            android:name="provider.SuggestionRecentProvider"
-            android:authorities="br.com.icaro.filme.search2" />
-
-        <provider
-            android:name="provider.SuggestionProvider"
-            android:authorities="br.com.icaro.filme.search"
-            android:enabled="true"
-            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -338,7 +318,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
 
         <service
             android:name="onsignal.CustomNotificationExtenderService"

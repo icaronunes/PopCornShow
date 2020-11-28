@@ -9,7 +9,7 @@ import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
 import br.com.icaro.filme.R
 import domain.person.ProfilesItem
-import pessoa.activity.FotoPersonActivity
+import pessoa.activity.PhotoPersonActivity
 import utils.Constant
 import utils.gone
 import utils.setPicassoWithCache
@@ -42,7 +42,7 @@ class PersonImagemAdapter(private val context: Context, private val artworks: Li
             })
 
             setOnClickListener {
-                context.startActivity(Intent(context, FotoPersonActivity::class.java).apply {
+                context.startActivity(Intent(context, PhotoPersonActivity::class.java).apply {
                     putExtra(Constant.PERSON, artworks as Serializable)
                     putExtra(Constant.NOME_PERSON, nome)
                     putExtra(Constant.POSICAO, position)

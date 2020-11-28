@@ -19,7 +19,7 @@ import utils.Constant
  * Created by icaro on 12/07/16.
  */
 
-class FotoPersonActivity : BaseActivity() {
+class PhotoPersonActivity(override var layout: Int = Layout.activity_scroll_poster) : BaseActivity() {
     private var position: Int? = 0
     private lateinit var artworks: List<ProfilesItem>
     private var nome: String? = null
@@ -29,8 +29,6 @@ class FotoPersonActivity : BaseActivity() {
             window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_scroll_poster)
-
         getExtras()
 
         pager?.adapter = PosterFragment(supportFragmentManager)
@@ -50,7 +48,7 @@ class FotoPersonActivity : BaseActivity() {
         }
     }
 
-    private inner class PosterFragment internal constructor(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+    private inner class PosterFragment constructor(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getItem(position: Int): Fragment {
             return PosterScrollFragment.newInstance(artworks[position].filePath, nome)

@@ -1,7 +1,7 @@
 package pessoaspopulares.activity
 
 import Layout
-import activity.BaseActivityAb
+import activity.BaseActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -25,7 +25,7 @@ import utils.visible
  * Created by icaro on 04/10/16.
  */
 class PersonPopularActivity(override var layout: Int = Layout.activity_person_popular) :
-	BaseActivityAb() {
+	BaseActivity() {
 	val model: ListByTypeViewModel by lazy {
 		createViewModel(ListByTypeViewModel::class.java,
             this)

@@ -19,15 +19,14 @@ import kotlin.coroutines.CoroutineContext
 open class BaseViewModel(open val app: Application) : AndroidViewModel(app), LifecycleObserver {
 
    open val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, throwable ->
+        get() = Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, _ ->
             Handler(Looper.getMainLooper()).post {
                 ops()
             }
         }
 
-    val _response = MutableLiveData<BaseRequest<*>>()
-    val response: LiveData<BaseRequest<*>>
-        get() = _response
+    protected val _response = MutableLiveData<BaseRequest<*>>()
+    val response: LiveData<BaseRequest<*>> = _response
 
     fun ops() {
         Toast.makeText(app.baseContext, app.getString(R.string.ops), Toast.LENGTH_LONG).show()

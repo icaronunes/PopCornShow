@@ -6,7 +6,6 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.AlertDialog.*
 import android.content.Intent
 import android.os.Bundle
@@ -17,7 +16,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
@@ -93,20 +91,13 @@ import java.util.Locale
  */
 class MovieFragment(override val layout: Int = Layout.movie_details_info) : BaseFragment() {
 	private lateinit var movieDb: Movie
-	private lateinit var model: MovieDetatilsViewModel
 	private lateinit var imdbDd: Imdb
+	private val model: MovieDetatilsViewModel by lazy { createViewModel(MovieDetatilsViewModel::class.java) }
 	private val color: Int by bindArgument(Constant.COLOR_TOP, 0)
-
-	override fun onResume() {
-		super.onResume()
-		getImdbData()
-	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		model = ViewModelProvider(requireActivity()).get(MovieDetatilsViewModel::class.java)
 		observers()
-
 		setAdMob(adView)
 
 		imdb_site.setOnClickListener {
@@ -199,6 +190,12 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 		}
 	}
 
+	private fun getImdbData() {
+		movieDb.imdbId?.let {
+			model.getImdb(it)
+		}
+	}
+
 	private fun observers() {
 		model.videos.observe(viewLifecycleOwner, Observer {
 			it.resolver(requireActivity(), { videos ->
@@ -236,6 +233,7 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 		model.movie.observe(viewLifecycleOwner, Observer { it ->
 			it.resolver(requireActivity(), { movie ->
 				movieDb = movie
+				getImdbData()
 				setTitulo()
 				setGenres()
 				setRelease()
@@ -456,12 +454,6 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 		}
 	}
 
-	private fun getImdbData() {
-		movieDb.imdbId?.let {
-			model.getImdb(it)
-		}
-	}
-
 	private fun setVotoMedia() {
 		if (mediaNotas > 0) {
 			img_star?.setImageResource(R.drawable.icon_star)
@@ -667,26 +659,28 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 	}
 
 	val mediaNotas: Float
-		get() { // Todo Refazer
+		get() {
 			var imdb = 0.0f
 			var tmdb = 0.0f
 			var metascore = 0.0f
 			var tomato = 0.0f
 			var tamanho = 0
 
-			movieDb.voteAverage?.let {
-				try {
-					tmdb = it
-					tamanho++
-				} catch (e: Exception) {
+			::movieDb.isInitialized.ifValid {
+				movieDb.voteAverage?.let {
+					try {
+						tmdb = it
+						tamanho++
+					} catch (e: Exception) {
+					}
 				}
 			}
 
-			if (imdbDd != null) {
-				if (imdbDd?.imdbRating != null) {
-					if (!imdbDd?.imdbRating!!.isEmpty()) {
+			if (::imdbDd.isInitialized) {
+				if (imdbDd.imdbRating != null) {
+					if (!imdbDd.imdbRating!!.isEmpty()) {
 						try {
-							imdbDd?.let {
+							imdbDd.let {
 								imdb = java.lang.Float.parseFloat(it.imdbRating)
 								tamanho++
 							}
@@ -695,10 +689,10 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 					}
 				}
 
-				if (imdbDd?.metascore != null) {
-					if (!imdbDd?.metascore!!.isEmpty()) {
+				if (imdbDd.metascore != null) {
+					if (!imdbDd.metascore!!.isEmpty()) {
 						try {
-							imdbDd?.let {
+							imdbDd.let {
 								val meta = java.lang.Float.parseFloat(it.metascore)
 								val nota = meta / 10
 								metascore = nota
@@ -709,10 +703,10 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 					}
 				}
 
-				if (imdbDd?.tomatoRating != null) {
-					if (!imdbDd?.tomatoRating!!.isEmpty()) {
+				if (imdbDd.tomatoRating != null) {
+					if (!imdbDd.tomatoRating!!.isEmpty()) {
 						try {
-							imdbDd?.let {
+							imdbDd.let {
 								tomato = java.lang.Float.parseFloat(it.tomatoRating)
 								tamanho++
 							}

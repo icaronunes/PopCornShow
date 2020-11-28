@@ -1,6 +1,6 @@
 package lista
 
-import activity.BaseActivityAb
+import activity.BaseActivity
 import adapter.ListUserAdapter
 import android.os.Bundle
 import android.view.Menu
@@ -23,7 +23,7 @@ import java.util.Random
 /**
  * Created by icaro on 04/10/16.
  */
-class ListGenericActivity(override var layout: Int = R.layout.activity_lista) : BaseActivityAb() {
+class ListGenericActivity(override var layout: Int = R.layout.activity_lista) : BaseActivity() {
 	val model: ListByTypeViewModel by lazy {
 		createViewModel(ListByTypeViewModel::class.java,
             this)
@@ -62,22 +62,23 @@ class ListGenericActivity(override var layout: Int = R.layout.activity_lista) : 
 
 	private fun observers() {
 		model.moviesList.observe(this, Observer {
-            when (it) {
-                is Success -> {
-                    model.setLoadingMovieId(false)
-                    val result = it.result
-                    (recycleView_favorite.adapter as ListUserAdapter).addItens(result.results,
-                        result.totalResults)
-                    pagina = result.page
-                    totalPagina = result.totalPages
-                    ++pagina
-                }
-                is Failure -> {
-                    ops()
-                    model.setLoadingMovieId(false)
-                }
-            }
-        })
+			when (it) {
+				is Success -> {
+					model.setLoadingMovieId(false)
+					val result = it.result
+					(recycleView_favorite.adapter as ListUserAdapter).addItens(result.results,
+						result.totalResults)
+					pagina = result.page
+					totalPagina = result.totalPages
+					++pagina
+				}
+				is Failure -> {
+					ops()
+					model.setLoadingMovieId(false)
+				}
+				is Loading -> {}
+			}
+		})
 	}
 
 	override fun onResume() {

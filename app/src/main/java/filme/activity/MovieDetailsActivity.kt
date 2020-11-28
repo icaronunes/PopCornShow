@@ -2,7 +2,7 @@ package filme.activity
 
 import ID
 import Txt
-import activity.BaseActivityAb
+import activity.BaseActivity
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -68,7 +68,7 @@ import utils.yearDate
 import java.io.File
 import java.util.HashMap
 
-class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) : BaseActivityAb() {
+class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) : BaseActivity() {
 	private val EMPTYRATED = 0.0f
 	private var numberRated: Float = EMPTYRATED
 	private val model: MovieDetatilsViewModel by lazy {
@@ -79,6 +79,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 
 	//Todo receber Reel id
 	private lateinit var movieDb: Movie
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setUpToolBar()
@@ -287,7 +288,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 			}.show()
 	}
 
-	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+	override fun onCreateOptionsMenu(menu: Menu): Boolean {
 		menuInflater.inflate(R.menu.menu_share, menu)
 		return true
 	}
@@ -297,7 +298,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 			if (::movieDb.isInitialized) {
 				salvaImagemMemoriaCache(
 					this@MovieDetailsActivity,
-					movieDb.posterPath,
+					movieDb.posterPath ?: "",
 					object : SalvarImageShare {
 						override fun retornaFile(file: File) {
 							val intent = Intent(Intent.ACTION_SEND).apply {
