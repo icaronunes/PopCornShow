@@ -434,26 +434,28 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 	}
 
 	private fun addOrRemoveWatch() {
-		menu_item_watchlist.animeRotation(end = { this@MovieDetailsActivity.fab_menu.close(true) })
-		model.chanceWatch(remove = {
-			it.child(idMovie.toString()).setValue(null)
-				.addOnCompleteListener {
-					Toast.makeText(
-						this@MovieDetailsActivity,
-						getString(R.string.filme_remove),
-						Toast.LENGTH_SHORT
-					).show()
-				}
-		}, add = {
-			it.child(idMovie.toString()).setValue(makeMovieDb())
-				.addOnCompleteListener {
-					Toast.makeText(
-						this@MovieDetailsActivity,
-						getString(R.string.filme_add_watchlist),
-						Toast.LENGTH_SHORT
-					).show()
-				}
-		}, idMedia = idMovie)
+		::movieDb.isInitialized.ifValid {
+			menu_item_watchlist.animeRotation(end = { this@MovieDetailsActivity.fab_menu.close(true) })
+			model.chanceWatch(remove = {
+				it.child(idMovie.toString()).setValue(null)
+					.addOnCompleteListener {
+						Toast.makeText(
+							this@MovieDetailsActivity,
+							getString(R.string.filme_remove),
+							Toast.LENGTH_SHORT
+						).show()
+					}
+			}, add = {
+				it.child(idMovie.toString()).setValue(makeMovieDb())
+					.addOnCompleteListener {
+						Toast.makeText(
+							this@MovieDetailsActivity,
+							getString(R.string.filme_add_watchlist),
+							Toast.LENGTH_SHORT
+						).show()
+					}
+			}, idMedia = idMovie)
+		}
 	}
 
 	private fun setTitleAndDisableTalk() {
