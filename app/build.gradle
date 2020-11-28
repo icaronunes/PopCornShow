@@ -20,15 +20,15 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '28.0.4'
+    compileSdkVersion 30
+    buildToolsVersion '30.0.2'
 
     defaultConfig {
         applicationId "br.com.icaro.filme"
         minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 93
-        versionName "9.8"
+        targetSdkVersion 30
+        versionCode 94
+        versionName "9.9"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
