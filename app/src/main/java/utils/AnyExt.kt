@@ -3,6 +3,7 @@ private val ZERO = 0
 private val EMPTY_STRING = ""
 
 infix fun <T, R> T.ifValid(function: () -> R?) = if (hasValue) function.invoke() else null
+infix fun <T, R> T.ifNotValid(function: () -> R?) = if (!hasValue) function.invoke() else null
 
 fun <T> forEachArg(vararg any: T, function: T.() -> Unit) = any.forEach { function.invoke(it) }
 

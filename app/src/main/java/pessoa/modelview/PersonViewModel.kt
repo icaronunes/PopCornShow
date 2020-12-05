@@ -5,14 +5,16 @@ import android.app.Application
 import android.os.Handler
 import android.os.Looper
 import applicaton.BaseViewModel
+import applicaton.BaseViewModel.BaseRequest.*
 import domain.person.Person
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import pessoa.modelview.listener.PersonBusinessListener
+import utils.success
 import kotlin.coroutines.CoroutineContext
 
-class PersonViewModel(override val app: Application,private val activity: Activity): BaseViewModel(app), PersonBusinessListener {
+class PersonViewModel(override val app: Application,activity: Activity): BaseViewModel(app), PersonBusinessListener {
 
     private val business: PersonBusiness = PersonBusiness(app, activity, this)
 

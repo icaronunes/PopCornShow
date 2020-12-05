@@ -23,7 +23,6 @@ class PersonPopularAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     init {
 	    delegateAdapters.put(Constant.ViewTypesIds.LOADING, LoadingDelegateAdapter())
 	    delegateAdapters.put(Constant.ViewTypesIds.NEWS, PersonDelegateAdapter())
-	    personResultsPage = ArrayList()
 	    personResultsPage.add(loadingItem)
     }
 

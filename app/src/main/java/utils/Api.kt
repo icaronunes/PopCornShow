@@ -31,7 +31,7 @@ import okhttp3.RequestBody
 import okhttp3.Response
 import rx.Observable
 import utils.ApiSingleton.Companion.LoggingInterceptor
-import utils.UtilsKt.Companion.getIdiomaEscolhido
+import utils.UtilsKt.getIdiomaEscolhido
 import utils.key.ApiKeys
 import java.io.IOException
 import java.util.Locale
@@ -119,10 +119,7 @@ class Api(val context: Context) : ApiSingleton() {
 		}
 	}
 
-	suspend fun getTrailersFromEn(
-		id: Int,
-		type: String,
-	): BaseRequest<Videos> {
+	suspend fun getTrailersFromEn(id: Int, type: String, ): BaseRequest<Videos> {
 		return suspendCancellableCoroutine { cont ->
 			executeCall("${baseUrl3}$type/$id/videos?api_key=${TMDBAPI}&language=en-US,null",
 				CallBackApiWithBaseRequest(cont, Videos::class.java))

@@ -11,9 +11,12 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewGroup.*
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.view.children
 import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -27,6 +30,7 @@ import applicaton.BaseViewModel.BaseRequest.*
 import br.com.icaro.filme.R
 import com.github.clans.fab.FloatingActionMenu
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
@@ -159,6 +163,16 @@ fun Fragment.makeToast(text: Any, time: Int = Toast.LENGTH_SHORT) {
  */
 fun Context.makeToast(text: Any?, time: Int = Toast.LENGTH_SHORT) {
 	Toast.makeText(this, text.putString(this), time).show()
+}
+
+/**
+ * NavigationView
+ */
+fun <T> NavigationView.findViewOnHeader(id: Int): T? {
+	return (getHeaderView(0) as? ViewGroup)
+		?.children?.first {
+			it.id == id
+		} as? T
 }
 
 /**

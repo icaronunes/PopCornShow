@@ -1,10 +1,13 @@
 package utils
 
 import android.util.Log
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class InfiniteScrollListener(val getMedia: () -> Unit = {}, private val gridLayout: GridLayoutManager) :
+class InfiniteScrollListener(
+    val getMedia: () -> Unit = {},
+    private val layoutManager: LinearLayoutManager
+) :
     RecyclerView.OnScrollListener() { // Todo - codigo chamado mais de uma vez
 
     private var previousTotal = 0
@@ -19,8 +22,8 @@ class InfiniteScrollListener(val getMedia: () -> Unit = {}, private val gridLayo
         if (dy > 0) {
 
             visibleItemCount = recyclerView.childCount
-            totalItemCount = gridLayout.itemCount
-            firstVisibleItem = gridLayout.findFirstVisibleItemPosition()
+            totalItemCount = layoutManager.itemCount
+            firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
 
             if (loading) {
                 if (totalItemCount > previousTotal) {

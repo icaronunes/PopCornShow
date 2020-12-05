@@ -10,7 +10,6 @@ import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
 import br.com.icaro.filme.R
-import br.com.icaro.filme.R.*
 import domain.ViewType
 import domain.search.Result
 import pessoaspopulares.adapter.ViewTypeDelegateAdapter
@@ -40,8 +39,9 @@ class SearchTvAdapter : ViewTypeDelegateAdapter {
 		private val searchTitleOriginal: TextView =
 			itemView.findViewById(R.id.search_title_original)
 		private val groupStar: Group = itemView.findViewById(R.id.group_star)
+
 		fun bind(series: Result) = with(itemView) {
-			poster.setPicassoWithCache(series.posterPath, 4, img_erro = drawable.poster_empty)
+			poster.setPicassoWithCache(series.posterPath, 4, img_erro = R.drawable.poster_empty)
 			series.originalName.let { searchTitleOriginal.text = it }
 			series.name.let { searchNome.text = it }
 

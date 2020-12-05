@@ -25,9 +25,9 @@ class SearchMultiModelView(override val app: Application): BaseViewModel(app) {
 
     private fun setErro(e: Throwable) { _response.value = Failure<Exception>(Exception(e)) }
 
-    fun fetchData(query: String) {
+    fun fetchData(query: String, pager: Int = 1) {
         GlobalScope.launch(coroutineContext) {
-            val response = async { Api(app).getTmdbSearch(query) }
+            val response = async { Api(app).getTmdbSearch(query, pager) }
             _response.value = Success(response.await())
         }
     }

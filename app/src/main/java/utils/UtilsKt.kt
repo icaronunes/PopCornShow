@@ -12,9 +12,7 @@ import com.google.android.gms.ads.formats.NativeAdOptions
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import configuracao.SettingsActivity
 
-class UtilsKt {
-
-    companion object {
+object UtilsKt {
 
         fun getIdiomaEscolhido(context: Context?): String {
 
@@ -100,5 +98,5 @@ class UtilsKt {
                 }
             }
         }
-    }
+
 }

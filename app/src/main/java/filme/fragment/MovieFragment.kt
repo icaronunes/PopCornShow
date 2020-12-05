@@ -272,8 +272,8 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 		return View.OnClickListener {
 			if (mediaNotas > 0) {
 				val layout = requireActivity().layoutInflater.inflate(R.layout.layout_notas, null)
-				fillDialogRateds(layout)
 				::imdbDd.isInitialized.ifValid {
+				fillDialogRateds(layout)
 					layout.findViewById<ImageView>(R.id.image_metacritic)
 						.setOnClickListener {
 							imdbDd.let {
@@ -332,22 +332,22 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 	}
 
 	private fun fillDialogRateds(layout: View) {
-		imdbDd?.imdbRating?.let {
+		imdbDd.imdbRating?.let {
 			layout.findViewById<TextView>(R.id.nota_imdb)
 				.text = String.format(getString(string.bar_ten), it)
 		}
 
-		imdbDd?.tomatoRating?.let {
+		imdbDd.tomatoRating?.let {
 			layout.findViewById<TextView>(R.id.nota_tomatoes)
 				.text = String.format(getString(string.bar_ten), it)
 		}
 
-		imdbDd?.imdbRating?.let {
+		imdbDd.imdbRating?.let {
 			layout.findViewById<TextView>(R.id.nota_imdb)
 				.text = String.format(getString(string.bar_ten), it)
 		}
 
-		imdbDd?.metascore?.let {
+		imdbDd.metascore?.let {
 			layout.findViewById<TextView>(R.id.nota_metacritic)
 				.text = String.format(getString(string.bar_hundred), it)
 		}
