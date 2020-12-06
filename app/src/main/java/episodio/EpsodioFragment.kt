@@ -52,7 +52,7 @@ import utils.setPicasso
  */
 class EpsodioFragment(override val layout: Int = Layout.epsodio_fragment) : BaseFragment() {
 	private val model: EpsodioViewModel by lazy { createViewModel(EpsodioViewModel::class.java) }
-	private val tvshowId: Int by bindArgument(Constant.TVSHOW_ID)
+	private val tvshowId: Int by bindArgument(Constant.ID)
 	private val temporadaPosition: Int by bindArgument(Constant.TEMPORADA_POSITION)
 	private val episode: EpisodesItem by bindArgument(Constant.EPSODIO)
 	private val color: Int by bindArgument(Constant.COLOR_TOP, Color.primary)
@@ -121,7 +121,7 @@ class EpsodioFragment(override val layout: Int = Layout.epsodio_fragment) : Base
 	private fun nextPersonActivity(it: CrewItem) {
 		startActivity(Intent(context, PersonActivity::class.java).apply {
 			putExtra(Constant.NOME_PERSON, it.name)
-			putExtra(Constant.PERSON_ID, it.id)
+			putExtra(Constant.ID, it.id)
 		})
 	}
 
@@ -275,7 +275,7 @@ class EpsodioFragment(override val layout: Int = Layout.epsodio_fragment) : Base
 			val fragment = EpsodioFragment()
 			fragment.arguments = bundleOf(
 				Constant.EPSODIO to tvEpisode,
-				Constant.TVSHOW_ID to tvshow_id,
+				Constant.ID to tvshow_id,
 				Constant.COLOR_TOP to color,
 				Constant.SEGUINDO to seguindo,
 				Constant.POSICAO to position,

@@ -33,7 +33,7 @@ class SearchHolderView(parent: ViewGroup) : ViewHolder(LayoutInflater.from(paren
 		setOnClickListener {
 			context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
                 putExtra(Constant.COLOR_TOP, poster.loadPallet())
-                putExtra(Constant.FILME_ID, item.id)
+                putExtra(Constant.ID, item.id)
                 putExtra(Constant.NOME_FILME, item.title)
             })
 			// icon?.alpha = 255
@@ -55,7 +55,7 @@ class SearchHolderView(parent: ViewGroup) : ViewHolder(LayoutInflater.from(paren
 		setOnClickListener {
 			context.startActivity(Intent(context, TvShowActivity::class.java).apply {
                 putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
-                putExtra(Constant.TVSHOW_ID, item.id)
+                putExtra(Constant.ID, item.id)
                 putExtra(Constant.NOME_TVSHOW, item.name)
                 putExtra(Constant.ID_REEL,
                     "${item.originalName.getNameTypeReel()}-${item.firstAirDate?.yearDate()}")
@@ -77,7 +77,7 @@ class SearchHolderView(parent: ViewGroup) : ViewHolder(LayoutInflater.from(paren
 		setOnClickListener {
 			context.startActivity(Intent(context, PersonActivity::class.java).apply {
                 putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
-                putExtra(Constant.PERSON_ID, item.id)
+                putExtra(Constant.ID, item.id)
                 putExtra(Constant.NOME_PERSON, item.name)
             })
 			// icon?.alpha = 255

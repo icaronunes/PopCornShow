@@ -52,7 +52,7 @@ class CrewAdapter(val context: Context, horizontal: Boolean) : ViewTypeDelegateA
 
 			setOnClickListener {
 				context.startActivity(Intent(context, PersonActivity::class.java).apply {
-					putExtra(Constant.PERSON_ID, id)
+					putExtra(Constant.ID, id)
 					putExtra(Constant.NOME_PERSON, name)
 				})
 			}

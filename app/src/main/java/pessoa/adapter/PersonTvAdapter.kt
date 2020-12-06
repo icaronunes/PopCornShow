@@ -56,7 +56,7 @@ class PersonTvAdapter(private val context: Context, private val personCredits: L
             setOnClickListener {
                 context.startActivity(Intent(context, TvShowActivity::class.java).apply {
                     putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
-                    putExtra(Constant.TVSHOW_ID, credit.id)
+                    putExtra(Constant.ID, credit.id)
                     putExtra(Constant.NOME_TVSHOW, credit.title)
                     putExtra(Constant.ID_REEL, "${credit.originalTitle?.getNameTypeReel()}-${credit.firstAir?.yearDate()}")
                 })

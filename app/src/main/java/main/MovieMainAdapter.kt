@@ -74,7 +74,7 @@ class MovieMainAdapter(context: FragmentActivity, private val movieDbs: ListaFil
             img_poster_grid.setOnClickListener {
                 context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
                     putExtra(Constant.NOME_FILME, item.title)
-                    putExtra(Constant.FILME_ID, item.id)
+                    putExtra(Constant.ID, item.id)
                     putExtra(Constant.COLOR_TOP, color)
                 })
             }

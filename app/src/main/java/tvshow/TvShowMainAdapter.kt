@@ -78,7 +78,7 @@ class TvShowMainAdapter(activity: FragmentActivity, private val popularTvshow: L
             img_poster_grid.setOnClickListener {
                 context.startActivity(Intent(context, TvShowActivity::class.java).apply {
                     putExtra(Constant.NOME_TVSHOW, item.name)
-                    putExtra(Constant.TVSHOW_ID, item.id)
+                    putExtra(Constant.ID, item.id)
                     putExtra(Constant.ID_REEL, "${item.originalName?.getNameTypeReel()}-${item.firstAirDate?.yearDate()}")
                     putExtra(Constant.COLOR_TOP, color)
                 })

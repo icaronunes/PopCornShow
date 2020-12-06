@@ -51,7 +51,7 @@ class SimilaresSerieAdapter(val activity: FragmentActivity, private val similarI
                 activity.startActivity(Intent(activity, TvShowActivity::class.java).apply {
                     putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_poster_grid))
                     putExtra(Constant.NOME_TVSHOW, tvshow.name)
-                    putExtra(Constant.TVSHOW_ID, tvshow.id)
+                    putExtra(Constant.ID, tvshow.id)
                     putExtra(Constant.ID_REEL, "${tvshow.originalName?.getNameTypeReel()}-${tvshow.firstAirDate?.yearDate()}")
                 })
             }

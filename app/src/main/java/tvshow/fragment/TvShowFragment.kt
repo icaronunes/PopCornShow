@@ -636,7 +636,8 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 	private fun setSimilares() {
 		text_similares.setOnClickListener {
 			startActivity(Intent(requireContext(), SimilaresActivity::class.java).apply {
-				putExtra(Constant.SIMILARES_TVSHOW, series.similar?.results as Serializable)
+				putExtra(Constant.MEDIATYPE, Constant.TV)
+				putExtra(Constant.SIMILARES, series.similar?.results as Serializable)
 				putExtra(Constant.NAME, series.name)
 			})
 		}

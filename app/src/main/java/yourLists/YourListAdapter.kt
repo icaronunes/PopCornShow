@@ -95,7 +95,7 @@ class YourListAdapter(
 					setOnClickListener {
 						fragment.startActivity(Intent(fragment, TvShowActivity::class.java).apply {
 							putExtra(Constant.COLOR_TOP, img_filme_usuario.loadPallet())
-							putExtra(Constant.TVSHOW_ID, media.id())
+							putExtra(Constant.ID, media.id())
 							putExtra(Constant.NOME_TVSHOW, media.name())
 						})
 					}
@@ -109,7 +109,7 @@ class YourListAdapter(
 								MovieDetailsActivity::class.java
 							).apply {
 								putExtra(Constant.COLOR_TOP, img_filme_usuario.loadPallet())
-								putExtra(Constant.FILME_ID, media.id())
+								putExtra(Constant.ID, media.id())
 								putExtra(Constant.NOME_FILME, media.name())
 							})
 					}

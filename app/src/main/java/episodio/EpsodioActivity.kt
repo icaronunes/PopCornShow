@@ -18,7 +18,7 @@ import utils.kotterknife.bindBundle
  */
 class EpsodioActivity(override var layout: Int = Layout.activity_epsodios) : BaseActivity() {
 
-	private val tvshowId: Int by bindBundle(Constant.TVSHOW_ID)
+	private val tvshowId: Int by bindBundle(Constant.ID)
 	private val posicao: Int by bindBundle(Constant.POSICAO)
 	private val color: Int by bindBundle(Constant.COLOR_TOP,  Color.primary)
 	private val seasonPosition: Int by bindBundle(Constant.TEMPORADA_POSITION)

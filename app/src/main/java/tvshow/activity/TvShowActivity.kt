@@ -65,7 +65,7 @@ class TvShowActivity(override var layout: Int = Layout.tvserie_activity) : BaseA
 			this
 		)
 	}
-	private val idTvshow: Int by bindBundle(Constant.TVSHOW_ID, -1)
+	private val idTvshow: Int by bindBundle(Constant.ID, -1)
 	private val idReel: String by bindBundle(Constant.ID_REEL, "")
 	private val colorTop: Int by bindBundle(Constant.COLOR_TOP, Color.colorFAB)
 

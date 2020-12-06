@@ -60,7 +60,7 @@ class ListasSeriesDelegateAdapter : ViewTypeDelegateAdapter {
             setOnClickListener {
                 val intent = Intent(context, TvShowActivity::class.java).apply {
                     putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(imgFilmes))
-                    putExtra(Constant.TVSHOW_ID, item?.id)
+                    putExtra(Constant.ID, item?.id)
                     putExtra(Constant.NOME_TVSHOW, item?.name)
                     putExtra(Constant.ID_REEL, "${item?.originalName?.getNameTypeReel()}-${item?.firstAirDate?.yearDate()}")
                 }

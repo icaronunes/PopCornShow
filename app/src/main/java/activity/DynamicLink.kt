@@ -77,7 +77,7 @@ class DynamicLink : AppCompatActivity() {
                         val stackBuilder = TaskStackBuilder.create(this@DynamicLink)
                         stackBuilder.addParentStack(MainActivity::class.java)
                         stackBuilder.addNextIntent(Intent(this@DynamicLink, MovieDetailsActivity::class.java).apply {
-                            putExtra(Constant.FILME_ID, id.toInt())
+                            putExtra(Constant.ID, id.toInt())
                         })
                         stackBuilder.startActivities()
                         finish()
@@ -87,7 +87,7 @@ class DynamicLink : AppCompatActivity() {
                         stackBuilder.addParentStack(MainActivity::class.java)
                         stackBuilder.addNextIntent(Intent(this@DynamicLink, TvShowActivity::class.java).apply {
                             putExtra(Constant.NOME_TVSHOW, name)
-                            putExtra(Constant.TVSHOW_ID, id.toInt())
+                            putExtra(Constant.ID, id.toInt())
                         })
                         stackBuilder.startActivities()
                         finish()

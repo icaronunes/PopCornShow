@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.include_progress_horizontal.progress_horiz
 
 class PersonActivity(override var layout: Int = Layout.activity_person) : BaseActivity() {
 
-    private val idPerso: Int by bindBundle(Constant.PERSON_ID, 0)
+    private val idPerso: Int by bindBundle(Constant.ID, 0)
     private val nome: String by bindBundle(Constant.NOME_PERSON, "")
     private val model by lazy { createViewModel(PersonViewModel::class.java, this) }
 

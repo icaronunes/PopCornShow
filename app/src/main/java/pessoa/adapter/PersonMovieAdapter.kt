@@ -49,7 +49,7 @@ class PersonMovieAdapter(private val context: Context, private val personCredits
             setOnClickListener {
                 context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
                     putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
-                    putExtra(Constant.FILME_ID, credit?.id)
+                    putExtra(Constant.ID, credit?.id)
                     putExtra(Constant.NOME_FILME, credit?.title)
                 })
             }

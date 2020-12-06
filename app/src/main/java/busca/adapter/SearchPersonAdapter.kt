@@ -57,7 +57,7 @@ class SearchPersonAdapter : ViewTypeDelegateAdapter {
             itemView.setOnClickListener {
                 context.startActivity(Intent(context, PersonActivity::class.java).apply {
                     putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
-                    putExtra(Constant.PERSON_ID, person.id)
+                    putExtra(Constant.ID, person.id)
                     putExtra(Constant.NOME_PERSON, person.name)
                 })
             }
@@ -99,7 +99,7 @@ class SearchPersonAdapter : ViewTypeDelegateAdapter {
                 EnumTypeMedia.MOVIE.type -> {
                     context.startActivity(Intent(itemView.context, MovieDetailsActivity::class.java).apply {
                         putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
-                        putExtra(Constant.FILME_ID, knownFor.id)
+                        putExtra(Constant.ID, knownFor.id)
                         putExtra(Constant.NOME_FILME, knownFor.title)
 
                     })
@@ -107,7 +107,7 @@ class SearchPersonAdapter : ViewTypeDelegateAdapter {
                 EnumTypeMedia.TV.type -> {
                     context.startActivity(Intent(context, TvShowActivity::class.java).apply {
                         putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
-                        putExtra(Constant.TVSHOW_ID, knownFor.id)
+                        putExtra(Constant.ID, knownFor.id)
                         putExtra(Constant.NOME_TVSHOW, knownFor.name)
                         putExtra(Constant.ID_REEL, "${knownFor.originalName.getNameTypeReel()}-${knownFor.firstDate.yearDate()}")
                     })

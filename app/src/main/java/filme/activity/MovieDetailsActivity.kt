@@ -75,7 +75,7 @@ class MovieDetailsActivity(override var layout: Int = R.layout.activity_movie) :
 		createViewModel(MovieDetatilsViewModel::class.java, this)
 	}
 	private val color: Int by bindBundle(Constant.COLOR_TOP, R.color.primary)
-	private val idMovie: Int by bindBundle(Constant.FILME_ID)
+	private val idMovie: Int by bindBundle(Constant.ID)
 
 	//Todo receber Reel id
 	private lateinit var movieDb: Movie

@@ -46,7 +46,7 @@ class PersonDelegateAdapter : ViewTypeDelegateAdapter {
             setOnClickListener {
                 val intent = Intent(context, PersonActivity::class.java)
                 intent.putExtra(Constant.NOME_PERSON, item.name)
-                intent.putExtra(Constant.PERSON_ID, item.id)
+                intent.putExtra(Constant.ID, item.id)
                 context.startActivity(intent)
             }
         }

@@ -58,7 +58,7 @@ class ElencoAdapter(private val context: Context, val horizontal: Boolean) :
 				context.startActivity(Intent(context, PersonActivity::class.java).apply {
 					putExtras(
 						bundleOf(
-							Constant.PERSON_ID to id,
+							Constant.ID to id,
 							Constant.NOME_PERSON to name
 						)
 					)

@@ -59,7 +59,7 @@ class SimilaresFilmesAdapter(val context: FragmentActivity, val similarItems: Li
                 context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
                     putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_poster_grid))
                     putExtra(Constant.NOME_FILME, item.title)
-                    putExtra(Constant.FILME_ID, item.id)
+                    putExtra(Constant.ID, item.id)
                 })
             }
         }

@@ -77,7 +77,7 @@ class NextTvAdapter : ViewTypeDelegateAdapter {
 				}
 
 				context.startActivity(Intent(context, SeasonActivity::class.java).apply {
-					putExtra(Constant.TVSHOW_ID, userTvshow.id)
+					putExtra(Constant.ID, userTvshow.id)
 					putExtra(Constant.TEMPORADA_ID, epItem.seasonNumber)
 					putExtra(Constant.TEMPORADA_POSITION, positionOnFireSeason())
 					putExtra(Constant.NAME, tvshow.name)
@@ -88,7 +88,7 @@ class NextTvAdapter : ViewTypeDelegateAdapter {
 			poster.setOnClickListener {
 				context.startActivity(Intent(context, TvShowActivity::class.java).apply {
 					putExtra(Constant.COLOR_TOP, colorTop)
-					putExtra(Constant.TVSHOW_ID, userTvshow.id)
+					putExtra(Constant.ID, userTvshow.id)
 					putExtra(Constant.NOME_TVSHOW, userTvshow.nome)
 					putExtra(Constant.ID_REEL, tvshow.createIdReal())
 				})

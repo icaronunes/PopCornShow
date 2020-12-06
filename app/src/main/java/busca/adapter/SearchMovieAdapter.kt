@@ -50,7 +50,7 @@ class SearchMovieAdapter : ViewTypeDelegateAdapter {
                         MovieDetailsActivity::class.java
                     ).apply {
                         putExtra(Constant.COLOR_TOP, poster.loadPallet())
-                        putExtra(Constant.FILME_ID, movie.id)
+                        putExtra(Constant.ID, movie.id)
                         putExtra(Constant.NOME_FILME, movie.title)
                     })
             }

@@ -2,6 +2,7 @@ package domain.tvshow
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import similares.SimilaresInfo
 import java.io.Serializable
 import javax.annotation.Generated
 
@@ -43,8 +44,15 @@ data class ResultsItem(
     val name: String? = null,
 
     @field:SerializedName("id")
-    val id: Int? = null,
+    val id: Int,
 
     @field:SerializedName("vote_count")
     val voteCount: Int? = null
-) : Serializable
+) : Serializable, SimilaresInfo {
+    override fun title() = name ?: ""
+    override fun firstDate() = firstAirDate ?: ""
+    override fun originalTitle() = originalName ?: ""
+    override fun votes() = voteAverage ?: 0.0
+    override fun poster() = posterPath ?: ""
+    override fun id() = id
+}

@@ -48,7 +48,7 @@ class SearchTvAdapter : ViewTypeDelegateAdapter {
 			setOnClickListener {
 				context.startActivity(Intent(context, TvShowActivity::class.java).apply {
 					putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
-					putExtra(Constant.TVSHOW_ID, series.id)
+					putExtra(Constant.ID, series.id)
 					putExtra(Constant.NOME_TVSHOW, series.name)
 					putExtra(
 						Constant.ID_REEL,

@@ -43,7 +43,7 @@ class CollectionPagerAdapter(private val info: List<PartsItem?>?, private val co
 
             setOnClickListener {
                 context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
-                    putExtra(Constant.FILME_ID, item?.id)
+                    putExtra(Constant.ID, item?.id)
                     putExtra(Constant.NOME_FILME, item?.title)
                 })
             }

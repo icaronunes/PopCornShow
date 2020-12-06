@@ -175,7 +175,7 @@ class TemporadasAdapter(
 			)
 			putExtra(Constant.TEMPORADA_ID, series?.seasons?.getOrNull(position)?.seasonNumber ?: 0)
 			putExtra(Constant.TEMPORADA_POSITION, position)
-			putExtra(Constant.TVSHOW_ID, series?.id)
+			putExtra(Constant.ID, series?.id)
 			putExtra(Constant.COLOR_TOP, color)
 		})
 	}

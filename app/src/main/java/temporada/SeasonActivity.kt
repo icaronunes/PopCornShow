@@ -47,7 +47,7 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 
 	private val seasonId: Int by bindBundle(Constant.TEMPORADA_ID)
 	private val seasonPosition: Int by bindBundle(Constant.TEMPORADA_POSITION)
-	private val tvShowId: Int by bindBundle(Constant.TVSHOW_ID)
+	private val tvShowId: Int by bindBundle(Constant.ID)
 	private val titleSeason: String by bindBundle(Constant.NAME)
 	private val color: Int by bindBundle(Constant.COLOR_TOP, Color.primary)
 	private var fallow: Boolean = false
@@ -95,7 +95,7 @@ class SeasonActivity(override var layout: Int = Layout.temporada_layout) : BaseA
 		val intent = Intent(this@SeasonActivity, EpsodioActivity::class.java).apply {
 			putExtras(
 				bundleOf(
-					Constant.TVSHOW_ID to tvShowId,
+					Constant.ID to tvShowId,
 					Constant.POSICAO to position,
 					Constant.TEMPORADA_POSITION to seasonPosition,
 					Constant.TVSEASONS to tvSeason,

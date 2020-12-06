@@ -54,7 +54,7 @@ class ProdutoraMovieAdapter : ViewTypeDelegateAdapter {
             setOnClickListener {
                 it.context.startActivity(Intent(itemView.context, MovieDetailsActivity::class.java).apply {
                     putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_movie))
-                    putExtra(Constant.FILME_ID, item.id)
+                    putExtra(Constant.ID, item.id)
                     putExtra(Constant.NOME_FILME, item.title)
                 })
             }

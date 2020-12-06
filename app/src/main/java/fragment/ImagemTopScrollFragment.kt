@@ -65,7 +65,7 @@ class ImagemTopScrollFragment(override val layout: Int = Layout.page_scroll_imag
 					.setOnClickListener {
 						val intent = Intent(context, MovieDetailsActivity::class.java)
 						intent.putExtra(Constant.NOME_FILME, topMains.nome)
-						intent.putExtra(Constant.FILME_ID, topMains.id)
+						intent.putExtra(Constant.ID, topMains.id)
 						intent.putExtra(Constant.COLOR_TOP, loadPalette(it as ImageView))
 						startActivity(intent)
 					}
@@ -81,7 +81,7 @@ class ImagemTopScrollFragment(override val layout: Int = Layout.page_scroll_imag
 					.setOnClickListener {
 						val intent = Intent(context, TvShowActivity::class.java)
 						intent.putExtra(Constant.NOME_TVSHOW, topMains.nome)
-						intent.putExtra(Constant.TVSHOW_ID, topMains.id)
+						intent.putExtra(Constant.ID, topMains.id)
 						intent.putExtra(Constant.COLOR_TOP, loadPalette(it as ImageView))
 						startActivity(intent)
 					}

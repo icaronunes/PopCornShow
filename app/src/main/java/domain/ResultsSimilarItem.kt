@@ -1,6 +1,13 @@
 package domain
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.synthetic.main.adapter_similares.view.similares_date_avaliable
+import kotlinx.android.synthetic.main.adapter_similares.view.similares_name
+import kotlinx.android.synthetic.main.adapter_similares.view.similares_rated
+import kotlinx.android.synthetic.main.adapter_similares.view.similares_title_original
+import similares.SimilaresInfo
+import utils.Constant
+import utils.parseDateShot
 import java.io.Serializable
 import javax.annotation.Generated
 
@@ -41,11 +48,18 @@ data class ResultsSimilarItem(
     val voteAverage: Double? = null,
 
     @field:SerializedName("id")
-    val id: Int? = null,
+    val id: Int,
 
     @field:SerializedName("adult")
     val adult: Boolean? = null,
 
     @field:SerializedName("vote_count")
     val voteCount: Int? = null
-) : Serializable
+) : Serializable, SimilaresInfo {
+    override fun title() = title ?: ""
+    override fun firstDate() = releaseDate ?: ""
+    override fun originalTitle() = originalTitle ?: ""
+    override fun votes() = voteAverage ?: 0.0
+    override fun poster() = posterPath ?: ""
+    override fun id() = id
+}

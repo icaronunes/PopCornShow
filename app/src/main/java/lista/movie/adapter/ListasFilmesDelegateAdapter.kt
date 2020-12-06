@@ -57,7 +57,7 @@ class ListasFilmesDelegateAdapter : ViewTypeDelegateAdapter {
 
             itemView.setOnClickListener {
                 val intent = Intent(context, MovieDetailsActivity::class.java)
-                intent.putExtra(Constant.FILME_ID, item.id)
+                intent.putExtra(Constant.ID, item.id)
                 intent.putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(imgFilmes))
                 context.startActivity(intent)
             }

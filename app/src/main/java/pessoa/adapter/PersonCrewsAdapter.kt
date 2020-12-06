@@ -76,7 +76,7 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
                     "movie" -> {
                         context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
                             putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
-                            putExtra(Constant.FILME_ID, item.id)
+                            putExtra(Constant.ID, item.id)
                             putExtra(Constant.NOME_FILME, item.title)
                             putExtra(Constant.ID_REEL, "${item.originalTitle?.getNameTypeReel()}-${item.releaseDate?.yearDate()}")
                         })
@@ -84,7 +84,7 @@ class PersonCrewsAdapter(private val context: Context, private val personCredits
                     "tv" -> {
                         context.startActivity(Intent(context, TvShowActivity::class.java).apply {
                             putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(poster))
-                            putExtra(Constant.TVSHOW_ID, item.id)
+                            putExtra(Constant.ID, item.id)
                             putExtra(Constant.NOME_TVSHOW, item.title)
                             putExtra(Constant.ID_REEL, "${item.originalName?.getNameTypeReel()}-${item.firstAir?.yearDate()}")
                         })

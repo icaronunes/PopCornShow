@@ -49,7 +49,7 @@ class FallowAllRecycleAdapter : ViewTypeDelegateAdapter {
 
             itemView.setOnClickListener {
                 context?.startActivity(Intent(context, TvShowActivity::class.java).apply {
-                    putExtra(Constant.TVSHOW_ID, item.id)
+                    putExtra(Constant.ID, item.id)
                     putExtra(Constant.NOME_TVSHOW, item.nome)
                     putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(follow_poster))
                 })

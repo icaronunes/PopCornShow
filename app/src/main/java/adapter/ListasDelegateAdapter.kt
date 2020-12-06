@@ -58,14 +58,14 @@ class ListasDelegateAdapter : ViewTypeDelegateAdapter {
 				when (item.mediaType) {
 					"tv" -> {
 						val intent = Intent(context, TvShowActivity::class.java).apply {
-							putExtra(Constant.TVSHOW_ID, item.id)
+							putExtra(Constant.ID, item.id)
 							putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_lista))
 						}
 						context.startActivity(intent)
 					}
 					"movie" -> {
 						val intent = Intent(context, MovieDetailsActivity::class.java).apply {
-							putExtra(Constant.FILME_ID, item.id)
+							putExtra(Constant.ID, item.id)
 							putExtra(Constant.COLOR_TOP, UtilsApp.loadPalette(img_lista))
 						}
 						context.startActivity(intent)

@@ -43,7 +43,6 @@ import utils.Constant.Signal.TVSHOW
 import utils.Constant.Signal.TVSHOWLIST
 import utils.Constant.Signal.VIDEO
 import utils.Constant.TEMPORADA_ID
-import utils.Constant.TVSHOW_ID
 
 /**
  * Created by icaro on 16/10/16.
@@ -124,9 +123,9 @@ class CustomNotificationOpenedHandler : NotificationOpenedHandler {
 	}
 
 	private fun callSeason(context: Context, jsonObject: JSONObject) { //todo feito
-		if (jsonObject.has(TEMPORADA_ID) && jsonObject.has(TVSHOW_ID)) {
+		if (jsonObject.has(TEMPORADA_ID) && jsonObject.has(ID)) {
 			val intent = Intent(context, SeasonActivity::class.java).apply {
-				putExtra(TVSHOW_ID, jsonObject.getInt(TVSHOW_ID))
+				putExtra(ID, jsonObject.getInt(ID))
 				putExtra(TEMPORADA_ID, jsonObject.getInt(TEMPORADA_ID))
 				putExtra(NAME, jsonObject.getString(NAME))
 				putExtra(COLOR_TOP, jsonObject.getString(COLOR_TOP))
@@ -158,7 +157,7 @@ class CustomNotificationOpenedHandler : NotificationOpenedHandler {
 	private fun callPersonPhoto(context: Context, jsonObject: JSONObject) { // Quebrado
 		val intent = Intent(context, PhotoPersonActivity::class.java)
 		if (jsonObject.has(ID)) {
-			intent.putExtra(Constant.PERSON_ID, jsonObject.getInt(ID))
+			intent.putExtra(Constant.ID, jsonObject.getInt(ID))
 			if (jsonObject.has(NOME_PERSON)) intent.putExtra(NOME_PERSON,
                 jsonObject.getString(NOME_PERSON))
 			if (jsonObject.has(POSICAO)) intent.putExtra(POSICAO, jsonObject.getInt(POSICAO))
@@ -176,7 +175,7 @@ class CustomNotificationOpenedHandler : NotificationOpenedHandler {
 		if (jsonObject.has("nome")) intent.putExtra(Constant.NOME_FILME,
             jsonObject.getString("nome"))
 		if (jsonObject.has("id")) {
-			intent.putExtra(Constant.FILME_ID, jsonObject.getInt("id"))
+			intent.putExtra(Constant.ID, jsonObject.getInt("id"))
 			val stackBuilder = TaskStackBuilder.create(context)
 			stackBuilder.addParentStack(SimilaresActivity::class.java)
 			stackBuilder.addNextIntent(intent)
@@ -258,7 +257,7 @@ class CustomNotificationOpenedHandler : NotificationOpenedHandler {
 	private fun callTvShow(context: Context, jsonObject: JSONObject) {
 		val intent = Intent(context, TvShowActivity::class.java)
 		if (jsonObject.has(ID)) {
-			intent.putExtra(TVSHOW_ID, jsonObject.getInt(ID))
+			intent.putExtra(ID, jsonObject.getInt(ID))
 			if (jsonObject.has(COLOR)) intent.putExtra(COLOR, jsonObject.getInt(COLOR))
 			if (jsonObject.has(NAME)) intent.putExtra(Constant.NOME_TVSHOW,
                 jsonObject.getString(NAME))
@@ -274,7 +273,7 @@ class CustomNotificationOpenedHandler : NotificationOpenedHandler {
 	private fun callMovieDetails(context: Context, jsonObject: JSONObject) {
 		val intent = Intent(context, MovieDetailsActivity::class.java)
 		if (jsonObject.has(ID)) {
-			intent.putExtra(Constant.FILME_ID, jsonObject.getInt(ID))
+			intent.putExtra(Constant.ID, jsonObject.getInt(ID))
 			if (jsonObject.has(COLOR)) intent.putExtra(COLOR, jsonObject.getInt(COLOR))
 			val stackBuilder = TaskStackBuilder.create(context)
 			stackBuilder.addParentStack(MovieDetailsActivity::class.java)

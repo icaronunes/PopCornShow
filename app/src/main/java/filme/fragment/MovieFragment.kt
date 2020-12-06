@@ -94,7 +94,6 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 	private lateinit var imdbDd: Imdb
 	private val model: MovieDetatilsViewModel by lazy { createViewModel(MovieDetatilsViewModel::class.java) }
 	private val color: Int by bindArgument(Constant.COLOR_TOP, 0)
-
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		observers()
@@ -165,12 +164,11 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 		}
 
 		textview_similares.setOnClickListener {
-			val intent = Intent(requireActivity(), SimilaresActivity::class.java)
-			intent.putExtra(
-				Constant.SIMILARES_FILME,
-				movieDb.similar?.resultsSimilar as Serializable
-			)
-			intent.putExtra(Constant.NAME, movieDb.title)
+			val intent = Intent(requireActivity(), SimilaresActivity::class.java).apply {
+				putExtra(Constant.MEDIATYPE, Constant.MOVIE)
+				putExtra(Constant.SIMILARES, movieDb.similar?.resultsSimilar as Serializable)
+				putExtra(Constant.NAME, movieDb.title)
+			}
 			startActivity(intent)
 		}
 	}
@@ -273,7 +271,7 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 			if (mediaNotas > 0) {
 				val layout = requireActivity().layoutInflater.inflate(R.layout.layout_notas, null)
 				::imdbDd.isInitialized.ifValid {
-				fillDialogRateds(layout)
+					fillDialogRateds(layout)
 					layout.findViewById<ImageView>(R.id.image_metacritic)
 						.setOnClickListener {
 							imdbDd.let {
@@ -293,7 +291,7 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 					layout.findViewById<ImageView>(R.id.image_tomatoes)
 						.setOnClickListener {
 							imdbDd.let {
-								it.title?.let {title ->
+								it.title?.let { title ->
 									val cleanName =
 										title.replace(" ", "_").toLowerCase(Locale.ROOT)
 											.removerAcentos()
@@ -332,6 +330,7 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 	}
 
 	private fun fillDialogRateds(layout: View) {
+		if(!::movieDb.isInitialized) return
 		imdbDd.imdbRating?.let {
 			layout.findViewById<TextView>(R.id.nota_imdb)
 				.text = String.format(getString(string.bar_ten), it)
@@ -604,7 +603,8 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 				itemAnimator = DefaultItemAnimator()
 				layoutManager =
 					LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-				adapter = SimilaresFilmesAdapter(requireActivity(), movieDb.similar?.resultsSimilar ?: listOf())
+				adapter = SimilaresFilmesAdapter(requireActivity(),
+					movieDb.similar?.resultsSimilar ?: listOf())
 			}
 
 			recycle_filme_similares.setScrollInvisibleFloatMenu(
