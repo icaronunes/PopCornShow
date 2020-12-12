@@ -36,7 +36,6 @@ import domain.Imdb
 import domain.tvshow.Tvshow
 import elenco.WorksActivity
 import elenco.adapter.WorksAdapter
-import filme.MovieDetatilsViewModel
 import ifValid
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.card_poster
 import kotlinx.android.synthetic.main.poster_tvhsow_details_layout.img_poster
@@ -69,7 +68,6 @@ import kotlinx.android.synthetic.main.tvshow_info.tmdb_site
 import kotlinx.android.synthetic.main.tvshow_info.ultimo_ep_name
 import kotlinx.android.synthetic.main.tvshow_info.voto_media
 import loading.firebase.TypeDataRef
-import otherWise
 import poster.PosterGridActivity
 import produtora.activity.ProductionActivity
 import similares.SimilaresActivity
@@ -234,7 +232,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 		val view = inflater.inflate(layout, container, false)
 		progressBarTemporada = view?.findViewById(R.id.progress_temporadas)
 		view?.findViewById<Button>(R.id.seguir)?.setOnClickListener { onClickSeguir() }
-		return view!!
+		return view
 	}
 
 	override fun onCreateView(
@@ -354,7 +352,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 
 			layout.findViewById<View>(R.id.image_tmdb).setOnClickListener {
 				startActivity(Intent(activity, Site::class.java).apply {
-					putExtra(Constant.SITE, "$BASEMOVIEDB_TV${series.id!!}")
+					putExtra(Constant.SITE, "$BASEMOVIEDB_TV${series.id}")
 				})
 			}
 
@@ -379,14 +377,14 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 				.getBoolean(SettingsActivity.PREF_IDIOMA_PADRAO, true)
 			if (local) {
 				when (it) {
-					StatusRunninTv.RETURN -> status?.setText(R.string.returnin_series)
-					StatusRunninTv.ENDED -> status!!.setText(R.string.ended)
-					StatusRunninTv.CANCELED -> status?.setText(R.string.canceled)
-					StatusRunninTv.PRODUCTION -> status?.setText(in_production)
+					StatusRunninTv.RETURN -> status.setText(R.string.returnin_series)
+					StatusRunninTv.ENDED -> status.setText(R.string.ended)
+					StatusRunninTv.CANCELED -> status.setText(R.string.canceled)
+					StatusRunninTv.PRODUCTION -> status.setText(in_production)
 					else -> status?.text = it
 				}
 			} else {
-				status?.text = it
+				status.text = it
 			}
 		}
 	}
@@ -403,10 +401,8 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 	}
 
 	private fun setTemporada() {
-		series.numberOfSeasons.ifValid {
-			if (series.numberOfSeasons!! > 0) {
-				temporadas?.text = series.numberOfSeasons.toString()
-			}
+		series.numberOfSeasons?.ifValid {
+			temporadas?.text = series.numberOfSeasons.toString()
 		}
 	}
 
@@ -484,7 +480,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 				requireActivity().makeToast(R.string.poster_empty)
 			}
 		}
-
+		text_similares
 		card_poster.setCardBackgroundColor(color)
 	}
 
@@ -564,7 +560,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 	private fun setPopularity() {
 		// Todo refazer metodo
 		if (series.popularity != null) {
-			ValueAnimator.ofFloat(1.0f, series.popularity!!.toFloat()).apply {
+			ValueAnimator.ofFloat(1.0f, series.popularity?.toFloat() ?: 0.0f)?.apply {
 				addUpdateListener { valueAnimator ->
 					val valor = valueAnimator.animatedValue as Float
 					var popularidade = valor.toString()
@@ -585,14 +581,14 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 				}
 				duration = 900
 				setTarget(popularity)
-			}.start()
+			}?.start()
 		}
 	}
 
 	private fun setupCast() {
 		textview_elenco?.setOnClickListener { callWorksActivity(Constant.ViewTypesIds.CAST) }
 
-		if (series.credits?.cast?.isNotEmpty()!!) {
+		if (series.credits?.cast?.isNotEmpty() == true) {
 			textview_elenco?.visible()
 			recycle_tvshow_elenco.patternRecyler(true).apply {
 				adapter = WorksAdapter(requireActivity(), series.credits?.cast ?: listOf())
@@ -621,7 +617,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 	private fun setupCrews() {
 		textview_crews?.setOnClickListener { callWorksActivity(Constant.ViewTypesIds.CREWS) }
 
-		if (series.credits?.crew?.isNotEmpty()!!) {
+		if (series.credits?.crew?.isNotEmpty() == true) {
 			textview_crews?.visibility = View.VISIBLE
 			recycle_tvshow_producao.patternRecyler(true).apply {
 				adapter = WorksAdapter(requireActivity(), series.credits?.crew ?: listOf())
@@ -638,11 +634,11 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 			startActivity(Intent(requireContext(), SimilaresActivity::class.java).apply {
 				putExtra(Constant.MEDIATYPE, Constant.TV)
 				putExtra(Constant.SIMILARES, series.similar?.results as Serializable)
-				putExtra(Constant.NAME, series.name)
+				putExtra(Constant.NAME, series.name ?: "")
 			})
 		}
 
-		if (series.similar?.results?.isNotEmpty()!!) {
+		if (series.similar?.results?.isNotEmpty() == true) {
 			recycle_tvshow_similares.patternRecyler().apply {
 				adapter = SimilaresSerieAdapter(requireActivity(), series.similar?.results)
 				setScrollInvisibleFloatMenu(requireActivity().findViewById(R.id.fab_menu))
@@ -680,12 +676,9 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 	}
 
 	private fun setHome() {
-		if (series.homepage != null) {
-			if (series.homepage?.length!! > 5) {
+		if (series.homepage.isNotBlank() &&
+			android.util.Patterns.WEB_URL.matcher(series.homepage).matches()) {
 				icon_site?.setImageResource(R.drawable.site_on)
-			} else {
-				icon_site?.setImageResource(R.drawable.site_off)
-			}
 		} else {
 			icon_site?.setImageResource(R.drawable.site_off)
 		}
@@ -712,7 +705,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 		if (::imdbDd.isInitialized) {
 			if (imdbDd.imdbRating.isNullOrBlank()) {
 				try {
-					imdb = java.lang.Float.parseFloat(imdbDd.imdbRating!!)
+					imdb = java.lang.Float.parseFloat(imdbDd.imdbRating)
 					tamanho++
 				} catch (e: Exception) {
 				}
@@ -720,7 +713,7 @@ class TvShowFragment(override val layout: Int = Layout.tvshow_info) : BaseFragme
 
 			if (imdbDd.metascore.isNullOrEmpty()) {
 				try {
-					val meta = java.lang.Float.parseFloat(imdbDd.metascore!!)
+					val meta = java.lang.Float.parseFloat(imdbDd.metascore)
 					val nota = meta / 10
 					metascore = nota
 					tamanho++

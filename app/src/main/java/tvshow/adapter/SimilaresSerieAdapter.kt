@@ -28,7 +28,7 @@ class SimilaresSerieAdapter(val activity: FragmentActivity, private val similarI
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimilaresSerieHolde = SimilaresSerieHolde(parent)
 
-    override fun getItemCount() = similarItems?.size!!
+    override fun getItemCount() = similarItems?.size ?: 0
 
     inner class SimilaresSerieHolde(parent: ViewGroup) :
         RecyclerView.ViewHolder(LayoutInflater.from(activity).inflate(R.layout.scroll_similares, parent, false)) {

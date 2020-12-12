@@ -114,7 +114,7 @@ data class Tvshow(
     val lastAirDate: String? = null,
 
     @field:SerializedName("homepage")
-    val homepage: String? = null,
+    val homepage: String = "",
 
     @field:SerializedName("status")
     val status: String? = null,

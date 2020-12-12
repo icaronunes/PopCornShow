@@ -189,8 +189,10 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 	}
 
 	private fun getImdbData() {
-		movieDb.imdbId?.let {
-			model.getImdb(it)
+		::movieDb.isInitialized.ifValid {
+			movieDb.imdbId?.let {
+				model.getImdb(it)
+			}
 		}
 	}
 
@@ -394,6 +396,7 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 		}
 	}
 
+	@SuppressLint("Recycle")
 	private fun setAnimated() {
 		AnimatorSet().apply {
 			playTogether(
