@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_collection"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager_collection"
-        android:layout_width="wrap_content"
-        android:layout_height="500dp" />
-
-</LinearLayout>
-
-<!--Possivel deixar este Layout junto docollapsing_toolbaryout.collection" e eliminar um arquivo?-->
+<androidx.viewpager.widget.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/viewpager_collection"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />

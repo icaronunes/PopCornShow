@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import applicaton.BaseFragment
 import br.com.icaro.filme.R
-import br.com.icaro.filme.R.*
 import com.github.clans.fab.FloatingActionMenu
 import domain.Imdb
 import domain.Movie
@@ -178,7 +177,7 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 			if (it.isNullOrBlank()) {
 				snack(
 					requireActivity().findViewById<FloatingActionMenu>(R.id.fab_menu),
-					string.no_site
+					Txt.no_site
 				)
 			} else {
 				startActivity(Intent(requireActivity(), Site::class.java).apply {
@@ -247,7 +246,7 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 				setSpokenLanguages()
 				setProductionCountries()
 				setPopularity()
-				setCollectoin()
+				setCollection()
 				setCast()
 				setCrews()
 				setTrailer()
@@ -271,7 +270,7 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 	private fun onClickImageStar(): View.OnClickListener? {
 		return View.OnClickListener {
 			if (mediaNotas > 0) {
-				val layout = requireActivity().layoutInflater.inflate(R.layout.layout_notas, null)
+				val layout = layoutInflater.inflate(R.layout.layout_notas, null)
 				::imdbDd.isInitialized.ifValid {
 					fillDialogRateds(layout)
 					layout.findViewById<ImageView>(R.id.image_metacritic)
@@ -335,34 +334,34 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 		if(!::movieDb.isInitialized) return
 		imdbDd.imdbRating?.let {
 			layout.findViewById<TextView>(R.id.nota_imdb)
-				.text = String.format(getString(string.bar_ten), it)
+				.text = String.format(getString(Txt.bar_ten), it)
 		}
 
 		imdbDd.tomatoRating?.let {
 			layout.findViewById<TextView>(R.id.nota_tomatoes)
-				.text = String.format(getString(string.bar_ten), it)
+				.text = String.format(getString(Txt.bar_ten), it)
 		}
 
 		imdbDd.imdbRating?.let {
 			layout.findViewById<TextView>(R.id.nota_imdb)
-				.text = String.format(getString(string.bar_ten), it)
+				.text = String.format(getString(Txt.bar_ten), it)
 		}
 
 		imdbDd.metascore?.let {
 			layout.findViewById<TextView>(R.id.nota_metacritic)
-				.text = String.format(getString(string.bar_hundred), it)
+				.text = String.format(getString(Txt.bar_hundred), it)
 		}
 
 		movieDb.voteAverage?.let {
 			layout.findViewById<TextView>(R.id.nota_tmdb)
-				.text = String.format(getString(string.bar_ten), it)
+				.text = String.format(getString(Txt.bar_ten), it)
 		}
 	}
 
 	@SuppressLint("InflateParams")
 	private fun getCollection(colecao: List<PartsItem?>?) {
-		if (colecao?.isNullOrEmpty()!!) {
-			requireActivity().makeToast(R.string.sem_informacao_colletion)
+		if (colecao?.isNullOrEmpty() == true) {
+			makeToast(R.string.sem_informacao_colletion)
 		} else {
 			openDialogCollection(colecao)
 		}
@@ -372,9 +371,9 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 	private fun openDialogCollection(collection: List<PartsItem?>?) {
 		Builder(requireActivity()).apply {
 			val dialogCollection =
-				requireActivity().layoutInflater.inflate(Layout.dialog_collection, null)
+				layoutInflater.inflate(Layout.dialog_collection, null)
 			setView(dialogCollection).apply {
-				val pager = dialogCollection?.findViewById<ViewPager>(R.id.viewpager_collection)
+				val pager = dialogCollection.findViewById<ViewPager>(R.id.viewpager_collection)
 				pager?.adapter = CollectionPagerAdapter(collection, requireActivity())
 			}
 			show()
@@ -494,8 +493,8 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 		val runTime = movieDb.runtime!!
 		val hour = runTime / ONE_HOUR
 		val min = runTime % ONE_HOUR
-		val stringHours = "${hour}${getString(if (hour > 1) string.horas else string.hora)}"
-		val stringMin = "$min ${getString(string.minutos)}"
+		val stringHours = "${hour}${getString(if (hour > 1) Txt.horas else Txt.hora)}"
+		val stringMin = "$min ${getString(Txt.minutos)}"
 		time_filme?.text = "$stringHours $stringMin"
 	}
 
@@ -653,7 +652,7 @@ class MovieFragment(override val layout: Int = Layout.movie_details_info) : Base
 		}
 	}
 
-	private fun setCollectoin() {
+	private fun setCollection() {
 		if (movieDb.belongsToCollection != null) {
 			icon_collection?.setImageResource(R.drawable.collection_on)
 		} else {

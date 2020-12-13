@@ -142,7 +142,7 @@ class Api(val context: Context) : ApiSingleton() {
 
 	suspend fun getCollection(id: Int): BaseRequest<Colecao> {
 		return suspendCancellableCoroutine { cont ->
-			executeCall("${baseUrl3}collection/$id?api_key=${TMDBAPI}&language=$timeZone,en",
+			executeCall("${baseUrl3}collection/$id?api_key=${TMDBAPI}&language=$timeZone",
 				CallBackApiWithBaseRequest(cont, Colecao::class.java))
 		}
 	}

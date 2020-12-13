@@ -16,70 +16,77 @@ import br.com.icaro.filme.R
 import domain.colecao.PartsItem
 import filme.activity.MovieDetailsActivity
 import utils.Constant
+import utils.isNotNullOrBlank
+import utils.onClick
 import utils.setPicasso
 
 /**
  * Created by icaro on 22/07/16.
  */
-class CollectionPagerAdapter(private val info: List<PartsItem?>?, private val context: Context) : PagerAdapter() {
-    private lateinit var imageView: ImageView
-    private lateinit var constraintLayout: ConstraintLayout
-    private lateinit var nome: TextView
+class CollectionPagerAdapter(private val info: List<PartsItem?>?, val context: Context) : PagerAdapter() {
 
-    override fun getCount(): Int {
-        return if (info?.isNotEmpty()!!) info.size else 0
-    }
+    override fun getCount() = info?.size ?: 0
 
-    override fun isViewFromObject(view: View, obj: Any): Boolean {
-        return view === obj
-    }
+    override fun isViewFromObject(view: View, obj: Any) = view === obj
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val item = info?.get(position)
-        val view = LayoutInflater.from(context).inflate(R.layout.collection, container, false)
-        nome = view.findViewById(R.id.dateCollection)
-        constraintLayout = view.findViewById(R.id.collection_linear)
-        imageView = view.findViewById<ImageView>(R.id.img_collection).apply {
-
-            setOnClickListener {
-                context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
-                    putExtra(Constant.ID, item?.id)
-                    putExtra(Constant.NOME_FILME, item?.title)
-                })
-            }
-
-            setPicasso(item?.posterPath, 5, { loadPaletteCollection(this.drawable as BitmapDrawable) })
-        }
-
-        var ano = "xxxx"
-
-        if (!item?.releaseDate.isNullOrBlank()) {
-
-            if (item?.releaseDate?.length!! >= 4) {
-                ano = item.releaseDate.substring(0, 4)
-            }
-        }
-
-        if (!item?.title.isNullOrBlank()) {
-            val tituloData = item?.title +
-                    " - " + ano
-            nome.text = tituloData
-        }
-        container.addView(view)
-        return view
+        return BindCollection(container, context).bind(item)
     }
 
-    private fun loadPaletteCollection(drawable: BitmapDrawable) {
-        val bitmap = drawable.bitmap
-        val builder = Palette.Builder(bitmap)
-        val swatch = builder.generate().vibrantSwatch
-        if (swatch != null) {
-            constraintLayout.setBackgroundColor(swatch.rgb)
-            nome.setTextColor(swatch.bodyTextColor)
-        }
+    override fun destroyItem(container: ViewGroup, position: Int, view: Any) {
+        (container as ViewPager).removeView(view as View)
     }
 
-    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        (container as ViewPager).removeView(`object` as View)
+    class BindCollection(val container: ViewGroup,val context: Context) {
+        private val XXXX = "xxxx"
+
+        private lateinit var constraintLayout: ConstraintLayout
+        private lateinit var name: TextView
+        private lateinit var reviews: TextView
+
+        fun bind(item: PartsItem?): View {
+            return with(LayoutInflater.from(context).inflate(R.layout.collection, container, false)) {
+                constraintLayout = findViewById(R.id.collection_linear)
+                name = findViewById<TextView>(R.id.nameCollection)
+                findViewById<TextView>(R.id.reviews).apply {
+                    text = item?.overview ?: ""
+                }
+                findViewById<ImageView>(R.id.img_collection).apply {
+                    onClick {
+                        context.startActivity(Intent(context, MovieDetailsActivity::class.java).apply {
+                            putExtra(Constant.ID, item?.id)
+                            putExtra(Constant.NOME_FILME, item?.title)
+                        })
+                    }
+
+                    setPicasso(item?.posterPath, 5, sucesso = { loadPaletteCollection(this.drawable as BitmapDrawable) })
+                }
+
+                var ano = XXXX
+                if (item?.releaseDate.isNotNullOrBlank()) {
+                    if (item?.releaseDate?.length!! >= 4) {
+                        ano = item.releaseDate.substring(0, 4)
+                    }
+                }
+
+                if (item?.title.isNotNullOrBlank()) {
+                    val tituloData = "${item?.title} - $ano"
+                    name.text = tituloData
+                }
+                container.addView(this@with)
+                this
+            }
+        }
+
+        private fun loadPaletteCollection(drawable: BitmapDrawable) {
+            val bitmap = drawable.bitmap
+            val builder = Palette.Builder(bitmap)
+            val swatch = builder.generate().vibrantSwatch
+            if (swatch != null) {
+                constraintLayout.setBackgroundColor(swatch.rgb)
+                name.setTextColor(swatch.bodyTextColor)
+            }
+        }
     }
 }

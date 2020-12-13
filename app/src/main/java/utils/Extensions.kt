@@ -15,7 +15,6 @@ import android.view.ViewGroup
 import android.view.ViewGroup.*
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.view.children
 import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
@@ -178,6 +177,9 @@ fun <T> NavigationView.findViewOnHeader(id: Int): T? {
 /**
  * VIEW
  */
+
+fun View.onClick(call: () -> Unit) = this.setOnClickListener { call.invoke() }
+
 fun View.gone() {
 	this.visibility = View.GONE
 }
@@ -339,6 +341,12 @@ fun <T> Gson.fromJsonWithLog(json: String?, classOfT: Class<T>): T {
 }
 
 fun String.log(tag: String = "") = Log.i(tag, this)
+
+fun CharSequence?.isNotNullOrBlank(): Boolean = !this.isNullOrBlank()
+
+/**
+ * TvShow
+ */
 
 fun Tvshow.createIdReal() = createIdReal(this.originalName ?: "", this.firstAirDate ?: "")
 private fun createIdReal(originalName: String, data: String) =
